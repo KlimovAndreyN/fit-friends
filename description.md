@@ -1,6 +1,5 @@
 # Документация API в формате OpenAPI
-(http://localhost:3000/spec-yaml)
-[http://localhost:3000/spec-yaml](http://localhost:3000/spec-yaml)
+http://localhost:3000/spec-yaml
 
 # Запуск проекта
 `
