@@ -6,8 +6,11 @@ import PrivateRoute from '../private-route/private-route';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Index from '../../pages/index/index';
+import Intro from '../../pages/intro/intro';
+import Login from '../../pages/login/login';
 import Register from '../../pages/register/register';
 import NotFound from '../../pages/not-found/not-found';
+
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 function App(): JSX.Element {
@@ -19,7 +22,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Root}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <Index />
               </PrivateRoute>
             }
@@ -28,7 +31,7 @@ function App(): JSX.Element {
             path={AppRoute.Intro}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
-                <Index />
+                <Intro />
               </PrivateRoute>
             }
           />
@@ -36,7 +39,7 @@ function App(): JSX.Element {
             path={AppRoute.Login}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
-                <Register />
+                <Login />
               </PrivateRoute>
             }
           />

@@ -14,8 +14,8 @@ type PrivateRouteProps = {
 
 function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps): JSX.Element {
   //!const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const authorizationStatus = AuthorizationStatus.Auth;
-  //const authorizationStatus = AuthorizationStatus.NoAuth;
+  //const authorizationStatus = AuthorizationStatus.Auth;
+  const authorizationStatus = AuthorizationStatus.NoAuth;
   //const authorizationStatus = AuthorizationStatus.Unknown;
 
   //! временно
