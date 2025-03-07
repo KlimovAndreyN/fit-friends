@@ -1,4 +1,14 @@
+import { Link, useNavigate } from 'react-router-dom';
+
+import { AppRoute } from '../../const';
+
 function Intro(): JSX.Element {
+  const navigate = useNavigate();
+
+  const handleRegisterButtonClick = () => {
+    navigate(AppRoute.Register);
+  };
+
   return (
     <main>
       <div className="intro">
@@ -19,8 +29,8 @@ function Intro(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            <button className="btn intro__button" type="button">Регистрация</button>
-            <p className="intro__text">Есть аккаунт? <a className="intro__link" href="#">Вход</a>
+            <button className="btn intro__button" type="button" onClick={handleRegisterButtonClick}>Регистрация</button>
+            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.Login}>Вход</Link>
             </p>
           </div>
         </div>

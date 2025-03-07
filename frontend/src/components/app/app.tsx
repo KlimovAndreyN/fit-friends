@@ -3,8 +3,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 
 import PrivateRoute from '../private-route/private-route';
-import Header from '../header/header';
-import Footer from '../footer/footer';
 import Index from '../../pages/index/index';
 import Intro from '../../pages/intro/intro';
 import Login from '../../pages/login/login';
@@ -17,7 +15,6 @@ function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <Header />
         <Routes>
           <Route
             path={AppRoute.Root}
@@ -53,9 +50,7 @@ function App(): JSX.Element {
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
-      {/*</HistoryRouter>*/}
     </HelmetProvider>
   );
 }

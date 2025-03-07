@@ -1,6 +1,13 @@
+import Footer from '../../components/footer/footer';
+import Header from '../../components/header/header';
+
 function Index(): JSX.Element {
   return (
-    <div>Index</div>
+    <>
+      <Header />
+      <div>Index</div>
+      <Footer />
+    </>
   );
 }
 
