@@ -4,7 +4,7 @@ import Spinner from '../spinner/spinner';
 
 //!import { useAppSelector } from '../../hooks';
 //!import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, mockData } from '../../const';
 
 type PrivateRouteProps = {
   restrictedFor: AuthorizationStatus;
@@ -14,13 +14,8 @@ type PrivateRouteProps = {
 
 function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps): JSX.Element {
   //!const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  //const authorizationStatus = AuthorizationStatus.Auth;
-  const authorizationStatus = AuthorizationStatus.NoAuth;
-  //const authorizationStatus = AuthorizationStatus.Unknown;
+  const authorizationStatus = mockData.authorizationStatus;
 
-  //! временно
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return <Spinner />;
   }

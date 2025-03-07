@@ -21,3 +21,6 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
+
+//! временно
+export const mockData = { authorizationStatus: AuthorizationStatus.NoAuth };
