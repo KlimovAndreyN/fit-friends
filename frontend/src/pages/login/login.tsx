@@ -19,15 +19,13 @@ function Login(): JSX.Element {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-
-    const data: LoginUserDto = {
-      login: formData.get(FormFieldName.login)?.toString() || '',
-      password: formData.get(FormFieldName.password)?.toString() || ''
-    };
+    const login = formData.get(FormFieldName.login)?.toString() || '';
+    const password = formData.get(FormFieldName.password)?.toString() || '';
+    const data: LoginUserDto = { login, password };
 
     //! временно
     // eslint-disable-next-line no-console
-    console.log('LoginUser', data);
+    console.log('LoginUserDto', data);
     mockData.authorizationStatus = AuthorizationStatus.Auth;
     navigate(AppRoute.Root);
     //!

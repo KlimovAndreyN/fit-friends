@@ -22,6 +22,14 @@ id2486639
 
 Вопросы:
   где фоновые изображения
-  что за скрипты в маркапах
-  перепроверить свг
+  что за скрипты в маркапах ?
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
+  различее в страницах
+    <html lang="ru" class="js-focus-visible" data-js-focus-visible="">
+    <html lang="ru">
+    + <canvas> в html
+
+
+  
 --
