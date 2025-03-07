@@ -69,8 +69,7 @@ function Register(): JSX.Element {
                     <div className="custom-select custom-select--not-selected">
                       <span className="custom-select__label">Ваша локация</span>
                       <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
-                        <span className="custom-select__text">
-                        </span>
+                        <span className="custom-select__text" />
                         <span className="custom-select__icon">
                           <svg width="15" height="6" aria-hidden="true">
                             <use xlinkHref="#arrow-down" />
@@ -101,9 +100,7 @@ function Register(): JSX.Element {
                         <div className="custom-toggle-radio__block">
                           <label>
                             <input type="radio" name="sex" defaultChecked />
-                            <span className="custom-toggle-radio__icon">
-
-                            </span>
+                            <span className="custom-toggle-radio__icon" />
                             <span className="custom-toggle-radio__label">Женский</span>
                           </label>
                         </div>
