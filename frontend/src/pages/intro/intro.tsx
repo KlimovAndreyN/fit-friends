@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
-import { AppRoute } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
 
 function Intro(): JSX.Element {
   const navigate = useNavigate();
@@ -11,6 +12,9 @@ function Intro(): JSX.Element {
 
   return (
     <main>
+      <Helmet>
+        <title>{PageTitle.Intro}</title>
+      </Helmet>
       <div className="intro">
         <div className="intro__background">
           <picture>

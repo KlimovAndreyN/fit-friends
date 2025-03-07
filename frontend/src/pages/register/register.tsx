@@ -1,6 +1,13 @@
+import { Helmet } from 'react-helmet-async';
+
+import { PageTitle } from '../../const';
+
 function Register(): JSX.Element {
   return (
     <main>
+      <Helmet>
+        <title>{PageTitle.Registration}</title>
+      </Helmet>
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
           <use xlinkHref="#logo-big" />
