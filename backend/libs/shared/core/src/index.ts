@@ -13,6 +13,8 @@ export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route-alias';
 
+export { AuthUser } from './lib/interfaces/auth-user.interface';
+export { Comment } from './lib/interfaces/comment.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';
@@ -25,26 +27,22 @@ export { RequestWithTokenPayload } from './lib/interfaces/request-with-token-pay
 export { RequestWithUserId } from './lib/interfaces/request-with-user-id.interface';
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { StoredFile } from './lib/interfaces/stored-file.interface';
+export { Subscriber } from './lib/interfaces/subscriber.interface';
+export { Subscription } from './lib/interfaces/subscription.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Token } from './lib/interfaces/token.interface';
+export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 
 export { UserRdo } from './lib/rdo/user.rdo';
 
-export { AuthUser } from './lib/types/auth-user.interface';
-export { Comment } from './lib/types/comment.interface';
 export * from './lib/types/environment.type';
-export { Like } from './lib/types/like.interface';
 export { RabbitRouting } from './lib/types/rabbit-routing.enum';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { SortType } from './lib/types/sort-type.enum';
-export { Subscriber } from './lib/types/subscriber.interface';
-export { Tag } from './lib/types/tag.interface';
-export { Subscription } from './lib/types/subscription.interface';
-export { User } from './lib/types/user.interface';
 export { XHeader } from './lib/types/x-header.enum';
 
 export * from './lib/utils/transform';
