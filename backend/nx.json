@@ -41,7 +41,10 @@
         "targetName": "test"
       },
       "exclude": [
-        "apps/api-e2e/**/*"
+        "apps/account-e2e/**/*",
+        "apps/api-e2e/**/*",
+        "apps/notify-e2e/**/*",
+        "apps/file-storage-e2e/**/*"
       ]
     }
   ]
