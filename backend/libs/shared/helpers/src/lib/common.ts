@@ -1,6 +1,5 @@
 import { ValidationError } from '@nestjs/common';
 import { ClassTransformOptions, plainToInstance } from 'class-transformer';
-import { join } from 'path/posix';
 
 export function getPort(evnName: string, defaultPort: number): number {
   return parseInt(process.env[evnName] || `${defaultPort}`, 10)

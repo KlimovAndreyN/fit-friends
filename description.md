@@ -24,11 +24,12 @@ cp apps/notify/.env-example apps/notify/.env
 # сформировать PrismaClient
 npx nx run fit:db:generate
 
-# инициализировать БД postgres - blog
+# инициализировать БД postgres
 npx nx run fit:db:migrate
 
 # наполнение тестовыми данными
 npx nx run account:db:seed
+npx nx run fit:db:seed
 
 # запуск сервисов
 npx nx run file-storage:serve
