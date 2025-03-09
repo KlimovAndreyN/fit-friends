@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 
 import { AUTH_NAME, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
-import { RequestProperty } from '@backend/shared/core';
+import { RequestProperty, RouteAlias } from '@backend/shared/core';
 import { TokenPayloadRdo } from '@backend/account/authentication';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class CheckAuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const url = `${this.apiOptions.accountServiceUrl}/check`;
+    const url = [this.apiOptions.accountServiceUrl, RouteAlias.Check].join('/');
     const requestId = request[RequestProperty.RequestId];
     const authorization = request.headers[AUTH_NAME]
     const { data } = await this.httpService.axiosRef.post<TokenPayloadRdo>(url, {}, makeHeaders(requestId, authorization));

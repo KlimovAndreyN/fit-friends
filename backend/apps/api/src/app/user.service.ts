@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
-import { join } from 'path/posix';
 
 import { UserRdo } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
@@ -16,7 +15,7 @@ export class UserService {
   ) { }
 
   public getUrl(route = ''): string {
-    return join(this.apiOptions.accountServiceUrl, route);
+    return [this.apiOptions.accountServiceUrl, route].join('/');
   }
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {

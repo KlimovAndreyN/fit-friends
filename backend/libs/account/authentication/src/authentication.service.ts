@@ -58,7 +58,7 @@ export class AuthenticationService {
     if (avatarFile) {
       try {
         const fileRdo = await uploadFile<UploadedFileRdo>(
-          join(this.accountOptions.fileStorageServiceUrl, RouteAlias.Upload),
+          [this.accountOptions.fileStorageServiceUrl, RouteAlias.Upload].join('/'),
           avatarFile,
           FILE_KEY,
           requestId
