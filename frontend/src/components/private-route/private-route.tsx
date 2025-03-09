@@ -2,9 +2,10 @@ import { Navigate } from 'react-router-dom';
 
 import Spinner from '../spinner/spinner';
 
-//!import { useAppSelector } from '../../hooks';
-//!import { getAuthorizationStatus } from '../../store/user-process/selectors';
-import { AppRoute, AuthorizationStatus, mockData } from '../../const';
+import { AuthorizationStatus } from '../../types/types';
+import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AppRoute } from '../../const';
 
 type PrivateRouteProps = {
   restrictedFor: AuthorizationStatus;
@@ -13,8 +14,7 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps): JSX.Element {
-  //!const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const authorizationStatus = mockData.authorizationStatus;
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
     return <Spinner />;

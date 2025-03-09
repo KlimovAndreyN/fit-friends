@@ -1,6 +1,4 @@
-import { XHeader } from '@backend/shared/core';
-
-export const AUTH_NAME = 'authorization';
+import { AUTH_NAME, XHeader } from '@backend/shared/core';
 
 type XHeaders = { headers: { [XHeader.RequestId]: string, [AUTH_NAME]?: string, [XHeader.UserId]?: string } };
 

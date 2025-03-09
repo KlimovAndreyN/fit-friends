@@ -16,11 +16,17 @@ export enum AppRoute {
   NotFound = '/404'
 }
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+export enum ApiRoute {
+  Login = '/users/login',
+  Check = '/users/check',
+  Logout = '/users/logout',
+  Register = 'users/register'
 }
 
-//! временно
-export const mockData = { authorizationStatus: AuthorizationStatus.NoAuth };
+export enum StoreSlice {
+  UserProcess = 'USER_PROCESS'
+}
+
+export enum HttpCode {
+  NoAuth = 401
+}

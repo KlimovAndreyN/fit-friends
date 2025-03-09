@@ -1,9 +1,10 @@
 import { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import { LoginUserDto } from '../../types/backend';
-import { AppRoute, AuthorizationStatus, mockData, PageTitle } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { loginUser } from '../../store/action';
+import { PageTitle } from '../../const';
 
 enum FormFieldName {
   login = 'email',
@@ -11,8 +12,7 @@ enum FormFieldName {
 }
 
 function Login(): JSX.Element {
-  //! временно
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,14 +21,9 @@ function Login(): JSX.Element {
     const formData = new FormData(form);
     const login = formData.get(FormFieldName.login)?.toString() || '';
     const password = formData.get(FormFieldName.password)?.toString() || '';
-    const data: LoginUserDto = { login, password };
+    const dto: LoginUserDto = { login, password };
 
-    //! временно
-    // eslint-disable-next-line no-console
-    console.log('LoginUserDto', data);
-    mockData.authorizationStatus = AuthorizationStatus.Auth;
-    navigate(AppRoute.Root);
-    //!
+    dispatch(loginUser(dto));
   };
 
   return (

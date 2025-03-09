@@ -9,7 +9,8 @@ import Login from '../../pages/login/login';
 import Register from '../../pages/register/register';
 import NotFound from '../../pages/not-found/not-found';
 
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../types/types';
+import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
   return (
