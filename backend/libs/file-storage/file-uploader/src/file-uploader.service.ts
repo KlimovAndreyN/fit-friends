@@ -7,8 +7,8 @@ import { writeFile } from 'node:fs/promises';
 import { join } from 'path/posix';
 import { randomUUID } from 'node:crypto';
 
-import { fileStorageConfig } from '@project/file-storage/config';
-import { StoredFile } from '@project/shared/core';
+import { fileStorageConfig } from '@backend/file-storage/config';
+import { StoredFile } from '@backend/shared/core';
 
 import { FileUploaderRepository } from './file-uploader.repository';
 import { FileUploaderEntity } from './file-uploader.entity';

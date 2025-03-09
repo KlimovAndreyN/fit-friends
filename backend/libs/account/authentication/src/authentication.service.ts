@@ -6,13 +6,13 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { join } from 'path/posix';
 
-import { RouteAlias, Token, User } from '@project/shared/core';
-import { createJWTPayload, parseAxiosError, uploadFile } from '@project/shared/helpers';
-import { FitUserRepository, FitUserEntity } from '@project/account/fit-user';
-import { accountConfig } from '@project/account/config';
-import { NotifyService } from '@project/account/notify';
-import { RefreshTokenService } from '@project/account/refresh-token';
-import { FILE_KEY, UploadedFileRdo } from '@project/file-storage/file-uploader';
+import { RouteAlias, Token, User } from '@backend/shared/core';
+import { createJWTPayload, parseAxiosError, uploadFile } from '@backend/shared/helpers';
+import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
+import { accountConfig } from '@backend/account/config';
+import { NotifyService } from '@backend/account/notify';
+import { RefreshTokenService } from '@backend/account/refresh-token';
+import { FILE_KEY, UploadedFileRdo } from '@backend/file-storage/file-uploader';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthenticationUserMessage } from './authentication.constant';

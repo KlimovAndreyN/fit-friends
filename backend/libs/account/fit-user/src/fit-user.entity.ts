@@ -1,6 +1,6 @@
 import { compare, genSalt, hash } from 'bcrypt';
 
-import { Entity, StorableEntity, AuthUser } from '@project/shared/core';
+import { Entity, StorableEntity, AuthUser } from '@backend/shared/core';
 
 import { SALT_ROUNDS } from './fit-user.constant';
 

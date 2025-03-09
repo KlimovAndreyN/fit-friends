@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
 
-import { RequestProperty, XHeader } from '@project/shared/core';
+import { RequestProperty, XHeader } from '@backend/shared/core';
 
 @Injectable()
 export class InjectUserIdInterceptor implements NestInterceptor {

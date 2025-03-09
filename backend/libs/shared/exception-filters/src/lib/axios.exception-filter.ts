@@ -2,7 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nest
 import { Response } from 'express';
 import { AxiosError } from 'axios';
 
-import { parseAxiosError } from '@project/shared/helpers';
+import { parseAxiosError } from '@backend/shared/helpers';
 
 const INTERNAL_SERVER_ERROR_MESSAGE = 'Internal server error';
 

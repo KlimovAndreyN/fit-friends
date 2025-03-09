@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 
-import { ApiConfigModule } from '@project/api/config';
+import { ApiConfigModule } from '@backend/api/config';
 
 import { UserService } from './user.service';
 import { UsersController } from './users.controller';

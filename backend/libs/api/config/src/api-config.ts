@@ -1,8 +1,8 @@
 import { registerAs } from '@nestjs/config';
 import Joi from 'joi';
 
-import { ConfigAlias, DEFAULT_PORT, Environment, ENVIRONMENTS } from '@project/shared/core';
-import { getPort } from '@project/shared/helpers';
+import { ConfigAlias, DEFAULT_PORT, Environment, ENVIRONMENTS } from '@backend/shared/core';
+import { getPort } from '@backend/shared/helpers';
 
 export interface ApiConfig {
   environment: string;

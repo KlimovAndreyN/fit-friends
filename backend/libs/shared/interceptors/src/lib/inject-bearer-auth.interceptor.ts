@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
 
-import { RequestProperty } from '@project/shared/core';
-import { AUTH_NAME } from '@project/shared/helpers';
+import { RequestProperty } from '@backend/shared/core';
+import { AUTH_NAME } from '@backend/shared/helpers';
 
 @Injectable()
 export class InjectBearerAuthInterceptor implements NestInterceptor {

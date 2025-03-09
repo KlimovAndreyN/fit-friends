@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { ApiPropertyOption } from '@project/shared/core';
+import { ApiPropertyOption } from '@backend/shared/core';
 
 export class TokenPayloadRdo {
   @ApiProperty(ApiPropertyOption.User.Id)

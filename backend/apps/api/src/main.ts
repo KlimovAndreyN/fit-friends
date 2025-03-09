@@ -7,9 +7,9 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { BearerAuth, BearerAuthOption } from '@project/shared/core';
-import { InjectBearerAuthInterceptor } from '@project/shared/interceptors';
-import { apiConfig, ApiConfig } from '@project/api/config';
+import { BearerAuth, BearerAuthOption } from '@backend/shared/core';
+import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
+import { apiConfig, ApiConfig } from '@backend/api/config';
 
 import { AppModule } from './app/app.module';
 import { InjectRequestIdGuard } from './app/guards/inject-request-id.guard';

@@ -4,8 +4,8 @@ import { Strategy } from 'passport-local';
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
-import { getValidationErrorString } from '@project/shared/helpers';
-import { FitUserEntity } from '@project/account/fit-user';
+import { getValidationErrorString } from '@backend/shared/helpers';
+import { FitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from '../authentication.service';
 import { LoginUserDto } from '../dto/login-user.dto';

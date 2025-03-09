@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import dayjs from 'dayjs';
 
-import { accountConfig } from '@project/account/config';
-import { RefreshTokenPayload } from '@project/shared/core';
-import { parseTime } from '@project/shared/helpers';
+import { accountConfig } from '@backend/account/config';
+import { RefreshTokenPayload } from '@backend/shared/core';
+import { parseTime } from '@backend/shared/helpers';
 
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { RefreshTokenEntity } from './refresh-token.entity';

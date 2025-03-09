@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
-import { ApiPropertyOption } from '@project/shared/core';
+import { ApiPropertyOption } from '@backend/shared/core';
 
 import { UserValidation } from '../authentication.constant';
 

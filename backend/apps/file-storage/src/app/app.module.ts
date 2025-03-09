@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { FileStorageConfigModule } from '@project/file-storage/config';
-import { getMongooseOptions } from '@project/shared/helpers';
-import { FileUploaderModule } from '@project/file-storage/file-uploader';
+import { FileStorageConfigModule } from '@backend/file-storage/config';
+import { getMongooseOptions } from '@backend/shared/helpers';
+import { FileUploaderModule } from '@backend/file-storage/file-uploader';
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 
-import { ConfigAlias } from '@project/shared/core';
+import { ConfigAlias } from '@backend/shared/core';
 
 import { getRabbitMQConnectionString } from './common';
 

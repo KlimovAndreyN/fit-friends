@@ -2,9 +2,9 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { PrefixOption } from '@project/shared/core';
-import { InjectRequestIdInterceptor } from '@project/shared/interceptors';
-import { fileStorageConfig, FileStorageConfig } from '@project/file-storage/config';
+import { PrefixOption } from '@backend/shared/core';
+import { InjectRequestIdInterceptor } from '@backend/shared/interceptors';
+import { fileStorageConfig, FileStorageConfig } from '@backend/file-storage/config';
 
 import { AppModule } from './app/app.module';
 

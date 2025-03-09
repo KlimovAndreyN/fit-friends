@@ -1,5 +1,5 @@
-import { PrismaClientService } from '@project/fit/models';
-import { Entity, StorableEntity, EntityFactory } from '@project/shared/core';
+import { PrismaClientService } from '@backend/fit/models';
+import { Entity, StorableEntity, EntityFactory } from '@backend/shared/core';
 
 import { Repository } from './repository.interface';
 

@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import { JwtToken } from '@project/shared/core';
+import { JwtToken } from '@backend/shared/core';
 
 @Schema({
   collection: 'refresh-sessions',

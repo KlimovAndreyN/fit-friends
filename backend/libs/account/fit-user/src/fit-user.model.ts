@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import { AuthUser } from '@project/shared/core';
+import { AuthUser } from '@backend/shared/core';
 
 import { ACCOUNTS_COLLECTION } from './fit-user.constant';
 

@@ -3,9 +3,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import 'multer'; // Express.Multer.File
 
-import { RouteAlias } from '@project/shared/core';
-import { MongoIdValidationPipe } from '@project/shared/pipes';
-import { fillDto } from '@project/shared/helpers';
+import { RouteAlias } from '@backend/shared/core';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
+import { fillDto } from '@backend/shared/helpers';
 
 import { UploadedFileRdo } from './rdo/uploaded-file.rdo';
 import { FileUploaderService } from './file-uploader.service';

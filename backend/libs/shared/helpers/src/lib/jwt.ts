@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
-import { User, TokenPayload, ConfigAlias } from '@project/shared/core';
+import { User, TokenPayload, ConfigAlias } from '@backend/shared/core';
 
 export async function getJwtOptions(configService: ConfigService): Promise<JwtModuleOptions> {
   return {

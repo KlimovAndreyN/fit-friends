@@ -9,14 +9,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiParamOption, BearerAuth, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, RouteAlias, USER_ID_PARAM, UserRdo, ApiOperationOption
-} from '@project/shared/core';
-import { dtoToFormData, makeHeaders, multerFileToFormData } from '@project/shared/helpers';
-import { MongoIdValidationPipe } from '@project/shared/pipes';
-import { AxiosExceptionFilter } from '@project/shared/exception-filters';
+} from '@backend/shared/core';
+import { dtoToFormData, makeHeaders, multerFileToFormData } from '@backend/shared/helpers';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
+import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 import {
   AuthenticationApiResponse, AvatarOption, CreateUserDto, LoggedUserRdo,
   LoginUserDto, parseFilePipeBuilder, TokenPayloadRdo, UserTokenRdo
-} from '@project/account/authentication';
+} from '@backend/account/authentication';
 
 import { UserService } from './user.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';

@@ -8,11 +8,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiParamOption, BearerAuth, RequestWithBearerAuth, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, RouteAlias, USER_ID_PARAM, UserRdo, ApiOperationOption
-} from '@project/shared/core';
-import { fillDto } from '@project/shared/helpers';
-import { MongoIdValidationPipe } from '@project/shared/pipes';
-import { InjectBearerAuthInterceptor } from '@project/shared/interceptors';
-import { RequestWithFitUserEntity } from '@project/account/fit-user';
+} from '@backend/shared/core';
+import { fillDto } from '@backend/shared/helpers';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
+import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
+import { RequestWithFitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from './dto/create-user.dto';

@@ -1,7 +1,7 @@
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 
-import { ConfigAlias } from '@project/shared/core';
+import { ConfigAlias } from '@backend/shared/core';
 
 import { getMongoConnectionString } from './common';
 

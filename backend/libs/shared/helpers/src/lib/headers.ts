@@ -1,4 +1,4 @@
-import { XHeader } from '@project/shared/core';
+import { XHeader } from '@backend/shared/core';
 
 export const AUTH_NAME = 'authorization';
 

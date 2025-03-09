@@ -3,9 +3,9 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { join } from 'path/posix';
 
-import { UserRdo } from '@project/shared/core';
-import { makeHeaders } from '@project/shared/helpers';
-import { apiConfig } from '@project/api/config';
+import { UserRdo } from '@backend/shared/core';
+import { makeHeaders } from '@backend/shared/helpers';
+import { apiConfig } from '@backend/api/config';
 
 @Injectable()
 export class UserService {

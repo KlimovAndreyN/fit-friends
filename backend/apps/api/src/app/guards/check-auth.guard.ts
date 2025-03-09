@@ -2,10 +2,10 @@ import { CanActivate, ExecutionContext, Inject, Injectable, Logger } from '@nest
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { AUTH_NAME, makeHeaders } from '@project/shared/helpers';
-import { apiConfig } from '@project/api/config';
-import { RequestProperty } from '@project/shared/core';
-import { TokenPayloadRdo } from '@project/account/authentication';
+import { AUTH_NAME, makeHeaders } from '@backend/shared/helpers';
+import { apiConfig } from '@backend/api/config';
+import { RequestProperty } from '@backend/shared/core';
+import { TokenPayloadRdo } from '@backend/account/authentication';
 
 @Injectable()
 export class CheckAuthGuard implements CanActivate {

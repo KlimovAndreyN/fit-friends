@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { AuthUser, EntityFactory } from '@project/shared/core';
+import { AuthUser, EntityFactory } from '@backend/shared/core';
 
 import { FitUserEntity } from './fit-user.entity';
 

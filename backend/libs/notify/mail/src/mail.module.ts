@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-import { getMailerAsyncOptions } from '@project/shared/helpers';
+import { getMailerAsyncOptions } from '@backend/shared/helpers';
 
 import { MailService } from './mail.service';
 

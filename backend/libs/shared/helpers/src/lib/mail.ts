@@ -3,7 +3,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { ConfigService } from '@nestjs/config';
 import { resolve } from 'node:path';
 
-import { ConfigAlias } from '@project/shared/core';
+import { ConfigAlias } from '@backend/shared/core';
 
 export function getMailerAsyncOptions(): MailerAsyncOptions {
   return {

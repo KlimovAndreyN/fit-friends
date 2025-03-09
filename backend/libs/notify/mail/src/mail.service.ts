@@ -2,8 +2,8 @@ import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 
-import { Subscriber } from '@project/shared/core';
-import { notifyConfig } from '@project/notify/config';
+import { Subscriber } from '@backend/shared/core';
+import { notifyConfig } from '@backend/notify/config';
 
 import { ADD_SUBCRIBER_TEMPLATE, ADD_SUBSCRIBER_SUBJECT } from './mail.constant';
 

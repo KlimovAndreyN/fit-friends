@@ -4,8 +4,8 @@ import Joi from 'joi';
 import {
   ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT, DEFAULT_RABBIT_PORT,
   DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
-} from '@project/shared/core';
-import { getPort } from '@project/shared/helpers';
+} from '@backend/shared/core';
+import { getPort } from '@backend/shared/helpers';
 
 export interface NotifyConfig {
   environment: string;

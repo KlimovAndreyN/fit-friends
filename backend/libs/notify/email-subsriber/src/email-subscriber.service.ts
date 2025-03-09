@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
-import { XHeader } from '@project/shared/core';
-import { MailService } from '@project/notify/mail';
+import { XHeader } from '@backend/shared/core';
+import { MailService } from '@backend/notify/mail';
 
 import { EmailSubscriberEntity } from './email-subscriber.entity';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';

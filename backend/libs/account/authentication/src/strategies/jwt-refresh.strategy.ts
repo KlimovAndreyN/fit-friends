@@ -3,9 +3,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigType } from '@nestjs/config';
 
-import { RefreshTokenPayload } from '@project/shared/core';
-import { accountConfig } from '@project/account/config';
-import { RefreshTokenService } from '@project/account/refresh-token';
+import { RefreshTokenPayload } from '@backend/shared/core';
+import { accountConfig } from '@backend/account/config';
+import { RefreshTokenService } from '@backend/account/refresh-token';
 
 import { AuthenticationService } from '../authentication.service';
 import { TokenNotExistsException } from '../exceptions/token-not-exists.exception';

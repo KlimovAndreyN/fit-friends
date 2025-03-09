@@ -3,7 +3,7 @@ import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-valid
 
 
 import { UserValidation } from '../authentication.constant';
-import { ApiPropertyOption } from '@project/shared/core';
+import { ApiPropertyOption } from '@backend/shared/core';
 
 export class CreateUserDto {
   @ApiProperty(ApiPropertyOption.User.Email)

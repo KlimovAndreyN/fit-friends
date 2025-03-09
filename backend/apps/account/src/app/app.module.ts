@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { getMongooseOptions } from '@project/shared/helpers';
-import { AuthenticationModule } from '@project/account/authentication'
-import { AccountConfigModule } from '@project/account/config'
+import { getMongooseOptions } from '@backend/shared/helpers';
+import { AuthenticationModule } from '@backend/account/authentication'
+import { AccountConfigModule } from '@backend/account/config'
 
 @Module({
   imports: [

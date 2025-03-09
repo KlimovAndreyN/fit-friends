@@ -1,8 +1,8 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { PrefixOption } from '@project/shared/core';
-import { notifyConfig, NotifyConfig } from '@project/notify/config';
+import { PrefixOption } from '@backend/shared/core';
+import { notifyConfig, NotifyConfig } from '@backend/notify/config';
 
 import { AppModule } from './app/app.module';
 

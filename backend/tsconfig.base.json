@@ -19,58 +19,58 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@project/account/authentication": [
+      "@backend/account/authentication": [
         "libs/account/authentication/src/index.ts"
       ],
-      "@project/account/fit-user": [
+      "@backend/account/fit-user": [
         "libs/account/fit-user/src/index.ts"
       ],
-      "@project/account/config": [
+      "@backend/account/config": [
         "libs/account/config/src/index.ts"
       ],
-      "@project/account/notify": [
+      "@backend/account/notify": [
         "libs/account/notify/src/index.ts"
       ],
-      "@project/account/refresh-token": [
+      "@backend/account/refresh-token": [
         "libs/account/refresh-token/src/index.ts"
       ],
-      "@project/api/config": [
+      "@backend/api/config": [
         "libs/api/config/src/index.ts"
       ],
-      "@project/file-storage/config": [
+      "@backend/file-storage/config": [
         "libs/file-storage/config/src/index.ts"
       ],
-      "@project/file-storage/file-uploader": [
+      "@backend/file-storage/file-uploader": [
         "libs/file-storage/file-uploader/src/index.ts"
       ],
-      "@project/fit/models": [
+      "@backend/fit/models": [
         "libs/fit/models/src/index.ts"
       ],
-      "@project/notify/config": [
+      "@backend/notify/config": [
         "libs/notify/config/src/index.ts"
       ],
-      "@project/notify/email-subsriber": [
+      "@backend/notify/email-subsriber": [
         "libs/notify/email-subsriber/src/index.ts"
       ],
-      "@project/notify/mail": [
+      "@backend/notify/mail": [
         "libs/notify/mail/src/index.ts"
       ],
-      "@project/shared/core": [
+      "@backend/shared/core": [
         "libs/shared/core/src/index.ts"
       ],
-      "@project/shared/data-access": [
+      "@backend/shared/data-access": [
         "libs/shared/data-access/src/index.ts"
       ],
-      "@project/shared/exception-filters": [
+      "@backend/shared/exception-filters": [
         "libs/shared/exception-filters/src/index.ts"
       ],
-      "@project/shared/helpers": [
+      "@backend/shared/helpers": [
         "libs/shared/helpers/src/index.ts"
       ],
-      "@project/shared/interceptors": [
+      "@backend/shared/interceptors": [
         "libs/shared/interceptors/src/index.ts"
       ],
-      "@project/shared/pipes": [
+      "@backend/shared/pipes": [
         "libs/shared/pipes/src/index.ts"
       ]
     }
