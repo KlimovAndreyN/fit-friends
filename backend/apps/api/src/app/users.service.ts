@@ -7,7 +7,7 @@ import { makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     private readonly httpService: HttpService,
     @Inject(apiConfig.KEY)

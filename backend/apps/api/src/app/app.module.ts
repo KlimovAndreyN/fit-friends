@@ -3,7 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 
 import { ApiConfigModule } from '@backend/api/config';
 
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 
 const HTTP_CLIENT_MAX_REDIRECTS = 5;
@@ -18,6 +18,6 @@ const HTTP_CLIENT_TIMEOUT = 3000;
     })
   ],
   controllers: [UsersController],
-  providers: [UserService]
+  providers: [UsersService]
 })
 export class AppModule { }

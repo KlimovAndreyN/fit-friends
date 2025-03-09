@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3003
-@baseUrlAuth = {{baseUrl}}/api/auth
+@baseUrl = http://localhost:3000
+@baseUrlAuth = {{baseUrl}}/api/users
 
 # Create a new user - Content-Type: application/json
 POST {{baseUrlAuth}}/register HTTP/1.1
