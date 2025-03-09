@@ -11,6 +11,7 @@ export * from './lib/constants/default-port';
 export { PageQueryApiProperty } from './lib/constants/page-query-api-property';
 export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { PrefixOption } from './lib/constants/prefix-option';
+export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route-alias';
 
@@ -39,7 +40,6 @@ export { PageQuery } from './lib/query/page.query';
 export { UserRdo } from './lib/rdo/user.rdo';
 
 export * from './lib/types/environment.type';
-export { RabbitRouting } from './lib/types/rabbit-routing.enum';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';

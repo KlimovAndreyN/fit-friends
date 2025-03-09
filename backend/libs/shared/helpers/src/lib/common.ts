@@ -42,19 +42,3 @@ export function getValidationErrorString(errors: ValidationError[]): string {
 
   return errorList.join(', ');
 }
-
-export function getQueryString(query: object): string {
-  const queryParams: string[] = [];
-
-  for (const [key, value] of Object.entries(query)) {
-    queryParams.push(`${key}=${value}`);
-  }
-
-  return queryParams.join('&');
-}
-
-export function makeUrl(mainUrl: string, mainRoute = '', route = '', query: object = null) {
-  const queryString = (query && Object.keys(query).length) ? `?${getQueryString(query)}` : '';
-
-  return join(mainUrl, mainRoute, route) + queryString;
-}

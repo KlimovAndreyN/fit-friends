@@ -36,5 +36,31 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: test
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongo:27017/
 
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server:2.2.0
+    container_name: fakesmtp
+
+    ports:
+      - 8025:8025
+      - 1085:8080
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: rabbitmq
+
+    ports:
+      - 1088:15672
+      - 5672:5672
+
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: test
+
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   mongo:
