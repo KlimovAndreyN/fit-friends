@@ -13,7 +13,8 @@ export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { PrefixOption } from './lib/constants/prefix-option';
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
-export * from './lib/constants/route-alias';
+export { RouteAlias } from './lib/constants/route-alias';
+export { XHeader } from './lib/constants/x-header';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
@@ -44,6 +45,5 @@ export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-requ
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { SortType } from './lib/types/sort-type.enum';
-export { XHeader } from './lib/types/x-header.enum';
 
 export * from './lib/utils/transform';

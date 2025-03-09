@@ -1,4 +1,4 @@
-import { XHeader } from '../types/x-header.enum';
+import { XHeader } from './x-header';
 import { ApiPropertyOption } from './api-property-option';
 
 export const ApiHeaderOption = {
