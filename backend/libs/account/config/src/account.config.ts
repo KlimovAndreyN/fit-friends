@@ -2,8 +2,8 @@ import { registerAs } from '@nestjs/config';
 import Joi from 'joi';
 
 import {
-  ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT, DEFAULT_RABBIT_PORT,
-  DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
+  ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT,
+  DEFAULT_RABBIT_PORT, Environment, ENVIRONMENTS
 } from '@project/shared/core';
 import { getPort } from '@project/shared/helpers';
 

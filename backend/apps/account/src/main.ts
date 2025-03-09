@@ -4,14 +4,14 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { BearerAuth, BearerAuthOption, PrefixOption } from '@project/shared/core';
 import { InjectRequestIdInterceptor } from '@project/shared/interceptors';
-import { ApplicationConfig, applicationConfig } from '@project/account/config';
+import { AccountConfig, accountConfig } from '@project/account/config';
 
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const applicationOption = app.get<ApplicationConfig>(applicationConfig.KEY);
-  const { port } = applicationOption;
+  const accountOption = app.get<AccountConfig>(accountConfig.KEY);
+  const { port } = accountOption;
 
   app.setGlobalPrefix(PrefixOption.Global);
 

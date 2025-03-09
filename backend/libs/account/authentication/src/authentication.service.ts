@@ -9,7 +9,7 @@ import { join } from 'path/posix';
 import { RouteAlias, Token, User } from '@project/shared/core';
 import { createJWTPayload, parseAxiosError, uploadFile } from '@project/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@project/account/fit-user';
-import { applicationConfig, jwtConfig } from '@project/account/config';
+import { accountConfig } from '@project/account/config';
 import { NotifyService } from '@project/account/notify';
 import { RefreshTokenService } from '@project/account/refresh-token';
 import { FILE_KEY, UploadedFileRdo } from '@project/file-storage/file-uploader';
@@ -26,10 +26,8 @@ export class AuthenticationService {
     private readonly fitUserRepository: FitUserRepository,
     private readonly jwtService: JwtService,
     private readonly notifyService: NotifyService,
-    @Inject(jwtConfig.KEY)
-    private readonly jwtOptions: ConfigType<typeof jwtConfig>,
-    @Inject(applicationConfig.KEY)
-    private readonly applicationOptions: ConfigType<typeof applicationConfig>,
+    @Inject(accountConfig.KEY)
+    private readonly accountOptions: ConfigType<typeof accountConfig>,
     private readonly refreshTokenService: RefreshTokenService
   ) { }
 
@@ -60,7 +58,7 @@ export class AuthenticationService {
     if (avatarFile) {
       try {
         const fileRdo = await uploadFile<UploadedFileRdo>(
-          join(this.applicationOptions.fileStorageServiceUrl, RouteAlias.Upload),
+          join(this.accountOptions.fileStorageServiceUrl, RouteAlias.Upload),
           avatarFile,
           FILE_KEY,
           requestId
@@ -101,8 +99,8 @@ export class AuthenticationService {
     try {
       const accessToken = await this.jwtService.signAsync(accessTokenPayload);
       const refreshToken = await this.jwtService.signAsync(refreshTokenPayload, {
-        secret: this.jwtOptions.refreshTokenSecret,
-        expiresIn: this.jwtOptions.refreshTokenExpiresIn
+        secret: this.accountOptions.jwt.refreshTokenSecret,
+        expiresIn: this.accountOptions.jwt.refreshTokenExpiresIn
       });
 
       return { accessToken, refreshToken };

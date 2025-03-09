@@ -4,13 +4,13 @@ import { ConfigType } from '@nestjs/config';
 
 import { RabbitRouting } from '@project/shared/core';
 import { makeHeaders } from '@project/shared/helpers';
-import { rabbitConfig } from '@project/account/config';
+import { accountConfig } from '@project/account/config';
 import { CreateSubscriberDto } from '@project/notify/email-subsriber';
 
 @Injectable()
 export class NotifyService {
-  @Inject(rabbitConfig.KEY)
-  private readonly rabbitOptions: ConfigType<typeof rabbitConfig>;
+  @Inject(accountConfig.KEY)
+  private readonly accountOptions: ConfigType<typeof accountConfig>;
 
   constructor(
     private readonly rabbitClient: AmqpConnection
@@ -18,7 +18,7 @@ export class NotifyService {
 
   public async registerSubscriber(dto: CreateSubscriberDto, requestId: string) {
     const result = await this.rabbitClient.publish<CreateSubscriberDto>(
-      this.rabbitOptions.exchange,
+      this.accountOptions.rabbit.exchange,
       RabbitRouting.AddSubscriber,
       dto,
       makeHeaders(requestId)

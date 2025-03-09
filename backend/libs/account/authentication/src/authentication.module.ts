@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
-import { getJwtOptions } from '@project/account/config';
+import { getJwtOptions } from '@project/shared/helpers';
 import { FitUserModule } from '@project/account/fit-user';
 import { NotifyModule } from '@project/account/notify';
 import { RefreshTokenModule } from '@project/account/refresh-token';
