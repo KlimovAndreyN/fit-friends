@@ -14,7 +14,6 @@ async function bootstrap() {
   app.setGlobalPrefix(PrefixOption.Global);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  //! а нужно ли слушать? перепроверить при регистрации
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${PrefixOption.Global}`);
 }
