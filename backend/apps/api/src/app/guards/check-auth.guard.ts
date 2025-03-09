@@ -2,9 +2,9 @@ import { CanActivate, ExecutionContext, Inject, Injectable, Logger } from '@nest
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { AUTH_NAME, makeHeaders } from '@backend/shared/helpers';
+import { AUTH_NAME, RequestProperty, RouteAlias } from '@backend/shared/core';
+import { makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
-import { RequestProperty, RouteAlias } from '@backend/shared/core';
 import { TokenPayloadRdo } from '@backend/account/authentication';
 
 @Injectable()

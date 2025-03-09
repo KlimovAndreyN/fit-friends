@@ -39,6 +39,7 @@ async function bootstrap() {
   app.useGlobalGuards(new InjectRequestIdGuard());
   app.useGlobalInterceptors(new InjectBearerAuthInterceptor());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors();
 
   await app.listen(port);
   // Микросервисы
