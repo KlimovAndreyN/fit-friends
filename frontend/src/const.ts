@@ -19,6 +19,7 @@ export enum AppRoute {
 export enum ApiRoute {
   Login = '/users/login',
   Check = '/users/check',
+  Refresh = '/users/refresh',
   Logout = '/users/logout',
   Register = 'users/register'
 }
@@ -28,5 +29,6 @@ export enum StoreSlice {
 }
 
 export enum HttpCode {
+  OK = 200,
   NoAuth = 401
 }
