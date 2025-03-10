@@ -5,8 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from '../private-route/private-route';
 import Index from '../../pages/index/index';
 import Intro from '../../pages/intro/intro';
-import Login from '../../pages/login/login';
-import Register from '../../pages/register/register';
+import SignIn from '../../pages/sign-in/sign-in';
+import Register from '../../pages/sign-up/sign-up';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
@@ -34,15 +34,15 @@ function App(): JSX.Element {
             }
           />
           <Route
-            path={AppRoute.Login}
+            path={AppRoute.SignIn}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
-                <Login />
+                <SignIn />
               </PrivateRoute>
             }
           />
           <Route
-            path={AppRoute.Register}
+            path={AppRoute.SignUp}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
                 <Register />

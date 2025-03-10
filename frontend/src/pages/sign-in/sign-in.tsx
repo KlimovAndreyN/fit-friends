@@ -11,7 +11,7 @@ enum FormFieldName {
   password = 'password'
 }
 
-function Login(): JSX.Element {
+function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -75,4 +75,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default SignIn;

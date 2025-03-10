@@ -7,7 +7,7 @@ function Intro(): JSX.Element {
   const navigate = useNavigate();
 
   const handleRegisterButtonClick = () => {
-    navigate(AppRoute.Register);
+    navigate(AppRoute.SignUp);
   };
 
   return (
@@ -34,7 +34,7 @@ function Intro(): JSX.Element {
           </div>
           <div className="intro__buttons">
             <button className="btn intro__button" type="button" onClick={handleRegisterButtonClick}>Регистрация</button>
-            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.Login}>Вход</Link>
+            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.SignIn}>Вход</Link>
             </p>
           </div>
         </div>

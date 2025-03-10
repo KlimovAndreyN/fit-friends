@@ -11,8 +11,8 @@ export const PageTitle = {
 export enum AppRoute {
   Root = '/',
   Intro = '/intro',
-  Login = '/login',
-  Register = '/register',
+  SignIn = '/sign-in',
+  SignUp = '/sign-up',
   NotFound = '/404'
 }
 
