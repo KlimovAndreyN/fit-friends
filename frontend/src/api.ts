@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
 import { TokenStore } from './utils/token-store';
+import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { AUTH_NAME } from './types/backend';
 
 const BACKEND_URL = 'http://localhost:3000/api';
@@ -29,14 +30,11 @@ export const createAPI = (): AxiosInstance => {
 
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError) => {
-      toast.dismiss();
-      //!toast.warn(error.response ? error.response.data.error : error.message);
-      //! временно
-      // eslint-disable-next-line no-console
-      console.log(error);
-      toast.warn(error.response ? error.response.statusText : error.message);
-      //!
+    (error: AxiosError<DataAxiosError>) => {
+      if (error) {
+        toast.dismiss();
+        toast.warn(getAxiosErrorMessage(error));
+      }
 
       return Promise.reject(error);
     }

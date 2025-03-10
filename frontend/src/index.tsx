@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <ToastContainer />
+    <ToastContainer style={{ 'whiteSpace': 'pre-line' }} />
     <App />
   </Provider>
 );
