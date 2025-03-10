@@ -2,7 +2,9 @@ export { AUTH_NAME } from '../../../backend/libs/shared/core/src/lib/constants/b
 export type { Token } from '../../../backend/libs/shared/core/src/lib/interfaces/token.interface';
 export type { User } from '../../../backend/libs/shared/core/src/lib/interfaces/user.interface';
 
+//!LoginUserDto
+
 export interface LoginUserDto {
-  login: string;
+  email: string;
   password: string;
 }

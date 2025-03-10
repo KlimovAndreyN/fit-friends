@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { TokenStore } from './utils/token-store';
+import { TokensStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { AUTH_NAME } from './types/backend';
 import { ApiRoute } from './const';
@@ -18,7 +18,7 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       if (config.headers) {
-        const token = TokenStore.get();
+        const token = TokensStore.getAccessToken();
 
         if (token) {
           config.headers[AUTH_NAME] = `Bearer ${token}`;

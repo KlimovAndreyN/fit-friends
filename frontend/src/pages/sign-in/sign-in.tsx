@@ -7,7 +7,7 @@ import { loginUser } from '../../store/action';
 import { PageTitle } from '../../const';
 
 enum FormFieldName {
-  login = 'email',
+  email = 'email',
   password = 'password'
 }
 
@@ -19,9 +19,9 @@ function SignIn(): JSX.Element {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const login = formData.get(FormFieldName.login)?.toString() || '';
+    const email = formData.get(FormFieldName.email)?.toString() || '';
     const password = formData.get(FormFieldName.password)?.toString() || '';
-    const dto: LoginUserDto = { login, password };
+    const dto: LoginUserDto = { email, password };
 
     dispatch(loginUser(dto));
   };
