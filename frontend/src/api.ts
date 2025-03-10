@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { TokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { AUTH_NAME } from './types/backend';
+import { ApiRoute } from './const';
 
 const BACKEND_URL = 'http://localhost:3000/api';
 const REQUEST_TIMEOUT = 5000;
@@ -31,7 +32,9 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DataAxiosError>) => {
-      if (error) {
+      const { response, config: { url } } = error;
+
+      if (url !== ApiRoute.Check || response && !response.data) {
         toast.dismiss();
         toast.warn(getAxiosErrorMessage(error));
       }

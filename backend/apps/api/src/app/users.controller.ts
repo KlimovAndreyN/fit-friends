@@ -113,7 +113,7 @@ export class UsersController {
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
   @UseGuards(CheckAuthGuard)
-  @Post(RouteAlias.Check)
+  @Get(RouteAlias.Check)
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
     return payload;
   }

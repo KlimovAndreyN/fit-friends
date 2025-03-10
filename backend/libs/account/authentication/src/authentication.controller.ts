@@ -98,7 +98,7 @@ export class AuthenticationController {
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
   @UseGuards(JwtAuthGuard)
-  @Post(RouteAlias.Check)
+  @Get(RouteAlias.Check)
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
     return fillDto(TokenPayloadRdo, payload);
   }
