@@ -19,3 +19,13 @@ export function parseTime(time: string): TimeAndUnit {
 
   return { value, unit };
 }
+
+export function testParseTime(time: string, errorMessge: string): void {
+  try {
+    parseTime(time);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error([errorMessge, error.message].join(': '));
+    }
+  }
+}

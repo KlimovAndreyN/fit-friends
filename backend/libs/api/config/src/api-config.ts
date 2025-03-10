@@ -13,7 +13,7 @@ export interface ApiConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required().label(ConfigAlias.NodeEnv),
-  port: Joi.number().port().default(DEFAULT_PORT),
+  port: Joi.number().port(),
   accountServiceUrl: Joi.string().required().label(ConfigAlias.AccountServiceUrlEnv),
   fileStorageServiceUrl: Joi.string().required().label(ConfigAlias.FileStorageServiceUrlEnv)
 });

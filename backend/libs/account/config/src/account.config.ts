@@ -5,7 +5,12 @@ import {
   ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT,
   DEFAULT_RABBIT_PORT, Environment, ENVIRONMENTS
 } from '@backend/shared/core';
-import { getPort } from '@backend/shared/helpers';
+import { getPort, testParseTime } from '@backend/shared/helpers';
+
+const TokenExpiresIn = {
+  ACCESS: '15m',
+  REFRESH: '7d'
+} as const;
 
 export interface AccountConfig {
   environment: string;
@@ -36,11 +41,11 @@ export interface AccountConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required().label(ConfigAlias.NodeEnv),
-  port: Joi.number().port().default(DEFAULT_PORT),
+  port: Joi.number().port(),
   fileStorageServiceUrl: Joi.string().required().label(ConfigAlias.FileStorageServiceUrlEnv),
   mongoDb: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.MongoDbHostEnv),
-    port: Joi.number().port().default(DEFAULT_MONGODB_PORT),
+    port: Joi.number().port(),
     user: Joi.string().required().label(ConfigAlias.MongoDbPortEnv),
     password: Joi.string().required().label(ConfigAlias.MongoDbPasswordEnv),
     database: Joi.string().required().label(ConfigAlias.MongoDbDatabaseEnv),
@@ -48,13 +53,13 @@ const validationSchema = Joi.object({
   }),
   jwt: Joi.object({
     accessTokenSecret: Joi.string().required().label(ConfigAlias.JwtAccessTokenSecretEnv),
-    accessTokenExpiresIn: Joi.string().required().label(ConfigAlias.JwtAccessTokenExpiresInEnv),
+    accessTokenExpiresIn: Joi.string().label(ConfigAlias.JwtAccessTokenExpiresInEnv),
     refreshTokenSecret: Joi.string().required().label(ConfigAlias.JwtRefreshTokenSecretEnv),
-    refreshTokenExpiresIn: Joi.string().required().label(ConfigAlias.JwtRefreshTokenExpiresInEnv)
+    refreshTokenExpiresIn: Joi.string().label(ConfigAlias.JwtRefreshTokenExpiresInEnv)
   }),
   rabbit: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.RabbitHostEnv),
-    port: Joi.number().port().default(DEFAULT_RABBIT_PORT),
+    port: Joi.number().port(),
     user: Joi.string().required().label(ConfigAlias.RabbitUserEnv),
     password: Joi.string().required().label(ConfigAlias.RabbitPasswordEnv),
     exchange: Joi.string().required().label(ConfigAlias.RabbitExchangeEnv)
@@ -84,9 +89,9 @@ function getConfig(): AccountConfig {
     },
     jwt: {
       accessTokenSecret: process.env[ConfigAlias.JwtAccessTokenSecretEnv],
-      accessTokenExpiresIn: process.env[ConfigAlias.JwtAccessTokenExpiresInEnv],
+      accessTokenExpiresIn: process.env[ConfigAlias.JwtAccessTokenExpiresInEnv] || TokenExpiresIn.ACCESS,
       refreshTokenSecret: process.env[ConfigAlias.JwtRefreshTokenSecretEnv],
-      refreshTokenExpiresIn: process.env[ConfigAlias.JwtRefreshTokenExpiresInEnv]
+      refreshTokenExpiresIn: process.env[ConfigAlias.JwtRefreshTokenExpiresInEnv] || TokenExpiresIn.REFRESH
     },
     rabbit: {
       host: process.env[ConfigAlias.RabbitHostEnv],
@@ -98,6 +103,11 @@ function getConfig(): AccountConfig {
   };
 
   validateConfig(config);
+
+  const { jwt: { accessTokenExpiresIn, refreshTokenExpiresIn } } = config;
+
+  testParseTime(accessTokenExpiresIn, ConfigAlias.JwtAccessTokenExpiresInEnv);
+  testParseTime(refreshTokenExpiresIn, ConfigAlias.JwtRefreshTokenExpiresInEnv);
 
   return config;
 }
