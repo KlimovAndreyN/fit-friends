@@ -24,7 +24,7 @@ function getConfig(): ApiConfig {
 
   validateConfig(validationSchema, config, 'Api');
 
-  //! Тест
+  //! С‚РµСЃС‚
   console.log('getConfig Api');
 
   console.log('NX_LOAD_DOT_ENV_FILES', process.env['NX_LOAD_DOT_ENV_FILES']);
