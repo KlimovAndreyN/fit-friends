@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { AppRoute, PageTitle } from '../../const';
 
 function Intro(): JSX.Element {
+  //! history?
   const navigate = useNavigate();
 
   const handleRegisterButtonClick = () => {

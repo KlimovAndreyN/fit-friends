@@ -1,5 +1,6 @@
 export { getRabbitMQOptions } from './lib/brokers';
 export * from './lib/common';
+export * from './lib/config';
 export * from './lib/form-data';
 export * from './lib/headers';
 export { getJwtOptions, createJWTPayload } from './lib/jwt';
