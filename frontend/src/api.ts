@@ -13,7 +13,7 @@ function getBearerAuthorization(token: string): string {
   return `Bearer ${token}`;
 }
 
-async function checkAccessToken(
+async function validateAccessToken(
   accessToken: string,
   timeout = REQUEST_TIMEOUT
 ): Promise<boolean> {
@@ -63,9 +63,9 @@ export function createAPI(): AxiosInstance {
         const refreshToken = TokensStore.getRefreshToken();
 
         if (accessToken && refreshToken) {
-          const validAccessToken = await checkAccessToken(accessToken);
+          const isValid = await validateAccessToken(accessToken);
 
-          if (!validAccessToken) {
+          if (!isValid) {
             try {
               const tokens = await refreshRefreshToken(refreshToken);
 

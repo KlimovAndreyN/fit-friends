@@ -21,12 +21,12 @@ export interface FileStorageConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required().label(ConfigAlias.NodeEnv),
-  port: Joi.number().port(),
+  port: Joi.number().port().required().label(ConfigAlias.PortEnv),
   uploadDirectoryPath: Joi.string().required().label(ConfigAlias.UploadDirectoryEnv),
   serveRoot: Joi.string().required().label(ConfigAlias.ServeRootEnv),
   mongoDb: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.MongoDbHostEnv),
-    port: Joi.number().port(),
+    port: Joi.number().port().required().label(ConfigAlias.MongoDbPortEnv),
     user: Joi.string().required().label(ConfigAlias.MongoDbUserEnv),
     password: Joi.string().required().label(ConfigAlias.MongoDbPasswordEnv),
     database: Joi.string().required().label(ConfigAlias.MongoDbDatabaseEnv),

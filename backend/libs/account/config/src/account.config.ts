@@ -41,12 +41,12 @@ export interface AccountConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required().label(ConfigAlias.NodeEnv),
-  port: Joi.number().port(),
+  port: Joi.number().port().required().label(ConfigAlias.PortEnv),
   fileStorageServiceUrl: Joi.string().required().label(ConfigAlias.FileStorageServiceUrlEnv),
   mongoDb: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.MongoDbHostEnv),
-    port: Joi.number().port(),
-    user: Joi.string().required().label(ConfigAlias.MongoDbPortEnv),
+    port: Joi.number().port().required().label(ConfigAlias.MongoDbPortEnv),
+    user: Joi.string().required().label(ConfigAlias.MongoDbUserEnv),
     password: Joi.string().required().label(ConfigAlias.MongoDbPasswordEnv),
     database: Joi.string().required().label(ConfigAlias.MongoDbDatabaseEnv),
     authBase: Joi.string().required().label(ConfigAlias.MongoDbAuthBaseEnv)
@@ -59,7 +59,7 @@ const validationSchema = Joi.object({
   }),
   rabbit: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.RabbitHostEnv),
-    port: Joi.number().port(),
+    port: Joi.number().port().required().label(ConfigAlias.RabbitPortEnv),
     user: Joi.string().required().label(ConfigAlias.RabbitUserEnv),
     password: Joi.string().required().label(ConfigAlias.RabbitPasswordEnv),
     exchange: Joi.string().required().label(ConfigAlias.RabbitExchangeEnv)

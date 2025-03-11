@@ -38,19 +38,19 @@ export interface NotifyConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required().label(ConfigAlias.NodeEnv),
-  port: Joi.number().port(),
+  port: Joi.number().port().required().label(ConfigAlias.PortEnv),
   apiFitFriendsUrlEnv: Joi.string().required().label(ConfigAlias.ApiFitFriendsUrlEnv),
   mongoDb: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.MongoDbHostEnv),
-    port: Joi.number().port(),
-    user: Joi.string().required().label(ConfigAlias.MongoDbPortEnv),
+    port: Joi.number().port().required().label(ConfigAlias.MongoDbPortEnv),
+    user: Joi.string().required().label(ConfigAlias.MongoDbUserEnv),
     password: Joi.string().required().label(ConfigAlias.MongoDbPasswordEnv),
     database: Joi.string().required().label(ConfigAlias.MongoDbDatabaseEnv),
     authBase: Joi.string().required().label(ConfigAlias.MongoDbAuthBaseEnv)
   }),
   rabbit: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.RabbitHostEnv),
-    port: Joi.number().port(),
+    port: Joi.number().port().required().label(ConfigAlias.RabbitPortEnv),
     user: Joi.string().required().label(ConfigAlias.RabbitUserEnv),
     password: Joi.string().required().label(ConfigAlias.RabbitPasswordEnv),
     exchange: Joi.string().required().label(ConfigAlias.RabbitExchangeEnv),
@@ -58,7 +58,7 @@ const validationSchema = Joi.object({
   }),
   mailSmtp: Joi.object({
     host: Joi.string().valid().hostname().required().label(ConfigAlias.MailSmtpHostEnv),
-    port: Joi.number().port(),
+    port: Joi.number().port().required().label(ConfigAlias.MailSmtpPortEnv),
     user: Joi.string().required().label(ConfigAlias.MailSmtpUserEnv),
     password: Joi.string().required().label(ConfigAlias.MailSmtpPasswordEnv),
     from: Joi.string().required().label(ConfigAlias.MailSmtpFromEnv)
