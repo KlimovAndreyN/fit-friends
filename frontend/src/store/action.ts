@@ -2,7 +2,7 @@ import type { History } from 'history';
 import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { TokensStore } from '../utils/token-store';
+import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { LoginUserDto, Token, User } from '../types/backend';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 
@@ -28,10 +28,11 @@ export const fetchUserStatus = createAsyncThunk<User['name'], undefined, { extra
 
       return data.name;
     } catch (error) {
-      const axiosError = error as AxiosError;
+      const { response } = error as AxiosError;
 
-      if (axiosError.response?.status === HttpCode.NoAuth) {
-        TokensStore.drop();
+      if (response?.status === HttpCode.NoAuth) {
+        AccessTokenStore.drop();
+        RefreshTokenStore.drop();
       }
 
       return Promise.reject(error);
@@ -46,7 +47,9 @@ export const loginUser = createAsyncThunk<User['name'], LoginUserDto, { extra: E
     const { data } = await api.post<User & Token>(ApiRoute.Login, { email, password });
     const { accessToken, refreshToken, name } = data;
 
-    TokensStore.save(accessToken, refreshToken);
+    AccessTokenStore.save(accessToken);
+    RefreshTokenStore.save(refreshToken);
+    //! useNavigate не работает
     history.push(AppRoute.Root);
 
     return name;
@@ -56,7 +59,8 @@ export const loginUser = createAsyncThunk<User['name'], LoginUserDto, { extra: E
 export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
   () => {
-    TokensStore.drop();
+    AccessTokenStore.drop();
+    RefreshTokenStore.drop();
   }
 );
 //!

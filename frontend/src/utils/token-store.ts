@@ -1,26 +1,25 @@
-export class TokensStore {
-  private static accessTokenName = 'fit-friends-access-token';
-  private static refreshTokenName = 'fit-friends-refresh-token';
+class TokenStore {
+  protected static tokenName = 'token';
 
-  static getAccessToken() {
-    const token = localStorage.getItem(this.accessTokenName);
-
-    return token ?? '';
-  }
-
-  static getRefreshToken() {
-    const token = localStorage.getItem(this.refreshTokenName);
+  static getToken() {
+    const token = localStorage.getItem(this.tokenName);
 
     return token ?? '';
   }
 
-  static save(accessToken: string, refreshToken: string) {
-    localStorage.setItem(this.accessTokenName, accessToken);
-    localStorage.setItem(this.refreshTokenName, refreshToken);
+  static save(token: string) {
+    localStorage.setItem(this.tokenName, token);
   }
 
   static drop() {
-    localStorage.removeItem(this.accessTokenName);
-    localStorage.removeItem(this.refreshTokenName);
+    localStorage.removeItem(this.tokenName);
   }
+}
+
+export class AccessTokenStore extends TokenStore {
+  protected static tokenName = 'fit-friends.access-token';
+}
+
+export class RefreshTokenStore extends TokenStore {
+  protected static tokenName = 'fit-friends.refresh-tokenn';
 }

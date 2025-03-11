@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { TokensStore } from './utils/token-store';
+import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { AUTH_NAME, Token } from './types/backend';
 import { ApiRoute, HttpCode } from './const';
@@ -59,24 +59,26 @@ export function createAPI(): AxiosInstance {
   api.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       if (config.headers) {
-        const accessToken = TokensStore.getAccessToken();
-        const refreshToken = TokensStore.getRefreshToken();
+        const currentAccessToken = AccessTokenStore.getToken();
+        const currentRefreshToken = RefreshTokenStore.getToken();
 
-        if (accessToken && refreshToken) {
-          const isValid = await validateAccessToken(accessToken);
+        if (currentAccessToken && currentRefreshToken) {
+          const isValid = await validateAccessToken(currentAccessToken);
 
           if (!isValid) {
             try {
-              const tokens = await refreshRefreshToken(refreshToken);
+              const { accessToken, refreshToken } = await refreshRefreshToken(currentRefreshToken);
 
-              TokensStore.save(tokens.accessToken, tokens.refreshToken);
+              AccessTokenStore.save(accessToken);
+              RefreshTokenStore.save(refreshToken);
             } catch (error) {
-              TokensStore.drop();
+              AccessTokenStore.drop();
+              RefreshTokenStore.drop();
             }
           }
         }
 
-        const token = TokensStore.getAccessToken();
+        const token = AccessTokenStore.getToken();
 
         if (token) {
           config.headers[AUTH_NAME] = getBearerAuthorization(token);
