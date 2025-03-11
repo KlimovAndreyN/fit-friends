@@ -1,5 +1,9 @@
 export { Entity } from './lib/base/entity';
 
+export { FileApiProperty } from './lib/constants/api-property/file.api-property';
+
+export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
+
 export { ApiHeaderOption } from './lib/constants/api-header-option';
 export { ApiOperationOption } from './lib/constants/api-operation-option';
 export * from './lib/constants/api-param-option';
@@ -8,6 +12,7 @@ export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { DateFormat } from './lib/constants/date-format';
 export * from './lib/constants/default-port';
+export * from './lib/constants/file-uploader.constant';
 export { PageQueryApiProperty } from './lib/constants/page-query-api-property';
 export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { PrefixOption } from './lib/constants/prefix-option';
@@ -38,6 +43,7 @@ export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 
+export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserRdo } from './lib/rdo/user.rdo';
 
 export * from './lib/types/environment.type';

@@ -3,13 +3,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import 'multer'; // Express.Multer.File
 
-import { RouteAlias } from '@backend/shared/core';
+import {
+  FILE_KEY, ApiParamOption, FileUploaderApiResponse, FileUploaderFileApiBody,
+  RouteAlias, UploadedFileRdo, FILE_ID_PARAM
+} from '@backend/shared/core';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { fillDto } from '@backend/shared/helpers';
 
-import { UploadedFileRdo } from './rdo/uploaded-file.rdo';
 import { FileUploaderService } from './file-uploader.service';
-import { FILE_KEY, FileIdApiParam, FileUploaderApiResponse, FileUploaderFileApiBody } from './file-uploader.constant';
 
 @ApiTags('file-upload')
 @Controller('files')
@@ -33,9 +34,9 @@ export class FileUploaderController {
   @ApiResponse(FileUploaderApiResponse.FileFound)
   @ApiResponse(FileUploaderApiResponse.FileNotFound)
   @ApiResponse(FileUploaderApiResponse.BadRequest)
-  @ApiParam(FileIdApiParam)
-  @Get(`:${FileIdApiParam.name}`)
-  public async show(@Param(FileIdApiParam.name, MongoIdValidationPipe) fileId: string): Promise<UploadedFileRdo> {
+  @ApiParam(ApiParamOption.FileId)
+  @Get(FILE_ID_PARAM)
+  public async show(@Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string): Promise<UploadedFileRdo> {
     const existFile = await this.fileUploaderService.getFile(fileId);
 
     return fillDto(UploadedFileRdo, existFile);

@@ -1,26 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { UploadedFileRdo } from './rdo/uploaded-file.rdo';
-import { FileApiProperty } from './file-uploader.constant.property';
-
-export const FILE_KEY = 'file';
-
-export const FileIdApiParam = {
-  name: 'fileId',
-  schema: FileApiProperty.Id
-} as const;
-
-export const FileUploaderFileApiBody = {
-  schema: {
-    type: 'object',
-    properties: {
-      [FILE_KEY]: {
-        type: 'string',
-        format: 'binary'
-      }
-    }
-  }
-};
+import { UploadedFileRdo } from '../../rdo/uploaded-file.rdo';
 
 export const FileUploaderApiResponse = {
   FileUploaded: {

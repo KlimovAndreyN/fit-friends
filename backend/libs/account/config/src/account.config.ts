@@ -8,7 +8,7 @@ import {
   mongoDbValidationSchema, RabbitConfig, rabbitValidationSchema, testParseTime, validateConfig
 } from '@backend/shared/helpers';
 
-const TokenExpiresIn = {
+const TokenDefaultExpiresIn = {
   ACCESS: '15m',
   REFRESH: '7d'
 } as const;
@@ -29,7 +29,7 @@ function getConfig(): AccountConfig {
   const config: AccountConfig = {
     ...getApplicationConfig(),
     fileStorageServiceUrl: process.env[ConfigAlias.FileStorageServiceUrlEnv],
-    ...getJWTConfig(TokenExpiresIn.ACCESS, TokenExpiresIn.REFRESH),
+    ...getJWTConfig(TokenDefaultExpiresIn.ACCESS, TokenDefaultExpiresIn.REFRESH),
     ...getMongoDbConfig(),
     ...getRabbitConfig()
   };
