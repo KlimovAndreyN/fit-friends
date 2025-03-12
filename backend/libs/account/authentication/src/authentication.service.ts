@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { join } from 'path/posix';
 
 import { AuthenticationMessage, CreateUserDto, FILE_KEY, LoginUserDto, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
-import { createJWTPayload, joinUrl, parseAxiosError, uploadFile } from '@backend/shared/helpers';
+import { createJwtPayload, joinUrl, parseAxiosError, uploadFile } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
 import { NotifyService } from '@backend/account/notify';
@@ -33,6 +33,8 @@ export class AuthenticationService {
     avatarFile?: Express.Multer.File
   ): Promise<FitUserEntity> {
     if (authorizationHeader) {
+      Logger.log(AuthenticationMessage.RequireLogout, AuthenticationService.name);
+
       throw new BadRequestException(AuthenticationMessage.RequireLogout);
     }
 
@@ -86,7 +88,7 @@ export class AuthenticationService {
   }
 
   public async createUserToken(user: User): Promise<Token> {
-    const accessTokenPayload = createJWTPayload(user);
+    const accessTokenPayload = createJwtPayload(user);
     const refreshTokenPayload = { ...accessTokenPayload, tokenId: crypto.randomUUID() };
 
     await this.refreshTokenService.createRefreshSession(refreshTokenPayload);

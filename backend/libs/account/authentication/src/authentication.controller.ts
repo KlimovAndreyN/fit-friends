@@ -104,8 +104,6 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
-  @ApiBearerAuth(BearerAuth.AccessToken)
-  @UseGuards(JwtAuthGuard)
   @Get(USER_ID_PARAM)
   public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<UserRdo> {
     const existUser = await this.authService.getUser(userId);

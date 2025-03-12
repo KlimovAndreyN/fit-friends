@@ -3,8 +3,8 @@ import Joi from 'joi';
 
 import { ConfigAlias } from '@backend/shared/core';
 import {
-  ApplicationConfig, applicationValidationSchema, getApplicationConfig, getJWTConfig,
-  getMongoDbConfig, getRabbitConfig, JWTConfig, jwtValidationSchema, MongoDbConfig,
+  ApplicationConfig, applicationValidationSchema, getApplicationConfig, getJwtConfig,
+  getMongoDbConfig, getRabbitConfig, JwtConfig, jwtValidationSchema, MongoDbConfig,
   mongoDbValidationSchema, RabbitConfig, rabbitValidationSchema, testParseTime, validateConfig
 } from '@backend/shared/helpers';
 
@@ -13,7 +13,7 @@ const TokenDefaultExpiresIn = {
   REFRESH: '7d'
 } as const;
 
-export interface AccountConfig extends ApplicationConfig, JWTConfig, MongoDbConfig, RabbitConfig {
+export interface AccountConfig extends ApplicationConfig, JwtConfig, MongoDbConfig, RabbitConfig {
   fileStorageServiceUrl: string;
 }
 
@@ -29,7 +29,7 @@ function getConfig(): AccountConfig {
   const config: AccountConfig = {
     ...getApplicationConfig(),
     fileStorageServiceUrl: process.env[ConfigAlias.FileStorageServiceUrlEnv],
-    ...getJWTConfig(TokenDefaultExpiresIn.ACCESS, TokenDefaultExpiresIn.REFRESH),
+    ...getJwtConfig(TokenDefaultExpiresIn.ACCESS, TokenDefaultExpiresIn.REFRESH),
     ...getMongoDbConfig(),
     ...getRabbitConfig()
   };

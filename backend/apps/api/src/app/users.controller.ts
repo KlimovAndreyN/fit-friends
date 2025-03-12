@@ -32,7 +32,6 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiResponse(AuthenticationApiResponse.NotAllow)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
@@ -68,10 +67,15 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.LoggedError)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
+  @ApiBearerAuth(BearerAuth.AccessToken)
   @Post(RouteAlias.Login)
-  public async login(@Body() dto: LoginUserDto, @Req() { requestId }: RequestWithRequestId): Promise<LoggedUserRdo> {
+  public async login(
+    @Body() dto: LoginUserDto,
+    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth
+  ): Promise<LoggedUserRdo> {
     const url = this.usersService.getUrl(RouteAlias.Login);
-    const headers = makeHeaders(requestId);
+    // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
+    const headers = makeHeaders(requestId, bearerAuth);
     const { data } = await this.httpService.axiosRef.post<LoggedUserRdo>(url, dto, headers);
 
     return data;
@@ -121,6 +125,8 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
+  @ApiBearerAuth(BearerAuth.AccessToken)
+  @UseGuards(CheckAuthGuard)
   @Get(USER_ID_PARAM)
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,

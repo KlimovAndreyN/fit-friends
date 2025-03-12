@@ -12,7 +12,7 @@ export interface ApplicationConfig {
   port: number;
 }
 
-export interface JWTConfig {
+export interface JwtConfig {
   jwt: {
     accessTokenSecret: string;
     accessTokenExpiresIn: string;
@@ -119,8 +119,8 @@ export function getApplicationConfig(): ApplicationConfig {
   return config;
 }
 
-export function getJWTConfig(accessTokenExpiresInDefault: string, refreshTokenExpiresInDefault: string): JWTConfig {
-  const config: JWTConfig = {
+export function getJwtConfig(accessTokenExpiresInDefault: string, refreshTokenExpiresInDefault: string): JwtConfig {
+  const config: JwtConfig = {
     jwt: {
       accessTokenSecret: process.env[ConfigAlias.JwtAccessTokenSecretEnv],
       accessTokenExpiresIn: process.env[ConfigAlias.JwtAccessTokenExpiresInEnv] || accessTokenExpiresInDefault,

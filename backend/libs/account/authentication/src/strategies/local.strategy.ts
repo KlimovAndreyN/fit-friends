@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { plainToClass } from 'class-transformer';
@@ -27,6 +27,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     // только анонимный пользователь может войти
     if (bearerAuth) {
       const [, token] = bearerAuth.split(' ');
+
+      Logger.log(AuthenticationMessage.RequireLogout, LocalStrategy.name);
 
       throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
     }
