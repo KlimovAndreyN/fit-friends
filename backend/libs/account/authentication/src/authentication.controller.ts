@@ -41,7 +41,6 @@ export class AuthenticationController {
     @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
-    // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
     const newUser = await this.authService.registerUser(dto, requestId, avatarFile);
 
     return fillDto(UserRdo, newUser.toPOJO());
