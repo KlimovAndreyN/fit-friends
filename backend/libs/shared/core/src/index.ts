@@ -19,7 +19,6 @@ export * from './lib/constants/default-port';
 export * from './lib/constants/file-uploader.constant';
 export { PageQueryApiProperty } from './lib/constants/page-query-api-property';
 export { PaginationApiProperty } from './lib/constants/pagination-api-property';
-export { PrefixOption } from './lib/constants/prefix-option';
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';

@@ -10,8 +10,7 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo,
-  AccountRoute,
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo, AccountRoute
 } from '@backend/shared/core';
 import { dtoToFormData, makeHeaders, multerFileToFormData } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';

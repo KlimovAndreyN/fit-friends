@@ -1,16 +1,7 @@
-/*
-export enum RouteAlias {
-  Users = 'users',
-  Register = 'register',
-  Login = 'login',
-  Logout = 'logout',
-  Refresh = 'refresh',
-  Check = 'check',
-  //
-  //
-  Upload = 'upload'
+export enum PrefixOption {
+  Global = 'api',
+  Swagger = 'spec'
 }
-*/
 
 export enum ApiServiceRoute {
   Users = 'users'
