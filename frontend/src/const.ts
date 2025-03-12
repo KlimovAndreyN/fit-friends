@@ -1,4 +1,4 @@
-import { AccountRoute, ApiServiceRoute, joinUrl, PrefixOption } from './types/backend';
+import { AccountRoute, ApiServiceRoute, joinUrl, GlobalRoute } from './types/backend';
 
 export const MAIN_TITLE = 'FitFriends';
 
@@ -19,7 +19,7 @@ export enum AppRoute {
 }
 
 const Route = {
-  Users: joinUrl(PrefixOption.Global, ApiServiceRoute.Users)
+  Users: joinUrl(GlobalRoute.Global, ApiServiceRoute.Users)
 } as const;
 
 export const ApiRoute = {

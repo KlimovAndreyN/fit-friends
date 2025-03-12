@@ -1,5 +1,5 @@
-export enum PrefixOption {
-  Global = 'api',
+export enum GlobalRoute {
+  Api = 'api',
   Swagger = 'spec'
 }
 

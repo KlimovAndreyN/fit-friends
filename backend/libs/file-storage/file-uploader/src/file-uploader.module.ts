@@ -3,7 +3,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ConfigAlias, PrefixOption } from '@backend/shared/core';
+import { ConfigAlias, GlobalRoute } from '@backend/shared/core';
 
 import { FileUploaderService } from './file-uploader.service';
 import { FileUploaderController } from './file-uploader.controller';
@@ -19,7 +19,7 @@ import { joinUrl } from '@backend/shared/helpers';
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
           const rootPath = configService.get<string>(ConfigAlias.AppUploadDirectoryPath);
-          const serveRoot = joinUrl(PrefixOption.Global, configService.get<string>(ConfigAlias.AppServeRoot));
+          const serveRoot = joinUrl(GlobalRoute.Global, configService.get<string>(ConfigAlias.AppServeRoot));
           //! ? const serveRoot = configService.get<string>(ConfigAlias.AppServeRoot);
 
           return [{

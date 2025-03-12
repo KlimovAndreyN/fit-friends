@@ -2,7 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { BearerAuth, BearerAuthOption, PrefixOption } from '@backend/shared/core';
+import { BearerAuth, BearerAuthOption, GlobalRoute } from '@backend/shared/core';
 import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
 import { apiConfig, ApiConfig } from '@backend/api/config';
 
@@ -14,7 +14,7 @@ async function bootstrap() {
   const apiOption = app.get<ApiConfig>(apiConfig.KEY);
   const { port, accountServiceUrl, fileStorageServiceUrl } = apiOption;
 
-  app.setGlobalPrefix(PrefixOption.Global);
+  app.setGlobalPrefix(GlobalRoute.Global);
 
   //Swagger
   const documentBuilder = new DocumentBuilder()
@@ -26,7 +26,7 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, documentBuilder);
 
-  SwaggerModule.setup(PrefixOption.Swagger, app, documentFactory);
+  SwaggerModule.setup(GlobalRoute.Swagger, app, documentFactory);
   //
 
   app.useGlobalGuards(new InjectRequestIdGuard());
@@ -39,8 +39,8 @@ async function bootstrap() {
   Logger.log(`FileStorage Service on: ${fileStorageServiceUrl}`);
   Logger.log(`Account Service on: ${accountServiceUrl}`);
   //
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${PrefixOption.Global}`);
-  Logger.log(`Swagger on: http://localhost:${port}/${PrefixOption.Swagger}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Global}`);
+  Logger.log(`Swagger on: http://localhost:${port}/${GlobalRoute.Swagger}`);
 }
 
 bootstrap();
