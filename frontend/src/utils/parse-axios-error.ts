@@ -33,5 +33,9 @@ export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>): string 
     messages.push(message);
   }
 
+  if (!baseURL) {
+    messages.push('EMPTY baseURL, check the console!');
+  }
+
   return messages.reverse().join(';\n');
 }
