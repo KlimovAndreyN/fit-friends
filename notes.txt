@@ -37,12 +37,7 @@ id2486639
 aaa@aaa.aaa
 111111
 
-      this.apiOptions.accountServiceUrl
-      'authentication'
-      'auth'
-      
-      .fileServiceUrl
-      'file-upload'
-      'files'
+проверить не повторяется ли "refixOption.Global, ServiceRoute.Auth"
+joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Auth, route)
 
 

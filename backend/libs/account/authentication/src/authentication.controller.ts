@@ -9,7 +9,7 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestId, RequestWithTokenPayload,
   TokenPayloadRdo, AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
-  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto,
+  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto, ServiceRoute
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -22,7 +22,7 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('authentication')
-@Controller('auth')
+@Controller(ServiceRoute.Account)
 export class AuthenticationController {
   constructor(
     private readonly authService: AuthenticationService

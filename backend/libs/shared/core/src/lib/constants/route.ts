@@ -17,8 +17,8 @@ export enum ApiServiceRoute {
 }
 
 export enum ServiceRoute {
-  Auth = 'auth',
-  Files = 'files'
+  Account = 'auth',
+  FileStorage = 'files'
 }
 
 export enum AccountRoute {

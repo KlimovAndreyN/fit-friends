@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Inject, Injectable, Logger } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
@@ -16,9 +16,17 @@ export class CheckAuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const url = joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Auth, AccountRoute.Check);
+    const url = joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Account, AccountRoute.Check);
     const requestId = request[RequestProperty.RequestId];
     const authorization = request.headers[AUTH_NAME];
+    const message = 'Authorization is empty!';
+
+    if (!authorization) {
+      Logger.log(`${request.method}: ${request.url}: ${RequestProperty.RequestId}: ${requestId}: ${message}`, CheckAuthGuard.name);
+
+      throw new UnauthorizedException(message);
+    }
+
     const { data } = await this.httpService.axiosRef.get<TokenPayloadRdo>(url, makeHeaders(requestId, authorization));
     const userId = data.sub;
 

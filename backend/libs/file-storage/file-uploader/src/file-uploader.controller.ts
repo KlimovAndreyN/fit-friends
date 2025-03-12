@@ -5,7 +5,7 @@ import 'multer'; // Express.Multer.File
 
 import {
   FILE_KEY, ApiParamOption, FileUploaderApiResponse, FileUploaderFileApiBody,
-  RouteAlias, UploadedFileRdo, FILE_ID_PARAM
+  UploadedFileRdo, FILE_ID_PARAM, FileStorageRoute, ServiceRoute
 } from '@backend/shared/core';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { fillDto } from '@backend/shared/helpers';
@@ -13,7 +13,7 @@ import { fillDto } from '@backend/shared/helpers';
 import { FileUploaderService } from './file-uploader.service';
 
 @ApiTags('file-upload')
-@Controller('files')
+@Controller(ServiceRoute.FileStorage)
 export class FileUploaderController {
   constructor(
     private readonly fileUploaderService: FileUploaderService
@@ -23,7 +23,7 @@ export class FileUploaderController {
   @ApiResponse(FileUploaderApiResponse.BadRequest)
   @ApiConsumes('multipart/form-data')
   @ApiBody(FileUploaderFileApiBody)
-  @Post(RouteAlias.Upload)
+  @Post(FileStorageRoute.Upload)
   @UseInterceptors(FileInterceptor(FILE_KEY))
   public async uploadFile(@UploadedFile(FILE_KEY) file: Express.Multer.File): Promise<UploadedFileRdo> {
     const fileEntity = await this.fileUploaderService.saveFile(file);

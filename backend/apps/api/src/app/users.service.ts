@@ -15,7 +15,7 @@ export class UsersService {
   ) { }
 
   public getUrl(route = ''): string {
-    return joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Auth, route);
+    return joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Account, route);
   }
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
