@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
-import { joinUrl, AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
+import { joinUrl } from './utils/backend';
+import { AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
 import { ApiRoute, HttpCode } from './const';
 
 const BACKEND_URL = 'http://localhost:3000/api';

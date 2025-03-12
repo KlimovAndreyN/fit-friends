@@ -1,4 +1,5 @@
-import { AccountRoute, ApiServiceRoute, joinUrl, GlobalRoute } from './types/backend';
+import { AccountRoute, ApiServiceRoute } from './types/backend';
+import { joinUrl } from './utils/backend';
 
 export const MAIN_TITLE = 'FitFriends';
 
@@ -18,16 +19,12 @@ export enum AppRoute {
   NotFound = '/404'
 }
 
-const Route = {
-  Users: joinUrl(GlobalRoute.Global, ApiServiceRoute.Users)
-} as const;
-
 export const ApiRoute = {
-  Login: joinUrl(Route.Users, AccountRoute.Login),
-  Check: joinUrl(Route.Users, AccountRoute.Check),
-  Refresh: joinUrl(Route.Users, AccountRoute.Refresh),
-  Logout: joinUrl(Route.Users, AccountRoute.Logout),
-  Register: joinUrl(Route.Users, AccountRoute.Refresh),
+  Login: joinUrl(ApiServiceRoute.Users, AccountRoute.Login),
+  Check: joinUrl(ApiServiceRoute.Users, AccountRoute.Check),
+  Refresh: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
+  Logout: joinUrl(ApiServiceRoute.Users, AccountRoute.Logout),
+  Register: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
 } as const;
 
 export enum StoreSlice {
@@ -38,4 +35,3 @@ export enum HttpCode {
   OK = 200,
   NoAuth = 401
 }
-

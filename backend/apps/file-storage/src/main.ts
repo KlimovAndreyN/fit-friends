@@ -13,7 +13,7 @@ async function bootstrap() {
   const fileStorageOption = app.get<FileStorageConfig>(fileStorageConfig.KEY);
   const { port } = fileStorageOption;
 
-  app.setGlobalPrefix(GlobalRoute.Global);
+  app.setGlobalPrefix(GlobalRoute.Api);
 
   //Swagger
   const documentBuilder = new DocumentBuilder()
@@ -30,7 +30,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Global}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Api}`);
   Logger.log(`Swagger on: http://localhost:${port}/${GlobalRoute.Swagger}`);
 }
 

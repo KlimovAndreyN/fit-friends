@@ -19,7 +19,7 @@ import { joinUrl } from '@backend/shared/helpers';
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
           const rootPath = configService.get<string>(ConfigAlias.AppUploadDirectoryPath);
-          const serveRoot = joinUrl(GlobalRoute.Global, configService.get<string>(ConfigAlias.AppServeRoot));
+          const serveRoot = joinUrl(GlobalRoute.Api, configService.get<string>(ConfigAlias.AppServeRoot));
           //! ? const serveRoot = configService.get<string>(ConfigAlias.AppServeRoot);
 
           return [{

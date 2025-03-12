@@ -14,7 +14,7 @@ async function bootstrap() {
   const apiOption = app.get<ApiConfig>(apiConfig.KEY);
   const { port, accountServiceUrl, fileStorageServiceUrl } = apiOption;
 
-  app.setGlobalPrefix(GlobalRoute.Global);
+  app.setGlobalPrefix(GlobalRoute.Api);
 
   //Swagger
   const documentBuilder = new DocumentBuilder()
@@ -39,7 +39,7 @@ async function bootstrap() {
   Logger.log(`FileStorage Service on: ${fileStorageServiceUrl}`);
   Logger.log(`Account Service on: ${accountServiceUrl}`);
   //
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Global}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Api}`);
   Logger.log(`Swagger on: http://localhost:${port}/${GlobalRoute.Swagger}`);
 }
 

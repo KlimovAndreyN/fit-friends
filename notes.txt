@@ -37,6 +37,6 @@ id2486639
 aaa@aaa.aaa
 111111
 
-проверить не повторяется ли "refixOption.Global, ServiceRoute.Auth"
-joinUrl(this.apiOptions.accountServiceUrl, GlobalRoute.Global, ServiceRoute.Auth, route)
+проверить не повторяется ли "refixOption.Api, ServiceRoute.Auth"
+joinUrl(this.apiOptions.accountServiceUrl, GlobalRoute.Api, ServiceRoute.Auth, route)
 

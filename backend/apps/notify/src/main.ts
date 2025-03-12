@@ -11,11 +11,11 @@ async function bootstrap() {
   const notifyOption = app.get<NotifyConfig>(notifyConfig.KEY);
   const { port } = notifyOption;
 
-  app.setGlobalPrefix(GlobalRoute.Global);
+  app.setGlobalPrefix(GlobalRoute.Api);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Global}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Api}`);
 }
 
 bootstrap();
