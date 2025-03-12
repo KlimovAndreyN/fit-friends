@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
-import { LoginUserDto, Token, User } from '../types/backend';
+import { LoggedUserRdo, LoginUserDto, TokenPayloadRdo } from '../types/backend';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 
 type Extra = {
@@ -18,13 +18,13 @@ export const Action = {
   REGISTER_USER: 'user/register'
 };
 
-export const fetchUserStatus = createAsyncThunk<User['name'], undefined, { extra: Extra }>(
+export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
   async (_, { extra }) => {
     const { api } = extra;
 
     try {
-      const { data } = await api.get<User>(ApiRoute.Check);
+      const { data } = await api.get<TokenPayloadRdo>(ApiRoute.Check);
 
       return data.name;
     } catch (error) {
@@ -40,19 +40,19 @@ export const fetchUserStatus = createAsyncThunk<User['name'], undefined, { extra
   }
 );
 
-export const loginUser = createAsyncThunk<User['name'], LoginUserDto, { extra: Extra }>(
+export const loginUser = createAsyncThunk<string, LoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<User & Token>(ApiRoute.Login, { email, password });
-    const { accessToken, refreshToken, name } = data;
+    const { data } = await api.post<LoggedUserRdo>(ApiRoute.Login, { email, password });
+    const { accessToken, refreshToken, email: loggedEmail } = data;
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
     //! useNavigate не работает
     history.push(AppRoute.Root);
 
-    return name;
+    return loggedEmail;
   }
 );
 

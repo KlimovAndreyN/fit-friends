@@ -1,10 +1,9 @@
 import store from '../store';
-import { User } from './backend';
 import { AuthorizationStatus } from './types';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
-  userName: User['name'];
+  userEmail: string;
 }
 
 export type State = ReturnType<typeof store.getState>;

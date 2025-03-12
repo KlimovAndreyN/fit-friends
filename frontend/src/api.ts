@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
-import { AUTH_NAME, Token } from './types/backend';
+import { AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
 import { ApiRoute, HttpCode } from './const';
 
 const BACKEND_URL = 'http://localhost:3000/api';
@@ -25,7 +25,7 @@ async function validateAccessToken(
     };
 
     try {
-      const response = await axios.get<Token>(url, options);
+      const response = await axios.get<TokenPayloadRdo>(url, options);
 
       return response.status === HttpCode.OK;
     } catch (error) {
@@ -37,14 +37,14 @@ async function validateAccessToken(
 async function refreshRefreshToken(
   refreshToken: string,
   timeout = REQUEST_TIMEOUT
-): Promise<Token> {
+): Promise<UserTokenRdo> {
   {
     const url = [BACKEND_URL, ApiRoute.Refresh].join('');
     const options = {
       timeout,
       headers: { [AUTH_NAME]: getBearerAuthorization(refreshToken) }
     };
-    const { data } = await axios.post<Token>(url, {}, options);
+    const { data } = await axios.post<UserTokenRdo>(url, {}, options);
 
     return { ...data };
   }
@@ -63,6 +63,7 @@ export function createAPI(): AxiosInstance {
         const currentRefreshToken = RefreshTokenStore.getToken();
 
         if (currentAccessToken && currentRefreshToken) {
+          //! если идет проверка статуса, то будет вызвана два раза... как нибуть зачесть ответ первого вызова для второго...
           const isValid = await validateAccessToken(currentAccessToken);
 
           if (!isValid) {

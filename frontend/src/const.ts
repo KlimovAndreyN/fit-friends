@@ -1,5 +1,3 @@
-import { UploadedFileRdo } from './types/backend';
-
 export const MAIN_TITLE = 'FitFriends';
 
 export const PageTitle = {
@@ -36,15 +34,3 @@ export enum HttpCode {
   NoAuth = 401
 }
 
-//! тест RDO
-const aaa: UploadedFileRdo = {
-  hashName: '',
-  id: '',
-  originalName: '',
-  subDirectory: '',
-  mimetype: '',
-  size: 0
-};
-
-// eslint-disable-next-line no-console
-console.log(aaa);

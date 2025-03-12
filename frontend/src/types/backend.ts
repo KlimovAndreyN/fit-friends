@@ -1,16 +1,8 @@
 
 export { AUTH_NAME } from '../../../backend/libs/shared/core/src/lib/constants/bearer-auth';
-export type { Token } from '../../../backend/libs/shared/core/src/lib/interfaces/token.interface';
-export type { User } from '../../../backend/libs/shared/core/src/lib/interfaces/user.interface';
 
-//! тест RDO
-export type { UploadedFileRdo } from '../../../backend/libs/shared/core/src/lib/rdo/uploaded-file.rdo';
+export type { LoginUserDto } from '../../../backend/libs/shared/core/src/lib/dto/login-user.dto';
 
-//!LoginUserDto
-//!UserTokenRdo - axios.post<Token>
-//!User & Token - api.post<User & Token>
-
-export interface LoginUserDto {
-  email: string;
-  password: string;
-}
+export type { LoggedUserRdo } from '../../../backend/libs/shared/core/src/lib/rdo/logged-user.rdo';
+export type { TokenPayloadRdo } from '../../../backend/libs/shared/core/src/lib/rdo/token-payload.rdo';
+export type { UserTokenRdo } from '../../../backend/libs/shared/core/src/lib/rdo/user-token.rdo';
