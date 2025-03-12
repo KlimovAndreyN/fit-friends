@@ -3,6 +3,7 @@ export function getBearerAuthorization(token: string): string {
 }
 
 export function getViteEnvVariable(envName: keyof ImportMetaEnv): string {
+  // при сборке записывает значения из .env в общий скрипт
   const value = import.meta.env[envName] as string | undefined;
 
   if (value === undefined) {
