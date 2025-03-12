@@ -18,6 +18,7 @@ import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { UsersService } from './users.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CheckNotAuthGuard } from './guards/check-not-auth.guard';
 
 @ApiTags(RouteAlias.Users)
 @Controller(RouteAlias.Users)
@@ -34,14 +35,14 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
+  @UseGuards(CheckNotAuthGuard)
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(RouteAlias.Register)
   public async register(
     @Body() dto: CreateUserDto,
-    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth,
+    @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
-    // можно сразу проверить есть ли bearerAuth, и выкинуть ошибку, что требуется logout, пока передаю в account, там есть проверка
     const formData = new FormData();
 
     dtoToFormData(dto, formData);
@@ -51,8 +52,7 @@ export class UsersController {
     }
 
     const url = this.usersService.getUrl(RouteAlias.Register);
-    // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
-    const headers = makeHeaders(requestId, bearerAuth);
+    const headers = makeHeaders(requestId);
     const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
       url,
       formData,

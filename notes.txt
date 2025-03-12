@@ -50,6 +50,8 @@ aaa@aaa.aaa
 
       throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
 
+RequestWithRequestIdAndBearerAuth
+
       'authentication'
       'auth'
       'file-upload'
