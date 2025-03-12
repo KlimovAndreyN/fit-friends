@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx",
+    "lint": "tsc && eslint src --ext ts,tsx",
     "preview": "vite preview",
     "test": "vitest --passWithNoTests"
   },

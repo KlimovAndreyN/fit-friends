@@ -1,5 +1,7 @@
 import { AxiosError } from 'axios';
 
+import { joinUrl } from './backend';
+
 //! возможно на беке есть описание этого типа
 export type DataAxiosError = {
   message: string | string[];
@@ -11,7 +13,7 @@ export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>): string 
   const { response, message, config: { baseURL, url } } = error;
   const messages: string[] = [];
 
-  messages.push([baseURL, url].join(''));
+  messages.push(joinUrl(baseURL || '', url || ''));
 
   if (response && response.data) {
     const { data, statusText } = response;

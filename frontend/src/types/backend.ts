@@ -1,6 +1,3 @@
-export { AUTH_NAME } from '../../../backend/libs/shared/core/src/lib/constants/bearer-auth';
-export { AccountRoute, ApiServiceRoute } from '../../../backend/libs/shared/core/src/lib/constants/route';
-
 export type { LoginUserDto } from '../../../backend/libs/shared/core/src/lib/dto/login-user.dto';
 
 export type { LoggedUserRdo } from '../../../backend/libs/shared/core/src/lib/rdo/logged-user.rdo';

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
-import { HttpCode } from './const';
+
 import { getBearerAuthorization } from './utils/common';
+import { TokenPayloadRdo, UserTokenRdo } from './types/backend';
+import { HttpCode, AUTH_NAME } from './const';
 
 const REQUEST_TIMEOUT = 5000;
 

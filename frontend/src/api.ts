@@ -5,9 +5,8 @@ import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { getBearerAuthorization, getViteEnvVariable } from './utils/common';
 import { joinUrl } from './utils/backend';
-import { AUTH_NAME } from './types/backend';
 import { refreshRefreshToken, validateAccessToken } from './tokens';
-import { ApiRoute } from './const';
+import { ApiRoute, AUTH_NAME } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
 const BACKEND_URL = getViteEnvVariable(VITE_BACKEND_URL_ENV);
