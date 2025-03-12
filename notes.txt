@@ -12,7 +12,7 @@ id2486639
     имя файла: 2486639-fitfriends.zip
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-1. Backend  
+1. Backend
 -----------------
 2. Backend - seed
 -----------------
@@ -31,5 +31,26 @@ id2486639
     + <canvas> в html
 
 
-  
+
 --
+
+aaa@aaa.aaa
+111111
+
+    if (authorizationHeader) {
+      Logger.log(AuthenticationMessage.RequireLogout, AuthenticationService.name);
+
+      throw new BadRequestException(AuthenticationMessage.RequireLogout);
+    }
+
+
+      Logger.log(AuthenticationMessage.RequireLogout, LocalStrategy.name);
+
+      throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
+
+      'authentication'
+      'auth'
+      'file-upload'
+      'files'
+
+

@@ -27,17 +27,10 @@ export class AuthenticationService {
   ) { }
 
   public async registerUser(
-    authorizationHeader: string,
     dto: CreateUserDto,
     requestId: string,
     avatarFile?: Express.Multer.File
   ): Promise<FitUserEntity> {
-    if (authorizationHeader) {
-      Logger.log(AuthenticationMessage.RequireLogout, AuthenticationService.name);
-
-      throw new BadRequestException(AuthenticationMessage.RequireLogout);
-    }
-
     const { email, name, password } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 

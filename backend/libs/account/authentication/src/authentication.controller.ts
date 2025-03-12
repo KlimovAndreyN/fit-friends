@@ -6,10 +6,10 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiRespons
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import {
-  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, CreateUserDto,
-  LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestIdAndBearerAuth, RequestWithTokenPayload,
+  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
+  LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestId, RequestWithTokenPayload,
   RouteAlias, TokenPayloadRdo, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
-  parseUserAvatarFilePipeBuilder, UserAvatarOption
+  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -32,18 +32,17 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(InjectBearerAuthInterceptor)
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(RouteAlias.Register)
   public async register(
     @Body() dto: CreateUserDto,
-    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth,
+    @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
     // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
-    const newUser = await this.authService.registerUser(bearerAuth, dto, requestId, avatarFile);
+    const newUser = await this.authService.registerUser(dto, requestId, avatarFile);
 
     return fillDto(UserRdo, newUser.toPOJO());
   }
@@ -53,7 +52,6 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.LoggedError)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
-  @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiBody({ type: LoginUserDto })
   @UseGuards(LocalAuthGuard)
   @Post(RouteAlias.Login)
@@ -66,8 +64,9 @@ export class AuthenticationController {
   @ApiOperation(AuthenticationApiOperation.Logout)
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
   @ApiBearerAuth(BearerAuth.RefreshToken)
-  @UseInterceptors(InjectBearerAuthInterceptor)
+  @UseInterceptors(InjectBearerAuthInterceptor) //! ?
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
+  @UseGuards(JwtRefreshGuard) //! ?
   @Delete(RouteAlias.Logout)
   public async logout(@Req() { bearerAuth }: RequestWithBearerAuth): Promise<void> {
     await this.authService.logout(bearerAuth);
