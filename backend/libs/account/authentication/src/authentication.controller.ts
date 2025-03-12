@@ -28,22 +28,28 @@ export class AuthenticationController {
     private readonly authService: AuthenticationService
   ) { }
 
-  @ApiOperation(AuthenticationApiOperation.Register)
-  @ApiResponse(AuthenticationApiResponse.UserCreated)
-  @ApiResponse(AuthenticationApiResponse.UserExist)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiConsumes('multipart/form-data')
-  @UseInterceptors(InjectBearerAuthInterceptor)
-  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
-  @Post(RouteAlias.Register)
-  public async register(
-    @Body() dto: CreateUserDto,
-    @Req() { requestId }: RequestWithRequestId,
-    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserRdo> {
-    const newUser = await this.authService.registerUser(dto, requestId, avatarFile);
+  @ApiOperation(AuthenticationApiOperation.Check)
+  @ApiResponse(AuthenticationApiResponse.CheckSuccess)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
+  @ApiBearerAuth(BearerAuth.AccessToken)
+  @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
+  @UseGuards(JwtAuthGuard)
+  @Get(RouteAlias.Check)
+  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
+    return fillDto(TokenPayloadRdo, payload);
+  }
 
-    return fillDto(UserRdo, newUser.toPOJO());
+  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
+  @ApiResponse(AuthenticationApiResponse.RefreshTokensSuccess)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
+  @ApiBearerAuth(BearerAuth.RefreshToken)
+  @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
+  @UseGuards(JwtRefreshGuard)
+  @Post(RouteAlias.Refresh)
+  public async refreshToken(@Req() { user }: RequestWithFitUserEntity): Promise<UserTokenRdo> {
+    const userToken = await this.authService.createUserToken(user);
+
+    return fillDto(UserTokenRdo, userToken);
   }
 
   @ApiOperation(AuthenticationApiOperation.Login)
@@ -72,28 +78,22 @@ export class AuthenticationController {
     await this.authService.logout(bearerAuth);
   }
 
-  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.Unauthorized)
-  @ApiBearerAuth(BearerAuth.RefreshToken)
-  @HttpCode(AuthenticationApiResponse.RefreshTokens.status)
-  @UseGuards(JwtRefreshGuard)
-  @Post(RouteAlias.Refresh)
-  public async refreshToken(@Req() { user }: RequestWithFitUserEntity): Promise<UserTokenRdo> {
-    const userToken = await this.authService.createUserToken(user);
+  @ApiOperation(AuthenticationApiOperation.Register)
+  @ApiResponse(AuthenticationApiResponse.UserCreated)
+  @ApiResponse(AuthenticationApiResponse.UserExist)
+  @ApiResponse(AuthenticationApiResponse.BadRequest)
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(InjectBearerAuthInterceptor)
+  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
+  @Post(RouteAlias.Register)
+  public async register(
+    @Body() dto: CreateUserDto,
+    @Req() { requestId }: RequestWithRequestId,
+    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
+  ): Promise<UserRdo> {
+    const newUser = await this.authService.registerUser(dto, requestId, avatarFile);
 
-    return fillDto(UserTokenRdo, userToken);
-  }
-
-  @ApiOperation(AuthenticationApiOperation.Check)
-  @ApiResponse(AuthenticationApiResponse.CheckSuccess)
-  @ApiResponse(AuthenticationApiResponse.Unauthorized)
-  @ApiBearerAuth(BearerAuth.AccessToken)
-  @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
-  @UseGuards(JwtAuthGuard)
-  @Get(RouteAlias.Check)
-  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
-    return fillDto(TokenPayloadRdo, payload);
+    return fillDto(UserRdo, newUser.toPOJO());
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)

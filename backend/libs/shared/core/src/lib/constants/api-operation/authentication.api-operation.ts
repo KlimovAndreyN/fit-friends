@@ -1,8 +1,8 @@
 export const AuthenticationApiOperation = {
-  Register: { summary: 'Регистрация нового пользователя' },
+  Check: { summary: 'Провека токена авторизации' },
+  RefreshTokens: { summary: 'Обновление токенов' },
   Login: { summary: 'Авторизация пользователя' },
   Logout: { summary: 'Выход пользователя' },
-  RefreshTokens: { summary: 'Обновление токенов' },
-  Check: { summary: 'Провека токена авторизации' },
+  Register: { summary: 'Регистрация нового пользователя' },
   Show: { summary: 'Получение информации о пользователе' }
 } as const;

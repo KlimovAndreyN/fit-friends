@@ -29,38 +29,29 @@ export class UsersController {
     private usersService: UsersService
   ) { }
 
-  @ApiOperation(AuthenticationApiOperation.Register)
-  @ApiResponse(AuthenticationApiResponse.UserCreated)
-  @ApiResponse(AuthenticationApiResponse.UserExist)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
+  @ApiOperation(AuthenticationApiOperation.Check)
+  @ApiResponse(AuthenticationApiResponse.CheckSuccess)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
-  @ApiConsumes('multipart/form-data')
-  @UseGuards(CheckNotAuthGuard)
-  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
-  @Post(RouteAlias.Register)
-  public async register(
-    @Body() dto: CreateUserDto,
-    @Req() { requestId }: RequestWithRequestId,
-    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserRdo> {
-    const formData = new FormData();
+  @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
+  @UseGuards(CheckAuthGuard)
+  @Get(RouteAlias.Check)
+  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
+    return payload;
+  }
 
-    dtoToFormData(dto, formData);
+  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
+  @ApiResponse(AuthenticationApiResponse.RefreshTokensSuccess)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
+  @ApiBearerAuth(BearerAuth.RefreshToken)
+  @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
+  @Post(RouteAlias.Refresh)
+  public async refreshToken(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<UserTokenRdo> {
+    const url = this.usersService.getUrl(RouteAlias.Refresh);
+    const headers = makeHeaders(requestId, bearerAuth);
+    const { data } = await this.httpService.axiosRef.post<UserTokenRdo>(url, null, headers);
 
-    if (avatarFile) {
-      multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
-    }
-
-    const url = this.usersService.getUrl(RouteAlias.Register);
-    const headers = makeHeaders(requestId);
-    const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
-      url,
-      formData,
-      headers
-    );
-
-    return registerData;
+    return data;
   }
 
   @ApiOperation(AuthenticationApiOperation.Login)
@@ -95,29 +86,38 @@ export class UsersController {
     await this.httpService.axiosRef.delete(url, headers);
   }
 
-  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.Unauthorized)
-  @ApiBearerAuth(BearerAuth.RefreshToken)
-  @HttpCode(AuthenticationApiResponse.RefreshTokens.status)
-  @Post(RouteAlias.Refresh)
-  public async refreshToken(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<UserTokenRdo> {
-    const url = this.usersService.getUrl(RouteAlias.Refresh);
-    const headers = makeHeaders(requestId, bearerAuth);
-    const { data } = await this.httpService.axiosRef.post<UserTokenRdo>(url, null, headers);
-
-    return data;
-  }
-
-  @ApiOperation(AuthenticationApiOperation.Check)
-  @ApiResponse(AuthenticationApiResponse.CheckSuccess)
+  @ApiOperation(AuthenticationApiOperation.Register)
+  @ApiResponse(AuthenticationApiResponse.UserCreated)
+  @ApiResponse(AuthenticationApiResponse.UserExist)
+  @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
-  @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
-  @UseGuards(CheckAuthGuard)
-  @Get(RouteAlias.Check)
-  public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
-    return payload;
+  @ApiConsumes('multipart/form-data')
+  @UseGuards(CheckNotAuthGuard)
+  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
+  @Post(RouteAlias.Register)
+  public async register(
+    @Body() dto: CreateUserDto,
+    @Req() { requestId }: RequestWithRequestId,
+    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
+  ): Promise<UserRdo> {
+    const formData = new FormData();
+
+    dtoToFormData(dto, formData);
+
+    if (avatarFile) {
+      multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
+    }
+
+    const url = this.usersService.getUrl(RouteAlias.Register);
+    const headers = makeHeaders(requestId);
+    const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
+      url,
+      formData,
+      headers
+    );
+
+    return registerData;
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)

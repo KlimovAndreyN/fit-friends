@@ -7,6 +7,29 @@ import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
 import { AuthenticationMessage } from '../authentication.constant';
 
 export const AuthenticationApiResponse = {
+  CheckSuccess: {
+    type: TokenPayloadRdo,
+    status: HttpStatus.OK,
+    description: 'Check access token success.'
+  },
+  RefreshTokensSuccess: {
+    type: UserTokenRdo,
+    status: HttpStatus.OK,
+    description: 'Refresh access/refresh tokens success.'
+  },
+  LoggedSuccess: {
+    type: LoggedUserRdo,
+    status: HttpStatus.OK,
+    description: 'User has been successfully logged.'
+  },
+  LoggedError: {
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Password or Login is wrong.'
+  },
+  LogoutSuccess: {
+    status: HttpStatus.NO_CONTENT,
+    description: 'User has been successfully logout.'
+  },
   UserCreated: {
     type: UserRdo,
     status: HttpStatus.CREATED,
@@ -16,11 +39,6 @@ export const AuthenticationApiResponse = {
     status: HttpStatus.CONFLICT,
     description: AuthenticationMessage.Exists
   },
-  RefreshTokens: {
-    type: UserTokenRdo,
-    status: HttpStatus.OK,
-    description: 'Get a new access/refresh tokens.'
-  },
   Unauthorized: {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized.'
@@ -28,24 +46,6 @@ export const AuthenticationApiResponse = {
   BadRequest: {
     status: HttpStatus.BAD_REQUEST,
     description: 'Bad request.'
-  },
-  LoggedSuccess: {
-    type: LoggedUserRdo,
-    status: HttpStatus.OK,
-    description: 'User has been successfully logged.'
-  },
-  LogoutSuccess: {
-    status: HttpStatus.NO_CONTENT,
-    description: 'User has been successfully logout.'
-  },
-  CheckSuccess: {
-    type: TokenPayloadRdo,
-    status: HttpStatus.OK,
-    description: 'Check access token success.'
-  },
-  LoggedError: {
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Password or Login is wrong.'
   },
   UserFound: {
     type: UserRdo,
