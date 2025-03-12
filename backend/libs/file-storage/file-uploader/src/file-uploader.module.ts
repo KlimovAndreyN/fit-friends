@@ -3,13 +3,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ConfigAlias } from '@backend/shared/core';
+import { ConfigAlias, PrefixOption } from '@backend/shared/core';
 
 import { FileUploaderService } from './file-uploader.service';
 import { FileUploaderController } from './file-uploader.controller';
 import { FileUploaderRepository } from './file-uploader.repository';
 import { FileUploaderFactory } from './file-uploader.factory';
 import { FileModel, FileSchema } from './file.model';
+import { joinUrl } from '@backend/shared/helpers';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { FileModel, FileSchema } from './file.model';
         inject: [ConfigService],
         useFactory: (configService: ConfigService) => {
           const rootPath = configService.get<string>(ConfigAlias.AppUploadDirectoryPath);
-          const serveRoot = configService.get<string>(ConfigAlias.AppServeRoot);
+          const serveRoot = joinUrl(PrefixOption.Global, configService.get<string>(ConfigAlias.AppServeRoot));
+          //! ? const serveRoot = configService.get<string>(ConfigAlias.AppServeRoot);
 
           return [{
             rootPath,

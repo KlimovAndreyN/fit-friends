@@ -40,4 +40,5 @@ aaa@aaa.aaa
 проверить не повторяется ли "refixOption.Global, ServiceRoute.Auth"
 joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Auth, route)
 
+.join('/')
 
