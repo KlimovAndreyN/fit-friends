@@ -22,7 +22,7 @@ export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { PrefixOption } from './lib/constants/prefix-option';
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
-export { RouteAlias } from './lib/constants/route-alias';
+export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';

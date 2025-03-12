@@ -9,8 +9,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, RouteAlias, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo
+  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo,
+  AccountRoute,
 } from '@backend/shared/core';
 import { dtoToFormData, makeHeaders, multerFileToFormData } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -20,8 +21,8 @@ import { UsersService } from './users.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckNotAuthGuard } from './guards/check-not-auth.guard';
 
-@ApiTags(RouteAlias.Users)
-@Controller(RouteAlias.Users)
+@ApiTags(ApiServiceRoute.Users)
+@Controller(ApiServiceRoute.Users)
 @UseFilters(AxiosExceptionFilter)
 export class UsersController {
   constructor(
@@ -35,7 +36,7 @@ export class UsersController {
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
   @UseGuards(CheckAuthGuard)
-  @Get(RouteAlias.Check)
+  @Get(AccountRoute.Check)
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
     return payload;
   }
@@ -45,9 +46,9 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
-  @Post(RouteAlias.Refresh)
+  @Post(AccountRoute.Refresh)
   public async refreshToken(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<UserTokenRdo> {
-    const url = this.usersService.getUrl(RouteAlias.Refresh);
+    const url = this.usersService.getUrl(AccountRoute.Refresh);
     const headers = makeHeaders(requestId, bearerAuth);
     const { data } = await this.httpService.axiosRef.post<UserTokenRdo>(url, null, headers);
 
@@ -61,12 +62,12 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @UseGuards(CheckNotAuthGuard)
-  @Post(RouteAlias.Login)
+  @Post(AccountRoute.Login)
   public async login(
     @Body() dto: LoginUserDto,
     @Req() { requestId }: RequestWithRequestId
   ): Promise<LoggedUserRdo> {
-    const url = this.usersService.getUrl(RouteAlias.Login);
+    const url = this.usersService.getUrl(AccountRoute.Login);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.post<LoggedUserRdo>(url, dto, headers);
 
@@ -78,9 +79,9 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
-  @Delete(RouteAlias.Logout)
+  @Delete(AccountRoute.Logout)
   public async logout(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<void> {
-    const url = this.usersService.getUrl(RouteAlias.Logout);
+    const url = this.usersService.getUrl(AccountRoute.Logout);
     const headers = makeHeaders(requestId, bearerAuth);
 
     await this.httpService.axiosRef.delete(url, headers);
@@ -95,7 +96,7 @@ export class UsersController {
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckNotAuthGuard)
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
-  @Post(RouteAlias.Register)
+  @Post(AccountRoute.Register)
   public async register(
     @Body() dto: CreateUserDto,
     @Req() { requestId }: RequestWithRequestId,
@@ -109,7 +110,7 @@ export class UsersController {
       multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
     }
 
-    const url = this.usersService.getUrl(RouteAlias.Register);
+    const url = this.usersService.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
       url,

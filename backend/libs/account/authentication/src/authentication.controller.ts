@@ -8,8 +8,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestId, RequestWithTokenPayload,
-  RouteAlias, TokenPayloadRdo, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
-  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto
+  TokenPayloadRdo, AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
+  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto,
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -34,7 +34,7 @@ export class AuthenticationController {
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
   @UseGuards(JwtAuthGuard)
-  @Get(RouteAlias.Check)
+  @Get(AccountRoute.Check)
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload): Promise<TokenPayloadRdo> {
     return fillDto(TokenPayloadRdo, payload);
   }
@@ -45,7 +45,7 @@ export class AuthenticationController {
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
   @UseGuards(JwtRefreshGuard)
-  @Post(RouteAlias.Refresh)
+  @Post(AccountRoute.Refresh)
   public async refreshToken(@Req() { user }: RequestWithFitUserEntity): Promise<UserTokenRdo> {
     const userToken = await this.authService.createUserToken(user);
 
@@ -59,7 +59,7 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBody({ type: LoginUserDto })
   @UseGuards(LocalAuthGuard)
-  @Post(RouteAlias.Login)
+  @Post(AccountRoute.Login)
   public async login(@Req() { user }: RequestWithFitUserEntity): Promise<LoggedUserRdo> {
     const userToken = await this.authService.createUserToken(user);
 
@@ -73,7 +73,7 @@ export class AuthenticationController {
   @UseInterceptors(InjectBearerAuthInterceptor) //! ?
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
   @UseGuards(JwtRefreshGuard) //! ?
-  @Delete(RouteAlias.Logout)
+  @Delete(AccountRoute.Logout)
   public async logout(@Req() { bearerAuth }: RequestWithBearerAuth): Promise<void> {
     await this.authService.logout(bearerAuth);
   }
@@ -85,7 +85,7 @@ export class AuthenticationController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(InjectBearerAuthInterceptor)
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
-  @Post(RouteAlias.Register)
+  @Post(AccountRoute.Register)
   public async register(
     @Body() dto: CreateUserDto,
     @Req() { requestId }: RequestWithRequestId,

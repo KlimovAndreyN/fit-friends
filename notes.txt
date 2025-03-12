@@ -37,19 +37,6 @@ id2486639
 aaa@aaa.aaa
 111111
 
-    // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
-
-    if (authorizationHeader) {
-      Logger.log(AuthenticationMessage.RequireLogout, AuthenticationService.name);
-
-      throw new BadRequestException(AuthenticationMessage.RequireLogout);
-    }
-
-
-      Logger.log(AuthenticationMessage.RequireLogout, LocalStrategy.name);
-
-      throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
-
       this.apiOptions.accountServiceUrl
       'authentication'
       'auth'
