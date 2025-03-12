@@ -1,13 +1,8 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { BearerAuth, BearerAuthOption } from '@backend/shared/core';
+import { BearerAuth, BearerAuthOption, PrefixOption } from '@backend/shared/core';
 import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
 import { apiConfig, ApiConfig } from '@backend/api/config';
 
@@ -16,12 +11,10 @@ import { InjectRequestIdGuard } from './app/guards/inject-request-id.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  const swaggerPrefix = 'spec';
   const apiOption = app.get<ApiConfig>(apiConfig.KEY);
   const { port, accountServiceUrl, fileStorageServiceUrl } = apiOption;
 
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(PrefixOption.Global);
 
   //Swagger
   const documentBuilder = new DocumentBuilder()
@@ -33,7 +26,7 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, documentBuilder);
 
-  SwaggerModule.setup(swaggerPrefix, app, documentFactory);
+  SwaggerModule.setup(PrefixOption.Swagger, app, documentFactory);
   //
 
   app.useGlobalGuards(new InjectRequestIdGuard());
@@ -46,8 +39,8 @@ async function bootstrap() {
   Logger.log(`FileStorage Service on: ${fileStorageServiceUrl}`);
   Logger.log(`Account Service on: ${accountServiceUrl}`);
   //
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
-  Logger.log(`Swagger on: http://localhost:${port}/${swaggerPrefix}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${PrefixOption.Global}`);
+  Logger.log(`Swagger on: http://localhost:${port}/${PrefixOption.Swagger}`);
 }
 
 bootstrap();

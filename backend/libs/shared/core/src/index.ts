@@ -60,6 +60,5 @@ export * from './lib/types/environment.type';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
-export { SortType } from './lib/types/sort-type.enum';
 
 export * from './lib/utils/transform';

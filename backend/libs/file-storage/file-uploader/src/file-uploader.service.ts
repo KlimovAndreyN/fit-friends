@@ -14,10 +14,11 @@ import { FileUploaderRepository } from './file-uploader.repository';
 import { FileUploaderEntity } from './file-uploader.entity';
 import { FileUploaderFactory } from './file-uploader.factory';
 
+const DATE_FORMAT = 'YYYY MM';
+
 @Injectable()
 export class FileUploaderService {
   private readonly logger = new Logger(FileUploaderService.name);
-  private readonly DATE_FORMAT = 'YYYY MM';
 
   @Inject(fileStorageConfig.KEY)
   private readonly fileStorageConfig: ConfigType<typeof fileStorageConfig>;
@@ -35,7 +36,7 @@ export class FileUploaderService {
   }
 
   private getSubUploadDirectoryPath(): string {
-    const [year, month] = dayjs().format(this.DATE_FORMAT).split(' ');
+    const [year, month] = dayjs().format(DATE_FORMAT).split(' ');
 
     return join(year, month);
   }

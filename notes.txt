@@ -41,4 +41,7 @@ aaa@aaa.aaa
 joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Auth, route)
 
 .join('/')
+= '
+This is not a production server yet!
+RequestProperty.User
 

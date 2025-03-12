@@ -6,6 +6,8 @@ import { AccountRoute, AUTH_NAME, PrefixOption, RequestProperty, ServiceRoute, T
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
+const ERROR_MESSAGE = 'Authorization is empty!';
+
 @Injectable()
 export class CheckAuthGuard implements CanActivate {
   constructor(
@@ -19,12 +21,11 @@ export class CheckAuthGuard implements CanActivate {
     const url = joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Account, AccountRoute.Check);
     const requestId = request[RequestProperty.RequestId];
     const authorization = request.headers[AUTH_NAME];
-    const message = 'Authorization is empty!';
 
     if (!authorization) {
-      Logger.log(`${request.method}: ${request.url}: ${RequestProperty.RequestId}: ${requestId}: ${message}`, CheckAuthGuard.name);
+      Logger.log(`${request.method}: ${request.url}: ${RequestProperty.RequestId}: ${requestId}: ${ERROR_MESSAGE}`, CheckAuthGuard.name);
 
-      throw new UnauthorizedException(message);
+      throw new UnauthorizedException(ERROR_MESSAGE);
     }
 
     const { data } = await this.httpService.axiosRef.get<TokenPayloadRdo>(url, makeHeaders(requestId, authorization));
