@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Inject, Injectable, Logger, Unauthorized
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { AccountRoute, AUTH_NAME, PrefixOption, RequestProperty, ServiceRoute, TokenPayloadRdo } from '@backend/shared/core';
+import { AccountRoute, AUTH_NAME, RequestProperty, ServiceRoute, TokenPayloadRdo } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -18,7 +18,7 @@ export class CheckAuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const url = joinUrl(this.apiOptions.accountServiceUrl, PrefixOption.Global, ServiceRoute.Account, AccountRoute.Check);
+    const url = joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, AccountRoute.Check);
     const requestId = request[RequestProperty.RequestId];
     const authorization = request.headers[AUTH_NAME];
 
