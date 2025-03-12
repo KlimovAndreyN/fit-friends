@@ -4,11 +4,11 @@ import { Strategy } from 'passport-local';
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
+import { LoginUserDto } from '@backend/shared/core';
 import { getValidationErrorString } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from '../authentication.service';
-import { LoginUserDto } from '../dto/login-user.dto';
 
 const USERNAME_FIELD_NAME = 'email';
 

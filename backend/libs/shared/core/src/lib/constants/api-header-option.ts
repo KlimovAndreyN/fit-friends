@@ -1,5 +1,5 @@
 import { XHeader } from './x-header';
-import { ApiPropertyOption } from './api-property-option';
+import { UserApiProperty } from './api-property/user.api-property';
 
 export const ApiHeaderOption = {
   RequestId: {
@@ -10,7 +10,7 @@ export const ApiHeaderOption = {
   },
   UserId: {
     name: XHeader.UserId,
-    example: ApiPropertyOption.User.Id.example,
+    example: UserApiProperty.Id.example,
     description: 'X-User-Id',
     required: false
   }

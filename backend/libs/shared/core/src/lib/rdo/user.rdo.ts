@@ -1,27 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 
-import { ApiPropertyOption } from '../constants/api-property-option';
 import { transformDate } from '../utils/transform';
+import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 export class UserRdo {
-  @ApiProperty(ApiPropertyOption.User.Id)
+  @ApiProperty(UserApiProperty.Id)
   @Expose()
   public id: string;
 
-  @ApiProperty(ApiPropertyOption.User.Email)
+  @ApiProperty(UserApiProperty.Email)
   @Expose()
   public email: string;
 
-  @ApiProperty(ApiPropertyOption.User.Name)
+  @ApiProperty(UserApiProperty.Name)
   @Expose()
   public name: string;
 
-  @ApiProperty(ApiPropertyOption.User.AvatarPath)
+  @ApiProperty(UserApiProperty.AvatarPath)
   @Expose()
   public avatarPath: string;
 
-  @ApiProperty(ApiPropertyOption.User.registrationDate)
+  @ApiProperty(UserApiProperty.registrationDate)
   @Transform(transformDate)
   @Expose({ name: 'createdAt' })
   public registrationDate: string;

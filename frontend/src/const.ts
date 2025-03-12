@@ -18,6 +18,7 @@ export enum AppRoute {
   NotFound = '/404'
 }
 
+//! прокинуть через бэк
 export enum ApiRoute {
   Login = '/users/login',
   Check = '/users/check',

@@ -24,16 +24,6 @@ function getConfig(): ApiConfig {
 
   validateConfig(validationSchema, config, 'Api');
 
-  //! тест
-  console.log('getConfig Api');
-
-  console.log('NX_LOAD_DOT_ENV_FILES', process.env['NX_LOAD_DOT_ENV_FILES']);
-  console.log('RABBIT_EXCHANGE', process.env['RABBIT_EXCHANGE']);
-  console.log('MONGODB_DATABASE', process.env['RABBIT_EXCHANGE']);
-  console.log('UPLOAD_DIRECTORY_PATH', process.env['UPLOAD_DIRECTORY_PATH']);
-  console.log('ACCOUNT_SERVICE_URL', process.env['ACCOUNT_SERVICE_URL']);
-  //
-
   return config;
 }
 

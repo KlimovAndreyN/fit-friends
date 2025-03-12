@@ -7,16 +7,14 @@ import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTag
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import {
-  ApiParamOption, BearerAuth, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, RouteAlias, USER_ID_PARAM, UserRdo, ApiOperationOption
+  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
+  LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
+  RequestWithTokenPayload, RouteAlias, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo
 } from '@backend/shared/core';
 import { dtoToFormData, makeHeaders, multerFileToFormData } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
-import {
-  AuthenticationApiResponse, AvatarOption, CreateUserDto, LoggedUserRdo,
-  LoginUserDto, parseFilePipeBuilder, TokenPayloadRdo, UserTokenRdo
-} from '@backend/account/authentication';
 
 import { UsersService } from './users.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -30,19 +28,19 @@ export class UsersController {
     private usersService: UsersService
   ) { }
 
-  @ApiOperation(ApiOperationOption.User.Register)
+  @ApiOperation(AuthenticationApiOperation.Register)
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.NotAllow)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor(AvatarOption.KEY))
+  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(RouteAlias.Register)
   public async register(
     @Body() dto: CreateUserDto,
     @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth,
-    @UploadedFile(parseFilePipeBuilder) avatarFile?: Express.Multer.File
+    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
     // можно сразу проверить есть ли bearerAuth, и выкинуть ошибку, что требуется logout, пока передаю в account, там есть проверка
     const formData = new FormData();
@@ -50,7 +48,7 @@ export class UsersController {
     dtoToFormData(dto, formData);
 
     if (avatarFile) {
-      multerFileToFormData(avatarFile, formData, AvatarOption.KEY);
+      multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
     }
 
     const url = this.usersService.getUrl(RouteAlias.Register);
@@ -65,7 +63,7 @@ export class UsersController {
     return registerData;
   }
 
-  @ApiOperation(ApiOperationOption.User.Login)
+  @ApiOperation(AuthenticationApiOperation.Login)
   @ApiResponse(AuthenticationApiResponse.LoggedSuccess)
   @ApiResponse(AuthenticationApiResponse.LoggedError)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
@@ -79,7 +77,7 @@ export class UsersController {
     return data;
   }
 
-  @ApiOperation(ApiOperationOption.User.Logout)
+  @ApiOperation(AuthenticationApiOperation.Logout)
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
@@ -91,7 +89,7 @@ export class UsersController {
     await this.httpService.axiosRef.delete(url, headers);
   }
 
-  @ApiOperation(ApiOperationOption.User.RefreshTokens)
+  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -106,7 +104,7 @@ export class UsersController {
     return data;
   }
 
-  @ApiOperation(ApiOperationOption.User.Check)
+  @ApiOperation(AuthenticationApiOperation.Check)
   @ApiResponse(AuthenticationApiResponse.CheckSuccess)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -118,7 +116,7 @@ export class UsersController {
     return payload;
   }
 
-  @ApiOperation(ApiOperationOption.User.Show)
+  @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)

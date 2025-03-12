@@ -1,22 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { ApiPropertyOption } from '@backend/shared/core';
+import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 export class LoggedUserRdo {
-  @ApiProperty(ApiPropertyOption.User.Id)
+  @ApiProperty(UserApiProperty.Id)
   @Expose()
   public id: string;
 
-  @ApiProperty(ApiPropertyOption.User.Email)
+  @ApiProperty(UserApiProperty.Email)
   @Expose()
   public email: string;
 
-  @ApiProperty(ApiPropertyOption.User.AccessToken)
+  @ApiProperty(UserApiProperty.AccessToken)
   @Expose()
   public accessToken: string;
 
-  @ApiProperty(ApiPropertyOption.User.RefreshToken)
+  @ApiProperty(UserApiProperty.RefreshToken)
   @Expose()
   public refreshToken: string;
 }

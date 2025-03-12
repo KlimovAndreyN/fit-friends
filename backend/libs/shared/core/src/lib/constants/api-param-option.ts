@@ -1,10 +1,11 @@
 import { ApiPropertyOption } from './api-property-option';
 import { FileApiProperty } from './api-property/file.api-property';
+import { UserApiProperty } from './api-property/user.api-property';
 
 export const ApiParamOption = {
   UserId: {
     name: 'userId',
-    schema: ApiPropertyOption.User.Id
+    schema: UserApiProperty.Id
   },
   CommentId: {
     name: 'commentId',

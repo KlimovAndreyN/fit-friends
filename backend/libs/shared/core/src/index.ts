@@ -1,13 +1,17 @@
 export { Entity } from './lib/base/entity';
 
+export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
+
 export { FileApiProperty } from './lib/constants/api-property/file.api-property';
+export { UserApiProperty } from './lib/constants/api-property/user.api-property';
 
 export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
+export { AuthenticationApiResponse } from './lib/constants/api-response/authentication.api-response';
 
 export { ApiHeaderOption } from './lib/constants/api-header-option';
-export { ApiOperationOption } from './lib/constants/api-operation-option';
 export * from './lib/constants/api-param-option';
 export { ApiPropertyOption } from './lib/constants/api-property-option';
+export * from './lib/constants/authentication.constant';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { DateFormat } from './lib/constants/date-format';
@@ -20,6 +24,10 @@ export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
 export { RouteAlias } from './lib/constants/route-alias';
 export { XHeader } from './lib/constants/x-header';
+
+export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
+export { CreateUserDto } from './lib/dto/create-user.dto';
+export { LoginUserDto } from './lib/dto/login-user.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
@@ -43,8 +51,11 @@ export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 
+export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
+export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { UserRdo } from './lib/rdo/user.rdo';
+export { UserTokenRdo } from './lib/rdo/user-token.rdo';
 
 export * from './lib/types/environment.type';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';

@@ -1,16 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
-import { ApiPropertyOption } from '@backend/shared/core';
-
-import { UserValidation } from '../authentication.constant';
+import { UserApiProperty } from '../constants/api-property/user.api-property';
+import { UserValidation } from '../constants/authentication.constant';
 
 export class LoginUserDto {
-  @ApiProperty(ApiPropertyOption.User.Email)
+  @ApiProperty(UserApiProperty.Email)
   @IsEmail({})
   public email: string;
 
-  @ApiProperty(ApiPropertyOption.User.Password)
+  @ApiProperty(UserApiProperty.Password)
   @IsString()
   @MinLength(UserValidation.Password.MinLength)
   @MaxLength(UserValidation.Password.MaxLength)

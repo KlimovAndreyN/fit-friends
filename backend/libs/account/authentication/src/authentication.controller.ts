@@ -6,8 +6,10 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiRespons
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import {
-  ApiParamOption, BearerAuth, RequestWithBearerAuth, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, RouteAlias, USER_ID_PARAM, UserRdo, ApiOperationOption
+  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, CreateUserDto,
+  LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestIdAndBearerAuth, RequestWithTokenPayload,
+  RouteAlias, TokenPayloadRdo, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
+  parseUserAvatarFilePipeBuilder, UserAvatarOption
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -15,15 +17,9 @@ import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
 import { RequestWithFitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from './authentication.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { UserTokenRdo } from './rdo/user-token.rdo';
-import { TokenPayloadRdo } from './rdo/token-payload.rdo';
-import { AuthenticationApiResponse, AvatarOption, parseFilePipeBuilder } from './authentication.constant';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -32,7 +28,7 @@ export class AuthenticationController {
     private readonly authService: AuthenticationService
   ) { }
 
-  @ApiOperation(ApiOperationOption.User.Register)
+  @ApiOperation(AuthenticationApiOperation.Register)
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
@@ -40,12 +36,12 @@ export class AuthenticationController {
   @ApiBearerAuth(BearerAuth.AccessToken) // для тестирования - анонимный пользователь может регистрироваться
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(InjectBearerAuthInterceptor)
-  @UseInterceptors(FileInterceptor(AvatarOption.KEY))
+  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(RouteAlias.Register)
   public async register(
     @Body() dto: CreateUserDto,
     @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth,
-    @UploadedFile(parseFilePipeBuilder) avatarFile?: Express.Multer.File
+    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
     // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
     const newUser = await this.authService.registerUser(bearerAuth, dto, requestId, avatarFile);
@@ -53,7 +49,7 @@ export class AuthenticationController {
     return fillDto(UserRdo, newUser.toPOJO());
   }
 
-  @ApiOperation(ApiOperationOption.User.Login)
+  @ApiOperation(AuthenticationApiOperation.Login)
   @ApiResponse(AuthenticationApiResponse.LoggedSuccess)
   @ApiResponse(AuthenticationApiResponse.LoggedError)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
@@ -67,7 +63,7 @@ export class AuthenticationController {
     return fillDto(LoggedUserRdo, { ...user.toPOJO(), ...userToken });
   }
 
-  @ApiOperation(ApiOperationOption.User.Logout)
+  @ApiOperation(AuthenticationApiOperation.Logout)
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @UseInterceptors(InjectBearerAuthInterceptor)
@@ -77,7 +73,7 @@ export class AuthenticationController {
     await this.authService.logout(bearerAuth);
   }
 
-  @ApiOperation(ApiOperationOption.User.RefreshTokens)
+  @ApiOperation(AuthenticationApiOperation.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -91,7 +87,7 @@ export class AuthenticationController {
     return fillDto(UserTokenRdo, userToken);
   }
 
-  @ApiOperation(ApiOperationOption.User.Check)
+  @ApiOperation(AuthenticationApiOperation.Check)
   @ApiResponse(AuthenticationApiResponse.CheckSuccess)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -103,7 +99,7 @@ export class AuthenticationController {
     return fillDto(TokenPayloadRdo, payload);
   }
 
-  @ApiOperation(ApiOperationOption.User.Show)
+  @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)

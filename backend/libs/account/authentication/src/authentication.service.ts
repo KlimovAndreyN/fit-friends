@@ -6,16 +6,12 @@ import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { join } from 'path/posix';
 
-import { FILE_KEY, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
+import { AuthenticationUserMessage, CreateUserDto, FILE_KEY, LoginUserDto, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
 import { createJWTPayload, parseAxiosError, uploadFile } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
 import { NotifyService } from '@backend/account/notify';
 import { RefreshTokenService } from '@backend/account/refresh-token';
-
-import { CreateUserDto } from './dto/create-user.dto';
-import { AuthenticationUserMessage } from './authentication.constant';
-import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
 export class AuthenticationService {
