@@ -1,5 +1,7 @@
+export { joinUrl } from '../../../backend/libs/shared/helpers/src/lib/join-url';
 
 export { AUTH_NAME } from '../../../backend/libs/shared/core/src/lib/constants/bearer-auth';
+export { RouteAlias } from '../../../backend/libs/shared/core/src/lib/constants/route-alias';
 
 export type { LoginUserDto } from '../../../backend/libs/shared/core/src/lib/dto/login-user.dto';
 

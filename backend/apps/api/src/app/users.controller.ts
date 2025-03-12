@@ -19,8 +19,8 @@ import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 import { UsersService } from './users.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
-@ApiTags('users')
-@Controller('users')
+@ApiTags(RouteAlias.Users)
+@Controller(RouteAlias.Users)
 @UseFilters(AxiosExceptionFilter)
 export class UsersController {
   constructor(

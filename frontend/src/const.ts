@@ -1,3 +1,5 @@
+import { joinUrl, RouteAlias } from './types/backend';
+
 export const MAIN_TITLE = 'FitFriends';
 
 export const PageTitle = {
@@ -16,14 +18,13 @@ export enum AppRoute {
   NotFound = '/404'
 }
 
-//! прокинуть через бэк
-export enum ApiRoute {
-  Login = '/users/login',
-  Check = '/users/check',
-  Refresh = '/users/refresh',
-  Logout = '/users/logout',
-  Register = 'users/register'
-}
+export const ApiRoute = {
+  Login: joinUrl(RouteAlias.Users, RouteAlias.Login),
+  Check: joinUrl(RouteAlias.Users, RouteAlias.Check),
+  Refresh: joinUrl(RouteAlias.Users, RouteAlias.Refresh),
+  Logout: joinUrl(RouteAlias.Users, RouteAlias.Logout),
+  Register: joinUrl(RouteAlias.Users, RouteAlias.Refresh),
+} as const;
 
 export enum StoreSlice {
   UserProcess = 'USER_PROCESS'

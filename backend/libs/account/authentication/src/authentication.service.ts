@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { join } from 'path/posix';
 
 import { AuthenticationUserMessage, CreateUserDto, FILE_KEY, LoginUserDto, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
-import { createJWTPayload, parseAxiosError, uploadFile } from '@backend/shared/helpers';
+import { createJWTPayload, joinUrl, parseAxiosError, uploadFile } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
 import { NotifyService } from '@backend/account/notify';
@@ -53,7 +53,7 @@ export class AuthenticationService {
     if (avatarFile) {
       try {
         const fileRdo = await uploadFile<UploadedFileRdo>(
-          [this.accountOptions.fileStorageServiceUrl, RouteAlias.Upload].join('/'),
+          joinUrl(this.accountOptions.fileStorageServiceUrl, RouteAlias.Upload),
           avatarFile,
           FILE_KEY,
           requestId

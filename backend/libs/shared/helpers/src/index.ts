@@ -3,6 +3,7 @@ export * from './lib/common';
 export * from './lib/config';
 export * from './lib/form-data';
 export * from './lib/headers';
+export { joinUrl } from './lib/join-url';
 export { getJwtOptions, createJWTPayload } from './lib/jwt';
 export { getMailerAsyncOptions } from './lib/mail';
 export { getMongooseOptions } from './lib/mongo-db';

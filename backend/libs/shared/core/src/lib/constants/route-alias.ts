@@ -1,10 +1,10 @@
 export enum RouteAlias {
+  Users = 'users',
   Register = 'register',
   Login = 'login',
   Logout = 'logout',
   Refresh = 'refresh',
   Check = 'check',
-  ChangePassword = 'change-password',
   //
   //
   Upload = 'upload'

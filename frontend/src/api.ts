@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
-import { AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
+import { joinUrl, AUTH_NAME, TokenPayloadRdo, UserTokenRdo } from './types/backend';
 import { ApiRoute, HttpCode } from './const';
 
 const BACKEND_URL = 'http://localhost:3000/api';
@@ -18,7 +18,7 @@ async function validateAccessToken(
   timeout = REQUEST_TIMEOUT
 ): Promise<boolean> {
   {
-    const url = [BACKEND_URL, ApiRoute.Check].join('');
+    const url = joinUrl(BACKEND_URL, ApiRoute.Check);
     const options = {
       timeout,
       headers: { [AUTH_NAME]: getBearerAuthorization(accessToken) }
@@ -39,7 +39,7 @@ async function refreshRefreshToken(
   timeout = REQUEST_TIMEOUT
 ): Promise<UserTokenRdo> {
   {
-    const url = [BACKEND_URL, ApiRoute.Refresh].join('');
+    const url = joinUrl(BACKEND_URL, ApiRoute.Refresh);
     const options = {
       timeout,
       headers: { [AUTH_NAME]: getBearerAuthorization(refreshToken) }
