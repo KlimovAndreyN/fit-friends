@@ -4,7 +4,7 @@ import { UserRdo } from '../../rdo/user.rdo';
 import { UserTokenRdo } from '../../rdo/user-token.rdo';
 import { LoggedUserRdo } from '../../rdo/logged-user.rdo';
 import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
-import { AuthenticationUserMessage } from '../authentication.constant';
+import { AuthenticationMessage } from '../authentication.constant';
 
 export const AuthenticationApiResponse = {
   UserCreated: {
@@ -14,7 +14,7 @@ export const AuthenticationApiResponse = {
   },
   UserExist: {
     status: HttpStatus.CONFLICT,
-    description: AuthenticationUserMessage.Exists
+    description: AuthenticationMessage.Exists
   },
   RefreshTokens: {
     type: UserTokenRdo,
@@ -24,10 +24,6 @@ export const AuthenticationApiResponse = {
   Unauthorized: {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized.'
-  },
-  NotAllow: {
-    status: HttpStatus.FORBIDDEN,
-    description: AuthenticationUserMessage.RequireLogout
   },
   BadRequest: {
     status: HttpStatus.BAD_REQUEST,
@@ -58,6 +54,6 @@ export const AuthenticationApiResponse = {
   },
   UserNotFound: {
     status: HttpStatus.NOT_FOUND,
-    description: AuthenticationUserMessage.NotFound
+    description: AuthenticationMessage.NotFound
   }
 } as const;

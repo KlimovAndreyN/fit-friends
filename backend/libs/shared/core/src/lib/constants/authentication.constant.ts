@@ -2,7 +2,7 @@ import { HttpStatus, ParseFilePipeBuilder } from '@nestjs/common';
 
 import { UserApiProperty } from './api-property/user.api-property';
 
-export const AuthenticationUserMessage = {
+export const AuthenticationMessage = {
   Exists: 'User with this email already exists.',
   NotFound: 'User not found.',
   WrongPassword: 'User password is wrong.',

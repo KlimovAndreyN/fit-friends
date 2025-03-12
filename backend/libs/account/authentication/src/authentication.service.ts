@@ -1,12 +1,12 @@
 import {
-  ConflictException, ForbiddenException, HttpException, HttpStatus, Inject,
+  ConflictException, BadRequestException, HttpException, HttpStatus, Inject,
   Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { join } from 'path/posix';
 
-import { AuthenticationUserMessage, CreateUserDto, FILE_KEY, LoginUserDto, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
+import { AuthenticationMessage, CreateUserDto, FILE_KEY, LoginUserDto, RouteAlias, Token, UploadedFileRdo, User } from '@backend/shared/core';
 import { createJWTPayload, joinUrl, parseAxiosError, uploadFile } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -33,14 +33,14 @@ export class AuthenticationService {
     avatarFile?: Express.Multer.File
   ): Promise<FitUserEntity> {
     if (authorizationHeader) {
-      throw new ForbiddenException(AuthenticationUserMessage.RequireLogout);
+      throw new BadRequestException(AuthenticationMessage.RequireLogout);
     }
 
     const { email, name, password } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
     if (existUser) {
-      throw new ConflictException(AuthenticationUserMessage.Exists);
+      throw new ConflictException(AuthenticationMessage.Exists);
     }
 
     const fitUser = {
@@ -120,7 +120,7 @@ export class AuthenticationService {
     const user = await this.fitUserRepository.findById(id);
 
     if (!user) {
-      throw new NotFoundException(AuthenticationUserMessage.NotFound);
+      throw new NotFoundException(AuthenticationMessage.NotFound);
     }
 
     return user;
@@ -143,7 +143,7 @@ export class AuthenticationService {
     const isCorrectPassword = await existUser.comparePassword(password);
 
     if (!isCorrectPassword) {
-      throw new UnauthorizedException(AuthenticationUserMessage.WrongPassword);
+      throw new UnauthorizedException(AuthenticationMessage.WrongPassword);
     }
 
     return existUser;
