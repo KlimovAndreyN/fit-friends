@@ -1,3 +1,4 @@
+/*
 import { PrismaClient } from '@prisma/client';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
@@ -92,3 +93,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+*/

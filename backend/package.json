@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
+    "lint": "tsc --project ./tsconfig.base.json --noEmit && eslint {src,apps,libs,test}/**/*.ts"
   },
   "private": true,
   "dependencies": {

@@ -1,10 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { RabbitHeader, RabbitPayload, RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 
-import { ConfigAlias, RabbitRouting, XHeader } from '@backend/shared/core';
+import { ConfigAlias, CreateSubscriberDto, RabbitRouting, XHeader } from '@backend/shared/core';
 
 import { EmailSubscriberService } from './email-subscriber.service';
-import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 
 @Controller()
 export class EmailSubscriberController {

@@ -1,3 +1,4 @@
+/*
 import mongoose, * as Mongoose from 'mongoose';
 import { genSalt, hash } from 'bcrypt';
 
@@ -52,3 +53,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+*/
