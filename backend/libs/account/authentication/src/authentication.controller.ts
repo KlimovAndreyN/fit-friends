@@ -62,6 +62,7 @@ export class AuthenticationController {
 
   @ApiOperation(AuthenticationApiOperation.Logout)
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @UseInterceptors(InjectBearerAuthInterceptor) //! ?
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
@@ -73,7 +74,6 @@ export class AuthenticationController {
 
   @ApiOperation(AuthenticationApiOperation.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.RefreshTokens.status)
@@ -87,7 +87,6 @@ export class AuthenticationController {
 
   @ApiOperation(AuthenticationApiOperation.Check)
   @ApiResponse(AuthenticationApiResponse.CheckSuccess)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)

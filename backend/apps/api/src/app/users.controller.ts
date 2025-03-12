@@ -33,6 +33,7 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckNotAuthGuard)
@@ -68,14 +69,14 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
+  @UseGuards(CheckNotAuthGuard)
   @Post(RouteAlias.Login)
   public async login(
     @Body() dto: LoginUserDto,
-    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth
+    @Req() { requestId }: RequestWithRequestId
   ): Promise<LoggedUserRdo> {
     const url = this.usersService.getUrl(RouteAlias.Login);
-    // headers: Authorization - т.к. только анонимный пользователь может регистрироваться
-    const headers = makeHeaders(requestId, bearerAuth);
+    const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.post<LoggedUserRdo>(url, dto, headers);
 
     return data;
@@ -83,6 +84,7 @@ export class UsersController {
 
   @ApiOperation(AuthenticationApiOperation.Logout)
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
   @Delete(RouteAlias.Logout)
@@ -95,7 +97,6 @@ export class UsersController {
 
   @ApiOperation(AuthenticationApiOperation.RefreshTokens)
   @ApiResponse(AuthenticationApiResponse.RefreshTokens)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.RefreshTokens.status)
@@ -110,7 +111,6 @@ export class UsersController {
 
   @ApiOperation(AuthenticationApiOperation.Check)
   @ApiResponse(AuthenticationApiResponse.CheckSuccess)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @HttpCode(AuthenticationApiResponse.CheckSuccess.status)
@@ -124,6 +124,7 @@ export class UsersController {
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
+  @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiParam(ApiParamOption.UserId)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @UseGuards(CheckAuthGuard)

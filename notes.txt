@@ -50,10 +50,11 @@ aaa@aaa.aaa
 
       throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
 
-RequestWithRequestIdAndBearerAuth
-
+      this.apiOptions.accountServiceUrl
       'authentication'
       'auth'
+      
+      .fileServiceUrl
       'file-upload'
       'files'
 
