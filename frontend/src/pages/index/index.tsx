@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { MouseEvent } from 'react';
 
-import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
 import { useAppDispatch } from '../../hooks';
@@ -26,42 +25,61 @@ function Index(): JSX.Element {
       <Header />
 
       <header className="header">
-        <div className="container"><span className="header__logo">
-          <svg width="187" height="70" aria-hidden="true">
-            <use xlinkHref="#logo"></use>
-          </svg></span>
+        <div className="container">
+          <span className="header__logo">
+            <svg width="187" height="70" aria-hidden="true">
+              <use xlinkHref="#logo"></use>
+            </svg>
+          </span>
           <nav className="main-nav">
             <ul className="main-nav__list">
-              <li className="main-nav__item"><a className="main-nav__link is-active" href="#" aria-label="На главную">
-                <svg width="18" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-home"></use>
-                </svg></a></li>
-              <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Личный кабинет">
-                <svg width="16" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-user"></use>
-                </svg></a></li>
-              <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Друзья">
-                <svg width="22" height="16" aria-hidden="true">
-                  <use xlinkHref="#icon-friends"></use>
-                </svg></a></li>
-              <li className="main-nav__item main-nav__item--notifications"><a className="main-nav__link" href="#" aria-label="Уведомления">
-                <svg width="14" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-notification"></use>
-                </svg></a>
+              <li className="main-nav__item">
+                <a className="main-nav__link is-active" href="#" aria-label="На главную">
+                  <svg width="18" height="18" aria-hidden="true">
+                    <use xlinkHref="#icon-home"></use>
+                  </svg>
+                </a>
+              </li>
+              <li className="main-nav__item">
+                <a className="main-nav__link" href="#" aria-label="Личный кабинет">
+                  <svg width="16" height="18" aria-hidden="true">
+                    <use xlinkHref="#icon-user"></use>
+                  </svg>
+                </a>
+              </li>
+              <li className="main-nav__item">
+                <a className="main-nav__link" href="#" aria-label="Друзья">
+                  <svg width="22" height="16" aria-hidden="true">
+                    <use xlinkHref="#icon-friends"></use>
+                  </svg>
+                </a>
+              </li>
+              <li className="main-nav__item main-nav__item--notifications">
+                <a className="main-nav__link" href="#" aria-label="Уведомления">
+                  <svg width="14" height="18" aria-hidden="true">
+                    <use xlinkHref="#icon-notification"></use>
+                  </svg>
+                </a>
                 <div className="main-nav__dropdown">
                   <p className="main-nav__label">Оповещения</p>
                   <ul className="main-nav__sublist">
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Катерина пригласила вас на&nbsp;тренировку</p>
-                      <time className="notification__time" dateTime="2023-12-23 12:35">23 декабря, 12:35</time></a>
+                    <li className="main-nav__subitem">
+                      <a className="notification is-active" href="#">
+                        <p className="notification__text">Катерина пригласила вас на&nbsp;тренировку</p>
+                        <time className="notification__time" dateTime="2023-12-23 12:35">23 декабря, 12:35</time>
+                      </a>
                     </li>
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Никита отклонил приглашение на&nbsp;совместную тренировку</p>
-                      <time className="notification__time" dateTime="2023-12-22 09:22">22 декабря, 09:22</time></a>
+                    <li className="main-nav__subitem">
+                      <a className="notification is-active" href="#">
+                        <p className="notification__text">Никита отклонил приглашение на&nbsp;совместную тренировку</p>
+                        <time className="notification__time" dateTime="2023-12-22 09:22">22 декабря, 09:22</time>
+                      </a>
                     </li>
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Татьяна добавила вас в&nbsp;друзья</p>
-                      <time className="notification__time" dateTime="2023-12-18 18:50">18 декабря, 18:50</time></a>
+                    <li className="main-nav__subitem">
+                      <a className="notification is-active" href="#">
+                        <p className="notification__text">Татьяна добавила вас в&nbsp;друзья</p>
+                        <time className="notification__time" dateTime="2023-12-18 18:50">18 декабря, 18:50</time>
+                      </a>
                     </li>
                     {/*
                      //!
@@ -77,7 +95,8 @@ function Index(): JSX.Element {
           </nav>
           <div className="search">
             <form action="#" method="get">
-              <label><span className="search__label">Поиск</span>
+              <label>
+                <span className="search__label">Поиск</span>
                 <input type="search" name="search" />
                 <svg className="search__icon" width="20" height="20" aria-hidden="true">
                   <use xlinkHref="#icon-search"></use>
@@ -193,7 +212,8 @@ function Index(): JSX.Element {
                           <use xlinkHref="#logotype"></use>
                         </svg>
                       </div>
-                    </div><span className="promo-slider__text">Горячие предложения на тренировки на фитболе</span>
+                    </div>
+                    <span className="promo-slider__text">Горячие предложения на тренировки на фитболе</span>
                     <div className="promo-slider__bottom-container">
                       <div className="promo-slider__slider-dots">
                         <button className="promo-slider__slider-dot--active promo-slider__slider-dot" aria-label="первый слайд"></button>
@@ -221,7 +241,8 @@ function Index(): JSX.Element {
                           <use xlinkHref="#logotype"></use>
                         </svg>
                       </div>
-                    </div><span className="promo-slider__text">Горячие предложения на&nbsp;Тренировки с&nbsp;резинкой для фитнеса</span>
+                    </div>
+                    <span className="promo-slider__text">Горячие предложения на&nbsp;Тренировки с&nbsp;резинкой для фитнеса</span>
                     <div className="promo-slider__bottom-container">
                       <div className="promo-slider__slider-dots">
                         <button className="promo-slider__slider-dot" aria-label="первый слайд"></button>
@@ -249,7 +270,8 @@ function Index(): JSX.Element {
                           <use xlinkHref="#logotype"></use>
                         </svg>
                       </div>
-                    </div><span className="promo-slider__text">Горячие предложения на&nbsp;Комплекс упражнений на&nbsp;растяжку всего тела для новичков</span>
+                    </div>
+                    <span className="promo-slider__text">Горячие предложения на&nbsp;Комплекс упражнений на&nbsp;растяжку всего тела для новичков</span>
                     <div className="promo-slider__bottom-container">
                       <div className="promo-slider__slider-dots">
                         <button className="promo-slider__slider-dot" aria-label="первый слайд"></button>
@@ -289,7 +311,8 @@ function Index(): JSX.Element {
             <div className="popular-trainings__wrapper">
               <div className="popular-trainings__title-wrapper">
                 <h2 className="popular-trainings__title">Популярные тренировки</h2>
-                <button className="btn-flat popular-trainings__button" type="button"><span>Смотреть все</span>
+                <button className="btn-flat popular-trainings__button" type="button">
+                  <span>Смотреть все</span>
                   <svg width="14" height="10" aria-hidden="true">
                     <use xlinkHref="#arrow-right"></use>
                   </svg>
@@ -332,7 +355,8 @@ function Index(): JSX.Element {
                         <div className="thumbnail-training__rate">
                           <svg width="16" height="16" aria-hidden="true">
                             <use xlinkHref="#icon-star"></use>
-                          </svg><span className="thumbnail-training__rate-value">5</span>
+                          </svg>
+                          <span className="thumbnail-training__rate-value">5</span>
                         </div>
                       </div>
                       <div className="thumbnail-training__text-wrapper">
@@ -369,7 +393,8 @@ function Index(): JSX.Element {
                         <div className="thumbnail-training__rate">
                           <svg width="16" height="16" aria-hidden="true">
                             <use xlinkHref="#icon-star"></use>
-                          </svg><span className="thumbnail-training__rate-value">5</span>
+                          </svg>
+                          <span className="thumbnail-training__rate-value">5</span>
                         </div>
                       </div>
                       <div className="thumbnail-training__text-wrapper">
@@ -406,7 +431,8 @@ function Index(): JSX.Element {
                         <div className="thumbnail-training__rate">
                           <svg width="16" height="16" aria-hidden="true">
                             <use xlinkHref="#icon-star"></use>
-                          </svg><span className="thumbnail-training__rate-value">5</span>
+                          </svg>
+                          <span className="thumbnail-training__rate-value">5</span>
                         </div>
                       </div>
                       <div className="thumbnail-training__text-wrapper">
@@ -443,7 +469,8 @@ function Index(): JSX.Element {
                         <div className="thumbnail-training__rate">
                           <svg width="16" height="16" aria-hidden="true">
                             <use xlinkHref="#icon-star"></use>
-                          </svg><span className="thumbnail-training__rate-value">5</span>
+                          </svg>
+                          <span className="thumbnail-training__rate-value">5</span>
                         </div>
                       </div>
                       <div className="thumbnail-training__text-wrapper">
@@ -608,9 +635,10 @@ function Index(): JSX.Element {
 
       <div>Index</div>
       <a className="main-nav__link" onClick={handleSignOutClick} aria-label="Выход">
-        <svg width="16px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M21.593 10.943c.584.585.584 1.53 0 2.116L18.71 15.95c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41 9.552 9.552 0 0 1 1.689-1.345l.387-.242-.207-.206a10 10 0 0 1-2.24.254H8.998a1 1 0 1 1 0-2h7.921a10 10 0 0 1 2.24.254l.207-.206-.386-.241a9.562 9.562 0 0 1-1.69-1.348.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0l2.883 2.893zM14 16a1 1 0 0 0-1 1v1.5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1.505a1 1 0 1 0 2 0V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v13A2.5 2.5 0 0 0 5.5 21h7a2.5 2.5 0 0 0 2.5-2.5V17a1 1 0 0 0-1-1z" fill="#000000" /></svg>
+        <svg width="16px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fillRule="evenodd" clipRule="evenodd" d="M21.593 10.943c.584.585.584 1.53 0 2.116L18.71 15.95c-.39.39-1.03.39-1.42 0a.996.996 0 0 1 0-1.41 9.552 9.552 0 0 1 1.689-1.345l.387-.242-.207-.206a10 10 0 0 1-2.24.254H8.998a1 1 0 1 1 0-2h7.921a10 10 0 0 1 2.24.254l.207-.206-.386-.241a9.562 9.562 0 0 1-1.69-1.348.996.996 0 0 1 0-1.41c.39-.39 1.03-.39 1.42 0l2.883 2.893zM14 16a1 1 0 0 0-1 1v1.5a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1.505a1 1 0 1 0 2 0V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v13A2.5 2.5 0 0 0 5.5 21h7a2.5 2.5 0 0 0 2.5-2.5V17a1 1 0 0 0-1-1z" fill="#000000" />
+        </svg>
       </a>
-      <Footer />
     </>
   );
 }
