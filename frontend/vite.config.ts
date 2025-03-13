@@ -3,6 +3,7 @@
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,6 +11,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.ts'],
+    setupFiles: ['./src/setupTests.ts']
   },
+  resolve: {
+    alias: {
+      '@backend/shared/constants/route': path.resolve(__dirname, '../backend/libs/shared/core/src/lib/constants/route.ts')
+    }
+  }
 });
