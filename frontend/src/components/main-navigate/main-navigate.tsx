@@ -1,7 +1,9 @@
 import { MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/action';
+import { AppRoute } from '../../const';
 
 function MainNavigate(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,25 +19,25 @@ function MainNavigate(): JSX.Element {
     <nav className="main-nav">
       <ul className="main-nav__list">
         <li className="main-nav__item">
-          <a className="main-nav__link is-active" href="#" aria-label="На главную">
+          <Link className="main-nav__link is-active" to={AppRoute.Root} aria-label="На главную">
             <svg width="18" height="18" aria-hidden="true">
               <use xlinkHref="#icon-home"></use>
             </svg>
-          </a>
+          </Link>
         </li>
         <li className="main-nav__item">
-          <a className="main-nav__link" href="#" aria-label="Личный кабинет">
+          <Link className="main-nav__link" to={AppRoute.PersonalAccount} aria-label="Личный кабинет">
             <svg width="16" height="18" aria-hidden="true">
               <use xlinkHref="#icon-user"></use>
             </svg>
-          </a>
+          </Link>
         </li>
         <li className="main-nav__item">
-          <a className="main-nav__link" href="#" aria-label="Друзья">
+          <Link className="main-nav__link" to={AppRoute.FriendsList} aria-label="Друзья">
             <svg width="22" height="16" aria-hidden="true">
               <use xlinkHref="#icon-friends"></use>
             </svg>
-          </a>
+          </Link>
         </li>
         <li className="main-nav__item main-nav__item--notifications">
           <a className="main-nav__link" href="#" aria-label="Уведомления">

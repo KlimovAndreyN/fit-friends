@@ -18,7 +18,9 @@ export enum AppRoute {
   Intro = '/intro',
   SignIn = '/sign-in',
   SignUp = '/sign-up',
-  NotFound = '/404'
+  PersonalAccount = 'personal-account',
+  FriendsList = 'friends-list',
+  NotFound = '/404',
 }
 
 export const ApiRoute = {

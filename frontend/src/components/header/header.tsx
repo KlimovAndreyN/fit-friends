@@ -1,14 +1,11 @@
+import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
 
 function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container">
-        <span className="header__logo">
-          <svg width="187" height="70" aria-hidden="true">
-            <use xlinkHref="#logo"></use>
-          </svg>
-        </span>
+        <Logo />
         <MainNavigate />
         <div className="search">
           <form action="#" method="get">
