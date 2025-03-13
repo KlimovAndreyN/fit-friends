@@ -21,7 +21,7 @@ function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps
   }
 
   return (
-    authorizationStatus !== restrictedFor
+    (authorizationStatus !== restrictedFor)
       ? children
       : <Navigate to={redirectTo} />
   );
