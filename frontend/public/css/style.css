@@ -10519,7 +10519,9 @@ input:active + .custom-textarea__text {
     -webkit-column-gap: 30px;
     -moz-column-gap: 30px;
     column-gap: 30px;
-    min-width: 362px;
+    /*five href*/
+    min-width: 436px;
+    /*min-width: 362px;*/
   }
 }
 
