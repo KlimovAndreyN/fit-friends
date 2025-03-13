@@ -1,14 +1,7 @@
 import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
 
-//!
-/*
-type HeaderProps = {
-  isActiveLogoLink?: boolean;
-}
-*/
-
-function Header(/*{ isActiveLogoLink = false }: HeaderProps*/): JSX.Element {
+function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="container">

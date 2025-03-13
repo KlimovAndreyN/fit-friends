@@ -5,6 +5,14 @@ import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/action';
 import { AppRoute } from '../../const';
 
+//!
+/*
+type HeaderProps = {
+  isActiveLogoLink?: boolean;
+}
+function Header(/*{ isActiveLogoLink = false }: HeaderProps
+*/
+
 function MainNavigateItem(): JSX.Element {
   const { pathname } = useLocation();
   const isIndexPage = pathname === AppRoute.Root;
