@@ -3,17 +3,20 @@ import { toast } from 'react-toastify';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
-import { joinUrl, getBearerAuthorization, getViteEnvVariable } from './utils/common';
+import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { refreshRefreshToken, validateAccessToken } from './tokens';
 import { ApiRoute, AUTH_NAME } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
-const BACKEND_URL = getViteEnvVariable(VITE_BACKEND_URL_ENV);
+const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';
 const REQUEST_TIMEOUT = 5000;
+
+const baseURL = getViteEnvVariable(VITE_BACKEND_URL_ENV);
+const showUrlAxiosError = getViteEnvBooleanVariable(VITE_SHOW_URL_AXIOS_ERROR_ENV);
 
 export function createAPI(): AxiosInstance {
   const api = axios.create({
-    baseURL: BACKEND_URL,
+    baseURL,
     timeout: REQUEST_TIMEOUT,
   });
 
@@ -34,12 +37,12 @@ export function createAPI(): AxiosInstance {
 
         if (currentAccessToken && currentRefreshToken) {
           //! если идет проверка статуса, то будет вызвана два раза... как нибуть зачесть ответ первого вызова для второго...
-          const checkUrl = joinUrl(BACKEND_URL, ApiRoute.Check);
+          const checkUrl = joinUrl(baseURL, ApiRoute.Check);
           const isValid = await validateAccessToken(checkUrl, currentAccessToken);
 
           if (!isValid) {
             try {
-              const refreshUrl = joinUrl(BACKEND_URL, ApiRoute.Refresh);
+              const refreshUrl = joinUrl(baseURL, ApiRoute.Refresh);
               const { accessToken, refreshToken } = await refreshRefreshToken(refreshUrl, currentRefreshToken);
 
               AccessTokenStore.save(accessToken);
@@ -69,7 +72,7 @@ export function createAPI(): AxiosInstance {
 
       if (url !== ApiRoute.Check || response && !response.data) {
         toast.dismiss();
-        toast.warn(getAxiosErrorMessage(error));
+        toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
       }
 
       return Promise.reject(error);

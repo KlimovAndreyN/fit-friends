@@ -6,7 +6,7 @@ export function getBearerAuthorization(token: string): string {
   return `Bearer ${token}`;
 }
 
-export function getViteEnvVariable(envName: keyof ImportMetaEnv, showError = true): string {
+export function getViteEnvVariable(envName: keyof ImportMetaEnv, defaultValue = '', showError = true): string {
   // при сборке записывает значения из .env в общий скрипт
   const value = import.meta.env[envName] as string | undefined;
 
@@ -20,5 +20,11 @@ export function getViteEnvVariable(envName: keyof ImportMetaEnv, showError = tru
     }
   }
 
-  return value || '';
+  return value || defaultValue;
+}
+
+export function getViteEnvBooleanVariable(envName: keyof ImportMetaEnv, showError = false): boolean {
+  const value = getViteEnvVariable(envName, 'false', showError);
+
+  return value === 'true';
 }

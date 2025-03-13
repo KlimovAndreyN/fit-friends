@@ -9,11 +9,15 @@ export type DataAxiosError = {
   statusCode: number;
 }
 
-export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>): string {
-  const { response, message, config: { baseURL, url } } = error;
+export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>, showUrl: boolean): string {
+  const { response, message, config } = error;
   const messages: string[] = [];
 
-  messages.push(joinUrl(baseURL || '', url || ''));
+  if (showUrl) {
+    const { baseURL, url } = config;
+
+    messages.push(joinUrl(baseURL || '', url || ''));
+  }
 
   if (response && response.data) {
     const { data, statusText } = response;
