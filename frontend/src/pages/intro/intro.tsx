@@ -13,7 +13,7 @@ function Intro(): JSX.Element {
   };
 
   const props = {
-    title: PageTitle.Loading,
+    title: PageTitle.Intro,
     children:
       <>
         <button className="btn intro__button" type="button" onClick={handleRegisterButtonClick}>Регистрация</button>

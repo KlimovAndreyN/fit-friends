@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import classNames from 'classnames';
 
 import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/action';
@@ -10,6 +11,8 @@ function MainNavigate(): JSX.Element {
   const isIndexPage = pathname === AppRoute.Root;
   const isPersonalAccountPage = pathname === AppRoute.PersonalAccount;
   const isFriendsListPage = pathname === AppRoute.FriendsList;
+
+  const className1 = classNames('main-nav__link', { 'is-active': isIndexPage });
 
   const dispatch = useAppDispatch();
 
@@ -24,7 +27,7 @@ function MainNavigate(): JSX.Element {
     <nav className="main-nav">
       <ul className="main-nav__list">
         <li className="main-nav__item">
-          <Link className={`main-nav__link${isIndexPage ? ' is-active' : ''}`} to={AppRoute.Root} aria-label="На главную">
+          <Link className={className1} to={AppRoute.Root} aria-label="На главную">
             <svg width="18" height="18" aria-hidden="true">
               <use xlinkHref="#icon-home"></use>
             </svg>

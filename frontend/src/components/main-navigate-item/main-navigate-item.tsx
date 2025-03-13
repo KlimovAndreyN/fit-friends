@@ -1,8 +1,5 @@
-import { MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useAppDispatch } from '../../hooks';
-import { logoutUser } from '../../store/action';
 import { AppRoute } from '../../const';
 
 //!
@@ -16,17 +13,6 @@ function Header(/*{ isActiveLogoLink = false }: HeaderProps
 function MainNavigateItem(): JSX.Element {
   const { pathname } = useLocation();
   const isIndexPage = pathname === AppRoute.Root;
-  const isPersonalAccountPage = pathname === AppRoute.PersonalAccount;
-  const isFriendsListPage = pathname === AppRoute.FriendsList;
-
-  const dispatch = useAppDispatch();
-
-  const handleSignOutClick = (event: MouseEvent) => {
-    //! дополнительный функционал
-    event.preventDefault();
-
-    dispatch(logoutUser());
-  };
 
   return (
     <li className="main-nav__item">
