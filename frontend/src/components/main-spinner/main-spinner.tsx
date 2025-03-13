@@ -5,7 +5,7 @@ import { PageTitle } from '../../const';
 function MainSpinner(): JSX.Element {
   const props = {
     title: PageTitle.Loading,
-    children: <p className="intro__text">Загрузка...</p>
+    children: <h1>Загрузка...</h1>
   };
 
   return (
