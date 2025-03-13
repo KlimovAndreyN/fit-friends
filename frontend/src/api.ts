@@ -3,8 +3,7 @@ import { toast } from 'react-toastify';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
-import { getBearerAuthorization, getViteEnvVariable } from './utils/common';
-import { joinUrl } from './utils/backend';
+import { joinUrl, getBearerAuthorization, getViteEnvVariable } from './utils/common';
 import { refreshRefreshToken, validateAccessToken } from './tokens';
 import { ApiRoute, AUTH_NAME } from './const';
 

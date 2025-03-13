@@ -1,3 +1,7 @@
+export function joinUrl(...items: string[]): string {
+  return [...items].join('/');
+}
+
 export function getBearerAuthorization(token: string): string {
   return `Bearer ${token}`;
 }
