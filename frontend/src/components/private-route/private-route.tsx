@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-import Spinner from '../spinner/spinner';
+import MainSpinner from '../main-spinner/main-spinner';
 
 import { AuthorizationStatus } from '../../types/types';
 import { useAppSelector } from '../../hooks';
@@ -17,7 +17,7 @@ function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
-    return <Spinner />;
+    return <MainSpinner />;
   }
 
   return (

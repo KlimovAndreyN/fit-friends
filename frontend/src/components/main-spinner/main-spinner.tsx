@@ -1,20 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import { AppRoute, PageTitle } from '../../const';
+import { PageTitle } from '../../const';
 
-function Intro(): JSX.Element {
-  //! history не работает
-  const navigate = useNavigate();
-
-  const handleRegisterButtonClick = () => {
-    navigate(AppRoute.SignUp);
-  };
-
+function MainSpinner(): JSX.Element {
   return (
     <main>
       <Helmet>
-        <title>{PageTitle.Intro}</title>
+        <title>{PageTitle.Loading}</title>
       </Helmet>
       <div className="intro">
         <div className="intro__background">
@@ -34,8 +26,7 @@ function Intro(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            <button className="btn intro__button" type="button" onClick={handleRegisterButtonClick}>Регистрация</button>
-            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.SignIn}>Вход</Link></p>
+            <p className="intro__text">Загрузка...</p>
           </div>
         </div>
       </div>
@@ -43,4 +34,4 @@ function Intro(): JSX.Element {
   );
 }
 
-export default Intro;
+export default MainSpinner;

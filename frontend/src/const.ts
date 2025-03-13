@@ -7,6 +7,7 @@ export const MAIN_TITLE = 'FitFriends';
 
 export const PageTitle = {
   Index: MAIN_TITLE,
+  Loading: `Загрузка... — ${MAIN_TITLE}`,
   Intro: `Разводящая — ${MAIN_TITLE}`,
   SignIn: `Войти — ${MAIN_TITLE}`,
   SignUp: `Регистрация — ${MAIN_TITLE}`,
