@@ -51,6 +51,7 @@ export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra 
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
+
     //! useNavigate не работает
     history.push(AppRoute.Root);
 
@@ -64,16 +65,13 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
     const { api, history } = extra;
 
     try {
-      await api.get<ITokenPayloadRdo>(ApiRoute.Logout);
-      //! возможно сделать deleteRefreshToken как refreshRefreshToken....
+      await api.delete<ITokenPayloadRdo>(ApiRoute.Logout);
     } finally {
       AccessTokenStore.drop();
       RefreshTokenStore.drop();
 
-      //! не успевает state.authorizationStatus = AuthorizationStatus.NoAuth;  ?
-      //! может только когда ошибка?
-      history.push(AppRoute.Root);
-      //!history.push(AppRoute.Intro);
+      //! useNavigate не работает
+      history.push(AppRoute.Intro);
     }
   }
 );

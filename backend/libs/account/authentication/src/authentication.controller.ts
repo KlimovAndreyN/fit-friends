@@ -7,9 +7,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
-  LoggedUserRdo, RequestWithBearerAuth, RequestWithRequestId, RequestWithTokenPayload,
+  LoggedUserRdo, UserAvatarOption, RequestWithRequestId, RequestWithTokenPayload,
   TokenPayloadRdo, AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
-  parseUserAvatarFilePipeBuilder, UserAvatarOption, CreateUserDto, ServiceRoute
+  parseUserAvatarFilePipeBuilder, CreateUserDto, ServiceRoute
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -70,12 +70,11 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.LogoutSuccess)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
   @ApiBearerAuth(BearerAuth.RefreshToken)
-  @UseInterceptors(InjectBearerAuthInterceptor) //! ?
   @HttpCode(AuthenticationApiResponse.LogoutSuccess.status)
-  @UseGuards(JwtRefreshGuard) //! ?
+  @UseGuards(JwtRefreshGuard)
   @Delete(AccountRoute.Logout)
-  public async logout(@Req() { bearerAuth }: RequestWithBearerAuth): Promise<void> {
-    await this.authService.logout(bearerAuth);
+  public async logout(): Promise<void> {
+    // Будет удалено при проверке токена в JwtRefreshStrategy.validate
   }
 
   @ApiOperation(AuthenticationApiOperation.Register)

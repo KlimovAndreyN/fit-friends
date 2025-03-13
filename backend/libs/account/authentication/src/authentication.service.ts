@@ -104,16 +104,6 @@ export class AuthenticationService {
     }
   }
 
-  public async logout(authorizationHeader: string): Promise<void> {
-    if (!authorizationHeader) {
-      return;
-    }
-
-    this.logger.log('AuthenticationService.logout');
-    // доделать позже проверить, что это refreh token... удалить его ...refreshTokenService.deleteRefreshSession...
-  }
-
-
   public async getUser(id: string): Promise<FitUserEntity> {
     const user = await this.fitUserRepository.findById(id);
 
