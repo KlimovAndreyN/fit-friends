@@ -6,7 +6,6 @@ type BaseIntroProps = {
 }
 
 function BaseIntro({ title, children }: BaseIntroProps): JSX.Element {
-
   return (
     <main>
       <Helmet>
