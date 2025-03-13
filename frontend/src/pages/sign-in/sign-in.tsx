@@ -1,7 +1,8 @@
 import { FormEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import { LoginUserDto } from '../../types/backend';
+import { LoginUserDtoInterface } from '@backend/shared/interafces/dto';
+
 import { useAppDispatch } from '../../hooks';
 import { loginUser } from '../../store/action';
 import { PageTitle } from '../../const';
@@ -21,7 +22,7 @@ function SignIn(): JSX.Element {
     const formData = new FormData(form);
     const email = formData.get(FormFieldName.email)?.toString() || '';
     const password = formData.get(FormFieldName.password)?.toString() || '';
-    const dto: LoginUserDto = { email, password };
+    const dto: LoginUserDtoInterface = { email, password };
 
     dispatch(loginUser(dto));
   };

@@ -31,8 +31,13 @@
        else mast added interafces
     */
     "strictPropertyInitialization": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
     /**/
+    "paths": {
+      "@backend/shared/interafces/dto": [
+        "../backend/libs/shared/core/src/lib/interfaces/dto/index.ts"
+      ]
+    }
   },
   "include": [
     "src",

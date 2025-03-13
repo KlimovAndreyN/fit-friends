@@ -2,8 +2,10 @@ import type { History } from 'history';
 import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+import { ILoginUserDto } from '@backend/shared/interafces/dto';
+
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
-import { LoggedUserRdo, LoginUserDto, TokenPayloadRdo } from '../types/backend';
+import { LoggedUserRdo, TokenPayloadRdo } from '../types/backend';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 
 type Extra = {
@@ -40,7 +42,7 @@ export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extr
   }
 );
 
-export const loginUser = createAsyncThunk<string, LoginUserDto, { extra: Extra }>(
+export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
