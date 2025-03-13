@@ -60,9 +60,21 @@ export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra 
 
 export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
-  () => {
-    AccessTokenStore.drop();
-    RefreshTokenStore.drop();
+  async (_, { extra }) => {
+    const { api, history } = extra;
+
+    try {
+      await api.get<ITokenPayloadRdo>(ApiRoute.Logout);
+      //! возможно сделать deleteRefreshToken как refreshRefreshToken....
+    } finally {
+      AccessTokenStore.drop();
+      RefreshTokenStore.drop();
+
+      //! не успевает state.authorizationStatus = AuthorizationStatus.NoAuth;  ?
+      //! может только когда ошибка?
+      history.push(AppRoute.Root);
+      //!history.push(AppRoute.Intro);
+    }
   }
 );
 //!

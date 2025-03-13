@@ -20,8 +20,17 @@ export function createAPI(): AxiosInstance {
   api.interceptors.request.use(
     async (config: AxiosRequestConfig) => {
       if (config.headers) {
-        const currentAccessToken = AccessTokenStore.getToken();
         const currentRefreshToken = RefreshTokenStore.getToken();
+
+        if (config.url === ApiRoute.Logout) {
+          if (currentRefreshToken) {
+            config.headers[AUTH_NAME] = getBearerAuthorization(currentRefreshToken);
+          }
+
+          return config;
+        }
+
+        const currentAccessToken = AccessTokenStore.getToken();
 
         if (currentAccessToken && currentRefreshToken) {
           //! если идет проверка статуса, то будет вызвана два раза... как нибуть зачесть ответ первого вызова для второго...
