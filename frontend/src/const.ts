@@ -1,10 +1,8 @@
-import { AUTH_NAME } from '../../backend/libs/shared/core/src/lib/constants/bearer-auth';
 import { AccountRoute, ApiServiceRoute } from '../../backend/libs/shared/core/src/lib/constants/route';
 
 import { joinUrl } from './utils/backend';
 
-export { AUTH_NAME };
-
+export const AUTH_NAME = 'authorization';
 export const MAIN_TITLE = 'FitFriends';
 
 export const PageTitle = {

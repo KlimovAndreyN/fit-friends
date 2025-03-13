@@ -25,17 +25,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    /*
-       Compile RDO and DTO classes from backend,
-       may be needed '@nestjs/swagger' and 'class-transformer' in devDependencies,
-       else mast added interafces
-    */
-    "strictPropertyInitialization": false,
-    "experimentalDecorators": true,
-    /**/
     "paths": {
       "@backend/shared/interafces/dto": [
         "../backend/libs/shared/core/src/lib/interfaces/dto/index.ts"
+      ],
+      "@backend/shared/interafces/rdo": [
+        "../backend/libs/shared/core/src/lib/interfaces/rdo/index.ts"
       ]
     }
   },

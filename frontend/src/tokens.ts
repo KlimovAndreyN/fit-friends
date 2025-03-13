@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+import { ITokenPayloadRdo, IUserTokenRdo } from '@backend/shared/interafces/rdo';
+
 import { getBearerAuthorization } from './utils/common';
-import { TokenPayloadRdo, UserTokenRdo } from './types/backend';
 import { HttpCode, AUTH_NAME } from './const';
 
 const REQUEST_TIMEOUT = 5000;
@@ -18,7 +19,7 @@ function getAxiosOptions(token: string, timeout = REQUEST_TIMEOUT) {
 
 export async function validateAccessToken(url: string, accessToken: string): Promise<boolean> {
   try {
-    const response = await axios.get<TokenPayloadRdo>(url, getAxiosOptions(accessToken));
+    const response = await axios.get<ITokenPayloadRdo>(url, getAxiosOptions(accessToken));
 
     return response.status === HttpCode.OK;
   } catch (error) {
@@ -26,8 +27,8 @@ export async function validateAccessToken(url: string, accessToken: string): Pro
   }
 }
 
-export async function refreshRefreshToken(url: string, refreshToken: string): Promise<UserTokenRdo> {
-  const { data } = await axios.post<UserTokenRdo>(url, {}, getAxiosOptions(refreshToken));
+export async function refreshRefreshToken(url: string, refreshToken: string): Promise<IUserTokenRdo> {
+  const { data } = await axios.post<IUserTokenRdo>(url, {}, getAxiosOptions(refreshToken));
 
   return { ...data };
 }

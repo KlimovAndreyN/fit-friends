@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
+import { ILoggedUserRdo } from '../interfaces/rdo';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 
-export class LoggedUserRdo {
+export class LoggedUserRdo implements ILoggedUserRdo {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
   public id: string;

@@ -3,9 +3,9 @@ import type { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ILoginUserDto } from '@backend/shared/interafces/dto';
+import { ITokenPayloadRdo, ILoggedUserRdo } from '@backend/shared/interafces/rdo';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
-import { LoggedUserRdo, TokenPayloadRdo } from '../types/backend';
 import { ApiRoute, AppRoute, HttpCode } from '../const';
 
 type Extra = {
@@ -26,7 +26,7 @@ export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extr
     const { api } = extra;
 
     try {
-      const { data } = await api.get<TokenPayloadRdo>(ApiRoute.Check);
+      const { data } = await api.get<ITokenPayloadRdo>(ApiRoute.Check);
 
       return data.name;
     } catch (error) {
@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra 
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<LoggedUserRdo>(ApiRoute.Login, { email, password });
+    const { data } = await api.post<ILoggedUserRdo>(ApiRoute.Login, { email, password });
     const { accessToken, refreshToken, email: loggedEmail } = data;
 
     AccessTokenStore.save(accessToken);

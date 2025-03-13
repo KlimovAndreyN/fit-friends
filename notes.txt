@@ -40,3 +40,5 @@ aaa@aaa.aaa
 проверить не повторяется ли "refixOption.Api, ServiceRoute.Auth"
 joinUrl(this.apiOptions.accountServiceUrl, GlobalRoute.Api, ServiceRoute.Auth, route)
 
+../backend/libs
+
