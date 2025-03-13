@@ -26,7 +26,7 @@ function NotFound(): JSX.Element {
           <br />
           <h1><Link to={AppRoute.Root}>На главную</Link></h1>
         </div>
-      </main >
+      </main>
     </>
   );
 }

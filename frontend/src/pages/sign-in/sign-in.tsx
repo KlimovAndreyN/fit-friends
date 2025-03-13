@@ -30,7 +30,7 @@ function SignIn(): JSX.Element {
   return (
     <main>
       <Helmet>
-        <title>{PageTitle.Login}</title>
+        <title>{PageTitle.SignIn}</title>
       </Helmet>
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">

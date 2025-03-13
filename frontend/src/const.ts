@@ -8,8 +8,10 @@ export const MAIN_TITLE = 'FitFriends';
 export const PageTitle = {
   Index: MAIN_TITLE,
   Intro: `Разводящая — ${MAIN_TITLE}`,
-  Login: `Войти — ${MAIN_TITLE}`,
-  Registration: `Регистрация — ${MAIN_TITLE}`,
+  SignIn: `Войти — ${MAIN_TITLE}`,
+  SignUp: `Регистрация — ${MAIN_TITLE}`,
+  PersonalAccount: `Личный кабинет — ${MAIN_TITLE}`,
+  FriendsList: `Список друзей — ${MAIN_TITLE}`,
   NotFound: `404 — ${MAIN_TITLE}`
 } as const;
 
@@ -18,8 +20,8 @@ export enum AppRoute {
   Intro = '/intro',
   SignIn = '/sign-in',
   SignUp = '/sign-up',
-  PersonalAccount = 'personal-account',
-  FriendsList = 'friends-list',
+  PersonalAccount = '/personal-account',
+  FriendsList = '/friends-list',
   NotFound = '/404',
 }
 

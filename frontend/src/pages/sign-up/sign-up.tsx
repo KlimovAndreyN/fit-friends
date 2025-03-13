@@ -6,7 +6,7 @@ function Register(): JSX.Element {
   return (
     <main>
       <Helmet>
-        <title>{PageTitle.Registration}</title>
+        <title>{PageTitle.SignUp}</title>
       </Helmet>
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">

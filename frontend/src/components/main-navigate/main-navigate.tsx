@@ -6,9 +6,10 @@ import { logoutUser } from '../../store/action';
 import { AppRoute } from '../../const';
 
 function MainNavigate(): JSX.Element {
-  const location = useLocation();
-
-  console.log('location', location);
+  const { pathname } = useLocation();
+  const isIndexPage = pathname === AppRoute.Root;
+  const isPersonalAccountPage = pathname === AppRoute.PersonalAccount;
+  const isFriendsListPage = pathname === AppRoute.FriendsList;
 
   const dispatch = useAppDispatch();
 
@@ -23,21 +24,21 @@ function MainNavigate(): JSX.Element {
     <nav className="main-nav">
       <ul className="main-nav__list">
         <li className="main-nav__item">
-          <Link className="main-nav__link is-active" to={AppRoute.Root} aria-label="На главную">
+          <Link className={`main-nav__link${isIndexPage ? ' is-active' : ''}`} to={AppRoute.Root} aria-label="На главную">
             <svg width="18" height="18" aria-hidden="true">
               <use xlinkHref="#icon-home"></use>
             </svg>
           </Link>
         </li>
         <li className="main-nav__item">
-          <Link className="main-nav__link" to={AppRoute.PersonalAccount} aria-label="Личный кабинет">
+          <Link className={`main-nav__link${isPersonalAccountPage ? ' is-active' : ''}`} to={AppRoute.PersonalAccount} aria-label="Личный кабинет">
             <svg width="16" height="18" aria-hidden="true">
               <use xlinkHref="#icon-user"></use>
             </svg>
           </Link>
         </li>
         <li className="main-nav__item">
-          <Link className="main-nav__link" to={AppRoute.FriendsList} aria-label="Друзья">
+          <Link className={`main-nav__link${isFriendsListPage ? ' is-active' : ''}`} to={AppRoute.FriendsList} aria-label="Друзья">
             <svg width="22" height="16" aria-hidden="true">
               <use xlinkHref="#icon-friends"></use>
             </svg>
