@@ -29,7 +29,7 @@ function Register(): JSX.Element {
                     <div className="input-load-avatar">
                       <label>
                         <input className="visually-hidden" type="file" accept="image/png, image/jpeg" />
-                        <span className="input-load-avatar__btn" >
+                        <span className="input-load-avatar__btn">
                           <svg width="20" height="20" aria-hidden="true">
                             <use xlinkHref="#icon-import" />
                           </svg>
@@ -159,7 +159,7 @@ function Register(): JSX.Element {
           </div>
         </div>
       </div>
-    </main >
+    </main>
   );
 }
 
