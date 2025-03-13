@@ -28,7 +28,7 @@ export const ApiRoute = {
   Check: joinUrl(ApiServiceRoute.Users, AccountRoute.Check),
   Refresh: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
   Logout: joinUrl(ApiServiceRoute.Users, AccountRoute.Logout),
-  Register: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
+  Register: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh)
 } as const;
 
 export enum StoreSlice {
