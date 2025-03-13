@@ -1,21 +1,23 @@
-/*
-<span class="header__logo">
-            <svg width="187" height="70" aria-hidden="true">
-              <use xlink:href="#logo"></use>
-            </svg></span>
-<a class="header__logo" href="index.html" aria-label="Переход на главную">
-            <svg width="187" height="70" aria-hidden="true">
-              <use xlink:href="#logo"></use>
-            </svg></a>
-            */
+import { Link } from 'react-router-dom';
 
+import { AppRoute } from '../../const';
 
-function Logo(): JSX.Element {
-  return (
+type LogoProps = {
+  isActiveLink: boolean;
+}
+
+const logoSvg = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="#logo"></use></svg>;
+
+function Logo({ isActiveLink }: LogoProps): JSX.Element {
+
+  return (isActiveLink
+    ?
+    <Link className="header__logo" to={AppRoute.Root} aria-label="Переход на главную">
+      {logoSvg}
+    </Link>
+    :
     <span className="header__logo">
-      <svg width="187" height="70" aria-hidden="true">
-        <use xlinkHref="#logo"></use>
-      </svg>
+      {logoSvg}
     </span>
   );
 }

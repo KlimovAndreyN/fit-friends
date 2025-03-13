@@ -1,11 +1,15 @@
 import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  isActiveLogoLink?: boolean;
+}
+
+function Header({ isActiveLogoLink = true }: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">
-        <Logo />
+        <Logo isActiveLink={isActiveLogoLink} />
         <MainNavigate />
         <div className="search">
           <form action="#" method="get">

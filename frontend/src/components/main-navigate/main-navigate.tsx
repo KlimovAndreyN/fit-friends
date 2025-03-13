@@ -1,11 +1,15 @@
 import { MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/action';
 import { AppRoute } from '../../const';
 
 function MainNavigate(): JSX.Element {
+  const location = useLocation();
+
+  console.log('location', location);
+
   const dispatch = useAppDispatch();
 
   const handleSignOutClick = (event: MouseEvent) => {
