@@ -1,5 +1,3 @@
-import { Helmet } from 'react-helmet-async';
-
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
@@ -7,8 +5,7 @@ import { PageTitle } from '../../const';
 function FriendsList(): JSX.Element {
   return (
     <>
-      <Helmet title={PageTitle.FriendsList} />
-      <Header />
+      <Header title={PageTitle.FriendsList} />
       <main>
         <section className="friends-list">
           <div className="container">

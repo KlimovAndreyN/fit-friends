@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/header/header';
@@ -8,8 +7,7 @@ import { AppRoute, PageTitle } from '../../const';
 function NotFound(): JSX.Element {
   return (
     <>
-      <Helmet title={PageTitle.NotFound} />
-      <Header />
+      <Header title={PageTitle.NotFound} />
       <main>
         <div className="container">
           <br />

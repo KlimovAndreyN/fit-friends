@@ -1,5 +1,3 @@
-import { Helmet } from 'react-helmet-async';
-
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
@@ -7,8 +5,7 @@ import { PageTitle } from '../../const';
 function PersonalAccount(): JSX.Element {
   return (
     <>
-      <Helmet title={PageTitle.PersonalAccount} />
-      <Header />
+      <Header title={PageTitle.PersonalAccount} />
       <main>
         <section className="inner-page">
           <div className="container">

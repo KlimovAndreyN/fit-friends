@@ -1,9 +1,16 @@
+import { Helmet } from 'react-helmet-async';
+
 import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
 
-function Header(): JSX.Element {
+type HeaderProps = {
+  title: string;
+}
+
+function Header(props: HeaderProps): JSX.Element {
   return (
     <header className="header">
+      <Helmet {...props} />
       <div className="container">
         <Logo />
         <MainNavigate />

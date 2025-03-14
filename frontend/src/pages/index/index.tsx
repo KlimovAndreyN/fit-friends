@@ -1,5 +1,3 @@
-import { Helmet } from 'react-helmet-async';
-
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
@@ -7,8 +5,7 @@ import { PageTitle } from '../../const';
 function Index(): JSX.Element {
   return (
     <>
-      <Helmet title={PageTitle.Index} />
-      <Header />
+      <Header title={PageTitle.Index} />
       <main>
         <h1 className="visually-hidden">FitFriends — Время находить тренировки, спортзалы и друзей спортсменов</h1>
         <section className="special-for-you">
