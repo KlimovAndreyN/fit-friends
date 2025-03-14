@@ -22,6 +22,7 @@ export enum AppRoute {
   Intro = '/intro',
   SignIn = '/sign-in',
   SignUp = '/sign-up',
+  Questionnaire = '/questionnaire',
   PersonalAccount = '/personal-account',
   FriendsList = '/friends-list',
   NotFound = '/404',

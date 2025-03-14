@@ -13,7 +13,8 @@ type MainNavigateItemProps = {
 function MainNavigateItem({ title, linkTo, onLinkClick, svg, children }: MainNavigateItemProps): JSX.Element {
   const { pathname } = useLocation();
   const isActive = pathname === linkTo;
-  const linkClassName = classNames('main-nav__link', { 'is-active': isActive, 'main-nav__item--notifications': !!children });
+  const linkClassName = classNames('main-nav__link', { 'is-active': isActive });
+  const listItemClassName = classNames('main-nav__item', { 'main-nav__item--notifications': !!children });
 
   const handleLinkClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -22,7 +23,7 @@ function MainNavigateItem({ title, linkTo, onLinkClick, svg, children }: MainNav
   };
 
   return (
-    <li className="main-nav__item">
+    <li className={listItemClassName}>
       {
         linkTo
           ?
@@ -30,10 +31,12 @@ function MainNavigateItem({ title, linkTo, onLinkClick, svg, children }: MainNav
             {svg}
           </Link>
           :
-          <a className={linkClassName} href="" onClick={handleLinkClick} aria-label={title}>
-            {svg}
+          <>
+            <a className={linkClassName} href="" onClick={handleLinkClick} aria-label={title}>
+              {svg}
+            </a>
             {children}
-          </a>
+          </>
       }
     </li>
   );

@@ -48,7 +48,7 @@ function SignIn(): JSX.Element {
           <label>
             <span className="custom-input__label">Пароль</span>
             <span className="custom-input__wrapper">
-              <input type="password" name="password" required />
+              <input type="password" name="password" required autoComplete="off" />
             </span>
           </label>
         </div>

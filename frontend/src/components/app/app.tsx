@@ -6,7 +6,8 @@ import PrivateRoute from '../private-route/private-route';
 import Index from '../../pages/index/index';
 import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
-import Register from '../../pages/sign-up/sign-up';
+import SignUp from '../../pages/sign-up/sign-up';
+import Questionnaire from '../../pages/questionnaire/questionnaire';
 import PersonalAccount from '../../pages/personal-account/personal-account';
 import FriendsList from '../../pages/friends-list/friends-list';
 import NotFound from '../../pages/not-found/not-found';
@@ -47,10 +48,20 @@ function App(): JSX.Element {
             path={AppRoute.SignUp}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
-                <Register />
+                <SignUp />
               </PrivateRoute>
             }
           />
+          {/* //! пока для тестирования */}
+          <Route
+            path={AppRoute.Questionnaire}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
+                <Questionnaire />
+              </PrivateRoute>
+            }
+          />
+          {/* */}
           <Route
             path={AppRoute.PersonalAccount}
             element={
