@@ -6,7 +6,7 @@ type PopupFormProps = {
   title: string;
   caption?: string;
   extraClass: string;
-  onSubmit: () => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   children: JSX.Element;
 }
 
@@ -17,7 +17,7 @@ function PopupForm(props: PopupFormProps): JSX.Element {
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    onSubmit();
+    onSubmit(event);
   };
 
   return (
