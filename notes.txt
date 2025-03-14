@@ -30,10 +30,22 @@ id2486639
     <html lang="ru">
     + <canvas> в html
 
+export const EnumStatus = {
+  ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS'
+} as const;
 
+export type EnumStatus = (typeof EnumStatus)[keyof typeof EnumStatus];
+
+const enumStatus: EnumStatus = EnumStatus.ERROR;
+console.log(enumStatus);
 
 --
 
 aaa@aaa.aaa
 111111
+
+
+
+
 
