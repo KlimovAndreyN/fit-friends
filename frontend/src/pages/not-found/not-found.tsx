@@ -8,11 +8,9 @@ import { AppRoute, PageTitle } from '../../const';
 function NotFound(): JSX.Element {
   return (
     <>
+      <Helmet title={PageTitle.NotFound} />
       <Header />
       <main>
-        <Helmet>
-          <title>{PageTitle.NotFound}</title>
-        </Helmet>
         <div className="container">
           <br />
           <br />

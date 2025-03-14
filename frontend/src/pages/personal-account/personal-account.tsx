@@ -7,9 +7,7 @@ import { PageTitle } from '../../const';
 function PersonalAccount(): JSX.Element {
   return (
     <>
-      <Helmet>
-        <title>{PageTitle.PersonalAccount}</title>
-      </Helmet>
+      <Helmet title={PageTitle.PersonalAccount} />
       <Header />
       <main>
         <section className="inner-page">

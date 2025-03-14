@@ -11,6 +11,7 @@ export const PageTitle = {
   Intro: `Разводящая — ${MAIN_TITLE}`,
   SignIn: `Войти — ${MAIN_TITLE}`,
   SignUp: `Регистрация — ${MAIN_TITLE}`,
+  Questionnaire: `Опросник — ${MAIN_TITLE}`,
   PersonalAccount: `Личный кабинет — ${MAIN_TITLE}`,
   FriendsList: `Список друзей — ${MAIN_TITLE}`,
   NotFound: `404 — ${MAIN_TITLE}`

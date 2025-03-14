@@ -8,9 +8,7 @@ type BaseIntroProps = {
 function BaseIntro({ title, children }: BaseIntroProps): JSX.Element {
   return (
     <main>
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
+      <Helmet title={title} />
       <div className="intro">
         <div className="intro__background">
           <picture>

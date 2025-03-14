@@ -7,9 +7,7 @@ import { PageTitle } from '../../const';
 function FriendsList(): JSX.Element {
   return (
     <>
-      <Helmet>
-        <title>{PageTitle.FriendsList}</title>
-      </Helmet>
+      <Helmet title={PageTitle.FriendsList} />
       <Header />
       <main>
         <section className="friends-list">

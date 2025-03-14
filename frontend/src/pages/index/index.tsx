@@ -7,9 +7,7 @@ import { PageTitle } from '../../const';
 function Index(): JSX.Element {
   return (
     <>
-      <Helmet>
-        <title>{PageTitle.Index}</title>
-      </Helmet>
+      <Helmet title={PageTitle.Index} />
       <Header />
       <main>
         <h1 className="visually-hidden">FitFriends — Время находить тренировки, спортзалы и друзей спортсменов</h1>

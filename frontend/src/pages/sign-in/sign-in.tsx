@@ -29,9 +29,7 @@ function SignIn(): JSX.Element {
 
   return (
     <main>
-      <Helmet>
-        <title>{PageTitle.SignIn}</title>
-      </Helmet>
+      <Helmet title={PageTitle.SignIn} />
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
           <use xlinkHref="#logo-big"></use>
