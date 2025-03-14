@@ -1,10 +1,12 @@
+import { Fragment } from 'react';
+
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
 
 function FriendsList(): JSX.Element {
   return (
-    <>
+    <Fragment>
       <Header title={PageTitle.FriendsList} />
       <main>
         <section className="friends-list">
@@ -404,7 +406,7 @@ function FriendsList(): JSX.Element {
           </div>
         </section>
       </main>
-    </>
+    </Fragment>
   );
 }
 

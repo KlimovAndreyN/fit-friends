@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { Fragment, MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -31,12 +31,12 @@ function MainNavigateItem({ title, linkTo, onLinkClick, svg, children }: MainNav
             {svg}
           </Link>
           :
-          <>
+          <Fragment>
             <a className={linkClassName} href="" onClick={handleLinkClick} aria-label={title}>
               {svg}
             </a>
             {children}
-          </>
+          </Fragment>
       }
     </li>
   );

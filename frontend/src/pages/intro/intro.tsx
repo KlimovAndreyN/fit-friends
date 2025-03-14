@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import BaseIntro from '../../components/base-intro/base-intro';
@@ -15,10 +16,10 @@ function Intro(): JSX.Element {
   const props = {
     title: PageTitle.Intro,
     children:
-      <>
+      <Fragment>
         <button className="btn intro__button" type="button" onClick={handleRegisterButtonClick}>Регистрация</button>
         <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.SignIn}>Вход</Link></p>
-      </>
+      </Fragment>
   };
 
   return (

@@ -21,14 +21,24 @@ id2486639
 4. Frontend - tests
 
 Вопросы:
+  хистори? перепроверить все ли корректно, возможно заменить как было изначально, только с типизацией вопрос решить
+  блокировка кнопок и элементов на форме при отправке запроса
+    вход
+    регистрация
+    опросник
+    редактирвоание в профиле
+    ...
   где фоновые изображения
-  что за скрипты в маркапах ?
-    <script src="js/vendor.min.js"></script>
-    <script src="js/main.min.js"></script>
   различее в страницах
     <html lang="ru" class="js-focus-visible" data-js-focus-visible="">
     <html lang="ru">
     + <canvas> в html
+  что за скрипты в маркапах ?
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
+
+
+--------------
 
 export const EnumStatus = {
   ERROR: 'ERROR',

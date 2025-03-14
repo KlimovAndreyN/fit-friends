@@ -1,10 +1,12 @@
+import { Fragment } from 'react';
+
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
 
 function Index(): JSX.Element {
   return (
-    <>
+    <Fragment>
       <Header title={PageTitle.Index} />
       <main>
         <h1 className="visually-hidden">FitFriends — Время находить тренировки, спортзалы и друзей спортсменов</h1>
@@ -517,7 +519,7 @@ function Index(): JSX.Element {
           </div>
         </section>
       </main>
-    </>
+    </Fragment>
   );
 }
 

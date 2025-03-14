@@ -1,11 +1,20 @@
-import { FormEvent } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 
 import { PageTitle } from '../../const';
 
 function SignUp(): JSX.Element {
+  const [avatarFile, setAvatarFile] = useState<File | undefined>();
   //const dispatch = useAppDispatch();
+
+  const handleAvatarFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
+
+    setAvatarFile(event.target.files[0]);
+  };
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -27,18 +36,42 @@ function SignUp(): JSX.Element {
     extraClass: 'popup-form--sign-up',
     onSubmit: handlePopupFormSubmit
   };
-
+  /*
+              <input
+                className="visually-hidden hidden"
+                type="file"
+                name="imageFile"
+                id="imageFile"
+                accept="image/png, image/jpeg"
+                onChange={handleImageFileInputChange}
+              />
+              <label htmlFor="imageFile">
+                {
+                  imageFile || imagePath
+                    ? <img className="edit-item-image__image" src={imageSrc} srcSet="" width="133" height="332" alt={title} />
+                    : ''
+                }
+              </label>
+  */
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-up">
         <div className="sign-up__load-photo">
           <div className="input-load-avatar">
             <label>
-              <input className="visually-hidden" type="file" accept="image/png, image/jpeg" />
+              <input className="visually-hidden" type="file" accept="image/png, image/jpeg" onChange={handleAvatarFileInputChange} />
               <span className="input-load-avatar__btn">
-                <svg width="20" height="20" aria-hidden="true">
-                  <use xlinkHref="#icon-import" />
-                </svg>
+                {
+                  avatarFile
+                    ?
+                    <Fragment>
+                    </Fragment>
+                    :
+                    <svg width="20" height="20" aria-hidden="true">
+                      <use xlinkHref="#icon-import" />
+                    </svg>
+                }
+
               </span>
             </label>
           </div>

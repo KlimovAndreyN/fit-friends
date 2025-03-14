@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import Header from '../../components/header/header';
@@ -6,7 +7,7 @@ import { AppRoute, PageTitle } from '../../const';
 
 function NotFound(): JSX.Element {
   return (
-    <>
+    <Fragment>
       <Header title={PageTitle.NotFound} />
       <main>
         <div className="container">
@@ -23,7 +24,7 @@ function NotFound(): JSX.Element {
           <h1><Link to={AppRoute.Root}>На главную</Link></h1>
         </div>
       </main>
-    </>
+    </Fragment>
   );
 }
 

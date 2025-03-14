@@ -1,10 +1,12 @@
+import { Fragment } from 'react';
+
 import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
   return (
-    <>
+    <Fragment>
       <Header title={PageTitle.PersonalAccount} />
       <main>
         <section className="inner-page">
@@ -216,7 +218,7 @@ function PersonalAccount(): JSX.Element {
           </div>
         </section>
       </main>
-    </>
+    </Fragment>
   );
 }
 
