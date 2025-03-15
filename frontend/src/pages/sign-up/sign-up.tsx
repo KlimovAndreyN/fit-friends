@@ -1,6 +1,7 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
+import AvatarLoadInput from '../../components/avatar-load-input/avatar-load-input';
 
 import { PageTitle } from '../../const';
 
@@ -53,28 +54,20 @@ function SignUp(): JSX.Element {
                 }
               </label>
   */
+  const avatarPath = (avatarFile) ? URL.createObjectURL(avatarFile) : '';
+  const avatarInputName = (avatarFile) ? 'user-photo-1' : '';
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (file: File) => {
+    setSelectedFile(file);
+    console.log(file);
+  };
+
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-up">
         <div className="sign-up__load-photo">
-          <div className="input-load-avatar">
-            <label>
-              <input className="visually-hidden" type="file" accept="image/png, image/jpeg" onChange={handleAvatarFileInputChange} />
-              <span className="input-load-avatar__btn">
-                {
-                  avatarFile
-                    ?
-                    <Fragment>
-                    </Fragment>
-                    :
-                    <svg width="20" height="20" aria-hidden="true">
-                      <use xlinkHref="#icon-import" />
-                    </svg>
-                }
-
-              </span>
-            </label>
-          </div>
+          <AvatarLoadInput path={avatarPath} name={avatarInputName} onChange={handleFileChange} />
           <div className="sign-up__description">
             <h2 className="sign-up__legend">Загрузите фото профиля</h2>
             <span className="sign-up__text">JPG, PNG, оптимальный размер 100×100&nbsp;px</span>
