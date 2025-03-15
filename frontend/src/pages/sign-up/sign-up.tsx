@@ -1,21 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
-import AvatarLoadInput from '../../components/avatar-load-input/avatar-load-input';
+import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 
 import { PageTitle } from '../../const';
 
 function SignUp(): JSX.Element {
-  const [avatarFile, setAvatarFile] = useState<File | undefined>();
+  const avatarUploadName = 'user-photo-1';
+
   //const dispatch = useAppDispatch();
-
-  const handleAvatarFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-
-    setAvatarFile(event.target.files[0]);
-  };
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -37,37 +30,12 @@ function SignUp(): JSX.Element {
     extraClass: 'popup-form--sign-up',
     onSubmit: handlePopupFormSubmit
   };
-  /*
-              <input
-                className="visually-hidden hidden"
-                type="file"
-                name="imageFile"
-                id="imageFile"
-                accept="image/png, image/jpeg"
-                onChange={handleImageFileInputChange}
-              />
-              <label htmlFor="imageFile">
-                {
-                  imageFile || imagePath
-                    ? <img className="edit-item-image__image" src={imageSrc} srcSet="" width="133" height="332" alt={title} />
-                    : ''
-                }
-              </label>
-  */
-  const avatarPath = (avatarFile) ? URL.createObjectURL(avatarFile) : '';
-  const avatarInputName = (avatarFile) ? 'user-photo-1' : '';
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileChange = (file: File) => {
-    setSelectedFile(file);
-    console.log(file);
-  };
 
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-up">
         <div className="sign-up__load-photo">
-          <AvatarLoadInput path={avatarPath} name={avatarInputName} onChange={handleFileChange} />
+          <AvatarUpload name={avatarUploadName} />
           <div className="sign-up__description">
             <h2 className="sign-up__legend">Загрузите фото профиля</h2>
             <span className="sign-up__text">JPG, PNG, оптимальный размер 100×100&nbsp;px</span>
