@@ -1,11 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
+import { AUTH_NAME } from '@backend/shared/constants';
+
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { refreshRefreshToken, validateAccessToken } from './tokens';
-import { ApiRoute, AUTH_NAME } from './const';
+import { ApiRoute } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
 const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';

@@ -1,8 +1,7 @@
-import { AccountRoute, ApiServiceRoute } from '@backend/shared/constants/route';
+import { AccountRoute, ApiServiceRoute } from '@backend/shared/constants';
 
 import { joinUrl } from './utils/common';
 
-export const AUTH_NAME = 'authorization';
 export const MAIN_TITLE = 'FitFriends';
 
 export const PageTitle = {

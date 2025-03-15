@@ -26,8 +26,8 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@backend/shared/constants/route": [
-        "../backend/libs/shared/core/src/lib/constants/route.ts"
+      "@backend/shared/constants": [
+        "../backend/libs/shared/core/src/lib/constants/fronted-re-export.ts"
       ],
       "@backend/shared/interafces/dto": [
         "../backend/libs/shared/core/src/lib/interfaces/dto/index.ts"

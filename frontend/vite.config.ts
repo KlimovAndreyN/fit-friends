@@ -15,7 +15,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@backend/shared/constants/route': path.resolve(__dirname, '../backend/libs/shared/core/src/lib/constants/route.ts')
+      '@backend/shared/constants': path.resolve(__dirname, '../backend/libs/shared/core/src/lib/constants/fronted-re-export.ts')
     }
   }
 });
