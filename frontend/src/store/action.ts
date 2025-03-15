@@ -4,9 +4,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { ILoginUserDto } from '@backend/shared/interafces/dto';
 import { ITokenPayloadRdo, ILoggedUserRdo } from '@backend/shared/interafces/rdo';
+import { AccountRoute, ApiServiceRoute } from '@backend/shared/constants';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
-import { ApiRoute, AppRoute, HttpCode } from '../const';
+import { joinUrl } from '../utils/common';
+import { AppRoute, HttpCode } from '../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -24,9 +26,10 @@ export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extr
   Action.FETCH_USER_STATUS,
   async (_, { extra }) => {
     const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
 
     try {
-      const { data } = await api.get<ITokenPayloadRdo>(ApiRoute.Check);
+      const { data } = await api.get<ITokenPayloadRdo>(url);
 
       return data.name;
     } catch (error) {
@@ -46,7 +49,8 @@ export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra 
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
-    const { data } = await api.post<ILoggedUserRdo>(ApiRoute.Login, { email, password });
+    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
+    const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
     const { accessToken, refreshToken, email: loggedEmail } = data;
 
     AccessTokenStore.save(accessToken);
@@ -63,9 +67,10 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
   async (_, { extra }) => {
     const { api, history } = extra;
+    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
 
     try {
-      await api.delete<ITokenPayloadRdo>(ApiRoute.Logout);
+      await api.delete<ITokenPayloadRdo>(url);
     } finally {
       AccessTokenStore.drop();
       RefreshTokenStore.drop();
