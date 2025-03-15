@@ -46,7 +46,7 @@ function SignUp(): JSX.Element {
             <label>
               <span className="custom-input__label">Имя</span>
               <span className="custom-input__wrapper">
-                <input type="text" name="name" />
+                <input type="text" name="name" required />
               </span>
             </label>
           </div>
@@ -54,7 +54,7 @@ function SignUp(): JSX.Element {
             <label>
               <span className="custom-input__label">E-mail</span>
               <span className="custom-input__wrapper">
-                <input type="email" name="email" />
+                <input type="email" name="email" required />
               </span>
             </label>
           </div>
@@ -83,7 +83,7 @@ function SignUp(): JSX.Element {
             <label>
               <span className="custom-input__label">Пароль</span>
               <span className="custom-input__wrapper">
-                <input type="password" name="password" autoComplete="off" />
+                <input type="password" name="password" autoComplete="off" required />
               </span>
             </label>
           </div>
@@ -92,21 +92,21 @@ function SignUp(): JSX.Element {
             <div className="custom-toggle-radio custom-toggle-radio--big">
               <div className="custom-toggle-radio__block">
                 <label>
-                  <input type="radio" name="sex" />
+                  <input type="radio" name="sex" value="male" />
                   <span className="custom-toggle-radio__icon" />
                   <span className="custom-toggle-radio__label">Мужской</span>
                 </label>
               </div>
               <div className="custom-toggle-radio__block">
                 <label>
-                  <input type="radio" name="sex" defaultChecked />
+                  <input type="radio" name="sex" value="female" defaultChecked />
                   <span className="custom-toggle-radio__icon" />
                   <span className="custom-toggle-radio__label">Женский</span>
                 </label>
               </div>
               <div className="custom-toggle-radio__block">
                 <label>
-                  <input type="radio" name="sex" />
+                  <input type="radio" name="sex" value="not-matter" />
                   <span className="custom-toggle-radio__icon" />
                   <span className="custom-toggle-radio__label">Неважно</span>
                 </label>
@@ -114,12 +114,13 @@ function SignUp(): JSX.Element {
             </div>
           </div>
         </div>
-        <div className="sign-up__role">
+        {/*//! visually-hidden - спратал выбор роли, по умолчанию был coach */}
+        <div className="sign-up__role visually-hidden">
           <h2 className="sign-up__legend">Выберите роль</h2>
           <div className="role-selector sign-up__role-selector">
             <div className="role-btn">
               <label>
-                <input className="visually-hidden" type="radio" name="role" value="coach" defaultChecked />
+                <input className="visually-hidden" type="radio" name="role" value="coach" />
                 <span className="role-btn__icon">
                   <svg width="12" height="13" aria-hidden="true">
                     <use xlinkHref="#icon-cup" />
@@ -130,7 +131,7 @@ function SignUp(): JSX.Element {
             </div>
             <div className="role-btn">
               <label>
-                <input className="visually-hidden" type="radio" name="role" value="sportsman" />
+                <input className="visually-hidden" type="radio" name="role" value="sportsman" defaultChecked />
                 <span className="role-btn__icon">
                   <svg width="12" height="13" aria-hidden="true">
                     <use xlinkHref="#icon-weight" />
@@ -143,7 +144,7 @@ function SignUp(): JSX.Element {
         </div>
         <div className="sign-up__checkbox">
           <label>
-            <input type="checkbox" value="user-agreement" name="user-agreement" defaultChecked />
+            <input type="checkbox" value="user-agreement" name="user-agreement" />
             <span className="sign-up__checkbox-icon">
               <svg width="9" height="6" aria-hidden="true">
                 <use xlinkHref="#arrow-check" />
