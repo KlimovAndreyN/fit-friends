@@ -16,8 +16,14 @@ function SignUp(): JSX.Element {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    // eslint-disable-next-line
-    formData.entries().forEach(([name, value]) => console.log(name, value));
+    //! отладка
+    const entries = formData.entries();
+    for (const entry of entries) {
+      const [key, value] = entry;
+      // eslint-disable-next-line
+      console.log(key, value);
+    }
+    //
 
     //const email = formData.get(FormFieldName.email)?.toString() || '';
     //const password = formData.get(FormFieldName.password)?.toString() || '';
