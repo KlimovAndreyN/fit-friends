@@ -1,10 +1,8 @@
-import type { History } from 'history';
-import type { AxiosInstance, AxiosError } from 'axios';
+import { History } from 'history';
+import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ILoginUserDto } from '@backend/shared/interafces/dto';
-import { ITokenPayloadRdo, ILoggedUserRdo } from '@backend/shared/interafces/rdo';
-import { AccountRoute, ApiServiceRoute } from '@backend/shared/constants';
+import { AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, ILoggedUserRdo } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { joinUrl } from '../utils/common';

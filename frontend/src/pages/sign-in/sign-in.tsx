@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 
-import { ILoginUserDto } from '@backend/shared/interafces/dto';
+import { ILoginUserDto } from '@backend/shared';
 
 import PopupForm from '../../components/popup-form/popup-form';
 

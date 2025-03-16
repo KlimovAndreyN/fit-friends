@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-import { ITokenPayloadRdo, IUserTokenRdo } from '@backend/shared/interafces/rdo';
-import { AUTH_NAME } from '@backend/shared/constants';
+import { AUTH_NAME, ITokenPayloadRdo, IUserTokenRdo } from '@backend/shared';
 
 import { getBearerAuthorization } from './utils/common';
 import { HttpCode } from './const';

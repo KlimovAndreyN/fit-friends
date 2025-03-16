@@ -1,4 +1,4 @@
-import type { State } from '../../types/state';
+import { State } from '../../types/state';
 import { AuthorizationStatus } from '../../types/types';
 import { StoreSlice } from '../../const';
 

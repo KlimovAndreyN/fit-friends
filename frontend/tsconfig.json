@@ -26,14 +26,8 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@backend/shared/constants": [
-        "../backend/libs/shared/core/src/lib/constants/fronted-re-export.ts"
-      ],
-      "@backend/shared/interafces/dto": [
-        "../backend/libs/shared/core/src/lib/interfaces/dto/index.ts"
-      ],
-      "@backend/shared/interafces/rdo": [
-        "../backend/libs/shared/core/src/lib/interfaces/rdo/index.ts"
+      "@backend/shared": [
+        "../backend/libs/shared/core/src/fronted-index.ts"
       ]
     }
   },
