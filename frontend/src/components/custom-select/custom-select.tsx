@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import classNames from 'classnames';
 
-export type Option = {
-  value: string;
-  label: string;
-}
+import { Option } from '../../types/option';
 
 type CustomSelectProps = {
+  name: string;
   caption: string;
   options: Option[];
-  onChange: (selected: Option | null) => void;
-  placeholder?: string;
+  onChange?: (selected: Option | null) => void;
+  selected?: string;
 }
 
 const CustomSelect = (props: CustomSelectProps) => {
-  const { caption, options, onChange, placeholder } = props;
+  const { name, caption, options, onChange, selected } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
 
@@ -22,27 +20,21 @@ const CustomSelect = (props: CustomSelectProps) => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionClick = (option: Option) => {
+  const handleListItemClick = (option: Option) => {
     setSelectedOption(option);
-    onChange(option);
+    onChange?.(option);
     setIsOpen(false);
   };
 
-  const existPlaceholder = !!placeholder;
-  const divClassName = classNames('custom-select', { 'custom-select--not-selected': !existPlaceholder, 'is-open': isOpen });
-
-  console.log('isOpen', isOpen);
-  console.log('placeholder', placeholder);
-  console.log('selectedOption', selectedOption);
-  console.log('existPlaceholder', existPlaceholder);
-  console.log('divClassName', divClassName);
+  const divClassName = classNames('custom-select', { 'custom-select--not-selected': !selected && !selectedOption, 'is-open': isOpen });
+  const defaultValue = (selectedOption) ? selectedOption.label : selected;
 
   return (
     <div className={divClassName}>
-      <span className="custom-select__label custom-select__label--placeholder">{caption}</span>
-      {
-        existPlaceholder ? <div className="custom-select__placeholder">{(selectedOption) ? selectedOption.label : placeholder}</div> : null
-      }
+      {/*//! пропадает label, добавил style={{ opacity: 1 }} */}
+      <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
+      <div className="custom-select__placeholder">{defaultValue}</div>
+      <input className='visually-hidden' type="text" readOnly name={name} defaultValue={defaultValue} />
       <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" onClick={toggleDropdown}>
         <span className="custom-select__text" />
         <span className="custom-select__icon">
@@ -58,7 +50,7 @@ const CustomSelect = (props: CustomSelectProps) => {
               <li
                 key={option.value}
                 className="custom-select__item"
-                onClick={() => handleOptionClick(option)}
+                onClick={() => handleListItemClick(option)}
               >
                 {option.label}
               </li>

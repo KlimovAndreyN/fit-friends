@@ -2,12 +2,13 @@ import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
-import CustomSelect, { Option } from '../../components/custom-select/custom-select';
+import CustomSelect from '../../components/custom-select/custom-select';
 
 import { PageTitle } from '../../const';
 
 function SignUp(): JSX.Element {
   const avatarUploadName = 'user-photo-1';
+  const locationName = 'location';
 
   //const dispatch = useAppDispatch();
 
@@ -68,13 +69,9 @@ function SignUp(): JSX.Element {
             </label>
           </div>
           <CustomSelect
+            name={locationName}
             caption='Ваша локация'
             options={[{ label: 'l1', value: 'v1' }, { label: 'l2', value: 'v2' }]}
-            placeholder='l1'
-            onChange={(selected: Option | null) => {
-              // eslint-disable-next-line
-              console.log('sign-up-selected', selected);
-            }}
           />
           <div className="custom-input">
             <label>
