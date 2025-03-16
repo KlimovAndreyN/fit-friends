@@ -2,6 +2,7 @@ import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
+import CustomSelect, { Option } from '../../components/custom-select/custom-select';
 
 import { PageTitle } from '../../const';
 
@@ -66,19 +67,15 @@ function SignUp(): JSX.Element {
               </span>
             </label>
           </div>
-          <div className="custom-select custom-select--not-selected">
-            <span className="custom-select__label">Ваша локация</span>
-            <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
-              <span className="custom-select__text" />
-              <span className="custom-select__icon">
-                <svg width="15" height="6" aria-hidden="true">
-                  <use xlinkHref="#arrow-down" />
-                </svg>
-              </span>
-            </button>
-            <ul className="custom-select__list" role="listbox">
-            </ul>
-          </div>
+          <CustomSelect
+            caption='Ваша локация'
+            options={[{ label: 'l1', value: 'v1' }, { label: 'l2', value: 'v2' }]}
+            placeholder='l1'
+            onChange={(selected: Option | null) => {
+              // eslint-disable-next-line
+              console.log('sign-up-selected', selected);
+            }}
+          />
           <div className="custom-input">
             <label>
               <span className="custom-input__label">Пароль</span>
