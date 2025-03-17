@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import PopupForm from '../../components/popup-form/popup-form';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import CustomSelect from '../../components/custom-select/custom-select';
+import CustomInput from '../../components/custom-input/custom-input';
 
 import { DefaultUser, PageTitle, SORTED_USER_GENDERS, SORTED_USER_ROLES, UserGenderOption, UserRoleOption } from '../../const';
 
@@ -50,51 +51,17 @@ function SignUp(): JSX.Element {
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-up">
-        <div className="sign-up__load-photo">
-          <AvatarUpload name={avatarUploadName} />
-          <div className="sign-up__description">
-            <h2 className="sign-up__legend">Загрузите фото профиля</h2>
-            <span className="sign-up__text">JPG, PNG, оптимальный размер 100×100&nbsp;px</span>
-          </div>
-        </div>
+        <AvatarUpload name={avatarUploadName} />
         <div className="sign-up__data">
-          <div className="custom-input">
-            <label>
-              <span className="custom-input__label">Имя</span>
-              <span className="custom-input__wrapper">
-                <input type="text" name="name" required />
-              </span>
-            </label>
-          </div>
-          <div className="custom-input">
-            <label>
-              <span className="custom-input__label">E-mail</span>
-              <span className="custom-input__wrapper">
-                <input type="email" name="email" required />
-              </span>
-            </label>
-          </div>
-          <div className="custom-input">
-            <label>
-              <span className="custom-input__label">Дата рождения</span>
-              <span className="custom-input__wrapper">
-                <input type="date" name="birthday" max="2099-12-31" />
-              </span>
-            </label>
-          </div>
+          <CustomInput name='name' type='text' label='Имя' required />
+          <CustomInput name='email' type='email' label='E-mail' required />
+          <CustomInput name='birthday' type='date' label='Дата рождения' max='2099-12-31' />
           <CustomSelect
             name={locationName}
             caption='Ваша локация'
             options={[{ label: 'l1', value: 'v1' }, { label: 'l2', value: 'v2' }]}
           />
-          <div className="custom-input">
-            <label>
-              <span className="custom-input__label">Пароль</span>
-              <span className="custom-input__wrapper">
-                <input type="password" name="password" autoComplete="off" required />
-              </span>
-            </label>
-          </div>
+          <CustomInput name='password' type='password' label='Пароль' required autoComplete='off' />
           <div className="sign-up__radio">
             <span className="sign-up__label">Пол</span>
             <div className="custom-toggle-radio custom-toggle-radio--big">
