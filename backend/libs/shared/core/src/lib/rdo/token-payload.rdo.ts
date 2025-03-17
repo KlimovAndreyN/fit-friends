@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { ITokenPayloadRdo } from '../interfaces/rdo';
+import { ITokenPayloadRdo } from '../interfaces/rdo/token-payload.rdo';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 export class TokenPayloadRdo implements ITokenPayloadRdo {

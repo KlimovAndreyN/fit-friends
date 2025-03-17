@@ -4,7 +4,7 @@ import PopupForm from '../../components/popup-form/popup-form';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import CustomSelect from '../../components/custom-select/custom-select';
 
-import { PageTitle } from '../../const';
+import { DefaultUser, PageTitle, SORTED_USER_GENDERS, SORTED_USER_ROLES, UserGenderOption, UserRoleOption } from '../../const';
 
 function SignUp(): JSX.Element {
   const avatarUploadName = 'user-photo-1';
@@ -90,61 +90,62 @@ function SignUp(): JSX.Element {
           <div className="sign-up__radio">
             <span className="sign-up__label">Пол</span>
             <div className="custom-toggle-radio custom-toggle-radio--big">
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="sex" value="male" />
-                  <span className="custom-toggle-radio__icon" />
-                  <span className="custom-toggle-radio__label">Мужской</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="sex" value="female" defaultChecked />
-                  <span className="custom-toggle-radio__icon" />
-                  <span className="custom-toggle-radio__label">Женский</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="sex" value="not-matter" />
-                  <span className="custom-toggle-radio__icon" />
-                  <span className="custom-toggle-radio__label">Неважно</span>
-                </label>
-              </div>
+              {
+                SORTED_USER_GENDERS.map(
+                  (userGender) => {
+                    const { title } = UserGenderOption[userGender];
+                    const checked = userGender === DefaultUser.GENDER;
+
+                    return (
+                      <div className="custom-toggle-radio__block" key={userGender}>
+                        <label>
+                          <input type="radio" name="sex" value={userGender} defaultChecked={checked} />
+                          <span className="custom-toggle-radio__icon" />
+                          <span className="custom-toggle-radio__label">{title}</span>
+                        </label>
+                      </div>
+                    );
+                  }
+                )
+              }
             </div>
           </div>
         </div>
-        {/*//! visually-hidden - спратал выбор роли, по умолчанию был coach */}
+        {/*
+        //! visually-hidden - спратал выбор роли, по умолчанию был coach
+        <div className="sign-up__role">
+        <div className="sign-up__role visually-hidden">
+        */}
         <div className="sign-up__role visually-hidden">
           <h2 className="sign-up__legend">Выберите роль</h2>
           <div className="role-selector sign-up__role-selector">
-            <div className="role-btn">
-              <label>
-                <input className="visually-hidden" type="radio" name="role" value="coach" />
-                <span className="role-btn__icon">
-                  <svg width="12" height="13" aria-hidden="true">
-                    <use xlinkHref="#icon-cup" />
-                  </svg>
-                </span>
-                <span className="role-btn__btn">Я хочу тренировать</span>
-              </label>
-            </div>
-            <div className="role-btn">
-              <label>
-                <input className="visually-hidden" type="radio" name="role" value="sportsman" defaultChecked />
-                <span className="role-btn__icon">
-                  <svg width="12" height="13" aria-hidden="true">
-                    <use xlinkHref="#icon-weight" />
-                  </svg>
-                </span>
-                <span className="role-btn__btn">Я хочу тренироваться</span>
-              </label>
-            </div>
+            {
+              SORTED_USER_ROLES.map(
+                (userRole) => {
+                  const { value, title, svgIcon } = UserRoleOption[userRole];
+                  const checked = userRole === DefaultUser.ROLE;
+
+                  return (
+                    <div className="role-btn" key={value}>
+                      <label>
+                        <input className="visually-hidden" type="radio" name="role" value={value} defaultChecked={checked} />
+                        <span className="role-btn__icon">
+                          <svg width="12" height="13" aria-hidden="true">
+                            <use xlinkHref={svgIcon} />
+                          </svg>
+                        </span>
+                        <span className="role-btn__btn">{title}</span>
+                      </label>
+                    </div>
+                  );
+                }
+              )
+            }
           </div>
         </div>
         <div className="sign-up__checkbox">
           <label>
-            <input type="checkbox" value="user-agreement" name="user-agreement" />
+            <input type="checkbox" value="user-agreement" name="user-agreement" required />
             <span className="sign-up__checkbox-icon">
               <svg width="9" height="6" aria-hidden="true">
                 <use xlinkHref="#arrow-check" />
@@ -153,6 +154,7 @@ function SignUp(): JSX.Element {
             <span className="sign-up__checkbox-label">Я соглашаюсь с <span>политикой конфиденциальности</span> компании</span>
           </label>
         </div>
+        {/* //! можно использовать is-disabled */}
         <button className="btn sign-up__button" type="submit">Продолжить</button>
       </div>
     </PopupForm>

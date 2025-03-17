@@ -31,7 +31,10 @@ const CustomSelect = (props: CustomSelectProps) => {
 
   return (
     <div className={divClassName}>
-      {/*//! пропадает label, добавил style={{ opacity: 1 }} */}
+      {/*
+      //! пропадает label, добавил style={{ opacity: 1 }}
+      .custom-select.is-open .custom-select__label
+      */}
       <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
       <div className="custom-select__placeholder">{defaultValue}</div>
       <input className='visually-hidden' type="text" readOnly name={name} defaultValue={defaultValue} />

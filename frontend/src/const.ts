@@ -1,3 +1,5 @@
+import { UserGender, UserRole } from '@backend/shared';
+
 const MAIN_TITLE = 'FitFriends';
 
 export enum PageTitle {
@@ -31,3 +33,23 @@ export enum HttpCode {
   OK = 200,
   NoAuth = 401
 }
+
+export const DefaultUser = {
+  ROLE: UserRole.User,
+  GENDER: UserGender.Female
+} as const;
+
+export const UserRoleOption: { [key in UserRole]: { sortOrder: number; value: string; title: string; svgIcon: string } } = {
+  user: { sortOrder: 2, value: 'sportsman', title: 'Я хочу тренироваться', svgIcon: '#icon-weight' },
+  coath: { sortOrder: 1, value: 'coath', title: 'Я хочу тренировать', svgIcon: '#icon-cup' }
+} as const;
+
+export const SORTED_USER_ROLES = Object.values(UserRole).sort((a, b) => (UserRoleOption[a].sortOrder - UserRoleOption[b].sortOrder));
+
+export const UserGenderOption: { [key in UserGender]: { sortOrder: number; title: string } } = {
+  [UserGender.Male]: { sortOrder: 1, title: 'Мужской' },
+  [UserGender.Female]: { sortOrder: 2, title: 'Женский' },
+  [UserGender.NotMatter]: { sortOrder: 3, title: 'Неважно' },
+} as const;
+
+export const SORTED_USER_GENDERS = Object.values(UserGender).sort((a, b) => (UserGenderOption[a].sortOrder - UserGenderOption[b].sortOrder));
