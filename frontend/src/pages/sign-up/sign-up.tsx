@@ -8,7 +8,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { PageTitle } from '../../const';
+import { LOCATIONS, PageTitle } from '../../const';
 
 function SignUp(): JSX.Element {
   const avatarUploadName = 'user-photo-1';
@@ -67,7 +67,7 @@ function SignUp(): JSX.Element {
           <CustomSelect
             name={locationName}
             caption='Ваша локация'
-            options={[{ label: 'l1', value: 'v1' }, { label: 'l2', value: 'v2' }]}
+            options={LOCATIONS}
           />
           <CustomInput name='password' type='password' label='Пароль' required autoComplete='off' />
           <SignUpUserGengers name='sex' />

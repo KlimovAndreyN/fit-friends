@@ -1,4 +1,5 @@
-import { UserGender, UserRole } from '@backend/shared';
+import { MetroStationName, UserGender, UserRole } from '@backend/shared';
+import { Option } from './types/option';
 
 const MAIN_TITLE = 'FitFriends';
 
@@ -53,3 +54,20 @@ export const UserGenderOption: { [key in UserGender]: { sortOrder: number; title
 } as const;
 
 export const SORTED_USER_GENDERS = Object.values(UserGender).sort((a, b) => (UserGenderOption[a].sortOrder - UserGenderOption[b].sortOrder));
+
+export const MetroStationOption: { [key in MetroStationName]: { sortOrder: number; title: string } } = {
+  [MetroStationName.Petrogradskaya]: { sortOrder: 2, title: 'Петроградская' },
+  [MetroStationName.Pionerskaya]: { sortOrder: 1, title: 'Пионерская' },
+  [MetroStationName.Sportivnaya]: { sortOrder: 5, title: 'Спортивная' },
+  [MetroStationName.Udelnaya]: { sortOrder: 3, title: 'Удельная' },
+  [MetroStationName.Zvezdnaya]: { sortOrder: 4, title: 'Звёздная' },
+} as const;
+
+export const LOCATIONS: Option[] = Object.values(MetroStationName)
+  .sort((a, b) => (MetroStationOption[a].sortOrder - MetroStationOption[b].sortOrder))
+  .map(
+    (item) => ({
+      value: item,
+      title: MetroStationOption[item].title
+    })
+  );

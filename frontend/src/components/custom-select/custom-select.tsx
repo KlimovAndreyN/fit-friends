@@ -27,7 +27,7 @@ const CustomSelect = (props: CustomSelectProps) => {
   };
 
   const divClassName = classNames('custom-select', { 'custom-select--not-selected': !selected && !selectedOption, 'is-open': isOpen });
-  const defaultValue = (selectedOption) ? selectedOption.label : selected;
+  const defaultValue = (selectedOption) ? selectedOption.title : selected;
 
   return (
     <div className={divClassName}>
@@ -55,7 +55,7 @@ const CustomSelect = (props: CustomSelectProps) => {
                 className="custom-select__item"
                 onClick={() => handleListItemClick(option)}
               >
-                {option.label}
+                {option.title}
               </li>
             )
           )
