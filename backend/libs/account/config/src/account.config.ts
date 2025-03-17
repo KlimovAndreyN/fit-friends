@@ -13,13 +13,10 @@ const TokenDefaultExpiresIn = {
   REFRESH: '7d'
 } as const;
 
-export interface AccountConfig extends ApplicationConfig, JwtConfig, MongoDbConfig, RabbitConfig {
-  fileStorageServiceUrl: string;
-}
+export interface AccountConfig extends ApplicationConfig, JwtConfig, MongoDbConfig, RabbitConfig { }
 
 const validationSchema = Joi.object({
   ...applicationValidationSchema,
-  fileStorageServiceUrl: Joi.string().required().label(ConfigAlias.FileStorageServiceUrlEnv),
   ...jwtValidationSchema,
   ...mongoDbValidationSchema,
   ...rabbitValidationSchema
@@ -28,7 +25,6 @@ const validationSchema = Joi.object({
 function getConfig(): AccountConfig {
   const config: AccountConfig = {
     ...getApplicationConfig(),
-    fileStorageServiceUrl: process.env[ConfigAlias.FileStorageServiceUrlEnv],
     ...getJwtConfig(TokenDefaultExpiresIn.ACCESS, TokenDefaultExpiresIn.REFRESH),
     ...getMongoDbConfig(),
     ...getRabbitConfig()

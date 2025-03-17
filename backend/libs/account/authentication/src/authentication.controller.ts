@@ -1,15 +1,14 @@
 import {
   Body, Controller, Delete, Get, HttpCode, Param,
-  Post, Req, UploadedFile, UseGuards, UseInterceptors
+  Post, Req, UseGuards, UseInterceptors
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
-  LoggedUserRdo, UserAvatarOption, RequestWithRequestId, RequestWithTokenPayload,
-  TokenPayloadRdo, AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo,
-  parseUserAvatarFilePipeBuilder, CreateUserDto, ServiceRoute
+  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
+  AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo, ServiceRoute,
+  CreateUserWithAvatarFileIdDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -81,17 +80,15 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiConsumes('multipart/form-data')
   @UseInterceptors(InjectBearerAuthInterceptor)
-  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(AccountRoute.Register)
   public async register(
-    @Body() dto: CreateUserDto,
-    @Req() { requestId }: RequestWithRequestId,
-    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
+    @Body() dto: CreateUserWithAvatarFileIdDto,
+    @Req() { requestId }: RequestWithRequestId
   ): Promise<UserRdo> {
-    const newUser = await this.authService.registerUser(dto, requestId, avatarFile);
+    const newUser = await this.authService.registerUser(dto, requestId);
 
+    //! RDO
     return fillDto(UserRdo, newUser.toPOJO());
   }
 

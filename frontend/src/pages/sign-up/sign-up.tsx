@@ -8,6 +8,8 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
+import { ICreateUserWithAvatarFileDto, MetroStationName, UserGender, UserRole } from '@backend/shared';
+
 import { getRandomItem } from '../../utils/random';
 import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';
 
@@ -26,6 +28,22 @@ function SignUp(): JSX.Element {
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    const dto: ICreateUserWithAvatarFileDto =
+    {
+      email: 'email',
+      name: 'name',
+      password: 'password',
+      backgroundPath: 'backgroundPath',
+      gender: UserGender.Female,
+      role: UserRole.User,
+      metroStationName: MetroStationName.Petrogradskaya,
+      avatarFile: undefined,
+      birthday: 'birthday'
+    };
+
+    // eslint-disable-next-line no-console
+    console.log(dto);
 
     //! отладка
     const entries = formData.entries();

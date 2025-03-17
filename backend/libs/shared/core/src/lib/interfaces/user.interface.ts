@@ -8,8 +8,9 @@ export interface User {
   email: string;
   birthday?: Date;
   metroStationName: MetroStationName;
-  avatarFileId: string;
+  backgroundPath: string;
   gender: UserGender;
   role: UserRole;
+  avatarFileId: string;
   createdAt?: Date;
 }

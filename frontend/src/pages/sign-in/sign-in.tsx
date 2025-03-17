@@ -1,8 +1,8 @@
 import { FormEvent } from 'react';
 
-import { ILoginUserDto } from '@backend/shared';
-
 import PopupForm from '../../components/popup-form/popup-form';
+
+import { ILoginUserDto } from '@backend/shared';
 
 import { useAppDispatch } from '../../hooks';
 import { loginUser } from '../../store/action';

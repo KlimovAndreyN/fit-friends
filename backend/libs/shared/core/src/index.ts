@@ -25,6 +25,8 @@ export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
+export { CreateUserWithAvatarFileIdDto } from './lib/dto/create-user-with-avatar-file-id.dto';
+export { CreateUserWithAvatarFileDto } from './lib/dto/create-user-with-avatar-file.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 
@@ -57,8 +59,11 @@ export { UserRdo } from './lib/rdo/user.rdo';
 export { UserTokenRdo } from './lib/rdo/user-token.rdo';
 
 export * from './lib/types/environment.type';
+export { MetroStationName } from './lib/types/metro-station-name.enum';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
+export { UserGender } from './lib/types/user-gender.enum';
+export { UserRole } from './lib/types/user-role.enum';
 
 export * from './lib/utils/transform';

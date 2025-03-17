@@ -1,12 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
-import { AuthUser } from '@backend/shared/core';
-
-import { ACCOUNTS_COLLECTION } from './fit-user.constant';
+import { AuthUser, MetroStationName, UserGender, UserRole } from '@backend/shared/core';
 
 @Schema({
-  collection: ACCOUNTS_COLLECTION,
+  collection: 'accounts',
   timestamps: true
 })
 export class FitUserModel extends Document implements AuthUser {
@@ -17,10 +15,25 @@ export class FitUserModel extends Document implements AuthUser {
   public name: string;
 
   @Prop()
-  public avatarPath: string;
+  public avatarFileId: string;
 
   @Prop({ required: true })
   public passwordHash: string;
+
+  @Prop()
+  public birthday: Date;
+
+  @Prop({ required: true, type: String })
+  public metroStationName: MetroStationName;
+
+  @Prop({ required: true })
+  public backgroundPath: string;
+
+  @Prop({ required: true, type: String })
+  public gender: UserGender;
+
+  @Prop({ required: true, type: String })
+  public role: UserRole;
 
   public createdAt: Date;
 }

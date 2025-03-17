@@ -1,13 +1,18 @@
 import { compare, genSalt, hash } from 'bcrypt';
 
-import { Entity, StorableEntity, AuthUser } from '@backend/shared/core';
+import { Entity, StorableEntity, AuthUser, MetroStationName, UserGender, UserRole } from '@backend/shared/core';
 
-import { SALT_ROUNDS } from './fit-user.constant';
+const SALT_ROUNDS = 10;
 
 export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public email: string;
   public name: string;
-  public avatarPath: string;
+  public birthday?: Date;
+  public metroStationName: MetroStationName;
+  public backgroundPath: string;
+  public gender: UserGender;
+  public role: UserRole;
+  public avatarFileId: string;
   public passwordHash: string;
   public createdAt: Date;
 
@@ -25,7 +30,13 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.id = user.id ?? undefined;
     this.email = user.email;
     this.name = user.name;
-    this.avatarPath = user.avatarPath;
+    this.birthday = user.birthday;
+    this.metroStationName = user.metroStationName;
+    this.backgroundPath = user.backgroundPath;
+    this.gender = user.gender;
+    this.role = user.role;
+    this.avatarFileId = user.avatarFileId;
+    this.backgroundPath = user.backgroundPath;
     this.passwordHash = user.passwordHash;
     this.createdAt = user.createdAt;
   }
@@ -35,7 +46,12 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       id: this.id,
       email: this.email,
       name: this.name,
-      avatarPath: this.avatarPath,
+      birthday: this.birthday,
+      metroStationName: this.metroStationName,
+      backgroundPath: this.backgroundPath,
+      gender: this.gender,
+      role: this.role,
+      avatarFileId: this.avatarFileId,
       passwordHash: this.passwordHash,
       createdAt: this.createdAt
     }

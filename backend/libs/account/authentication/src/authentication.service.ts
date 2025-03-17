@@ -1,16 +1,12 @@
 import {
   ConflictException, UnauthorizedException, HttpException, HttpStatus, Inject,
-  Injectable, InternalServerErrorException, Logger, NotFoundException
+  Injectable, Logger, NotFoundException
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { join } from 'path/posix';
 
-import {
-  AuthenticationMessage, CreateUserDto, FILE_KEY, FileStorageRoute,
-  LoginUserDto, ServiceRoute, Token, UploadedFileRdo, User
-} from '@backend/shared/core';
-import { createJwtPayload, joinUrl, parseAxiosError, uploadFile } from '@backend/shared/helpers';
+import { AuthenticationMessage, AuthUser, CreateUserWithAvatarFileIdDto, LoginUserDto, Token, User } from '@backend/shared/core';
+import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
 import { NotifyService } from '@backend/account/notify';
@@ -29,42 +25,38 @@ export class AuthenticationService {
     private readonly refreshTokenService: RefreshTokenService
   ) { }
 
-  public async registerUser(
-    dto: CreateUserDto,
-    requestId: string,
-    avatarFile?: Express.Multer.File
-  ): Promise<FitUserEntity> {
-    const { email, name, password } = dto;
+  public async registerUser(dto: CreateUserWithAvatarFileIdDto, requestId: string): Promise<FitUserEntity> {
+    const { email, name, password, backgroundPath, gender, metroStationName, role, avatarFileId, birthday } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
     if (existUser) {
       throw new ConflictException(AuthenticationMessage.Exists);
     }
 
-    const fitUser = {
+    const fitUser: AuthUser = {
       email,
       name,
-      avatarPath: '',
+      backgroundPath,
+      gender,
+      metroStationName,
+      role,
+      avatarFileId,
+      birthday: new Date(),//! временно
       passwordHash: ''
+
+      /*
+        id?: string;
+        name: string;
+        email: string;
+        birthday?: Date;
+        metroStationName: MetroStationName;
+        backgroundPath: string;
+        gender: UserGender;
+        role: UserRole;
+        avatarFileId: string;
+        createdAt?: Date;
+         */
     };
-
-    if (avatarFile) {
-      try {
-        const fileRdo = await uploadFile<UploadedFileRdo>(
-          joinUrl(this.accountOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, FileStorageRoute.Upload),
-          avatarFile,
-          FILE_KEY,
-          requestId
-        );
-        const { subDirectory, hashName } = fileRdo
-
-        fitUser.avatarPath = join(subDirectory, hashName);
-      } catch (error) {
-        this.logger.error(`RegisterUser.FileUploadError: ${parseAxiosError(error)}`);
-
-        throw new InternalServerErrorException('File upload error!');
-      }
-    }
 
     const userEntity = new FitUserEntity(fitUser);
 
