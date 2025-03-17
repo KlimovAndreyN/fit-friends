@@ -1,4 +1,5 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
+import classNames from 'classnames';
 
 import PopupForm from '../../components/popup-form/popup-form';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
@@ -9,8 +10,13 @@ import { DefaultUser, PageTitle, SORTED_USER_GENDERS, SORTED_USER_ROLES, UserGen
 function SignUp(): JSX.Element {
   const avatarUploadName = 'user-photo-1';
   const locationName = 'location';
+  const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
 
   //const dispatch = useAppDispatch();
+
+  const handleUserAgreementInputChange = () => {
+    setCheckedUserAgreementInput(!checkedUserAgreementInput);
+  };
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -38,6 +44,8 @@ function SignUp(): JSX.Element {
     extraClass: 'popup-form--sign-up',
     onSubmit: handlePopupFormSubmit
   };
+
+  const submitClassName = classNames('btn sign-up__button', { 'is-disabled': !checkedUserAgreementInput });
 
   return (
     <PopupForm {...popupFormProps} >
@@ -145,7 +153,7 @@ function SignUp(): JSX.Element {
         </div>
         <div className="sign-up__checkbox">
           <label>
-            <input type="checkbox" value="user-agreement" name="user-agreement" required />
+            <input type="checkbox" value="user-agreement" name="user-agreement" checked={checkedUserAgreementInput} onChange={handleUserAgreementInputChange} />
             <span className="sign-up__checkbox-icon">
               <svg width="9" height="6" aria-hidden="true">
                 <use xlinkHref="#arrow-check" />
@@ -154,8 +162,7 @@ function SignUp(): JSX.Element {
             <span className="sign-up__checkbox-label">Я соглашаюсь с <span>политикой конфиденциальности</span> компании</span>
           </label>
         </div>
-        {/* //! можно использовать is-disabled */}
-        <button className="btn sign-up__button" type="submit">Продолжить</button>
+        <button className={submitClassName} type="submit">Продолжить</button>
       </div>
     </PopupForm>
   );

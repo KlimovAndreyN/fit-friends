@@ -33,7 +33,7 @@ const CustomSelect = (props: CustomSelectProps) => {
     <div className={divClassName}>
       {/*
       //! пропадает label, добавил style={{ opacity: 1 }}
-      .custom-select.is-open .custom-select__label
+      возможно ошибка в css .custom-select.is-open .custom-select__label
       */}
       <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
       <div className="custom-select__placeholder">{defaultValue}</div>
