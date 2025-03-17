@@ -36,7 +36,7 @@ function SignUp(): JSX.Element {
       password: 'password',
       backgroundPath: 'backgroundPath',
       gender: UserGender.Female,
-      role: UserRole.User,
+      role: UserRole.Sportsman,
       metroStationName: MetroStationName.Petrogradskaya,
       avatarFile: undefined,
       birthday: 'birthday'

@@ -36,13 +36,13 @@ export enum HttpCode {
 }
 
 export const DefaultUser = {
-  ROLE: UserRole.User,
+  ROLE: UserRole.Sportsman,
   GENDER: UserGender.Female
 } as const;
 
-export const UserRoleOption: { [key in UserRole]: { sortOrder: number; value: string; title: string; svgIcon: string } } = {
-  user: { sortOrder: 2, value: 'sportsman', title: 'Я хочу тренироваться', svgIcon: '#icon-weight' },
-  coath: { sortOrder: 1, value: 'coath', title: 'Я хочу тренировать', svgIcon: '#icon-cup' }
+export const UserRoleOption: { [key in UserRole]: { sortOrder: number; title: string; svgIcon: string } } = {
+  [UserRole.Sportsman]: { sortOrder: 2, title: 'Я хочу тренироваться', svgIcon: '#icon-weight' },
+  [UserRole.Coath]: { sortOrder: 1, title: 'Я хочу тренировать', svgIcon: '#icon-cup' }
 } as const;
 
 export const SORTED_USER_ROLES = Object.values(UserRole).sort((a, b) => (UserRoleOption[a].sortOrder - UserRoleOption[b].sortOrder));

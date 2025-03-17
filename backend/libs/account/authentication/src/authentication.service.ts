@@ -29,7 +29,17 @@ export class AuthenticationService {
   ) { }
 
   public async registerUser(dto: CreateUserDto, requestId: string): Promise<FitUserEntity> {
-    const { email, name, password, backgroundPath, gender, metroStationName, role, avatarFileId, birthday } = dto;
+    const {
+      email,
+      name,
+      password,
+      backgroundPath,
+      gender,
+      metroStationName,
+      role,
+      avatarFileId,
+      //!birthday
+    } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
     if (existUser) {

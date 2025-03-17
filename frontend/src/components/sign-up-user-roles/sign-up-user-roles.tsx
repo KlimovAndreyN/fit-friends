@@ -18,13 +18,13 @@ function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
         {
           SORTED_USER_ROLES.map(
             (userRole) => {
-              const { value, title, svgIcon } = UserRoleOption[userRole];
+              const { title, svgIcon } = UserRoleOption[userRole];
               const checked = userRole === DefaultUser.ROLE;
 
               return (
-                <div className="role-btn" key={value}>
+                <div className="role-btn" key={userRole}>
                   <label>
-                    <input className="visually-hidden" type="radio" name={name} value={value} defaultChecked={checked} />
+                    <input className="visually-hidden" type="radio" name={name} value={userRole} defaultChecked={checked} />
                     <span className="role-btn__icon">
                       <svg width="12" height="13" aria-hidden="true">
                         <use xlinkHref={svgIcon} />
