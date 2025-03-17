@@ -5,7 +5,10 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { AuthenticationMessage, AuthUser, CreateUserWithAvatarFileIdDto, LoginUserDto, Token, User } from '@backend/shared/core';
+import {
+  AuthenticationMessage, AuthUser, CreateUserDto, LoginUserDto,
+  MetroStationName, Token, User, UserGender, UserRole
+} from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -25,7 +28,7 @@ export class AuthenticationService {
     private readonly refreshTokenService: RefreshTokenService
   ) { }
 
-  public async registerUser(dto: CreateUserWithAvatarFileIdDto, requestId: string): Promise<FitUserEntity> {
+  public async registerUser(dto: CreateUserDto, requestId: string): Promise<FitUserEntity> {
     const { email, name, password, backgroundPath, gender, metroStationName, role, avatarFileId, birthday } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
@@ -37,11 +40,11 @@ export class AuthenticationService {
       email,
       name,
       backgroundPath,
-      gender,
-      metroStationName,
-      role,
+      gender: gender as UserGender,
+      metroStationName: metroStationName as MetroStationName,
+      role: role as UserRole,
       avatarFileId,
-      birthday: new Date(),//! временно
+      birthday: new Date(),//! временно в dto преобразовать birthday
       passwordHash: ''
 
       /*

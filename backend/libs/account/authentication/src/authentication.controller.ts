@@ -6,9 +6,8 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } 
 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
-  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
-  AccountRoute, USER_ID_PARAM, UserRdo, LoginUserDto, UserTokenRdo, ServiceRoute,
-  CreateUserWithAvatarFileIdDto
+  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserRdo,
+  AccountRoute, USER_ID_PARAM, LoginUserDto, UserTokenRdo, ServiceRoute, CreateUserDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -73,7 +72,7 @@ export class AuthenticationController {
   @UseGuards(JwtRefreshGuard)
   @Delete(AccountRoute.Logout)
   public async logout(): Promise<void> {
-    // Будет удалено при проверке токена в JwtRefreshStrategy.validate
+    // RefreshToken будет удален при проверке токена в JwtRefreshStrategy.validate
   }
 
   @ApiOperation(AuthenticationApiOperation.Register)
@@ -82,10 +81,7 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @UseInterceptors(InjectBearerAuthInterceptor)
   @Post(AccountRoute.Register)
-  public async register(
-    @Body() dto: CreateUserWithAvatarFileIdDto,
-    @Req() { requestId }: RequestWithRequestId
-  ): Promise<UserRdo> {
+  public async register(@Body() dto: CreateUserDto, @Req() { requestId }: RequestWithRequestId): Promise<UserRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
 
     //! RDO

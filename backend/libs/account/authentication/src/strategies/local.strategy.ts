@@ -4,13 +4,13 @@ import { Strategy } from 'passport-local';
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
-import { LoginUserDto } from '@backend/shared/core';
+import { LoginUserDto, UserProp } from '@backend/shared/core';
 import { getValidationErrorString } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from '../authentication.service';
 
-const USERNAME_FIELD_NAME = 'email';
+const USERNAME_FIELD_NAME = UserProp.Email;
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

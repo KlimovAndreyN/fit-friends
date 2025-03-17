@@ -26,7 +26,9 @@ export class CreateUserDto implements ICreateUserDto {
   @IsOptional()
   birthday?: string;
 
-  avatarFileId: string;
+  @IsOptional()
+  avatarFileId?: string;
+
   metroStationName: string;
   backgroundPath: string;
   gender: string;

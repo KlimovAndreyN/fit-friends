@@ -25,7 +25,6 @@ export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
-export { CreateUserWithAvatarFileIdDto } from './lib/dto/create-user-with-avatar-file-id.dto';
 export { CreateUserWithAvatarFileDto } from './lib/dto/create-user-with-avatar-file.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
@@ -48,7 +47,7 @@ export { Subscriber } from './lib/interfaces/subscriber.interface';
 export { Subscription } from './lib/interfaces/subscription.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Token } from './lib/interfaces/token.interface';
-export { User } from './lib/interfaces/user.interface';
+export { UserProp, User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 
