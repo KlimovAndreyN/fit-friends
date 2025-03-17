@@ -8,11 +8,13 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { LOCATIONS, PageTitle } from '../../const';
+import { getRandomItem } from '../../utils/random';
+import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';
 
 function SignUp(): JSX.Element {
   const avatarUploadName = 'user-photo-1';
   const locationName = 'location';
+  const backgroundPath = 'background';
   const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
 
   //const dispatch = useAppDispatch();
@@ -73,6 +75,15 @@ function SignUp(): JSX.Element {
           <SignUpUserGengers name='sex' />
         </div>
         <SignUpUserRoles name='role' />
+        {/*//! добавил в разметку фоновую картинку */}
+        <div className="sign-up__data">
+          <CustomSelect
+            name={backgroundPath}
+            currentOption={getRandomItem(USER_BACKGROUND_PATHS)}
+            caption='Фоновая картика'
+            options={USER_BACKGROUND_PATHS}
+          />
+        </div>
         <div className="sign-up__checkbox">
           <label>
             <input type="checkbox" value="user-agreement" name="user-agreement" checked={checkedUserAgreementInput} onChange={handleUserAgreementInputChange} />
