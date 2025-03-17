@@ -1,14 +1,9 @@
-import { MetroStationName } from '../../types/metro-station-name.enum';
-import { UserGender } from '../../types/user-gender.enum';
-import { UserRole } from '../../types/user-role.enum';
+import { User } from '../user.interface';
 
-export interface ICreateUserDto {
-  name: string;
-  email: string;
+export interface ICreateUserDto extends Omit<User, 'birthday' | 'metroStationName' | 'gender' | 'role'> {
   password: string;
   birthday?: string;
-  metroStationName: MetroStationName;
-  backgroundPath: string;
-  gender: UserGender;
-  role: UserRole;
+  metroStationName: string;
+  gender: string;
+  role: string;
 }

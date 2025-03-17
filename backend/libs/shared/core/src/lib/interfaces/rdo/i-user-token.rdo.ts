@@ -1,4 +1,3 @@
-export interface IUserTokenRdo {
-  accessToken: string;
-  refreshToken: string;
-}
+import { Token } from '../token.interface';
+
+export type IUserTokenRdo = Token;
