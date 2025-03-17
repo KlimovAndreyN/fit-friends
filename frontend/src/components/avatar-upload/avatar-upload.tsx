@@ -20,26 +20,19 @@ function AvatarUpload({ name }: AvatarUploadProps): JSX.Element {
   };
 
   return (
-    <div className="sign-up__load-photo">
-      <div className="input-load-avatar">
-        <label>
-          <ImageUploadInput
-            name={inputName}
-            className='visually-hidden'
-            acceptTypes='image/png, image/jpeg'
-            onChange={handleImageUploadInputChange}
-          />
-          <span className={spanClassName}>
-            {image}
-          </span>
-        </label>
-      </div>
-      <div className="sign-up__description">
-        <h2 className="sign-up__legend">Загрузите фото профиля</h2>
-        <span className="sign-up__text">JPG, PNG, оптимальный размер 100×100&nbsp;px</span>
-      </div>
+    <div className="input-load-avatar">
+      <label>
+        <ImageUploadInput
+          name={inputName}
+          className='visually-hidden'
+          acceptTypes='image/png, image/jpeg'
+          onChange={handleImageUploadInputChange}
+        />
+        <span className={spanClassName}>
+          {image}
+        </span>
+      </label>
     </div>
-
   );
 }
 
