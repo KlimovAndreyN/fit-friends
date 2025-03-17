@@ -51,8 +51,13 @@ export function createAPI(): AxiosInstance {
               AccessTokenStore.save(accessToken);
               RefreshTokenStore.save(refreshToken);
             } catch (error) {
-              AccessTokenStore.drop();
-              RefreshTokenStore.drop();
+              if (error instanceof AxiosError) {
+                // удаляем токены, если не ошибка по связи...  но три провальных запроса очень долгие... может передвинуть в validateAccessToken
+                if (error.code !== 'ERR_NETWORK') {
+                  AccessTokenStore.drop();
+                  RefreshTokenStore.drop();
+                }
+              }
             }
           }
         }

@@ -21,5 +21,5 @@ export class AccessTokenStore extends TokenStore {
 }
 
 export class RefreshTokenStore extends TokenStore {
-  protected static tokenName = 'fit-friends.refresh-tokenn';
+  protected static tokenName = 'fit-friends.refresh-token';
 }
