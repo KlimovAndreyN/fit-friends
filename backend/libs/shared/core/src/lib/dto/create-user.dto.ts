@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
+import { UserProp } from '../interfaces/user.interface';
 import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { UserValidation } from '../constants/authentication.constant';
@@ -27,7 +28,7 @@ export class CreateUserDto implements ICreateUserDto {
   birthday?: string;
 
   @IsOptional()
-  avatarFileId?: string;
+  [UserProp.AvatarFileId]?: string;
 
   metroStationName: string;
   backgroundPath: string;
