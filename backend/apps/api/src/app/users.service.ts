@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { CreateUserWithAvatarFileDto, ServiceRoute, UserRdo } from '@backend/shared/core';
+import { AccountRoute, CreateUserDto, CreateUserWithAvatarFileDto, ServiceRoute, UserProp, UserRdo } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -22,38 +22,25 @@ export class UsersService {
   }
 
   public async registerUser(dto: CreateUserWithAvatarFileDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
-    const avatar = (avatarFile) ? await this.filesService.uploadFile(avatarFile, requestId) : null;
+    const avatar = await this.filesService.uploadFile(avatarFile, requestId);
+    const createUserDto: CreateUserDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
 
-    const registeredUser: UserRdo = { email: '11', id: '11', name: '333', registrationDate: 'asdasds' };
+    const url = this.getUrl(AccountRoute.Register);
+    const headers = makeHeaders(requestId);
+    const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUserDto, headers);
 
     console.log('dto', dto);
     console.log('avatarFile', avatarFile);
     console.log('avatar', avatar);
     console.log('requestId', requestId);
 
+    /*
+    const { subDirectory, hashName } = fileRdo
+    fitUser.avatarPath = join(subDirectory, hashName);
+    */
+
     return registeredUser;
   }
-  /*
-    const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
-
-      const formData = new FormData();
-
-      dtoToFormData(dto, formData);
-
-
-
-      multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
-
-      const url = this.usersService.getUrl(AccountRoute.Register);
-      const headers = makeHeaders(requestId);
-      const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
-        url,
-        formData,
-        headers
-      );
-
-      return registerData;
-  */
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
     const url = this.getUrl(id);

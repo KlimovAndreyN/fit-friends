@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 
 import { UserProp } from '../interfaces/user.interface';
 import { MetroStationName } from '../types/metro-station-name.enum';
@@ -39,14 +39,17 @@ export class BaseUserDto {
   public [UserProp.AvatarFile]?: File;
 
   @ApiProperty(UserApiProperty.MetroStationName)
-  public [UserProp.MetroStationName]: string;//!MetroStationName;
+  @IsEnum(MetroStationName)
+  public [UserProp.MetroStationName]: string;
 
   @ApiProperty(UserApiProperty.BackgroundPath)
   public [UserProp.BackgroundPath]: string;
 
   @ApiProperty(UserApiProperty.Gender)
-  public [UserProp.Gender]: string;//!UserGender;
+  @IsEnum(UserGender)
+  public [UserProp.Gender]: string;
 
   @ApiProperty(UserApiProperty.Role)
-  public [UserProp.Role]: string;//!UserRole;
+  @IsEnum(UserRole)
+  public [UserProp.Role]: string;
 }

@@ -35,7 +35,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.backgroundPath = user.backgroundPath;
     this.gender = user.gender;
     this.role = user.role;
-    this.avatarFileId = user.avatarFileId;
+    this.avatarFileId = user.avatarFileId || '';
     this.backgroundPath = user.backgroundPath;
     this.passwordHash = user.passwordHash;
     this.createdAt = user.createdAt;

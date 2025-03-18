@@ -17,24 +17,26 @@ export class FilesService {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
-  public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo> {
-    if (file) {
-      const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, FileStorageRoute.Upload);
-      const headers = makeHeaders(requestId);
+  public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {
+    if (!file) {
+      return null;
+    }
 
-      try {
-        const fileFormData = new FormData();
+    const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, FileStorageRoute.Upload);
+    const headers = makeHeaders(requestId);
 
-        multerFileToFormData(file, fileFormData, FILE_KEY);
+    try {
+      const fileFormData = new FormData();
 
-        const { data: fileRdo } = await this.httpService.axiosRef.post<UploadedFileRdo>(url, fileFormData, headers);
+      multerFileToFormData(file, fileFormData, FILE_KEY);
 
-        return fileRdo;
-      } catch (error) {
-        this.logger.error(`FilesService.uploadFile: ${parseAxiosError(error)}`);
+      const { data: fileRdo } = await this.httpService.axiosRef.post<UploadedFileRdo>(url, fileFormData, headers);
 
-        throw new InternalServerErrorException('File upload error!');
-      }
+      return fileRdo;
+    } catch (error) {
+      this.logger.error(`FilesService.uploadFile: ${parseAxiosError(error)}`);
+
+      throw new InternalServerErrorException('File upload error!');
     }
   }
 }
