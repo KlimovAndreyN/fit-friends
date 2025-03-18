@@ -1,4 +1,9 @@
+export enum TokenProp {
+  AccessToken = 'accessToken',
+  RefreshToken = 'refreshToken'
+}
+
 export interface Token {
-  accessToken: string;
-  refreshToken: string;
+  [TokenProp.AccessToken]: string;
+  [TokenProp.RefreshToken]: string;
 }

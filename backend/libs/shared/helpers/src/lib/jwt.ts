@@ -14,9 +14,7 @@ export async function getJwtOptions(configService: ConfigService): Promise<JwtMo
 }
 
 export function createJwtPayload(user: User): TokenPayload {
-  return {
-    sub: user.id,
-    email: user.email,
-    name: user.name
-  };
+  const { id: sub, email, name, role } = user;
+
+  return { sub, email, name, role };
 }

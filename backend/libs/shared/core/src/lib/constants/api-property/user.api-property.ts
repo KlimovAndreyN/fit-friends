@@ -60,13 +60,5 @@ export const UserApiProperty = {
     description: 'The user registration date',
     type: 'string',
     example: '2025-01-20'
-  },
-  AccessToken: {
-    description: 'The user access JWT token',
-    example: 'asdasdsdfetyhetyhythgfnghnlkcsdkfajowfjlsdkmcv'
-  },
-  RefreshToken: {
-    description: 'The user refresh JWT token',
-    example: 'fvdfvbdgbsdfbfgbfgfghdr6he5656hsrthsfhfg'
   }
 } as const;

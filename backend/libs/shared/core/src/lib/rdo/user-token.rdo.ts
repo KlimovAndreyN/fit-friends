@@ -1,15 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
+import { TokenProp } from '../interfaces/token.interface';
 import { IUserTokenRdo } from '../interfaces/rdo/i-user-token.rdo';
-import { UserApiProperty } from '../constants/api-property/user.api-property';
+import { TokenApiProperty } from '../constants/api-property/token.api-property';
 
 export class UserTokenRdo implements IUserTokenRdo {
-  @ApiProperty(UserApiProperty.AccessToken)
+  @ApiProperty(TokenApiProperty.AccessToken)
   @Expose()
-  public accessToken: string;
+  public [TokenProp.AccessToken]: string;
 
-  @ApiProperty(UserApiProperty.RefreshToken)
+  @ApiProperty(TokenApiProperty.RefreshToken)
   @Expose()
-  public refreshToken: string;
+  public [TokenProp.RefreshToken]: string;
 }

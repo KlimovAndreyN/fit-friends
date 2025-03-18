@@ -25,5 +25,5 @@ export class UserRdo {
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
   @Expose({ name: UserProp.CreatedAt })
-  public registrationDate: string; //! userprop
+  public [UserProp.RegistrationDate]: string; //! userprop
 }

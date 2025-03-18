@@ -14,7 +14,8 @@ export enum UserProp {
   BackgroundPath = 'backgroundPath',
   Gender = 'gender',
   Role = 'role',
-  CreatedAt = 'createdAt'
+  CreatedAt = 'createdAt',
+  RegistrationDate = 'registrationDate'
 }
 
 export interface User {

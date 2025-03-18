@@ -3,6 +3,7 @@ import { Expose } from 'class-transformer';
 
 import { ILoggedUserRdo } from '../interfaces/rdo/i-logged-user.rdo';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
+import { TokenApiProperty } from '../constants/api-property/token.api-property';
 
 export class LoggedUserRdo implements ILoggedUserRdo {
   @ApiProperty(UserApiProperty.Id)
@@ -13,11 +14,11 @@ export class LoggedUserRdo implements ILoggedUserRdo {
   @Expose()
   public email: string;
 
-  @ApiProperty(UserApiProperty.AccessToken)
+  @ApiProperty(TokenApiProperty.AccessToken)
   @Expose()
   public accessToken: string;
 
-  @ApiProperty(UserApiProperty.RefreshToken)
+  @ApiProperty(TokenApiProperty.RefreshToken)
   @Expose()
   public refreshToken: string;
 }
