@@ -5,24 +5,29 @@ import { UserRole } from '../../types/user-role.enum';
 export const UserApiProperty = {
   Id: {
     description: 'The unique user ID',
-    example: '658170cbb954e9f5b905ccf4'
+    example: '658170cbb954e9f5b905ccf4',
+    type: 'string'
   },
   Email: {
     description: 'The unique user email',
-    example: 'user@local.local'
+    example: 'user@local.local',
+    type: 'string'
   },
   Name: {
     description: 'The user name',
-    example: 'Name'
+    example: 'Name',
+    type: 'string'
   },
   Password: {
     description: 'The user password',
-    example: 'password'
+    example: 'password',
+    type: 'string'
   },
   AvatarFileId: {
     required: false,
     description: 'The user avatar file id',
-    example: '658170cbb954e9f5b905ddf4'
+    example: '658170cbb954e9f5b905ddf4',
+    type: 'string'
   },
   AvatarFile: {
     required: false,
