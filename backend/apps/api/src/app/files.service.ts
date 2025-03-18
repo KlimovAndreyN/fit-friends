@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
 
-import { FILE_KEY, FileStorageRoute, ServiceRoute, UploadedFileRdo, UserRdo } from '@backend/shared/core';
-import { joinUrl, makeHeaders, parseAxiosError, uploadFile } from '@backend/shared/helpers';
+import { FILE_KEY, FileStorageRoute, ServiceRoute, UploadedFileRdo } from '@backend/shared/core';
+import { joinUrl, makeHeaders, multerFileToFormData, parseAxiosError } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 @Injectable()
@@ -20,17 +20,14 @@ export class FilesService {
   public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo> {
     if (file) {
       const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, FileStorageRoute.Upload);
-
-      //!const headers = makeHeaders(requestId);
+      const headers = makeHeaders(requestId);
 
       try {
-        //!
-        const fileRdo = await uploadFile<UploadedFileRdo>(
-          url,
-          file,
-          FILE_KEY,
-          requestId
-        );
+        const fileFormData = new FormData();
+
+        multerFileToFormData(file, fileFormData, FILE_KEY);
+
+        const { data: fileRdo } = await this.httpService.axiosRef.post<UploadedFileRdo>(url, fileFormData, headers);
 
         return fileRdo;
       } catch (error) {

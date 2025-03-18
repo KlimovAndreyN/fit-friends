@@ -1,3 +1,5 @@
+import 'multer'; // Express.Multer.File
+
 //! нужно ли?
 export function dtoToFormData<T>(dto: T, formData: FormData): void {
   for (const [key, value] of Object.entries(dto)) {
