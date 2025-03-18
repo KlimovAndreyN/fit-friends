@@ -11,8 +11,8 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserWithAvatarFileDto,
-  UserWithAvatarFileRdo, ApiApiResponse
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
+  UserRdo, ApiApiResponse
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -99,10 +99,10 @@ export class UsersController {
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(AccountRoute.Register)
   public async register(
-    @Body() dto: CreateUserWithAvatarFileDto,
+    @Body() dto: CreateUserDto,
     @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserWithAvatarFileRdo> {
+  ): Promise<UserRdo> {
     const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
 
     return registeredUser;
@@ -120,7 +120,7 @@ export class UsersController {
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { requestId }: RequestWithRequestId
-  ): Promise<UserWithAvatarFileRdo> {
+  ): Promise<UserRdo> {
     const user = await this.usersService.getUser(userId, requestId);
 
     return user;

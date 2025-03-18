@@ -7,7 +7,7 @@ import { UserProp } from '../interfaces/user.interface';
 import { BaseUserDto } from '../dto/base-user.dto';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 
-export class UserRdo
+export class UserWithFileIdRdo
   extends PickType(
     BaseUserDto,
     [

@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  AccountRoute, CreateUserWithFileIdDto, CreateUserWithAvatarFileDto,
-  ServiceRoute, UserProp, UserRdo, UserWithAvatarFileRdo
+  AccountRoute, CreateUserWithFileIdDto, CreateUserDto,
+  ServiceRoute, UserProp, UserWithFileIdRdo, UserRdo
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -24,7 +24,7 @@ export class UsersService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, route);
   }
 
-  public async registerUser(dto: CreateUserWithAvatarFileDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserWithAvatarFileRdo> {
+  public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
     //!
     console.log('dto', dto);
     console.log('avatarFile', avatarFile);
@@ -34,22 +34,22 @@ export class UsersService {
     const createUser: CreateUserWithFileIdDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
-    const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUser, headers);
+    const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);
     //!
     console.log('registeredUser', registeredUser);
     const avatarSrc = this.filesService.makeSrc(avatar);
-    const rdo: UserWithAvatarFileRdo = { ...registeredUser, avatarSrc };
+    const rdo: UserRdo = { ...registeredUser, avatarSrc };
     //!
     console.log('rdo', rdo);
 
     return rdo;
   }
 
-  public async getUser(id: string, requestId: string): Promise<UserWithAvatarFileRdo> {
+  public async getUser(id: string, requestId: string): Promise<UserRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
-    //! UserRdo
-    const { data } = await this.httpService.axiosRef.get<UserWithAvatarFileRdo>(url, headers);
+    //! UserWithFileIdRdo
+    const { data } = await this.httpService.axiosRef.get<UserRdo>(url, headers);
 
     //! дополнить информацией о файле
     return data;

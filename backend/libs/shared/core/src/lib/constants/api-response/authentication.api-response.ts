@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { UserRdo } from '../../rdo/user.rdo';
+import { UserWithFileIdRdo } from '../../rdo/user.rdo';
 import { UserTokenRdo } from '../../rdo/user-token.rdo';
 import { LoggedUserRdo } from '../../rdo/logged-user.rdo';
 import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
@@ -31,7 +31,7 @@ export const AuthenticationApiResponse = {
     description: 'User has been successfully logout.'
   },
   UserCreated: {
-    type: UserRdo,
+    type: UserWithFileIdRdo,
     status: HttpStatus.CREATED,
     description: 'The new user has been successfully created.'
   },
@@ -48,7 +48,7 @@ export const AuthenticationApiResponse = {
     description: 'Bad request.'
   },
   UserFound: {
-    type: UserRdo,
+    type: UserWithFileIdRdo,
     status: HttpStatus.OK,
     description: 'User found.'
   },

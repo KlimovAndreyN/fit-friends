@@ -6,7 +6,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } 
 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
-  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserRdo, User,
+  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserWithFileIdRdo, User,
   AccountRoute, USER_ID_PARAM, LoginUserDto, UserTokenRdo, ServiceRoute, CreateUserWithFileIdDto, UserProp
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
@@ -81,10 +81,10 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @UseInterceptors(InjectBearerAuthInterceptor)
   @Post(AccountRoute.Register)
-  public async register(@Body() dto: CreateUserWithFileIdDto, @Req() { requestId }: RequestWithRequestId): Promise<UserRdo> {
+  public async register(@Body() dto: CreateUserWithFileIdDto, @Req() { requestId }: RequestWithRequestId): Promise<UserWithFileIdRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
 
-    return fillDto(UserRdo, newUser.toPOJO());
+    return fillDto(UserWithFileIdRdo, newUser.toPOJO());
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)
@@ -93,9 +93,9 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
   @Get(USER_ID_PARAM)
-  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User[UserProp.Id]): Promise<UserRdo> {
+  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User[UserProp.Id]): Promise<UserWithFileIdRdo> {
     const existUser = await this.authService.getUser(userId);
 
-    return fillDto(UserRdo, existUser.toPOJO());
+    return fillDto(UserWithFileIdRdo, existUser.toPOJO());
   }
 }

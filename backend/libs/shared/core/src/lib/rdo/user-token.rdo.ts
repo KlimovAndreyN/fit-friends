@@ -6,5 +6,8 @@ import { LoggedUserRdo } from './logged-user.rdo';
 export class UserTokenRdo
   extends PickType(
     LoggedUserRdo,
-    [TokenProp.AccessToken, TokenProp.RefreshToken]
+    [
+      TokenProp.AccessToken,
+      TokenProp.RefreshToken
+    ]
   ) implements Token { }

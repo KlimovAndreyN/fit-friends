@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  ILoggedUserRdo, ICreateUserWithAvatarFileDto, IUserWithAvatarFileRdo
+  ILoggedUserRdo, ICreateUserDto, IUserRdo
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
@@ -82,13 +82,13 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   }
 );
 
-export const registerUser = createAsyncThunk<void, ICreateUserWithAvatarFileDto, { extra: Extra }>(
+export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extra }>(
   Action.REGISTER_USER,
   async (dto, { extra }) => {
     const { api, history } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
-    await api.post<IUserWithAvatarFileRdo>(url, dto);
+    await api.post<IUserRdo>(url, dto);
 
     history.push(AppRoute.Root);
   }

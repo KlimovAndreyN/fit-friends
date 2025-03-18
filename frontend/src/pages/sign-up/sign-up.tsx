@@ -8,7 +8,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserWithAvatarFileDto, MetroStationName, UserGender, UserRole } from '@backend/shared';
+import { ICreateUserDto, MetroStationName, UserGender, UserRole } from '@backend/shared';
 
 import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/action';
@@ -50,7 +50,7 @@ function SignUp(): JSX.Element {
     const metroStationName = (formData.get(FormFieldName.location)?.toString() || '') as MetroStationName;
     const avatarFile = formData.get(FormFieldName.avatar) as File; //! ??
 
-    const dto: ICreateUserWithAvatarFileDto =
+    const dto: ICreateUserDto =
     {
       name,
       email,
