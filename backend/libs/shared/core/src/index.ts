@@ -56,7 +56,7 @@ export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserTokenRdo } from './lib/rdo/user-token.rdo';
-export { UserRdo } from './lib/rdo/user-with-avatar-file.rdo';
+export { UserRdo } from './lib/rdo/user.rdo';
 export { UserWithFileIdRdo } from './lib/rdo/user-with-file-id.rdo';
 
 export * from './lib/types/environment.type';

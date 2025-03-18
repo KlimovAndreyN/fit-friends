@@ -1,4 +1,4 @@
-import { UserRdo } from '../../rdo/user-with-avatar-file.rdo';
+import { UserRdo } from '../../rdo/user.rdo';
 import { AuthenticationApiResponse } from './authentication.api-response';
 
 export const ApiApiResponse = {
