@@ -25,19 +25,28 @@ export class BaseUserDto {
   @MaxLength(UserValidation.Password.MaxLength)
   public [UserProp.Password]: string;
 
-  //! остальное описать
+  @ApiProperty(UserApiProperty.Birthday) //! проверять описать формат '2005-01-20'
+  @IsString()
   @IsOptional()
-  birthday?: string;
+  public [UserProp.Birthday]?: string;
 
+  @ApiProperty(UserApiProperty.AvatarFileId)
   @IsOptional()
-  avatarFileId?: string;
+  public [UserProp.AvatarFileId]?: string;
 
   @ApiProperty(UserApiProperty.AvatarFile)
   @IsOptional()
-  avatarFile?: string;
+  public [UserProp.AvatarFile]?: File;
 
-  metroStationName: MetroStationName;
-  backgroundPath: string;
-  gender: UserGender;
-  role: UserRole;
+  @ApiProperty(UserApiProperty.MetroStationName)
+  public [UserProp.MetroStationName]: string;//!MetroStationName;
+
+  @ApiProperty(UserApiProperty.BackgroundPath)
+  public [UserProp.BackgroundPath]: string;
+
+  @ApiProperty(UserApiProperty.Gender)
+  public [UserProp.Gender]: string;//!UserGender;
+
+  @ApiProperty(UserApiProperty.Role)
+  public [UserProp.Role]: string;//!UserRole;
 }

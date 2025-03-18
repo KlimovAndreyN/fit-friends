@@ -1,3 +1,7 @@
+import { MetroStationName } from '../../types/metro-station-name.enum';
+import { UserGender } from '../../types/user-gender.enum';
+import { UserRole } from '../../types/user-role.enum';
+
 export const UserApiProperty = {
   Id: {
     description: 'The unique user ID',
@@ -15,9 +19,9 @@ export const UserApiProperty = {
     description: 'The user password',
     example: 'password'
   },
-  AvatarPath: {
-    description: 'The user avatar path',
-    example: '/img/avatar.jpg'
+  AvatarFileId: {
+    description: 'The user avatar file id',
+    example: '658170cbb954e9f5b905ddf4'
   },
   AvatarFile: {
     required: false,
@@ -25,7 +29,32 @@ export const UserApiProperty = {
     type: 'string',
     format: 'binary'
   },
-  registrationDate: {
+  Birthday: {
+    description: 'The user dirthday date',
+    type: 'string',
+    example: '2005-01-20'
+  },
+  MetroStationName: {
+    description: 'The user metro station name',
+    type: 'string',
+    example: MetroStationName.Petrogradskaya
+  },
+  BackgroundPath: {
+    description: 'The user background path',
+    type: 'string',
+    example: '/some/path/img.jpg'
+  },
+  Gender: {
+    description: 'The user gender',
+    type: 'string',
+    example: UserGender.Male
+  },
+  Role: {
+    description: 'The user role',
+    type: 'string',
+    example: UserRole.Sportsman
+  },
+  RegistrationDate: {
     description: 'The user registration date',
     type: 'string',
     example: '2025-01-20'
