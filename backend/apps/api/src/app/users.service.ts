@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  AccountRoute, CreateUserDto, CreateUserWithAvatarFileDto,
+  AccountRoute, CreateUserWithFileIdDto, CreateUserWithAvatarFileDto,
   ServiceRoute, UserProp, UserRdo, UserWithAvatarFileRdo
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -31,7 +31,7 @@ export class UsersService {
     const avatar = await this.filesService.uploadFile(avatarFile, requestId);
     //!
     console.log('avatar', avatar);
-    const createUser: CreateUserDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
+    const createUser: CreateUserWithFileIdDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUser, headers);

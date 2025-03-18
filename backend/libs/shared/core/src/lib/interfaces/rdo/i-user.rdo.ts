@@ -1,6 +1,6 @@
 import { User, UserProp } from '../user.interface';
 
-export interface IUserRdo
+export interface IUserWithFileIdRdo
   extends Pick<
     User,
     UserProp.Name | UserProp.Email | UserProp.MetroStationName | UserProp.BackgroundPath | UserProp.Gender | UserProp.AvatarFileId | UserProp.Role

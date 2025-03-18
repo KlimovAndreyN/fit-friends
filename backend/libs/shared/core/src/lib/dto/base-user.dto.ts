@@ -3,13 +3,15 @@ import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'cla
 import { Expose } from 'class-transformer';
 
 import { User, UserProp } from '../interfaces/user.interface';
-import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
+import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user.dto';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { UserValidation } from '../constants/authentication.constant';
 
+//! название и размещение не очень... используется для описания, валидации и трансформации dto и rdo
+// UserApiDoc
 export class BaseUserDto {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
@@ -32,13 +34,13 @@ export class BaseUserDto {
   @IsString()
   @MinLength(UserValidation.Password.MinLength)
   @MaxLength(UserValidation.Password.MaxLength)
-  public [UserProp.Password]: ICreateUserDto[UserProp.Password];
+  public [UserProp.Password]: ICreateUserWithFileIdDto[UserProp.Password];
 
   @ApiProperty(UserApiProperty.Birthday) //! проверять описать формат '2005-01-20'
   @Expose()
   @IsString()
   @IsOptional()
-  public [UserProp.Birthday]?: string;
+  public [UserProp.Birthday]?: ICreateUserWithFileIdDto[UserProp.Birthday];
 
   @ApiProperty(UserApiProperty.AvatarFileId)
   @Expose()

@@ -2,7 +2,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 
 import { transformDate } from '../utils/transform';
-import { IUserRdo } from '../interfaces/rdo/i-user.rdo';
+import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user.rdo';
 import { UserProp } from '../interfaces/user.interface';
 import { BaseUserDto } from '../dto/base-user.dto';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
@@ -21,9 +21,9 @@ export class UserRdo
       UserProp.Gender,
       UserProp.Role
     ]
-  ) implements IUserRdo {
+  ) implements IUserWithFileIdRdo {
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
   @Expose({ name: UserProp.CreatedAt })
-  public [UserProp.RegistrationDate]: IUserRdo[UserProp.RegistrationDate];
+  public [UserProp.RegistrationDate]: IUserWithFileIdRdo[UserProp.RegistrationDate];
 }

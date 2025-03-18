@@ -1,10 +1,10 @@
 import { PickType } from '@nestjs/swagger';
 
 import { UserProp } from '../interfaces/user.interface';
-import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
+import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user.dto';
 import { BaseUserDto } from './base-user.dto';
 
-export class CreateUserDto extends PickType(
+export class CreateUserWithFileIdDto extends PickType(
   BaseUserDto,
   [
     UserProp.Name,
@@ -17,4 +17,4 @@ export class CreateUserDto extends PickType(
     UserProp.Gender,
     UserProp.Role
   ]
-) implements ICreateUserDto { }
+) implements ICreateUserWithFileIdDto { }

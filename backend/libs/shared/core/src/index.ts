@@ -27,7 +27,7 @@ export { XHeader } from './lib/constants/x-header';
 
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
 export { CreateUserWithAvatarFileDto } from './lib/dto/create-user-with-avatar-file.dto';
-export { CreateUserDto } from './lib/dto/create-user.dto';
+export { CreateUserWithFileIdDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';

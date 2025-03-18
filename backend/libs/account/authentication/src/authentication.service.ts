@@ -5,7 +5,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { AuthenticationMessage, AuthUser, CreateUserDto, LoginUserDto, Token, User } from '@backend/shared/core';
+import { AuthenticationMessage, AuthUser, CreateUserWithFileIdDto, LoginUserDto, Token, User } from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -25,7 +25,7 @@ export class AuthenticationService {
     private readonly refreshTokenService: RefreshTokenService
   ) { }
 
-  public async registerUser(dto: CreateUserDto, requestId: string): Promise<FitUserEntity> {
+  public async registerUser(dto: CreateUserWithFileIdDto, requestId: string): Promise<FitUserEntity> {
     const {
       email,
       name,

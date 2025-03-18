@@ -1,7 +1,7 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { User, UserProp } from '../interfaces/user.interface';
+import { UserProp } from '../interfaces/user.interface';
 import { TokenPayload, TokenPayloadProp } from '../interfaces/token-payload.interface';
 import { BaseUserDto } from '../dto/base-user.dto';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
@@ -16,5 +16,5 @@ export class TokenPayloadRdo extends PickType(
 ) implements TokenPayload {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
-  public [TokenPayloadProp.Sub]: User[UserProp.Id];
+  public [TokenPayloadProp.Sub]: TokenPayload[TokenPayloadProp.Sub];
 }

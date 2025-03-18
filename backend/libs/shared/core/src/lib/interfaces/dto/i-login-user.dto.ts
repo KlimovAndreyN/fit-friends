@@ -1,4 +1,4 @@
 import { UserProp } from '../user.interface';
-import { ICreateUserDto } from './i-create-user.dto';
+import { ICreateUserWithFileIdDto } from './i-create-user.dto';
 
-export type ILoginUserDto = Pick<ICreateUserDto, UserProp.Email | UserProp.Password>;
+export type ILoginUserDto = Pick<ICreateUserWithFileIdDto, UserProp.Email | UserProp.Password>;

@@ -1,6 +1,6 @@
 import { UserProp } from '../user.interface';
-import { ICreateUserDto } from './i-create-user.dto';
+import { ICreateUserWithFileIdDto } from './i-create-user.dto';
 
-export interface ICreateUserWithAvatarFileDto extends Omit<ICreateUserDto, UserProp.AvatarFileId> {
+export interface ICreateUserWithAvatarFileDto extends Omit<ICreateUserWithFileIdDto, UserProp.AvatarFileId> {
   [UserProp.AvatarFile]?: File;
 }

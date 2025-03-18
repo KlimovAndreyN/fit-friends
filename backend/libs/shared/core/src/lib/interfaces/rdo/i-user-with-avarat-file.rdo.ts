@@ -1,6 +1,6 @@
 import { UserProp } from '../user.interface';
-import { IUserRdo } from './i-user.rdo';
+import { IUserWithFileIdRdo } from './i-user.rdo';
 
-export interface IUserWithAvatarFileRdo extends Omit<IUserRdo, UserProp.AvatarFileId> {
+export interface IUserWithAvatarFileRdo extends Omit<IUserWithFileIdRdo, UserProp.AvatarFileId> {
   [UserProp.AvatarSrc]: string;
 }
