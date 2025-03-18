@@ -5,10 +5,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import {
-  AuthenticationMessage, AuthUser, CreateUserDto, LoginUserDto,
-  MetroStationName, Token, User, UserGender, UserRole
-} from '@backend/shared/core';
+import { AuthenticationMessage, AuthUser, CreateUserDto, LoginUserDto, Token, User } from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -50,25 +47,12 @@ export class AuthenticationService {
       email,
       name,
       backgroundPath,
-      gender: gender as UserGender,
-      metroStationName: metroStationName as MetroStationName,
-      role: role as UserRole,
+      gender,
+      metroStationName,
+      role,
       avatarFileId,
       birthday: new Date(),//! временно в dto преобразовать birthday
       passwordHash: ''
-
-      /*
-        id?: string;
-        name: string;
-        email: string;
-        birthday?: Date;
-        metroStationName: MetroStationName;
-        backgroundPath: string;
-        gender: UserGender;
-        role: UserRole;
-        avatarFileId: string;
-        createdAt?: Date;
-         */
     };
 
     const userEntity = new FitUserEntity(fitUser);

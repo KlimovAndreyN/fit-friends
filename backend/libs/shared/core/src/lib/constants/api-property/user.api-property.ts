@@ -39,6 +39,7 @@ export const UserApiProperty = {
   MetroStationName: {
     description: 'The user metro station name',
     type: 'string',
+    enum: MetroStationName,
     example: MetroStationName.Petrogradskaya
   },
   BackgroundPath: {
@@ -49,11 +50,13 @@ export const UserApiProperty = {
   Gender: {
     description: 'The user gender',
     type: 'string',
+    enum: UserGender,
     example: UserGender.Male
   },
   Role: {
     description: 'The user role',
     type: 'string',
+    enum: UserRole,
     example: UserRole.Sportsman
   },
   RegistrationDate: {

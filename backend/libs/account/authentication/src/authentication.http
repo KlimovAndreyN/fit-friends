@@ -6,39 +6,16 @@ POST {{baseUrlAuth}}/register HTTP/1.1
 Content-Type: application/json
 
 {
+  "name": "Name",
   "email": "user@local.local",
-  "name": "Keks",
-  "password": "123456"
+  "password": "password",
+  "birthday": "2005-01-20",
+  "avatarFileId": "658170cbb954e9f5b905ddf4",
+  "metroStationName": "pionerskaya",
+  "backgroundPath": "/some/path/img.jpg",
+  "gender": "male",
+  "role": "sportsman"
 }
-
-###
-
-# Create a new user with avatarFile - Content-Type: multipart/form-data
-POST {{baseUrlAuth}}/register HTTP/1.1
-Content-Type: multipart/form-data; boundary=boundary
-
---boundary
-Content-Disposition: form-data; name="email"
-
-user1@local.local
---boundary
-Content-Disposition: form-data; name="name"
-
-Keks
---boundary
-Content-Disposition: form-data; name="name1111"
-
-Keks1111
---boundary
-Content-Disposition: form-data; name="password"
-
-123456
---boundary
-Content-Disposition: form-data; name="avatarFile"; filename="cat.jpg"
-Content-Type: image/jpeg
-
-< ../../../../../markup/img/cat.jpg
---boundary--
 
 ###
 

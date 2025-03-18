@@ -29,6 +29,7 @@ export class UsersService {
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUserDto, headers);
 
+    //!
     console.log('dto', dto);
     console.log('avatarFile', avatarFile);
     console.log('avatar', avatar);

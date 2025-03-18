@@ -6,9 +6,14 @@ POST {{baseUrlAuth}}/register HTTP/1.1
 Content-Type: application/json
 
 {
+  "name": "Name",
   "email": "user@local.local",
-  "name": "Keks",
-  "password": "123456"
+  "password": "password",
+  "birthday": "2005-01-20",
+  "metroStationName": "pionerskaya",
+  "backgroundPath": "/some/path/img.jpg",
+  "gender": "male",
+  "role": "sportsman"
 }
 
 ###
@@ -34,10 +39,26 @@ Content-Disposition: form-data; name="password"
 
 123456
 --boundary
-Content-Disposition: form-data; name="avatarFile"; filename="cat.jpg"
-Content-Type: image/jpeg
+Content-Disposition: form-data; name="metroStationName"
 
-< ../../../../../markup/img/cat.jpg
+pionerskaya
+--boundary
+Content-Disposition: form-data; name="backgroundPath"
+
+/some/path/img.jpg
+--boundary
+Content-Disposition: form-data; name="gender"
+
+male
+--boundary
+Content-Disposition: form-data; name="role"
+
+sportsman
+--boundary
+Content-Disposition: form-data; name="avatarFile"; filename="cat.jpg"
+Content-Type: image/png
+
+< ../../../../../markup/img/content/avatars/users/photo-1.png
 --boundary--
 
 ###
