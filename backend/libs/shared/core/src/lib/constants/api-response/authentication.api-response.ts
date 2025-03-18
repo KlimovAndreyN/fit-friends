@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-import { UserWithFileIdRdo } from '../../rdo/user.rdo';
+import { UserWithFileIdRdo } from '../../rdo/user-with-file-id.rdo';
 import { UserTokenRdo } from '../../rdo/user-token.rdo';
 import { LoggedUserRdo } from '../../rdo/logged-user.rdo';
 import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
