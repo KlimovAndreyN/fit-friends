@@ -1,3 +1,4 @@
+//! нужно ли?
 export function dtoToFormData<T>(dto: T, formData: FormData): void {
   for (const [key, value] of Object.entries(dto)) {
     // если массив, то все значения добавляем отдельно

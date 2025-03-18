@@ -9,5 +9,5 @@ import { ICreateUserWithAvatarFileDto } from '../interfaces/dto/i-create-user-wi
 export class CreateUserWithAvatarFileDto extends OmitType(CreateUserDto, [UserProp.AvatarFileId]) implements ICreateUserWithAvatarFileDto {
   @ApiProperty(UserApiProperty.AvatarFile)
   @IsOptional()
-  public [UserProp.AvatarFile]?: File; //!! наверное еще нужен класс для Swagger, фактически будет в @UploadedFile... avatarFile?: Express.Multer.File
+  public [UserProp.AvatarFile]?: File;
 }

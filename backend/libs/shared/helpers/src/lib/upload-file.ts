@@ -7,6 +7,7 @@ import { makeHeaders } from './headers';
 const HTTP_CLIENT_MAX_REDIRECTS = 5;
 const HTTP_CLIENT_TIMEOUT = 3000;
 
+//! перенести в api
 export async function uploadFile<T>(
   fileUploadUrl: string,
   file: Express.Multer.File,

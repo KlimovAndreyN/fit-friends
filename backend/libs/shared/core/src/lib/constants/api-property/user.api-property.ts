@@ -20,6 +20,7 @@ export const UserApiProperty = {
     example: 'password'
   },
   AvatarFileId: {
+    required: false,
     description: 'The user avatar file id',
     example: '658170cbb954e9f5b905ddf4'
   },
@@ -30,6 +31,7 @@ export const UserApiProperty = {
     format: 'binary'
   },
   Birthday: {
+    required: false,
     description: 'The user dirthday date',
     type: 'string',
     example: '2005-01-20'

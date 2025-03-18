@@ -10,9 +10,9 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, CreateUserDto, UserRdo, AccountRoute
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, UserRdo, AccountRoute, CreateUserWithAvatarFileDto
 } from '@backend/shared/core';
-import { dtoToFormData, makeHeaders, multerFileToFormData } from '@backend/shared/helpers';
+import { makeHeaders } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -97,27 +97,13 @@ export class UsersController {
   @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Post(AccountRoute.Register)
   public async register(
-    @Body() dto: CreateUserDto,
+    @Body() dto: CreateUserWithAvatarFileDto,
     @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserRdo> {
-    const formData = new FormData();
+    const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
 
-    dtoToFormData(dto, formData);
-
-    if (avatarFile) {
-      multerFileToFormData(avatarFile, formData, UserAvatarOption.KEY);
-    }
-
-    const url = this.usersService.getUrl(AccountRoute.Register);
-    const headers = makeHeaders(requestId);
-    const { data: registerData } = await this.httpService.axiosRef.post<UserRdo>(
-      url,
-      formData,
-      headers
-    );
-
-    return registerData;
+    return registeredUser; //! дополнить информацией о файле
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)
@@ -135,6 +121,6 @@ export class UsersController {
   ): Promise<UserRdo> {
     const user = await this.usersService.getUser(userId, requestId);
 
-    return user;
+    return user; //! дополнить информацией о файле
   }
 }
