@@ -1,24 +1,28 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 import { ILoggedUserRdo } from '../interfaces/rdo/i-logged-user.rdo';
-import { UserApiProperty } from '../constants/api-property/user.api-property';
+import { BaseUserDto } from '../dto/base-user.dto';
 import { TokenApiProperty } from '../constants/api-property/token.api-property';
+import { UserProp } from '../interfaces/user.interface';
+import { Token, TokenProp } from '../interfaces/token.interface';
 
-export class LoggedUserRdo implements ILoggedUserRdo {
-  @ApiProperty(UserApiProperty.Id)
-  @Expose()
-  public id: string;
-
-  @ApiProperty(UserApiProperty.Email)
-  @Expose()
-  public email: string;
-
+export class LoggedUserRdo extends
+  PickType(
+    BaseUserDto,
+    [
+      UserProp.Id,
+      UserProp.Name,
+      UserProp.Email,
+      UserProp.Role
+    ]
+  )
+  implements ILoggedUserRdo {
   @ApiProperty(TokenApiProperty.AccessToken)
   @Expose()
-  public accessToken: string;
+  public [TokenProp.AccessToken]: Token[TokenProp.AccessToken];
 
   @ApiProperty(TokenApiProperty.RefreshToken)
   @Expose()
-  public refreshToken: string;
+  public [TokenProp.RefreshToken]: Token[TokenProp.RefreshToken];
 }

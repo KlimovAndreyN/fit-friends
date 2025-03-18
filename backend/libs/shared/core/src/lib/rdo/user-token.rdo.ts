@@ -1,15 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { PickType } from '@nestjs/swagger';
 
 import { Token, TokenProp } from '../interfaces/token.interface';
-import { TokenApiProperty } from '../constants/api-property/token.api-property';
+import { LoggedUserRdo } from './logged-user.rdo';
 
-export class UserTokenRdo implements Token {
-  @ApiProperty(TokenApiProperty.AccessToken)
-  @Expose()
-  public [TokenProp.AccessToken]: string;
-
-  @ApiProperty(TokenApiProperty.RefreshToken)
-  @Expose()
-  public [TokenProp.RefreshToken]: string;
-}
+export class UserTokenRdo
+  extends PickType(
+    LoggedUserRdo,
+    [TokenProp.AccessToken, TokenProp.RefreshToken]
+  ) implements Token { }
