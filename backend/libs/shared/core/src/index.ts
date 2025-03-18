@@ -5,8 +5,9 @@ export { AuthenticationApiOperation } from './lib/constants/api-operation/authen
 export { FileApiProperty } from './lib/constants/api-property/file.api-property';
 export { UserApiProperty } from './lib/constants/api-property/user.api-property';
 
-export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
+export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
 export { AuthenticationApiResponse } from './lib/constants/api-response/authentication.api-response';
+export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
 
 export { ApiHeaderOption } from './lib/constants/api-header-option';
 export * from './lib/constants/api-param-option';
@@ -52,10 +53,11 @@ export { UserProp, User } from './lib/interfaces/user.interface';
 export { PageQuery } from './lib/query/page.query';
 
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
-export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
-export { UserRdo } from './lib/rdo/user.rdo';
+export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserTokenRdo } from './lib/rdo/user-token.rdo';
+export { UserWithAvatarFileRdo } from './lib/rdo/user-with-avatar-file.rdo';
+export { UserRdo } from './lib/rdo/user.rdo';
 
 export * from './lib/types/environment.type';
 export { MetroStationName } from './lib/types/metro-station-name.enum';

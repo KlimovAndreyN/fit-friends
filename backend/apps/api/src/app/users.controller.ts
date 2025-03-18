@@ -11,7 +11,8 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, UserRdo, AccountRoute, CreateUserWithAvatarFileDto
+  UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserWithAvatarFileDto,
+  UserWithAvatarFileRdo, ApiApiResponse
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -88,7 +89,7 @@ export class UsersController {
   }
 
   @ApiOperation(AuthenticationApiOperation.Register)
-  @ApiResponse(AuthenticationApiResponse.UserCreated)
+  @ApiResponse(ApiApiResponse.UserCreated)
   @ApiResponse(AuthenticationApiResponse.UserExist)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -101,14 +102,14 @@ export class UsersController {
     @Body() dto: CreateUserWithAvatarFileDto,
     @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserRdo> {
+  ): Promise<UserWithAvatarFileRdo> {
     const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
 
-    return registeredUser; //! дополнить информацией о файле
+    return registeredUser;
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)
-  @ApiResponse(AuthenticationApiResponse.UserFound)
+  @ApiResponse(ApiApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiResponse(AuthenticationApiResponse.Unauthorized)
@@ -119,9 +120,9 @@ export class UsersController {
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { requestId }: RequestWithRequestId
-  ): Promise<UserRdo> {
+  ): Promise<UserWithAvatarFileRdo> {
     const user = await this.usersService.getUser(userId, requestId);
 
-    return user; //! дополнить информацией о файле
+    return user;
   }
 }

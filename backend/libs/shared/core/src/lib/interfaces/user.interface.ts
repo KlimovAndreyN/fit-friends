@@ -9,6 +9,7 @@ export enum UserProp {
   Password = 'password',
   AvatarFileId = 'avatarFileId',
   AvatarFile = 'avatarFile',
+  AvatarSrc = 'avatarSrc',
   Birthday = 'birthday',
   MetroStationName = 'metroStationName',
   BackgroundPath = 'backgroundPath',

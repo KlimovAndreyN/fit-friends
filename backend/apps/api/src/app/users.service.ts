@@ -2,7 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { AccountRoute, CreateUserDto, CreateUserWithAvatarFileDto, ServiceRoute, UserProp, UserRdo } from '@backend/shared/core';
+import {
+  AccountRoute, CreateUserDto, CreateUserWithAvatarFileDto,
+  ServiceRoute, UserProp, UserRdo, UserWithAvatarFileRdo
+} from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -21,7 +24,7 @@ export class UsersService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, route);
   }
 
-  public async registerUser(dto: CreateUserWithAvatarFileDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
+  public async registerUser(dto: CreateUserWithAvatarFileDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserWithAvatarFileRdo> {
     const avatar = await this.filesService.uploadFile(avatarFile, requestId);
     const createUserDto: CreateUserDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
 
@@ -36,18 +39,20 @@ export class UsersService {
     console.log('requestId', requestId);
 
     /*
+     //! дополнить информацией о файле
     const { subDirectory, hashName } = fileRdo
     fitUser.avatarPath = join(subDirectory, hashName);
     */
 
-    return registeredUser;
+    return registeredUser as UserWithAvatarFileRdo; //! временно
   }
 
-  public async getUser(id: string, requestId: string): Promise<UserRdo> {
+  public async getUser(id: string, requestId: string): Promise<UserWithAvatarFileRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
-    const { data } = await this.httpService.axiosRef.get<UserRdo>(url, headers);
+    const { data } = await this.httpService.axiosRef.get<UserWithAvatarFileRdo>(url, headers);
 
+    //! дополнить информацией о файле
     return data;
   }
 }

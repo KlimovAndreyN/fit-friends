@@ -35,6 +35,11 @@ export const UserApiProperty = {
     type: 'string',
     format: 'binary'
   },
+  AvatarSrc: {
+    description: 'The avatar file src',
+    type: 'string',
+    example: '/path/img.jpg'
+  },
   Birthday: {
     required: false,
     description: 'The user dirthday date',
