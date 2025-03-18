@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
+import { fetchUserStatus, loginUser, logoutUser } from '../action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
@@ -39,22 +39,18 @@ export const userProcess = createSlice(
           }
         )
         .addCase(
-          logoutUser.fulfilled,
+          logoutUser.pending, // сразу выйти и удалить
+          //!logoutUser.rejected, // выход после отображения ошибоки удаления
           (state) => {
             state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
-        .addCase(registerUser.fulfilled,
-          () => {
-            /*
-            //! в state.payload положить логин и пароль? и попробовать авторизоватся или же при регистрации отдавать токены!
-
-               const dispatch = useAppDispatch();
-               const { email, password } = dto;
-
-               dispatch(loginUser({ email, password }));
-             */
+        .addCase(
+          logoutUser.fulfilled, //! выход после отображения ошибоки удаления
+          (state) => {
+            state.userInfo = null;
+            state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         );
     }

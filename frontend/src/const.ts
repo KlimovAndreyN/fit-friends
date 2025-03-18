@@ -35,6 +35,8 @@ export enum HttpCode {
   NoAuth = 401
 }
 
+export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' } as const;
+
 export const DefaultUser = {
   ROLE: UserRole.Sportsman,
   GENDER: UserGender.Female

@@ -9,7 +9,7 @@ import {
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { joinUrl } from '../utils/common';
-import { AppRoute, HttpCode } from '../const';
+import { AppRoute, HttpCode, multipartFormDataHeader } from '../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -26,6 +26,11 @@ export const Action = {
 export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
   async (_, { extra }) => {
+    // если токена изначально нет, то и проверять не нужно...
+    if (!AccessTokenStore.getToken()) {
+      return Promise.reject();
+    }
+
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
 
@@ -71,6 +76,7 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
 
     try {
+      //! при выходе могут быть ошибки: связь, 404 ... нужно их обработать... logoutUser.pending logoutUser.rejected
       await api.delete<ITokenPayloadRdo>(url);
     } finally {
       AccessTokenStore.drop();
@@ -84,13 +90,13 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
 
 export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extra }>(
   Action.REGISTER_USER,
-  async (dto, { extra }) => {
-    const { api, history } = extra;
+  async (dto, { extra, dispatch }) => {
+    const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
-    await api.post<IUserRdo>(url, dto);
+    await api.post<IUserRdo>(url, dto, { headers: multipartFormDataHeader });
 
-    history.push(AppRoute.Root);
+    const { email, password } = dto;
+    dispatch(loginUser({ email, password }));
   }
 );
-

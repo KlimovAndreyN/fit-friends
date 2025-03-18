@@ -25,22 +25,14 @@ export class UsersService {
   }
 
   public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
-    //!
-    console.log('dto', dto);
-    console.log('avatarFile', avatarFile);
     const avatar = await this.filesService.uploadFile(avatarFile, requestId);
-    //!
-    console.log('avatar', avatar);
     const createUser: CreateUserWithFileIdDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);
-    //!
-    console.log('registeredUser', registeredUser);
     const avatarSrc = this.filesService.makeSrc(avatar);
+    //! перепроверить типизацию, чтобы не было в ответе AvatarFileId, или перечислить или вызвать fillDto В контроллере
     const rdo: UserRdo = { ...registeredUser, avatarSrc };
-    //!
-    console.log('rdo', rdo);
 
     return rdo;
   }
@@ -51,7 +43,7 @@ export class UsersService {
     //! UserWithFileIdRdo
     const { data } = await this.httpService.axiosRef.get<UserRdo>(url, headers);
 
-    //! дополнить информацией о файле
+    //! дополнить информацией о файле и перепроверить типизацию
     return data;
   }
 }
