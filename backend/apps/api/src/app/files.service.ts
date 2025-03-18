@@ -23,14 +23,13 @@ export class FilesService {
     }
 
     const { subDirectory, hashName } = file;
-    //! временно 'static' он у file-storage есть через env и тут нужно подкинуть или еще url для отдачи файлов +- /api в FileUploaderModule
-    const src = joinUrl(this.apiOptions.fileStorageServiceUrl, 'static', subDirectory, hashName);
+    const src = joinUrl(this.apiOptions.staticFileServiceUrl, subDirectory, hashName);
 
     return src;
   }
 
   public async getFileSrc(fileId: string, requestId: string): Promise<string> {
-    //!
+    //! проверить позже
     console.log('fileId', fileId);
 
     if (!fileId) {

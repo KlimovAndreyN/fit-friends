@@ -22,7 +22,6 @@ export class UserRdo
       UserProp.Role
     ]
   ) implements IUserRdo {
-
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
   @Expose({ name: UserProp.CreatedAt })

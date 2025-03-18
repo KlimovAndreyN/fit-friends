@@ -84,7 +84,6 @@ export class AuthenticationController {
   public async register(@Body() dto: CreateUserDto, @Req() { requestId }: RequestWithRequestId): Promise<UserRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
 
-    //! RDO
     return fillDto(UserRdo, newUser.toPOJO());
   }
 
