@@ -1,6 +1,8 @@
+import { ITokenPayloadRdo } from '@backend/shared';
+
 import { AuthorizationStatus } from './types';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
-  userEmail: string;
+  userInfo: ITokenPayloadRdo | null;
 }

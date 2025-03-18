@@ -48,6 +48,7 @@ export class UsersService {
   public async getUser(id: string, requestId: string): Promise<UserWithAvatarFileRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
+    //! UserRdo
     const { data } = await this.httpService.axiosRef.get<UserWithAvatarFileRdo>(url, headers);
 
     //! дополнить информацией о файле

@@ -20,7 +20,7 @@ export const Action = {
   REGISTER_USER: 'user/register'
 };
 
-export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extra }>(
+export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
   async (_, { extra }) => {
     const { api } = extra;
@@ -29,7 +29,7 @@ export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extr
     try {
       const { data } = await api.get<ITokenPayloadRdo>(url);
 
-      return data.name;
+      return data;
     } catch (error) {
       const { response } = error as AxiosError;
 
@@ -43,13 +43,13 @@ export const fetchUserStatus = createAsyncThunk<string, undefined, { extra: Extr
   }
 );
 
-export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra }>(
+export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
     const { api, history } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
-    const { accessToken, refreshToken, email: loggedEmail } = data;
+    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role } = data;
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
@@ -57,7 +57,7 @@ export const loginUser = createAsyncThunk<string, ILoginUserDto, { extra: Extra 
     //! useNavigate не работает
     history.push(AppRoute.Root);
 
-    return loggedEmail;
+    return { sub, email: dataEmail, name, role };
   }
 );
 

@@ -7,7 +7,7 @@ import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  userEmail: ''
+  userInfo: null
 };
 
 export const userProcess = createSlice(
@@ -20,28 +20,28 @@ export const userProcess = createSlice(
         .addCase(
           fetchUserStatus.fulfilled,
           (state, action) => {
-            state.userEmail = action.payload;
+            state.userInfo = action.payload;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
         .addCase(
           fetchUserStatus.rejected,
           (state) => {
-            state.userEmail = '';
+            state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
         .addCase(
           loginUser.fulfilled,
           (state, action) => {
-            state.userEmail = action.payload;
+            state.userInfo = action.payload;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
         .addCase(
           logoutUser.fulfilled,
           (state) => {
-            state.userEmail = '';
+            state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         );
