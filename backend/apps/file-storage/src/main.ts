@@ -28,6 +28,7 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new InjectRequestIdInterceptor());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors();
 
   await app.listen(port);
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Api}`);

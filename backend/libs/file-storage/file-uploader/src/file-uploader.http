@@ -1,8 +1,5 @@
-//@baseUrl = http://localhost:3001
-//@baseUrlFiles = {{baseUrl}}/api/files
-//! ?
-@baseUrl = http://localhost:3001/api
-@baseUrlFiles = {{baseUrl}}/files
+@baseUrl = http://localhost:3001
+@baseUrlFiles = {{baseUrl}}/api/files
 
 # Upload some file
 POST {{baseUrlFiles}}/upload HTTP/1.1
