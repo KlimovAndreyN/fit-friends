@@ -2,7 +2,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 
 import { transformDate } from '../utils/transform';
-import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user.rdo';
+import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
 import { UserProp } from '../interfaces/user.interface';
 import { BaseUserDto } from '../dto/base-user.dto';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
