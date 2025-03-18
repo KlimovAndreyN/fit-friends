@@ -2,7 +2,10 @@ import { History } from 'history';
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, ILoggedUserRdo } from '@backend/shared';
+import {
+  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
+  ILoggedUserRdo, ICreateUserWithAvatarFileDto, IUserWithAvatarFileRdo
+} from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { joinUrl } from '../utils/common';
@@ -78,17 +81,16 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
     }
   }
 );
-//!
-/*
-export const registerUser = createAsyncThunk<void, UserRegister, { extra: Extra }>(
-  Action.REGISTER_USER,
-  async ({ email, password, name }, { extra }) => {
-    const { api, history } = extra;
-    const user = { email, password, name };
 
-    await api.post<{ id: string }>(ApiRoute.Register, user);
+export const registerUser = createAsyncThunk<void, ICreateUserWithAvatarFileDto, { extra: Extra }>(
+  Action.REGISTER_USER,
+  async (dto, { extra }) => {
+    const { api, history } = extra;
+    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
+
+    await api.post<IUserWithAvatarFileRdo>(url, dto);
 
     history.push(AppRoute.Root);
   }
 );
-*/
+

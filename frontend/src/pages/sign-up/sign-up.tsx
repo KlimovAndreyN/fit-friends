@@ -11,15 +11,26 @@ import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-ro
 import { ICreateUserWithAvatarFileDto, MetroStationName, UserGender, UserRole } from '@backend/shared';
 
 import { getRandomItem } from '../../utils/random';
+import { registerUser } from '../../store/action';
+import { useAppDispatch } from '../../hooks';
 import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';
 
-function SignUp(): JSX.Element {
-  const avatarUploadName = 'user-photo-1';
-  const locationName = 'location';
-  const backgroundPath = 'background';
-  const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
+enum FormFieldName {
+  avatar = 'user-photo-1',
+  name = 'name',
+  email = 'email',
+  password = 'password',
+  birthday = 'birthday',
+  location = 'location',
+  sex = 'sex',
+  role = 'role',
+  background = 'background',
+  userAgreement = 'user-agreement'
+}
 
-  //const dispatch = useAppDispatch();
+function SignUp(): JSX.Element {
+  const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleUserAgreementInputChange = () => {
     setCheckedUserAgreementInput(!checkedUserAgreementInput);
@@ -29,36 +40,30 @@ function SignUp(): JSX.Element {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
+    const name = formData.get(FormFieldName.name)?.toString() || '';
+    const email = formData.get(FormFieldName.email)?.toString() || '';
+    const password = formData.get(FormFieldName.password)?.toString() || '';
+    const birthday = formData.get(FormFieldName.birthday)?.toString() || '';
+    const backgroundPath = formData.get(FormFieldName.background)?.toString() || '';
+    const gender = (formData.get(FormFieldName.sex)?.toString() || '') as UserGender;
+    const role = (formData.get(FormFieldName.role)?.toString() || '') as UserRole;
+    const metroStationName = (formData.get(FormFieldName.location)?.toString() || '') as MetroStationName;
+    const avatarFile = formData.get(FormFieldName.avatar) as File; //! ??
+
     const dto: ICreateUserWithAvatarFileDto =
     {
-      email: 'email',
-      name: 'name',
-      password: 'password',
-      backgroundPath: 'backgroundPath',
-      gender: UserGender.Female,
-      role: UserRole.Sportsman,
-      metroStationName: MetroStationName.Petrogradskaya,
-      avatarFile: undefined,
-      birthday: 'birthday'
+      name,
+      email,
+      password,
+      birthday,
+      backgroundPath,
+      gender,
+      role,
+      metroStationName,
+      avatarFile
     };
 
-    // eslint-disable-next-line no-console
-    console.log(dto);
-
-    //! отладка
-    const entries = formData.entries();
-    for (const entry of entries) {
-      const [key, value] = entry;
-      // eslint-disable-next-line
-      console.log(key, value);
-    }
-    //
-
-    //const email = formData.get(FormFieldName.email)?.toString() || '';
-    //const password = formData.get(FormFieldName.password)?.toString() || '';
-    //const dto: ILoginUserDto = { email, password };
-
-    //dispatch(loginUser(dto));
+    dispatch(registerUser(dto));
   };
 
   const popupFormProps = {
@@ -74,29 +79,29 @@ function SignUp(): JSX.Element {
     <PopupForm {...popupFormProps} >
       <div className="sign-up">
         <div className="sign-up__load-photo">
-          <AvatarUpload name={avatarUploadName} />
+          <AvatarUpload name={FormFieldName.avatar} />
           <div className="sign-up__description">
             <h2 className="sign-up__legend">Загрузите фото профиля</h2>
             <span className="sign-up__text">JPG, PNG, оптимальный размер 100×100&nbsp;px</span>
           </div>
         </div>
         <div className="sign-up__data">
-          <CustomInput name='name' type='text' label='Имя' required />
-          <CustomInput name='email' type='email' label='E-mail' required />
-          <CustomInput name='birthday' type='date' label='Дата рождения' max='2099-12-31' />
+          <CustomInput name={FormFieldName.name} type='text' label='Имя' required />
+          <CustomInput name={FormFieldName.email} type='email' label='E-mail' required />
+          <CustomInput name={FormFieldName.birthday} type='date' label='Дата рождения' max='2099-12-31' />
           <CustomSelect
-            name={locationName}
+            name={FormFieldName.location}
             caption='Ваша локация'
             options={LOCATIONS}
           />
-          <CustomInput name='password' type='password' label='Пароль' required autoComplete='off' />
-          <SignUpUserGengers name='sex' />
+          <CustomInput name={FormFieldName.password} type='password' label='Пароль' required autoComplete='off' />
+          <SignUpUserGengers name={FormFieldName.sex} />
         </div>
-        <SignUpUserRoles name='role' />
+        <SignUpUserRoles name={FormFieldName.role} />
         {/*//! добавил в разметку фоновую картинку */}
         <div className="sign-up__data">
           <CustomSelect
-            name={backgroundPath}
+            name={FormFieldName.background}
             currentOption={getRandomItem(USER_BACKGROUND_PATHS)}
             caption='Фоновая картика'
             options={USER_BACKGROUND_PATHS}
@@ -104,7 +109,7 @@ function SignUp(): JSX.Element {
         </div>
         <div className="sign-up__checkbox">
           <label>
-            <input type="checkbox" value="user-agreement" name="user-agreement" checked={checkedUserAgreementInput} onChange={handleUserAgreementInputChange} />
+            <input type="checkbox" value="user-agreement" name={FormFieldName.userAgreement} checked={checkedUserAgreementInput} onChange={handleUserAgreementInputChange} />
             <span className="sign-up__checkbox-icon">
               <svg width="9" height="6" aria-hidden="true">
                 <use xlinkHref="#arrow-check" />

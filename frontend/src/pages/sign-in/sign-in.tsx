@@ -40,7 +40,7 @@ function SignIn(): JSX.Element {
           <label>
             <span className="custom-input__label">E-mail</span>
             <span className="custom-input__wrapper">
-              <input type="email" name="email" required />
+              <input type="email" name={FormFieldName.email} required />
             </span>
           </label>
         </div>
@@ -48,7 +48,7 @@ function SignIn(): JSX.Element {
           <label>
             <span className="custom-input__label">Пароль</span>
             <span className="custom-input__wrapper">
-              <input type="password" name="password" autoComplete="off" required />
+              <input type="password" name={FormFieldName.password} autoComplete="off" required />
             </span>
           </label>
         </div>
