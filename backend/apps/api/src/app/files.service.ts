@@ -17,6 +17,35 @@ export class FilesService {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
+  public makeSrc(file: UploadedFileRdo): string {
+    if (!file) {
+      return '';
+    }
+
+    const { subDirectory, hashName } = file;
+    //! временно 'static' он у file-storage есть через env и тут нужно подкинуть или еще url для отдачи файлов +- /api в FileUploaderModule
+    const src = joinUrl(this.apiOptions.fileStorageServiceUrl, 'static', subDirectory, hashName);
+
+    return src;
+  }
+
+  public async getFileSrc(fileId: string, requestId: string): Promise<string> {
+    //!
+    console.log('fileId', fileId);
+
+    if (!fileId) {
+      return '';
+    }
+
+    const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, fileId);
+    const headers = makeHeaders(requestId);
+    const { data: file } = await this.httpService.axiosRef.get<UploadedFileRdo>(url, headers);
+    //!
+    console.log('file', file);
+
+    return this.makeSrc(file);
+  }
+
   public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {
     if (!file) {
       return null;

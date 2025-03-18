@@ -25,26 +25,24 @@ export class UsersService {
   }
 
   public async registerUser(dto: CreateUserWithAvatarFileDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserWithAvatarFileRdo> {
-    const avatar = await this.filesService.uploadFile(avatarFile, requestId);
-    const createUserDto: CreateUserDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
-
-    const url = this.getUrl(AccountRoute.Register);
-    const headers = makeHeaders(requestId);
-    const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUserDto, headers);
-
     //!
     console.log('dto', dto);
     console.log('avatarFile', avatarFile);
+    const avatar = await this.filesService.uploadFile(avatarFile, requestId);
+    //!
     console.log('avatar', avatar);
-    console.log('requestId', requestId);
+    const createUser: CreateUserDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
+    const url = this.getUrl(AccountRoute.Register);
+    const headers = makeHeaders(requestId);
+    const { data: registeredUser } = await this.httpService.axiosRef.post<UserRdo>(url, createUser, headers);
+    //!
+    console.log('registeredUser', registeredUser);
+    const avatarSrc = this.filesService.makeSrc(avatar);
+    const rdo: UserWithAvatarFileRdo = { ...registeredUser, avatarSrc };
+    //!
+    console.log('rdo', rdo);
 
-    /*
-     //! дополнить информацией о файле
-    const { subDirectory, hashName } = fileRdo
-    fitUser.avatarPath = join(subDirectory, hashName);
-    */
-
-    return registeredUser as UserWithAvatarFileRdo; //! временно
+    return rdo;
   }
 
   public async getUser(id: string, requestId: string): Promise<UserWithAvatarFileRdo> {
