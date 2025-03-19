@@ -5,8 +5,8 @@ import PopupForm from '../../components/popup-form/popup-form';
 
 import { ILoginUserDto } from '@backend/shared';
 
-import { getIsSingInExecuting } from '../../store/user-process/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsSingInExecuting } from '../../store/user-process/selectors';
 import { loginUser } from '../../store/action';
 import { PageTitle } from '../../const';
 
@@ -16,8 +16,8 @@ enum FormFieldName {
 }
 
 function SignIn(): JSX.Element {
-  const isSingInExecuting = useAppSelector(getIsSingInExecuting);
   const dispatch = useAppDispatch();
+  const isSingInExecuting = useAppSelector(getIsSingInExecuting);
   const submitClassName = classNames('btn sign-in__button', { 'is-disabled': isSingInExecuting });
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {

@@ -12,7 +12,8 @@ import { ICreateUserDto, MetroStationName, UserGender, UserRole } from '@backend
 
 import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/action';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsSingUpExecuting } from '../../store/user-process/selectors';
 import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';
 
 enum FormFieldName {
@@ -29,8 +30,9 @@ enum FormFieldName {
 }
 
 function SignUp(): JSX.Element {
-  const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
   const dispatch = useAppDispatch();
+  const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
+  const isSingUpExecuting = useAppSelector(getIsSingUpExecuting);
 
   const handleUserAgreementInputChange = () => {
     setCheckedUserAgreementInput(!checkedUserAgreementInput);
@@ -73,7 +75,7 @@ function SignUp(): JSX.Element {
     onSubmit: handlePopupFormSubmit
   };
 
-  const submitClassName = classNames('btn sign-up__button', { 'is-disabled': !checkedUserAgreementInput });
+  const submitClassName = classNames('btn sign-up__button', { 'is-disabled': !checkedUserAgreementInput || isSingUpExecuting });
 
   return (
     <PopupForm {...popupFormProps} >
