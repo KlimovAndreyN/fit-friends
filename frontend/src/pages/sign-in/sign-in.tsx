@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingInExecuting } from '../../store/user-process/selectors';
 import { loginUser } from '../../store/action';
 import { PageTitle } from '../../const';
+import CustomInput from '../../components/custom-input/custom-input';
 
 enum FormFieldName {
   email = 'email',
@@ -19,6 +20,7 @@ function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
   const isSingInExecuting = useAppSelector(getIsSingInExecuting);
   const submitClassName = classNames('btn sign-in__button', { 'is-disabled': isSingInExecuting });
+  const divExtraClassName = 'sign-in__input';
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -40,22 +42,8 @@ function SignIn(): JSX.Element {
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-in">
-        <div className="custom-input sign-in__input">
-          <label>
-            <span className="custom-input__label">E-mail</span>
-            <span className="custom-input__wrapper">
-              <input type="email" name={FormFieldName.email} required />
-            </span>
-          </label>
-        </div>
-        <div className="custom-input sign-in__input">
-          <label>
-            <span className="custom-input__label">Пароль</span>
-            <span className="custom-input__wrapper">
-              <input type="password" name={FormFieldName.password} autoComplete="off" required />
-            </span>
-          </label>
-        </div>
+        <CustomInput divExtraClassName={divExtraClassName} name={FormFieldName.email} type='email' label='E-mail' required />
+        <CustomInput divExtraClassName={divExtraClassName} name={FormFieldName.password} type='password' label='Пароль' required autoComplete='off' />
         <button className={submitClassName} type="submit">Продолжить</button>
       </div>
     </PopupForm>

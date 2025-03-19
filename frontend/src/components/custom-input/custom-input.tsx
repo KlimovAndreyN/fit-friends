@@ -1,4 +1,5 @@
 type CustomSelectProps = {
+  divExtraClassName?: string;
   name: string;
   type: string;
   label: string;
@@ -8,10 +9,14 @@ type CustomSelectProps = {
 }
 
 const CustomInput = (props: CustomSelectProps) => {
-  const { name, type, label, required, max, autoComplete } = props;
+  const { divExtraClassName, name, type, label, required, max, autoComplete } = props;
+  const divClassNames = ['custom-input'];
+  if (divExtraClassName) {
+    divClassNames.push(divExtraClassName);
+  }
 
   return (
-    <div className="custom-input">
+    <div className={divClassNames.join(' ')}>
       <label>
         <span className="custom-input__label">{label}</span>
         <span className="custom-input__wrapper">
