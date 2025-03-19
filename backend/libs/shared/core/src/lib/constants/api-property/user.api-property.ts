@@ -44,7 +44,7 @@ export const UserApiProperty = {
     required: false,
     description: 'The user dirthday date',
     type: 'string',
-    example: '2005-01-20'
+    example: '2025-03-20T00:00:00.000Z'
   },
   MetroStationName: {
     description: 'The user metro station name',

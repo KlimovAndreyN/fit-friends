@@ -9,7 +9,7 @@ Content-Type: application/json
   "name": "Name",
   "email": "user@local.local",
   "password": "password",
-  "birthday": "2005-01-20",
+  "birthday": "2005-11-20",
   "metroStationName": "pionerskaya",
   "backgroundPath": "/some/path/img.jpg",
   "gender": "male",
@@ -31,9 +31,9 @@ Content-Disposition: form-data; name="name"
 
 Keks
 --boundary
-Content-Disposition: form-data; name="name1111"
+Content-Disposition: form-data; name="birthday"
 
-Keks1111
+2005-11-20T00:00:00.000Z
 --boundary
 Content-Disposition: form-data; name="password"
 

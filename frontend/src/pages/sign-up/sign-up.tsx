@@ -45,7 +45,8 @@ function SignUp(): JSX.Element {
     const name = formData.get(FormFieldName.name)?.toString() || '';
     const email = formData.get(FormFieldName.email)?.toString() || '';
     const password = formData.get(FormFieldName.password)?.toString() || '';
-    const birthday = formData.get(FormFieldName.birthday)?.toString() || '';
+    const birthdayValue = formData.get(FormFieldName.birthday)?.toString() || '';
+    const birthday = (new Date(birthdayValue)).toISOString();
     const backgroundPath = formData.get(FormFieldName.background)?.toString() || '';
     const gender = (formData.get(FormFieldName.sex)?.toString() || '') as UserGender;
     const role = (formData.get(FormFieldName.role)?.toString() || '') as UserRole;

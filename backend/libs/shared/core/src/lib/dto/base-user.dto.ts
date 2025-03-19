@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { Expose } from 'class-transformer';
 
 import { User, UserProp } from '../interfaces/user.interface';
@@ -36,9 +36,9 @@ export class BaseUserDto {
   @MaxLength(UserValidation.Password.MaxLength)
   public [UserProp.Password]: ICreateUserWithFileIdDto[UserProp.Password];
 
-  @ApiProperty(UserApiProperty.Birthday) //! проверять описать формат '2005-01-20'
+  @ApiProperty(UserApiProperty.Birthday)
   @Expose()
-  @IsString()
+  @IsDateString()
   @IsOptional()
   public [UserProp.Birthday]?: ICreateUserWithFileIdDto[UserProp.Birthday];
 

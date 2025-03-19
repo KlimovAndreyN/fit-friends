@@ -35,7 +35,7 @@ export class AuthenticationService {
       metroStationName,
       role,
       avatarFileId,
-      //!birthday - нужна дата
+      birthday
     } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
@@ -51,7 +51,7 @@ export class AuthenticationService {
       metroStationName,
       role,
       avatarFileId,
-      birthday: new Date(),//! временно в dto преобразовать birthday
+      birthday: new Date(birthday),
       passwordHash: ''
     };
 

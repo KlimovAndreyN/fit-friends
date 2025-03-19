@@ -9,7 +9,7 @@ Content-Type: application/json
   "name": "Name",
   "email": "user@local.local",
   "password": "password",
-  "birthday": "2005-01-20",
+  "birthday": "2005-03-20T00:00:00.000Z",
   "avatarFileId": "658170cbb954e9f5b905ddf4",
   "metroStationName": "pionerskaya",
   "backgroundPath": "/some/path/img.jpg",
