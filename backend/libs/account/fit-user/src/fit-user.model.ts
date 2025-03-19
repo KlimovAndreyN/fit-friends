@@ -35,6 +35,9 @@ export class FitUserModel extends Document implements AuthUser {
   @Prop({ required: true, type: String })
   public role: UserRole;
 
+  @Prop({ required: true })
+  public existQuestionnaire: boolean;
+
   public createdAt: Date;
 }
 

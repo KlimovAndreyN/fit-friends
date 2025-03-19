@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 import { User, UserProp } from '../interfaces/user.interface';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
+import { transformDate } from '../utils/transform';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { UserValidation } from '../constants/authentication.constant';
 
@@ -71,4 +72,13 @@ export class BaseUserDto {
   @Expose()
   @IsEnum(UserRole)
   public [UserProp.Role]: User[UserProp.Role];
+
+  @ApiProperty(UserApiProperty.RegistrationDate)
+  @Transform(transformDate)
+  @Expose({ name: UserProp.CreatedAt })
+  public [UserProp.RegistrationDate]: string;
+
+  @ApiProperty(UserApiProperty.ExistQuestionnaire)
+  @Expose()
+  public [UserProp.ExistQuestionnaire]: User[UserProp.ExistQuestionnaire];
 }

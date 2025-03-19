@@ -7,5 +7,5 @@ export interface IUserWithFileIdRdo
   > {
   [UserProp.Id]: User[UserProp.Id];
   [UserProp.Birthday]?: string;
-  [UserProp.RegistrationDate]: User[UserProp.CreatedAt];
+  [UserProp.RegistrationDate]: string;
 };

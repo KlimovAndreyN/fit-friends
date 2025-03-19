@@ -52,6 +52,7 @@ export class AuthenticationService {
       role,
       avatarFileId,
       birthday: new Date(birthday),
+      existQuestionnaire: false,
       passwordHash: ''
     };
 
@@ -63,13 +64,6 @@ export class AuthenticationService {
     await this.notifyService.registerSubscriber({ email, name }, requestId);
 
     return userEntity;
-  }
-
-  public async changeUserPassword(email: string, oldPassword: string, newPassword: string): Promise<void> {
-    const userEntity = await this.verifyUser({ email, password: oldPassword });
-
-    await userEntity.setPassword(newPassword);
-    await this.fitUserRepository.update(userEntity);
   }
 
   public async createUserToken(user: User): Promise<Token> {

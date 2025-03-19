@@ -16,6 +16,7 @@ export enum UserProp {
   Gender = 'gender',
   Role = 'role',
   CreatedAt = 'createdAt',
+  ExistQuestionnaire = 'existQuestionnaire',
   RegistrationDate = 'registrationDate'
 }
 
@@ -29,5 +30,6 @@ export interface User {
   [UserProp.Gender]: UserGender;
   [UserProp.Role]: UserRole;
   [UserProp.AvatarFileId]?: string;
+  [UserProp.ExistQuestionnaire]: boolean;
   [UserProp.CreatedAt]?: Date;
 }
