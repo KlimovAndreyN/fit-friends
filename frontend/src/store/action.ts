@@ -88,7 +88,11 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
 export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra }) => {
-    const { api, history } = extra;
+    //!
+    // eslint-disable-next-line no-console
+    console.log('loginUser.begin');
+    //!
+    const { api, /*history*/ } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
     const { accessToken, refreshToken, id: sub, email: dataEmail, name, role, existQuestionnaire } = data;
@@ -97,7 +101,11 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     RefreshTokenStore.save(refreshToken);
 
     //! useNavigate не работает
-    history.push(AppRoute.Root);
+    //! а нужно ли статус же дернется... history.push(AppRoute.Root);
+
+    //!
+    // eslint-disable-next-line no-console
+    console.log('loginUser.end');
 
     return { sub, email: dataEmail, name, role, existQuestionnaire };
   }

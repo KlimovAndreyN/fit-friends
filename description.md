@@ -5,21 +5,26 @@ http://localhost:3000/spec-yaml
 ```bash
 # перейти в папку с проектом
 cd ~/fit-friends
-
-# добавить docker-compose
-docker compose --file docker-compose.dev.yml up -d
-
-# перейти в папку с проектом
-cd ~/fit-friends/backend
-
-# установить зависимости
-npm install
+#my win
+#D:
+#cd HTMLAcademy/fit-friends
 
 # Скопировать .env-example -> .env:
-cp apps/account/.env-example apps/account/.env
-cp apps/api/.env-example apps/api/.env
-cp apps/file-storage/.env-example apps/file-storage/.env
-cp apps/notify/.env-example apps/notify/.env
+cd backend/apps
+cp account/.env-example account/.env
+cp api/.env-example api/.env
+cp file-storage/.env-example file-storage/.env
+cp notify/.env-example notify/.env
+cd ../../frontend
+cp frontend/.env-example frontend/.env
+
+# добавить docker-compose
+cd ..
+docker compose --file docker-compose.dev.yml up -d
+
+# установка зависимостей для backend
+cd backend
+npm install
 
 # сформировать PrismaClient
 npx nx run fit:db:generate
@@ -28,23 +33,31 @@ npx nx run fit:db:generate
 npx nx run fit:db:migrate
 
 # наполнение тестовыми данными
-npx nx run account:db:seed
-npx nx run fit:db:seed
+#npx nx run account:db:seed
+#npx nx run fit:db:seed
 
-# запуск сервисов
+# запуск сервисов backend
+# file-storage
+cd backend
 npx nx run file-storage:serve
-npx nx run fit:serve
+# notify
+cd backend
+npx nx run notify:serve
+# account
+cd backend
+npx nx run account:serve
+# fit
+#cd backend
+#npx nx run fit:serve
+# api
+cd backend
 npx nx run api:serve
 
-# перейти в папку с проектом
-cd ~/fit-friends/frontend
-# Скопировать .env-example -> .env:
-cp .env-example .env
-
-# установить зависимости
+# установка зависимостей для frontend
+cd frontend
 npm install
 
-# запуск Web
+# запуск frontend
 npm run start
 ```
 

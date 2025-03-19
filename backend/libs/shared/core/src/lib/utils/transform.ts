@@ -16,6 +16,10 @@ export function transformTags({ value }): string[] {
     });
 }
 
+//! нужно ли
 export function transformDate({ value }): string {
+  //!
+  console.log('transformDate', value);
+
   return dayjs(value).format(DateFormat.ONLY_DATE);
 }

@@ -45,8 +45,7 @@ function SignUp(): JSX.Element {
     const name = formData.get(FormFieldName.name)?.toString() || '';
     const email = formData.get(FormFieldName.email)?.toString() || '';
     const password = formData.get(FormFieldName.password)?.toString() || '';
-    const birthdayValue = formData.get(FormFieldName.birthday)?.toString() || '';
-    const birthday = (new Date(birthdayValue)).toISOString();
+    const birthday = formData.get(FormFieldName.birthday)?.toString() || '';
     const backgroundPath = formData.get(FormFieldName.background)?.toString() || '';
     const gender = (formData.get(FormFieldName.sex)?.toString() || '') as UserGender;
     const role = (formData.get(FormFieldName.role)?.toString() || '') as UserRole;
@@ -58,13 +57,17 @@ function SignUp(): JSX.Element {
       name,
       email,
       password,
-      birthday,
       backgroundPath,
+      birthday: (birthday) ? (new Date(birthday)).toISOString() : undefined, //! можно отдать как есть строку
       gender,
       role,
       metroStationName,
       avatarFile
     };
+
+    //!
+    // eslint-disable-next-line no-console
+    console.log('dto', dto);
 
     dispatch(registerUser(dto));
   };
