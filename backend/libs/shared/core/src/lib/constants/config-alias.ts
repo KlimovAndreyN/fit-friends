@@ -101,5 +101,5 @@ export enum ConfigAlias {
   FileStorageServiceUrlEnv = `FILE_STORAGE_${ServiceUrlEnv}`,
   StaticFileServiceUrlEnv = `STATIC_FILE_${ServiceUrlEnv}`,
   //
-  ApiFitFriendsUrlEnv = `API_FIT_FRIENDS_URL`
+  fitFriendsUrlEnv = `FIT_FRIENDS_URL`
 }

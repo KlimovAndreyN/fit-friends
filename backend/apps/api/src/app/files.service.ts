@@ -54,6 +54,7 @@ export class FilesService {
     const headers = makeHeaders(requestId);
     const fileFormData = new FormData();
 
+    // если бы был File, то можно без дополнительной конвертации отправить указав заголовок 'Content-Type': 'multipart/form-data'
     multerFileToFormData(file, fileFormData, FILE_KEY);
 
     const { data: fileRdo } = await this.httpService.axiosRef.post<UploadedFileRdo>(url, fileFormData, headers);

@@ -9,12 +9,12 @@ import {
 } from '@backend/shared/helpers';
 
 export interface NotifyConfig extends ApplicationConfig, MongoDbConfig, RabbitSubscriberConfig, MailSmtpConfig {
-  apiFitFriendsUrlEnv: string;
+  fitFriendsUrlEnv: string;
 }
 
 const validationSchema = Joi.object({
   ...applicationValidationSchema,
-  apiFitFriendsUrlEnv: Joi.string().required().label(ConfigAlias.ApiFitFriendsUrlEnv),
+  fitFriendsUrlEnv: Joi.string().required().label(ConfigAlias.fitFriendsUrlEnv),
   ...mongoDbValidationSchema,
   ...rabbitSubscriberValidationSchema,
   ...mailSmtpValidationSchema
@@ -23,7 +23,7 @@ const validationSchema = Joi.object({
 function getConfig(): NotifyConfig {
   const config: NotifyConfig = {
     ...getApplicationConfig(),
-    apiFitFriendsUrlEnv: process.env[ConfigAlias.ApiFitFriendsUrlEnv],
+    fitFriendsUrlEnv: process.env[ConfigAlias.fitFriendsUrlEnv],
     ...getMongoDbConfig(),
     ...getRabbitSubscriberConfig(),
     ...getMailSmtpConfig()

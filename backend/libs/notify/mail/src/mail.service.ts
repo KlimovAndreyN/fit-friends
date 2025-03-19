@@ -19,7 +19,7 @@ export class MailService {
   public async sendNotifyNewSubscriber(subscriber: Subscriber): Promise<void> {
     const { name, email } = subscriber;
     const { mailSmtp: { from } } = this.notifyConfig;
-    const { apiFitFriendsUrlEnv: url } = this.notifyConfig;
+    const { fitFriendsUrlEnv: url } = this.notifyConfig;
 
     const sendMailOption: ISendMailOptions = {
       from,
