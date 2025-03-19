@@ -35,7 +35,7 @@ export class AuthenticationService {
       metroStationName,
       role,
       avatarFileId,
-      //!birthday
+      //!birthday - нужна дата
     } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 

@@ -13,7 +13,7 @@ Content-Disposition: form-data; name="file"; filename="file-uploader.factory.ts"
 //  "message": "Unexpected field",
 //  "error": "Bad Request",
 //  "statusCode": 400
-//! почемуто не отправляет текущий файл?
+//! почему-то не отправляет текущий файл?
 
 --boundary--
 

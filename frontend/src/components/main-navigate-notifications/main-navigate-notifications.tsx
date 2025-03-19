@@ -22,7 +22,7 @@ function MainNavigateNotifications(): JSX.Element {
           </a>
         </li>
         {/*
-           //!
+           //! закоментировано в маркапах
           <!--<li className="main-nav__subitem"><a className="notification" href="#">
             <p className="notification__text">Наталья приняла приглашение на&nbsp;совместную тренировку</p>
             <time className="notification__time" dateTime="2023-12-14 08:15">14 декабря, 08:15</time></a>

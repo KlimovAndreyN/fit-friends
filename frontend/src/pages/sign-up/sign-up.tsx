@@ -50,7 +50,7 @@ function SignUp(): JSX.Element {
     const gender = (formData.get(FormFieldName.sex)?.toString() || '') as UserGender;
     const role = (formData.get(FormFieldName.role)?.toString() || '') as UserRole;
     const metroStationName = (formData.get(FormFieldName.location)?.toString() || '') as MetroStationName;
-    const avatarFile = formData.get(FormFieldName.avatar) as File; //! ??
+    const avatarFile = formData.get(FormFieldName.avatar) as File;
 
     const dto: ICreateUserDto =
     {

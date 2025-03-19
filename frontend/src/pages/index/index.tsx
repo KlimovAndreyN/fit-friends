@@ -407,7 +407,7 @@ function Index(): JSX.Element {
                       </picture>
                     </div>
                     {/*
-                    //!
+                    //! закоментировано в маркапах
                       <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
                         <svg width="12" height="12" aria-hidden="true">
                           <use xlinkHref="#icon-crown"></use>
@@ -490,7 +490,7 @@ function Index(): JSX.Element {
                       </picture>
                     </div>
                     {/*
-                    //!
+                    //! закоментировано в маркапах
                       <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
                           <svg width="12" height="12" aria-hidden="true">
                             <use xlinkHref="#icon-crown"></use>

@@ -55,15 +55,15 @@ export const userProcess = createSlice(
           }
         )
         .addCase(
-          logoutUser.pending, // сразу выйти и удалить
-          //!logoutUser.rejected, // выход после отображения ошибоки удаления
+          logoutUser.pending, //! перепроверить - сразу выйти и удалить
+          //! перепроверить - logoutUser.rejected, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
             state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
         .addCase(
-          logoutUser.fulfilled, //! выход после отображения ошибоки удаления
+          logoutUser.fulfilled, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
             state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
