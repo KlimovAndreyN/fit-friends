@@ -91,7 +91,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     const { api, history } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
-    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role } = data;
+    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role, existQuestionnaire } = data;
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
@@ -99,7 +99,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     //! useNavigate не работает
     history.push(AppRoute.Root);
 
-    return { sub, email: dataEmail, name, role };
+    return { sub, email: dataEmail, name, role, existQuestionnaire };
   }
 );
 
