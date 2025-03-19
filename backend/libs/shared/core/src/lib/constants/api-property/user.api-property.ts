@@ -69,6 +69,11 @@ export const UserApiProperty = {
     enum: UserRole,
     example: UserRole.Sportsman
   },
+  ExistQuestionnaire: {
+    description: 'The exist questionnaire user',
+    type: 'boolean',
+    example: false
+  },
   RegistrationDate: {
     description: 'The user registration date',
     type: 'string',
