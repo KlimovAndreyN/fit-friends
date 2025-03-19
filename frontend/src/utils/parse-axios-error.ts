@@ -41,3 +41,7 @@ export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>, showUrl:
 
   return messages.reverse().join(';\n');
 }
+
+export function isErrorNetwork(error: AxiosError): boolean {
+  return error.code === 'ERR_NETWORK';
+}

@@ -6,7 +6,6 @@ import { AccountRoute, ApiServiceRoute, AUTH_NAME } from '@backend/shared';
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
-import { refreshRefreshToken, validateAccessToken } from './tokens';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
 const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';
@@ -22,50 +21,17 @@ export function createAPI(): AxiosInstance {
   });
 
   api.interceptors.request.use(
-    async (config: AxiosRequestConfig) => {
-      if (config.headers) {
-        const currentRefreshToken = RefreshTokenStore.getToken();
+    (config: AxiosRequestConfig) => {
+      const { headers } = config;
+
+      if (headers) {
+        const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
         const logoutUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
-
-        if (config.url === logoutUrl) {
-          if (currentRefreshToken) {
-            config.headers[AUTH_NAME] = getBearerAuthorization(currentRefreshToken);
-          }
-
-          return config;
-        }
-
-        const currentAccessToken = AccessTokenStore.getToken();
-
-        if (currentAccessToken && currentRefreshToken) {
-          //! если идет проверка статуса, то будет вызвана два раза... как нибуть зачесть ответ первого вызова для второго...
-          const checkUrl = joinUrl(baseURL, ApiServiceRoute.Users, AccountRoute.Check);
-          const isValid = await validateAccessToken(checkUrl, currentAccessToken);
-
-          if (!isValid) {
-            const refreshUrl = joinUrl(baseURL, ApiServiceRoute.Users, AccountRoute.Refresh);
-
-            try {
-              const { accessToken, refreshToken } = await refreshRefreshToken(refreshUrl, currentRefreshToken);
-
-              AccessTokenStore.save(accessToken);
-              RefreshTokenStore.save(refreshToken);
-            } catch (error) {
-              if (error instanceof AxiosError) {
-                // удаляем токены, если не ошибка по связи...  но три провальных запроса очень долгие... может передвинуть в validateAccessToken
-                if (error.code !== 'ERR_NETWORK') {
-                  AccessTokenStore.drop();
-                  RefreshTokenStore.drop();
-                }
-              }
-            }
-          }
-        }
-
-        const token = AccessTokenStore.getToken();
+        const url = config.url || '';
+        const token = ([refreshUrl, logoutUrl].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
 
         if (token) {
-          config.headers[AUTH_NAME] = getBearerAuthorization(token);
+          headers[AUTH_NAME] = getBearerAuthorization(token);
         }
       }
 

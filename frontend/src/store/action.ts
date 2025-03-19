@@ -4,10 +4,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo
+  ILoggedUserRdo, ICreateUserDto, IUserRdo, IUserTokenRdo
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
+import { isErrorNetwork } from '../utils/parse-axios-error';
 import { joinUrl } from '../utils/common';
 import { AppRoute, HttpCode, multipartFormDataHeader } from '../const';
 
@@ -32,21 +33,54 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
     }
 
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
+    const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
 
     try {
-      const { data } = await api.get<ITokenPayloadRdo>(url);
+      const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
 
       return data;
-    } catch (error) {
-      const { response } = error as AxiosError;
+    } catch (checkTokenError) {
+      if (checkTokenError instanceof AxiosError) {
+        if (checkTokenError.response?.status !== HttpCode.NoAuth) {
+          if (!isErrorNetwork(checkTokenError)) {
+            AccessTokenStore.drop();
+            RefreshTokenStore.drop();
+          }
 
-      if (response?.status === HttpCode.NoAuth) {
-        AccessTokenStore.drop();
-        RefreshTokenStore.drop();
+          return Promise.reject();
+        }
+
+        // Пробуем получить AccessToken через RefreshToken, если он есть
+        if (!RefreshTokenStore.getToken()) {
+          AccessTokenStore.drop();
+
+          return Promise.reject();
+        }
+
+        const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
+
+        try {
+          const { data: { accessToken, refreshToken } } = await api.post<IUserTokenRdo>(refreshUrl);
+
+          AccessTokenStore.save(accessToken);
+          RefreshTokenStore.save(refreshToken);
+
+          const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
+
+          return data;
+        } catch (refreshTokenError) {
+          if (refreshTokenError instanceof AxiosError) {
+            if (!isErrorNetwork(refreshTokenError)) {
+              AccessTokenStore.drop();
+              RefreshTokenStore.drop();
+            }
+
+            return Promise.reject();
+          }
+        }
       }
 
-      return Promise.reject(error);
+      return Promise.reject();
     }
   }
 );
@@ -74,13 +108,22 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   async (_, { extra }) => {
     const { api, history } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
+    let needDropTokens = true;
 
     try {
       //! при выходе могут быть ошибки: связь, 404 ... нужно их обработать... logoutUser.pending logoutUser.rejected
       await api.delete<ITokenPayloadRdo>(url);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (!isErrorNetwork(error)) {
+          needDropTokens = false;
+        }
+      }
     } finally {
-      AccessTokenStore.drop();
-      RefreshTokenStore.drop();
+      if (needDropTokens) {
+        AccessTokenStore.drop();
+        RefreshTokenStore.drop();
+      }
 
       //! useNavigate не работает
       history.push(AppRoute.Intro);
