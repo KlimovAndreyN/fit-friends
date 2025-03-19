@@ -56,7 +56,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Questionnaire}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <Questionnaire />
               </PrivateRoute>
             }

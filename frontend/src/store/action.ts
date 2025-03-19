@@ -137,9 +137,22 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
+    //! проверка асинхронности действий для вызова dispatch(fetchUserStatus()) перед каждым действием, а может возможно сделать еще middleware? если в там можно вызвать dispatch...
+    // eslint-disable-next-line no-console
+    console.log('registerUser.before.reg');
+
     await api.post<IUserRdo>(url, dto, { headers: multipartFormDataHeader });
+    //!
+    // eslint-disable-next-line no-console
+    console.log('registerUser.after.reg');
 
     const { email, password } = dto;
+    //!
+    // eslint-disable-next-line no-console
+    console.log('registerUser.before.dispatch');
     dispatch(loginUser({ email, password }));
+    //!
+    // eslint-disable-next-line no-console
+    console.log('registerUser.after.dispatch');
   }
 );

@@ -2,9 +2,20 @@ import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 
-import { PageTitle } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getUserInfo } from '../../store/user-process/selectors';
+import { Navigate } from 'react-router-dom';
 
 function Questionnaire(): JSX.Element {
+  const userInfo = useAppSelector(getUserInfo);
+  //! в App и проверить state, и вынести параметр отдельно
+  const existQuestionnaire = userInfo?.existQuestionnaire || false;
+
+  if (existQuestionnaire) {
+    return <Navigate to={AppRoute.Root} />;
+  }
+
   //const dispatch = useAppDispatch();
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
