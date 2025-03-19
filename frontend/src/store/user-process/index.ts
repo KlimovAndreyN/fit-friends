@@ -7,6 +7,7 @@ import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  isSingInExecuting: false,
   userInfo: null
 };
 
@@ -32,8 +33,21 @@ export const userProcess = createSlice(
           }
         )
         .addCase(
+          loginUser.pending,
+          (state) => {
+            state.isSingInExecuting = true;
+          }
+        )
+        .addCase(
+          loginUser.rejected,
+          (state) => {
+            state.isSingInExecuting = false;
+          }
+        )
+        .addCase(
           loginUser.fulfilled,
           (state, action) => {
+            state.isSingInExecuting = false;
             state.userInfo = action.payload;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
