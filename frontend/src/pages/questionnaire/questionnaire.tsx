@@ -2,18 +2,9 @@ import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 
-import { AppRoute, PageTitle } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { getExistQuestionnaire } from '../../store/user-process/selectors';
-import { Navigate } from 'react-router-dom';
+import { PageTitle } from '../../const';
 
 function Questionnaire(): JSX.Element {
-  const existQuestionnaire = useAppSelector(getExistQuestionnaire);
-
-  if (existQuestionnaire) {
-    return <Navigate to={AppRoute.Root} />;
-  }
-
   //const dispatch = useAppDispatch();
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {

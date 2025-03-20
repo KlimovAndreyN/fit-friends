@@ -10,7 +10,7 @@ function NotFound(): JSX.Element {
     <Fragment>
       <Header title={PageTitle.NotFound} />
       <main>
-        <div className="container">
+        <div className="container intro__wrapper">
           <br />
           <br />
           <br />
@@ -21,7 +21,7 @@ function NotFound(): JSX.Element {
           <h2>Возможно, страница была удалена или</h2>
           <h2>её вовсе не существовало.</h2>
           <br />
-          <h1><Link to={AppRoute.Root}>На главную</Link></h1>
+          <h1><Link className='intro__link' to={AppRoute.Root}>На главную</Link></h1>
         </div>
       </main>
     </Fragment>

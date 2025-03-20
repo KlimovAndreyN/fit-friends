@@ -1,19 +1,10 @@
 import { Fragment } from 'react';
 
-import { Navigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 
-import { useAppSelector } from '../../hooks';
-import { getExistQuestionnaire } from '../../store/user-process/selectors';
-import { AppRoute, PageTitle } from '../../const';
+import { PageTitle } from '../../const';
 
 function Index(): JSX.Element {
-  const existQuestionnaire = useAppSelector(getExistQuestionnaire);
-
-  if (!existQuestionnaire) {
-    return <Navigate to={AppRoute.Questionnaire} />;
-  }
-
   return (
     <Fragment>
       <Header title={PageTitle.Index} />
