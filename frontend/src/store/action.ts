@@ -10,7 +10,7 @@ import {
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { isErrorNetwork } from '../utils/parse-axios-error';
 import { joinUrl } from '../utils/common';
-import { AppRoute, HttpCode, multipartFormDataHeader } from '../const';
+import { HttpCode, multipartFormDataHeader } from '../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -114,7 +114,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
 export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
   async (_, { extra }) => {
-    const { api, history } = extra;
+    const { api, /*history*/ } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
     let needDropTokens = true;
 
@@ -134,7 +134,7 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
       }
 
       //! useNavigate не работает
-      history.push(AppRoute.Intro);
+      //history.push(AppRoute.Intro);
     }
   }
 );

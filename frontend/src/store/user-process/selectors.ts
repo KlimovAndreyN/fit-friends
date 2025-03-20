@@ -8,3 +8,4 @@ export const getIsSingUpExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }:
 export const getIsQuestionnaireInExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isQuestionnaireExecuting'] => USER_PROCESS.isQuestionnaireExecuting;
 //!export const getUserInfo = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userInfo'] => USER_PROCESS.userInfo;
 export const getExistQuestionnaire = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['existQuestionnaire'] => USER_PROCESS.existQuestionnaire;
+export const getUserRole = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userRole'] => USER_PROCESS.userRole;

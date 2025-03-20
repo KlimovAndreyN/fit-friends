@@ -1,4 +1,4 @@
-import { ITokenPayloadRdo } from '@backend/shared';
+import { ITokenPayloadRdo, UserRole } from '@backend/shared';
 
 import { AuthorizationStatus } from './types';
 
@@ -9,4 +9,5 @@ export type UserProcess = {
   isQuestionnaireExecuting: boolean;
   userInfo: ITokenPayloadRdo | null;
   existQuestionnaire: boolean;
+  userRole?: UserRole;
 }

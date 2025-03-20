@@ -1,10 +1,17 @@
 import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
+import QuestionnaireSpecializations from '../../components/questionnaire-specializations/questionnaire-specializations';
 
-import { PageTitle } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getUserRole } from '../../store/user-process/selectors';
+import { PageTitle, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
+  const userRole = useAppSelector(getUserRole);
+  const endingClassName = (userRole) ? UserRoleOption[userRole].endingClassName : '';
+  const divClassName = `questionnaire-${endingClassName}`;
+
   //const dispatch = useAppDispatch();
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -29,68 +36,16 @@ function Questionnaire(): JSX.Element {
 
   const popupFormProps = {
     title: PageTitle.Questionnaire,
-    extraClass: 'popup-form--sign-up',
+    extraClass: `popup-form--questionnaire-${endingClassName}`,
     onSubmit: handlePopupFormSubmit
   };
 
   return (
     <PopupForm {...popupFormProps} >
-      <div className="questionnaire-user">
+      <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
         <div className="questionnaire-user__wrapper">
-          <div className="questionnaire-user__block">
-            <span className="questionnaire-user__legend">Ваша специализация (тип) тренировок</span>
-            <div className="specialization-checkbox questionnaire-user__specializations">
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="yoga" />
-                  <span className="btn-checkbox__btn">Йога</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="running" />
-                  <span className="btn-checkbox__btn">Бег</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="power" checked />
-                  <span className="btn-checkbox__btn">Силовые</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="aerobics" />
-                  <span className="btn-checkbox__btn">Аэробика</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="crossfit" checked />
-                  <span className="btn-checkbox__btn">Кроссфит</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="boxing" checked />
-                  <span className="btn-checkbox__btn">Бокс</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="pilates" />
-                  <span className="btn-checkbox__btn">Пилатес</span>
-                </label>
-              </div>
-              <div className="btn-checkbox">
-                <label>
-                  <input className="visually-hidden" type="checkbox" name="specialisation" value="stretching" />
-                  <span className="btn-checkbox__btn">Стрейчинг</span>
-                </label>
-              </div>
-            </div>
-          </div>
+          <QuestionnaireSpecializations name='specialisation' />
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
             <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
@@ -103,7 +58,7 @@ function Questionnaire(): JSX.Element {
               </div>
               <div className="custom-toggle-radio__block">
                 <label>
-                  <input type="radio" name="time" checked />
+                  <input type="radio" name="time" defaultChecked />
                   <span className="custom-toggle-radio__icon"></span>
                   <span className="custom-toggle-radio__label">30-50 мин</span>
                 </label>
@@ -136,7 +91,7 @@ function Questionnaire(): JSX.Element {
               </div>
               <div className="custom-toggle-radio__block">
                 <label>
-                  <input type="radio" name="level" checked />
+                  <input type="radio" name="level" defaultChecked />
                   <span className="custom-toggle-radio__icon"></span>
                   <span className="custom-toggle-radio__label">Любитель</span>
                 </label>

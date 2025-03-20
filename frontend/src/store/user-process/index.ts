@@ -11,7 +11,8 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   isQuestionnaireExecuting: false,
   userInfo: null,
-  existQuestionnaire: false
+  existQuestionnaire: false,
+  userRole: undefined
 };
 
 export const userProcess = createSlice(
@@ -33,6 +34,7 @@ export const userProcess = createSlice(
           (state, action) => {
             state.userInfo = action.payload;
             state.existQuestionnaire = action.payload.existQuestionnaire;
+            state.userRole = action.payload.role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -54,6 +56,7 @@ export const userProcess = createSlice(
             state.isSingInExecuting = false;
             state.userInfo = action.payload;
             state.existQuestionnaire = action.payload.existQuestionnaire;
+            state.userRole = action.payload.role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -62,6 +65,7 @@ export const userProcess = createSlice(
           //! перепроверить - logoutUser.rejected, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
             state.userInfo = null;
+            state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
@@ -69,6 +73,7 @@ export const userProcess = createSlice(
           logoutUser.fulfilled, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
             state.userInfo = null;
+            state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )

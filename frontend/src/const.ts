@@ -42,9 +42,9 @@ export const DefaultUser = {
   GENDER: UserGender.Female
 } as const;
 
-export const UserRoleOption: { [key in UserRole]: { sortOrder: number; title: string; svgIcon: string } } = {
-  [UserRole.Sportsman]: { sortOrder: 2, title: 'Я хочу тренироваться', svgIcon: '#icon-weight' },
-  [UserRole.Coath]: { sortOrder: 1, title: 'Я хочу тренировать', svgIcon: '#icon-cup' }
+export const UserRoleOption: { [key in UserRole]: { sortOrder: number; title: string; svgIcon: string; endingClassName: string } } = {
+  [UserRole.Sportsman]: { sortOrder: 2, title: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
+  [UserRole.Coath]: { sortOrder: 1, title: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
 } as const;
 
 export const SORTED_USER_ROLES = Object.values(UserRole).sort((a, b) => (UserRoleOption[a].sortOrder - UserRoleOption[b].sortOrder));
