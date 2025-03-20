@@ -3,8 +3,6 @@ import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
 
 export enum UserProp {
-  Password = 'password',
-  AvatarFile = 'avatarFile',
   AvatarSrc = 'avatarSrc',
   CreatedAt = 'createdAt',
   RegistrationDate = 'registrationDate'

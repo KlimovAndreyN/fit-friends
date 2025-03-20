@@ -5,6 +5,7 @@ import { Expose, Transform } from 'class-transformer';
 import { User, UserProp } from '../interfaces/user.interface';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
+import { CreateUserDto } from './create-user-with-avatar-file.dto';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
@@ -36,7 +37,7 @@ export class BaseUserDto {
   @IsString()
   @MinLength(UserValidation.Password.MinLength)
   @MaxLength(UserValidation.Password.MaxLength)
-  public [UserProp.Password]: ICreateUserWithFileIdDto[UserProp.Password];
+  public password: ICreateUserWithFileIdDto['password'];
 
   @ApiProperty(UserApiProperty.Birthday)
   @Expose()
@@ -52,7 +53,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
   @IsOptional()
-  public [UserProp.AvatarFile]?: File;
+  public 'avatarFile'?: CreateUserDto['avatarFile']
 
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()
