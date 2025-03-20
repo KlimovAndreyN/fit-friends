@@ -1,7 +1,9 @@
 import { FormEvent } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
-import QuestionnaireSpecializations from '../../components/questionnaire-specializations/questionnaire-specializations';
+import QuestionnairebBlock from '../../components/questionnaire-block/questionnaire-block';
+import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
+import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 
 import { useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -45,40 +47,13 @@ function Questionnaire(): JSX.Element {
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
         <div className="questionnaire-user__wrapper">
-          <QuestionnaireSpecializations name='specialisation' caption={'Ваша специализация (тип) тренировок'} divExtraClassName={endingClassName} />
-          <div className="questionnaire-user__block">
-            <span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
-            <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="time" />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">10-30 мин</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="time" defaultChecked />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">30-50 мин</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="time" />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">50-80 мин</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="time" />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">80-100 мин</span>
-                </label>
-              </div>
-            </div>
-          </div>
+          <QuestionnairebBlock caption='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
+            <SpecializationsCheckbox name='specialisation' divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
+          </QuestionnairebBlock>
+          <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
+            {/*//!*/}
+            <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={[]} startOptionValue={''} />
+          </QuestionnairebBlock>
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Ваш уровень</span>
             <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">

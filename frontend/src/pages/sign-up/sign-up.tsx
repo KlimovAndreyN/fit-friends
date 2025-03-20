@@ -104,7 +104,7 @@ function SignUp(): JSX.Element {
         <div className="sign-up__data">
           <CustomSelect
             name={FormFieldName.background}
-            currentOption={getRandomItem(USER_BACKGROUND_PATHS)}
+            startOption={getRandomItem(USER_BACKGROUND_PATHS)}
             caption='Фоновая картика'
             options={USER_BACKGROUND_PATHS}
           />

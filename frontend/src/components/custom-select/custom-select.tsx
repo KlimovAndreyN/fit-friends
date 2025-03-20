@@ -8,11 +8,11 @@ type CustomSelectProps = {
   caption: string;
   options: Option[];
   onChange?: (selected: Option | null) => void;
-  currentOption?: Option;
+  startOption?: Option;
 }
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
-  const { name, caption, options, onChange, currentOption: startOption } = props;
+  const { name, caption, options, onChange, startOption } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(startOption);
 
