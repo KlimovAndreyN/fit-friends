@@ -11,9 +11,9 @@ export class LoggedUserRdo extends
   PickType(
     BaseUserDto,
     [
-      UserProp.Id,
-      UserProp.Name,
-      UserProp.Email,
+      'id',
+      'name',
+      'email',
       UserProp.Role,
       UserProp.ExistQuestionnaire
     ]

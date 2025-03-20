@@ -10,7 +10,7 @@ import { FitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from '../authentication.service';
 
-const USERNAME_FIELD_NAME = UserProp.Email;
+const USERNAME_FIELD_NAME = 'email';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {

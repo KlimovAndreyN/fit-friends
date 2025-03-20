@@ -3,14 +3,10 @@ import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
 
 export enum UserProp {
-  Id = 'id',
-  Name = 'name',
-  Email = 'email',
   Password = 'password',
   AvatarFileId = 'avatarFileId',
   AvatarFile = 'avatarFile',
   AvatarSrc = 'avatarSrc',
-  Birthday = 'birthday',
   MetroStationName = 'metroStationName',
   BackgroundPath = 'backgroundPath',
   Gender = 'gender',
@@ -21,10 +17,10 @@ export enum UserProp {
 }
 
 export interface User {
-  [UserProp.Id]?: string;
-  [UserProp.Name]: string;
-  [UserProp.Email]: string;
-  [UserProp.Birthday]?: Date;
+  id?: string;
+  name: string;
+  email: string;
+  birthday?: Date;
   [UserProp.MetroStationName]: MetroStationName;
   [UserProp.BackgroundPath]: string;
   [UserProp.Gender]: UserGender;

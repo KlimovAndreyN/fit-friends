@@ -9,8 +9,8 @@ import { UserApiProperty } from '../constants/api-property/user.api-property';
 export class TokenPayloadRdo extends PickType(
   BaseUserDto,
   [
-    UserProp.Name,
-    UserProp.Email,
+    'name',
+    'email',
     UserProp.Role
   ]
 ) implements TokenPayload {

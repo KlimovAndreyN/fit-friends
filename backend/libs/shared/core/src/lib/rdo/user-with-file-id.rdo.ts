@@ -8,10 +8,10 @@ export class UserWithFileIdRdo
   extends PickType(
     BaseUserDto,
     [
-      UserProp.Id,
-      UserProp.Name,
-      UserProp.Email,
-      UserProp.Birthday,
+      'id',
+      'name',
+      'email',
+      'birthday',
       UserProp.AvatarFileId,
       UserProp.MetroStationName,
       UserProp.BackgroundPath,

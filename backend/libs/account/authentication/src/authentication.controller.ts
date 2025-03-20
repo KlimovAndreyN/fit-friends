@@ -5,9 +5,9 @@ import {
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
-  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserWithFileIdRdo, User,
-  AccountRoute, USER_ID_PARAM, LoginUserDto, UserTokenRdo, ServiceRoute, CreateUserWithFileIdDto, UserProp
+  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, User,
+  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserWithFileIdRdo,
+  AccountRoute, USER_ID_PARAM, LoginUserDto, UserTokenRdo, ServiceRoute, CreateUserWithFileIdDto,
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -93,7 +93,7 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
   @Get(USER_ID_PARAM)
-  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User[UserProp.Id]): Promise<UserWithFileIdRdo> {
+  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id']): Promise<UserWithFileIdRdo> {
     const existUser = await this.authService.getUser(userId);
 
     return fillDto(UserWithFileIdRdo, existUser.toPOJO());

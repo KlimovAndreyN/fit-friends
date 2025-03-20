@@ -4,6 +4,7 @@ import { Expose, Transform } from 'class-transformer';
 
 import { User, UserProp } from '../interfaces/user.interface';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
+import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
@@ -16,19 +17,19 @@ import { UserValidation } from '../constants/authentication.constant';
 export class BaseUserDto {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
-  public [UserProp.Id]: User[UserProp.Id];
+  public id: User['id'];
 
   @ApiProperty(UserApiProperty.Name)
   @Expose()
   @IsString()
   @MinLength(UserValidation.Name.MinLength)
   @MaxLength(UserValidation.Name.MaxLength)
-  public [UserProp.Name]: User[UserProp.Name];
+  public name: User['name'];
 
   @ApiProperty(UserApiProperty.Email)
   @Expose()
   @IsEmail({})
-  public [UserProp.Email]: User[UserProp.Email];
+  public email: User['email'];
 
   @ApiProperty(UserApiProperty.Password)
   @Expose()
@@ -41,12 +42,12 @@ export class BaseUserDto {
   @Expose()
   @IsDateString()
   @IsOptional()
-  public [UserProp.Birthday]?: ICreateUserWithFileIdDto[UserProp.Birthday];
+  public birthday?: ICreateUserWithFileIdDto['birthday'];
 
   @ApiProperty(UserApiProperty.AvatarFileId)
   @Expose()
   @IsOptional()
-  public [UserProp.AvatarFileId]?: User[UserProp.AvatarFileId];
+  public [UserProp.AvatarFileId]?: User['avatarFileId'];
 
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
@@ -56,29 +57,29 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()
   @IsEnum(MetroStationName)
-  public [UserProp.MetroStationName]: User[UserProp.MetroStationName];
+  public [UserProp.MetroStationName]: User['metroStationName'];
 
   @ApiProperty(UserApiProperty.BackgroundPath) //! сделать проверку пути
   @Expose()
   @IsString()
-  public [UserProp.BackgroundPath]: User[UserProp.BackgroundPath];
+  public [UserProp.BackgroundPath]: User['backgroundPath'];
 
   @ApiProperty(UserApiProperty.Gender)
   @Expose()
   @IsEnum(UserGender)
-  public [UserProp.Gender]: User[UserProp.Gender];
+  public [UserProp.Gender]: User['gender'];
 
   @ApiProperty(UserApiProperty.Role)
   @Expose()
   @IsEnum(UserRole)
-  public [UserProp.Role]: User[UserProp.Role];
+  public [UserProp.Role]: User['role'];
 
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
   @Expose({ name: UserProp.CreatedAt })
-  public [UserProp.RegistrationDate]: string;
+  public [UserProp.RegistrationDate]: IUserWithFileIdRdo[UserProp.RegistrationDate];
 
   @ApiProperty(UserApiProperty.ExistQuestionnaire)
   @Expose()
-  public [UserProp.ExistQuestionnaire]: User[UserProp.ExistQuestionnaire];
+  public [UserProp.ExistQuestionnaire]: User['existQuestionnaire'];
 }

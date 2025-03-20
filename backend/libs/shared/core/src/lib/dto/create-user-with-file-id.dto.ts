@@ -7,10 +7,10 @@ import { BaseUserDto } from './base-user.dto';
 export class CreateUserWithFileIdDto extends PickType(
   BaseUserDto,
   [
-    UserProp.Name,
-    UserProp.Email,
+    'name',
+    'email',
     UserProp.Password,
-    UserProp.Birthday,
+    'birthday',
     UserProp.AvatarFileId,
     UserProp.MetroStationName,
     UserProp.BackgroundPath,

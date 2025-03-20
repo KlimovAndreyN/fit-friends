@@ -4,6 +4,6 @@ export enum TokenPayloadProp {
   Sub = 'sub'
 }
 
-export interface TokenPayload extends Pick<User, UserProp.Email | UserProp.Name | UserProp.Role | UserProp.ExistQuestionnaire> {
-  [TokenPayloadProp.Sub]: User[UserProp.Id];
+export interface TokenPayload extends Pick<User, 'email' | 'name' | UserProp.Role | UserProp.ExistQuestionnaire> {
+  [TokenPayloadProp.Sub]: User['id'];
 }
