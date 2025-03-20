@@ -1,80 +1,35 @@
+import { SORTED_SPECIALISATIONS, SpecialisationOption } from '../../const';
+
 type QuestionnaireSpecializationsProps = {
-  //divExtraClassName?: string;
+  divExtraClassName: string;
   name: string;
-  /*
-  type: string;
-  label: string;
-  required?: boolean;
-  max?: string;
-  autoComplete?: string;
-  */
+  caption: string;
 }
 
-const QuestionnaireSpecializations = (props: QuestionnaireSpecializationsProps) => {
-  //!
-  const { /*divExtraClassName, */name/*, type, label, required, max, autoComplete*/ } = props;
-  /*
-  const divClassNames = ['custom-input'];
-  if (divExtraClassName) {
-    divClassNames.push(divExtraClassName);
-  }
-  */
-
+function QuestionnaireSpecializations({ divExtraClassName, name, caption }: QuestionnaireSpecializationsProps): JSX.Element {
   return (
-    <div className="questionnaire-user__block">
-      <span className="questionnaire-user__legend">Ваша специализация (тип) тренировок</span>
+    <div className={`questionnaire-${divExtraClassName}__block`}>
+      <span className={`questionnaire-${divExtraClassName}__legend`}>{caption}</span>
       <div className="specialization-checkbox questionnaire-user__specializations">
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="yoga" />
-            <span className="btn-checkbox__btn">Йога</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="running" />
-            <span className="btn-checkbox__btn">Бег</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="power" defaultChecked />
-            <span className="btn-checkbox__btn">Силовые</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="aerobics" />
-            <span className="btn-checkbox__btn">Аэробика</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="crossfit" defaultChecked />
-            <span className="btn-checkbox__btn">Кроссфит</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="boxing" defaultChecked />
-            <span className="btn-checkbox__btn">Бокс</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="pilates" />
-            <span className="btn-checkbox__btn">Пилатес</span>
-          </label>
-        </div>
-        <div className="btn-checkbox">
-          <label>
-            <input className="visually-hidden" type="checkbox" name={name} value="stretching" />
-            <span className="btn-checkbox__btn">Стрейчинг</span>
-          </label>
-        </div>
+        {
+          SORTED_SPECIALISATIONS.map(
+            (specialisation) => {
+              const { title, defaultChecked } = SpecialisationOption[specialisation];
+
+              return (
+                <div className="btn-checkbox" key={specialisation}>
+                  <label>
+                    <input className="visually-hidden" type="checkbox" name={name} value={specialisation} defaultChecked={defaultChecked} />
+                    <span className="btn-checkbox__btn">{title}</span>
+                  </label>
+                </div>
+              );
+            }
+          )
+        }
       </div>
     </div>
   );
-};
+}
 
 export default QuestionnaireSpecializations;

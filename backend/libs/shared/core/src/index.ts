@@ -64,6 +64,7 @@ export { MetroStationName } from './lib/types/metro-station-name.enum';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
+export { Specialisation } from './lib/types/specialisation.enum';
 export { UserGender } from './lib/types/user-gender.enum';
 export { UserRole } from './lib/types/user-role.enum';
 

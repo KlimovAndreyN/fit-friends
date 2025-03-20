@@ -45,7 +45,7 @@ function Questionnaire(): JSX.Element {
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
         <div className="questionnaire-user__wrapper">
-          <QuestionnaireSpecializations name='specialisation' />
+          <QuestionnaireSpecializations name='specialisation' caption={'Ваша специализация (тип) тренировок'} divExtraClassName={endingClassName} />
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
             <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
