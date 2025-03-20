@@ -42,7 +42,7 @@ export const UserApiProperty = {
   },
   Birthday: {
     required: false,
-    description: 'The user dirthday date',
+    description: 'The user dirthday date, in "2025-03-20" or "2025-03-20T00:00:00.000Z", out "2025-03-20T00:00:00.000Z"',
     type: 'string',
     example: '2025-03-20T00:00:00.000Z'
   },
@@ -77,6 +77,6 @@ export const UserApiProperty = {
   RegistrationDate: {
     description: 'The user registration date',
     type: 'string',
-    example: '2025-01-20'
+    example: '2025-03-20T00:00:00.000Z'
   }
 } as const;

@@ -35,7 +35,7 @@ export class AuthenticationService {
       metroStationName,
       role,
       avatarFileId,
-      birthday //! почему string, еще должен быть undefined
+      birthday
     } = dto;
     const existUser = await this.fitUserRepository.findByEmail(email);
 
@@ -51,7 +51,7 @@ export class AuthenticationService {
       metroStationName,
       role,
       avatarFileId,
-      birthday: (birthday) ? new Date(birthday) : undefined, //! а зачем все это может просто строкой? почему не типизирует string, еще должен быть undefined, может изза []
+      birthday: (birthday) ? new Date(birthday) : undefined,
       existQuestionnaire: false,
       passwordHash: ''
     };

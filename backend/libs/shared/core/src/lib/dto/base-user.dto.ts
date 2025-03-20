@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
 import { User } from '../interfaces/user.interface';
 import { ICreateUserDto } from '../../fronted-index';
@@ -9,11 +9,11 @@ import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
-import { transformDate } from '../utils/transform';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { UserValidation } from '../constants/authentication.constant';
 
 //! название и размещение не очень... используется для описания, валидации и трансформации dto и rdo
+//! иногда разное описание например дата рождения, в dto и кратное и полное, а rdo только полное
 // UserApiDoc
 export class BaseUserDto {
   @ApiProperty(UserApiProperty.Id)
@@ -76,7 +76,6 @@ export class BaseUserDto {
   public role: User['role'];
 
   @ApiProperty(UserApiProperty.RegistrationDate)
-  @Transform(transformDate)
   @Expose({ name: 'createdAt' })
   public registrationDate: IUserWithFileIdRdo['registrationDate'];
 

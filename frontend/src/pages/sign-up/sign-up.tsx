@@ -58,16 +58,12 @@ function SignUp(): JSX.Element {
       email,
       password,
       backgroundPath,
-      birthday: (birthday) ? (new Date(birthday)).toISOString() : undefined, //! можно отдать как есть строку
+      birthday,
       gender,
       role,
       metroStationName,
       avatarFile
     };
-
-    //!
-    // eslint-disable-next-line no-console
-    console.log('dto', dto);
 
     dispatch(registerUser(dto));
   };
