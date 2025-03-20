@@ -1,4 +1,4 @@
-import { User, UserProp } from './user.interface';
+import { User } from './user.interface';
 
 export enum TokenPayloadProp {
   Sub = 'sub'

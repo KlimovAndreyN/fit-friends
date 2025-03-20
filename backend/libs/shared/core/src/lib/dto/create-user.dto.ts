@@ -8,5 +8,5 @@ import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
 export class CreateUserDto extends OmitType(CreateUserWithFileIdDto, ['avatarFileId']) implements ICreateUserDto {
   @ApiProperty(UserApiProperty.AvatarFile)
   @IsOptional()
-  public avatarFile?: File;
+  public avatarFile?: ICreateUserDto['avatarFile'];
 }

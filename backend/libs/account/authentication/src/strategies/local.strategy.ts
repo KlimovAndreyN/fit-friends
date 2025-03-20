@@ -4,7 +4,7 @@ import { Strategy } from 'passport-local';
 import { plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 
-import { LoginUserDto, UserProp } from '@backend/shared/core';
+import { LoginUserDto } from '@backend/shared/core';
 import { getValidationErrorString } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 

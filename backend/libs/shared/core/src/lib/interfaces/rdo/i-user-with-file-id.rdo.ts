@@ -1,5 +1,5 @@
 import { ICreateUserWithFileIdDto } from '../dto/i-create-user-with-file-id.dto';
-import { User, UserProp } from '../user.interface';
+import { User } from '../user.interface';
 
 export interface IUserWithFileIdRdo
   extends Pick<
@@ -8,5 +8,5 @@ export interface IUserWithFileIdRdo
   > {
   id: User['id'];
   birthday?: ICreateUserWithFileIdDto['birthday'];
-  [UserProp.RegistrationDate]: string;
+  registrationDate: string;
 };

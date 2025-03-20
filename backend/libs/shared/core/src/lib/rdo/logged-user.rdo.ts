@@ -4,7 +4,6 @@ import { Expose } from 'class-transformer';
 import { ILoggedUserRdo } from '../interfaces/rdo/i-logged-user.rdo';
 import { BaseUserDto } from '../dto/base-user.dto';
 import { TokenApiProperty } from '../constants/api-property/token.api-property';
-import { UserProp } from '../interfaces/user.interface';
 import { Token, TokenProp } from '../interfaces/token.interface';
 
 export class LoggedUserRdo extends

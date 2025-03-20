@@ -2,12 +2,6 @@ import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
 
-export enum UserProp {
-  AvatarSrc = 'avatarSrc',
-  CreatedAt = 'createdAt',
-  RegistrationDate = 'registrationDate'
-}
-
 export interface User {
   id?: string;
   name: string;

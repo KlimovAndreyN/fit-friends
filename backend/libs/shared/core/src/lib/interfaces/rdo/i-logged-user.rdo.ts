@@ -1,5 +1,5 @@
 import { Token } from '../token.interface';
-import { User, UserProp } from '../user.interface';
+import { User } from '../user.interface';
 
 export interface ILoggedUserRdo
   extends

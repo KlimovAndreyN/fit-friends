@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { Expose, Transform } from 'class-transformer';
 
-import { User, UserProp } from '../interfaces/user.interface';
+import { User } from '../interfaces/user.interface';
+import { ICreateUserDto } from '../../fronted-index';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
-import { CreateUserDto } from './create-user.dto';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
@@ -53,7 +53,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
   @IsOptional()
-  public 'avatarFile'?: CreateUserDto['avatarFile']
+  public avatarFile?: ICreateUserDto['avatarFile']
 
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()
@@ -78,7 +78,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
   @Expose({ name: 'createdAt' })
-  public [UserProp.RegistrationDate]: IUserWithFileIdRdo[UserProp.RegistrationDate];
+  public registrationDate: IUserWithFileIdRdo['registrationDate'];
 
   @ApiProperty(UserApiProperty.ExistQuestionnaire)
   @Expose()

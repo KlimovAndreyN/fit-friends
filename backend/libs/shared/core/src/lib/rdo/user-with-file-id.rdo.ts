@@ -1,7 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
 import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
-import { UserProp } from '../interfaces/user.interface';
 import { BaseUserDto } from '../dto/base-user.dto';
 
 export class UserWithFileIdRdo
@@ -17,6 +16,6 @@ export class UserWithFileIdRdo
       'backgroundPath',
       'gender',
       'role',
-      UserProp.RegistrationDate
+      'registrationDate'
     ]
   ) implements IUserWithFileIdRdo { }
