@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 
 import {
   AccountRoute, CreateUserWithFileIdDto, CreateUserDto,
-  ServiceRoute, UserProp, UserWithFileIdRdo, UserRdo
+  ServiceRoute, UserWithFileIdRdo, UserRdo
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';

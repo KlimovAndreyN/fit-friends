@@ -4,13 +4,11 @@ import PopupForm from '../../components/popup-form/popup-form';
 
 import { AppRoute, PageTitle } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getUserInfo } from '../../store/user-process/selectors';
+import { getExistQuestionnaire } from '../../store/user-process/selectors';
 import { Navigate } from 'react-router-dom';
 
 function Questionnaire(): JSX.Element {
-  const userInfo = useAppSelector(getUserInfo);
-  //! в App и проверить state, и вынести параметр отдельно
-  const existQuestionnaire = userInfo?.existQuestionnaire || false;
+  const existQuestionnaire = useAppSelector(getExistQuestionnaire);
 
   if (existQuestionnaire) {
     return <Navigate to={AppRoute.Root} />;

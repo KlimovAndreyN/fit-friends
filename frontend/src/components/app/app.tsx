@@ -52,7 +52,6 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           />
-          {/* //! пока для тестирования */}
           <Route
             path={AppRoute.Questionnaire}
             element={
@@ -61,7 +60,6 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           />
-          {/* */}
           <Route
             path={AppRoute.PersonalAccount}
             element={

@@ -10,7 +10,8 @@ const initialState: UserProcess = {
   isSingInExecuting: false,
   isSingUpExecuting: false,
   isQuestionnaireExecuting: false,
-  userInfo: null
+  userInfo: null,
+  existQuestionnaire: false
 };
 
 export const userProcess = createSlice(
@@ -31,6 +32,7 @@ export const userProcess = createSlice(
           fetchUserStatus.fulfilled,
           (state, action) => {
             state.userInfo = action.payload;
+            state.existQuestionnaire = action.payload.existQuestionnaire;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -51,6 +53,7 @@ export const userProcess = createSlice(
           (state, action) => {
             state.isSingInExecuting = false;
             state.userInfo = action.payload;
+            state.existQuestionnaire = action.payload.existQuestionnaire;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
