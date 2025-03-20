@@ -8,9 +8,10 @@ type CustomSelectProps = {
   autoComplete?: string;
 }
 
-const CustomInput = (props: CustomSelectProps) => {
+function CustomInput(props: CustomSelectProps): JSX.Element {
   const { divExtraClassName, name, type, label, required, max, autoComplete } = props;
   const divClassNames = ['custom-input'];
+
   if (divExtraClassName) {
     divClassNames.push(divExtraClassName);
   }
@@ -25,6 +26,6 @@ const CustomInput = (props: CustomSelectProps) => {
       </label>
     </div>
   );
-};
+}
 
 export default CustomInput;

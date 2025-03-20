@@ -11,7 +11,7 @@ type CustomSelectProps = {
   currentOption?: Option;
 }
 
-const CustomSelect = (props: CustomSelectProps) => {
+function CustomSelect(props: CustomSelectProps): JSX.Element {
   const { name, caption, options, onChange, currentOption: startOption } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(startOption);
@@ -62,8 +62,8 @@ const CustomSelect = (props: CustomSelectProps) => {
           )
         }
       </ul>
-    </div >
+    </div>
   );
-};
+}
 
 export default CustomSelect;

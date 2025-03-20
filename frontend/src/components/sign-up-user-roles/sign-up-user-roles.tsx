@@ -5,7 +5,6 @@ type SignUpUserRolesProps = {
 }
 
 function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
-
   return (
     /*
     //! visually-hidden - спратал выбор роли, по умолчанию был coach
@@ -38,7 +37,7 @@ function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
           )
         }
       </div>
-    </div >
+    </div>
   );
 }
 
