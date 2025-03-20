@@ -47,7 +47,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.AvatarFileId)
   @Expose()
   @IsOptional()
-  public [UserProp.AvatarFileId]?: User['avatarFileId'];
+  public avatarFileId?: User['avatarFileId'];
 
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
@@ -57,29 +57,29 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()
   @IsEnum(MetroStationName)
-  public [UserProp.MetroStationName]: User['metroStationName'];
+  public metroStationName: User['metroStationName'];
 
   @ApiProperty(UserApiProperty.BackgroundPath) //! сделать проверку пути
   @Expose()
   @IsString()
-  public [UserProp.BackgroundPath]: User['backgroundPath'];
+  public backgroundPath: User['backgroundPath'];
 
   @ApiProperty(UserApiProperty.Gender)
   @Expose()
   @IsEnum(UserGender)
-  public [UserProp.Gender]: User['gender'];
+  public gender: User['gender'];
 
   @ApiProperty(UserApiProperty.Role)
   @Expose()
   @IsEnum(UserRole)
-  public [UserProp.Role]: User['role'];
+  public role: User['role'];
 
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Transform(transformDate)
-  @Expose({ name: UserProp.CreatedAt })
+  @Expose({ name: 'createdAt' })
   public [UserProp.RegistrationDate]: IUserWithFileIdRdo[UserProp.RegistrationDate];
 
   @ApiProperty(UserApiProperty.ExistQuestionnaire)
   @Expose()
-  public [UserProp.ExistQuestionnaire]: User['existQuestionnaire'];
+  public existQuestionnaire: User['existQuestionnaire'];
 }

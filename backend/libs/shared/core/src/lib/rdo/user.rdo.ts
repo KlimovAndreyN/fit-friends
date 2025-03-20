@@ -6,7 +6,7 @@ import { UserProp } from '../interfaces/user.interface';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { UserWithFileIdRdo } from './user-with-file-id.rdo';
 
-export class UserRdo extends OmitType(UserWithFileIdRdo, [UserProp.AvatarFileId]) implements IUserRdo {
+export class UserRdo extends OmitType(UserWithFileIdRdo, ['avatarFileId']) implements IUserRdo {
   @ApiProperty(UserApiProperty.AvatarSrc)
   @Expose()
   public [UserProp.AvatarSrc]: IUserRdo[UserProp.AvatarSrc];

@@ -12,11 +12,11 @@ export class UserWithFileIdRdo
       'name',
       'email',
       'birthday',
-      UserProp.AvatarFileId,
-      UserProp.MetroStationName,
-      UserProp.BackgroundPath,
-      UserProp.Gender,
-      UserProp.Role,
+      'avatarFileId',
+      'metroStationName',
+      'backgroundPath',
+      'gender',
+      'role',
       UserProp.RegistrationDate
     ]
   ) implements IUserWithFileIdRdo { }

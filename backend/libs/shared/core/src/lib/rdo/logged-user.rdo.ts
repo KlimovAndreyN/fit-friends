@@ -14,8 +14,8 @@ export class LoggedUserRdo extends
       'id',
       'name',
       'email',
-      UserProp.Role,
-      UserProp.ExistQuestionnaire
+      'role',
+      'existQuestionnaire'
     ]
   )
   implements ILoggedUserRdo {

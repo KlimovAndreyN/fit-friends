@@ -55,7 +55,7 @@ export class UsersService {
 
   public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
     const avatar = await this.filesService.uploadFile(avatarFile, requestId);
-    const createUser: CreateUserWithFileIdDto = { ...dto, [UserProp.AvatarFileId]: avatar?.id };
+    const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);

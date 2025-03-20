@@ -11,10 +11,10 @@ export class CreateUserWithFileIdDto extends PickType(
     'email',
     UserProp.Password,
     'birthday',
-    UserProp.AvatarFileId,
-    UserProp.MetroStationName,
-    UserProp.BackgroundPath,
-    UserProp.Gender,
-    UserProp.Role
+    'avatarFileId',
+    'metroStationName',
+    'backgroundPath',
+    'gender',
+    'role'
   ]
 ) implements ICreateUserWithFileIdDto { }
