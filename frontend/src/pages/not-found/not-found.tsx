@@ -1,30 +1,33 @@
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import Header from '../../components/header/header';
-
+import PopupForm from '../../components/popup-form/popup-form';
 import { AppRoute, PageTitle } from '../../const';
 
 function NotFound(): JSX.Element {
+  const navigate = useNavigate();
+
+  const handlePopupFormSubmit = () => {
+    navigate(AppRoute.Root);
+  };
+
+  const popupFormProps = {
+    title: PageTitle.NotFound,
+    caption: 'Страница не найдена!',
+    extraClass: '',
+    onSubmit: handlePopupFormSubmit
+  };
+
   return (
-    <Fragment>
-      <Header title={PageTitle.NotFound} />
-      <main>
-        <div className="container intro__wrapper">
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <h1>404 - Страница не найдена!</h1>
-          <br />
-          <h2>Возможно, страница была удалена или</h2>
-          <h2>её вовсе не существовало.</h2>
-          <br />
-          <h1><Link className='intro__link' to={AppRoute.Root}>На главную</Link></h1>
-        </div>
-      </main>
-    </Fragment>
+    <PopupForm {...popupFormProps} >
+      <div>
+        <h1>404 - Страница не найдена!</h1>
+        <h2>Возможно, страница была удалена или</h2>
+        <h2>её вовсе не существовало.</h2>
+        <br />
+        <button className='btn' type="submit">На главную</button>
+        { }
+      </div>
+    </PopupForm>
   );
 }
 
