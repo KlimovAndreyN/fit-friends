@@ -1,7 +1,3 @@
-import dayjs from 'dayjs';
-
-import { DateFormat } from '../constants/date-format';
-
 //! нужно ли
 export function transformTags({ value }): string[] {
   // когда запрос в fit, то преобразует entity[]
