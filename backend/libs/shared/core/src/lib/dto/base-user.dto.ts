@@ -5,7 +5,7 @@ import { Expose, Transform } from 'class-transformer';
 import { User, UserProp } from '../interfaces/user.interface';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
-import { CreateUserDto } from './create-user-with-avatar-file.dto';
+import { CreateUserDto } from './create-user.dto';
 import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
