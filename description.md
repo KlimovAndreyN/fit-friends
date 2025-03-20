@@ -8,6 +8,7 @@ cd ~/fit-friends
 #my win
 #D:
 #cd HTMLAcademy/fit-friends
+#cd Projects/fit-friends
 
 # Скопировать .env-example -> .env:
 cd backend/apps
@@ -16,7 +17,7 @@ cp api/.env-example api/.env
 cp file-storage/.env-example file-storage/.env
 cp notify/.env-example notify/.env
 cd ../../frontend
-cp frontend/.env-example frontend/.env
+cp .env-example .env
 
 # добавить docker-compose
 cd ..
@@ -27,10 +28,10 @@ cd backend
 npm install
 
 # сформировать PrismaClient
-npx nx run fit:db:generate
+#npx nx run fit:db:generate
 
 # инициализировать БД postgres
-npx nx run fit:db:migrate
+#npx nx run fit:db:migrate
 
 # наполнение тестовыми данными
 #npx nx run account:db:seed
