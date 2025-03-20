@@ -1,8 +1,9 @@
-import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 
 import PrivateRoute from '../private-route/private-route';
+import QuestionnaireRoute from '../questionnaire-route/questionnaire-route';
 import Index from '../../pages/index/index';
 import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -12,14 +13,10 @@ import PersonalAccount from '../../pages/personal-account/personal-account';
 import FriendsList from '../../pages/friends-list/friends-list';
 import NotFound from '../../pages/not-found/not-found';
 
-import { useAppSelector } from '../../hooks';
-import { getExistQuestionnaire } from '../../store/user-process/selectors';
 import { AuthorizationStatus } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
-  const existQuestionnaire = useAppSelector(getExistQuestionnaire);
-
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -28,11 +25,9 @@ function App(): JSX.Element {
             path={AppRoute.Root}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                {
-                  (!existQuestionnaire)
-                    ? <Navigate to={AppRoute.Questionnaire} />
-                    : <Index />
-                }
+                <QuestionnaireRoute>
+                  <Index />
+                </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
@@ -64,11 +59,9 @@ function App(): JSX.Element {
             path={AppRoute.Questionnaire}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                {
-                  (existQuestionnaire)
-                    ? <Navigate to={AppRoute.Root} />
-                    : <Questionnaire />
-                }
+                <QuestionnaireRoute isQuestionnaire>
+                  <Questionnaire />
+                </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
@@ -76,11 +69,9 @@ function App(): JSX.Element {
             path={AppRoute.PersonalAccount}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                {
-                  (!existQuestionnaire)
-                    ? <Navigate to={AppRoute.Questionnaire} />
-                    : <PersonalAccount />
-                }
+                <QuestionnaireRoute>
+                  <PersonalAccount />
+                </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
@@ -88,11 +79,9 @@ function App(): JSX.Element {
             path={AppRoute.FriendsList}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                {
-                  (existQuestionnaire)
-                    ? <Navigate to={AppRoute.Root} />
-                    : <FriendsList />
-                }
+                <QuestionnaireRoute>
+                  <FriendsList />
+                </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
