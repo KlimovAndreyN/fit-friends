@@ -1,0 +1,48 @@
+@baseUrl = http://localhost:3003/api
+@baseUrlAuth = {{baseUrl}}/auth
+
+# Create a new user - Content-Type: application/json
+POST {{baseUrlAuth}}/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Name",
+  "email": "user@local.local",
+  "password": "password",
+  "birthday": "2005-03-20T00:00:00.000Z",
+  "avatarFileId": "658170cbb954e9f5b905ddf4",
+  "metroStationName": "pionerskaya",
+  "backgroundPath": "/some/path/img.jpg",
+  "gender": "male",
+  "role": "sportsman"
+}
+
+###
+
+# Login user by email and password
+POST {{baseUrlAuth}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@local.local",
+  "password": "123456"
+}
+
+###
+
+# Get new JWT pair
+POST {{baseUrlAuth}}/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzdlNWYzMTVjODE2NmIyZWE3ZjcwMTUiLCJlbWFpbCI6InVzZXJAbG9jYWwubG9jYWwiLCJuYW1lIjoiS2VrcyIsInRva2VuSWQiOiIxYmI3OWVkZi05MmQ5LTQwNjUtYTlhNS1mZjRkMjFkYTQ3YTAiLCJpYXQiOjE3MzY3NDc4NjYsImV4cCI6MTczOTMzOTg2Nn0.p_3sMwRZ-5bhCp9wNQabL1phSdVo0o5x0iDDjasFpD8
+
+###
+
+# Check user token
+POST {{baseUrlAuth}}/check HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzdlNWYzMTVjODE2NmIyZWE3ZjcwMTUiLCJlbWFpbCI6InVzZXJAbG9jYWwubG9jYWwiLCJuYW1lIjoiS2VrcyIsImlhdCI6MTczNjc0Nzg2NiwiZXhwIjoxNzM2NzQ4MTY2fQ.1BHbfTjaWESWSoNauE-R79JgsBT9WesglhwN3LHtZtw
+
+###
+
+# Get user by ID
+GET {{baseUrlAuth}}/677e5f315c8166b2ea7f7015 HTTP/1.1
+
+###

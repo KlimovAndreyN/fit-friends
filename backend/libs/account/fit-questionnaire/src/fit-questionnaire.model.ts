@@ -1,35 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
-import { Questionnaire } from '@backend/shared/core';
 import { Document } from 'mongoose';
+
+import { Duration, Questionnaire, Specialisation, UserLevel } from '@backend/shared/core';
 
 @Schema({
   collection: 'questionnaires'
 })
 export class FitQuestionnaireModel extends Document implements Questionnaire {
   @Prop({ required: true })
-  public specialisations: Questionnaire['specialisations'];
+  public specialisations: Specialisation[];
 
   @Prop({ required: true, type: String })
-  public level: Questionnaire['level'];
+  public level: UserLevel;
 
   @Prop({ type: String })
-  public time: Questionnaire['time'];
+  public time: Duration;
 
   @Prop()
-  public caloriesLose: Questionnaire['caloriesLose'];
+  public caloriesLose: number;
 
   @Prop()
-  public caloriesWaste?: Questionnaire['caloriesWaste'];
+  public caloriesWaste: number;
 
   @Prop()
-  public fileIds?: Questionnaire['fileIds'];
+  public fileIds: string[];
 
   @Prop()
-  public description?: Questionnaire['description'];
+  public description: string;
 
   @Prop()
-  public individualTraining?: Questionnaire['individualTraining'];
+  public individualTraining: boolean;
 }
 
 export const FitQuestionnaireSchema = SchemaFactory.createForClass(FitQuestionnaireModel);

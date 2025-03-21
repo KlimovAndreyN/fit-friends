@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FitQuestionnaireRepository } from './fit-questionnaire.repository';
 import { FitQuestionnaireFactory } from './fit-questionnaire.factory';
 import { FitQuestionnaireModel, FitQuestionnaireSchema } from './fit-questionnaire.model';
+import { FitQuestionnaireController } from './fit-questionnaire.controller';
+import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @Module({
   imports: [
@@ -16,10 +18,11 @@ import { FitQuestionnaireModel, FitQuestionnaireSchema } from './fit-questionnai
       ]
     )
   ],
+  controllers: [FitQuestionnaireController],
   providers: [
+    FitQuestionnaireService,
     FitQuestionnaireRepository,
     FitQuestionnaireFactory
-  ],
-  exports: [FitQuestionnaireRepository]
+  ]
 })
 export class FitQuestionnaireModule { }

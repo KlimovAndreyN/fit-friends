@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import { AuthUser } from '@backend/shared/core';
+import { AuthUser, MetroStationName, UserGender, UserRole } from '@backend/shared/core';
 
 @Schema({
   collection: 'accounts',
@@ -9,36 +9,36 @@ import { AuthUser } from '@backend/shared/core';
 })
 export class FitUserModel extends Document implements AuthUser {
   @Prop({ required: true, unique: true })
-  public email: AuthUser['email'];
+  public email: string;
 
   @Prop({ required: true })
-  public name: AuthUser['name'];
+  public name: string;
 
   @Prop()
-  public avatarFileId: AuthUser['avatarFileId'];
+  public avatarFileId: string;
 
   @Prop({ required: true })
-  public passwordHash: AuthUser['passwordHash'];
+  public passwordHash: string;
 
   @Prop()
-  public birthday: AuthUser['birthday'];
+  public birthday: Date;
 
   @Prop({ required: true, type: String })
-  public metroStationName: AuthUser['metroStationName'];
+  public metroStationName: MetroStationName;
 
   @Prop({ required: true })
   public backgroundPath: string;
 
   @Prop({ required: true, type: String })
-  public gender: AuthUser['gender'];
+  public gender: UserGender;
 
   @Prop({ required: true, type: String })
-  public role: AuthUser['role'];
+  public role: UserRole;
 
   @Prop({ required: true })
-  public existQuestionnaire: AuthUser['existQuestionnaire'];
+  public existQuestionnaire: boolean;
 
-  public createdAt: AuthUser['createdAt'];
+  public createdAt: Date;
 }
 
 export const FitUserSchema = SchemaFactory.createForClass(FitUserModel);
