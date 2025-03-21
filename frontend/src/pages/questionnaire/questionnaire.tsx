@@ -1,9 +1,10 @@
-import { FormEvent } from 'react';
+import { FormEvent, Fragment } from 'react';
 
 import PopupForm from '../../components/popup-form/popup-form';
 import QuestionnairebBlock from '../../components/questionnaire-block/questionnaire-block';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
+import CalorieInput from '../../components/calorie-input/calorie-input';
 
 import { useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -56,30 +57,12 @@ function Questionnaire(): JSX.Element {
           <QuestionnairebBlock caption='Ваш уровень' divExtraClassName={endingClassName} >
             <CustomToggleRadio name='level' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
           </QuestionnairebBlock>
-          <div className="questionnaire-user__block">
-            <div className="questionnaire-user__calories-lose">
-              <span className="questionnaire-user__legend">Сколько калорий хотите сбросить</span>
-              <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                <label>
-                  <span className="custom-input__wrapper">
-                    <input type="number" name="calories-lose" />
-                    <span className="custom-input__text">ккал</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-            <div className="questionnaire-user__calories-waste">
-              <span className="questionnaire-user__legend">Сколько калорий тратить в день</span>
-              <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                <label>
-                  <span className="custom-input__wrapper">
-                    <input type="number" name="calories-waste" />
-                    <span className="custom-input__text">ккал</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
+          <QuestionnairebBlock divExtraClassName={endingClassName} >
+            <Fragment>
+              <CalorieInput name='calories-lose' caption='Сколько калорий хотите сбросить' />
+              <CalorieInput name='calories-waste' caption='Сколько калорий тратить в день' />
+            </Fragment>
+          </QuestionnairebBlock>
         </div>
         <button className="btn questionnaire-user__button" type="submit">Продолжить</button>
       </div>
