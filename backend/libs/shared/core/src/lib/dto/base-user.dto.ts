@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { Expose } from 'class-transformer';
 
 import { User } from '../interfaces/user.interface';
@@ -23,8 +23,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.Name)
   @Expose()
   @IsString()
-  @MinLength(UserValidation.Name.MinLength)
-  @MaxLength(UserValidation.Name.MaxLength)
+  @Matches(UserValidation.Name.Regexp)
   public name: User['name'];
 
   @ApiProperty(UserApiProperty.Email)
@@ -63,6 +62,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.BackgroundPath) //! сделать проверку пути
   @Expose()
   @IsString()
+  @Matches(UserValidation.BackgroundPath.Regexp)
   public backgroundPath: User['backgroundPath'];
 
   @ApiProperty(UserApiProperty.Gender)

@@ -11,14 +11,13 @@ export const AuthenticationMessage = {
 
 export const UserAvatarOption = {
   KEY: 'avatarFile',
-  MAX_SIZE: 500 * 1024,
+  MAX_SIZE: 1024 * 1024,
   MIME_TYPES: ['image/jpg', 'image/jpeg', 'image/png']
 } as const;
 
 export const UserValidation = {
   Name: {
-    MinLength: 3,
-    MaxLength: 50
+    Regexp: /^[a-zA-Zа-яА-ЯёЁ]{1,15}$/
   },
   Password: {
     MinLength: 6,
@@ -31,6 +30,9 @@ export const UserValidation = {
       fileIsRequired: UserApiProperty.AvatarFile.required,
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
     }
+  },
+  BackgroundPath: {
+    Regexp: /\.(jpeg|jpg|png)$/
   }
 } as const;
 
