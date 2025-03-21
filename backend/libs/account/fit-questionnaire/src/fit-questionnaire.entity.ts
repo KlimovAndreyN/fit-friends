@@ -1,6 +1,7 @@
 import { Entity, StorableEntity, Questionnaire } from '@backend/shared/core';
 
 export class FitQuestionnaireEntity extends Entity implements StorableEntity<Questionnaire> {
+  public userId: Questionnaire['userId'];
   public specialisations: Questionnaire['specialisations'];
   public level: Questionnaire['level'];
   public time?: Questionnaire['time'];
@@ -22,6 +23,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
     }
 
     this.id = questionnaire.id ?? undefined;
+    this.userId = questionnaire.userId;
     this.specialisations = [...questionnaire.specialisations];
     this.level = questionnaire.level;
     this.time = questionnaire.time;
@@ -35,6 +37,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
   public toPOJO(): Questionnaire {
     return {
       id: this.id,
+      userId: this.userId,
       specialisations: this.specialisations,
       level: this.level,
       time: this.time,

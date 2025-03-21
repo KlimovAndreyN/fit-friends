@@ -9,6 +9,7 @@ import { Duration } from '../types/duration.enum';
 import { ICreateQuestionnaireUserDto } from '../interfaces/dto/i-create-questionnaire-user.dto';
 import { QuestionnaireApiProperty } from '../constants/api-property/questionnaire.api-property';
 import { QuestionnaireValidation } from '../constants/authentication.constant';
+import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 //! название и размещение не очень... используется для описания, валидации и трансформации dto и rdo
 //! иногда разное описание например дата рождения, в dto и кратное и полное, а rdo только полное
@@ -17,6 +18,10 @@ export class BaseQuestionnaireDto {
   @ApiProperty(QuestionnaireApiProperty.Id)
   @Expose()
   public id: Questionnaire['id'];
+
+  @ApiProperty(UserApiProperty.Id)
+  @Expose()
+  public userId: Questionnaire['userId'];
 
   @ApiProperty(QuestionnaireApiProperty.Specialisations)
   @Expose()

@@ -25,6 +25,7 @@ export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
+export { CreateQuestionnaireUserDto } from './lib/dto/create-questionnaire-user.dto';
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { CreateUserWithFileIdDto } from './lib/dto/create-user-with-file-id.dto';

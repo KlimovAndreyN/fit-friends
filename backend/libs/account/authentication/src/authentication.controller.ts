@@ -87,6 +87,9 @@ export class AuthenticationController {
     return fillDto(UserWithFileIdRdo, newUser.toPOJO());
   }
 
+  //! нужно обновление пользователя!
+  //@Patch(....)
+
   @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)

@@ -8,6 +8,9 @@ import { Duration, Questionnaire, Specialisation, UserLevel } from '@backend/sha
 })
 export class FitQuestionnaireModel extends Document implements Questionnaire {
   @Prop({ required: true })
+  public userId: string;
+
+  @Prop({ required: true })
   public specialisations: Specialisation[];
 
   @Prop({ required: true, type: String })

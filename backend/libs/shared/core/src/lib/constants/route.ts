@@ -21,6 +21,11 @@ export enum AccountRoute {
   Register = 'register'
 }
 
+export enum QuestionnaireRoute {
+  User = 'user',
+  Coach = 'coach'
+}
+
 export enum FileStorageRoute {
   Upload = 'upload'
 }
