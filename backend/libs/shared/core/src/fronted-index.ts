@@ -13,5 +13,6 @@ export { type Token as IUserTokenRdo } from './lib/interfaces/token.interface';
 export { Duration } from './lib/types/duration.enum';
 export { MetroStationName } from './lib/types/metro-station-name.enum';
 export { Specialisation } from './lib/types/specialisation.enum';
+export { UserLevel } from './lib/types/user-level.enum';
 export { UserGender } from './lib/types/user-gender.enum';
 export { UserRole } from './lib/types/user-role.enum';

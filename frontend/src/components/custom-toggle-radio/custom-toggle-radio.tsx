@@ -1,10 +1,12 @@
 import classNames from 'classnames';
 
+import { Option } from '../../types/option';
+
 type CustomToggleRadioProps = {
   divExtraClassName: string;
   name: string;
-  options: string[];
-  startOptionValue?: string;
+  options: Option[];
+  startOptionValue?: Option['value'];
 }
 
 function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
@@ -15,7 +17,7 @@ function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
     <div className={divClassName}>
       {
         options.map(
-          (value) => {
+          ({ value, title }) => {
             const checked = value === startOptionValue;
 
             return (
@@ -23,7 +25,7 @@ function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
                 <label>
                   <input type="radio" name={name} value={value} defaultChecked={checked} />
                   <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">{value} мин</span>
+                  <span className="custom-toggle-radio__label">{title}</span>
                 </label>
               </div>
             );

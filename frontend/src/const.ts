@@ -1,4 +1,4 @@
-import { Duration, MetroStationName, Specialisation, UserGender, UserRole } from '@backend/shared';
+import { Duration, MetroStationName, Specialisation, UserGender, UserLevel, UserRole } from '@backend/shared';
 import { Option } from './types/option';
 
 const MAIN_TITLE = 'FitFriends';
@@ -41,7 +41,8 @@ export const DefaultUser = {
   ROLE: UserRole.Sportsman,
   GENDER: UserGender.Female,
   SPECIALISATIONS: [Specialisation.Boxing as string, Specialisation.Crossfit as string, Specialisation.Power as string],
-  TIME: Duration.Minutes_30_50
+  TIME: Duration.Minutes_30_50,
+  LEVEL: UserLevel.Amateur
 } as const;
 
 export const UserRoleOption: { [key in UserRole]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
@@ -110,9 +111,21 @@ export const SPECIALISATIONS: Option[] = [
   { value: Specialisation.Stretching, title: SpecialisationTitle[Specialisation.Stretching] }
 ];
 
-export const TIMES: string[] = [
-  Duration.Minutes_10_30,
-  Duration.Minutes_30_50,
-  Duration.Minutes_50_80,
-  Duration.Minutes_80_100
+export const TIMES: Option[] = [
+  { value: Duration.Minutes_10_30, title: '10-30 мин' },
+  { value: Duration.Minutes_30_50, title: '30-50 мин' },
+  { value: Duration.Minutes_50_80, title: '50-80 мин' },
+  { value: Duration.Minutes_80_100, title: '80-100 мин' }
+];
+
+export const UserLevelTitle: { [key in UserLevel]: string } = {
+  [UserLevel.Amateur]: 'Любитель',
+  [UserLevel.Beginner]: 'Новичок',
+  [UserLevel.Professional]: 'Профессионал'
+} as const;
+
+export const USER_LEVELS: Option[] = [
+  { value: UserLevel.Beginner, title: UserLevelTitle[UserLevel.Beginner] },
+  { value: UserLevel.Amateur, title: UserLevelTitle[UserLevel.Amateur] },
+  { value: UserLevel.Professional, title: UserLevelTitle[UserLevel.Professional] }
 ];

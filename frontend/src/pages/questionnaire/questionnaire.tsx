@@ -7,7 +7,7 @@ import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggl
 
 import { useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { DefaultUser, PageTitle, TIMES, UserRoleOption } from '../../const';
+import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
   const userRole = useAppSelector(getUserRole);
@@ -51,35 +51,11 @@ function Questionnaire(): JSX.Element {
             <SpecializationsCheckbox name='specialisation' divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
           </QuestionnairebBlock>
           <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
-            {/*//!*/}
             <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
           </QuestionnairebBlock>
-          <div className="questionnaire-user__block">
-            <span className="questionnaire-user__legend">Ваш уровень</span>
-            <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="level" />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">Новичок</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="level" defaultChecked />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">Любитель</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="level" />
-                  <span className="custom-toggle-radio__icon"></span>
-                  <span className="custom-toggle-radio__label">Профессионал</span>
-                </label>
-              </div>
-            </div>
-          </div>
+          <QuestionnairebBlock caption='Ваш уровень' divExtraClassName={endingClassName} >
+            <CustomToggleRadio name='level' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
+          </QuestionnairebBlock>
           <div className="questionnaire-user__block">
             <div className="questionnaire-user__calories-lose">
               <span className="questionnaire-user__legend">Сколько калорий хотите сбросить</span>
