@@ -9,6 +9,7 @@ export enum ApiServiceRoute {
 
 export enum ServiceRoute {
   Account = 'auth',
+  Questionnaire = 'question',
   FileStorage = 'files'
 }
 
