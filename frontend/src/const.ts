@@ -1,4 +1,4 @@
-import { MetroStationName, Specialisation, UserGender, UserRole } from '@backend/shared';
+import { Duration, MetroStationName, Specialisation, UserGender, UserRole } from '@backend/shared';
 import { Option } from './types/option';
 
 const MAIN_TITLE = 'FitFriends';
@@ -39,40 +39,47 @@ export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' }
 
 export const DefaultUser = {
   ROLE: UserRole.Sportsman,
-  GENDER: UserGender.Female
+  GENDER: UserGender.Female,
+  SPECIALISATIONS: [Specialisation.Boxing as string, Specialisation.Crossfit as string, Specialisation.Power as string]
 } as const;
 
-export const UserRoleOption: { [key in UserRole]: { sortOrder: number; title: string; svgIcon: string; endingClassName: string } } = {
-  [UserRole.Sportsman]: { sortOrder: 2, title: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
-  [UserRole.Coath]: { sortOrder: 1, title: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
+export const UserRoleOption: { [key in UserRole]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
+  [UserRole.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
+  [UserRole.Coath]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
 } as const;
 
-export const SORTED_USER_ROLES = Object.values(UserRole).sort((a, b) => (UserRoleOption[a].sortOrder - UserRoleOption[b].sortOrder));
+export const USER_ROLES = [
+  UserRole.Coath,
+  UserRole.Sportsman
+] as const;
 
-export const UserGenderOption: { [key in UserGender]: { sortOrder: number; title: string } } = {
-  [UserGender.Male]: { sortOrder: 1, title: 'Мужской' },
-  [UserGender.Female]: { sortOrder: 2, title: 'Женский' },
-  [UserGender.NotMatter]: { sortOrder: 3, title: 'Неважно' }
+export const UserGenderTitle: { [key in UserGender]: string } = {
+  [UserGender.Female]: 'Женский',
+  [UserGender.Male]: 'Мужской',
+  [UserGender.NotMatter]: 'Неважно',
 } as const;
 
-export const SORTED_USER_GENDERS = Object.values(UserGender).sort((a, b) => (UserGenderOption[a].sortOrder - UserGenderOption[b].sortOrder));
+export const USER_GENDERS: Option[] = [
+  { value: UserGender.Male, title: UserGenderTitle[UserGender.Male] },
+  { value: UserGender.Female, title: UserGenderTitle[UserGender.Female] },
+  { value: UserGender.NotMatter, title: UserGenderTitle[UserGender.NotMatter] }
+];
 
-export const MetroStationOption: { [key in MetroStationName]: { sortOrder: number; title: string } } = {
-  [MetroStationName.Petrogradskaya]: { sortOrder: 2, title: 'Петроградская' },
-  [MetroStationName.Pionerskaya]: { sortOrder: 1, title: 'Пионерская' },
-  [MetroStationName.Sportivnaya]: { sortOrder: 5, title: 'Спортивная' },
-  [MetroStationName.Udelnaya]: { sortOrder: 3, title: 'Удельная' },
-  [MetroStationName.Zvezdnaya]: { sortOrder: 4, title: 'Звёздная' }
+export const MetroStationTitle: { [key in MetroStationName]: string } = {
+  [MetroStationName.Petrogradskaya]: 'Петроградская',
+  [MetroStationName.Pionerskaya]: 'Пионерская',
+  [MetroStationName.Sportivnaya]: 'Спортивная',
+  [MetroStationName.Udelnaya]: 'Удельная',
+  [MetroStationName.Zvezdnaya]: 'Звёздная'
 } as const;
 
-export const LOCATIONS: Option[] = Object.values(MetroStationName)
-  .sort((a, b) => (MetroStationOption[a].sortOrder - MetroStationOption[b].sortOrder))
-  .map(
-    (item) => ({
-      value: item,
-      title: MetroStationOption[item].title
-    })
-  );
+export const LOCATIONS: Option[] = [
+  { value: MetroStationName.Pionerskaya, title: MetroStationTitle[MetroStationName.Pionerskaya] },
+  { value: MetroStationName.Petrogradskaya, title: MetroStationTitle[MetroStationName.Petrogradskaya] },
+  { value: MetroStationName.Udelnaya, title: MetroStationTitle[MetroStationName.Udelnaya] },
+  { value: MetroStationName.Zvezdnaya, title: MetroStationTitle[MetroStationName.Zvezdnaya] },
+  { value: MetroStationName.Sportivnaya, title: MetroStationTitle[MetroStationName.Sportivnaya] }
+];
 
 //! еще будет для тренера и должно подменятся при изменении роли
 export const USER_BACKGROUND_PATHS: Option[] = [
@@ -80,15 +87,31 @@ export const USER_BACKGROUND_PATHS: Option[] = [
   { value: '/img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
 ];
 
-export const SpecialisationOption: { [key in Specialisation]: { sortOrder: number; title: string; defaultChecked: boolean } } = {
-  [Specialisation.Aerobics]: { sortOrder: 4, title: 'Аэробика', defaultChecked: false },
-  [Specialisation.Boxing]: { sortOrder: 6, title: 'Бокс', defaultChecked: true },
-  [Specialisation.Crossfit]: { sortOrder: 5, title: 'Кроссфит', defaultChecked: true },
-  [Specialisation.Pilates]: { sortOrder: 7, title: 'Пилатес', defaultChecked: false },
-  [Specialisation.Power]: { sortOrder: 3, title: 'Силовые', defaultChecked: true },
-  [Specialisation.Running]: { sortOrder: 2, title: 'Бег', defaultChecked: false },
-  [Specialisation.Stretching]: { sortOrder: 8, title: 'Стрейчинг', defaultChecked: false },
-  [Specialisation.Yoga]: { sortOrder: 1, title: 'Йога', defaultChecked: false }
+export const SpecialisationTitle: { [key in Specialisation]: string } = {
+  [Specialisation.Aerobics]: 'Аэробика',
+  [Specialisation.Boxing]: 'Бокс',
+  [Specialisation.Crossfit]: 'Кроссфит',
+  [Specialisation.Pilates]: 'Пилатес',
+  [Specialisation.Power]: 'Силовые',
+  [Specialisation.Running]: 'Бег',
+  [Specialisation.Stretching]: 'Стрейчинг',
+  [Specialisation.Yoga]: 'Йога'
 } as const;
 
-export const SORTED_SPECIALISATIONS = Object.values(Specialisation).sort((a, b) => (SpecialisationOption[a].sortOrder - SpecialisationOption[b].sortOrder));
+export const SPECIALISATIONS: Option[] = [
+  { value: Specialisation.Yoga, title: SpecialisationTitle[Specialisation.Yoga] },
+  { value: Specialisation.Running, title: SpecialisationTitle[Specialisation.Running] },
+  { value: Specialisation.Power, title: SpecialisationTitle[Specialisation.Power] },
+  { value: Specialisation.Aerobics, title: SpecialisationTitle[Specialisation.Aerobics] },
+  { value: Specialisation.Crossfit, title: SpecialisationTitle[Specialisation.Crossfit] },
+  { value: Specialisation.Boxing, title: SpecialisationTitle[Specialisation.Boxing] },
+  { value: Specialisation.Pilates, title: SpecialisationTitle[Specialisation.Pilates] },
+  { value: Specialisation.Stretching, title: SpecialisationTitle[Specialisation.Stretching] }
+];
+
+export const TIMES: string[] = [
+  Duration.Minutes_10_30,
+  Duration.Minutes_30_50,
+  Duration.Minutes_50_80,
+  Duration.Minutes_80_100
+];

@@ -1,4 +1,4 @@
-import { DefaultUser, SORTED_USER_GENDERS, UserGenderOption } from '../../const';
+import { DefaultUser, USER_GENDERS } from '../../const';
 
 type SignUpUserGengersProps = {
   name: string;
@@ -10,15 +10,14 @@ function SignUpUserGengers({ name }: SignUpUserGengersProps): JSX.Element {
       <span className="sign-up__label">Пол</span>
       <div className="custom-toggle-radio custom-toggle-radio--big">
         {
-          SORTED_USER_GENDERS.map(
-            (userGender) => {
-              const { title } = UserGenderOption[userGender];
-              const checked = userGender === DefaultUser.GENDER;
+          USER_GENDERS.map(
+            ({ value, title }) => {
+              const checked = value === DefaultUser.GENDER;
 
               return (
-                <div className="custom-toggle-radio__block" key={userGender}>
+                <div className="custom-toggle-radio__block" key={value}>
                   <label>
-                    <input type="radio" name={name} value={userGender} defaultChecked={checked} />
+                    <input type="radio" name={name} value={value} defaultChecked={checked} />
                     <span className="custom-toggle-radio__icon" />
                     <span className="custom-toggle-radio__label">{title}</span>
                   </label>

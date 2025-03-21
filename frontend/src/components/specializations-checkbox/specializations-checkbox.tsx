@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { SORTED_SPECIALISATIONS, SpecialisationOption } from '../../const';
+import { DefaultUser, SPECIALISATIONS } from '../../const';
 
 type SpecializationsCheckboxProps = {
   divExtraClassName: string;
@@ -13,14 +13,14 @@ function SpecializationsCheckbox({ divExtraClassName, name }: SpecializationsChe
   return (
     <div className={className}>
       {
-        SORTED_SPECIALISATIONS.map(
-          (specialisation) => {
-            const { title, defaultChecked } = SpecialisationOption[specialisation];
+        SPECIALISATIONS.map(
+          ({ value, title }) => {
+            const checked = DefaultUser.SPECIALISATIONS.includes(value);
 
             return (
-              <div className="btn-checkbox" key={specialisation}>
+              <div className="btn-checkbox" key={value}>
                 <label>
-                  <input className="visually-hidden" type="checkbox" name={name} value={specialisation} defaultChecked={defaultChecked} />
+                  <input className="visually-hidden" type="checkbox" name={name} value={value} defaultChecked={checked} />
                   <span className="btn-checkbox__btn">{title}</span>
                 </label>
               </div>

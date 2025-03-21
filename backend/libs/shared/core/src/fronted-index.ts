@@ -10,6 +10,7 @@ export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';
 export { type Token as IUserTokenRdo } from './lib/interfaces/token.interface';
 
+export { Duration } from './lib/types/duration.enum';
 export { MetroStationName } from './lib/types/metro-station-name.enum';
 export { Specialisation } from './lib/types/specialisation.enum';
 export { UserGender } from './lib/types/user-gender.enum';

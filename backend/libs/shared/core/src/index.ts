@@ -32,6 +32,7 @@ export { LoginUserDto } from './lib/dto/login-user.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
+export { Duration } from './lib/types/duration.enum';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';

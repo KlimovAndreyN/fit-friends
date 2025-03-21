@@ -1,4 +1,4 @@
-import { DefaultUser, SORTED_USER_ROLES, UserRoleOption } from '../../const';
+import { DefaultUser, USER_ROLES, UserRoleOption } from '../../const';
 
 type SignUpUserRolesProps = {
   name: string;
@@ -15,9 +15,9 @@ function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
       <h2 className="sign-up__legend">Выберите роль</h2>
       <div className="role-selector sign-up__role-selector">
         {
-          SORTED_USER_ROLES.map(
+          USER_ROLES.map(
             (userRole) => {
-              const { title, svgIcon } = UserRoleOption[userRole];
+              const { singUpTitle: title, svgIcon } = UserRoleOption[userRole];
               const checked = userRole === DefaultUser.ROLE;
 
               return (
