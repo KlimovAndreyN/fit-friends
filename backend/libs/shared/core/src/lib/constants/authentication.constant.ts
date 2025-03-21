@@ -36,6 +36,17 @@ export const UserValidation = {
   }
 } as const;
 
+export const QuestionnaireValidation = {
+  CaloriesLose: {
+    Min: 1000,
+    Max: 5000
+  },
+  CaloriesWaste: {
+    Min: 1000,
+    Max: 5000
+  }
+} as const;
+
 export const parseUserAvatarFilePipeBuilder =
   new ParseFilePipeBuilder()
     .addFileTypeValidator(UserValidation.AvatarFile.Type)
