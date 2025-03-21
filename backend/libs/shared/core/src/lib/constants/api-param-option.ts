@@ -1,4 +1,4 @@
-import { ApiPropertyOption } from './api-property-option';
+import { CommentApiProperty } from './api-property/comment.api-property';
 import { FileApiProperty } from './api-property/file.api-property';
 import { UserApiProperty } from './api-property/user.api-property';
 
@@ -9,7 +9,7 @@ export const ApiParamOption = {
   },
   CommentId: {
     name: 'commentId',
-    schema: ApiPropertyOption.Comment.Id
+    schema: CommentApiProperty.Id
   },
   FileId: {
     name: 'fileId',

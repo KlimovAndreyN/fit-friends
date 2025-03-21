@@ -11,7 +11,7 @@ export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploa
 
 export { ApiHeaderOption } from './lib/constants/api-header-option';
 export * from './lib/constants/api-param-option';
-export { ApiPropertyOption } from './lib/constants/api-property-option';
+export { CommentApiProperty as ApiPropertyOption } from './lib/constants/api-property/comment.api-property';
 export * from './lib/constants/authentication.constant';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
