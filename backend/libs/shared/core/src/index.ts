@@ -36,6 +36,7 @@ export { Duration } from './lib/types/duration.enum';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';
+export { Questionnaire } from './lib/interfaces/questionnaire.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
 export { NewsLetter } from './lib/interfaces/news-letter.interface';
 export { RefreshTokenPayload } from './lib/interfaces/refresh-token-payload.interface';

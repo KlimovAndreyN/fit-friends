@@ -1,21 +1,21 @@
 import { compare, genSalt, hash } from 'bcrypt';
 
-import { Entity, StorableEntity, AuthUser, MetroStationName, UserGender, UserRole } from '@backend/shared/core';
+import { Entity, StorableEntity, AuthUser } from '@backend/shared/core';
 
 const SALT_ROUNDS = 10;
 
 export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
-  public email: string;
-  public name: string;
-  public birthday?: Date;
-  public metroStationName: MetroStationName;
-  public backgroundPath: string;
-  public gender: UserGender;
-  public role: UserRole;
-  public avatarFileId: string;
-  public passwordHash: string;
-  public existQuestionnaire: boolean;
-  public createdAt: Date;
+  public email: AuthUser['email'];
+  public name: AuthUser['name'];
+  public birthday?: AuthUser['birthday'];
+  public metroStationName: AuthUser['metroStationName'];
+  public backgroundPath: AuthUser['backgroundPath'];
+  public gender: AuthUser['gender'];
+  public role: AuthUser['role'];
+  public avatarFileId: AuthUser['avatarFileId'];
+  public passwordHash: AuthUser['passwordHash'];
+  public existQuestionnaire: AuthUser['existQuestionnaire'];
+  public createdAt: AuthUser['createdAt'];
 
   constructor(user?: AuthUser) {
     super();
