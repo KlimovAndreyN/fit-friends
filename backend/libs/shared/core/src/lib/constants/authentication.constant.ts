@@ -15,29 +15,18 @@ export const UserAvatarOption = {
   MIME_TYPES: ['image/jpg', 'image/jpeg', 'image/png']
 } as const;
 
-export const UserValidation = {
-  Name: {
-    Regexp: /^[a-zA-Zа-яА-ЯёЁ]{1,15}$/
-  },
-  Password: {
-    MinLength: 6,
-    MaxLength: 12
-  },
-  AvatarFile: {
-    Type: { fileType: UserAvatarOption.MIME_TYPES.join('|') },
-    MaxSize: { maxSize: UserAvatarOption.MAX_SIZE },
-    Build: {
-      fileIsRequired: UserApiProperty.AvatarFile.required,
-      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-    }
-  },
-  BackgroundPath: {
-    Regexp: /\.(jpeg|jpg|png)$/
+//! еще упростить...
+export const UserAvatarFileValidation = {
+  Type: { fileType: UserAvatarOption.MIME_TYPES.join('|') },
+  MaxSize: { maxSize: UserAvatarOption.MAX_SIZE },
+  Build: {
+    fileIsRequired: UserApiProperty.AvatarFile.required,
+    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
   }
 } as const;
 
 export const parseUserAvatarFilePipeBuilder =
   new ParseFilePipeBuilder()
-    .addFileTypeValidator(UserValidation.AvatarFile.Type)
-    .addMaxSizeValidator(UserValidation.AvatarFile.MaxSize)
-    .build(UserValidation.AvatarFile.Build);
+    .addFileTypeValidator(UserAvatarFileValidation.Type)
+    .addMaxSizeValidator(UserAvatarFileValidation.MaxSize)
+    .build(UserAvatarFileValidation.Build);

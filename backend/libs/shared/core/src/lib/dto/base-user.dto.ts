@@ -10,7 +10,6 @@ import { MetroStationName } from '../types/metro-station-name.enum';
 import { UserGender } from '../types/user-gender.enum';
 import { UserRole } from '../types/user-role.enum';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
-import { UserValidation } from '../constants/authentication.constant';
 
 //! название и размещение не очень... используется для описания, валидации и трансформации dto и rdo
 //! иногда разное описание например дата рождения, в dto и кратное и полное, а rdo только полное
@@ -23,7 +22,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.Name)
   @Expose()
   @IsString()
-  @Matches(UserValidation.Name.Regexp)
+  @Matches(/^[a-zA-Zа-яА-ЯёЁ]{1,15}$/)
   public name: User['name'];
 
   @ApiProperty(UserApiProperty.Email)
@@ -34,8 +33,8 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.Password)
   @Expose()
   @IsString()
-  @MinLength(UserValidation.Password.MinLength)
-  @MaxLength(UserValidation.Password.MaxLength)
+  @MinLength(6)
+  @MaxLength(12)
   public password: ICreateUserWithFileIdDto['password'];
 
   @ApiProperty(UserApiProperty.Birthday)
@@ -62,7 +61,7 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.BackgroundPath) //! сделать проверку пути
   @Expose()
   @IsString()
-  @Matches(UserValidation.BackgroundPath.Regexp)
+  @Matches(/\.(jpeg|jpg|png)$/)
   public backgroundPath: User['backgroundPath'];
 
   @ApiProperty(UserApiProperty.Gender)
