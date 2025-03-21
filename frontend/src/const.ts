@@ -40,7 +40,8 @@ export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' }
 export const DefaultUser = {
   ROLE: UserRole.Sportsman,
   GENDER: UserGender.Female,
-  SPECIALISATIONS: [Specialisation.Boxing as string, Specialisation.Crossfit as string, Specialisation.Power as string]
+  SPECIALISATIONS: [Specialisation.Boxing as string, Specialisation.Crossfit as string, Specialisation.Power as string],
+  TIME: Duration.Minutes_30_50
 } as const;
 
 export const UserRoleOption: { [key in UserRole]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {

@@ -7,7 +7,7 @@ import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggl
 
 import { useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { PageTitle, UserRoleOption } from '../../const';
+import { DefaultUser, PageTitle, TIMES, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
   const userRole = useAppSelector(getUserRole);
@@ -52,7 +52,7 @@ function Questionnaire(): JSX.Element {
           </QuestionnairebBlock>
           <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
             {/*//!*/}
-            <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={[]} startOptionValue={''} />
+            <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
           </QuestionnairebBlock>
           <div className="questionnaire-user__block">
             <span className="questionnaire-user__legend">Ваш уровень</span>
