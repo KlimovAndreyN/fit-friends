@@ -36,6 +36,43 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: test
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongo:27017/
 
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: test
+      #POSTGRES_DATABASE: fit-friends или postgres //! нужно ли, базу docker не создает, перепроверить когда будет migrate
+
+    ports:
+      -  5433:5432
+
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: =admin@test.ru
+      PGADMIN_DEFAULT_PASSWORD: test
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+
+    ports:
+      - 8084:80
+
+    depends_on:
+      - postgres
+
   fakesmtp:
     image: gessnerfl/fake-smtp-server:2.2.0
     container_name: fakesmtp
@@ -64,3 +101,4 @@ services:
 
 volumes:
   mongo:
+  postgres:
