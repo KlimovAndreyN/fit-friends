@@ -22,9 +22,6 @@
       "@backend/account/authentication": [
         "libs/account/authentication/src/index.ts"
       ],
-      "@backend/account/fit-questionnaire": [
-        "libs/account/fit-questionnaire/src/index.ts"
-      ],
       "@backend/account/fit-user": [
         "libs/account/fit-user/src/index.ts"
       ],
