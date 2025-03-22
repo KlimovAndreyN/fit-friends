@@ -48,8 +48,8 @@ npx nx run notify:serve
 cd backend
 npx nx run account:serve
 # fit
-#cd backend
-#npx nx run fit:serve
+cd backend
+npx nx run fit:serve
 # api
 cd backend
 npx nx run api:serve
