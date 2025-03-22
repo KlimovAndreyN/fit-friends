@@ -7,4 +7,5 @@ export const getIsSingInExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }:
 export const getIsSingUpExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isSingUpExecuting'] => USER_PROCESS.isSingUpExecuting;
 export const getIsQuestionnaireInExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isQuestionnaireExecuting'] => USER_PROCESS.isQuestionnaireExecuting;
 export const getExistQuestionnaire = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['existQuestionnaire'] => USER_PROCESS.existQuestionnaire;
+export const getIsExistQuestionnaireExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isExistQuestionnaireExecuting'] => USER_PROCESS.isExistQuestionnaireExecuting;
 export const getUserRole = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userRole'] => USER_PROCESS.userRole;

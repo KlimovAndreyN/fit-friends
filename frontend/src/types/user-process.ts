@@ -8,5 +8,6 @@ export type UserProcess = {
   isSingUpExecuting: boolean;
   isQuestionnaireExecuting: boolean;
   existQuestionnaire: boolean;
+  isExistQuestionnaireExecuting: boolean;
   userRole?: UserRole;
 }

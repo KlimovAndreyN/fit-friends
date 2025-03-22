@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
+import { existUserQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
@@ -11,6 +11,7 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   isQuestionnaireExecuting: false,
   existQuestionnaire: false,
+  isExistQuestionnaireExecuting: false,
   userRole: undefined
 };
 
@@ -21,6 +22,25 @@ export const userProcess = createSlice(
     reducers: {},
     extraReducers(builder) {
       builder
+        .addCase(
+          existUserQuestionnaire.pending,
+          (state) => {
+            state.isExistQuestionnaireExecuting = true;
+          }
+        )
+        .addCase(
+          existUserQuestionnaire.rejected,
+          (state) => {
+            state.isExistQuestionnaireExecuting = false;
+          }
+        )
+        .addCase(
+          existUserQuestionnaire.fulfilled,
+          (state, action) => {
+            state.existQuestionnaire = action.payload;
+            state.isExistQuestionnaireExecuting = false;
+          }
+        )
         .addCase(
           fetchUserStatus.rejected,
           (state) => {

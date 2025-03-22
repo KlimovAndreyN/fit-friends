@@ -1,5 +1,6 @@
 import { FormEvent, Fragment } from 'react';
 
+import MainSpinner from '../../components/main-spinner/main-spinner';
 import PopupForm from '../../components/popup-form/popup-form';
 import QuestionnairebBlock from '../../components/questionnaire-block/questionnaire-block';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
@@ -7,15 +8,20 @@ import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggl
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
 import { useAppSelector } from '../../hooks';
-import { getUserRole } from '../../store/user-process/selectors';
+import { getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
+  const isExistQuestionnaireExecuting = useAppSelector(getIsExistQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
+  //const dispatch = useAppDispatch();
+
+  if (isExistQuestionnaireExecuting) {
+    return <MainSpinner />; //! тут бы другую загрузку на основе PopupForm
+  }
+
   const endingClassName = (userRole) ? UserRoleOption[userRole].endingClassName : '';
   const divClassName = `questionnaire-${endingClassName}`;
-
-  //const dispatch = useAppDispatch();
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
