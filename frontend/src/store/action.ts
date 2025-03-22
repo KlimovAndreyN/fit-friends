@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo, IUserTokenRdo
+  ILoggedUserRdo, ICreateUserDto, IUserRdo, IUserTokenRdo, QuestionnaireRoute
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
@@ -21,12 +21,24 @@ export const Action = {
   LOGIN_USER: 'user/login',
   LOGOUT_USER: 'user/logout',
   FETCH_USER_STATUS: 'user/fetch-status',
-  REGISTER_USER: 'user/register'
+  REGISTER_USER: 'user/register',
+  EXIST_USER_QUESTIONNARE: 'user/exist-questionnaire'
 };
+
+export const existUserQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
+  Action.EXIST_USER_QUESTIONNARE,
+  async (_, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.FitQuestionnaires, QuestionnaireRoute.Exist);
+    const { data } = await api.get<boolean>(url);
+
+    return data;
+  }
+);
 
 export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
-  async (_, { extra }) => {
+  async (_, { extra, dispatch }) => {
     // если токена изначально нет, то и проверять не нужно...
     if (!AccessTokenStore.getToken()) {
       return Promise.reject();
@@ -37,6 +49,8 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
 
     try {
       const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
+
+      dispatch(existUserQuestionnaire()); //! как то дважды вызвано
 
       return data;
     } catch (checkTokenError) {
@@ -67,6 +81,8 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
 
           const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
 
+          dispatch(existUserQuestionnaire()); //! как то дважды вызвано
+
           return data;
         } catch (refreshTokenError) {
           if (refreshTokenError instanceof AxiosError) {
@@ -87,7 +103,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
 
 export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
-  async ({ email, password }, { extra }) => {
+  async ({ email, password }, { extra, dispatch }) => {
     //!
     // eslint-disable-next-line no-console
     console.log('loginUser.begin');
@@ -106,6 +122,8 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     //!
     // eslint-disable-next-line no-console
     console.log('loginUser.end');
+
+    dispatch(existUserQuestionnaire());
 
     return { sub, email: dataEmail, name, role };
   }

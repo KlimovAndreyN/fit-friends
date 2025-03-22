@@ -1,5 +1,5 @@
 export { AUTH_NAME } from './lib/constants/bearer-auth';
-export { AccountRoute, ApiServiceRoute } from './lib/constants/route';
+export { AccountRoute, ApiServiceRoute, QuestionnaireRoute } from './lib/constants/route';
 
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
