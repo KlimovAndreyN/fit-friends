@@ -8,9 +8,10 @@ export const QuestionnaireApiProperty = {
     type: 'string'
   },
   Specialisations: {
-    description: 'Specialisations - warning! not correct send string[] on swagger!',
+    description: 'The user specialisations',
+    //description: 'Specialisations - warning! not correct send string[] on swagger!',  //! нужно при swagger fromdata c api
     example: ['boxing'], // ['boxing', 'running'], из swagger-а не коректно передает пример, у значений убирает [] и ""
-    name: 'specialisations[]', // не корректная передача string[] через form-data
+    //name: 'specialisations[]', // не корректная передача string[] через form-data //! нужно при swagger fromdata c api
   },
   Level: {
     description: 'The user level',

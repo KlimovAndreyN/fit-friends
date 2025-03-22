@@ -12,7 +12,8 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  //url      = "postgres://admin:test@localhost:5433/fit-friends" // на windows при команде "npx nx run fit:db:migrate" не вводит название migrate
+  //url      = "postgres://admin:test@localhost:5433/fit-friends"
+  // на windows при команде "npx nx run fit:db:migrate" не вводит название migrate
   // cd backend
   // cd libs/fit/models/prisma
   // npx prisma migrate dev --schema ./schema.prisma --skip-generate --skip-seed
@@ -22,14 +23,14 @@ datasource db {
 model Questionnaire {
   id                 String   @id @default(uuid())
   userId             String   @unique @map("user_id") @db.VarChar(50)
-  specialisations    String[] @map("specialisations") @db.VarChar(50)
+  specialisations    String[] @map("specialisations") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
   level              String   @map("level") @db.VarChar(50)
   time               String?  @map("time") @db.VarChar(50)
   caloriesLose       Int?     @map("calories_lose")
   caloriesWaste      Int?     @map("calories_waste")
-  fileIds            String[] @map("file_ids") @db.VarChar(50)
-  description        String   @map("description") @db.VarChar(5000)
-  individualTraining Boolean  @map("individual_training")
+  fileIds            String[] @map("file_ids") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
+  description        String?  @map("description") @db.VarChar(5000)
+  individualTraining Boolean? @map("individual_training")
 
   @@index([userId])
   @@map("questionnaires")
