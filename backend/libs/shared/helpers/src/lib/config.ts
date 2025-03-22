@@ -1,7 +1,7 @@
 import Joi, { ObjectSchema } from 'joi';
 
 import {
-  ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT,
+  ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT, DEFAULT_POSTGRES_PORT,
   DEFAULT_RABBIT_PORT, DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
 } from '@backend/shared/core';
 
@@ -29,6 +29,17 @@ export interface MongoDbConfig {
     password: string;
     database: string;
     authBase: string;
+  }
+}
+
+export interface PostgresConfig {
+  postgres: {
+    host: string;
+    port: number;
+    user: string;
+    password: string;
+    database: string;
+    databaseUrl: string;
   }
 }
 
@@ -80,6 +91,17 @@ export const mongoDbValidationSchema = {
     password: Joi.string().required().label(ConfigAlias.MongoDbPasswordEnv),
     database: Joi.string().required().label(ConfigAlias.MongoDbDatabaseEnv),
     authBase: Joi.string().required().label(ConfigAlias.MongoDbAuthBaseEnv)
+  })
+};
+
+export const postgresValidationSchema = {
+  postgres: Joi.object({
+    host: Joi.string().valid().hostname().required().label(ConfigAlias.PostgresHostEnv),
+    port: Joi.number().port().required().label(ConfigAlias.PostgresPortEnv),
+    user: Joi.string().required().label(ConfigAlias.PostgresPortEnv),
+    password: Joi.string().required().label(ConfigAlias.PostgresPasswordEnv),
+    database: Joi.string().required().label(ConfigAlias.PostgresDatabaseEnv),
+    databaseUrl: Joi.string().required().label(ConfigAlias.PostgresDatabaseUrlEnv)
   })
 };
 
@@ -141,6 +163,21 @@ export function getMongoDbConfig(): MongoDbConfig {
       password: process.env[ConfigAlias.MongoDbPasswordEnv],
       database: process.env[ConfigAlias.MongoDbDatabaseEnv],
       authBase: process.env[ConfigAlias.MongoDbAuthBaseEnv]
+    }
+  };
+
+  return config;
+}
+
+export function getPostgresConfig(): PostgresConfig {
+  const config: PostgresConfig = {
+    postgres: {
+      host: process.env[ConfigAlias.PostgresHostEnv],
+      port: getPort(ConfigAlias.PostgresPortEnv, DEFAULT_POSTGRES_PORT),
+      user: process.env[ConfigAlias.PostgresUserEnv],
+      password: process.env[ConfigAlias.PostgresPasswordEnv],
+      database: process.env[ConfigAlias.PostgresDatabaseEnv],
+      databaseUrl: process.env[ConfigAlias.PostgresDatabaseUrlEnv]
     }
   };
 
