@@ -36,6 +36,9 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: test
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongo:27017/
 
+    depends_on:
+      - mongo #//! все ок?
+
   postgres:
     image: postgres:14-alpine
     container_name: postgres
@@ -43,7 +46,6 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: test
-      #POSTGRES_DATABASE: fit-friends или postgres //! нужно ли, базу docker не создает, перепроверить когда будет migrate
 
     ports:
       -  5433:5432
