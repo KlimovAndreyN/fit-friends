@@ -10,7 +10,6 @@ const initialState: UserProcess = {
   isSingInExecuting: false,
   isSingUpExecuting: false,
   isQuestionnaireExecuting: false,
-  userInfo: null,
   existQuestionnaire: false,
   userRole: undefined
 };
@@ -25,15 +24,12 @@ export const userProcess = createSlice(
         .addCase(
           fetchUserStatus.rejected,
           (state) => {
-            state.userInfo = null;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
         .addCase(
           fetchUserStatus.fulfilled,
           (state, action) => {
-            state.userInfo = action.payload;
-            state.existQuestionnaire = action.payload.existQuestionnaire;
             state.userRole = action.payload.role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
@@ -54,8 +50,6 @@ export const userProcess = createSlice(
           loginUser.fulfilled,
           (state, action) => {
             state.isSingInExecuting = false;
-            state.userInfo = action.payload;
-            state.existQuestionnaire = action.payload.existQuestionnaire;
             state.userRole = action.payload.role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
@@ -64,7 +58,6 @@ export const userProcess = createSlice(
           logoutUser.pending, //! перепроверить - сразу выйти и удалить
           //! перепроверить - logoutUser.rejected, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
-            state.userInfo = null;
             state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
@@ -72,7 +65,6 @@ export const userProcess = createSlice(
         .addCase(
           logoutUser.fulfilled, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
-            state.userInfo = null;
             state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }

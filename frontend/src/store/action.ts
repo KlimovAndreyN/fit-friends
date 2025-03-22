@@ -95,7 +95,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     const { api, /*history*/ } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
-    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role, existQuestionnaire } = data;
+    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role } = data;
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
@@ -107,7 +107,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     // eslint-disable-next-line no-console
     console.log('loginUser.end');
 
-    return { sub, email: dataEmail, name, role, existQuestionnaire };
+    return { sub, email: dataEmail, name, role };
   }
 );
 

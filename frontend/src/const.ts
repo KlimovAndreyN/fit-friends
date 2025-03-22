@@ -47,11 +47,11 @@ export const DefaultUser = {
 
 export const UserRoleOption: { [key in UserRole]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
   [UserRole.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
-  [UserRole.Coath]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
+  [UserRole.Coach]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
 } as const;
 
 export const USER_ROLES = [
-  UserRole.Coath,
+  UserRole.Coach,
   UserRole.Sportsman
 ] as const;
 

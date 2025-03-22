@@ -52,7 +52,6 @@ export class AuthenticationService {
       role,
       avatarFileId,
       birthday: (birthday) ? new Date(birthday) : undefined,
-      existQuestionnaire: false,
       passwordHash: ''
     };
 

@@ -16,8 +16,4 @@ export class TokenPayloadRdo extends PickType(
   @ApiProperty(UserApiProperty.Id)
   @Expose()
   public sub: TokenPayload['sub'];
-
-  @ApiProperty(UserApiProperty.ExistQuestionnaire)
-  @Expose()
-  public existQuestionnaire: BaseUserDto['existQuestionnaire'];
 }

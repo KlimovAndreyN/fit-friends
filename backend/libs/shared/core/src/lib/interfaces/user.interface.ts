@@ -12,6 +12,5 @@ export interface User {
   gender: UserGender;
   role: UserRole;
   avatarFileId?: string;
-  existQuestionnaire: boolean;
   createdAt?: Date;
 }

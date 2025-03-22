@@ -14,7 +14,6 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public role: AuthUser['role'];
   public avatarFileId: AuthUser['avatarFileId'];
   public passwordHash: AuthUser['passwordHash'];
-  public existQuestionnaire: AuthUser['existQuestionnaire'];
   public createdAt: AuthUser['createdAt'];
 
   constructor(user?: AuthUser) {
@@ -39,7 +38,6 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.avatarFileId = user.avatarFileId || '';
     this.backgroundPath = user.backgroundPath;
     this.passwordHash = user.passwordHash;
-    this.existQuestionnaire = user.existQuestionnaire;
     this.createdAt = user.createdAt;
   }
 
@@ -55,7 +53,6 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       role: this.role,
       avatarFileId: this.avatarFileId,
       passwordHash: this.passwordHash,
-      existQuestionnaire: this.existQuestionnaire,
       createdAt: this.createdAt
     }
   }

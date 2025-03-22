@@ -56,7 +56,6 @@ export class QuestionnaireService {
         role,
         avatarFileId,
         birthday: (birthday) ? new Date(birthday) : undefined,
-        existQuestionnaire: false,
         passwordHash: ''
       };
 

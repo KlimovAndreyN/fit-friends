@@ -78,8 +78,4 @@ export class BaseUserDto {
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Expose({ name: 'createdAt' })
   public registrationDate: IUserWithFileIdRdo['registrationDate'];
-
-  @ApiProperty(UserApiProperty.ExistQuestionnaire)
-  @Expose()
-  public existQuestionnaire: User['existQuestionnaire'];
 }

@@ -13,8 +13,7 @@ export class LoggedUserRdo extends
       'id',
       'name',
       'email',
-      'role',
-      'existQuestionnaire'
+      'role'
     ]
   )
   implements ILoggedUserRdo {
