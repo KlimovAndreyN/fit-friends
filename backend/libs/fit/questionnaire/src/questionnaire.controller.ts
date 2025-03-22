@@ -22,6 +22,17 @@ export class QuestionnaireController {
 
   //! проверка есть ли опрос у пользователя true/false/404 user
   //Get(USER_ID_PARAM)
+  @ApiParam(ApiParamOption.UserId)
+  @Get(join(QuestionnaireRoute.Exist, USER_ID_PARAM))
+  public async existQuestionnaire(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<boolean> {
+    console.log('existQuestionnaire');
+    console.log('userId', userId);
+
+    //await this.questionnaireService.createQuestionnaireUser(dto, userId);
+
+    //!
+    return false;
+  }
 
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)

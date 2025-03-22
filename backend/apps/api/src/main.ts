@@ -12,7 +12,7 @@ import { InjectRequestIdGuard } from './app/guards/inject-request-id.guard';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const apiOption = app.get<ApiConfig>(apiConfig.KEY);
-  const { port, accountServiceUrl, fileStorageServiceUrl } = apiOption;
+  const { port, accountServiceUrl, fileStorageServiceUrl, staticFileServiceUrl, fitServiceUrl } = apiOption;
 
   app.setGlobalPrefix(GlobalRoute.Api);
 
@@ -37,7 +37,9 @@ async function bootstrap() {
   await app.listen(port);
   // Микросервисы
   Logger.log(`FileStorage Service on: ${fileStorageServiceUrl}`);
+  Logger.log(`StaticFile Service on: ${staticFileServiceUrl}`);
   Logger.log(`Account Service on: ${accountServiceUrl}`);
+  Logger.log(`Fit Service on: ${fitServiceUrl}`);
   //
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${GlobalRoute.Api}`);
   Logger.log(`Swagger on: http://localhost:${port}/${GlobalRoute.Swagger}`);

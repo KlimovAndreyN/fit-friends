@@ -4,7 +4,8 @@ export enum GlobalRoute {
 }
 
 export enum ApiServiceRoute {
-  Users = 'users'
+  Users = 'users',
+  FitQuestionnaires = 'fit-questions'
 }
 
 export enum ServiceRoute {
@@ -22,6 +23,7 @@ export enum AccountRoute {
 }
 
 export enum QuestionnaireRoute {
+  Exist = 'exist',
   User = 'user',
   Coach = 'coach'
 }
