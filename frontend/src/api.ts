@@ -28,8 +28,8 @@ export function createAPI(): AxiosInstance {
       if (headers) {
         const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
         const logoutUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
-        const url = config.url || '';
-        const token = ([refreshUrl, logoutUrl].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
+        const url = config.url;
+        const token = (url && [refreshUrl, logoutUrl].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
 
         if (token) {
           headers[AUTH_NAME] = getBearerAuthorization(token);

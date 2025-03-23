@@ -2,10 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import {
-  AccountRoute, CreateUserWithFileIdDto, CreateUserDto,
-  ServiceRoute, UserWithFileIdRdo, UserRdo
-} from '@backend/shared/core';
+import { AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, UserWithFileIdRdo, UserRdo } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -47,7 +44,6 @@ export class UsersService {
 
     return rdo;
   }
-
 
   public getUrl(route = ''): string {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, route);

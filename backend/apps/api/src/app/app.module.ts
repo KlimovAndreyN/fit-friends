@@ -5,6 +5,7 @@ import { ApiConfigModule } from '@backend/api/config';
 
 import { FilesService } from './files.service';
 import { UsersService } from './users.service';
+import { FitService } from './fit.service';
 import { UsersController } from './users.controller';
 import { FitQuestionnaireController } from './fit-questionnaire.controller';
 
@@ -25,7 +26,8 @@ const HTTP_CLIENT_TIMEOUT = 3000;
   ],
   providers: [
     FilesService,
-    UsersService
+    UsersService,
+    FitService
   ]
 })
 export class AppModule { }
