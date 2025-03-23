@@ -11,8 +11,6 @@ import { MongoIdValidationPipe } from '@backend/shared/pipes';
 
 import { QuestionnaireService } from './questionnaire.service';
 
-const QuestionnaireUserRoute = join(QuestionnaireRoute.User, USER_ID_PARAM);
-
 @ApiTags('questionnaire')
 @Controller(ServiceRoute.Questionnaire)
 export class QuestionnaireController {
@@ -20,27 +18,13 @@ export class QuestionnaireController {
     private readonly questionnaireService: QuestionnaireService
   ) { }
 
-  //! проверка есть ли опрос у пользователя true/false/404 user
-  //Get(USER_ID_PARAM)
-  @ApiParam(ApiParamOption.UserId)
-  @Get(join(QuestionnaireRoute.Exist, USER_ID_PARAM))
-  public async existQuestionnaire(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<boolean> {
-    console.log('existQuestionnaire');
-    console.log('userId', userId);
-
-    //await this.questionnaireService.createQuestionnaireUser(dto, userId);
-
-    //!
-    return false;
-  }
-
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)
   //@ApiResponse(AuthenticationApiResponse.UserNotFound)
   //@ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
-  @Post(QuestionnaireUserRoute)
-  public async createQuestionnaireUser(
+  @Post(USER_ID_PARAM)
+  public async create(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Body() dto: CreateQuestionnaireUserDto
   ): Promise<string> {
@@ -55,8 +39,8 @@ export class QuestionnaireController {
   }
 
   @ApiParam(ApiParamOption.UserId)
-  @Patch(QuestionnaireUserRoute)
-  public async updateQuestionnaireUser(
+  @Patch(USER_ID_PARAM)
+  public async update(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Body() dto: CreateQuestionnaireUserDto //! UpdateDto и не все можно менять!
   ): Promise<string> {
@@ -68,10 +52,12 @@ export class QuestionnaireController {
   }
 
   @ApiParam(ApiParamOption.UserId)
-  @Get(QuestionnaireUserRoute)
-  public async showQuestionnaireUser(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<string> {
+  @Get(USER_ID_PARAM)
+  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<string> {
+    const questionnaire = await this.questionnaireService.findByUserId(userId);
     console.log('showQuestionnaireUser');
     console.log('userId', userId);
+    console.log('userId', questionnaire);
 
     return 'showQuestionnaireUser';
   }

@@ -82,7 +82,7 @@ export class AuthenticationService {
     } catch (error) {
       this.logger.error(`Token generation error: ${error.message}`);
 
-      throw new HttpException('Ошибка при создании токена.', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('Error creating token.', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

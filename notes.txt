@@ -79,3 +79,5 @@ console.log(enumStatus);
 
 --------------
 
+интерцепторы для HttpService возможны? добавлять requestId, авторизацию...
+

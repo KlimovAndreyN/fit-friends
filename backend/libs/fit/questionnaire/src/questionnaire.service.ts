@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { AuthenticationMessage, AuthUser, CreateQuestionnaireUserDto, CreateUserWithFileIdDto, Entity } from '@backend/shared/core';
+import { CreateQuestionnaireUserDto } from '@backend/shared/core';
 
 import { QuestionnaireRepository } from './questionnaire.repository';
 import { QuestionnaireEntity } from './questionnaire.entity';
@@ -14,12 +14,14 @@ export class QuestionnaireService {
   /*
   private create
   private update
-  public createQuestionnaireUser -> create
-  public createQuestionnaireCoach -> create
-  public updateQuestionnaireUser -> update
-  public updateQuestionnaireCoach -> update
   public show / а контроллеры сами преобразовывают по своему
   */
+
+  public async findByUserId(userId: string): Promise<QuestionnaireEntity> {
+    const entity = await this.questionnaireRepository.findByUserId(userId);
+
+    return entity;
+  }
 
   public async createQuestionnaireUser(dto: CreateQuestionnaireUserDto, userId: string): Promise<QuestionnaireEntity> {
     const entity: QuestionnaireEntity = QuestionnaireFactory.createFromDto(dto, userId);

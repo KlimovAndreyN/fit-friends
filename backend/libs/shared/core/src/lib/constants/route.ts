@@ -23,9 +23,7 @@ export enum AccountRoute {
 }
 
 export enum QuestionnaireRoute {
-  Exist = 'exist',
-  User = 'user',
-  Coach = 'coach'
+  Exist = 'exist'
 }
 
 export enum FileStorageRoute {

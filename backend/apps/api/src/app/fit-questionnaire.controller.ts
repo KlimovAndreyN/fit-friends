@@ -1,12 +1,10 @@
-import { Controller, Get, Inject, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
-import { ConfigType } from '@nestjs/config';
 
 import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
-import { apiConfig } from '@backend/api/config';
 
 import { FitService } from './fit.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -18,21 +16,17 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 export class FitQuestionnaireController {
   constructor(
     private readonly httpService: HttpService,
-    private readonly fitService: FitService,
-    @Inject(apiConfig.KEY)
-    private readonly apiOptions: ConfigType<typeof apiConfig>
+    private readonly fitService: FitService
   ) { }
 
   @UseGuards(CheckAuthGuard)
   @Get(QuestionnaireRoute.Exist)
-  public async existQuestionnaire(
+  public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
-    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, QuestionnaireRoute.Exist, userId);
-    const headers = makeHeaders(requestId);
-    const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+    const existQuestionnaire = await this.fitService.existQuestionnaire(userId, requestId);
 
-    return data;
+    return existQuestionnaire;
   }
 
   @UseGuards(CheckAuthGuard)
@@ -40,7 +34,19 @@ export class FitQuestionnaireController {
   public async createQuestionnaire(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
-    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, QuestionnaireRoute.Exist, userId);
+    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
+    const headers = makeHeaders(requestId);
+    const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+
+    return data;
+  }
+
+  @UseGuards(CheckAuthGuard)
+  @Get()
+  public async show(
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<boolean> {
+    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
 

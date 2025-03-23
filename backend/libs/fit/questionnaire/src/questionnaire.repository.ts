@@ -20,8 +20,7 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
     const record = await this.client.questionnaire.findFirst({ where: { userId } });
 
     if (!record) {
-      //!
-      throw new NotFoundException('NotFound');
+      throw new NotFoundException('Questionnaire for userId' + userId + 'not found');
     }
 
     const { id, caloriesLose, caloriesWaste, description, fileIds, individualTraining } = record;
