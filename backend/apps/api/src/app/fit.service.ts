@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
-import { ServiceRoute } from '@backend/shared/core';
+import { QuestionnaireRdo, ServiceRoute } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -19,15 +19,19 @@ export class FitService {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
   }
 
-  //! findQuestionnaireByUserId
-  public async existQuestionnaire(userId: string, requestId: string): Promise<boolean> {
+  public async findQuestionnaireByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const url = this.getUrl(ServiceRoute.Questionnaire, userId);
     const headers = makeHeaders(requestId);
+    const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
 
+    return data;
+  }
+
+  public async existQuestionnaire(userId: string, requestId: string): Promise<boolean> {
     try {
-      const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+      await this.findQuestionnaireByUserId(userId, requestId);
 
-      return data;
+      return true;
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status !== HttpStatus.NOT_FOUND) {

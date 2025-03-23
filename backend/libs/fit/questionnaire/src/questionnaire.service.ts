@@ -18,6 +18,7 @@ export class QuestionnaireService {
   }
 
   public async createQuestionnaireUser(dto: CreateQuestionnaireDto, userId: string): Promise<QuestionnaireEntity> {
+    //! нужна своя проверка заполеннности толей в зависимости от роли
     const entity: QuestionnaireEntity = QuestionnaireFactory.createFromDto(dto, userId);
 
     await this.questionnaireRepository.save(entity);

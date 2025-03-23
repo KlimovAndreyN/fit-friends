@@ -24,7 +24,6 @@ export class FitQuestionnaireController {
   public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
-    //! findQuestionnaireByUserId
     const existQuestionnaire = await this.fitService.existQuestionnaire(userId, requestId);
 
     return existQuestionnaire;
@@ -37,6 +36,7 @@ export class FitQuestionnaireController {
     @Body() dto: CreateQuestionnaireDto
   ): Promise<QuestionnaireRdo> {
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
+    //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
     const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, dto, headers);
@@ -49,11 +49,8 @@ export class FitQuestionnaireController {
   @Get()
   public async show(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
-  ): Promise<boolean> {
-    //! findQuestionnaireByUserId
-    const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
-    const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+  ): Promise<QuestionnaireRdo> {
+    const data = this.fitService.findQuestionnaireByUserId(userId, requestId);
 
     return data;
   }

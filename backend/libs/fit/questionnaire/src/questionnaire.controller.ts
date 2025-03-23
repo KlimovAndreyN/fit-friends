@@ -1,10 +1,7 @@
 import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
 
-import {
-  ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo,
-  CreateQuestionnaireDto, ApiHeaderOption, RequestWithUserId
-} from '@backend/shared/core';
+import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, ApiHeaderOption, RequestWithUserId } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
@@ -32,7 +29,7 @@ export class QuestionnaireController {
 
   @Patch()
   public async update(
-    @Body() dto: CreateQuestionnaireDto, //! UpdateDto и не все можно менять!
+    @Body() dto: CreateQuestionnaireWithFileIdsDto, //! UpdateDto и не все можно менять!
     @Req() { userId }: RequestWithUserId
   ): Promise<string> {
     //!
@@ -44,12 +41,9 @@ export class QuestionnaireController {
   }
 
   @Get()
-  public async show(@Req() { userId }: RequestWithUserId): Promise<string> {
-    const questionnaire = await this.questionnaireService.findByUserId(userId);
-    console.log('showQuestionnaireUser');
-    console.log('userId', userId);
-    console.log('userId', questionnaire);
+  public async show(@Req() { userId }: RequestWithUserId): Promise<QuestionnaireWithFileIdsRdo> {
+    const entity = await this.questionnaireService.findByUserId(userId);
 
-    return 'showQuestionnaireUser';
+    return fillDto(QuestionnaireWithFileIdsRdo, entity);
   }
 }
