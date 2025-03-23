@@ -17,7 +17,7 @@ export class UsersService {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
-  private convertToUserRdo(user: UserWithFileIdRdo, avatarSrc: string): UserRdo {
+  private convertToUserRdo(user: UserWithFileIdRdo, avatarPath: string): UserRdo {
     const {
       id,
       name,
@@ -39,7 +39,7 @@ export class UsersService {
       metroStationName,
       registrationDate,
       role,
-      avatarSrc
+      avatarPath
     };
 
     return rdo;
@@ -55,9 +55,9 @@ export class UsersService {
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);
-    const avatarSrc = this.filesService.makeSrc(avatar);
+    const avatarPath = this.filesService.makeSrc(avatar);
 
-    return this.convertToUserRdo(registeredUser, avatarSrc);
+    return this.convertToUserRdo(registeredUser, avatarPath);
   }
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
@@ -66,7 +66,7 @@ export class UsersService {
     //! UserWithFileIdRdo
     const { data } = await this.httpService.axiosRef.get<UserRdo>(url, headers);
 
-    //! дополнить информацией о файле и перепроверить типизацию - this.convertToUserRdo(registeredUser, avatarSrc);
+    //! дополнить информацией о файле и перепроверить типизацию - this.convertToUserRdo(registeredUser, avatarPath);
     return data;
   }
 }

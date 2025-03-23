@@ -7,16 +7,16 @@ type AvatarUploadProps = {
 }
 
 function AvatarUpload({ name }: AvatarUploadProps): JSX.Element {
-  const [avatarSrc, setAvatarSrc] = useState<string>();
-  const spanClassName = (avatarSrc) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
-  const inputName = (avatarSrc) ? name : undefined;
+  const [avatarPath, setAvatarPath] = useState<string>();
+  const spanClassName = (avatarPath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
+  const inputName = (avatarPath) ? name : undefined;
   const image =
-    (avatarSrc)
-      ? <img src={avatarSrc} width="98" height="98" alt="user photo" />
+    (avatarPath)
+      ? <img src={avatarPath} width="98" height="98" alt="user photo" />
       : <svg width="20" height="20" aria-hidden="true"><use xlinkHref="#icon-import" /></svg>;
 
   const handleImageUploadInputChange = (filePath: string) => {
-    setAvatarSrc(filePath);
+    setAvatarPath(filePath);
   };
 
   return (

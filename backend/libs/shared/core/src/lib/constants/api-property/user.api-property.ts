@@ -35,7 +35,7 @@ export const UserApiProperty = {
     type: 'string',
     format: 'binary'
   },
-  AvatarSrc: {
+  AvatarPath: {
     description: 'The avatar file src',
     type: 'string',
     example: '/path/img.jpg'
