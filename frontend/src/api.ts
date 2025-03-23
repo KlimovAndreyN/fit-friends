@@ -1,11 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { AccountRoute, ApiServiceRoute, AUTH_NAME } from '@backend/shared';
+import { AccountRoute, ApiServiceRoute, AUTH_NAME, IUserTokenRdo } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
 import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
+import { HttpCode } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
 const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';
@@ -17,7 +18,7 @@ const showUrlAxiosError = getViteEnvBooleanVariable(VITE_SHOW_URL_AXIOS_ERROR_EN
 export function createAPI(): AxiosInstance {
   const api = axios.create({
     baseURL,
-    timeout: REQUEST_TIMEOUT,
+    timeout: REQUEST_TIMEOUT
   });
 
   api.interceptors.request.use(
@@ -41,14 +42,60 @@ export function createAPI(): AxiosInstance {
 
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<DataAxiosError>) => {
-      const { response, config: { url } } = error;
-      const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
+    async (error: AxiosError<DataAxiosError>) => {
+      //!
+      // eslint-disable-next-line no-console
+      console.log('error', error);
 
-      if ((url !== checkUrl) || (response && !response.data)) {
-        toast.dismiss();
-        toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
+      const { response, config: { url } } = error;
+      const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
+      const originalRequestConfig = error.config;
+
+      //! продумать удаление токенов при ошибках
+      /*
+      if (!isErrorNetwork(checkTokenError)) {
+        AccessTokenStore.drop();
+        RefreshTokenStore.drop();
       }
+      */
+
+      // пробуем обновить токены
+      if ((url !== refreshUrl) && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
+        originalRequestConfig.retry = true;
+
+        if (!RefreshTokenStore.getToken()) {
+          return Promise.reject('RefreshToken is empty!');
+        }
+
+        //!
+        // try {
+        const { data: { accessToken, refreshToken } } = await api.post<IUserTokenRdo>(refreshUrl);
+
+        AccessTokenStore.save(accessToken);
+        RefreshTokenStore.save(refreshToken);
+
+        //! ? await ? return await api(originalRequestConfig);
+        return api(originalRequestConfig);
+        /*
+        } catch (refreshError) {
+          console.error('Unable to refresh tokens', refreshError);
+        }
+        */
+      }
+
+      //! обработка ошибок
+      const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
+      // eslint-disable-next-line no-console
+      console.log('response', response);
+      // eslint-disable-next-line no-console
+      console.log('url', url);
+      // eslint-disable-next-line no-console
+      console.log('checkUrl', checkUrl);
+
+      //! if ((url !== checkUrl) || (response && !response.data)) {
+      toast.dismiss();
+      toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
+      //! }
 
       return Promise.reject(error);
     }

@@ -4,13 +4,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo, IUserTokenRdo, QuestionnaireRoute
+  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { isErrorNetwork } from '../utils/parse-axios-error';
 import { joinUrl } from '../utils/common';
-import { HttpCode, multipartFormDataHeader } from '../const';
+import { multipartFormDataHeader } from '../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -41,63 +41,16 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
   async (_, { extra, dispatch }) => {
     // если токена изначально нет, то и проверять не нужно...
     if (!AccessTokenStore.getToken()) {
-      return Promise.reject();
+      return Promise.reject('AccessToken is empty!');
     }
 
     const { api } = extra;
     const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
+    const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
 
-    try {
-      const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
+    dispatch(existUserQuestionnaire());
 
-      dispatch(existUserQuestionnaire()); //! как то дважды вызвано
-
-      return data;
-    } catch (checkTokenError) {
-      if (checkTokenError instanceof AxiosError) {
-        if (checkTokenError.response?.status !== HttpCode.NoAuth) {
-          if (!isErrorNetwork(checkTokenError)) {
-            AccessTokenStore.drop();
-            RefreshTokenStore.drop();
-          }
-
-          return Promise.reject();
-        }
-
-        // Пробуем получить AccessToken через RefreshToken, если он есть
-        if (!RefreshTokenStore.getToken()) {
-          AccessTokenStore.drop();
-
-          return Promise.reject();
-        }
-
-        const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
-
-        try {
-          const { data: { accessToken, refreshToken } } = await api.post<IUserTokenRdo>(refreshUrl);
-
-          AccessTokenStore.save(accessToken);
-          RefreshTokenStore.save(refreshToken);
-
-          const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
-
-          dispatch(existUserQuestionnaire()); //! как то дважды вызвано
-
-          return data;
-        } catch (refreshTokenError) {
-          if (refreshTokenError instanceof AxiosError) {
-            if (!isErrorNetwork(refreshTokenError)) {
-              AccessTokenStore.drop();
-              RefreshTokenStore.drop();
-            }
-
-            return Promise.reject();
-          }
-        }
-      }
-
-      return Promise.reject();
-    }
+    return data;
   }
 );
 

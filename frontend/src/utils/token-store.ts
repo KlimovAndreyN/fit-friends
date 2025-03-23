@@ -12,7 +12,11 @@ class TokenStore {
   }
 
   static drop() {
-    localStorage.removeItem(this.tokenName);
+    //!
+    // eslint-disable-next-line no-console
+    console.log('TokenStore-drop', this.tokenName);
+
+    //!localStorage.removeItem(this.tokenName);
   }
 }
 
