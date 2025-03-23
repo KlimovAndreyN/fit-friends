@@ -24,43 +24,4 @@ export class QuestionnaireService {
 
     return entity;
   }
-  /*
-    public async registerUser(dto: CreateUserWithFileIdDto, requestId: string): Promise<FitUserEntity> {
-      const {
-        email,
-        name,
-        password,
-        backgroundPath,
-        gender,
-        metroStationName,
-        role,
-        avatarFileId,
-        birthday
-      } = dto;
-      const existUser = await this.fitUserRepository.findByEmail(email);
-
-      if (existUser) {
-        throw new ConflictException(AuthenticationMessage.Exists);
-      }
-
-      const fitUser: AuthUser = {
-        email,
-        name,
-        backgroundPath,
-        gender,
-        metroStationName,
-        role,
-        avatarFileId,
-        birthday: (birthday) ? new Date(birthday) : undefined,
-        passwordHash: ''
-      };
-
-      const userEntity = new FitUserEntity(fitUser);
-
-
-      //await this.notifyService.registerSubscriber({ email, name }, requestId);
-
-      return userEntity;
-    }
-      */
 }

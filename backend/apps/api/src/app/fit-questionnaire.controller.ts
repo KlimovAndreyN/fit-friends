@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Req, UseFilters, UseGuards } from '@nestjs
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
 
-import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId, CreateQuestionnaireDto } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId, CreateQuestionnaireDto, QuestionnaireRdo } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -35,16 +35,14 @@ export class FitQuestionnaireController {
   public async create(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
     @Body() dto: CreateQuestionnaireDto
-  ): Promise<CreateQuestionnaireDto> {
-    console.log('requestId', requestId);
-    console.log('userId', userId);
-    console.log('dto', dto);
+  ): Promise<QuestionnaireRdo> {
+    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
+    const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, dto, headers);
 
-    //const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
-    //const headers = makeHeaders(requestId);
-    //const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
-
-    return dto;
+    //! когда будет роль тренер нужно преобразовать id файлов в пути
+    return data;
   }
 
   @UseGuards(CheckAuthGuard)
@@ -53,8 +51,8 @@ export class FitQuestionnaireController {
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
     //! findQuestionnaireByUserId
-    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
-    const headers = makeHeaders(requestId);
+    const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
 
     return data;

@@ -3,7 +3,7 @@ import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength
 import { Expose } from 'class-transformer';
 
 import { User } from '../interfaces/user.interface';
-import { ICreateUserDto } from '../../fronted-index';
+import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../interfaces/rdo/i-user-with-file-id.rdo';
 import { MetroStationName } from '../types/metro-station-name.enum';

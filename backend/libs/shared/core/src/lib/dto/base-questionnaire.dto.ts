@@ -3,13 +3,14 @@ import { ArrayMaxSize, IsArray, IsEnum, IsNumber, IsOptional, IsString, Max, Min
 import { Expose } from 'class-transformer';
 
 import { Questionnaire } from '../interfaces/questionnaire.interface';
+import { ICreateQuestionnaireDto } from '../interfaces/dto/i-create-questionnaire.dto';
 import { Specialisation } from '../types/specialisation.enum';
 import { UserLevel } from '../types/user-level.enum';
 import { Duration } from '../types/duration.enum';
+import { UserRole } from '../types/user-role.enum';
 import { QuestionnaireApiProperty } from '../constants/api-property/questionnaire.api-property';
 import { QuestionnaireValidation } from '../constants/authentication.constant';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
-import { UserRole } from '../types/user-role.enum';
 
 //! название и размещение не очень... используется для описания, валидации и трансформации dto и rdo
 //! иногда разное описание например дата рождения, в dto и кратное и полное, а rdo только полное
@@ -63,4 +64,15 @@ export class BaseQuestionnaireDto {
   caloriesWaste: number;
 
   //! еще будут данные от опросника тренера
+  @IsOptional() //!
+  description: Questionnaire['description']
+
+  @IsOptional() //!
+  fileIds: Questionnaire['fileIds']
+
+  @IsOptional() //!
+  files: ICreateQuestionnaireDto['files']
+
+  @IsOptional() //!
+  individualTraining: Questionnaire['individualTraining']
 }

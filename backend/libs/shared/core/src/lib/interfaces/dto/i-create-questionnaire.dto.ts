@@ -1,5 +1,5 @@
-import { ICreateQuestionnaireWithfIleIdsDto } from './i-create-questionnaire-with-file-ids.dto';
+import { ICreateQuestionnaireWithFileIdsDto } from './i-create-questionnaire-with-file-ids.dto';
 
-export interface ICreateQuestionnaireDto extends Omit<ICreateQuestionnaireWithfIleIdsDto, 'fileIds'> {
+export interface ICreateQuestionnaireDto extends Omit<ICreateQuestionnaireWithFileIdsDto, 'fileIds'> {
   files?: File[];
 }

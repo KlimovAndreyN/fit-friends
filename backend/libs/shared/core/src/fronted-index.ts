@@ -1,10 +1,12 @@
 export { AUTH_NAME } from './lib/constants/bearer-auth';
 export { AccountRoute, ApiServiceRoute, QuestionnaireRoute } from './lib/constants/route';
 
+export { type ICreateQuestionnaireDto } from './lib/interfaces/dto/i-create-questionnaire.dto';
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
 
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
+export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.dto';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 
 export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';

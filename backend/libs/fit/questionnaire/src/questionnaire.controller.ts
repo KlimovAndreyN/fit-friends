@@ -1,13 +1,17 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 
-import { ApiParamOption, USER_ID_PARAM, ServiceRoute, CreateQuestionnaireDto } from '@backend/shared/core';
+import {
+  ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo,
+  CreateQuestionnaireDto, ApiHeaderOption, RequestWithUserId
+} from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
-import { MongoIdValidationPipe } from '@backend/shared/pipes';
 
 import { QuestionnaireService } from './questionnaire.service';
 
 @ApiTags('questionnaire')
+@ApiHeader(ApiHeaderOption.RequestId)
+@ApiHeader(ApiHeaderOption.UserId)
 @Controller(ServiceRoute.Questionnaire)
 export class QuestionnaireController {
   constructor(
@@ -16,30 +20,22 @@ export class QuestionnaireController {
 
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)
-  //@ApiResponse(AuthenticationApiResponse.UserNotFound)
-  //@ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiParam(ApiParamOption.UserId)
-  @Post(USER_ID_PARAM)
+  @Post()
   public async create(
-    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
-    @Body() dto: CreateQuestionnaireDto
-  ): Promise<string> {
-    console.log('createQuestionnaireUser');
-    console.log('userId', userId);
-    console.log('dto', dto);
+    @Body() dto: CreateQuestionnaireWithFileIdsDto,
+    @Req() { userId }: RequestWithUserId
+  ): Promise<QuestionnaireWithFileIdsRdo> {
+    const entity = await this.questionnaireService.createQuestionnaireUser(dto, userId);
 
-    await this.questionnaireService.createQuestionnaireUser(dto, userId);
-
-    //!
-    return 'createQuestionnaireUser';
+    return fillDto(QuestionnaireWithFileIdsRdo, entity);
   }
 
-  @ApiParam(ApiParamOption.UserId)
-  @Patch(USER_ID_PARAM)
+  @Patch()
   public async update(
-    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
-    @Body() dto: CreateQuestionnaireDto //! UpdateDto и не все можно менять!
+    @Body() dto: CreateQuestionnaireDto, //! UpdateDto и не все можно менять!
+    @Req() { userId }: RequestWithUserId
   ): Promise<string> {
+    //!
     console.log('updateQuestionnaireUser');
     console.log('userId', userId);
     console.log('dto', dto);
@@ -47,9 +43,8 @@ export class QuestionnaireController {
     return 'updateQuestionnaireUser';
   }
 
-  @ApiParam(ApiParamOption.UserId)
-  @Get(USER_ID_PARAM)
-  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string): Promise<string> {
+  @Get()
+  public async show(@Req() { userId }: RequestWithUserId): Promise<string> {
     const questionnaire = await this.questionnaireService.findByUserId(userId);
     console.log('showQuestionnaireUser');
     console.log('userId', userId);
