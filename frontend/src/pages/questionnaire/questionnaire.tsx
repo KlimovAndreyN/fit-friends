@@ -1,4 +1,5 @@
 import { FormEvent, Fragment } from 'react';
+import classNames from 'classnames';
 
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import PopupForm from '../../components/popup-form/popup-form';
@@ -7,14 +8,18 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { useAppSelector } from '../../hooks';
-import { getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
+import { Duration, ICreateQuestionnaireDto, Specialisation, UserLevel, UserRole } from '@backend/shared';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsCreateQuestionnaireExecuting, getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
+import { createQuestionnaire } from '../../store/action';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
   const isExistQuestionnaireExecuting = useAppSelector(getIsExistQuestionnaireExecuting);
+  const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
-  //const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   if (isExistQuestionnaireExecuting) {
     return <MainSpinner />; //! тут бы другую загрузку на основе PopupForm
@@ -22,6 +27,7 @@ function Questionnaire(): JSX.Element {
 
   const endingClassName = (userRole) ? UserRoleOption[userRole].endingClassName : '';
   const divClassName = `questionnaire-${endingClassName}`;
+  const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -36,11 +42,23 @@ function Questionnaire(): JSX.Element {
     }
     //
 
+    //! отладка
     //const email = formData.get(FormFieldName.email)?.toString() || '';
     //const password = formData.get(FormFieldName.password)?.toString() || '';
-    //const dto: ILoginUserDto = { email, password };
+    const dto: ICreateQuestionnaireDto = {
+      userRole: UserRole.Sportsman, //! userRole = useAppSelector(getUserRole) - undefined
+      level: UserLevel.Professional,
+      specialisations: [Specialisation.Aerobics, Specialisation.Crossfit],
+      time: Duration.Minutes_80_100,
+      caloriesLose: 5000,
+      caloriesWaste: 5000
+    };
 
-    //dispatch(loginUser(dto));
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('dto', dto);
+
+    dispatch(createQuestionnaire(dto));
   };
 
   const popupFormProps = {
@@ -53,7 +71,7 @@ function Questionnaire(): JSX.Element {
     <PopupForm {...popupFormProps} >
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
-        <div className="questionnaire-user__wrapper">
+        <div className={`questionnaire-${endingClassName}__wrapper`}>
           <QuestionnairebBlock caption='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
             <SpecializationsCheckbox name='specialisation' divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
           </QuestionnairebBlock>
@@ -70,7 +88,7 @@ function Questionnaire(): JSX.Element {
             </Fragment>
           </QuestionnairebBlock>
         </div>
-        <button className="btn questionnaire-user__button" type="submit">Продолжить</button>
+        <button className={submitClassName} type="submit">Продолжить</button>
       </div>
     </PopupForm>
   );

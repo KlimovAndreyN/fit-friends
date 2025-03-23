@@ -2,16 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { existUserQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
+import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isSingInExecuting: false,
   isSingUpExecuting: false,
-  isQuestionnaireExecuting: false,
-  existQuestionnaire: false,
   isExistQuestionnaireExecuting: false,
+  isCreateQuestionnaireExecuting: false,
+  existQuestionnaire: false,
   userRole: undefined
 };
 
@@ -23,19 +23,19 @@ export const userProcess = createSlice(
     extraReducers(builder) {
       builder
         .addCase(
-          existUserQuestionnaire.pending,
+          existQuestionnaire.pending,
           (state) => {
             state.isExistQuestionnaireExecuting = true;
           }
         )
         .addCase(
-          existUserQuestionnaire.rejected,
+          existQuestionnaire.rejected,
           (state) => {
             state.isExistQuestionnaireExecuting = false;
           }
         )
         .addCase(
-          existUserQuestionnaire.fulfilled,
+          existQuestionnaire.fulfilled,
           (state, action) => {
             state.existQuestionnaire = action.payload;
             state.isExistQuestionnaireExecuting = false;
@@ -105,6 +105,25 @@ export const userProcess = createSlice(
           registerUser.fulfilled,
           (state) => {
             state.isSingUpExecuting = false;
+          }
+        )
+        .addCase(
+          createQuestionnaire.pending,
+          (state) => {
+            state.isCreateQuestionnaireExecuting = true;
+          }
+        )
+        .addCase(
+          createQuestionnaire.rejected,
+          (state) => {
+            state.isCreateQuestionnaireExecuting = false;
+          }
+        )
+        .addCase(
+          createQuestionnaire.fulfilled,
+          (state) => {
+            state.existQuestionnaire = true;
+            state.isCreateQuestionnaireExecuting = false;
           }
         );
     }

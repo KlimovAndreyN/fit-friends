@@ -3,8 +3,8 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute
+  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IQuestionnaireRdo,
+  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute, ICreateQuestionnaireDto
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
@@ -22,11 +22,12 @@ export const Action = {
   LOGOUT_USER: 'user/logout',
   FETCH_USER_STATUS: 'user/fetch-status',
   REGISTER_USER: 'user/register',
-  EXIST_USER_QUESTIONNARE: 'user/exist-questionnaire'
+  EXIST_QUESTIONNARE: 'user/exist-questionnaire',
+  CREATE_QUESTIONNARE: 'user/create-questionnaire'
 };
 
-export const existUserQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
-  Action.EXIST_USER_QUESTIONNARE,
+export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
+  Action.EXIST_QUESTIONNARE,
   async (_, { extra }) => {
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.FitQuestionnaires, QuestionnaireRoute.Exist);
@@ -48,7 +49,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
     const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
     const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
 
-    dispatch(existUserQuestionnaire());
+    dispatch(existQuestionnaire());
 
     return data;
   }
@@ -76,7 +77,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     // eslint-disable-next-line no-console
     console.log('loginUser.end');
 
-    dispatch(existUserQuestionnaire());
+    dispatch(existQuestionnaire());
 
     return { sub, email: dataEmail, name, role };
   }
@@ -116,22 +117,22 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
-    //! проверка асинхронности действий для вызова dispatch(fetchUserStatus()) перед каждым действием, а может возможно сделать еще middleware? если в там можно вызвать dispatch...
-    // eslint-disable-next-line no-console
-    console.log('registerUser.before.reg');
-
     await api.post<IUserRdo>(url, dto, { headers: multipartFormDataHeader });
-    //!
-    // eslint-disable-next-line no-console
-    console.log('registerUser.after.reg');
 
     const { email, password } = dto;
-    //!
-    // eslint-disable-next-line no-console
-    console.log('registerUser.before.dispatch');
+
     dispatch(loginUser({ email, password }));
-    //!
-    // eslint-disable-next-line no-console
-    console.log('registerUser.after.dispatch');
+  }
+);
+
+export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDto, { extra: Extra }>(
+  Action.CREATE_QUESTIONNARE,
+  async (dto, { extra }) => {
+    const { api } = extra;
+    const url = ApiServiceRoute.FitQuestionnaires;
+
+    //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
+    //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
+    await api.post<IQuestionnaireRdo>(url, dto);
   }
 );

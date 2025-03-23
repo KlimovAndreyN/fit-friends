@@ -20,8 +20,8 @@ export class FitService {
   }
 
   public async findQuestionnaireByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
-    const url = this.getUrl(ServiceRoute.Questionnaire, userId);
-    const headers = makeHeaders(requestId);
+    const url = this.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
 
     return data;
@@ -34,7 +34,7 @@ export class FitService {
       return true;
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (error.response?.status !== HttpStatus.NOT_FOUND) {
+        if (error.response?.status === HttpStatus.NOT_FOUND) {
           return false;
         }
       }

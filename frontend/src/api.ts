@@ -43,7 +43,7 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      //!
+      //! отладка
       // eslint-disable-next-line no-console
       console.log('error', error);
 
@@ -67,7 +67,7 @@ export function createAPI(): AxiosInstance {
           return Promise.reject('RefreshToken is empty!');
         }
 
-        //!
+        //! нужно ли ловить исключение и так обрабытывает, по refreshUrl
         // try {
         const { data: { accessToken, refreshToken } } = await api.post<IUserTokenRdo>(refreshUrl);
 
@@ -83,7 +83,7 @@ export function createAPI(): AxiosInstance {
         */
       }
 
-      //! обработка ошибок
+      //! проверить обработку ошибок
       const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
       // eslint-disable-next-line no-console
       console.log('response', response);

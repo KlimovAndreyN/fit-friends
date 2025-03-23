@@ -30,10 +30,11 @@ export class FitQuestionnaireController {
   }
 
   @UseGuards(CheckAuthGuard)
+  //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
   @Post()
   public async create(
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
-    @Body() dto: CreateQuestionnaireDto
+    @Body() dto: CreateQuestionnaireDto,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
