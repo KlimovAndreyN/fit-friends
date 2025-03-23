@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
 
-import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId, CreateQuestionnaireDto } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -24,6 +24,7 @@ export class FitQuestionnaireController {
   public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
+    //! findQuestionnaireByUserId
     const existQuestionnaire = await this.fitService.existQuestionnaire(userId, requestId);
 
     return existQuestionnaire;
@@ -31,14 +32,19 @@ export class FitQuestionnaireController {
 
   @UseGuards(CheckAuthGuard)
   @Post()
-  public async createQuestionnaire(
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
-  ): Promise<boolean> {
-    const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
-    const headers = makeHeaders(requestId);
-    const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+  public async create(
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
+    @Body() dto: CreateQuestionnaireDto
+  ): Promise<CreateQuestionnaireDto> {
+    console.log('requestId', requestId);
+    console.log('userId', userId);
+    console.log('dto', dto);
 
-    return data;
+    //const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
+    //const headers = makeHeaders(requestId);
+    //const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);
+
+    return dto;
   }
 
   @UseGuards(CheckAuthGuard)
@@ -46,6 +52,7 @@ export class FitQuestionnaireController {
   public async show(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
+    //! findQuestionnaireByUserId
     const url = this.fitService.getUrl(ServiceRoute.Questionnaire, userId);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.get<boolean>(url, headers);

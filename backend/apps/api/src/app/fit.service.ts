@@ -19,6 +19,7 @@ export class FitService {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
   }
 
+  //! findQuestionnaireByUserId
   public async existQuestionnaire(userId: string, requestId: string): Promise<boolean> {
     const url = this.getUrl(ServiceRoute.Questionnaire, userId);
     const headers = makeHeaders(requestId);

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateQuestionnaireUserDto, EntityFactory, Questionnaire } from '@backend/shared/core';
+import { CreateQuestionnaireDto, EntityFactory, Questionnaire } from '@backend/shared/core';
 
 import { QuestionnaireEntity } from './questionnaire.entity';
 
@@ -10,7 +10,7 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
     return new QuestionnaireEntity(entityPlainData);
   }
 
-  public static createFromDto(dto: CreateQuestionnaireUserDto, userId: string): QuestionnaireEntity {
+  public static createFromDto(dto: CreateQuestionnaireDto, userId: string): QuestionnaireEntity {
     const questionnaire: Questionnaire = {
       userId,
       specialisations: dto.specialisations,

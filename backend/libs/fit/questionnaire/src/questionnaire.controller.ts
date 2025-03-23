@@ -1,11 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { join } from 'path/posix';
 
-import {
-  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse,
-  USER_ID_PARAM, ServiceRoute, QuestionnaireRoute, CreateQuestionnaireUserDto
-} from '@backend/shared/core';
+import { ApiParamOption, USER_ID_PARAM, ServiceRoute, CreateQuestionnaireDto } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 
@@ -26,7 +22,7 @@ export class QuestionnaireController {
   @Post(USER_ID_PARAM)
   public async create(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
-    @Body() dto: CreateQuestionnaireUserDto
+    @Body() dto: CreateQuestionnaireDto
   ): Promise<string> {
     console.log('createQuestionnaireUser');
     console.log('userId', userId);
@@ -42,7 +38,7 @@ export class QuestionnaireController {
   @Patch(USER_ID_PARAM)
   public async update(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
-    @Body() dto: CreateQuestionnaireUserDto //! UpdateDto и не все можно менять!
+    @Body() dto: CreateQuestionnaireDto //! UpdateDto и не все можно менять!
   ): Promise<string> {
     console.log('updateQuestionnaireUser');
     console.log('userId', userId);
