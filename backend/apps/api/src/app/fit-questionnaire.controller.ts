@@ -3,8 +3,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute,
-  RequestWithRequestIdAndUserId, CreateQuestionnaireDto, QuestionnaireRdo
+  BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, CreateQuestionnaireWithFileIdsDto,
+  RequestWithRequestIdAndUserId, CreateQuestionnaireDto, QuestionnaireRdo, UserRole
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -39,12 +39,14 @@ export class FitQuestionnaireController {
     @Body() dto: CreateQuestionnaireDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
-    //! подкинуть роль пользователя через Sub или отдельный добавить через guard
+    //! подкинуть роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId
+    //! временно
+    const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto, userRole: UserRole.Sportsman, fileIds: [] }
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
     const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, dto, headers);
+    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
 
     //! когда будет роль тренер нужно преобразовать id файлов в пути
     return data;
