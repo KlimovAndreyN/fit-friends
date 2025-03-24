@@ -1,10 +1,38 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
+import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-process/selectors';
+import { fetchUserInfo } from '../../store/user-action';
 import { PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [isEditing/*, setIsEditing*/] = useState(false);
+  const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
+  const userInfo = useAppSelector(getUserInfo);
+
+  useEffect(
+    () => {
+      //! временно, потом const [searchParams, setSearchParams] = useSearchParams();
+      dispatch(fetchUserInfo());
+    },
+    [dispatch]
+  );
+
+  if (isFetchUserInfoExecuting) {
+    //! нужен свой спиннер
+    return <MainSpinner />;
+  }
+
+  //! отладка
+  // eslint-disable-next-line no-console
+  console.log(userInfo);
+
+  const endingClassName = (isEditing) ? '-edit' : '';
+
   return (
     <Fragment>
       <Header title={PageTitle.PersonalAccount} />
@@ -13,7 +41,7 @@ function PersonalAccount(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              <section className="user-info">
+              <section className={`user-info${endingClassName}`}>
                 <div className="user-info__header">
                   <div className="input-load-avatar">
                     <label>

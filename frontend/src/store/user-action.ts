@@ -136,3 +136,13 @@ export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDt
     await api.post<IQuestionnaireRdo>(url, dto);
   }
 );
+
+export const fetchUserInfo = createAsyncThunk<void, undefined, { extra: Extra }>(
+  Action.CREATE_QUESTIONNARE,
+  /*async*/(_, { extra }) => {
+    const { api } = extra;
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('fetchUserInfo - api', api);
+  }
+);

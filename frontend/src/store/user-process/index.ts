@@ -1,9 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { IUserInfoRdo, MetroStationName, Specialisation, UserGender, UserLevel, UserRole } from '@backend/shared';
+
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
 import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
 import { StoreSlice } from '../../const';
+
+const EMPTY_USER_INFO: IUserInfoRdo = {
+  name: '',
+  avatarPath: '',
+  gender: UserGender.NotMatter,
+  level: UserLevel.Beginner,
+  metroStationName: MetroStationName.Petrogradskaya,
+  specialisations: [Specialisation.Aerobics],
+  ready: false
+};
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -11,8 +23,10 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   isExistQuestionnaireExecuting: false,
   isCreateQuestionnaireExecuting: false,
+  isFetchUserInfoExecuting: false,
   existQuestionnaire: false,
-  userRole: undefined
+  userRole: UserRole.Sportsman,
+  userInfo: EMPTY_USER_INFO
 };
 
 export const userProcess = createSlice(
@@ -78,14 +92,12 @@ export const userProcess = createSlice(
           logoutUser.pending, //! перепроверить - сразу выйти и удалить
           //! перепроверить - logoutUser.rejected, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
-            state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
         .addCase(
           logoutUser.fulfilled, //! перепроверить - выход после отображения ошибоки удаления
           (state) => {
-            state.userRole = undefined;
             state.authorizationStatus = AuthorizationStatus.NoAuth;
           }
         )
@@ -125,6 +137,28 @@ export const userProcess = createSlice(
             state.existQuestionnaire = true;
             state.isCreateQuestionnaireExecuting = false;
           }
+          /*
+          //! пока нет действия
+          )
+          .addCase(
+            fetchUserInfo.pending,
+            (state) => {
+              state.isFetchUserInfoExecuting = true;
+            }
+          )
+          .addCase(
+            fetchUserInfo.rejected,
+            (state) => {
+              state.isFetchUserInfoExecuting = false;
+            }
+          )
+          .addCase(
+            fetchUserInfo.fulfilled,
+            (state) => {
+              //! state.userInfo = action.payload
+              state.isFetchUserInfoExecuting = false;
+            }
+          */
         );
     }
   }

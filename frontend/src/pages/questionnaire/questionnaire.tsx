@@ -8,7 +8,7 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { Duration, ICreateQuestionnaireDto, Specialisation, UserLevel, UserRole } from '@backend/shared';
+import { Duration, ICreateQuestionnaireDto, Specialisation, UserLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsCreateQuestionnaireExecuting, getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
@@ -46,7 +46,7 @@ function Questionnaire(): JSX.Element {
     //const email = formData.get(FormFieldName.email)?.toString() || '';
     //const password = formData.get(FormFieldName.password)?.toString() || '';
     const dto: ICreateQuestionnaireDto = {
-      userRole: UserRole.Sportsman, //! userRole = useAppSelector(getUserRole) - undefined
+      userRole,
       level: UserLevel.Professional,
       specialisations: [Specialisation.Aerobics, Specialisation.Crossfit],
       time: Duration.Minutes_80_100,
