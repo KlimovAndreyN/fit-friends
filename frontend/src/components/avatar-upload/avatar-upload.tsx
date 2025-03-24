@@ -7,10 +7,10 @@ type AvatarUploadProps = {
   path?: string;
   forPersonalAccount?: boolean;
   isShowButtons?: boolean;
-  disabled?: boolean;
+  readonly?: boolean;
 }
 
-function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, disabled }: AvatarUploadProps): JSX.Element {
+function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, readonly }: AvatarUploadProps): JSX.Element {
   const [avatarPath, setAvatarPath] = useState<string>(path);
   const spanClassName = (avatarPath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
   const inputName = (avatarPath) ? name : undefined;
@@ -36,7 +36,7 @@ function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, disa
             className='visually-hidden'
             acceptTypes='image/png, image/jpeg'
             onChange={handleImageUploadInputChange}
-            disabled={disabled}
+            readonly={readonly}
           />
           <span className={spanClassName}>
             {image}

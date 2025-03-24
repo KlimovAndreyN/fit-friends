@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from 'react';
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
+import CustomInput from '../../components/custom-input/custom-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-process/selectors';
@@ -34,6 +35,7 @@ function PersonalAccount(): JSX.Element {
   console.log(userInfo);
 
   const endingClassName = (isEditing) ? '-edit' : '';
+  const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
 
   return (
     <Fragment>
@@ -46,17 +48,18 @@ function PersonalAccount(): JSX.Element {
               <section className={`user-info${endingClassName}`}>
                 <div className="user-info__header">
                   {/* //! нужен будет обработчик при изменнии файла в режиме редактирования */}
-                  <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} disabled={!isEditing} />
+                  <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
                 </div>
                 <form className="user-info__form" action="#" method="post">
-                  <button className="btn-flat btn-flat--underlined user-info__edit-button" type="button" aria-label="Редактировать">
+                  <button className="btn-flat btn-flat--underlined user-info__edit-button" type="button" aria-label={buttonCaption}>
                     <svg width="12" height="12" aria-hidden="true">
                       <use xlinkHref="#icon-edit"></use>
                     </svg>
-                    <span>Редактировать</span>
+                    <span>{buttonCaption}</span>
                   </button>
                   <div className="user-info__section">
                     <h2 className="user-info__title">Обо мне</h2>
+                    <CustomInput type='text' name='name' label='Имя' value='Валерия' divExtraClassName='user-info__input' readonly={!isEditing} />
                     <div className="custom-input custom-input--readonly user-info__input">
                       <label>
                         <span className="custom-input__label">Имя</span>
