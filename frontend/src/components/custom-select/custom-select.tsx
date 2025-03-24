@@ -9,12 +9,13 @@ type CustomSelectProps = {
   options: Option[];
   onChange?: (selected: Option | null) => void;
   value?: string;
+  titlePrefix?: string;
   extraClassName?: string;
   readonly?: boolean;
 }
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
-  const { name, caption, options, onChange, value = '', extraClassName, readonly } = props;
+  const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readonly } = props;
   const title = options.find((option) => (option.value === value))?.title || '';
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option>({ value, title });
@@ -51,7 +52,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       возможно ошибка в css .custom-select.is-open .custom-select__label
       */}
       <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
-      <div className="custom-select__placeholder">{currentTitle}</div>
+      <div className="custom-select__placeholder">{titlePrefix + currentTitle}</div>
       {
         (readonly)
           ? null
@@ -77,7 +78,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
                   className="custom-select__item"
                   onClick={() => handleListItemClick(option)}
                 >
-                  {option.title}
+                  {titlePrefix + option.title}
                 </li>
               )
             )

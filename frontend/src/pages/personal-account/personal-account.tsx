@@ -21,7 +21,7 @@ function PersonalAccount(): JSX.Element {
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
-  const { name, avatarPath, about, specializations } = userInfo;
+  const { name, avatarPath, about, specializations, metroStationName } = userInfo;
 
   useEffect(
     () => {
@@ -92,11 +92,11 @@ function PersonalAccount(): JSX.Element {
                   <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
                     <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={`${mainClassName}__specialization`} readonly={!isEditing} />
                   </PersonalAccountBlock>
-                  <CustomSelect
+                  <CustomSelect //! в макете к названию станции добавлено "ст. м. ", добавил titlePrefix
                     name='location'
                     caption='Локация'
-                    //! отладка
-                    startOption={{ value: '111', title: '2222' }}
+                    value={metroStationName}
+                    titlePrefix='ст. м. '
                     options={LOCATIONS}
                     extraClassName={`${mainClassName}__select`}
                     readonly={!isEditing}
