@@ -18,6 +18,8 @@ function PersonalAccountLeftPanel(): JSX.Element {
   const userInfo = useAppSelector(getUserInfo);
   const { name, avatarPath, about, specializations, metroStationName, gender, level } = userInfo;
 
+  //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
+
   const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -27,12 +29,23 @@ function PersonalAccountLeftPanel(): JSX.Element {
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    //! нужен признак очистки аватара и сам файл и кнопки для его обработки
+    //! т.е. обработчик при изменнии файла в режиме редактирования
+
+    //! сбор и отправка данных, перечисление названиями полей
+    //! блокировка отправки кнопок и всей формы пока отправляются данные
+
     const form = event.currentTarget;
     const formData = new FormData(form);
 
     //! отладка
-    // eslint-disable-next-line no-console
-    console.log(formData);
+    const entries = formData.entries();
+    for (const entry of entries) {
+      const [key, value] = entry;
+      // eslint-disable-next-line
+      console.log(key, value);
+    }
+    //
 
     /*
     const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel;
@@ -59,12 +72,9 @@ function PersonalAccountLeftPanel(): JSX.Element {
   return (
     <section className={mainClassName}>
       <div className={`${mainClassName}__header`}>
-        {/* //! нужен будет обработчик при изменнии файла в режиме редактирования */}
         <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
       </div>
-      {/* //! нужен будет обработчик при сохранении формы, если редактирование */}
       <form className={`${mainClassName}__form`} method="post" onSubmit={(isEditing) ? handleFormSubmit : undefined}>
-        {/* //! нужен будет обработчик при нажатии на кнопку, если просмотр */}
         <button
           className={`btn-flat btn-flat--underlined ${mainClassName}__${(isEditing) ? 'save' : 'edit'}-button`}
           type={(isEditing) ? 'submit' : 'button'}
