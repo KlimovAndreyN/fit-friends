@@ -3,16 +3,17 @@ import { Fragment, useEffect, useState } from 'react';
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
-import CustomInput from '../../components/custom-input/custom-input';
-import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
+import CustomInput from '../../components/custom-input/custom-input';
+import CustomSelect from '../../components/custom-select/custom-select';
+import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
 import { UserRole } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchUserInfoExecuting, getUserInfo, getUserRole } from '../../store/user-process/selectors';
 import { fetchUserInfo } from '../../store/user-action';
-import { PageTitle } from '../../const';
+import { LOCATIONS, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -91,6 +92,15 @@ function PersonalAccount(): JSX.Element {
                   <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
                     <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={`${mainClassName}__specialization`} readonly={!isEditing} />
                   </PersonalAccountBlock>
+                  <CustomSelect
+                    name='location'
+                    caption='Локация'
+                    //! отладка
+                    startOption={{ value: '111', title: '2222' }}
+                    options={LOCATIONS}
+                    extraClassName={`${mainClassName}__select`}
+                    readonly={!isEditing}
+                  />
                   <div className={`custom-select--readonly custom-select ${mainClassName}__select`}>
                     <span className="custom-select__label">Локация</span>
                     <div className="custom-select__placeholder">ст. м. Адмиралтейская</div>

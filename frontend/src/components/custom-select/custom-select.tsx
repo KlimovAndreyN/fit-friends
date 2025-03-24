@@ -9,10 +9,12 @@ type CustomSelectProps = {
   options: Option[];
   onChange?: (selected: Option | null) => void;
   startOption?: Option;
+  extraClassName?: string;
+  readonly?: boolean;
 }
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
-  const { name, caption, options, onChange, startOption } = props;
+  const { name, caption, options, onChange, startOption, extraClassName, readonly } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(startOption);
 
@@ -26,7 +28,13 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
     setIsOpen(false);
   };
 
-  const divClassName = classNames('custom-select', { 'custom-select--not-selected': !startOption && !selectedOption, 'is-open': isOpen });
+  const mainClassName = 'custom-select';
+  const divClassName = classNames(
+    { [`${mainClassName}--readonly`]: readonly },
+    'custom-select',
+    { [`${mainClassName}--not-selected`]: !startOption && !selectedOption, 'is-open': isOpen },
+    extraClassName
+  );
   const value = (selectedOption) ? selectedOption.value : startOption?.value;
   const title = (selectedOption) ? selectedOption.title : startOption?.title;
 
@@ -38,8 +46,12 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       */}
       <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
       <div className="custom-select__placeholder">{title}</div>
-      <input className='visually-hidden' type="text" readOnly name={name} defaultValue={value} />
-      <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" onClick={toggleDropdown}>
+      {
+        (readonly)
+          ? null
+          : <input className='visually-hidden' type="text" readOnly name={name} defaultValue={value} />
+      }
+      <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" onClick={toggleDropdown} disabled={readonly}>
         <span className="custom-select__text" />
         <span className="custom-select__icon">
           <svg width="15" height="6" aria-hidden="true">
@@ -49,17 +61,19 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       </button>
       <ul className="custom-select__list" role="listbox">
         {
-          options.map(
-            (option) => (
-              <li
-                key={option.value}
-                className="custom-select__item"
-                onClick={() => handleListItemClick(option)}
-              >
-                {option.title}
-              </li>
+          (readonly)
+            ? null
+            : options.map(
+              (option) => (
+                <li
+                  key={option.value}
+                  className="custom-select__item"
+                  onClick={() => handleListItemClick(option)}
+                >
+                  {option.title}
+                </li>
+              )
             )
-          )
         }
       </ul>
     </div>
