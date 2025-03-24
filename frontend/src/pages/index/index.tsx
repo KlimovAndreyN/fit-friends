@@ -181,8 +181,7 @@ function Index(): JSX.Element {
                     <img src="img/content/thumbnails/nearest-gym-01.jpg" srcSet="img/content/thumbnails/nearest-gym-01@2x.jpg 2x" width="330" height="190" alt="" />
                   </picture>
                 </div>
-                {/*
-                //! не понятно что в маркапах
+                {/* //! закоментировано в маркапах
                 <!-- <p class="thumbnail-spec-gym__type">Ближайший зал</p> -->
                 <div class="thumbnail-spec-gym__header", align ="center",>
                 */}
@@ -406,8 +405,7 @@ function Index(): JSX.Element {
                         <img src="img/content/thumbnails/user-04.jpg" srcSet="img/content/thumbnails/user-04@2x.jpg 2x" width="82" height="82" alt="" />
                       </picture>
                     </div>
-                    {/*
-                    //! закоментировано в маркапах
+                    {/* //! закоментировано в маркапах
                       <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
                         <svg width="12" height="12" aria-hidden="true">
                           <use xlinkHref="#icon-crown"></use>
@@ -489,8 +487,7 @@ function Index(): JSX.Element {
                         <img src="img/content/thumbnails/user-07.jpg" srcSet="img/content/thumbnails/user-07@2x.jpg 2x" width="82" height="82" alt="" />
                       </picture>
                     </div>
-                    {/*
-                    //! закоментировано в маркапах
+                    {/* //! закоментировано в маркапах
                       <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
                           <svg width="12" height="12" aria-hidden="true">
                             <use xlinkHref="#icon-crown"></use>
