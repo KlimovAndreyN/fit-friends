@@ -12,10 +12,11 @@ cd ~/fit-friends
 
 # Скопировать .env-example -> .env:
 cd backend/apps
-cp account/.env-example account/.env
-cp api/.env-example api/.env
 cp file-storage/.env-example file-storage/.env
 cp notify/.env-example notify/.env
+cp account/.env-example account/.env
+cp fit/.env-example fit/.env
+cp api/.env-example api/.env
 cd ../../frontend
 cp .env-example .env
 
@@ -28,10 +29,10 @@ cd backend
 npm install
 
 # сформировать PrismaClient
-#npx nx run fit:db:generate
+npx nx run fit:db:generate
 
 # инициализировать БД postgres
-#npx nx run fit:db:migrate
+npx nx run fit:db:migrate
 
 # наполнение тестовыми данными
 #npx nx run account:db:seed
