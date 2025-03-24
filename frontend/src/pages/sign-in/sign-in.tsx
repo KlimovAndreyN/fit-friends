@@ -42,8 +42,21 @@ function SignIn(): JSX.Element {
   return (
     <PopupForm {...popupFormProps} >
       <div className="sign-in">
-        <CustomInput divExtraClassName={divExtraClassName} name={FormFieldName.Email} type='email' label='E-mail' required />
-        <CustomInput divExtraClassName={divExtraClassName} name={FormFieldName.Password} type='password' label='Пароль' required autoComplete='off' />
+        <CustomInput
+          divExtraClassName={divExtraClassName}
+          name={FormFieldName.Email}
+          type='email'
+          label='E-mail'
+          required
+        />
+        <CustomInput
+          divExtraClassName={divExtraClassName}
+          name={FormFieldName.Password}
+          type='password'
+          label='Пароль'
+          required
+          autoComplete='off'
+        />
         <button className={submitClassName} type="submit">Продолжить</button>
       </div>
     </PopupForm>

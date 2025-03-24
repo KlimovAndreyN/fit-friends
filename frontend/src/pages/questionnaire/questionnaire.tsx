@@ -64,13 +64,27 @@ function Questionnaire(): JSX.Element {
         <h1 className="visually-hidden">Опросник</h1>
         <div className={`questionnaire-${endingClassName}__wrapper`}>
           <QuestionnairebBlock legend='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
-            <SpecializationsCheckbox name={FormFieldName.Spec} values={[...DefaultUser.SPECIALISATIONS]} divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
+            <SpecializationsCheckbox
+              name={FormFieldName.Spec}
+              values={[...DefaultUser.SPECIALISATIONS]}
+              divExtraClassName={`questionnaire-${endingClassName}__specializations`}
+            />
           </QuestionnairebBlock>
           <QuestionnairebBlock legend='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
-            <CustomToggleRadio name={FormFieldName.Time} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
+            <CustomToggleRadio
+              name={FormFieldName.Time}
+              divExtraClassName={`questionnaire-${endingClassName}__radio`}
+              options={TIMES}
+              value={DefaultUser.TIME}
+            />
           </QuestionnairebBlock>
           <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={endingClassName} >
-            <CustomToggleRadio name={FormFieldName.Level} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
+            <CustomToggleRadio
+              name={FormFieldName.Level}
+              divExtraClassName={`questionnaire-${endingClassName}__radio`}
+              options={USER_LEVELS}
+              value={DefaultUser.LEVEL}
+            />
           </QuestionnairebBlock>
           <QuestionnairebBlock divExtraClassName={endingClassName} >
             <Fragment>

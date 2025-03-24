@@ -89,15 +89,36 @@ function SignUp(): JSX.Element {
           </div>
         </div>
         <div className="sign-up__data">
-          <CustomInput name={FormFieldName.Name} type='text' label='Имя' required />
-          <CustomInput name={FormFieldName.Email} type='email' label='E-mail' required />
-          <CustomInput name={FormFieldName.Birthday} type='date' label='Дата рождения' max='2099-12-31' />
+          <CustomInput
+            name={FormFieldName.Name}
+            type='text'
+            label='Имя'
+            required
+          />
+          <CustomInput
+            name={FormFieldName.Email}
+            type='email'
+            label='E-mail'
+            required
+          />
+          <CustomInput
+            name={FormFieldName.Birthday}
+            type='date'
+            label='Дата рождения'
+            max='2099-12-31'
+          />
           <CustomSelect
             name={FormFieldName.Location}
             caption='Ваша локация'
             options={LOCATIONS}
           />
-          <CustomInput name={FormFieldName.Password} type='password' label='Пароль' required autoComplete='off' />
+          <CustomInput
+            name={FormFieldName.Password}
+            type='password'
+            label='Пароль'
+            required
+            autoComplete='off'
+          />
           <SignUpUserGengers name={FormFieldName.Sex} />
         </div>
         <SignUpUserRoles name={FormFieldName.Role} />
@@ -112,7 +133,13 @@ function SignUp(): JSX.Element {
         </div>
         <div className="sign-up__checkbox">
           <label>
-            <input type="checkbox" value="user-agreement" name={FormFieldName.UserAgreement} checked={checkedUserAgreementInput} onChange={handleUserAgreementInputChange} />
+            <input
+              type="checkbox"
+              value="user-agreement"
+              name={FormFieldName.UserAgreement}
+              checked={checkedUserAgreementInput}
+              onChange={handleUserAgreementInputChange}
+            />
             <span className="sign-up__checkbox-icon">
               <svg width="9" height="6" aria-hidden="true">
                 <use xlinkHref="#arrow-check" />
