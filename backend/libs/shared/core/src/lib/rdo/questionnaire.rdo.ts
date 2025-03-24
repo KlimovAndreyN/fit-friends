@@ -2,7 +2,7 @@ import { OmitType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 import { QuestionnaireWithFileIdsRdo } from './questionnaire-with-file-ids.rdo';
-import { IQuestionnaireRdo } from '../interfaces/rdo/i-questionnaire.dto';
+import { IQuestionnaireRdo } from '../interfaces/rdo/i-questionnaire.rdo';
 
 export class QuestionnaireRdo extends OmitType(QuestionnaireWithFileIdsRdo, ['fileIds']) implements IQuestionnaireRdo {
   //!@ApiProperty()

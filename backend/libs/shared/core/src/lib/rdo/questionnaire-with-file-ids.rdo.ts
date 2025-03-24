@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { IQuestionnaireWithFileIdsRdo } from '../interfaces/rdo/i-questionnaire-with-file-ids.dto';
+import { IQuestionnaireWithFileIdsRdo } from '../interfaces/rdo/i-questionnaire-with-file-ids.rdo';
 import { BaseQuestionnaireDto } from '../dto/base-questionnaire.dto';
 
 export class QuestionnaireWithFileIdsRdo
