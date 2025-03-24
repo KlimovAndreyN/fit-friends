@@ -1,4 +1,4 @@
-export enum Specialisation {
+export enum Specialization {
   Aerobics = 'aerobics',
   Boxing = 'boxing',
   Crossfit = 'crossfit',

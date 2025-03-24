@@ -4,7 +4,7 @@ import { Expose } from 'class-transformer';
 
 import { Questionnaire } from '../interfaces/questionnaire.interface';
 import { ICreateQuestionnaireDto } from '../interfaces/dto/i-create-questionnaire.dto';
-import { Specialisation } from '../types/specialisation.enum';
+import { Specialization } from '../types/specialization.enum';
 import { UserLevel } from '../types/user-level.enum';
 import { Duration } from '../types/duration.enum';
 import { UserRole } from '../types/user-role.enum';
@@ -31,9 +31,9 @@ export class BaseQuestionnaireDto {
   @ApiProperty(QuestionnaireApiProperty.Specialisations)
   @Expose()
   @IsArray()
-  @ArrayMaxSize(Object.values(Specialisation).length)
+  @ArrayMaxSize(Object.values(Specialization).length)
   @IsString({ each: true })
-  @IsEnum(Specialisation, { each: true })
+  @IsEnum(Specialization, { each: true })
   specializations: Questionnaire['specializations'];
 
   @ApiProperty(QuestionnaireApiProperty.Level)
