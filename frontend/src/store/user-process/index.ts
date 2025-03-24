@@ -1,24 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IUserInfoRdo, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
+import { IQuestionnaireRdo, IUserRdo, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
 import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
 import { StoreSlice } from '../../const';
 
-const EMPTY_USER_INFO: IUserInfoRdo = {
+const EMPTY_USER: IUserRdo = {
+  id: '',
   //! отладка
   //name: '',
   name: 'Валерия',
   avatarPath: '',
+  email: '',
+  role: UserRole.Sportsman,
+  backgroundPath: '',
   about: 'asdas asd asd asdas asd asd',
   //avatarPath: '/img/content/user-photo-1.png',
   gender: UserGender.NotMatter,
+  registrationDate: '',
+  metroStationName: MetroStationName.Petrogradskaya
+};
+
+const EMPTY_QUESTIONNAIRE: IQuestionnaireRdo = {
+  //! отладка
   level: UserLevel.Beginner,
-  metroStationName: MetroStationName.Petrogradskaya,
   specializations: [Specialization.Aerobics, Specialization.Crossfit],
-  ready: false
+  readyForTraining: false
 };
 
 const initialState: UserProcess = {
@@ -30,7 +39,10 @@ const initialState: UserProcess = {
   isFetchUserInfoExecuting: false,
   existQuestionnaire: false,
   userRole: UserRole.Sportsman,
-  userInfo: EMPTY_USER_INFO
+  userInfo: {
+    user: EMPTY_USER,
+    questionnaire: EMPTY_QUESTIONNAIRE
+  }
 };
 
 export const userProcess = createSlice(

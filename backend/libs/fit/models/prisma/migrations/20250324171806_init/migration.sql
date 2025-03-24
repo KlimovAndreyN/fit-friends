@@ -1,17 +1,15 @@
 -- CreateTable
 CREATE TABLE "questionnaires" (
-    "id" TEXT NOT NULL,
     "user_id" VARCHAR(50) NOT NULL,
     "specializations" VARCHAR(50)[],
     "level" VARCHAR(50) NOT NULL,
+    "ready_for_training" BOOLEAN NOT NULL,
     "time" VARCHAR(50),
     "calories_lose" INTEGER,
     "calories_waste" INTEGER,
     "file_ids" VARCHAR(50)[],
     "description" VARCHAR(5000),
-    "individual_training" BOOLEAN,
-
-    CONSTRAINT "questionnaires_pkey" PRIMARY KEY ("id")
+    "individual_training" BOOLEAN
 );
 
 -- CreateIndex

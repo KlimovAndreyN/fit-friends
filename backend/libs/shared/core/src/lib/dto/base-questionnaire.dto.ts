@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMaxSize, IsArray, IsEnum, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Expose } from 'class-transformer';
 
+import { User } from '../interfaces/user.interface';
 import { Questionnaire } from '../interfaces/questionnaire.interface';
 import { ICreateQuestionnaireDto } from '../interfaces/dto/i-create-questionnaire.dto';
 import { Specialization } from '../types/specialization.enum';
@@ -16,17 +17,13 @@ import { UserApiProperty } from '../constants/api-property/user.api-property';
 //! иногда разное описание например дата рождения, в dto и кратное и полное, а rdo только полное
 // QuestionnaireApiDoc
 export class BaseQuestionnaireDto {
-  @ApiProperty(QuestionnaireApiProperty.Id)
-  @Expose()
-  public id: Questionnaire['id'];
-
   @ApiProperty(UserApiProperty.Id)
   @Expose()
   public userId: Questionnaire['userId'];
 
   @ApiProperty(UserApiProperty.Role)
   @IsEnum(UserRole)
-  public userRole: UserRole;
+  public userRole: User['role'];
 
   @ApiProperty(QuestionnaireApiProperty.Specializations)
   @Expose()
@@ -39,13 +36,13 @@ export class BaseQuestionnaireDto {
   @ApiProperty(QuestionnaireApiProperty.Level)
   @Expose()
   @IsEnum(UserLevel)
-  level: UserLevel;
+  level: Questionnaire['level'];
 
   @ApiProperty(QuestionnaireApiProperty.Time)
   @Expose()
   @IsEnum(Duration)
   @IsOptional() //!
-  time: Duration;
+  time: Questionnaire['time'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()
@@ -53,7 +50,7 @@ export class BaseQuestionnaireDto {
   @Min(QuestionnaireValidation.CaloriesLose.Min)
   @Max(QuestionnaireValidation.CaloriesLose.Max)
   @IsOptional() //!
-  caloriesLose: number;
+  caloriesLose: Questionnaire['caloriesLose'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesWaste)
   @Expose()
@@ -61,7 +58,7 @@ export class BaseQuestionnaireDto {
   @Min(QuestionnaireValidation.CaloriesWaste.Min)
   @Max(QuestionnaireValidation.CaloriesWaste.Max)
   @IsOptional() //!
-  caloriesWaste: number;
+  caloriesWaste: Questionnaire['caloriesWaste'];
 
   //! еще будут данные от опросника тренера
   @IsOptional() //!

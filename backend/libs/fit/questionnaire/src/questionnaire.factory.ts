@@ -15,6 +15,7 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
       userId,
       specializations: dto.specializations,
       level: dto.level,
+      readyForTraining: false, //! по ТЗ не уточнения как по умолчанию
       time: dto.time,
       caloriesLose: dto.caloriesLose,
       caloriesWaste: dto.caloriesWaste

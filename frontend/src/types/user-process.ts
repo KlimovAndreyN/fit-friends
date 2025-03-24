@@ -1,4 +1,4 @@
-import { IUserInfoRdo, UserRole } from '@backend/shared';
+import { IQuestionnaireRdo, IUserRdo, UserRole } from '@backend/shared';
 
 import { AuthorizationStatus } from './types';
 
@@ -11,5 +11,8 @@ export type UserProcess = {
   isFetchUserInfoExecuting: boolean;
   existQuestionnaire: boolean;
   userRole: UserRole;
-  userInfo: IUserInfoRdo;
+  userInfo: {
+    user: IUserRdo; //! | null; ?
+    questionnaire: IQuestionnaireRdo; //! | null; ?
+  };
 }

@@ -4,6 +4,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
   public userId: Questionnaire['userId'];
   public specializations: Questionnaire['specializations'];
   public level: Questionnaire['level'];
+  public readyForTraining: Questionnaire['readyForTraining'];
   public time?: Questionnaire['time'];
   public caloriesLose?: Questionnaire['caloriesLose'];
   public caloriesWaste?: Questionnaire['caloriesWaste'];
@@ -22,10 +23,10 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
       return;
     }
 
-    this.id = questionnaire.id ?? undefined;
     this.userId = questionnaire.userId;
     this.specializations = [...questionnaire.specializations];
     this.level = questionnaire.level;
+    this.readyForTraining = questionnaire.readyForTraining;
     this.time = questionnaire.time;
     this.caloriesLose = questionnaire.caloriesLose;
     this.caloriesWaste = questionnaire.caloriesWaste;
@@ -36,10 +37,10 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
 
   public toPOJO(): Questionnaire {
     return {
-      id: this.id,
       userId: this.userId,
       specializations: this.specializations,
       level: this.level,
+      readyForTraining: this.readyForTraining,
       time: this.time,
       caloriesLose: this.caloriesLose,
       caloriesWaste: this.caloriesWaste,

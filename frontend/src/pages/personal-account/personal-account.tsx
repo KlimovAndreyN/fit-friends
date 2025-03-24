@@ -16,7 +16,7 @@ function PersonalAccount(): JSX.Element {
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
-  const { caloriesWaste } = userInfo;
+  const { questionnaire: { caloriesWaste } } = userInfo;
 
   useEffect(
     () => {

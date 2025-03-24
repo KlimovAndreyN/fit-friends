@@ -2,11 +2,6 @@ import { Duration } from '../../types/duration.enum';
 import { UserLevel } from '../../types/user-level.enum';
 
 export const QuestionnaireApiProperty = {
-  Id: {
-    description: 'Questionnaire ID',
-    example: '658170cbb954e9f50000ccf4',
-    type: 'string'
-  },
   Specializations: {
     description: 'The user specializations',
     //description: 'Specializations - warning! not correct send string[] on swagger!',  //! нужно при swagger fromdata c api

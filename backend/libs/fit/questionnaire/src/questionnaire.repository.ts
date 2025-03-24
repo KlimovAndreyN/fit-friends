@@ -23,16 +23,16 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
       throw new NotFoundException('Questionnaire for userId' + userId + 'not found');
     }
 
-    const { id, caloriesLose, caloriesWaste, description, fileIds, individualTraining } = record;
+    const { readyForTraining, caloriesLose, caloriesWaste, description, fileIds, individualTraining } = record;
     const specializations: Specialization[] = record.specializations.map((specialization) => (specialization as Specialization));
     const level: UserLevel = record.level as UserLevel;
     const time: Duration = record.time as Duration;
 
     const questionnaire: Questionnaire = {
-      id,
       userId,
       specializations,
       level,
+      readyForTraining,
       time,
       caloriesLose,
       caloriesWaste,
@@ -46,19 +46,17 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
 
   public async save(entity: QuestionnaireEntity): Promise<void> {
     const pojoEntity = entity.toPOJO();
-    const record = await this.client.questionnaire.create({
+    await this.client.questionnaire.create({
       data: { ...pojoEntity }
     });
-
-    entity.id = record.id;
   }
 
   public async update(entity: QuestionnaireEntity): Promise<void> {
-    const { id } = entity;
+    const { userId } = entity;
     const pojoEntity = entity.toPOJO();
 
     await this.client.questionnaire.update({
-      where: { id },
+      where: { userId },
       data: { ...pojoEntity }
     });
   }

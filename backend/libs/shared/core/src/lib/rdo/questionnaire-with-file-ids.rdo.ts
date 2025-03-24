@@ -1,5 +1,7 @@
 import { PickType } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
+import { Questionnaire } from '../interfaces/questionnaire.interface';
 import { IQuestionnaireWithFileIdsRdo } from '../interfaces/rdo/i-questionnaire-with-file-ids.rdo';
 import { BaseQuestionnaireDto } from '../dto/base-questionnaire.dto';
 
@@ -16,4 +18,9 @@ export class QuestionnaireWithFileIdsRdo
       'fileIds',
       'individualTraining'
     ]
-  ) implements IQuestionnaireWithFileIdsRdo { }
+  ) implements IQuestionnaireWithFileIdsRdo {
+  //!
+  //@ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
+  @Expose()
+  readyForTraining: Questionnaire['readyForTraining']
+}

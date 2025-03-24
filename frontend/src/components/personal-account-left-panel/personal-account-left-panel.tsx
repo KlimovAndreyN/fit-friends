@@ -16,7 +16,9 @@ function PersonalAccountLeftPanel(): JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
   const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
-  const { name, avatarPath, about, specializations, metroStationName, gender, level } = userInfo;
+  const { user, questionnaire } = userInfo;
+  const { name, avatarPath, about, metroStationName, gender } = user;
+  const { specializations, level } = questionnaire;
 
   //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
 

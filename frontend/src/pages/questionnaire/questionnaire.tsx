@@ -41,7 +41,6 @@ function Questionnaire(): JSX.Element {
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const dto: ICreateQuestionnaireDto = {
-      userRole,
       level,
       specializations,
       time,

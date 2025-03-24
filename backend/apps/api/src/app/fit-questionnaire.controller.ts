@@ -2,7 +2,10 @@ import { Body, Controller, Get, Post, Req, UseFilters, UseGuards } from '@nestjs
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
 
-import { BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute, RequestWithRequestIdAndUserId, CreateQuestionnaireDto, QuestionnaireRdo } from '@backend/shared/core';
+import {
+  BearerAuth, ApiServiceRoute, QuestionnaireRoute, ServiceRoute,
+  RequestWithRequestIdAndUserId, CreateQuestionnaireDto, QuestionnaireRdo
+} from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -36,6 +39,7 @@ export class FitQuestionnaireController {
     @Body() dto: CreateQuestionnaireDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
+    //! подкинуть роль пользователя через Sub или отдельный добавить через guard
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
     const url = this.fitService.getUrl(ServiceRoute.Questionnaire);
