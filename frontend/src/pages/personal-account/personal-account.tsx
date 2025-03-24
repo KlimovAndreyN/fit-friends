@@ -4,6 +4,7 @@ import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import CustomInput from '../../components/custom-input/custom-input';
+import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-process/selectors';
@@ -15,7 +16,7 @@ function PersonalAccount(): JSX.Element {
   const [isEditing/*, setIsEditing*/] = useState(false);
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userInfo = useAppSelector(getUserInfo);
-  const { name, avatarPath, about } = userInfo;
+  const { name, avatarPath, about, specializations } = userInfo;
 
   useEffect(
     () => {
@@ -78,56 +79,7 @@ function PersonalAccount(): JSX.Element {
                   </div>
                   <div className="user-info__section">
                     <h2 className="user-info__title user-info__title--specialization">Специализация</h2>
-                    <div className="specialization-checkbox user-info__specialization">
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="yoga" defaultChecked />
-                          <span className="btn-checkbox__btn">Йога</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="running" />
-                          <span className="btn-checkbox__btn">Бег</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="aerobics" defaultChecked />
-                          <span className="btn-checkbox__btn">Аэробика</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="boxing" />
-                          <span className="btn-checkbox__btn">Бокс</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="power" />
-                          <span className="btn-checkbox__btn">Силовые</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="pilates" defaultChecked />
-                          <span className="btn-checkbox__btn">Пилатес</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="stretching" defaultChecked />
-                          <span className="btn-checkbox__btn">Стрейчинг</span>
-                        </label>
-                      </div>
-                      <div className="btn-checkbox">
-                        <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="crossfit" />
-                          <span className="btn-checkbox__btn">Кроссфит</span>
-                        </label>
-                      </div>
-                    </div>
+                    <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={'user-info__specialization'} readonly={!isEditing} />
                   </div>
                   <div className="custom-select--readonly custom-select user-info__select">
                     <span className="custom-select__label">Локация</span>

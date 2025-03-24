@@ -17,7 +17,7 @@ const EMPTY_USER_INFO: IUserInfoRdo = {
   gender: UserGender.NotMatter,
   level: UserLevel.Beginner,
   metroStationName: MetroStationName.Petrogradskaya,
-  specializations: [Specialization.Aerobics],
+  specializations: [Specialization.Aerobics, Specialization.Crossfit],
   ready: false
 };
 

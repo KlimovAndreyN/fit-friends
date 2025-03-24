@@ -67,7 +67,7 @@ function Questionnaire(): JSX.Element {
         <h1 className="visually-hidden">Опросник</h1>
         <div className={`questionnaire-${endingClassName}__wrapper`}>
           <QuestionnairebBlock caption='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
-            <SpecializationsCheckbox name='specialization' divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
+            <SpecializationsCheckbox name='specialization' values={[...DefaultUser.SPECIALISATIONS]} divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
           </QuestionnairebBlock>
           <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
             <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
