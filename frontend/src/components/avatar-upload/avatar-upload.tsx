@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
@@ -6,10 +6,11 @@ type AvatarUploadProps = {
   name: string;
   path?: string;
   forPersonalAccount?: boolean;
+  isShowButtons?: boolean;
   disabled?: boolean;
 }
 
-function AvatarUpload({ name, path = '', forPersonalAccount, disabled }: AvatarUploadProps): JSX.Element {
+function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, disabled }: AvatarUploadProps): JSX.Element {
   const [avatarPath, setAvatarPath] = useState<string>(path);
   const spanClassName = (avatarPath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
   const inputName = (avatarPath) ? name : undefined;
@@ -23,23 +24,45 @@ function AvatarUpload({ name, path = '', forPersonalAccount, disabled }: AvatarU
 
   const handleImageUploadInputChange = (filePath: string) => {
     setAvatarPath(filePath);
+    //! нужно прокинуть на верх файл, он вторым параметром
   };
 
   return (
-    <div className="input-load-avatar">
-      <label>
-        <ImageUploadInput
-          name={inputName}
-          className='visually-hidden'
-          acceptTypes='image/png, image/jpeg'
-          onChange={handleImageUploadInputChange}
-          disabled={disabled}
-        />
-        <span className={spanClassName}>
-          {image}
-        </span>
-      </label>
-    </div>
+    <Fragment>
+      <div className="input-load-avatar">
+        <label>
+          <ImageUploadInput
+            name={inputName}
+            className='visually-hidden'
+            acceptTypes='image/png, image/jpeg'
+            onChange={handleImageUploadInputChange}
+            disabled={disabled}
+          />
+          <span className={spanClassName}>
+            {image}
+          </span>
+        </label>
+      </div>
+      {
+        //! нужны обработчики на кнопки
+        (isShowButtons)
+          ?
+          <div className="user-info-edit__controls">
+            <button className="user-info-edit__control-btn" aria-label="обновить">
+              <svg width="16" height="16" aria-hidden="true">
+                <use xlinkHref="#icon-change"></use>
+              </svg>
+            </button>
+            <button className="user-info-edit__control-btn" aria-label="удалить">
+              <svg width="14" height="16" aria-hidden="true">
+                <use xlinkHref="#icon-trash"></use>
+              </svg>
+            </button>
+          </div>
+          :
+          null
+      }
+    </Fragment>
   );
 }
 

@@ -45,7 +45,8 @@ function PersonalAccount(): JSX.Element {
               <h1 className="visually-hidden">Личный кабинет</h1>
               <section className={`user-info${endingClassName}`}>
                 <div className="user-info__header">
-                  <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount disabled={!isEditing} />
+                  {/* //! нужен будет обработчик при изменнии файла в режиме редактирования */}
+                  <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} disabled={!isEditing} />
                 </div>
                 <form className="user-info__form" action="#" method="post">
                   <button className="btn-flat btn-flat--underlined user-info__edit-button" type="button" aria-label="Редактировать">
