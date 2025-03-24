@@ -35,7 +35,7 @@ function PersonalAccount(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log(userInfo);
 
-  const endingClassName = (isEditing) ? '-edit' : '';
+  const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
   const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
 
   return (
@@ -46,26 +46,32 @@ function PersonalAccount(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              <section className={`user-info${endingClassName}`}>
-                <div className="user-info__header">
+              <section className={mainClassName}>
+                <div className={`${mainClassName}__header`}>
                   {/* //! нужен будет обработчик при изменнии файла в режиме редактирования */}
                   <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
                 </div>
-                <form className="user-info__form" action="#" method="post">
-                  <button className="btn-flat btn-flat--underlined user-info__edit-button" type="button" aria-label={buttonCaption}>
+                {/* //! нужен будет обработчик при сохранении формы, если редактирование */}
+                <form className={`${mainClassName}__form`} action="#" method="post">
+                  {/* //! нужен будет обработчик при нажатии на кнопку, если просмотр */}
+                  <button
+                    className={`btn-flat btn-flat--underlined ${mainClassName}__${(isEditing) ? 'save' : 'edit'}-button`}
+                    type={(isEditing) ? 'submit' : 'button'}
+                    aria-label={buttonCaption}
+                  >
                     <svg width="12" height="12" aria-hidden="true">
                       <use xlinkHref="#icon-edit"></use>
                     </svg>
                     <span>{buttonCaption}</span>
                   </button>
-                  <div className="user-info__section">
-                    <h2 className="user-info__title">Обо мне</h2>
-                    <CustomInput type='text' name='name' label='Имя' value={name} divExtraClassName='user-info__input' readonly={!isEditing} />
-                    <CustomInput type='textarea' name='description' label='Описание' value={about} divExtraClassName='user-info__textarea' readonly={!isEditing} />
+                  <div className={`${mainClassName}__section`}>
+                    <h2 className={`${mainClassName}__title`}>Обо мне</h2>
+                    <CustomInput type='text' name='name' label='Имя' value={name} divExtraClassName={`${mainClassName}__input`} readonly={!isEditing} />
+                    <CustomInput type='textarea' name='description' label='Описание' value={about} divExtraClassName={`${mainClassName}__textarea`} readonly={!isEditing} />
                   </div>
-                  <div className="user-info__section user-info__section--status">
-                    <h2 className="user-info__title user-info__title--status">Статус</h2>
-                    <div className="custom-toggle custom-toggle--switch user-info__toggle">
+                  <div className={`${mainClassName}__section ${mainClassName}__section--status`}>
+                    <h2 className={`${mainClassName}__title ${mainClassName}__title--status`}>Статус</h2>
+                    <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
                       <label>
                         <input type="checkbox" name="ready-for-training" defaultChecked />
                         <span className="custom-toggle__icon">
@@ -77,11 +83,11 @@ function PersonalAccount(): JSX.Element {
                       </label>
                     </div>
                   </div>
-                  <div className="user-info__section">
-                    <h2 className="user-info__title user-info__title--specialization">Специализация</h2>
-                    <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={'user-info__specialization'} readonly={!isEditing} />
+                  <div className={`${mainClassName}__section`}>
+                    <h2 className={`${mainClassName}__title ${mainClassName}__title--specialization`}>Специализация</h2>
+                    <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={`${mainClassName}__specialization`} readonly={!isEditing} />
                   </div>
-                  <div className="custom-select--readonly custom-select user-info__select">
+                  <div className={`custom-select--readonly custom-select ${mainClassName}__select`}>
                     <span className="custom-select__label">Локация</span>
                     <div className="custom-select__placeholder">ст. м. Адмиралтейская</div>
                     <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled>
@@ -95,7 +101,7 @@ function PersonalAccount(): JSX.Element {
                     <ul className="custom-select__list" role="listbox">
                     </ul>
                   </div>
-                  <div className="custom-select--readonly custom-select user-info__select">
+                  <div className={`custom-select--readonly custom-select ${mainClassName}__select`} >
                     <span className="custom-select__label">Пол</span>
                     <div className="custom-select__placeholder">Женский</div>
                     <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled>
@@ -109,7 +115,7 @@ function PersonalAccount(): JSX.Element {
                     <ul className="custom-select__list" role="listbox">
                     </ul>
                   </div>
-                  <div className="custom-select--readonly custom-select user-info__select">
+                  <div className={`custom-select--readonly custom-select ${mainClassName}__select`} >
                     <span className="custom-select__label">Уровень</span>
                     <div className="custom-select__placeholder">Профессионал</div>
                     <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled>
