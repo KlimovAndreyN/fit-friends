@@ -23,7 +23,7 @@ datasource db {
 model Questionnaire {
   id                 String   @id @default(uuid())
   userId             String   @unique @map("user_id") @db.VarChar(50)
-  specialisations    String[] @map("specialisations") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
+  specializations    String[] @map("specializations") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
   level              String   @map("level") @db.VarChar(50)
   time               String?  @map("time") @db.VarChar(50)
   caloriesLose       Int?     @map("calories_lose")

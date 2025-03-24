@@ -42,7 +42,7 @@ function Questionnaire(): JSX.Element {
     const dto: ICreateQuestionnaireDto = {
       userRole,
       level: UserLevel.Professional,
-      specialisations: [Specialisation.Aerobics, Specialisation.Crossfit],
+      specializations: [Specialisation.Aerobics, Specialisation.Crossfit],
       time: Duration.Minutes_80_100,
       caloriesLose: 5000,
       caloriesWaste: 5000

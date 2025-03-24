@@ -13,7 +13,7 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
   public static createFromDto(dto: CreateQuestionnaireDto, userId: string): QuestionnaireEntity {
     const questionnaire: Questionnaire = {
       userId,
-      specialisations: dto.specialisations,
+      specializations: dto.specializations,
       level: dto.level,
       time: dto.time,
       caloriesLose: dto.caloriesLose,

@@ -5,7 +5,7 @@ import { UserLevel } from '../types/user-level.enum';
 export interface Questionnaire {
   id?: string;
   userId: string;
-  specialisations: Specialisation[];
+  specializations: Specialisation[];
   level: UserLevel;
   time?: Duration;
   caloriesLose?: number;

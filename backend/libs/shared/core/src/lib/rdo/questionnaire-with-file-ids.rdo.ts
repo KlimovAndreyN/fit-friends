@@ -7,7 +7,7 @@ export class QuestionnaireWithFileIdsRdo
   extends PickType(
     BaseQuestionnaireDto,
     [
-      'specialisations',
+      'specializations',
       'level',
       'time',
       'caloriesLose',

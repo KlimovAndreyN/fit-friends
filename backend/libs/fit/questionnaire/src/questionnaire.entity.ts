@@ -2,7 +2,7 @@ import { Entity, StorableEntity, Questionnaire } from '@backend/shared/core';
 
 export class QuestionnaireEntity extends Entity implements StorableEntity<Questionnaire> {
   public userId: Questionnaire['userId'];
-  public specialisations: Questionnaire['specialisations'];
+  public specializations: Questionnaire['specializations'];
   public level: Questionnaire['level'];
   public time?: Questionnaire['time'];
   public caloriesLose?: Questionnaire['caloriesLose'];
@@ -24,7 +24,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
 
     this.id = questionnaire.id ?? undefined;
     this.userId = questionnaire.userId;
-    this.specialisations = [...questionnaire.specialisations];
+    this.specializations = [...questionnaire.specializations];
     this.level = questionnaire.level;
     this.time = questionnaire.time;
     this.caloriesLose = questionnaire.caloriesLose;
@@ -38,7 +38,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
     return {
       id: this.id,
       userId: this.userId,
-      specialisations: this.specialisations,
+      specializations: this.specializations,
       level: this.level,
       time: this.time,
       caloriesLose: this.caloriesLose,

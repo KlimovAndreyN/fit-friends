@@ -7,7 +7,7 @@ export class CreateQuestionnaireWithFileIdsDto extends PickType(
   BaseQuestionnaireDto,
   [
     'userRole',
-    'specialisations',
+    'specializations',
     'level',
     'time',
     'caloriesLose',

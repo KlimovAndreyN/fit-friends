@@ -34,7 +34,7 @@ export class BaseQuestionnaireDto {
   @ArrayMaxSize(Object.values(Specialisation).length)
   @IsString({ each: true })
   @IsEnum(Specialisation, { each: true })
-  specialisations: Questionnaire['specialisations'];
+  specializations: Questionnaire['specializations'];
 
   @ApiProperty(QuestionnaireApiProperty.Level)
   @Expose()
