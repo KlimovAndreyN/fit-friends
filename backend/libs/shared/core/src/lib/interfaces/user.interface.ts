@@ -12,5 +12,6 @@ export interface User {
   gender: UserGender;
   role: UserRole;
   avatarFileId?: string;
+  about?: string;
   createdAt?: Date;
 }

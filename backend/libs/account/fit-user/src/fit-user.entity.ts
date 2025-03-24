@@ -13,6 +13,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public gender: AuthUser['gender'];
   public role: AuthUser['role'];
   public avatarFileId: AuthUser['avatarFileId'];
+  public about: AuthUser['about'];
   public passwordHash: AuthUser['passwordHash'];
   public createdAt: AuthUser['createdAt'];
 
@@ -36,6 +37,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.gender = user.gender;
     this.role = user.role;
     this.avatarFileId = user.avatarFileId || '';
+    this.about = user.about;
     this.backgroundPath = user.backgroundPath;
     this.passwordHash = user.passwordHash;
     this.createdAt = user.createdAt;
@@ -52,6 +54,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       gender: this.gender,
       role: this.role,
       avatarFileId: this.avatarFileId,
+      about: this.about,
       passwordHash: this.passwordHash,
       createdAt: this.createdAt
     }
