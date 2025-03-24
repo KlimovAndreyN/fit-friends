@@ -5,9 +5,10 @@ type ImageUploadInputProps = {
   className?: string;
   acceptTypes?: string;
   onChange: (filePath: string, file: File) => void;
+  disabled?: boolean;
 }
 
-function ImageUploadInput({ name, className, acceptTypes = 'image/*', onChange }: ImageUploadInputProps): JSX.Element {
+function ImageUploadInput({ name, className, acceptTypes = 'image/*', onChange, disabled }: ImageUploadInputProps): JSX.Element {
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files) {
@@ -30,7 +31,9 @@ function ImageUploadInput({ name, className, acceptTypes = 'image/*', onChange }
       className={className}
       type="file"
       name={name}
-      accept={acceptTypes} onChange={handleImageChange}
+      accept={acceptTypes}
+      onChange={handleImageChange}
+      disabled={disabled}
     />
   );
 }

@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
+import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-process/selectors';
@@ -13,6 +14,7 @@ function PersonalAccount(): JSX.Element {
   const [isEditing/*, setIsEditing*/] = useState(false);
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userInfo = useAppSelector(getUserInfo);
+  const { avatarPath } = userInfo;
 
   useEffect(
     () => {
@@ -43,14 +45,7 @@ function PersonalAccount(): JSX.Element {
               <h1 className="visually-hidden">Личный кабинет</h1>
               <section className={`user-info${endingClassName}`}>
                 <div className="user-info__header">
-                  <div className="input-load-avatar">
-                    <label>
-                      <input className="visually-hidden" type="file" name="user-photo-1" accept="image/png, image/jpeg" />
-                      <span className="input-load-avatar__avatar">
-                        <img src="img/content/user-photo-1.png" srcSet="img/content/user-photo-1@2x.png 2x" width="98" height="98" alt="user photo" />
-                      </span>
-                    </label>
-                  </div>
+                  <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount disabled={!isEditing} />
                 </div>
                 <form className="user-info__form" action="#" method="post">
                   <button className="btn-flat btn-flat--underlined user-info__edit-button" type="button" aria-label="Редактировать">

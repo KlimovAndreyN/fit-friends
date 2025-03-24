@@ -10,6 +10,8 @@ import { StoreSlice } from '../../const';
 const EMPTY_USER_INFO: IUserInfoRdo = {
   name: '',
   avatarPath: '',
+  //! отладка
+  //avatarPath: '/img/content/user-photo-1.png',
   gender: UserGender.NotMatter,
   level: UserLevel.Beginner,
   metroStationName: MetroStationName.Petrogradskaya,
