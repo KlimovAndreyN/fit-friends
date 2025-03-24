@@ -66,7 +66,7 @@ function PersonalAccount(): JSX.Element {
                     <h2 className="user-info__title user-info__title--status">Статус</h2>
                     <div className="custom-toggle custom-toggle--switch user-info__toggle">
                       <label>
-                        <input type="checkbox" name="ready-for-training" checked />
+                        <input type="checkbox" name="ready-for-training" defaultChecked />
                         <span className="custom-toggle__icon">
                           <svg width="9" height="6" aria-hidden="true">
                             <use xlinkHref="#arrow-check"></use>
@@ -81,7 +81,7 @@ function PersonalAccount(): JSX.Element {
                     <div className="specialization-checkbox user-info__specialization">
                       <div className="btn-checkbox">
                         <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="yoga" checked />
+                          <input className="visually-hidden" type="checkbox" name="specialization" value="yoga" defaultChecked />
                           <span className="btn-checkbox__btn">Йога</span>
                         </label>
                       </div>
@@ -93,7 +93,7 @@ function PersonalAccount(): JSX.Element {
                       </div>
                       <div className="btn-checkbox">
                         <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="aerobics" checked />
+                          <input className="visually-hidden" type="checkbox" name="specialization" value="aerobics" defaultChecked />
                           <span className="btn-checkbox__btn">Аэробика</span>
                         </label>
                       </div>
@@ -111,13 +111,13 @@ function PersonalAccount(): JSX.Element {
                       </div>
                       <div className="btn-checkbox">
                         <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="pilates" checked />
+                          <input className="visually-hidden" type="checkbox" name="specialization" value="pilates" defaultChecked />
                           <span className="btn-checkbox__btn">Пилатес</span>
                         </label>
                       </div>
                       <div className="btn-checkbox">
                         <label>
-                          <input className="visually-hidden" type="checkbox" name="specialization" value="stretching" checked />
+                          <input className="visually-hidden" type="checkbox" name="specialization" value="stretching" defaultChecked />
                           <span className="btn-checkbox__btn">Стрейчинг</span>
                         </label>
                       </div>
@@ -181,13 +181,13 @@ function PersonalAccount(): JSX.Element {
                         <div className="personal-account-user__input">
                           <label>
                             <span className="personal-account-user__label">План на день, ккал</span>
-                            <input type="text" name="schedule-for-the-day" value="3 300" />
+                            <input type="text" name="schedule-for-the-day" defaultValue="3 300" />
                           </label>
                         </div>
                         <div className="personal-account-user__input">
                           <label>
                             <span className="personal-account-user__label">План на неделю, ккал</span>
-                            <input type="text" name="schedule-for-the-week" value="23 100" />
+                            <input type="text" name="schedule-for-the-week" defaultValue="23 100" />
                           </label>
                         </div>
                       </div>
