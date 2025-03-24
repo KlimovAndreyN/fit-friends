@@ -1,7 +1,9 @@
 import { Navigate } from 'react-router-dom';
 
+import MainSpinner from '../main-spinner/main-spinner';
+
 import { useAppSelector } from '../../hooks';
-import { getExistQuestionnaire } from '../../store/user-process/selectors';
+import { getExistQuestionnaire, getIsExistQuestionnaireExecuting } from '../../store/user-process/selectors';
 import { AppRoute } from '../../const';
 
 type QuestionnaireRouteProps = {
@@ -10,7 +12,12 @@ type QuestionnaireRouteProps = {
 }
 
 function QuestionnaireRoute({ children, isQuestionnaire = false }: QuestionnaireRouteProps): JSX.Element {
+  const isExistQuestionnaireExecuting = useAppSelector(getIsExistQuestionnaireExecuting);
   const existQuestionnaire = useAppSelector(getExistQuestionnaire);
+
+  if (isExistQuestionnaireExecuting) {
+    return <MainSpinner />; //! тут бы другую загрузку на основе PopupForm
+  }
 
   if (isQuestionnaire && existQuestionnaire) {
     return <Navigate to={AppRoute.Root} />;

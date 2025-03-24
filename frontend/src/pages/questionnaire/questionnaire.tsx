@@ -1,7 +1,6 @@
 import { FormEvent, Fragment } from 'react';
 import classNames from 'classnames';
 
-import MainSpinner from '../../components/main-spinner/main-spinner';
 import PopupForm from '../../components/popup-form/popup-form';
 import QuestionnairebBlock from '../../components/questionnaire-block/questionnaire-block';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
@@ -11,19 +10,14 @@ import CalorieInput from '../../components/calorie-input/calorie-input';
 import { Duration, ICreateQuestionnaireDto, Specialisation, UserLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsCreateQuestionnaireExecuting, getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
+import { getIsCreateQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
 import { createQuestionnaire } from '../../store/user-action';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {
-  const isExistQuestionnaireExecuting = useAppSelector(getIsExistQuestionnaireExecuting);
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();
-
-  if (isExistQuestionnaireExecuting) {
-    return <MainSpinner />; //! тут бы другую загрузку на основе PopupForm
-  }
 
   const endingClassName = (userRole) ? UserRoleOption[userRole].endingClassName : '';
   const divClassName = `questionnaire-${endingClassName}`;
