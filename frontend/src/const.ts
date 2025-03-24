@@ -1,4 +1,4 @@
-import { Duration, MetroStationName, Specialisation, UserGender, UserLevel, UserRole } from '@backend/shared';
+import { Duration, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
 import { Option } from './types/option';
 
 const MAIN_TITLE = 'FitFriends';
@@ -40,7 +40,11 @@ export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' }
 export const DefaultUser = {
   ROLE: UserRole.Sportsman,
   GENDER: UserGender.Female,
-  SPECIALISATIONS: [Specialisation.Boxing as string, Specialisation.Crossfit as string, Specialisation.Power as string],
+  SPECIALISATIONS: [
+    Specialization.Boxing as string,
+    Specialization.Crossfit as string,
+    Specialization.Power as string
+  ],
   TIME: Duration.Minutes_30_50,
   LEVEL: UserLevel.Amateur
 } as const;
@@ -89,26 +93,26 @@ export const USER_BACKGROUND_PATHS: Option[] = [
   { value: '/img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
 ];
 
-export const SpecialisationTitle: { [key in Specialisation]: string } = {
-  [Specialisation.Aerobics]: 'Аэробика',
-  [Specialisation.Boxing]: 'Бокс',
-  [Specialisation.Crossfit]: 'Кроссфит',
-  [Specialisation.Pilates]: 'Пилатес',
-  [Specialisation.Power]: 'Силовые',
-  [Specialisation.Running]: 'Бег',
-  [Specialisation.Stretching]: 'Стрейчинг',
-  [Specialisation.Yoga]: 'Йога'
+export const SpecializationTitle: { [key in Specialization]: string } = {
+  [Specialization.Aerobics]: 'Аэробика',
+  [Specialization.Boxing]: 'Бокс',
+  [Specialization.Crossfit]: 'Кроссфит',
+  [Specialization.Pilates]: 'Пилатес',
+  [Specialization.Power]: 'Силовые',
+  [Specialization.Running]: 'Бег',
+  [Specialization.Stretching]: 'Стрейчинг',
+  [Specialization.Yoga]: 'Йога'
 } as const;
 
 export const SPECIALISATIONS: Option[] = [
-  { value: Specialisation.Yoga, title: SpecialisationTitle[Specialisation.Yoga] },
-  { value: Specialisation.Running, title: SpecialisationTitle[Specialisation.Running] },
-  { value: Specialisation.Power, title: SpecialisationTitle[Specialisation.Power] },
-  { value: Specialisation.Aerobics, title: SpecialisationTitle[Specialisation.Aerobics] },
-  { value: Specialisation.Crossfit, title: SpecialisationTitle[Specialisation.Crossfit] },
-  { value: Specialisation.Boxing, title: SpecialisationTitle[Specialisation.Boxing] },
-  { value: Specialisation.Pilates, title: SpecialisationTitle[Specialisation.Pilates] },
-  { value: Specialisation.Stretching, title: SpecialisationTitle[Specialisation.Stretching] }
+  { value: Specialization.Yoga, title: SpecializationTitle[Specialization.Yoga] },
+  { value: Specialization.Running, title: SpecializationTitle[Specialization.Running] },
+  { value: Specialization.Power, title: SpecializationTitle[Specialization.Power] },
+  { value: Specialization.Aerobics, title: SpecializationTitle[Specialization.Aerobics] },
+  { value: Specialization.Crossfit, title: SpecializationTitle[Specialization.Crossfit] },
+  { value: Specialization.Boxing, title: SpecializationTitle[Specialization.Boxing] },
+  { value: Specialization.Pilates, title: SpecializationTitle[Specialization.Pilates] },
+  { value: Specialization.Stretching, title: SpecializationTitle[Specialization.Stretching] }
 ];
 
 export const TIMES: Option[] = [

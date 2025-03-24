@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { IUserInfoRdo, MetroStationName, Specialisation, UserGender, UserLevel, UserRole } from '@backend/shared';
+import { IUserInfoRdo, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
@@ -17,7 +17,7 @@ const EMPTY_USER_INFO: IUserInfoRdo = {
   gender: UserGender.NotMatter,
   level: UserLevel.Beginner,
   metroStationName: MetroStationName.Petrogradskaya,
-  specializations: [Specialisation.Aerobics],
+  specializations: [Specialization.Aerobics],
   ready: false
 };
 

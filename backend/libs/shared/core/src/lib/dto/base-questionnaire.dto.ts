@@ -28,7 +28,7 @@ export class BaseQuestionnaireDto {
   @IsEnum(UserRole)
   public userRole: UserRole;
 
-  @ApiProperty(QuestionnaireApiProperty.Specialisations)
+  @ApiProperty(QuestionnaireApiProperty.Specializations)
   @Expose()
   @IsArray()
   @ArrayMaxSize(Object.values(Specialization).length)
