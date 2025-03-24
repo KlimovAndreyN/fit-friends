@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { AccountRoute, ApiServiceRoute, AUTH_NAME, IUserTokenRdo } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
-import { DataAxiosError, getAxiosErrorMessage } from './utils/parse-axios-error';
+import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
 import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { HttpCode } from './const';
 
@@ -51,14 +51,6 @@ export function createAPI(): AxiosInstance {
       const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
       const originalRequestConfig = error.config;
 
-      //! продумать удаление токенов при ошибках
-      /*
-      if (!isErrorNetwork(checkTokenError)) {
-        AccessTokenStore.drop();
-        RefreshTokenStore.drop();
-      }
-      */
-
       // пробуем обновить токены
       if ((url !== refreshUrl) && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
         originalRequestConfig.retry = true;
@@ -96,6 +88,16 @@ export function createAPI(): AxiosInstance {
       toast.dismiss();
       toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
       //! }
+
+      // если ошибка при обновлении токенов
+      if (url === refreshUrl) {
+        // если ошибка не по связи
+        if (!isErrorNetwork(error)) {
+          // то удалим токены
+          AccessTokenStore.drop();
+          RefreshTokenStore.drop();
+        }
+      }
 
       return Promise.reject(error);
     }

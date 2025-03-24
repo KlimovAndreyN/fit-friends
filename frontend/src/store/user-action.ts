@@ -101,6 +101,7 @@ export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
       }
     } finally {
       if (needDropTokens) {
+        //! отладить удаление
         AccessTokenStore.drop();
         RefreshTokenStore.drop();
       }
