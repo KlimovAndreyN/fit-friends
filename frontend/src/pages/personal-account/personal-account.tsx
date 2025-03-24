@@ -5,9 +5,12 @@ import Header from '../../components/header/header';
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import CustomInput from '../../components/custom-input/custom-input';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
+import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
+
+import { UserRole } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-process/selectors';
+import { getIsFetchUserInfoExecuting, getUserInfo, getUserRole } from '../../store/user-process/selectors';
 import { fetchUserInfo } from '../../store/user-action';
 import { PageTitle } from '../../const';
 
@@ -15,6 +18,7 @@ function PersonalAccount(): JSX.Element {
   const dispatch = useAppDispatch();
   const [isEditing/*, setIsEditing*/] = useState(false);
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
+  const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
   const { name, avatarPath, about, specializations } = userInfo;
 
@@ -37,6 +41,7 @@ function PersonalAccount(): JSX.Element {
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
   const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
+  const readyForTrainingCaption = (userRole === UserRole.Sportsman) ? 'Готов к тренировке' : 'Готов тренировать';
 
   return (
     <Fragment>
@@ -64,13 +69,13 @@ function PersonalAccount(): JSX.Element {
                     </svg>
                     <span>{buttonCaption}</span>
                   </button>
-                  <div className={`${mainClassName}__section`}>
-                    <h2 className={`${mainClassName}__title`}>Обо мне</h2>
-                    <CustomInput type='text' name='name' label='Имя' value={name} divExtraClassName={`${mainClassName}__input`} readonly={!isEditing} />
-                    <CustomInput type='textarea' name='description' label='Описание' value={about} divExtraClassName={`${mainClassName}__textarea`} readonly={!isEditing} />
-                  </div>
-                  <div className={`${mainClassName}__section ${mainClassName}__section--status`}>
-                    <h2 className={`${mainClassName}__title ${mainClassName}__title--status`}>Статус</h2>
+                  <PersonalAccountBlock mainClassNamePrefix={mainClassName} title='Обо мне' >
+                    <Fragment>
+                      <CustomInput type='text' name='name' label='Имя' value={name} divExtraClassName={`${mainClassName}__input`} readonly={!isEditing} />
+                      <CustomInput type='textarea' name='description' label='Описание' value={about} divExtraClassName={`${mainClassName}__textarea`} readonly={!isEditing} />
+                    </Fragment>
+                  </PersonalAccountBlock>
+                  <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' title='Статус' >
                     <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
                       <label>
                         <input type="checkbox" name="ready-for-training" defaultChecked />
@@ -79,14 +84,13 @@ function PersonalAccount(): JSX.Element {
                             <use xlinkHref="#arrow-check"></use>
                           </svg>
                         </span>
-                        <span className="custom-toggle__label">Готов тренировать</span>
+                        <span className="custom-toggle__label">{readyForTrainingCaption}</span>
                       </label>
                     </div>
-                  </div>
-                  <div className={`${mainClassName}__section`}>
-                    <h2 className={`${mainClassName}__title ${mainClassName}__title--specialization`}>Специализация</h2>
+                  </PersonalAccountBlock>
+                  <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
                     <SpecializationsCheckbox name='specialization' values={specializations} divExtraClassName={`${mainClassName}__specialization`} readonly={!isEditing} />
-                  </div>
+                  </PersonalAccountBlock>
                   <div className={`custom-select--readonly custom-select ${mainClassName}__select`}>
                     <span className="custom-select__label">Локация</span>
                     <div className="custom-select__placeholder">ст. м. Адмиралтейская</div>
@@ -139,6 +143,7 @@ function PersonalAccount(): JSX.Element {
                         <div className="personal-account-user__input">
                           <label>
                             <span className="personal-account-user__label">План на день, ккал</span>
+                            {/*//! или выключить или что по ТЗ, но тип поменять на number, как быть со вторым полем... */}
                             <input type="text" name="schedule-for-the-day" defaultValue="3 300" />
                           </label>
                         </div>

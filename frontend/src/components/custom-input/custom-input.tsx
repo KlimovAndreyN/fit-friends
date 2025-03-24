@@ -31,7 +31,7 @@ function CustomInput(props: CustomInputProps): JSX.Element {
         {
           (isTextarea)
             ?
-            <textarea name={name} placeholder=" " disabled={readonly} defaultValue={value} />
+            <textarea name={name} placeholder=" " defaultValue={value} disabled={readonly} />
             :
             <span className={`${mainClassName}__wrapper`}>
               <input type={type} name={name} defaultValue={value} required={required} max={max} autoComplete={autoComplete} disabled={readonly} />

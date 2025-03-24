@@ -1,10 +1,10 @@
 type QuestionnairebBlockProps = {
   divExtraClassName: string;
-  caption?: string;
+  legend?: string;
   children: JSX.Element;
 }
 
-function QuestionnairebBlock({ divExtraClassName, caption, children }: QuestionnairebBlockProps): JSX.Element {
+function QuestionnairebBlock({ divExtraClassName, legend: caption, children }: QuestionnairebBlockProps): JSX.Element {
   return (
     <div className={`questionnaire-${divExtraClassName}__block`}>
       {

@@ -80,4 +80,4 @@ console.log(enumStatus);
 --------------
 
 интерцепторы для HttpService возможны? добавлять requestId, авторизацию...
-
+как перебрать несколько childrens: JSX.Element[]; и если и так и один children: JSX.Element

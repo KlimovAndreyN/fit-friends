@@ -63,13 +63,13 @@ function Questionnaire(): JSX.Element {
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
         <div className={`questionnaire-${endingClassName}__wrapper`}>
-          <QuestionnairebBlock caption='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
+          <QuestionnairebBlock legend='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
             <SpecializationsCheckbox name={FormFieldName.Spec} values={[...DefaultUser.SPECIALISATIONS]} divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
           </QuestionnairebBlock>
-          <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
+          <QuestionnairebBlock legend='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
             <CustomToggleRadio name={FormFieldName.Time} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
           </QuestionnairebBlock>
-          <QuestionnairebBlock caption='Ваш уровень' divExtraClassName={endingClassName} >
+          <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={endingClassName} >
             <CustomToggleRadio name={FormFieldName.Level} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
           </QuestionnairebBlock>
           <QuestionnairebBlock divExtraClassName={endingClassName} >
