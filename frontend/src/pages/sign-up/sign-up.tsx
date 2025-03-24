@@ -76,6 +76,7 @@ function SignUp(): JSX.Element {
   };
 
   const submitClassName = classNames('btn sign-up__button', { 'is-disabled': !checkedUserAgreementInput || isSingUpExecuting });
+  const backgroundPath = getRandomItem(USER_BACKGROUND_PATHS).value;
 
   return (
     <PopupForm {...popupFormProps} >
@@ -104,7 +105,7 @@ function SignUp(): JSX.Element {
         <div className="sign-up__data">
           <CustomSelect
             name={FormFieldName.Background}
-            startOption={getRandomItem(USER_BACKGROUND_PATHS)}
+            value={backgroundPath}
             caption='Фоновая картика'
             options={USER_BACKGROUND_PATHS}
           />

@@ -8,15 +8,16 @@ type CustomSelectProps = {
   caption: string;
   options: Option[];
   onChange?: (selected: Option | null) => void;
-  startOption?: Option;
+  value?: string;
   extraClassName?: string;
   readonly?: boolean;
 }
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
-  const { name, caption, options, onChange, startOption, extraClassName, readonly } = props;
+  const { name, caption, options, onChange, value = '', extraClassName, readonly } = props;
+  const title = options.find((option) => (option.value === value))?.title || '';
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option | undefined>(startOption);
+  const [selectedOption, setSelectedOption] = useState<Option>({ value, title });
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -28,28 +29,33 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
     setIsOpen(false);
   };
 
+  const handleDivOnMouseLeave = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   const mainClassName = 'custom-select';
   const divClassName = classNames(
     { [`${mainClassName}--readonly`]: readonly },
     'custom-select',
-    { [`${mainClassName}--not-selected`]: !startOption && !selectedOption, 'is-open': isOpen },
+    { [`${mainClassName}--not-selected`]: !value && !selectedOption, 'is-open': isOpen },
     extraClassName
   );
-  const value = (selectedOption) ? selectedOption.value : startOption?.value;
-  const title = (selectedOption) ? selectedOption.title : startOption?.title;
+  const { value: currentValue, title: currentTitle } = selectedOption;
 
   return (
-    <div className={divClassName} onMouseLeave={() => (setIsOpen(false)/*//! скрыть*/)}>
+    <div className={divClassName} onMouseLeave={handleDivOnMouseLeave} >
       {/*
       //! пропадает label, добавил style={{ opacity: 1 }}
       возможно ошибка в css .custom-select.is-open .custom-select__label
       */}
       <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
-      <div className="custom-select__placeholder">{title}</div>
+      <div className="custom-select__placeholder">{currentTitle}</div>
       {
         (readonly)
           ? null
-          : <input className='visually-hidden' type="text" readOnly name={name} defaultValue={value} />
+          : <input className='visually-hidden' type="text" readOnly name={name} value={currentValue} />
       }
       <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" onClick={toggleDropdown} disabled={readonly}>
         <span className="custom-select__text" />
@@ -64,6 +70,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
           (readonly)
             ? null
             : options.map(
+              //! а есть стиль для подсветки выбранного значения?
               (option) => (
                 <li
                   key={option.value}
