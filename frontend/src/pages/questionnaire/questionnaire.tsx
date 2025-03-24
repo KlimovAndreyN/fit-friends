@@ -14,6 +14,14 @@ import { getIsCreateQuestionnaireExecuting, getUserRole } from '../../store/user
 import { createQuestionnaire } from '../../store/user-action';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
+enum FormFieldName {
+  Spec = 'specialization',
+  Time = 'time',
+  Level = 'level',
+  CaloriesLose = 'calories-lose',
+  CaloriesWaste = 'calories-waste'
+}
+
 function Questionnaire(): JSX.Element {
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
@@ -27,30 +35,19 @@ function Questionnaire(): JSX.Element {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    //! отладка
-    const entries = formData.entries();
-    for (const entry of entries) {
-      const [key, value] = entry;
-      // eslint-disable-next-line
-      console.log(key, value);
-    }
-    //
-
-    //! отладка
-    //const email = formData.get(FormFieldName.email)?.toString() || '';
-    //const password = formData.get(FormFieldName.password)?.toString() || '';
+    const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel;
+    const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization));
+    const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration;
+    const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
+    const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const dto: ICreateQuestionnaireDto = {
       userRole,
-      level: UserLevel.Professional,
-      specializations: [Specialization.Aerobics, Specialization.Crossfit],
-      time: Duration.Minutes_80_100,
-      caloriesLose: 5000,
-      caloriesWaste: 5000
+      level,
+      specializations,
+      time,
+      caloriesLose,
+      caloriesWaste
     };
-
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('dto', dto);
 
     dispatch(createQuestionnaire(dto));
   };
@@ -67,18 +64,18 @@ function Questionnaire(): JSX.Element {
         <h1 className="visually-hidden">Опросник</h1>
         <div className={`questionnaire-${endingClassName}__wrapper`}>
           <QuestionnairebBlock caption='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
-            <SpecializationsCheckbox name='specialization' values={[...DefaultUser.SPECIALISATIONS]} divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
+            <SpecializationsCheckbox name={FormFieldName.Spec} values={[...DefaultUser.SPECIALISATIONS]} divExtraClassName={`questionnaire-${endingClassName}__specializations`} />
           </QuestionnairebBlock>
           <QuestionnairebBlock caption='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
-            <CustomToggleRadio name='time' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
+            <CustomToggleRadio name={FormFieldName.Time} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={TIMES} startOptionValue={DefaultUser.TIME} />
           </QuestionnairebBlock>
           <QuestionnairebBlock caption='Ваш уровень' divExtraClassName={endingClassName} >
-            <CustomToggleRadio name='level' divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
+            <CustomToggleRadio name={FormFieldName.Level} divExtraClassName={`questionnaire-${endingClassName}__radio`} options={USER_LEVELS} startOptionValue={DefaultUser.LEVEL} />
           </QuestionnairebBlock>
           <QuestionnairebBlock divExtraClassName={endingClassName} >
             <Fragment>
-              <CalorieInput name='calories-lose' caption='Сколько калорий хотите сбросить' />
-              <CalorieInput name='calories-waste' caption='Сколько калорий тратить в день' />
+              <CalorieInput name={FormFieldName.CaloriesLose} caption='Сколько калорий хотите сбросить' />
+              <CalorieInput name={FormFieldName.CaloriesWaste} caption='Сколько калорий тратить в день' />
             </Fragment>
           </QuestionnairebBlock>
         </div>
