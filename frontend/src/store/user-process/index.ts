@@ -8,9 +8,11 @@ import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, lo
 import { StoreSlice } from '../../const';
 
 const EMPTY_USER_INFO: IUserInfoRdo = {
-  name: '',
-  avatarPath: '',
   //! отладка
+  //name: '',
+  name: 'Валерия',
+  avatarPath: '',
+  about: 'asdas asd asd asdas asd asd',
   //avatarPath: '/img/content/user-photo-1.png',
   gender: UserGender.NotMatter,
   level: UserLevel.Beginner,

@@ -15,7 +15,7 @@ function PersonalAccount(): JSX.Element {
   const [isEditing/*, setIsEditing*/] = useState(false);
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userInfo = useAppSelector(getUserInfo);
-  const { avatarPath } = userInfo;
+  const { name, avatarPath, about } = userInfo;
 
   useEffect(
     () => {
@@ -59,21 +59,8 @@ function PersonalAccount(): JSX.Element {
                   </button>
                   <div className="user-info__section">
                     <h2 className="user-info__title">Обо мне</h2>
-                    <CustomInput type='text' name='name' label='Имя' value='Валерия' divExtraClassName='user-info__input' readonly={!isEditing} />
-                    <div className="custom-input custom-input--readonly user-info__input">
-                      <label>
-                        <span className="custom-input__label">Имя</span>
-                        <span className="custom-input__wrapper">
-                          <input type="text" name="name" value="Валерия" disabled />
-                        </span>
-                      </label>
-                    </div>
-                    <div className="custom-textarea custom-textarea--readonly user-info__textarea">
-                      <label>
-                        <span className="custom-textarea__label">Описание</span>
-                        <textarea name="description" placeholder=" " disabled>Персональный тренер и инструктор групповых программ с опытом  более 4х лет. Специализация: коррекция фигуры и осанки, снижение веса, восстановление после травм, пилатес.</textarea>
-                      </label>
-                    </div>
+                    <CustomInput type='text' name='name' label='Имя' value={name} divExtraClassName='user-info__input' readonly={!isEditing} />
+                    <CustomInput type='textarea' name='description' label='Описание' value={about} divExtraClassName='user-info__textarea' readonly={!isEditing} />
                   </div>
                   <div className="user-info__section user-info__section--status">
                     <h2 className="user-info__title user-info__title--status">Статус</h2>

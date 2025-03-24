@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-type CustomSelectProps = {
+type CustomInputProps = {
   divExtraClassName?: string;
   name: string;
   type: string;
@@ -13,9 +13,11 @@ type CustomSelectProps = {
   readonly?: boolean;
 }
 
-function CustomInput(props: CustomSelectProps): JSX.Element {
+function CustomInput(props: CustomInputProps): JSX.Element {
   const { divExtraClassName, name, type, label, text, value, required, max, autoComplete, readonly } = props;
-  const mainClassName = 'custom-input';
+  const isTextarea = type === 'textarea';
+  const mainType = (isTextarea) ? type : 'input';
+  const mainClassName = `custom-${mainType}`;
   const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readonly }, divExtraClassName);
 
   return (
@@ -26,14 +28,20 @@ function CustomInput(props: CustomSelectProps): JSX.Element {
             ? <span className={`${mainClassName}__label`}>{label}</span>
             : null
         }
-        <span className={`${mainClassName}__wrapper`}>
-          <input type={type} name={name} value={value} required={required} max={max} autoComplete={autoComplete} disabled={readonly} />
-          {
-            (text)
-              ? <span className={`${mainClassName}__text`}>{text}</span>
-              : null
-          }
-        </span>
+        {
+          (isTextarea)
+            ?
+            <textarea name={name} placeholder=" " disabled={readonly}>{value}</textarea>
+            :
+            <span className={`${mainClassName}__wrapper`}>
+              <input type={type} name={name} defaultValue={value} required={required} max={max} autoComplete={autoComplete} disabled={readonly} />
+              {
+                (text)
+                  ? <span className={`${mainClassName}__text`}>{text}</span>
+                  : null
+              }
+            </span>
+        }
       </label>
     </div>
   );
