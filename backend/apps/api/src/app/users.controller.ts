@@ -116,6 +116,7 @@ export class UsersController {
   @ApiParam(ApiParamOption.UserId)
   @ApiBearerAuth(BearerAuth.AccessToken)
   @UseGuards(CheckAuthGuard)
+  //! возможно не понадобится
   @Get(USER_ID_PARAM)
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,

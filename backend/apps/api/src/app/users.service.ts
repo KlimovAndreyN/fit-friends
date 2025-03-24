@@ -60,6 +60,7 @@ export class UsersService {
     return this.convertToUserRdo(registeredUser, avatarPath);
   }
 
+  //! возможно не понадобится
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);

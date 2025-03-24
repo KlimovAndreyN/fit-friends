@@ -5,5 +5,5 @@ export interface IUserInfoRdo extends
   Pick<IUserRdo, 'name' | 'avatarPath' | 'about' | 'gender' | 'metroStationName'>,
   //! нужно что то одно 'caloriesLose' 'caloriesWaste'
   Pick<IQuestionnaireRdo, 'specializations' | 'level' | 'caloriesLose' | 'caloriesWaste'> {
-  ready: boolean;
+  readyForTraining: boolean;//! может в Questionnaire? или отдельная таблица
 }
