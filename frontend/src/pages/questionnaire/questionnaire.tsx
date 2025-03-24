@@ -12,7 +12,7 @@ import { Duration, ICreateQuestionnaireDto, Specialisation, UserLevel, UserRole 
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsCreateQuestionnaireExecuting, getIsExistQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
-import { createQuestionnaire } from '../../store/action';
+import { createQuestionnaire } from '../../store/user-action';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 function Questionnaire(): JSX.Element {

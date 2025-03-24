@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../action';
+import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {

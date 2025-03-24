@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { createAPI } from '../api';
 import { rootReducer } from './root-reducer';
-import { fetchUserStatus } from './action';
+import { fetchUserStatus } from './user-action';
 import { history } from '../history';
 
 const api = createAPI();
