@@ -30,6 +30,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
           type="checkbox"
           name={name}
           checked={readyForTraining}
+          readOnly
           disabled={isReadyForTrainingChangeExecuting}
         />
         <span className="custom-toggle__icon">
