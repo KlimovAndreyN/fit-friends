@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { FormEvent, Fragment, useState } from 'react';
 
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
+import PersonalAccountReadyCheckbox from '../personal-account-ready-checkbox/personal-account-ready-checkbox';
 import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
@@ -28,20 +29,11 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     setIsEditing(true);
   };
 
-  const handleInputReadyForTrainingChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //event.preventDefault();
-    //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
-    //вынести в отдельный компонет!
-
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleInputReadyForTrainingChange - event.target.checked', event.target.checked);
-  };
-
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     //! нужен признак очистки аватара и сам файл и кнопки для его обработки
+    //! или через стейт
     //! т.е. обработчик при изменнии файла в режиме редактирования
 
     //! сбор и отправка данных, перечисление названиями полей
@@ -74,7 +66,6 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
   const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
-  const readyForTrainingCaption = (isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать';
 
   return (
     <section className={mainClassName} >
@@ -114,22 +105,12 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           </Fragment>
         </PersonalAccountBlock>
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' title='Статус' >
-          <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
-            <label>
-              <input
-                type="checkbox"
-                name="ready-for-training"
-                defaultChecked={readyForTraining}
-                onChange={handleInputReadyForTrainingChange}
-              />
-              <span className="custom-toggle__icon">
-                <svg width="9" height="6" aria-hidden="true">
-                  <use xlinkHref="#arrow-check"></use>
-                </svg>
-              </span>
-              <span className="custom-toggle__label">{readyForTrainingCaption}</span>
-            </label>
-          </div>
+          <PersonalAccountReadyCheckbox
+            name='ready-for-training'
+            mainClassName={mainClassName}
+            readyForTraining={readyForTraining}
+            isSpotsmanRole={isSpotsmanRole}
+          />
         </PersonalAccountBlock>
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
           <SpecializationsCheckbox

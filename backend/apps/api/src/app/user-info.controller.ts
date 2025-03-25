@@ -1,7 +1,7 @@
 import { Controller, Get, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, ApiRoute, RequestWithRequestIdAndUserId, UserInfoRdo } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { UsersService } from './users.service';
