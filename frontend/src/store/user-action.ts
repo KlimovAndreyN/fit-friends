@@ -60,11 +60,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
 export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra, dispatch }) => {
-    //!
-    // eslint-disable-next-line no-console
-    console.log('loginUser.begin');
-    //!
-    const { api, /*history*/ } = extra;
+    const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
     const { accessToken, refreshToken, id: sub, email: dataEmail, name, role } = data;
@@ -72,45 +68,34 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
 
-    //! useNavigate не работает
-    //! а нужно ли статус же дернется... history.push(AppRoute.Root);
-
-    //!
-    // eslint-disable-next-line no-console
-    console.log('loginUser.end');
-
     dispatch(existQuestionnaire());
 
     return { sub, email: dataEmail, name, role };
   }
 );
 
-export const logoutUser = createAsyncThunk<void, undefined, { extra: Extra }>(
+export const logoutUser = createAsyncThunk<boolean, undefined, { extra: Extra }>(
   Action.LOGOUT_USER,
   async (_, { extra }) => {
-    const { api, /*history*/ } = extra;
+    const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
     let needDropTokens = true;
 
     try {
-      //! при выходе могут быть ошибки: связь, 404 ... нужно их обработать... logoutUser.pending logoutUser.rejected
       await api.delete<ITokenPayloadRdo>(url);
+
     } catch (error) {
       if (error instanceof AxiosError) {
-        if (!isErrorNetwork(error)) {
-          needDropTokens = false;
-        }
+        needDropTokens = !isErrorNetwork(error);
       }
-    } finally {
-      if (needDropTokens) {
-        //! отладить удаление
-        AccessTokenStore.drop();
-        RefreshTokenStore.drop();
-      }
-
-      //! useNavigate не работает
-      //history.push(AppRoute.Intro);
     }
+
+    if (needDropTokens) {
+      AccessTokenStore.drop();
+      RefreshTokenStore.drop();
+    }
+
+    return needDropTokens;
   }
 );
 

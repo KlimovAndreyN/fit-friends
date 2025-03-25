@@ -77,16 +77,11 @@ export const userProcess = createSlice(
           }
         )
         .addCase(
-          logoutUser.pending, //! перепроверить - сразу выйти и удалить
-          //! перепроверить - logoutUser.rejected, //! перепроверить - выход после отображения ошибоки удаления
-          (state) => {
-            state.authorizationStatus = AuthorizationStatus.NoAuth;
-          }
-        )
-        .addCase(
-          logoutUser.fulfilled, //! перепроверить - выход после отображения ошибоки удаления
-          (state) => {
-            state.authorizationStatus = AuthorizationStatus.NoAuth;
+          logoutUser.fulfilled,
+          (state, action) => {
+            if (action.payload) {
+              state.authorizationStatus = AuthorizationStatus.NoAuth;
+            }
           }
         )
         .addCase(

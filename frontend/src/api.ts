@@ -43,51 +43,42 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      //! отладка
-      // eslint-disable-next-line no-console
-      console.log('error', error);
-
       const { response, config: { url } } = error;
       const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
+      const loginUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
+      const logoutUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
       const originalRequestConfig = error.config;
 
       // пробуем обновить токены
-      if ((url !== refreshUrl) && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
+      if (![refreshUrl, loginUrl, logoutUrl].includes(url || '') && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
         originalRequestConfig.retry = true;
 
         if (!RefreshTokenStore.getToken()) {
           return Promise.reject('RefreshToken is empty!');
         }
 
-        //! нужно ли ловить исключение и так обрабытывает, по refreshUrl
-        // try {
         const { data: { accessToken, refreshToken } } = await api.post<IUserTokenRdo>(refreshUrl);
 
         AccessTokenStore.save(accessToken);
         RefreshTokenStore.save(refreshToken);
 
-        //! ? await ? return await api(originalRequestConfig);
+        //! нужен ли await?
         return api(originalRequestConfig);
-        /*
-        } catch (refreshError) {
-          console.error('Unable to refresh tokens', refreshError);
-        }
-        */
       }
 
-      //! проверить обработку ошибок
-      const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
-      // eslint-disable-next-line no-console
-      console.log('response', response);
-      // eslint-disable-next-line no-console
-      console.log('url', url);
-      // eslint-disable-next-line no-console
-      console.log('checkUrl', checkUrl);
+      //! отладка обработки ошибок / при выставленной переменной окружения showUrlAxiosError
+      if (showUrlAxiosError) {
+        //! проверить обработку ошибок
+        // eslint-disable-next-line no-console
+        console.log('response', response);
+        // eslint-disable-next-line no-console
+        console.log('url', url);
+        // eslint-disable-next-line no-console
+        console.log('error', error);
+      }
 
-      //! if ((url !== checkUrl) || (response && !response.data)) {
       toast.dismiss();
       toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
-      //! }
 
       // если ошибка при обновлении токенов
       if (url === refreshUrl) {
