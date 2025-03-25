@@ -5,7 +5,7 @@ import { BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { UsersService } from './users.service';
-import { FitService } from './fit.service';
+import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @ApiTags(ApiServiceRoute.UserInfo)
@@ -16,13 +16,13 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 export class UserInfoController {
   constructor(
     private usersService: UsersService,
-    private fitService: FitService
+    private fitQuestionnaireService: FitQuestionnaireService
   ) { }
 
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
     const user = await this.usersService.getUser(userId, requestId);
-    const questionnaire = await this.fitService.findQuestionnaireByUserId(userId, requestId);
+    const questionnaire = await this.fitQuestionnaireService.findQuestionnaireByUserId(userId, requestId);
 
     return { user, questionnaire };
   }

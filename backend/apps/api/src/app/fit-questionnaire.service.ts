@@ -8,7 +8,7 @@ import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 @Injectable()
-export class FitService {
+export class FitQuestionnaireService {
   constructor(
     private readonly httpService: HttpService,
     @Inject(apiConfig.KEY)
@@ -41,7 +41,7 @@ export class FitService {
         }
       }
 
-      Logger.log('Error check exist questionnaire', FitService.name);
+      Logger.log('Error check exist questionnaire', FitQuestionnaireService.name);
       throw new InternalServerErrorException('Error check exist questionnaire');
     }
   }
