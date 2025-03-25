@@ -17,7 +17,7 @@ export class FilesService {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
-  public makeSrc(file: UploadedFileRdo): string {
+  public makePath(file: UploadedFileRdo): string {
     if (!file) {
       return '';
     }
@@ -28,10 +28,7 @@ export class FilesService {
     return src;
   }
 
-  public async getFileSrc(fileId: string, requestId: string): Promise<string> {
-    //! проверить позже
-    console.log('fileId', fileId);
-
+  public async getFilePath(fileId: string, requestId: string): Promise<string> {
     if (!fileId) {
       return '';
     }
@@ -39,10 +36,8 @@ export class FilesService {
     const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, fileId);
     const headers = makeHeaders(requestId);
     const { data: file } = await this.httpService.axiosRef.get<UploadedFileRdo>(url, headers);
-    //!
-    console.log('file', file);
 
-    return this.makeSrc(file);
+    return this.makePath(file);
   }
 
   public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {

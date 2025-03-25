@@ -70,6 +70,9 @@ for (const entry of entries) {
 //! отладка
 // eslint-disable-next-line
 console.log('func - value', value);
+
+//! отладка
+console.log('func - value', value);
 --------------
 
 интерцепторы для HttpService возможны? добавлять requestId, авторизацию...

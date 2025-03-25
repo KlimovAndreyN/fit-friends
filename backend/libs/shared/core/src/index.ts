@@ -76,4 +76,5 @@ export { UserLevel } from './lib/types/user-level.enum';
 export { UserGender } from './lib/types/user-gender.enum';
 export { UserRole } from './lib/types/user-role.enum';
 
+export * from './lib/utils/convert';
 export * from './lib/utils/transform';
