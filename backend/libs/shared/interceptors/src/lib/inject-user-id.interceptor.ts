@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor, UnauthorizedException } from '@nestjs/common';
 
 import { RequestProperty, XHeader } from '@backend/shared/core';
 
@@ -10,8 +10,12 @@ export class InjectUserIdInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest<Request>();
     const userId = request.headers[XHeader.UserId];
 
-    request[RequestProperty.UserId] = userId; //  можно доделать валидацию по GuidValidationPipe
-    Logger.log(`${request.method}: ${request.url}: ${RequestProperty.UserId}: ${userId || 'empty'}`, InjectUserIdInterceptor.name);
+    if (!userId) {
+      throw new UnauthorizedException(`XHeader[${XHeader.UserId}] is empty!`);
+    }
+
+    request[RequestProperty.UserId] = userId; //! можно доделать валидацию по GuidValidationPipe
+    Logger.log(`${request.method}: ${request.url}: ${RequestProperty.UserId}: ${userId}`, InjectUserIdInterceptor.name);
 
     return next.handle();
   }

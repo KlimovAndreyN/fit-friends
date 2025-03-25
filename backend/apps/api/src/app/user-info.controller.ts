@@ -42,6 +42,7 @@ export class UserInfoController {
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
     //! подкинуть роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId
+    //! CheckAuthGuard складывает в request[RequestProperty.User] = data {sub, name, role....};
     //! временно
     const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto, userRole: UserRole.Sportsman, fileIds: [] }
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
