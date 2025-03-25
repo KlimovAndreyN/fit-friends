@@ -23,4 +23,6 @@ export class QuestionnaireWithFileIdsRdo
   //@ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
   @Expose()
   readyForTraining: Questionnaire['readyForTraining']
+
+  //! перенести в base?
 }

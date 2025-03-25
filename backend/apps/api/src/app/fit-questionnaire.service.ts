@@ -51,7 +51,7 @@ export class FitQuestionnaireService {
 
     const url = this.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
+    const { data } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, { readyForTraining }, headers);
     //!
     console.log('readyForTraining', readyForTraining);
     console.log('data', data);
