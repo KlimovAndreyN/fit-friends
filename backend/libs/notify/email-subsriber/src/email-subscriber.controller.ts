@@ -16,7 +16,10 @@ export class EmailSubscriberController {
     queue: process.env[ConfigAlias.RabbitQueueSubscriberEnv], // а как забрать через config module?
     routingKey: RabbitRouting.AddSubscriber
   })
-  public async create(@RabbitHeader(XHeader.RequestId) requestId: string, @RabbitPayload() subscriber: CreateSubscriberDto): Promise<void> {
+  public async create(
+    @RabbitHeader(XHeader.RequestId) requestId: string,
+    @RabbitPayload() subscriber: CreateSubscriberDto
+  ): Promise<void> {
     await this.subscriberService.addSubscriber(subscriber, requestId);
   }
 }

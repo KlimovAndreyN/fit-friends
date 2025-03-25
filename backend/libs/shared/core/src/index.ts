@@ -9,7 +9,7 @@ export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
 export { AuthenticationApiResponse } from './lib/constants/api-response/authentication.api-response';
 export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
 
-export { ApiHeaderOption } from './lib/constants/api-header-option';
+export * from './lib/constants/api-header-option';
 export * from './lib/constants/api-param-option';
 export { CommentApiProperty as ApiPropertyOption } from './lib/constants/api-property/comment.api-property';
 export * from './lib/constants/authentication.constant';

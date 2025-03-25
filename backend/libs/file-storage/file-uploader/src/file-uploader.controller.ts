@@ -1,11 +1,11 @@
 import { Controller, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import 'multer'; // Express.Multer.File
 
 import {
-  FILE_KEY, ApiParamOption, FileUploaderApiResponse, FileUploaderFileApiBody,
-  UploadedFileRdo, FILE_ID_PARAM, FileStorageRoute, ServiceRoute
+  FILE_KEY, ApiParamOption, FileUploaderApiResponse, FileUploaderFileApiBody, ServiceRoute,
+  UploadedFileRdo, FILE_ID_PARAM, FileStorageRoute, XRequestIdApiHeaderOptions
 } from '@backend/shared/core';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { fillDto } from '@backend/shared/helpers';
@@ -13,6 +13,7 @@ import { fillDto } from '@backend/shared/helpers';
 import { FileUploaderService } from './file-uploader.service';
 
 @ApiTags('file-upload')
+@ApiHeader(XRequestIdApiHeaderOptions)
 @Controller(ServiceRoute.FileStorage)
 export class FileUploaderController {
   constructor(

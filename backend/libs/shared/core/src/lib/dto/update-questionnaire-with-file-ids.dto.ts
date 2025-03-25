@@ -1,3 +1,5 @@
+//!
+/*
 import { PickType } from '@nestjs/swagger';
 
 import { BaseQuestionnaireDto } from './base-questionnaire.dto';
@@ -8,7 +10,7 @@ export class UpdateQuestionnaireWithFileIdsDto extends PickType(
   [
     'specializations',
     'level',
-    ''
+    //''
     'caloriesLose',
     'caloriesWaste',
     //! для тренера
@@ -17,3 +19,4 @@ export class UpdateQuestionnaireWithFileIdsDto extends PickType(
     //!'individualTraining'
   ]
 ) implements IUpdateQuestionnaireWithFileIdsDto { }
+*/

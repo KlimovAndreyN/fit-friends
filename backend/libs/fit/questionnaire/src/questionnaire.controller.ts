@@ -1,14 +1,13 @@
 import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
-import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, ApiHeaderOption, RequestWithUserId } from '@backend/shared/core';
+import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
 
 @ApiTags('questionnaire')
-@ApiHeader(ApiHeaderOption.RequestId)
-@ApiHeader(ApiHeaderOption.UserId)
+@ApiHeaders(XApiHeaderOptions)
 @Controller(ServiceRoute.Questionnaire)
 export class QuestionnaireController {
   constructor(
