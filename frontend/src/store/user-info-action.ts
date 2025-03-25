@@ -10,7 +10,8 @@ type Extra = {
 };
 
 export const Action = {
-  GET_USER_INFO: 'user-info/get-user-info'
+  GET_USER_INFO: 'user-info/get-user-info',
+  CHANGE_READY: 'user-info/change-ready'
 };
 
 export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
@@ -20,5 +21,21 @@ export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: 
     const { data } = await api.get<IUserInfoRdo>(ApiServiceRoute.UserInfo);
 
     return data;
+  }
+);
+
+export const changeReadyForTraning = createAsyncThunk<boolean, boolean, { extra: Extra }>(
+  Action.CHANGE_READY,
+  async (ready, { extra }) => {
+    const { api } = extra;
+    const url = ApiServiceRoute.UserInfo;
+
+    if (ready) {
+      await api.post(url);
+    } else {
+      await api.delete(url);
+    }
+
+    return ready;
   }
 );

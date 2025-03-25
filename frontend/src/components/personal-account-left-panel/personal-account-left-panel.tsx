@@ -21,7 +21,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
 
   const { user, questionnaire } = userInfo;
   const { name, avatarPath, about, metroStationName, gender } = user;
-  const { specializations, level, readyForTraining } = questionnaire;
+  const { specializations, level } = questionnaire;
 
   const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -108,7 +108,6 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           <PersonalAccountReadyCheckbox
             name='ready-for-training'
             mainClassName={mainClassName}
-            readyForTraining={readyForTraining}
             isSpotsmanRole={isSpotsmanRole}
           />
         </PersonalAccountBlock>

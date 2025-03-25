@@ -1,31 +1,36 @@
-import { ChangeEvent } from 'react';
+import { MouseEvent } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/user-info-process/selectors';
+import { changeReadyForTraning } from '../../store/user-info-action';
 
 type PersonalAccountReadyCheckboxProps = {
   name: string;
   mainClassName: string;
-  readyForTraining: boolean;
   isSpotsmanRole: boolean;
 }
 
-function PersonalAccountReadyCheckbox({ name, mainClassName, readyForTraining, isSpotsmanRole }: PersonalAccountReadyCheckboxProps): JSX.Element {
-  const handleInputReadyForTrainingChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //! остановить по умолчани / выполнить диспатч / продолжить выполенине действия - можно так сделать?
-    //event.preventDefault();
-    //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
+function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: PersonalAccountReadyCheckboxProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isReadyForTrainingChangeExecuting = useAppSelector(getIsReadyForTrainingChangeExecuting);
+  const readyForTraining = useAppSelector(getReadyForTraining);
 
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleInputReadyForTrainingChange - event.target.checked', event.target.checked);
+  const handleInputReadyForTrainingClick = (event: MouseEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+
+    const checked = !readyForTraining;
+
+    dispatch(changeReadyForTraning(checked));
   };
 
   return (
     <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
-      <label>
+      <label onClick={handleInputReadyForTrainingClick}>
         <input
           type="checkbox"
           name={name}
-          defaultChecked={readyForTraining}
-          onChange={handleInputReadyForTrainingChange}
+          checked={readyForTraining}
+          disabled={isReadyForTrainingChangeExecuting}
         />
         <span className="custom-toggle__icon">
           <svg width="9" height="6" aria-hidden="true">
