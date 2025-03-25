@@ -19,6 +19,7 @@ export class FitService {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
   }
 
+  //! возможно будет FitQuestionnaireService
   public async findQuestionnaireByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const url = this.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
@@ -27,6 +28,7 @@ export class FitService {
     return data;
   }
 
+  //! возможно будет FitQuestionnaireService
   public async existQuestionnaire(userId: string, requestId: string): Promise<boolean> {
     try {
       await this.findQuestionnaireByUserId(userId, requestId);

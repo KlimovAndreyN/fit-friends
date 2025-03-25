@@ -17,6 +17,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 @Controller(ApiServiceRoute.FitQuestionnaires)
 @UseGuards(CheckAuthGuard)
 @UseFilters(AxiosExceptionFilter)
+//! перенести все в UserInfoController
 export class FitQuestionnaireController {
   constructor(
     private readonly httpService: HttpService,
@@ -48,15 +49,6 @@ export class FitQuestionnaireController {
     const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
 
     //! когда будет роль тренер нужно преобразовать id файлов в пути
-    return data;
-  }
-
-  @Get()
-  public async show(
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
-  ): Promise<QuestionnaireRdo> {
-    const data = this.fitService.findQuestionnaireByUserId(userId, requestId);
-
     return data;
   }
 }

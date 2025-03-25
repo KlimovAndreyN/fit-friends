@@ -18,8 +18,6 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, readyForTraining, i
     console.log('handleInputReadyForTrainingChange - event.target.checked', event.target.checked);
   };
 
-  const readyForTrainingCaption = (isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать';
-
   return (
     <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
       <label>
@@ -34,7 +32,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, readyForTraining, i
             <use xlinkHref="#arrow-check"></use>
           </svg>
         </span>
-        <span className="custom-toggle__label">{readyForTrainingCaption}</span>
+        <span className="custom-toggle__label">{(isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать'}</span>
       </label>
     </div>
   );
