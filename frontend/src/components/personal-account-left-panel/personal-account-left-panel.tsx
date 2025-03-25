@@ -6,19 +6,17 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUserInfoRdo, UserRole } from '@backend/shared';
+import { IUserInfoRdo } from '@backend/shared';
 
-import { useAppSelector } from '../../hooks';
-import { getUserRole } from '../../store/user-process/selectors';
 import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
 
 type PersonalAccountLeftPanelProps = {
   userInfo: IUserInfoRdo;
+  isSpotsmanRole: boolean;
 }
 
-function PersonalAccountLeftPanel({ userInfo }: PersonalAccountLeftPanelProps): JSX.Element {
+function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
-  const userRole = useAppSelector(getUserRole);
 
   const { user, questionnaire } = userInfo;
   const { name, avatarPath, about, metroStationName, gender } = user;
@@ -76,7 +74,6 @@ function PersonalAccountLeftPanel({ userInfo }: PersonalAccountLeftPanelProps): 
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
   const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
-  const isSpotsmanRole = (userRole === UserRole.Sportsman);
   const readyForTrainingCaption = (isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать';
 
   return (

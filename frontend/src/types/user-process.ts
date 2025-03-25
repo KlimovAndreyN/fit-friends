@@ -10,6 +10,6 @@ export type UserProcess = {
   isCreateQuestionnaireExecuting: boolean;
   isFetchUserInfoExecuting: boolean;
   existQuestionnaire: boolean;
-  userRole: UserRole; //! ? | null;
+  userRole: UserRole | null;
   userInfo: IUserInfoRdo | null;
 }

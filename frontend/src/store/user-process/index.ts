@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { UserRole } from '@backend/shared';
-
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
 import { createQuestionnaire, existQuestionnaire, fetchUserInfo, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
@@ -15,7 +13,7 @@ const initialState: UserProcess = {
   isCreateQuestionnaireExecuting: false,
   isFetchUserInfoExecuting: false,
   existQuestionnaire: false,
-  userRole: UserRole.Sportsman,
+  userRole: null,
   userInfo: null
 };
 

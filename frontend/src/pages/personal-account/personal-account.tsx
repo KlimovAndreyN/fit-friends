@@ -25,7 +25,8 @@ function PersonalAccount(): JSX.Element {
     [dispatch]
   );
 
-  if (isFetchUserInfoExecuting || !userInfo) {
+  //! userInfo и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке
+  if (isFetchUserInfoExecuting || !userInfo || !userRole) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
@@ -41,7 +42,7 @@ function PersonalAccount(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              <PersonalAccountLeftPanel userInfo={userInfo} />
+              <PersonalAccountLeftPanel userInfo={userInfo} isSpotsmanRole={isSpotsmanRole} />
               <div className="inner-page__content">
                 {
                   (isSpotsmanRole)
