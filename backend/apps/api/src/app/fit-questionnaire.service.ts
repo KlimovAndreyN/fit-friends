@@ -19,8 +19,7 @@ export class FitQuestionnaireService {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
   }
 
-  //! возможно будет FitQuestionnaireService
-  public async findQuestionnaireByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
+  public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const url = this.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
@@ -28,10 +27,9 @@ export class FitQuestionnaireService {
     return data;
   }
 
-  //! возможно будет FitQuestionnaireService
-  public async existQuestionnaire(userId: string, requestId: string): Promise<boolean> {
+  public async exist(userId: string, requestId: string): Promise<boolean> {
     try {
-      await this.findQuestionnaireByUserId(userId, requestId);
+      await this.findByUserId(userId, requestId);
 
       return true;
     } catch (error) {
@@ -44,5 +42,18 @@ export class FitQuestionnaireService {
       Logger.log('Error check exist questionnaire', FitQuestionnaireService.name);
       throw new InternalServerErrorException('Error check exist questionnaire');
     }
+  }
+
+  public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {
+    //! отладка
+    console.log('readyForTraining - readyForTraining', readyForTraining);
+    console.log('readyForTraining - userId', userId);
+
+    const url = this.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
+    //!
+    console.log('readyForTraining', readyForTraining);
+    console.log('data', data);
   }
 }

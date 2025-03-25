@@ -30,7 +30,7 @@ export class UserInfoController {
   public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
-    const existQuestionnaire = await this.fitQuestionnaireService.existQuestionnaire(userId, requestId);
+    const existQuestionnaire = await this.fitQuestionnaireService.exist(userId, requestId);
 
     return existQuestionnaire;
   }
@@ -58,22 +58,18 @@ export class UserInfoController {
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
     const user = await this.usersService.getUser(userId, requestId);
-    const questionnaire = await this.fitQuestionnaireService.findQuestionnaireByUserId(userId, requestId);
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
   }
 
   @Post(UserInfoRoute.ReadyForTraining)
   public async readyForTraining(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
-    const user = await this.usersService.getUser(userId, requestId);
-    //! отладка
-    console.log('readyForTraining - user', user);
+    await this.fitQuestionnaireService.updateReadyForTraining(true, userId, requestId);
   }
 
   @Delete(UserInfoRoute.ReadyForTraining)
   public async notReadyForTraining(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
-    const user = await this.usersService.getUser(userId, requestId);
-    //! отладка
-    console.log('notReadyForTraining - user', user);
+    await this.fitQuestionnaireService.updateReadyForTraining(false, userId, requestId);
   }
 }
