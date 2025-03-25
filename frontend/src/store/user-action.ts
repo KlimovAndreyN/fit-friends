@@ -125,12 +125,12 @@ export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDt
   }
 );
 
+//! в отдельный process
 export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
   Action.GET_USER_INFO,
   async (_, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.Users, ApiRoute.GetUserInfo);
-    const { data } = await api.get<IUserInfoRdo>(url);
+    const { data } = await api.get<IUserInfoRdo>(ApiServiceRoute.UserInfo);
 
     return data;
   }

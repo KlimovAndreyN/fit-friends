@@ -15,6 +15,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 @ApiTags(ApiServiceRoute.FitQuestionnaires)
 @ApiBearerAuth(BearerAuth.AccessToken)
 @Controller(ApiServiceRoute.FitQuestionnaires)
+@UseGuards(CheckAuthGuard)
 @UseFilters(AxiosExceptionFilter)
 export class FitQuestionnaireController {
   constructor(
@@ -22,7 +23,6 @@ export class FitQuestionnaireController {
     private readonly fitService: FitService
   ) { }
 
-  @UseGuards(CheckAuthGuard)
   @Get(QuestionnaireRoute.Exist)
   public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
@@ -32,7 +32,6 @@ export class FitQuestionnaireController {
     return existQuestionnaire;
   }
 
-  @UseGuards(CheckAuthGuard)
   //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
   @Post()
   public async create(
@@ -52,7 +51,6 @@ export class FitQuestionnaireController {
     return data;
   }
 
-  @UseGuards(CheckAuthGuard)
   @Get()
   public async show(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId

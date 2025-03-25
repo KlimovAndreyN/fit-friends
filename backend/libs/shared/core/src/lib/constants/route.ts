@@ -5,7 +5,8 @@ export enum GlobalRoute {
 
 export enum ApiServiceRoute {
   Users = 'users',
-  FitQuestionnaires = 'fit-questions'
+  FitQuestionnaires = 'fit-questions',
+  UserInfo = 'user-info'
 }
 
 export enum ServiceRoute {
@@ -26,8 +27,9 @@ export enum QuestionnaireRoute {
   Exist = 'exist'
 }
 
+//! пригодился?
 export enum ApiRoute {
-  GetUserInfo = 'get-user-info'
+  //GetUserInfo = 'get-user-info'
 }
 
 export enum FileStorageRoute {
