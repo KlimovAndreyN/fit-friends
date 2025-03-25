@@ -24,7 +24,8 @@ export enum AccountRoute {
 }
 
 export enum QuestionnaireRoute {
-  Exist = 'exist'
+  Exist = 'exist',
+  Questionnaire = 'questionnaire'
 }
 
 export enum UserInfoRoute {

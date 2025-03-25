@@ -2,7 +2,7 @@ import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, IUserInfoRdo, UserInfoRoute } from '@backend/shared';
+import { ApiServiceRoute, ICreateQuestionnaireDto, IQuestionnaireRdo, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute } from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
 
@@ -12,9 +12,34 @@ type Extra = {
 };
 
 export const Action = {
+  EXIST_QUESTIONNARE: 'user/exist-questionnaire',
+  CREATE_QUESTIONNARE: 'user/create-questionnaire',
   GET_USER_INFO: 'user-info/get-user-info',
   CHANGE_READY: 'user-info/change-ready'
 };
+
+export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
+  Action.EXIST_QUESTIONNARE,
+  async (_, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserInfo, QuestionnaireRoute.Exist);
+    const { data } = await api.get<boolean>(url);
+
+    return data;
+  }
+);
+
+export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDto, { extra: Extra }>(
+  Action.CREATE_QUESTIONNARE,
+  async (dto, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserInfo, QuestionnaireRoute.Questionnaire);
+
+    //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
+    //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
+    await api.post<IQuestionnaireRdo>(url, dto);
+  }
+);
 
 export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
   Action.GET_USER_INFO,

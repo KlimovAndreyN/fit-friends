@@ -2,15 +2,12 @@ import { History } from 'history';
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import {
-  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
-  IQuestionnaireRdo, ILoggedUserRdo, ICreateUserDto, IUserRdo,
-  QuestionnaireRoute, ICreateQuestionnaireDto
-} from '@backend/shared';
+import { AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IUserRdo, ILoggedUserRdo, ICreateUserDto } from '@backend/shared';
 
-import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { isErrorNetwork } from '../utils/parse-axios-error';
 import { joinUrl } from '../utils/common';
+import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
+import { existQuestionnaire } from './user-info-action';
 import { multipartFormDataHeader } from '../const';
 
 type Extra = {
@@ -22,21 +19,9 @@ export const Action = {
   LOGIN_USER: 'user/login',
   LOGOUT_USER: 'user/logout',
   FETCH_USER_STATUS: 'user/fetch-status',
-  REGISTER_USER: 'user/register',
-  EXIST_QUESTIONNARE: 'user/exist-questionnaire',
-  CREATE_QUESTIONNARE: 'user/create-questionnaire'
+  REGISTER_USER: 'user/register'
 };
 
-export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
-  Action.EXIST_QUESTIONNARE,
-  async (_, { extra }) => {
-    const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.FitQuestionnaires, QuestionnaireRoute.Exist);
-    const { data } = await api.get<boolean>(url);
-
-    return data;
-  }
-);
 
 export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
@@ -109,16 +94,5 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
     const { email, password } = dto;
 
     dispatch(loginUser({ email, password }));
-  }
-);
-
-export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDto, { extra: Extra }>(
-  Action.CREATE_QUESTIONNARE,
-  async (dto, { extra }) => {
-    const { api } = extra;
-
-    //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
-    //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
-    await api.post<IQuestionnaireRdo>(ApiServiceRoute.FitQuestionnaires, dto);
   }
 );

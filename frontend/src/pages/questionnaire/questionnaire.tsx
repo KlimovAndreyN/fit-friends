@@ -10,8 +10,9 @@ import CalorieInput from '../../components/calorie-input/calorie-input';
 import { Duration, ICreateQuestionnaireDto, Specialization, UserLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsCreateQuestionnaireExecuting, getUserRole } from '../../store/user-process/selectors';
-import { createQuestionnaire } from '../../store/user-action';
+import { getUserRole } from '../../store/user-process/selectors';
+import { getIsCreateQuestionnaireExecuting } from '../../store/user-info-process/selectors';
+import { createQuestionnaire } from '../../store/user-info-action';
 import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
 
 enum FormFieldName {

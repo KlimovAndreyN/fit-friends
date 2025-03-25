@@ -1,13 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { UserInfoProcess } from '../../types/user-info-process';
-import { changeReadyForTraning, fetchUserInfo } from '../user-info-action';
+import { changeReadyForTraning, createQuestionnaire, existQuestionnaire, fetchUserInfo } from '../user-info-action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserInfoProcess = {
+  isExistQuestionnaireExecuting: false,
+  isCreateQuestionnaireExecuting: false,
   isFetchUserInfoExecuting: false,
   isReadyForTrainingChangeExecuting: false,
-  userInfo: null
+  existQuestionnaire: false,
+  userInfo: null,
+  readyForTraining: undefined
 };
 
 export const userInfoProcess = createSlice(
@@ -17,6 +21,44 @@ export const userInfoProcess = createSlice(
     reducers: {},
     extraReducers(builder) {
       builder
+        .addCase(
+          existQuestionnaire.pending,
+          (state) => {
+            state.isExistQuestionnaireExecuting = true;
+          }
+        )
+        .addCase(
+          existQuestionnaire.rejected,
+          (state) => {
+            state.isExistQuestionnaireExecuting = false;
+          }
+        )
+        .addCase(
+          existQuestionnaire.fulfilled,
+          (state, action) => {
+            state.existQuestionnaire = action.payload;
+            state.isExistQuestionnaireExecuting = false;
+          }
+        )
+        .addCase(
+          createQuestionnaire.pending,
+          (state) => {
+            state.isCreateQuestionnaireExecuting = true;
+          }
+        )
+        .addCase(
+          createQuestionnaire.rejected,
+          (state) => {
+            state.isCreateQuestionnaireExecuting = false;
+          }
+        )
+        .addCase(
+          createQuestionnaire.fulfilled,
+          (state) => {
+            state.existQuestionnaire = true;
+            state.isCreateQuestionnaireExecuting = false;
+          }
+        )
         .addCase(
           fetchUserInfo.pending,
           (state) => {

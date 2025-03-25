@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import MainSpinner from '../main-spinner/main-spinner';
 
 import { useAppSelector } from '../../hooks';
-import { getExistQuestionnaire, getIsExistQuestionnaireExecuting } from '../../store/user-process/selectors';
+import { getExistQuestionnaire, getIsExistQuestionnaireExecuting } from '../../store/user-info-process/selectors';
 import { AppRoute } from '../../const';
 
 type QuestionnaireRouteProps = {

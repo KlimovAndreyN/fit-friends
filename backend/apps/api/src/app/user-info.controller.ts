@@ -1,12 +1,18 @@
-import { Controller, Delete, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo, UserInfoRoute } from '@backend/shared/core';
+import {
+  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo,
+  QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
+  UserRole, ServiceRoute, QuestionnaireRdo, UserInfoRoute
+} from '@backend/shared/core';
+import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
+import { CheckAuthGuard } from './guards/check-auth.guard';
 import { UsersService } from './users.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
-import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @ApiTags(ApiServiceRoute.UserInfo)
 @ApiBearerAuth(BearerAuth.AccessToken)
@@ -15,9 +21,39 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 @UseFilters(AxiosExceptionFilter)
 export class UserInfoController {
   constructor(
+    private readonly httpService: HttpService,
     private usersService: UsersService,
     private fitQuestionnaireService: FitQuestionnaireService
   ) { }
+
+  @Get(QuestionnaireRoute.Exist)
+  public async exist(
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<boolean> {
+    const existQuestionnaire = await this.fitQuestionnaireService.existQuestionnaire(userId, requestId);
+
+    return existQuestionnaire;
+  }
+
+  //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
+  @Post(QuestionnaireRoute.Questionnaire)
+  public async create(
+    @Body() dto: CreateQuestionnaireDto,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<QuestionnaireRdo> {
+    //! подкинуть роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId
+    //! временно
+    const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto, userRole: UserRole.Sportsman, fileIds: [] }
+    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
+    //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
+    //! перенести в сервис?
+    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
+
+    //! когда будет роль тренер нужно преобразовать id файлов в пути
+    return data;
+  }
 
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
