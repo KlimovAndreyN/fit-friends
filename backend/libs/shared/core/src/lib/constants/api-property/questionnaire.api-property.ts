@@ -1,7 +1,11 @@
 import { Duration } from '../../types/duration.enum';
 import { UserLevel } from '../../types/user-level.enum';
 
-//! типизировать через ApiPropertyCommonOptions, а потом собрать в общий обьект
+//! типизировать через SchemaObjectMetadata не получается
+// или import { ApiPropertyOptions } from '@nestjs/swagger';
+// или import { SchemaObjectMetadata } from '@nestjs/swagger/dist/interfaces/schema-object-metadata.interface';
+// Ошибка - has or is using name 'SchemaObjectCommonMetadata' from external module "fit-friends/backend/node_modules/@nestjs/swagger/dist/interfaces/schema-object-metadata.interface" but cannot be named.ts(4023)
+
 export const QuestionnaireApiProperty = {
   Specializations: {
     description: 'The user specializations',

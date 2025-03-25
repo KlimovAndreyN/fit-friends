@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ArrayMaxSize, IsArray, IsBoolean, IsEnum, IsOptional } from 'class-validator';
 
 import { Questionnaire } from '../interfaces/questionnaire.interface';
@@ -10,6 +10,7 @@ import { QuestionnaireApiProperty } from '../constants/api-property/questionnair
 //! если будут файл для тренера, то сделать UpdateQuestionnaireWithFileIdsDto, а здесь исключить id файлов и добавить пути к файлам
 export class UpdateQuestionnaireDto implements IUpdateQuestionnaireDto {
   @ApiProperty(QuestionnaireApiProperty.Specializations)
+  @ApiPropertyOptional()
   @IsArray()
   @ArrayMaxSize(Object.values(Specialization).length)
   @IsEnum(Specialization, { each: true })
@@ -17,11 +18,13 @@ export class UpdateQuestionnaireDto implements IUpdateQuestionnaireDto {
   specializations?: Questionnaire['specializations'];
 
   @ApiProperty(QuestionnaireApiProperty.Level)
+  @ApiPropertyOptional()
   @IsEnum(UserLevel)
   @IsOptional()
   level?: Questionnaire['level'];
 
   @ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
+  @ApiPropertyOptional()
   @IsBoolean()
   @IsOptional()
   readyForTraining?: Questionnaire['readyForTraining'];
