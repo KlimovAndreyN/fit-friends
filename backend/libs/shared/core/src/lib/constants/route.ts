@@ -26,6 +26,10 @@ export enum QuestionnaireRoute {
   Exist = 'exist'
 }
 
+export enum ApiRoute {
+  GetUserInfo = 'get-user-info'
+}
+
 export enum FileStorageRoute {
   Upload = 'upload'
 }

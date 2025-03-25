@@ -4,7 +4,7 @@ import { IQuestionnaireRdo, IUserRdo, MetroStationName, Specialization, UserGend
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
+import { createQuestionnaire, existQuestionnaire, fetchUserInfo, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
 import { StoreSlice } from '../../const';
 
 const EMPTY_USER: IUserRdo = {
@@ -153,28 +153,25 @@ export const userProcess = createSlice(
             state.existQuestionnaire = true;
             state.isCreateQuestionnaireExecuting = false;
           }
-          /*
-          //! пока нет действия
-          )
-          .addCase(
-            fetchUserInfo.pending,
-            (state) => {
-              state.isFetchUserInfoExecuting = true;
-            }
-          )
-          .addCase(
-            fetchUserInfo.rejected,
-            (state) => {
-              state.isFetchUserInfoExecuting = false;
-            }
-          )
-          .addCase(
-            fetchUserInfo.fulfilled,
-            (state) => {
-              //! state.userInfo = action.payload
-              state.isFetchUserInfoExecuting = false;
-            }
-          */
+        )
+        .addCase(
+          fetchUserInfo.pending,
+          (state) => {
+            state.isFetchUserInfoExecuting = true;
+          }
+        )
+        .addCase(
+          fetchUserInfo.rejected,
+          (state) => {
+            state.isFetchUserInfoExecuting = false;
+          }
+        )
+        .addCase(
+          fetchUserInfo.fulfilled,
+          (state, action) => {
+            state.userInfo = action.payload;
+            state.isFetchUserInfoExecuting = false;
+          }
         );
     }
   }

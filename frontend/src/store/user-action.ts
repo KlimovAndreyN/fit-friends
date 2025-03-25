@@ -4,7 +4,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IQuestionnaireRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute, ICreateQuestionnaireDto
+  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute, ICreateQuestionnaireDto,
+   ApiRoute, IUserInfoRdo,
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
@@ -23,7 +24,8 @@ export const Action = {
   FETCH_USER_STATUS: 'user/fetch-status',
   REGISTER_USER: 'user/register',
   EXIST_QUESTIONNARE: 'user/exist-questionnaire',
-  CREATE_QUESTIONNARE: 'user/create-questionnaire'
+  CREATE_QUESTIONNARE: 'user/create-questionnaire',
+  GET_USER_INFO: 'user/get-user-ingo'
 };
 
 export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
@@ -138,12 +140,13 @@ export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDt
   }
 );
 
-export const fetchUserInfo = createAsyncThunk<void, undefined, { extra: Extra }>(
-  Action.CREATE_QUESTIONNARE,
-  /*async*/(_, { extra }) => {
+export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
+  Action.GET_USER_INFO,
+  async (_, { extra }) => {
     const { api } = extra;
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('fetchUserInfo - api', api);
+    const url = joinUrl(ApiServiceRoute.Users, ApiRoute.GetUserInfo);
+    const { data } = await api.get<IUserInfoRdo>(url);
+
+    return data;
   }
 );

@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
@@ -18,7 +18,7 @@ function PersonalAccountLeftPanel(): JSX.Element {
   const userInfo = useAppSelector(getUserInfo);
   const { user, questionnaire } = userInfo;
   const { name, avatarPath, about, metroStationName, gender } = user;
-  const { specializations, level } = questionnaire;
+  const { specializations, level, readyForTraining } = questionnaire;
 
   //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
 
@@ -26,6 +26,15 @@ function PersonalAccountLeftPanel(): JSX.Element {
     event.preventDefault();
 
     setIsEditing(true);
+  };
+
+  const handleInputReadyForTrainingChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //event.preventDefault();
+    //вынести в отдельный компонет!
+
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleInputReadyForTrainingChange - event.target.checked', event.target.checked);
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -72,7 +81,7 @@ function PersonalAccountLeftPanel(): JSX.Element {
   const readyForTrainingCaption = (isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать';
 
   return (
-    <section className={mainClassName}>
+    <section className={mainClassName} >
       <div className={`${mainClassName}__header`}>
         <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
       </div>
@@ -111,7 +120,12 @@ function PersonalAccountLeftPanel(): JSX.Element {
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' title='Статус' >
           <div className={`custom-toggle custom-toggle--switch ${mainClassName}__toggle`}>
             <label>
-              <input type="checkbox" name="ready-for-training" defaultChecked />
+              <input
+                type="checkbox"
+                name="ready-for-training"
+                defaultChecked={readyForTraining}
+                onChange={handleInputReadyForTrainingChange}
+              />
               <span className="custom-toggle__icon">
                 <svg width="9" height="6" aria-hidden="true">
                   <use xlinkHref="#arrow-check"></use>

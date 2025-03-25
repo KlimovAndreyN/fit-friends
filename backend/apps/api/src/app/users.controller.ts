@@ -12,13 +12,14 @@ import {
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, UserTokenRdo,
   UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
-  UserRdo, ApiApiResponse
+  UserRdo, ApiApiResponse, ApiRoute, RequestWithRequestIdAndUserId, UserInfoRdo
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { UsersService } from './users.service';
+import { FitService } from './fit.service';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckNotAuthGuard } from './guards/check-not-auth.guard';
 
@@ -28,7 +29,8 @@ import { CheckNotAuthGuard } from './guards/check-not-auth.guard';
 export class UsersController {
   constructor(
     private readonly httpService: HttpService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private fitService: FitService
   ) { }
 
   @ApiOperation(AuthenticationApiOperation.Check)
@@ -106,6 +108,16 @@ export class UsersController {
     const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
 
     return registeredUser;
+  }
+
+  @ApiBearerAuth(BearerAuth.AccessToken)
+  @UseGuards(CheckAuthGuard)
+  @Get(ApiRoute.GetUserInfo)
+  public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
+    const user = await this.usersService.getUser(userId, requestId);
+    const questionnaire = await this.fitService.findQuestionnaireByUserId(userId, requestId);
+
+    return { user, questionnaire };
   }
 
   @ApiOperation(AuthenticationApiOperation.Show)

@@ -67,7 +67,7 @@ function PersonalAccount(): JSX.Element {
                             <div className="personal-account-user__input">
                               <label>
                                 <span className="personal-account-user__label">План на неделю, ккал</span>
-                                <input type="text" name="schedule-for-the-week" defaultValue={caloriesWaste || 0 * 7} disabled />
+                                <input type="text" name="schedule-for-the-week" defaultValue={(caloriesWaste || 0) * 7} disabled />
                               </label>
                             </div>
                           </div>
