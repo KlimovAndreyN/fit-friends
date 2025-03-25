@@ -3,9 +3,9 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IQuestionnaireRdo,
-  ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute, ICreateQuestionnaireDto,
-  ApiRoute, IUserInfoRdo,
+  AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo,
+  IQuestionnaireRdo, ILoggedUserRdo, ICreateUserDto, IUserRdo,
+  QuestionnaireRoute, ICreateQuestionnaireDto
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
@@ -15,7 +15,7 @@ import { multipartFormDataHeader } from '../const';
 
 type Extra = {
   api: AxiosInstance;
-  history: History;
+  history: History; //! пригодилось?
 };
 
 export const Action = {
@@ -24,8 +24,7 @@ export const Action = {
   FETCH_USER_STATUS: 'user/fetch-status',
   REGISTER_USER: 'user/register',
   EXIST_QUESTIONNARE: 'user/exist-questionnaire',
-  CREATE_QUESTIONNARE: 'user/create-questionnaire',
-  GET_USER_INFO: 'user/get-user-ingo'
+  CREATE_QUESTIONNARE: 'user/create-questionnaire'
 };
 
 export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
@@ -117,21 +116,9 @@ export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDt
   Action.CREATE_QUESTIONNARE,
   async (dto, { extra }) => {
     const { api } = extra;
-    const url = ApiServiceRoute.FitQuestionnaires;
 
     //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
     //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
-    await api.post<IQuestionnaireRdo>(url, dto);
-  }
-);
-
-//! в отдельный process
-export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
-  Action.GET_USER_INFO,
-  async (_, { extra }) => {
-    const { api } = extra;
-    const { data } = await api.get<IUserInfoRdo>(ApiServiceRoute.UserInfo);
-
-    return data;
+    await api.post<IQuestionnaireRdo>(ApiServiceRoute.FitQuestionnaires, dto);
   }
 );

@@ -7,8 +7,9 @@ import PersonalAccountLeftPanel from '../../components/personal-account-left-pan
 import { UserRole } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsFetchUserInfoExecuting, getUserInfo, getUserRole } from '../../store/user-process/selectors';
-import { fetchUserInfo } from '../../store/user-action';
+import { getUserRole } from '../../store/user-process/selectors';
+import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-info-process/selectors';
+import { fetchUserInfo } from '../../store/user-info-action';
 import { PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {

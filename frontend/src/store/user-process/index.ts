@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/user-process';
 import { AuthorizationStatus } from '../../types/types';
-import { createQuestionnaire, existQuestionnaire, fetchUserInfo, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
+import { createQuestionnaire, existQuestionnaire, fetchUserStatus, loginUser, logoutUser, registerUser } from '../user-action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
@@ -11,10 +11,8 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   isExistQuestionnaireExecuting: false,
   isCreateQuestionnaireExecuting: false,
-  isFetchUserInfoExecuting: false,
   existQuestionnaire: false,
-  userRole: null,
-  userInfo: null
+  userRole: null
 };
 
 export const userProcess = createSlice(
@@ -119,25 +117,6 @@ export const userProcess = createSlice(
           (state) => {
             state.existQuestionnaire = true;
             state.isCreateQuestionnaireExecuting = false;
-          }
-        )
-        .addCase(
-          fetchUserInfo.pending,
-          (state) => {
-            state.isFetchUserInfoExecuting = true;
-          }
-        )
-        .addCase(
-          fetchUserInfo.rejected,
-          (state) => {
-            state.isFetchUserInfoExecuting = false;
-          }
-        )
-        .addCase(
-          fetchUserInfo.fulfilled,
-          (state, action) => {
-            state.userInfo = action.payload;
-            state.isFetchUserInfoExecuting = false;
           }
         );
     }
