@@ -9,7 +9,9 @@ CREATE TABLE "questionnaires" (
     "calories_waste" INTEGER,
     "file_ids" VARCHAR(50)[],
     "description" VARCHAR(5000),
-    "individual_training" BOOLEAN
+    "individual_training" BOOLEAN,
+
+    CONSTRAINT "questionnaires_pkey" PRIMARY KEY ("user_id")
 );
 
 -- CreateIndex
