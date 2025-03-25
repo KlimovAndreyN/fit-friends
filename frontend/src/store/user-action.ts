@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IQuestionnaireRdo,
   ILoggedUserRdo, ICreateUserDto, IUserRdo, QuestionnaireRoute, ICreateQuestionnaireDto,
-   ApiRoute, IUserInfoRdo,
+  ApiRoute, IUserInfoRdo,
 } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';

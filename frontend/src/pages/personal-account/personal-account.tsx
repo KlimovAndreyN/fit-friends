@@ -16,7 +16,6 @@ function PersonalAccount(): JSX.Element {
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
-  const { questionnaire: { caloriesWaste } } = userInfo;
 
   useEffect(
     () => {
@@ -26,15 +25,12 @@ function PersonalAccount(): JSX.Element {
     [dispatch]
   );
 
-  if (isFetchUserInfoExecuting) {
+  if (isFetchUserInfoExecuting || !userInfo) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
 
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('PersonalAccountLeftPanel', 'userRole,', userRole, 'userInfo', userInfo);
-
+  const { questionnaire: { caloriesWaste } } = userInfo;
   const isSpotsmanRole = (userRole === UserRole.Sportsman);
 
   return (
@@ -45,7 +41,7 @@ function PersonalAccount(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              <PersonalAccountLeftPanel />
+              <PersonalAccountLeftPanel userInfo={userInfo} />
               <div className="inner-page__content">
                 {
                   (isSpotsmanRole)

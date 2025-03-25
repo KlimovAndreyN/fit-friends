@@ -6,21 +6,23 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { UserRole } from '@backend/shared';
+import { IUserInfoRdo, UserRole } from '@backend/shared';
 
 import { useAppSelector } from '../../hooks';
-import { getUserInfo, getUserRole } from '../../store/user-process/selectors';
+import { getUserRole } from '../../store/user-process/selectors';
 import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
 
-function PersonalAccountLeftPanel(): JSX.Element {
+type PersonalAccountLeftPanelProps = {
+  userInfo: IUserInfoRdo;
+}
+
+function PersonalAccountLeftPanel({ userInfo }: PersonalAccountLeftPanelProps): JSX.Element {
   const [isEditing, setIsEditing] = useState(false);
   const userRole = useAppSelector(getUserRole);
-  const userInfo = useAppSelector(getUserInfo);
+
   const { user, questionnaire } = userInfo;
   const { name, avatarPath, about, metroStationName, gender } = user;
   const { specializations, level, readyForTraining } = questionnaire;
-
-  //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
 
   const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -30,6 +32,7 @@ function PersonalAccountLeftPanel(): JSX.Element {
 
   const handleInputReadyForTrainingChange = (event: ChangeEvent<HTMLInputElement>) => {
     //event.preventDefault();
+    //! ready-for-training, нужно где-то получить, пока defaultChecked и отдельный обработчик на изменение и лоадер и т.д....
     //вынести в отдельный компонет!
 
     //! отладка
@@ -70,10 +73,6 @@ function PersonalAccountLeftPanel(): JSX.Element {
 
     setIsEditing(false);
   };
-
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('PersonalAccountLeftPanel', 'userRole,', userRole, 'userInfo', userInfo);
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
   const buttonCaption = (isEditing) ? 'Сохранить' : 'Редактировать';
