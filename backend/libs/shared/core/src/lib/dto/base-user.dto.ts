@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { Expose } from 'class-transformer';
 
@@ -37,6 +37,12 @@ export class BaseUserDto {
   @MinLength(UserValidation.Password.MinLength)
   @MaxLength(UserValidation.Password.MaxLength)
   public password: ICreateUserWithFileIdDto['password'];
+
+  @ApiProperty()
+  //@ApiProperty(UserApiProperty.About)
+  @ApiPropertyOptional()
+  @Expose()
+  public about?: User['about'];
 
   @ApiProperty(UserApiProperty.Birthday)
   @Expose()
