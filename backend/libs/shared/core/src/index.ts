@@ -31,6 +31,7 @@ export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { CreateUserWithFileIdDto } from './lib/dto/create-user-with-file-id.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
+export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';

@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
-import { QuestionnaireRdo, ServiceRoute } from '@backend/shared/core';
+import { QuestionnaireRdo, ServiceRoute, UpdateQuestionnaireDto } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -45,15 +45,9 @@ export class FitQuestionnaireService {
   }
 
   public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {
-    //! отладка
-    console.log('readyForTraining - readyForTraining', readyForTraining);
-    console.log('readyForTraining - userId', userId);
-
     const url = this.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, { readyForTraining }, headers);
-    //!
-    console.log('readyForTraining', readyForTraining);
-    console.log('data', data);
+    const dto: UpdateQuestionnaireDto = { readyForTraining }
+    await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
   }
 }

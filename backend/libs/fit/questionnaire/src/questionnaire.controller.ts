@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions } from '@backend/shared/core';
+import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
@@ -28,10 +28,10 @@ export class QuestionnaireController {
 
   @Patch()
   public async update(
-    @Body() dto: CreateQuestionnaireWithFileIdsDto, //! UpdateDto и не все можно менять!
+    @Body() dto: UpdateQuestionnaireDto, //! UpdateDto и не все можно менять!
     @Req() { userId }: RequestWithUserId
   ): Promise<string> {
-    //!
+    //! отладка, доделать и вызвать сервис
     console.log('updateQuestionnaireUser');
     console.log('userId', userId);
     console.log('dto', dto);

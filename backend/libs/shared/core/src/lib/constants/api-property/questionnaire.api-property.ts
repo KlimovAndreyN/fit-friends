@@ -1,6 +1,7 @@
 import { Duration } from '../../types/duration.enum';
 import { UserLevel } from '../../types/user-level.enum';
 
+//! типизировать через ApiPropertyCommonOptions, а потом собрать в общий обьект
 export const QuestionnaireApiProperty = {
   Specializations: {
     description: 'The user specializations',
@@ -13,6 +14,11 @@ export const QuestionnaireApiProperty = {
     type: 'string',
     enum: UserLevel,
     example: UserLevel.Amateur
+  },
+  ReadyForTraining: {
+    description: 'ready for training',
+    type: 'boolean',
+    example: false
   },
   Time: {
     description: 'The user time',

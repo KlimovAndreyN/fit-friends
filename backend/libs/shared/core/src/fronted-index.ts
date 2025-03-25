@@ -4,6 +4,7 @@ export { ApiServiceRoute, AccountRoute, QuestionnaireRoute, UserInfoRoute } from
 export { type ICreateQuestionnaireDto } from './lib/interfaces/dto/i-create-questionnaire.dto';
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
+export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-questionnaire.dto';
 
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';
