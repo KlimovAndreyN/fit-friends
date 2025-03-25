@@ -27,9 +27,8 @@ export enum QuestionnaireRoute {
   Exist = 'exist'
 }
 
-//! пригодился?
-export enum ApiRoute {
-  //GetUserInfo = 'get-user-info'
+export enum UserInfoRoute {
+  ReadyForTraining = 'ready-for-training'
 }
 
 export enum FileStorageRoute {

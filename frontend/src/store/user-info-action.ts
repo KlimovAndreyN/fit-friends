@@ -2,7 +2,9 @@ import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, IUserInfoRdo } from '@backend/shared';
+import { ApiServiceRoute, IUserInfoRdo, UserInfoRoute } from '@backend/shared';
+
+import { joinUrl } from '../utils/common';
 
 type Extra = {
   api: AxiosInstance;
@@ -28,7 +30,7 @@ export const changeReadyForTraning = createAsyncThunk<boolean, boolean, { extra:
   Action.CHANGE_READY,
   async (ready, { extra }) => {
     const { api } = extra;
-    const url = ApiServiceRoute.UserInfo;
+    const url = joinUrl(ApiServiceRoute.UserInfo, UserInfoRoute.ReadyForTraining);
 
     if (ready) {
       await api.post(url);
