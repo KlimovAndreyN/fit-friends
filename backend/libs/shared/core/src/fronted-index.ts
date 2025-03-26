@@ -12,7 +12,7 @@ export { type IUserInfoRdo } from './lib/interfaces/rdo/i-user-info.rdo';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 
 export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';
-export { type Token as ITokenRdo } from './lib/interfaces/token.interface';
+export { type Tokens as ITokensRdo } from './lib/interfaces/tokens.interface';
 
 export { Duration } from './lib/types/duration.enum';
 export { MetroStationName } from './lib/types/metro-station-name.enum';

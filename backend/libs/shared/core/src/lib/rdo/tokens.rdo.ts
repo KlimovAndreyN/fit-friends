@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { Token } from '../interfaces/token.interface';
+import { Tokens } from '../interfaces/tokens.interface';
 import { TokenApiProperty } from '../constants/api-property/token.api-property';
 
-export class TokenRdo
-  implements Token {
+export class TokensRdo
+  implements Tokens {
   @ApiProperty(TokenApiProperty.AccessToken)
   @Expose()
-  public accessToken: Token['accessToken'];
+  public accessToken: Tokens['accessToken'];
 
   @ApiProperty(TokenApiProperty.RefreshToken)
   @Expose()
-  public refreshToken: Token['refreshToken'];
+  public refreshToken: Tokens['refreshToken'];
 }

@@ -10,7 +10,7 @@ import 'multer'; // Express.Multer.File
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, TokenRdo,
+  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, TokensRdo,
   UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
   UserRdo, ApiApiResponse
 } from '@backend/shared/core';
@@ -48,10 +48,10 @@ export class UsersController {
   @ApiBearerAuth(BearerAuth.RefreshToken)
   @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
   @Post(AccountRoute.Refresh)
-  public async refreshToken(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<TokenRdo> {
+  public async refreshToken(@Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth): Promise<TokensRdo> {
     const url = this.usersService.getUrl(AccountRoute.Refresh);
     const headers = makeHeaders(requestId, bearerAuth);
-    const { data } = await this.httpService.axiosRef.post<TokenRdo>(url, null, headers);
+    const { data } = await this.httpService.axiosRef.post<TokensRdo>(url, null, headers);
 
     return data;
   }

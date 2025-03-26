@@ -2,7 +2,7 @@ import { ApiProperty, PickType } from '@nestjs/swagger';
 
 import { ILoggedUserRdo } from '../interfaces/rdo/i-logged-user.rdo';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
-import { TokenRdo } from './token.rdo';
+import { TokensRdo } from './tokens.rdo';
 
 export class LoggedUserRdo extends
   PickType(
@@ -15,6 +15,6 @@ export class LoggedUserRdo extends
     ]
   )
   implements ILoggedUserRdo {
-  @ApiProperty({ type: TokenRdo })
-  token: TokenRdo;
+  @ApiProperty({ type: TokensRdo })
+  tokens: TokensRdo;
 }

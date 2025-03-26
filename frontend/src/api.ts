@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokenRdo } from '@backend/shared';
+import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokensRdo } from '@backend/shared';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
@@ -57,7 +57,7 @@ export function createAPI(): AxiosInstance {
           return Promise.reject('RefreshToken is empty!');
         }
 
-        const { data: { accessToken, refreshToken } } = await api.post<ITokenRdo>(refreshUrl);
+        const { data: { accessToken, refreshToken } } = await api.post<ITokensRdo>(refreshUrl);
 
         AccessTokenStore.save(accessToken);
         RefreshTokenStore.save(refreshToken);

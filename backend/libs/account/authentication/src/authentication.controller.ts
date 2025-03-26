@@ -7,7 +7,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, User,
   LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserWithFileIdRdo,
-  AccountRoute, USER_ID_PARAM, LoginUserDto, TokenRdo, ServiceRoute, CreateUserWithFileIdDto,
+  AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, CreateUserWithFileIdDto,
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -44,10 +44,10 @@ export class AuthenticationController {
   @HttpCode(AuthenticationApiResponse.RefreshTokensSuccess.status)
   @UseGuards(JwtRefreshGuard)
   @Post(AccountRoute.Refresh)
-  public async refreshToken(@Req() { user }: RequestWithFitUserEntity): Promise<TokenRdo> {
-    const userToken = await this.authService.createUserToken(user);
+  public async refreshToken(@Req() { user }: RequestWithFitUserEntity): Promise<TokensRdo> {
+    const tokens = await this.authService.createUserTokens(user);
 
-    return fillDto(TokenRdo, userToken);
+    return fillDto(TokensRdo, tokens);
   }
 
   @ApiOperation(AuthenticationApiOperation.Login)
@@ -59,9 +59,9 @@ export class AuthenticationController {
   @UseGuards(LocalAuthGuard)
   @Post(AccountRoute.Login)
   public async login(@Req() { user }: RequestWithFitUserEntity): Promise<LoggedUserRdo> {
-    const token = await this.authService.createUserToken(user);
+    const tokens = await this.authService.createUserTokens(user);
     const { id, name, email, role } = user;
-    const data: LoggedUserRdo = { id, name, email, role, token };
+    const data: LoggedUserRdo = { id, name, email, role, tokens };
 
     return data;
   }

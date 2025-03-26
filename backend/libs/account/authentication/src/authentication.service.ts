@@ -5,7 +5,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { AuthenticationMessage, AuthUser, CreateUserWithFileIdDto, LoginUserDto, Token, User } from '@backend/shared/core';
+import { AuthenticationMessage, AuthUser, CreateUserWithFileIdDto, LoginUserDto, Tokens, User } from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -65,7 +65,7 @@ export class AuthenticationService {
     return userEntity;
   }
 
-  public async createUserToken(user: User): Promise<Token> {
+  public async createUserTokens(user: User): Promise<Tokens> {
     const accessTokenPayload = createJwtPayload(user);
     const refreshTokenPayload = { ...accessTokenPayload, tokenId: crypto.randomUUID() };
 
