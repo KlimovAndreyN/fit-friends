@@ -1,12 +1,24 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { PickType } from '@nestjs/swagger';
 
 import { IUserRdo } from '../interfaces/rdo/i-user.rdo';
-import { UserApiProperty } from '../constants/api-property/user.api-property';
-import { UserWithFileIdRdo } from './user-with-file-id.rdo';
+import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
-export class UserRdo extends OmitType(UserWithFileIdRdo, ['avatarFileId']) implements IUserRdo {
-  @ApiProperty(UserApiProperty.AvatarPath)
-  @Expose()
-  public avatarPath: IUserRdo['avatarPath'];
+export class UserRdo
+  extends PickType(
+    UserApiDoc,
+    [
+      'id',
+      'name',
+      'about',
+      'email',
+      'birthday',
+      'avatarPath',
+      'metroStationName',
+      'backgroundPath',
+      'gender',
+      'role',
+      'registrationDate'
+    ]
+  )
+  implements IUserRdo {
 }

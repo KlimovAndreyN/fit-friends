@@ -1,12 +1,22 @@
-import { ApiProperty, OmitType } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { PickType } from '@nestjs/swagger';
 
-import { CreateUserWithFileIdDto } from './create-user-with-file-id.dto';
-import { UserApiProperty } from '../constants/api-property/user.api-property';
 import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
+import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
-export class CreateUserDto extends OmitType(CreateUserWithFileIdDto, ['avatarFileId']) implements ICreateUserDto {
-  @ApiProperty(UserApiProperty.AvatarFile)
-  @IsOptional()
-  public avatarFile?: ICreateUserDto['avatarFile'];
+export class CreateUserDto
+  extends PickType(
+    UserApiDoc,
+    [
+      'name',
+      'email',
+      'password',
+      'birthday',
+      'avatarFile',
+      'metroStationName',
+      'backgroundPath',
+      'gender',
+      'role'
+    ]
+  )
+  implements ICreateUserDto {
 }
