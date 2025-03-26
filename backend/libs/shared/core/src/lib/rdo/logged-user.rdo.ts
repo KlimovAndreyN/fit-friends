@@ -3,12 +3,12 @@ import { Expose } from 'class-transformer';
 
 import { Token } from '../interfaces/token.interface';
 import { ILoggedUserRdo } from '../interfaces/rdo/i-logged-user.rdo';
-import { BaseUserDto } from '../dto/base-user.dto';
 import { TokenApiProperty } from '../constants/api-property/token.api-property';
+import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class LoggedUserRdo extends
   PickType(
-    BaseUserDto,
+    UserApiDoc,
     [
       'id',
       'name',
@@ -17,6 +17,7 @@ export class LoggedUserRdo extends
     ]
   )
   implements ILoggedUserRdo {
+  //! попробовать сделать объект tokens: TokenRdo...
   @ApiProperty(TokenApiProperty.AccessToken)
   @Expose()
   public accessToken: Token['accessToken'];
