@@ -61,9 +61,9 @@ export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { QuestionnaireWithFileIdsRdo } from './lib/rdo/questionnaire-with-file-ids.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
+export { TokenRdo } from './lib/rdo/token.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserInfoRdo } from './lib/rdo/user-info.rdo';
-export { UserTokenRdo } from './lib/rdo/user-token.rdo';
 export { UserRdo } from './lib/rdo/user.rdo';
 export { UserWithFileIdRdo } from './lib/rdo/user-with-file-id.rdo';
 

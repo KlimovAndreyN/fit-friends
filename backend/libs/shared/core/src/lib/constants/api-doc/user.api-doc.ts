@@ -12,11 +12,16 @@ import { UserRole } from '../../types/user-role.enum';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
 import { UserValidation } from '../../constants/authentication.constant';
 import { IUserRdo } from '../../../fronted-index';
+import { TokenPayload } from '../../interfaces/token-payload.interface';
 
 export class UserApiDoc {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
   public id: User['id'];
+
+  @ApiProperty(UserApiProperty.Id)
+  @Expose()
+  public sub: TokenPayload['sub'];
 
   @ApiProperty(UserApiProperty.Name)
   @Expose()

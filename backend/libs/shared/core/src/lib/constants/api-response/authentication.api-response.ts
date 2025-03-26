@@ -1,7 +1,7 @@
 import { HttpStatus } from '@nestjs/common';
 
 import { UserWithFileIdRdo } from '../../rdo/user-with-file-id.rdo';
-import { UserTokenRdo } from '../../rdo/user-token.rdo';
+import { TokenRdo } from '../../rdo/token.rdo';
 import { LoggedUserRdo } from '../../rdo/logged-user.rdo';
 import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
 import { AuthenticationMessage } from '../authentication.constant';
@@ -13,7 +13,7 @@ export const AuthenticationApiResponse = {
     description: 'Check access token success.'
   },
   RefreshTokensSuccess: {
-    type: UserTokenRdo,
+    type: TokenRdo,
     status: HttpStatus.OK,
     description: 'Refresh access/refresh tokens success.'
   },
