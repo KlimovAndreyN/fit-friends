@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
-import { ApiHeaders, ApiTags } from '@nestjs/swagger';
+import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireRdo } from '@backend/shared/core';
+import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
@@ -16,6 +16,7 @@ export class QuestionnaireController {
 
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)
+  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
   @Post()
   public async create(
     @Body() dto: CreateQuestionnaireWithFileIdsDto,
@@ -26,16 +27,18 @@ export class QuestionnaireController {
     return fillDto(QuestionnaireWithFileIdsRdo, entity);
   }
 
+  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
   @Patch()
   public async update(
     @Body() dto: UpdateQuestionnaireDto,
     @Req() { userId }: RequestWithUserId
-  ): Promise<QuestionnaireRdo> {
+  ): Promise<QuestionnaireWithFileIdsRdo> {
     const entity = await this.questionnaireService.update(dto, userId);
 
-    return fillDto(QuestionnaireRdo, entity);
+    return fillDto(QuestionnaireWithFileIdsRdo, entity);
   }
 
+  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
   @Get()
   public async show(@Req() { userId }: RequestWithUserId): Promise<QuestionnaireWithFileIdsRdo> {
     const entity = await this.questionnaireService.findByUserId(userId);

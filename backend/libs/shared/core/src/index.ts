@@ -28,10 +28,13 @@ export { XHeader } from './lib/constants/x-header';
 export { CreateQuestionnaireWithFileIdsDto } from './lib/dto/create-questionnaire-with-file-ids.dto';
 export { CreateQuestionnaireDto } from './lib/dto/create-questionnaire.dto';
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
-export { CreateUserDto } from './lib/dto/create-user.dto';
 export { CreateUserWithFileIdDto } from './lib/dto/create-user-with-file-id.dto';
+export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
+export { UpdateUserInfoDto } from './lib/dto/update-user-info.dto';
+export { UpdateUserWithFileIdDto } from './lib/dto/update-user-with-file-id.dto';
+export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
@@ -64,8 +67,8 @@ export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserInfoRdo } from './lib/rdo/user-info.rdo';
-export { UserRdo } from './lib/rdo/user.rdo';
 export { UserWithFileIdRdo } from './lib/rdo/user-with-file-id.rdo';
+export { UserRdo } from './lib/rdo/user.rdo';
 
 export * from './lib/types/environment.type';
 export { MetroStationName } from './lib/types/metro-station-name.enum';

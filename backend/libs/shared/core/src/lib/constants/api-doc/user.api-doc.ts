@@ -47,7 +47,6 @@ export class UserApiDoc {
   @MaxLength(UserValidation.Password.MaxLength)
   public password: ICreateUserWithFileIdDto['password'];
 
-  @ApiProperty()
   @ApiProperty(UserApiProperty.About)
   @Expose()
   @IsString()

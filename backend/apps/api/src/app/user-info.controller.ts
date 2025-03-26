@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo, ServiceRoute, QuestionnaireRdo,
-  QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto, UserRole, UserInfoRoute
+  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo, 
+  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, ServiceRoute,
+  UserRole, UserInfoRoute, UpdateUserInfoDto, CreateQuestionnaireWithFileIdsDto
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -48,7 +49,7 @@ export class UserInfoController {
     //! временно
     const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto, userRole: UserRole.Sportsman, fileIds: [] }
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
-    //! можно сразу вызвать проверку исходную дпо заполеннности полей в зависимости от роли
+    //! можно сразу вызвать проверку исходную дто заполеннности полей в зависимости от роли
     //! перенести в сервис?
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
@@ -65,6 +66,27 @@ export class UserInfoController {
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
+  }
+
+  @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
+  @Patch()
+  public async update(
+    @Body() dto: UpdateUserInfoDto,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<UserInfoRdo> {
+    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
+    //! перенести в сервис/сервисы?
+    //! отладка
+    console.log('UserInfoController - update - dto', dto);
+
+    //const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
+    //const headers = makeHeaders(requestId, null, userId);
+    //const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
+    //!
+    const data: UserInfoRdo = { questionnaire: undefined, user: undefined }
+
+    //! когда будет роль тренер нужно преобразовать id файлов в пути
+    return data;
   }
 
   @Post(UserInfoRoute.ReadyForTraining)

@@ -46,7 +46,7 @@ export class QuestionnaireApiDoc {
   @Expose()
   @IsEnum(Duration)
   @IsOptional()
-  time: Questionnaire['time'];
+  time?: Questionnaire['time'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()
@@ -54,7 +54,7 @@ export class QuestionnaireApiDoc {
   @Min(QuestionnaireValidation.CaloriesLose.Min)
   @Max(QuestionnaireValidation.CaloriesLose.Max)
   @IsOptional()
-  caloriesLose: Questionnaire['caloriesLose'];
+  caloriesLose?: Questionnaire['caloriesLose'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesWaste)
   @Expose()
@@ -62,31 +62,31 @@ export class QuestionnaireApiDoc {
   @Min(QuestionnaireValidation.CaloriesWaste.Min)
   @Max(QuestionnaireValidation.CaloriesWaste.Max)
   @IsOptional()
-  caloriesWaste: Questionnaire['caloriesWaste'];
+  caloriesWaste?: Questionnaire['caloriesWaste'];
 
   @ApiProperty(QuestionnaireApiProperty.Description)
   @Expose()
   @IsOptional()
-  description: Questionnaire['description']; //! ограничения есть в ТЗ?
+  description?: Questionnaire['description']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
   @Expose()
   @IsOptional()
-  fileIds: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
+  fileIds?: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.Files)
   @Expose()
   @IsOptional()
-  files: ICreateQuestionnaireDto['files']; //! ограничения есть в ТЗ?
+  files?: ICreateQuestionnaireDto['files']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FilePaths)
   @Expose()
   @IsOptional()
-  filePaths: IQuestionnaireRdo['filePaths'];
+  filePaths?: IQuestionnaireRdo['filePaths'];
 
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()
   @IsBoolean()
   @IsOptional()
-  individualTraining: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
+  individualTraining?: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
 }
