@@ -1,10 +1,10 @@
 import { PickType } from '@nestjs/swagger';
 
-import { BaseQuestionnaireDto } from './base-questionnaire.dto';
+import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
 import { ICreateQuestionnaireWithFileIdsDto } from '../interfaces/dto/i-create-questionnaire-with-file-ids.dto';
 
 export class CreateQuestionnaireWithFileIdsDto extends PickType(
-  BaseQuestionnaireDto,
+  QuestionnaireApiDoc,
   [
     'userRole',
     'specializations',
@@ -12,9 +12,8 @@ export class CreateQuestionnaireWithFileIdsDto extends PickType(
     'time',
     'caloriesLose',
     'caloriesWaste',
-    //! для тренера
-    //!'description',
+    'description',
     'fileIds',
-    //!'individualTraining'
+    'individualTraining'
   ]
 ) implements ICreateQuestionnaireWithFileIdsDto { }

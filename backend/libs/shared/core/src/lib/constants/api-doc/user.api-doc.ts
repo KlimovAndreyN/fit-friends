@@ -14,6 +14,11 @@ import { UserValidation } from '../../constants/authentication.constant';
 import { IUserRdo } from '../../../fronted-index';
 import { TokenPayload } from '../../interfaces/token-payload.interface';
 
+//! типизировать через SchemaObjectMetadata не получается
+// или import { ApiPropertyOptions } from '@nestjs/swagger';
+// или import { SchemaObjectMetadata } from '@nestjs/swagger/dist/interfaces/schema-object-metadata.interface';
+// Ошибка - has or is using name 'SchemaObjectCommonMetadata' from external module "fit-friends/backend/node_modules/@nestjs/swagger/dist/interfaces/schema-object-metadata.interface" but cannot be named.ts(4023)
+
 export class UserApiDoc {
   @ApiProperty(UserApiProperty.Id)
   @Expose()

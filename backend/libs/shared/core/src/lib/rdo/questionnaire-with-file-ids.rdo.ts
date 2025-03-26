@@ -1,16 +1,15 @@
 import { PickType } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
 
-import { Questionnaire } from '../interfaces/questionnaire.interface';
 import { IQuestionnaireWithFileIdsRdo } from '../interfaces/rdo/i-questionnaire-with-file-ids.rdo';
-import { BaseQuestionnaireDto } from '../dto/base-questionnaire.dto';
+import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
 
 export class QuestionnaireWithFileIdsRdo
   extends PickType(
-    BaseQuestionnaireDto,
+    QuestionnaireApiDoc,
     [
       'specializations',
       'level',
+      'readyForTraining',
       'time',
       'caloriesLose',
       'caloriesWaste',
@@ -19,10 +18,4 @@ export class QuestionnaireWithFileIdsRdo
       'individualTraining'
     ]
   ) implements IQuestionnaireWithFileIdsRdo {
-  //!
-  //@ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
-  @Expose()
-  readyForTraining: Questionnaire['readyForTraining']
-
-  //! перенести в base?
 }
