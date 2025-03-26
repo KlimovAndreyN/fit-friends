@@ -1,11 +1,22 @@
-import { OmitType } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { PickType } from '@nestjs/swagger';
 
-import { QuestionnaireWithFileIdsRdo } from './questionnaire-with-file-ids.rdo';
 import { IQuestionnaireRdo } from '../interfaces/rdo/i-questionnaire.rdo';
+import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
 
-export class QuestionnaireRdo extends OmitType(QuestionnaireWithFileIdsRdo, ['fileIds']) implements IQuestionnaireRdo {
-  //!@ApiProperty()
-  @Expose()
-  public filePaths: IQuestionnaireRdo['filePaths'];
+export class QuestionnaireRdo
+  extends PickType(
+    QuestionnaireApiDoc,
+    [
+      'specializations',
+      'level',
+      'readyForTraining',
+      'time',
+      'caloriesLose',
+      'caloriesWaste',
+      'description',
+      'filePaths',
+      'individualTraining'
+    ]
+  )
+  implements IQuestionnaireRdo {
 }

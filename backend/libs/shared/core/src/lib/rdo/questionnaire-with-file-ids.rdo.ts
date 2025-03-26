@@ -17,5 +17,6 @@ export class QuestionnaireWithFileIdsRdo
       'fileIds',
       'individualTraining'
     ]
-  ) implements IQuestionnaireWithFileIdsRdo {
+  )
+  implements IQuestionnaireWithFileIdsRdo {
 }

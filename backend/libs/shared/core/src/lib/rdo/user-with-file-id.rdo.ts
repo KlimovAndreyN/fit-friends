@@ -19,4 +19,5 @@ export class UserWithFileIdRdo
       'role',
       'registrationDate'
     ]
-  ) implements IUserWithFileIdRdo { }
+  )
+  implements IUserWithFileIdRdo { }

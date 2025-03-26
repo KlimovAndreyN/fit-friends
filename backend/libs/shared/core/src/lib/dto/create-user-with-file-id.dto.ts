@@ -16,4 +16,5 @@ export class CreateUserWithFileIdDto extends PickType(
     'gender',
     'role'
   ]
-) implements ICreateUserWithFileIdDto { }
+)
+  implements ICreateUserWithFileIdDto { }

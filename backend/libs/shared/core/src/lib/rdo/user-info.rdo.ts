@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IUserInfoRdo } from '../../fronted-index';
+import { IUserInfoRdo } from '../interfaces/rdo/i-user-info.rdo';
 import { UserRdo } from './user.rdo';
 import { QuestionnaireRdo } from './questionnaire.rdo';
 

@@ -3,6 +3,9 @@ import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength
 import { Expose } from 'class-transformer';
 
 import { User } from '../../interfaces/user.interface';
+import { TokenPayload } from '../../interfaces/token-payload.interface';
+import { IUserRdo } from '../../interfaces/rdo/i-user.rdo';
+import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 import { ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
@@ -11,9 +14,6 @@ import { UserGender } from '../../types/user-gender.enum';
 import { UserRole } from '../../types/user-role.enum';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
 import { UserValidation } from '../../constants/authentication.constant';
-import { IUserRdo } from '../../../fronted-index';
-import { TokenPayload } from '../../interfaces/token-payload.interface';
-import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 
 //! типизировать через SchemaObjectMetadata не получается
 // или import { ApiPropertyOptions } from '@nestjs/swagger';

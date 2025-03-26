@@ -64,6 +64,13 @@ export const QuestionnaireApiProperty = {
     format: 'binary',
     require: false
   },
+  FilePaths: {//! перепроверить в Swagger когда будет multiFormData
+    description: 'The coach files paths',
+    isArray: true,
+    type: 'string',
+    example: ['/some/file'],
+    require: false
+  },
   IndividualTraining: {
     description: 'The coach individual training',
     type: 'boolean',
