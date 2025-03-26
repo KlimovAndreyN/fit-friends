@@ -59,9 +59,11 @@ export class AuthenticationController {
   @UseGuards(LocalAuthGuard)
   @Post(AccountRoute.Login)
   public async login(@Req() { user }: RequestWithFitUserEntity): Promise<LoggedUserRdo> {
-    const userToken = await this.authService.createUserToken(user);
+    const token = await this.authService.createUserToken(user);
+    const { id, name, email, role } = user;
+    const data: LoggedUserRdo = { id, name, email, role, token };
 
-    return fillDto(LoggedUserRdo, { ...user.toPOJO(), ...userToken });
+    return data;
   }
 
   @ApiOperation(AuthenticationApiOperation.Logout)

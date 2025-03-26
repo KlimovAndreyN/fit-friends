@@ -47,7 +47,12 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
     const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
-    const { accessToken, refreshToken, id: sub, email: dataEmail, name, role } = data;
+    const {
+      token: { accessToken, refreshToken },
+      id: sub,
+      email: dataEmail,
+      name,
+      role } = data;
 
     AccessTokenStore.save(accessToken);
     RefreshTokenStore.save(refreshToken);
