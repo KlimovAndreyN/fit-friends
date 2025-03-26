@@ -23,28 +23,35 @@ export const UserApiProperty = {
     example: 'password',
     type: 'string'
   },
+  About: {
+    description: 'The user about',
+    example: 'About about about',
+    type: 'string',
+    required: false
+  },
   AvatarFileId: {
-    required: false,
     description: 'The user avatar file id',
     example: '658170cbb954e9f5b905ddf4',
-    type: 'string'
+    type: 'string',
+    required: false
   },
   AvatarFile: {
-    required: false,
     description: 'The avatar file',
     type: 'string',
-    format: 'binary'
+    format: 'binary',
+    required: false
   },
   AvatarPath: {
     description: 'The avatar file src',
     type: 'string',
-    example: '/path/img.jpg'
+    example: '/path/img.jpg',
+    required: false
   },
   Birthday: {
-    required: false,
     description: 'The user dirthday date, in "2025-03-20" or "2025-03-20T00:00:00.000Z", out "2025-03-20T00:00:00.000Z"',
     type: 'string',
-    example: '2025-03-20T00:00:00.000Z'
+    example: '2025-03-20T00:00:00.000Z',
+    required: false
   },
   MetroStationName: {
     description: 'The user metro station name',

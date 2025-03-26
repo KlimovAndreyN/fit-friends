@@ -23,6 +23,10 @@ export const UserValidation = {
     MinLength: 6,
     MaxLength: 12
   },
+  About: {
+    MinLength: 10,
+    MaxLength: 140
+  },
   AvatarFile: {
     Type: { fileType: UserAvatarOption.MIME_TYPES.join('|') },
     MaxSize: { maxSize: UserAvatarOption.MAX_SIZE },

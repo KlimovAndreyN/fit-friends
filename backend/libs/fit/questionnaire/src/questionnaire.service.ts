@@ -33,6 +33,7 @@ export class QuestionnaireService {
 
     for (const [key, value] of Object.entries(dto)) {
       if (value !== undefined && existsPost[key] !== value) {
+        //! проверить нужно ли для dto.specializations Arrai.isArray() и existsPost[key] = [...value];
         existsPost[key] = value;
         hasChanges = true;
       }

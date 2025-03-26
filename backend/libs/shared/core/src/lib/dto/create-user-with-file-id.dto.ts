@@ -1,10 +1,10 @@
 import { PickType } from '@nestjs/swagger';
 
 import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
-import { BaseUserDto } from './base-user.dto';
+import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class CreateUserWithFileIdDto extends PickType(
-  BaseUserDto,
+  UserApiDoc,
   [
     'name',
     'email',

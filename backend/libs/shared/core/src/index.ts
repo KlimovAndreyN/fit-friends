@@ -2,6 +2,8 @@ export { Entity } from './lib/base/entity';
 
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
+export { UserApiDoc } from './lib/constants/api-doc/user.api-doc';
+
 export { FileApiProperty } from './lib/constants/api-property/file.api-property';
 export { UserApiProperty } from './lib/constants/api-property/user.api-property';
 
