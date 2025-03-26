@@ -20,7 +20,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   const [isEditing, setIsEditing] = useState(false);
 
   const { user, questionnaire } = userInfo;
-  const { name, avatarPath, about, metroStationName, gender } = user;
+  const { name, avatarFilePath, about, metroStationName, gender } = user;
   const { specializations, level } = questionnaire;
 
   const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
@@ -70,7 +70,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   return (
     <section className={mainClassName} >
       <div className={`${mainClassName}__header`}>
-        <AvatarUpload name='user-photo-1' path={avatarPath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
+        <AvatarUpload name='user-photo-1' path={avatarFilePath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
       </div>
       <form className={`${mainClassName}__form`} method="post" onSubmit={(isEditing) ? handleFormSubmit : undefined}>
         <button

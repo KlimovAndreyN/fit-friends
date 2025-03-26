@@ -11,19 +11,19 @@ type AvatarUploadProps = {
 }
 
 function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, readonly }: AvatarUploadProps): JSX.Element {
-  const [avatarPath, setAvatarPath] = useState<string>(path);
-  const spanClassName = (avatarPath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
-  const inputName = (avatarPath) ? name : undefined;
+  const [avatarFilePath, setAvatarFilePath] = useState<string>(path);
+  const spanClassName = (avatarFilePath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
+  const inputName = (avatarFilePath) ? name : undefined;
   const svg = (forPersonalAccount)
     ? <svg aria-hidden="true" width="48" height="54"><use xlinkHref="#icon-user" /></svg>
     : <svg aria-hidden="true" width="20" height="20"><use xlinkHref="#icon-import" /></svg>;
   const image =
-    (avatarPath)
-      ? <img src={avatarPath} width="98" height="98" alt="user photo" />
+    (avatarFilePath)
+      ? <img src={avatarFilePath} width="98" height="98" alt="user photo" />
       : svg;
 
   const handleImageUploadInputChange = (filePath: string) => {
-    setAvatarPath(filePath);
+    setAvatarFilePath(filePath);
     //! нужно прокинуть на верх файл, он вторым параметром
   };
 

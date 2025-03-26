@@ -12,7 +12,7 @@ export class UserRdo
       'about',
       'email',
       'birthday',
-      'avatarPath',
+      'avatarFilePath',
       'metroStationName',
       'backgroundPath',
       'gender',

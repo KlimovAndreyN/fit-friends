@@ -61,10 +61,10 @@ export class UserApiDoc {
   @IsOptional()
   public avatarFile?: ICreateUserDto['avatarFile']
 
-  @ApiProperty(UserApiProperty.AvatarPath)
+  @ApiProperty(UserApiProperty.AvatarFilePath)
   @Expose()
   @IsOptional()
-  public avatarPath?: IUserRdo['avatarPath']
+  public avatarFilePath?: IUserRdo['avatarFilePath']
 
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()

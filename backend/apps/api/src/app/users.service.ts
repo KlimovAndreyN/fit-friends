@@ -27,9 +27,9 @@ export class UsersService {
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);
-    const avatarPath = this.filesService.makePath(avatar);
+    const avatarFilePath = this.filesService.makePath(avatar);
 
-    return convertToUserRdo(registeredUser, avatarPath);
+    return convertToUserRdo(registeredUser, avatarFilePath);
   }
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
