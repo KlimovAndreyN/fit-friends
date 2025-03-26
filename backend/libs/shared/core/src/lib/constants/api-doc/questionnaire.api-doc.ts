@@ -39,7 +39,7 @@ export class QuestionnaireApiDoc {
   @Expose()
   @IsBoolean()
   @IsOptional()
-  readyForTraining: Questionnaire['readyForTraining']
+  readyForTraining: Questionnaire['readyForTraining'];
 
   @ApiProperty(QuestionnaireApiProperty.Time)
   @Expose()
@@ -66,17 +66,17 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Description)
   @Expose()
   @IsOptional()
-  description: Questionnaire['description'] //! ограничения есть в ТЗ?
+  description: Questionnaire['description']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
   @Expose()
   @IsOptional()
-  fileIds: Questionnaire['fileIds'] //! ограничения есть в ТЗ?
+  fileIds: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.Files)
   @Expose()
   @IsOptional()
-  files: ICreateQuestionnaireDto['files'] //! ограничения есть в ТЗ?
+  files: ICreateQuestionnaireDto['files']; //! ограничения есть в ТЗ?
 
   //! filePaths ?
 
@@ -84,5 +84,5 @@ export class QuestionnaireApiDoc {
   @Expose()
   @IsBoolean()
   @IsOptional()
-  individualTraining: Questionnaire['individualTraining'] //! ограничения есть в ТЗ? //! что по умолчанию?
+  individualTraining: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
 }

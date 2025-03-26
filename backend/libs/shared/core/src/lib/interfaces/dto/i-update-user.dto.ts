@@ -3,5 +3,5 @@ import { IUpdateUserWithFileIdDto } from './i-update-user-with-file-id.dto';
 
 export interface IUpdateUserDto extends Omit<IUpdateUserWithFileIdDto, 'avatarFileId'> {
   avatarFile?: ICreateUserDto['avatarFile'];
-  clearedAvatarFile?: boolean;
+  emptyAvatarFile?: boolean;
 }

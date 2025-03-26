@@ -41,6 +41,12 @@ export const UserApiProperty = {
     format: 'binary',
     required: false
   },
+  EmptyAvatarFile: {
+    description: 'The empty avatar file',
+    type: 'boolean',
+    example: false,
+    required: false
+  },
   AvatarFilePath: {
     description: 'The avatar file src',
     type: 'string',

@@ -5,6 +5,8 @@ export { type ICreateQuestionnaireDto } from './lib/interfaces/dto/i-create-ques
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
 export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-questionnaire.dto';
+export { type IUpdateUserInfoDto } from './lib/interfaces/dto/i-update-user-info.dto';
+export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
 
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';

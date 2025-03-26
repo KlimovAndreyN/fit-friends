@@ -13,6 +13,7 @@ import { UserApiProperty } from '../../constants/api-property/user.api-property'
 import { UserValidation } from '../../constants/authentication.constant';
 import { IUserRdo } from '../../../fronted-index';
 import { TokenPayload } from '../../interfaces/token-payload.interface';
+import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 
 //! типизировать через SchemaObjectMetadata не получается
 // или import { ApiPropertyOptions } from '@nestjs/swagger';
@@ -69,12 +70,18 @@ export class UserApiDoc {
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
   @IsOptional()
-  public avatarFile?: ICreateUserDto['avatarFile']
+  public avatarFile?: ICreateUserDto['avatarFile'];
+
+
+  @ApiProperty(UserApiProperty.EmptyAvatarFile)
+  @Expose()
+  @IsOptional()
+  public emptyAvatarFile?: IUpdateUserDto['emptyAvatarFile'];
 
   @ApiProperty(UserApiProperty.AvatarFilePath)
   @Expose()
   @IsOptional()
-  public avatarFilePath?: IUserRdo['avatarFilePath']
+  public avatarFilePath?: IUserRdo['avatarFilePath'];
 
   @ApiProperty(UserApiProperty.MetroStationName)
   @Expose()
