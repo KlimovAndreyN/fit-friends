@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserInfoProcess } from '../../types/user-info-process';
 import { changeReadyForTraning, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-info-action';
 import { StoreSlice } from '../../const';
-import { IUserInfoRdo } from '@backend/shared';
 
 const initialState: UserInfoProcess = {
   isExistQuestionnaireExecuting: false,
@@ -96,12 +95,8 @@ export const userInfoProcess = createSlice(
         .addCase(
           updateUserInfo.fulfilled,
           (state, action) => {
-            //! state.userInfo = action.payload;
-            //! временно
-            const aaa: IUserInfoRdo = { questionnaire: { ...(action.payload.questionnaire) }, user: { ...(state.userInfo?.user) } };
-            state.userInfo = aaa;
-            //! почемуто не прошло обновление данных....
-            //
+            state.userInfo = action.payload; //! не работает селектор! на данных не в форме работает селектор!
+            //state.userInfo = null; //! работает селектор
             state.isUpdateUserInfoExecuting = false;
           }
         )

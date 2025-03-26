@@ -20,7 +20,6 @@ function PersonalAccount(): JSX.Element {
 
   useEffect(
     () => {
-      //! временно, потом const [searchParams, setSearchParams] = useSearchParams();
       dispatch(fetchUserInfo());
     },
     [dispatch]

@@ -72,16 +72,7 @@ export const updateUserInfo = createAsyncThunk<IUserInfoRdo, IUpdateUserInfoDto,
   Action.UPDATE_USER_INFO,
   async (dto, { extra }) => {
     const { api } = extra;
-    //const url = joinUrl(ApiServiceRoute.UserInfo, UserInfoRoute.ReadyForTraining);
-
-    //! отладка
-    // eslint-disable-next-line
-    console.log('updateUserInfo - dto', dto);
-
-    //! отладка
     const { data } = await api.patch<IUserInfoRdo>(ApiServiceRoute.UserInfo, dto);
-    // eslint-disable-next-line
-    console.log(data);
 
     return data;
   }

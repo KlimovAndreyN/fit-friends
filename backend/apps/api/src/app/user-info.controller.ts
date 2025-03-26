@@ -79,13 +79,13 @@ export class UserInfoController {
     //! отладка
     console.log('UserInfoController - update - dto', dto);
 
+    const user = await this.usersService.updateUser(dto.user, null, bearerAuth, requestId);
+
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
 
-    const user = await this.usersService.updateUser(dto.user, null, bearerAuth, requestId);
-
-    const userInfoRdo: UserInfoRdo = { questionnaire, user };
+    const userInfoRdo: UserInfoRdo = { user, questionnaire };
 
     //! отладка
     console.log('UserInfoController - update - userInfoRdo', userInfoRdo);
