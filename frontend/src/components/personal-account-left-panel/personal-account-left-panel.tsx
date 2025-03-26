@@ -56,6 +56,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     }
     //
     const dto: IUpdateUserInfoDto = {
+      user: { name: 'aaaaaaaaa' },
       questionnaire: { level: UserLevel.Professional }
     };
 
