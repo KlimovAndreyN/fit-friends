@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo, 
+  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, ServiceRoute,
   UserRole, UserInfoRoute, UpdateUserInfoDto, CreateQuestionnaireWithFileIdsDto
 } from '@backend/shared/core';
@@ -79,14 +79,17 @@ export class UserInfoController {
     //! отладка
     console.log('UserInfoController - update - dto', dto);
 
-    //const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
-    //const headers = makeHeaders(requestId, null, userId);
-    //const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
-    //!
-    const data: UserInfoRdo = { questionnaire: undefined, user: undefined }
+    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
+    //const { data: user } = await this...  dto.user
+    const userInfoRdo: UserInfoRdo = { questionnaire, user: undefined }
+
+    //! отладка
+    console.log('UserInfoController - update - userInfoRdo', userInfoRdo);
 
     //! когда будет роль тренер нужно преобразовать id файлов в пути
-    return data;
+    return userInfoRdo;
   }
 
   @Post(UserInfoRoute.ReadyForTraining)

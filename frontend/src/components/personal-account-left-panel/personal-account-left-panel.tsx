@@ -7,9 +7,12 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUserInfoRdo } from '@backend/shared';
+import { IUpdateUserInfoDto, IUserInfoRdo, UserLevel } from '@backend/shared';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { updateUserInfo } from '../../store/user-info-action';
 import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
+import { getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
 
 type PersonalAccountLeftPanelProps = {
   userInfo: IUserInfoRdo;
@@ -17,6 +20,8 @@ type PersonalAccountLeftPanelProps = {
 }
 
 function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
   const [isEditing, setIsEditing] = useState(false);
 
   const { user, questionnaire } = userInfo;
@@ -50,16 +55,11 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
       console.log(key, value);
     }
     //
-
-    /*
-    const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel;
-    const dto: ICreateQuestionnaireDto = {
-      userRole,
-      caloriesWaste
+    const dto: IUpdateUserInfoDto = {
+      questionnaire: { level: UserLevel.Professional }
     };
 
-    dispatch(createQuestionnaire(dto));
-    */
+    dispatch(updateUserInfo(dto));
 
     setIsEditing(false);
   };
@@ -78,6 +78,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           type={(isEditing) ? 'submit' : 'button'}
           aria-label={buttonCaption}
           onClick={(isEditing) ? undefined : handleButtonClick}
+          disabled={isUpdateUserInfoExecuting}
         >
           <svg width="12" height="12" aria-hidden="true">
             <use xlinkHref="#icon-edit"></use>

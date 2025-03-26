@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { UserInfoProcess } from '../../types/user-info-process';
-import { changeReadyForTraning, createQuestionnaire, existQuestionnaire, fetchUserInfo } from '../user-info-action';
+import { changeReadyForTraning, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-info-action';
 import { StoreSlice } from '../../const';
+import { IUserInfoRdo } from '@backend/shared';
 
 const initialState: UserInfoProcess = {
   isExistQuestionnaireExecuting: false,
   isCreateQuestionnaireExecuting: false,
   isFetchUserInfoExecuting: false,
+  isUpdateUserInfoExecuting: false,
   isReadyForTrainingChangeExecuting: false,
   existQuestionnaire: false,
   userInfo: null,
@@ -77,6 +79,30 @@ export const userInfoProcess = createSlice(
             state.userInfo = action.payload;
             state.readyForTraining = action.payload.questionnaire.readyForTraining;
             state.isFetchUserInfoExecuting = false;
+          }
+        )
+        .addCase(
+          updateUserInfo.pending,
+          (state) => {
+            state.isUpdateUserInfoExecuting = true;
+          }
+        )
+        .addCase(
+          updateUserInfo.rejected,
+          (state) => {
+            state.isUpdateUserInfoExecuting = false;
+          }
+        )
+        .addCase(
+          updateUserInfo.fulfilled,
+          (state, action) => {
+            //! state.userInfo = action.payload;
+            //! временно
+            const aaa: IUserInfoRdo = { questionnaire: { ...(action.payload.questionnaire) }, user: { ...(state.userInfo?.user) } };
+            state.userInfo = aaa;
+            //! почемуто не прошло обновление данных....
+            //
+            state.isUpdateUserInfoExecuting = false;
           }
         )
         .addCase(

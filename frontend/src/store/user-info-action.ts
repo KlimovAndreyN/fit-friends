@@ -2,7 +2,7 @@ import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, ICreateQuestionnaireDto, IQuestionnaireRdo, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute } from '@backend/shared';
+import { ApiServiceRoute, ICreateQuestionnaireDto, IQuestionnaireRdo, IUpdateUserInfoDto, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute } from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
 
@@ -12,9 +12,10 @@ type Extra = {
 };
 
 export const Action = {
-  EXIST_QUESTIONNARE: 'user/exist-questionnaire',
-  CREATE_QUESTIONNARE: 'user/create-questionnaire',
-  GET_USER_INFO: 'user-info/get-user-info',
+  EXIST_QUESTIONNARE: 'user-info/exist-questionnaire',
+  CREATE_QUESTIONNARE: 'user-info/create-questionnaire',
+  GET_USER_INFO: 'user-info/get',
+  UPDATE_USER_INFO: 'user-info/update',
   CHANGE_READY: 'user-info/change-ready'
 };
 
@@ -64,5 +65,24 @@ export const changeReadyForTraning = createAsyncThunk<boolean, boolean, { extra:
     }
 
     return ready;
+  }
+);
+
+export const updateUserInfo = createAsyncThunk<IUserInfoRdo, IUpdateUserInfoDto, { extra: Extra }>(
+  Action.UPDATE_USER_INFO,
+  async (dto, { extra }) => {
+    const { api } = extra;
+    //const url = joinUrl(ApiServiceRoute.UserInfo, UserInfoRoute.ReadyForTraining);
+
+    //! отладка
+    // eslint-disable-next-line
+    console.log('updateUserInfo - dto', dto);
+
+    //! отладка
+    const { data } = await api.patch<IUserInfoRdo>(ApiServiceRoute.UserInfo, dto);
+    // eslint-disable-next-line
+    console.log(data);
+
+    return data;
   }
 );

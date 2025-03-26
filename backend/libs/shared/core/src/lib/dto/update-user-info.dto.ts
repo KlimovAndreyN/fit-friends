@@ -7,9 +7,9 @@ import { UpdateQuestionnaireDto } from './update-questionnaire.dto';
 export class UpdateUserInfoDto implements IUpdateUserInfoDto {
   @ApiProperty()
   @ApiPropertyOptional()
-  user: UpdateUserDto;
+  user?: UpdateUserDto;
 
   @ApiProperty()
   @ApiPropertyOptional()
-  questionnaire: UpdateQuestionnaireDto;
+  questionnaire?: UpdateQuestionnaireDto;
 }
