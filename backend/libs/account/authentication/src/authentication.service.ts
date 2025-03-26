@@ -5,7 +5,10 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
-import { AuthenticationMessage, AuthUser, CreateUserWithFileIdDto, LoginUserDto, Tokens, User } from '@backend/shared/core';
+import {
+  AuthenticationMessage, AuthUser, CreateUserWithFileIdDto,
+  LoginUserDto, Tokens, UpdateUserWithFileIdDto, User
+} from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
 import { accountConfig } from '@backend/account/config';
@@ -63,6 +66,26 @@ export class AuthenticationService {
     await this.notifyService.registerSubscriber({ email, name }, requestId);
 
     return userEntity;
+  }
+
+  public async updateUser(id: string, dto: UpdateUserWithFileIdDto): Promise<FitUserEntity> {
+    const existUser = await this.fitUserRepository.findById(id);
+
+    let hasChanges = false;
+
+    //! есть несколько таких мест - вытащить в однин хелпер / QuestionnaireService.update
+    for (const [key, value] of Object.entries(dto)) {
+      if (value !== undefined && existUser[key] !== value) {
+        existUser[key] = value;
+        hasChanges = true;
+      }
+    }
+
+    if (hasChanges) {
+      await this.fitUserRepository.update(existUser);
+    }
+
+    return existUser;
   }
 
   public async createUserTokens(user: User): Promise<Tokens> {

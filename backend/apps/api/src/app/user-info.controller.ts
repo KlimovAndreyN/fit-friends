@@ -3,9 +3,9 @@ import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo,
-  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, ServiceRoute,
-  UserRole, UserInfoRoute, UpdateUserInfoDto, CreateQuestionnaireWithFileIdsDto
+  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
+  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
+  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -72,7 +72,7 @@ export class UserInfoController {
   @Patch()
   public async update(
     @Body() dto: UpdateUserInfoDto,
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithRequestIdAndUserId
   ): Promise<UserInfoRdo> {
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! перенести в сервис/сервисы?
@@ -82,8 +82,10 @@ export class UserInfoController {
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
-    //const { data: user } = await this...  dto.user
-    const userInfoRdo: UserInfoRdo = { questionnaire, user: undefined }
+
+    const user = await this.usersService.updateUser(dto.user, null, bearerAuth, requestId);
+
+    const userInfoRdo: UserInfoRdo = { questionnaire, user };
 
     //! отладка
     console.log('UserInfoController - update - userInfoRdo', userInfoRdo);

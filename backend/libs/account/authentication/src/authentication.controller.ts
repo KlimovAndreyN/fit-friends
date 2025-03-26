@@ -1,13 +1,14 @@
 import {
   Body, Controller, Delete, Get, HttpCode, Param,
-  Post, Req, UseGuards, UseInterceptors
+  Patch, Post, Req, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, User,
-  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo, UserWithFileIdRdo,
-  AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, CreateUserWithFileIdDto,
+  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
+  LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
+  AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, User,
+  UpdateUserWithFileIdDto, UserWithFileIdRdo, CreateUserWithFileIdDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -83,15 +84,28 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @UseInterceptors(InjectBearerAuthInterceptor)
   @Post(AccountRoute.Register)
-  public async register(@Body() dto: CreateUserWithFileIdDto, @Req() { requestId }: RequestWithRequestId): Promise<UserWithFileIdRdo> {
+  public async register(
+    @Body() dto: CreateUserWithFileIdDto,
+    @Req() { requestId }: RequestWithRequestId
+  ): Promise<UserWithFileIdRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
 
     return fillDto(UserWithFileIdRdo, newUser.toPOJO());
   }
 
-  //! нужно обновление пользователя!
-  //@Patch(....)
+  @ApiResponse({ type: UserWithFileIdRdo }) //! перенести в описание
+  @UseGuards(JwtAuthGuard) // разрешено менять только себя, но по правильному и токеп пейлоад обновить там имя... или исключить его из токеп пейлоад
+  @Patch()
+  public async update(
+    @Body() dto: UpdateUserWithFileIdDto,
+    @Req() { user: { sub: id } }: RequestWithTokenPayload
+  ): Promise<UserWithFileIdRdo> {
+    const user = await this.authService.updateUser(id, dto);
 
+    return fillDto(UserWithFileIdRdo, user.toPOJO());
+  }
+
+  //! испльзуется? нужен? доступ только авторизированным или себе/по себе?
   @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)

@@ -108,6 +108,7 @@ export class UsersController {
     return registeredUser;
   }
 
+  /*
   @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(ApiApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
@@ -126,4 +127,5 @@ export class UsersController {
 
     return user;
   }
+  */
 }
