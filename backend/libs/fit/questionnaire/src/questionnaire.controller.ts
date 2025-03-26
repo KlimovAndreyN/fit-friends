@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto } from '@backend/shared/core';
+import { ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo, RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireRdo } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
@@ -21,22 +21,19 @@ export class QuestionnaireController {
     @Body() dto: CreateQuestionnaireWithFileIdsDto,
     @Req() { userId }: RequestWithUserId
   ): Promise<QuestionnaireWithFileIdsRdo> {
-    const entity = await this.questionnaireService.createQuestionnaireUser(dto, userId);
+    const entity = await this.questionnaireService.create(dto, userId);
 
     return fillDto(QuestionnaireWithFileIdsRdo, entity);
   }
 
   @Patch()
   public async update(
-    @Body() dto: UpdateQuestionnaireDto, //! UpdateDto и не все можно менять!
+    @Body() dto: UpdateQuestionnaireDto,
     @Req() { userId }: RequestWithUserId
-  ): Promise<string> {
-    //! отладка, доделать и вызвать сервис
-    console.log('updateQuestionnaireUser');
-    console.log('userId', userId);
-    console.log('dto', dto);
+  ): Promise<QuestionnaireRdo> {
+    const entity = await this.questionnaireService.update(dto, userId);
 
-    return 'updateQuestionnaireUser';
+    return fillDto(QuestionnaireRdo, entity);
   }
 
   @Get()
