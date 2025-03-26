@@ -5,7 +5,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
-  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth
+  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -72,7 +72,7 @@ export class UserInfoController {
   @Patch()
   public async update(
     @Body() dto: UpdateUserInfoDto,
-    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithRequestIdAndUserId
+    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId
   ): Promise<UserInfoRdo> {
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! перенести в сервис/сервисы?

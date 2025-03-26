@@ -38,7 +38,6 @@ export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
-export { Duration } from './lib/types/duration.enum';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { PaginationResult } from './lib/interfaces/pagination.interface';
@@ -46,10 +45,6 @@ export { Questionnaire } from './lib/interfaces/questionnaire.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
 export { NewsLetter } from './lib/interfaces/news-letter.interface';
 export { RefreshTokenPayload } from './lib/interfaces/refresh-token-payload.interface';
-export { RequestWithBearerAuth } from './lib/interfaces/request-with-bearer-auth.interface';
-export { RequestWithRequestId } from './lib/interfaces/request-with-request-id.interface';
-export { RequestWithTokenPayload } from './lib/interfaces/request-with-token-payload.interface';
-export { RequestWithUserId } from './lib/interfaces/request-with-user-id.interface';
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { StoredFile } from './lib/interfaces/stored-file.interface';
 export { Subscriber } from './lib/interfaces/subscriber.interface';
@@ -70,10 +65,16 @@ export { UserInfoRdo } from './lib/rdo/user-info.rdo';
 export { UserWithFileIdRdo } from './lib/rdo/user-with-file-id.rdo';
 export { UserRdo } from './lib/rdo/user.rdo';
 
+export { RequestWithBearerAuth } from './lib/types/request/request-with-bearer-auth.type';
+export { RequestWithRequestIdAndBearerAuth } from './lib/types/request/request-with-request-id-and-bearer-auth.type';
+export { RequestWithRequestIdAndUserId } from './lib/types/request/request-with-request-id-and-user-id.type';
+export { RequestWithRequestId } from './lib/types/request/request-with-request-id.type';
+export { RequestWithTokenPayload } from './lib/types/request/request-with-token-payload.type';
+export { RequestWithUserId } from './lib/types/request/request-with-user-id.type';
+
 export * from './lib/types/environment.type';
+export { Duration } from './lib/types/duration.enum';
 export { MetroStationName } from './lib/types/metro-station-name.enum';
-export { RequestWithRequestIdAndBearerAuth } from './lib/types/request-with-request-id-and-bearer-auth.type';
-export { RequestWithRequestIdAndUserId } from './lib/types/request-with-request-id-and-user-id.type';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { UserLevel } from './lib/types/user-level.enum';

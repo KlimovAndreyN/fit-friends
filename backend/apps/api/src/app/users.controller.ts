@@ -1,21 +1,20 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, Param, Post,
-  Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
+  Body, Controller, Delete, Get, HttpCode, Post, Req,
+  UploadedFile, UseFilters, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
 import {
-  ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
+  AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, USER_ID_PARAM, TokensRdo,
+  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, TokensRdo,
   UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
   UserRdo, ApiApiResponse
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
-import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { UsersService } from './users.service';
