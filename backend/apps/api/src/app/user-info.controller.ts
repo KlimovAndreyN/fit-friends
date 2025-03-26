@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, UserInfoRdo, ServiceRoute, QuestionnaireRdo,
@@ -26,6 +26,9 @@ export class UserInfoController {
   ) { }
 
   @Get(QuestionnaireRoute.Exist)
+  //! может дополнять при входе и при проверке токена
+  //! или коды ответов сделать разные
+  //! или на клиенте обработать 404 без олтображения ошибки
   public async exist(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
@@ -55,6 +58,7 @@ export class UserInfoController {
     return data;
   }
 
+  @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
     const user = await this.usersService.getUser(userId, requestId);

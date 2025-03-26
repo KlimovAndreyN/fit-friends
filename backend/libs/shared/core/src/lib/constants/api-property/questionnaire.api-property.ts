@@ -9,6 +9,7 @@ import { UserLevel } from '../../types/user-level.enum';
 export const QuestionnaireApiProperty = {
   Specializations: { //! перепроверить в Swagger когда будет multiFormData
     description: 'The user specializations',
+    isArray: true,
     //description: 'Specializations - warning! not correct send string[] on swagger!',  //! нужно при swagger fromdata c api
     example: ['boxing'] // ['boxing', 'running'], из swagger-а не коректно передает пример, у значений убирает [] и ""
     //name: 'specializations[]' // не корректная передача string[] через form-data //! нужно при swagger fromdata c api
@@ -52,11 +53,13 @@ export const QuestionnaireApiProperty = {
   },
   FileIds: { //! перепроверить в Swagger когда будет multiFormData
     description: 'The coach fileIds',
+    isArray: true,
     example: ['111222333444'],
     require: false
   },
   Files: {//! перепроверить в Swagger когда будет multiFormData
     description: 'The coach files',
+    isArray: true,
     type: 'string',
     format: 'binary',
     require: false

@@ -1,15 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IQuestionnaireRdo, IUserInfoRdo } from '../../fronted-index';
+import { IUserInfoRdo } from '../../fronted-index';
 import { UserRdo } from './user.rdo';
+import { QuestionnaireRdo } from './questionnaire.rdo';
 
 export class UserInfoRdo implements IUserInfoRdo {
-  @ApiProperty()//!
+  @ApiProperty()
   @Expose()
   public user: UserRdo;
 
-  @ApiProperty()//!
+  @ApiProperty()
   @Expose()
-  public questionnaire: IQuestionnaireRdo;
+  public questionnaire: QuestionnaireRdo;
 }

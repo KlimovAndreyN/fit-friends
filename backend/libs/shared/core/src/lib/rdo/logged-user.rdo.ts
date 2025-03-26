@@ -15,6 +15,6 @@ export class LoggedUserRdo extends
     ]
   )
   implements ILoggedUserRdo {
-  @ApiProperty({ type: TokensRdo })
+  @ApiProperty()
   tokens: TokensRdo;
 }
