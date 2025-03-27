@@ -47,7 +47,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
   const mainClassName = 'custom-select';
   const divClassName = classNames(
     { [`${mainClassName}--readonly`]: readonly },
-    'custom-select',
+    mainClassName,
     { [`${mainClassName}--not-selected`]: !value, 'is-open': isOpen },
     extraClassName
   );
