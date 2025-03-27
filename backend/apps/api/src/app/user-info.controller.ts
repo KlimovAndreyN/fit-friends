@@ -4,10 +4,10 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
-  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
-  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId
+  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute, UserInfoRdo,
+  UserRole, RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto
 } from '@backend/shared/core';
-import { makeHeaders } from '@backend/shared/helpers';
+import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -38,17 +38,17 @@ export class UserInfoController {
     return existQuestionnaire;
   }
 
-  //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
-  @Post(QuestionnaireRoute.Questionnaire)
+  @Post(joinUrl(QuestionnaireRoute.Questionnaire, UserRole.Sportsman))
   public async create(
-    @Body() dto: CreateQuestionnaireDto,
+    @Body() dto: CreateQuestionnaireSportsmanDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
-    //! подкинуть роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId
+    //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Sportsman
+    //! нужна функция пригодиться для тренера, а может где еще
     //! CheckAuthGuard складывает в request[RequestProperty.User] = data {sub, name, role....};
-    //! временно
-    const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto, userRole: UserRole.Sportsman, fileIds: [] }
-    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
+    //! может сделать RequestWithUser...
+    const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto };
+    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в - fileIds: []
     //! можно сразу вызвать проверку исходную дто заполеннности полей в зависимости от роли
     //! перенести в сервис?
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
@@ -58,6 +58,11 @@ export class UserInfoController {
     //! когда будет роль тренер нужно преобразовать id файлов в пути
     return data;
   }
+
+  //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
+  //@Post(joinUrl(QuestionnaireRoute.Questionnaire, UserRole.Coach))
+  //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Coach
+
 
   @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
   @Get()

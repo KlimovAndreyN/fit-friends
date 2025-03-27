@@ -7,7 +7,7 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { Duration, ICreateQuestionnaireDto, Specialization, UserLevel } from '@backend/shared';
+import { Duration, ICreateQuestionnaireSportsmanDto, Specialization, UserLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -33,6 +33,10 @@ function Questionnaire(): JSX.Element {
   const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!userRole) {
+      //! сделать компонет с ошибкой и вывести ошибку или 404 с текстом
+      return;
+    }
     const form = event.currentTarget;
     const formData = new FormData(form);
 
@@ -41,7 +45,7 @@ function Questionnaire(): JSX.Element {
     const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
-    const dto: ICreateQuestionnaireDto = {
+    const dto: ICreateQuestionnaireSportsmanDto = {
       level,
       specializations,
       time,
@@ -49,7 +53,7 @@ function Questionnaire(): JSX.Element {
       caloriesWaste
     };
 
-    dispatch(createQuestionnaire(dto));
+    dispatch(createQuestionnaire({ dto, userRole }));
   };
 
   const popupFormProps = {

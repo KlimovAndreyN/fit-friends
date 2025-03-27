@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ArrayMaxSize, IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
+import {
+  ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, Min,
+  IsEnum, IsNumber, IsOptional, IsString, Max, IsBoolean
+} from 'class-validator';
 import { Expose } from 'class-transformer';
 
 import { Questionnaire } from '../../interfaces/questionnaire.interface';
@@ -20,7 +23,9 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Specializations)
   @Expose()
   @IsArray()
-  @ArrayMaxSize(Object.values(Specialization).length) //! нужно ли, может условие, что каждая один раз или потом забрать все уникальные значение
+  @ArrayUnique()//! нужно ли? может сделать трансформацию одинаковых в один все уникальные значение... @Transform ...
+  @ArrayMinSize(QuestionnaireValidation.Specializations.ArrayMinSize)
+  @ArrayMaxSize(QuestionnaireValidation.Specializations.ArrayMaxSize)
   @IsString({ each: true })
   @IsEnum(Specialization, { each: true })
   specializations: Questionnaire['specializations'];

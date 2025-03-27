@@ -2,7 +2,7 @@ import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, ICreateQuestionnaireDto, IQuestionnaireRdo, IUpdateUserInfoDto, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute } from '@backend/shared';
+import { ApiServiceRoute, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo, IUpdateUserInfoDto, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, UserRole } from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
 
@@ -30,11 +30,11 @@ export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: 
   }
 );
 
-export const createQuestionnaire = createAsyncThunk<void, ICreateQuestionnaireDto, { extra: Extra }>(
+export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestionnaireSportsmanDto; userRole: UserRole }, { extra: Extra }>(
   Action.CREATE_QUESTIONNARE,
-  async (dto, { extra }) => {
+  async ({ dto, userRole }, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserInfo, QuestionnaireRoute.Questionnaire);
+    const url = joinUrl(ApiServiceRoute.UserInfo, QuestionnaireRoute.Questionnaire, userRole);
 
     //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
     //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });

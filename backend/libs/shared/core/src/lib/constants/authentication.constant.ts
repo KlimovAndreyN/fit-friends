@@ -41,6 +41,10 @@ export const UserValidation = {
 } as const;
 
 export const QuestionnaireValidation = {
+  Specializations: {
+    ArrayMinSize: 1,
+    ArrayMaxSize: 3
+  },
   CaloriesLose: {
     Min: 1000,
     Max: 5000
