@@ -1,17 +1,23 @@
-import { Fragment, useState } from 'react';
+import { Fragment, MouseEvent, useRef, useState } from 'react';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
+
+import { onFileInputChange } from '../../types/types';
 
 type AvatarUploadProps = {
   name: string;
   path?: string;
+  onChange?: onFileInputChange;
   forPersonalAccount?: boolean;
   isShowButtons?: boolean;
   readonly?: boolean;
 }
 
-function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, readonly }: AvatarUploadProps): JSX.Element {
+function AvatarUpload(props: AvatarUploadProps): JSX.Element {
+  const { name, path = '', onChange, forPersonalAccount, isShowButtons, readonly } = props;
   const [avatarFilePath, setAvatarFilePath] = useState<string>(path);
+  const imageUploadInputRef = useRef<HTMLInputElement | null>(null);
+
   const spanClassName = (avatarFilePath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
   const inputName = (avatarFilePath) ? name : undefined;
   const svg = (forPersonalAccount)
@@ -22,9 +28,22 @@ function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, read
       ? <img src={avatarFilePath} width="98" height="98" alt="user photo" />
       : svg;
 
-  const handleImageUploadInputChange = (filePath: string) => {
+  const handleImageUploadInputChange = (filePath: string, file: File | null) => {
     setAvatarFilePath(filePath);
-    //! нужно прокинуть на верх файл, он вторым параметром
+    onChange?.(filePath, file);
+  };
+
+  const handleEditButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    imageUploadInputRef.current?.click();
+  };
+
+  const handleDeleteButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    setAvatarFilePath('');
+    onChange?.('', null);
   };
 
   return (
@@ -36,6 +55,7 @@ function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, read
             className='visually-hidden'
             acceptTypes='image/png, image/jpeg'
             onChange={handleImageUploadInputChange}
+            inputRef={imageUploadInputRef}
             readonly={readonly}
           />
           <span className={spanClassName}>
@@ -48,12 +68,12 @@ function AvatarUpload({ name, path = '', forPersonalAccount, isShowButtons, read
         (isShowButtons)
           ?
           <div className="user-info-edit__controls">
-            <button className="user-info-edit__control-btn" aria-label="обновить">
+            <button className="user-info-edit__control-btn" aria-label="обновить" onClick={handleEditButtonClick}>
               <svg width="16" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-change"></use>
               </svg>
             </button>
-            <button className="user-info-edit__control-btn" aria-label="удалить">
+            <button className="user-info-edit__control-btn" aria-label="удалить" onClick={handleDeleteButtonClick}>
               <svg width="14" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-trash"></use>
               </svg>

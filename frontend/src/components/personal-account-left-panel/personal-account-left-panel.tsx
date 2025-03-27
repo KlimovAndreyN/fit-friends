@@ -31,11 +31,13 @@ type PersonalAccountLeftPanelProps = {
 }
 
 function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
+  //! возможно стоит разделить функционал - вынести форму отдельно
   //! обработка аватарки удалить и заменить
   const dispatch = useAppDispatch();
   const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
   const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
   const [isEditing, setIsEditing] = useState(false);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (!isUpdateUserInfoExecuting && !isUpdateUserInfoError) {
@@ -47,6 +49,16 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   const { name, avatarFilePath, about, metroStationName, gender } = user;
   const { specializations, level } = questionnaire;
 
+  const handleAvatarUploadChange = (_filePath: string, file: File | null) => {
+    //! отладка
+    // eslint-disable-next-line
+    console.log('_filePath', _filePath);
+    // eslint-disable-next-line
+    console.log('file', file);
+
+    setAvatarFile(file);
+  };
+
   const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
@@ -56,16 +68,12 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    //! нужен признак очистки аватара и сам файл и кнопки для его обработки
-    //! или через стейт
-    //! т.е. обработчик при изменнии файла в режиме редактирования
-
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    /*
-      Avatar = 'user-photo-1',
-    */
+    //! отладка задать emptyAvatarFile и avatarFile
+    // eslint-disable-next-line
+    console.log('avatarFile', avatarFile);
 
     const dto: IUpdateUserInfoDto = {
       user: {
@@ -89,7 +97,14 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   return (
     <section className={mainClassName} >
       <div className={`${mainClassName}__header`}>
-        <AvatarUpload name={FormFieldName.Avatar} path={avatarFilePath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
+        <AvatarUpload
+          name={FormFieldName.Avatar}
+          path={avatarFilePath}
+          onChange={handleAvatarUploadChange}
+          forPersonalAccount
+          isShowButtons={isEditing}
+          readonly={!isEditing}
+        />
       </div>
       <form className={`${mainClassName}__form`} method="post" onSubmit={(isEditing) ? handleFormSubmit : undefined}>
         <button
