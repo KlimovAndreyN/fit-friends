@@ -1,7 +1,7 @@
 export { AUTH_NAME } from './lib/constants/bearer-auth';
 export { ApiServiceRoute, AccountRoute, QuestionnaireRoute, UserInfoRoute } from './lib/constants/route';
 
-export { type ICreateQuestionnaireDto } from './lib/interfaces/dto/i-create-questionnaire.dto';
+export { type ICreateQuestionnaireSportsmanDto } from './lib/interfaces/dto/i-create-questionnaire-sportsman.dto';
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
 export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-questionnaire.dto';

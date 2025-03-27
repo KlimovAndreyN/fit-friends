@@ -2,14 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ArrayMaxSize, IsArray, IsBoolean, IsEnum, IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Expose } from 'class-transformer';
 
-import { User } from '../../interfaces/user.interface';
 import { Questionnaire } from '../../interfaces/questionnaire.interface';
-import { ICreateQuestionnaireDto } from '../../interfaces/dto/i-create-questionnaire.dto';
+import { ICreateQuestionnaireCoachDto } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
 import { IQuestionnaireRdo } from '../../interfaces/rdo/i-questionnaire.rdo';
 import { Specialization } from '../../types/specialization.enum';
 import { UserLevel } from '../../types/user-level.enum';
 import { Duration } from '../../types/duration.enum';
-import { UserRole } from '../../types/user-role.enum';
 import { QuestionnaireApiProperty } from '../../constants/api-property/questionnaire.api-property';
 import { QuestionnaireValidation } from '../../constants/authentication.constant';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
@@ -18,10 +16,6 @@ export class QuestionnaireApiDoc {
   @ApiProperty(UserApiProperty.Id)
   @Expose()
   public userId: Questionnaire['userId'];
-
-  @ApiProperty(UserApiProperty.Role)
-  @IsEnum(UserRole)
-  public userRole: User['role'];
 
   @ApiProperty(QuestionnaireApiProperty.Specializations)
   @Expose()
@@ -39,54 +33,46 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
   @Expose()
   @IsBoolean()
-  @IsOptional()
   readyForTraining: Questionnaire['readyForTraining'];
 
   @ApiProperty(QuestionnaireApiProperty.Time)
   @Expose()
   @IsEnum(Duration)
-  @IsOptional()
-  time?: Questionnaire['time'];
+  time: Questionnaire['time'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()
   @IsNumber({ maxDecimalPlaces: 0 })
   @Min(QuestionnaireValidation.CaloriesLose.Min)
   @Max(QuestionnaireValidation.CaloriesLose.Max)
-  @IsOptional()
-  caloriesLose?: Questionnaire['caloriesLose'];
+  caloriesLose: Questionnaire['caloriesLose'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesWaste)
   @Expose()
   @IsNumber({ maxDecimalPlaces: 0 })
   @Min(QuestionnaireValidation.CaloriesWaste.Min)
   @Max(QuestionnaireValidation.CaloriesWaste.Max)
-  @IsOptional()
-  caloriesWaste?: Questionnaire['caloriesWaste'];
+  caloriesWaste: Questionnaire['caloriesWaste'];
 
   @ApiProperty(QuestionnaireApiProperty.Description)
   @Expose()
-  @IsOptional()
-  description?: Questionnaire['description']; //! ограничения есть в ТЗ?
+  description: Questionnaire['description']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
   @Expose()
-  @IsOptional()
-  fileIds?: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
+  fileIds: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.Files)
   @Expose()
   @IsOptional()
-  files?: ICreateQuestionnaireDto['files']; //! ограничения есть в ТЗ?
+  files?: ICreateQuestionnaireCoachDto['files']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FilePaths)
   @Expose()
-  @IsOptional()
-  filePaths?: IQuestionnaireRdo['filePaths'];
+  filePaths: IQuestionnaireRdo['filePaths'];
 
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()
   @IsBoolean()
-  @IsOptional()
-  individualTraining?: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
+  individualTraining: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
 }

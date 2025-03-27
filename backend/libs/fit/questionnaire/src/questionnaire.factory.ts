@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateQuestionnaireDto, EntityFactory, Questionnaire } from '@backend/shared/core';
+import { CreateQuestionnaireWithFileIdsDto, EntityFactory, Questionnaire } from '@backend/shared/core';
 
 import { QuestionnaireEntity } from './questionnaire.entity';
 
@@ -10,16 +10,19 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
     return new QuestionnaireEntity(entityPlainData);
   }
 
-  public static createFromDto(dto: CreateQuestionnaireDto, userId: string): QuestionnaireEntity {
+  public static createFromDto(dto: CreateQuestionnaireWithFileIdsDto, userId: string): QuestionnaireEntity {
     const questionnaire: Questionnaire = {
       userId,
-      specializations: dto.specializations,
+      specializations: dto.specializations, //! обязательно ли [...dto.specializations]
       level: dto.level,
       readyForTraining: false, //! по ТЗ не уточнения как по умолчанию
       time: dto.time,
       caloriesLose: dto.caloriesLose,
-      caloriesWaste: dto.caloriesWaste
-    };
+      caloriesWaste: dto.caloriesWaste,
+      description: dto.description,
+      fileIds: dto.fileIds, //! обязательно ли [...dto.fileIds] ? будул ли файлы обязательными?
+      individualTraining: dto.individualTraining
+    }
 
     return new QuestionnaireEntity(questionnaire);
   }

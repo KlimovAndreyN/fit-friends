@@ -29,32 +29,27 @@ export const QuestionnaireApiProperty = {
     description: 'The user time',
     type: 'string',
     enum: Duration,
-    example: Duration.Minutes_30_50,
-    required: false
+    example: Duration.Minutes_30_50
   },
   CaloriesLose: {
     description: 'The sportsman calories lose',
     type: 'integer',
-    example: 1000,
-    required: false
+    example: 1000
   },
   CaloriesWaste: {
     description: 'The sportsman calories waste',
     type: 'integer',
-    example: 2000,
-    required: false
+    example: 2000
   },
   Description: {
     description: 'The coach description',
     type: 'string',
-    example: 'The coach description',
-    required: false
+    example: 'The coach description'
   },
   FileIds: { //! перепроверить в Swagger когда будет multiFormData
     description: 'The coach fileIds',
     isArray: true,
-    example: ['111222333444'],
-    required: false
+    example: ['111222333444']
   },
   Files: {//! перепроверить в Swagger когда будет multiFormData
     description: 'The coach files',
@@ -67,13 +62,11 @@ export const QuestionnaireApiProperty = {
     description: 'The coach files paths',
     isArray: true,
     type: 'string',
-    example: ['/some/file'],
-    required: false
+    example: ['/some/file']
   },
   IndividualTraining: {
     description: 'The coach individual training',
     type: 'boolean',
-    example: false,
-    required: false
+    example: false
   }
 } as const;

@@ -26,7 +26,7 @@ export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
 export { CreateQuestionnaireWithFileIdsDto } from './lib/dto/create-questionnaire-with-file-ids.dto';
-export { CreateQuestionnaireDto } from './lib/dto/create-questionnaire.dto';
+export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
 export { CreateUserWithFileIdDto } from './lib/dto/create-user-with-file-id.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
