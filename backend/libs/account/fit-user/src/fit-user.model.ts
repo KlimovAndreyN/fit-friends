@@ -15,6 +15,9 @@ export class FitUserModel extends Document implements AuthUser {
   public name: string;
 
   @Prop()
+  public about: string;
+
+  @Prop()
   public avatarFileId: string;
 
   @Prop({ required: true })

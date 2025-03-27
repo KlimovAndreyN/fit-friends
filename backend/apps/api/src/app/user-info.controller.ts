@@ -85,11 +85,6 @@ export class UserInfoController {
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
 
-    //! отладка
-    user.name = 'testtest';
-    questionnaire.level = UserLevel.Amateur;
-    //
-
     const userInfoRdo: UserInfoRdo = { user, questionnaire };
 
     //! отладка

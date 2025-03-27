@@ -7,12 +7,23 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IUserInfoRdo, UserLevel } from '@backend/shared';
+import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, UserGender, UserLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateUserInfo } from '../../store/user-info-action';
 import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
 import { getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
+
+enum FormFieldName {
+  Avatar = 'user-photo-1',
+  Name = 'name',
+  About = 'description',
+  ReadyForTraining = 'ready-for-training',
+  Spec = 'specialization',
+  Location = 'location',
+  Sex = 'sex',
+  Level = 'level'
+}
 
 type PersonalAccountLeftPanelProps = {
   userInfo: IUserInfoRdo;
@@ -20,6 +31,8 @@ type PersonalAccountLeftPanelProps = {
 }
 
 function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
+  //! если ошибка при сохранении то не переключать в просмотр, если все ок то переключить, убрать после dispatch - setIsEditing(false), наверное через дополнительный селектор
+  //! обработка аватарки удалить и заменить
   const dispatch = useAppDispatch();
   const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
   const [isEditing, setIsEditing] = useState(false);
@@ -41,27 +54,25 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     //! или через стейт
     //! т.е. обработчик при изменнии файла в режиме редактирования
 
-    //! сбор и отправка данных, перечисление названиями полей
-    //! блокировка отправки кнопок и всей формы пока отправляются данные
-
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    //! отладка
-    const entries = formData.entries();
-    for (const entry of entries) {
-      const [key, value] = entry;
-      // eslint-disable-next-line
-      console.log(key, value);
-    }
-    //
-    const name1 = formData.get('name')?.toString() || '';
-    const level1 = (formData.get('level')?.toString() || '') as UserLevel;
+    /*
+      Avatar = 'user-photo-1',
+    */
+
     const dto: IUpdateUserInfoDto = {
-      user: { name: name1 },
-      questionnaire: { level: level1 }
+      user: {
+        name: formData.get(FormFieldName.Name)?.toString() || '',
+        about: formData.get(FormFieldName.About)?.toString() || '',
+        metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
+        gender: (formData.get(FormFieldName.Sex)?.toString() || '') as UserGender //! одинаковый код - в хелпер
+      },
+      questionnaire: {
+        specializations: formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)), //! одинаковый код - в хелпер
+        level: (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel //! одинаковый код - в хелпер
+      }
     };
-    //
 
     dispatch(updateUserInfo(dto));
 
@@ -74,7 +85,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   return (
     <section className={mainClassName} >
       <div className={`${mainClassName}__header`}>
-        <AvatarUpload name='user-photo-1' path={avatarFilePath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
+        <AvatarUpload name={FormFieldName.Avatar} path={avatarFilePath} forPersonalAccount isShowButtons={isEditing} readonly={!isEditing} />
       </div>
       <form className={`${mainClassName}__form`} method="post" onSubmit={(isEditing) ? handleFormSubmit : undefined}>
         <button
@@ -93,7 +104,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           <Fragment>
             <CustomInput
               type='text'
-              name='name'
+              name={FormFieldName.Name}
               label='Имя'
               value={name}
               divExtraClassName={`${mainClassName}__input`}
@@ -101,7 +112,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
             />
             <CustomInput
               type='textarea'
-              name='description'
+              name={FormFieldName.About}
               label='Описание'
               value={about}
               divExtraClassName={`${mainClassName}__textarea`}
@@ -111,21 +122,21 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
         </PersonalAccountBlock>
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' title='Статус' >
           <PersonalAccountReadyCheckbox
-            name='ready-for-training'
+            name={FormFieldName.ReadyForTraining}
             mainClassName={mainClassName}
             isSpotsmanRole={isSpotsmanRole}
           />
         </PersonalAccountBlock>
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
           <SpecializationsCheckbox
-            name='specialization'
+            name={FormFieldName.Spec}
             values={specializations}
             divExtraClassName={`${mainClassName}__specialization`}
             readonly={!isEditing}
           />
         </PersonalAccountBlock>
         <CustomSelect //! в макете к названию станции добавлено "ст. м. ", добавил titlePrefix
-          name='location'
+          name={FormFieldName.Location}
           caption='Локация'
           value={metroStationName}
           titlePrefix='ст. м. '
@@ -134,7 +145,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           readonly={!isEditing}
         />
         <CustomSelect
-          name='sex'
+          name={FormFieldName.Sex}
           caption='Пол'
           value={gender}
           options={USER_GENDERS}
@@ -142,7 +153,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
           readonly={!isEditing}
         />
         <CustomSelect
-          name='level'
+          name={FormFieldName.Level}
           caption='Уровень'
           value={level}
           options={USER_LEVELS}

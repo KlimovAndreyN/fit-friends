@@ -5,6 +5,7 @@ export function convertToUserRdo(user: UserWithFileIdRdo, avatarFilePath: UserRd
   const {
     id,
     name,
+    about,
     email,
     birthday,
     backgroundPath,
@@ -16,6 +17,7 @@ export function convertToUserRdo(user: UserWithFileIdRdo, avatarFilePath: UserRd
   const rdo: UserRdo = {
     id,
     name,
+    about,
     email,
     birthday,
     backgroundPath,

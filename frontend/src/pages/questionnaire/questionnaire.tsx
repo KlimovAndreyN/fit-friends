@@ -36,9 +36,9 @@ function Questionnaire(): JSX.Element {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel;
-    const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization));
-    const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration;
+    const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel; //! одинаковый код - в хелпер
+    const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)); //! одинаковый код - в хелпер
+    const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const dto: ICreateQuestionnaireDto = {
