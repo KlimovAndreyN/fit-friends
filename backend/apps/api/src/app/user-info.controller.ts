@@ -5,7 +5,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
-  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId, UserLevel
+  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
