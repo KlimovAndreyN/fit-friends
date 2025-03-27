@@ -16,16 +16,16 @@ type CustomSelectProps = {
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
   const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readonly } = props;
-  const title = options.find((option) => (option.value === value))?.title || '';
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option>({ value, title });
+  const [selectedValue, setSelectedValue] = useState(value);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleListItemClick = (option: Option) => {
-    setSelectedOption(option);
+    //! что то одно Option или sting?
+    setSelectedValue(option.value);
     onChange?.(option);
     setIsOpen(false);
   };
@@ -40,10 +40,26 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
   const divClassName = classNames(
     { [`${mainClassName}--readonly`]: readonly },
     'custom-select',
-    { [`${mainClassName}--not-selected`]: !value && !selectedOption, 'is-open': isOpen },
+    { [`${mainClassName}--not-selected`]: !value, 'is-open': isOpen },
     extraClassName
   );
-  const { value: currentValue, title: currentTitle } = selectedOption;
+
+  const currentValue = (readonly) ? value : selectedValue;
+  const title = options.find((option) => (option.value === currentValue))?.title || '';
+
+  //! отладка
+  if (name === 'level') {
+    // eslint-disable-next-line
+    console.log('CustomSelect - readonly', readonly);
+    // eslint-disable-next-line
+    console.log('CustomSelect - value', value);
+    // eslint-disable-next-line
+    console.log('CustomSelect - selectedValue', selectedValue);
+    // eslint-disable-next-line
+    console.log('CustomSelect - currentValue', currentValue);
+    // eslint-disable-next-line
+    console.log('CustomSelect - title', title);
+  }
 
   return (
     <div className={divClassName} onMouseLeave={handleDivOnMouseLeave} >
@@ -51,22 +67,28 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       //! пропадает label, добавил style={{ opacity: 1 }}
       возможно ошибка в css .custom-select.is-open .custom-select__label
       */}
-      <span className="custom-select__label" style={{ opacity: 1 }}>{caption}</span>
-      <div className="custom-select__placeholder">{titlePrefix + currentTitle}</div>
+      <span className={`${mainClassName}__label`} style={{ opacity: 1 }}>{caption}</span>
+      <div className={`${mainClassName}__placeholder`}>{titlePrefix + title}</div>
       {
         (readonly)
           ? null
-          : <input className='visually-hidden' type="text" readOnly name={name} value={currentValue} />
+          : <input className='visually-hidden' type="text" name={name} defaultValue={currentValue} />
       }
-      <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" onClick={toggleDropdown} disabled={readonly}>
-        <span className="custom-select__text" />
-        <span className="custom-select__icon">
+      <button
+        className={`${mainClassName}__button`}
+        type="button"
+        aria-label="Выберите одну из опций"
+        onClick={toggleDropdown}
+        disabled={readonly}
+      >
+        <span className={`${mainClassName}__text`} />
+        <span className={`${mainClassName}__icon`}>
           <svg width="15" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-down" />
           </svg>
         </span>
       </button>
-      <ul className="custom-select__list" role="listbox">
+      <ul className={`${mainClassName}__list`} role="listbox">
         {
           (readonly)
             ? null
@@ -75,7 +97,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
               (option) => (
                 <li
                   key={option.value}
-                  className="custom-select__item"
+                  className={`${mainClassName}__item`}
                   onClick={() => handleListItemClick(option)}
                 >
                   {titlePrefix + option.title}

@@ -65,6 +65,10 @@ function SignUp(): JSX.Element {
       avatarFile
     };
 
+    //! отладка
+    // eslint-disable-next-line
+    console.log('dto.metroStationName', dto.metroStationName);
+
     dispatch(registerUser(dto));
   };
 

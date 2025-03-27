@@ -5,7 +5,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireDto, CreateQuestionnaireWithFileIdsDto,
-  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId
+  UserRole, UserInfoRoute, UserInfoRdo, RequestWithRequestIdAndBearerAuth, RequestWithUserId, UserLevel
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -84,6 +84,11 @@ export class UserInfoController {
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
+
+    //! отладка
+    user.name = 'testtest';
+    questionnaire.level = UserLevel.Amateur;
+    //
 
     const userInfoRdo: UserInfoRdo = { user, questionnaire };
 
