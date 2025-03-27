@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { Option } from '../../types/option';
@@ -17,7 +17,15 @@ type CustomSelectProps = {
 function CustomSelect(props: CustomSelectProps): JSX.Element {
   const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readonly } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(value);
+  const [selectedValue, setSelectedValue] = useState('');
+
+  useEffect(() => {
+    // приходят новые значения из предка! при переключении режимо редактирования и повторной отрисовки формы после получения ответа
+    if (value) {
+      setSelectedValue(value);
+    }
+  }, [value]);
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -44,22 +52,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
     extraClassName
   );
 
-  const currentValue = (readonly) ? value : selectedValue;
-  const title = options.find((option) => (option.value === currentValue))?.title || '';
-
-  //! отладка
-  if (name === 'level') {
-    // eslint-disable-next-line
-    console.log('CustomSelect - readonly', readonly);
-    // eslint-disable-next-line
-    console.log('CustomSelect - value', value);
-    // eslint-disable-next-line
-    console.log('CustomSelect - selectedValue', selectedValue);
-    // eslint-disable-next-line
-    console.log('CustomSelect - currentValue', currentValue);
-    // eslint-disable-next-line
-    console.log('CustomSelect - title', title);
-  }
+  const title = options.find((option) => (option.value === selectedValue))?.title || '';
 
   return (
     <div className={divClassName} onMouseLeave={handleDivOnMouseLeave} >
@@ -72,7 +65,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       {
         (readonly)
           ? null
-          : <input className='visually-hidden' type="text" name={name} defaultValue={currentValue} />
+          : <input className='visually-hidden' type="text" name={name} value={selectedValue} readOnly />
       }
       <button
         className={`${mainClassName}__button`}

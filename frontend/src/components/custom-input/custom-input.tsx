@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 type CustomInputProps = {
@@ -17,49 +17,51 @@ type CustomInputProps = {
 
 function CustomInput(props: CustomInputProps): JSX.Element {
   const { divExtraClassName, name, type, value, label, text, onChange, required, max, autoComplete, readonly } = props;
+  const [currentValue, setCurrentValue] = useState('');
+
+  useEffect(() => {
+    // приходят новые значения из предка! при переключении режимо редактирования и повторной отрисовки формы после получения ответа
+    if (value) {
+      setCurrentValue(value);
+    }
+  }, [value]);
+
   const isTextarea = type === 'textarea';
   const mainType = (isTextarea) ? type : 'input';
   const mainClassName = `custom-${mainType}`;
   const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readonly }, divExtraClassName);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange?.(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    event.preventDefault();
+    const { value: inputValue } = event.target;
+
+    setCurrentValue(inputValue);
+    onChange?.(inputValue);
   };
+
+  const inputProps = {
+    name,
+    value: currentValue,
+    onChange: handleChange,
+    required,
+    disabled: readonly
+  };
+
+  const labelSpan = (!label) ? null : <span className={`${mainClassName}__label`}>{label}</span>;
+  const textSpan = (isTextarea || !text) ? null : <span className={`${mainClassName}__text`}>{text}</span>;
 
   return (
     <div className={divClassNames}>
       <label>
-        {
-          (label)
-            ? <span className={`${mainClassName}__label`}>{label}</span>
-            : null
-        }
+        {labelSpan}
         {
           (isTextarea)
             ?
-            <textarea
-              name={name}
-              placeholder=' '
-              value={value}
-              disabled={readonly}
-            />
+            <textarea {...inputProps} placeholder=' ' />
             :
             <span className={`${mainClassName}__wrapper`}>
-              <input
-                type={type}
-                name={name}
-                value={value}
-                onChange={handleInputChange}
-                required={required}
-                max={max}
-                autoComplete={autoComplete}
-                disabled={readonly}
-              />
-              {
-                (text)
-                  ? <span className={`${mainClassName}__text`}>{text}</span>
-                  : null
-              }
+              <input {...inputProps} type={type} max={max} autoComplete={autoComplete} />
+              {textSpan}
             </span>
         }
       </label>

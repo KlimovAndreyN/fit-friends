@@ -48,12 +48,12 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     const formData = new FormData(form);
 
     //! отладка
-    //const entries = formData.entries();
-    //for (const entry of entries) {
-    //  const [key, value] = entry;
-    //  // eslint-disable-next-line
-    //  console.log(key, value);
-    //}
+    const entries = formData.entries();
+    for (const entry of entries) {
+      const [key, value] = entry;
+      // eslint-disable-next-line
+      console.log(key, value);
+    }
     //
     const name1 = formData.get('name')?.toString() || '';
     const level1 = (formData.get('level')?.toString() || '') as UserLevel;
@@ -61,10 +61,6 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
       user: { name: name1 },
       questionnaire: { level: level1 }
     };
-    // eslint-disable-next-line
-    console.log('dto.user.name', dto.user?.name);
-    // eslint-disable-next-line
-    console.log('dto.questionnaire?.level', dto.questionnaire?.level);
     //
 
     dispatch(updateUserInfo(dto));
