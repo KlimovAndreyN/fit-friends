@@ -95,8 +95,7 @@ export const userInfoProcess = createSlice(
         .addCase(
           updateUserInfo.fulfilled,
           (state, action) => {
-            state.userInfo = action.payload; //! не работает селектор! на данных не в форме работает селектор!
-            //state.userInfo = null; //! работает селектор
+            state.userInfo = action.payload;
             state.isUpdateUserInfoExecuting = false;
           }
         )

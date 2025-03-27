@@ -19,6 +19,7 @@ enum FormFieldName {
 function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
   const isSingInExecuting = useAppSelector(getIsSingInExecuting);
+
   const submitClassName = classNames('btn sign-in__button', { 'is-disabled': isSingInExecuting });
   const divExtraClassName = 'sign-in__input';
 

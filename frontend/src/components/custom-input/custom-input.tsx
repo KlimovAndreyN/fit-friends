@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import classNames from 'classnames';
 
 type CustomInputProps = {
@@ -7,6 +8,7 @@ type CustomInputProps = {
   value?: string;
   label?: string;
   text?: string;
+  onChange?: (newValue: string) => void;
   required?: boolean;
   max?: string;
   autoComplete?: string;
@@ -14,11 +16,15 @@ type CustomInputProps = {
 }
 
 function CustomInput(props: CustomInputProps): JSX.Element {
-  const { divExtraClassName, name, type, label, text, value, required, max, autoComplete, readonly } = props;
+  const { divExtraClassName, name, type, value, label, text, onChange, required, max, autoComplete, readonly } = props;
   const isTextarea = type === 'textarea';
   const mainType = (isTextarea) ? type : 'input';
   const mainClassName = `custom-${mainType}`;
   const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readonly }, divExtraClassName);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event.target.value);
+  };
 
   return (
     <div className={divClassNames}>
@@ -31,10 +37,24 @@ function CustomInput(props: CustomInputProps): JSX.Element {
         {
           (isTextarea)
             ?
-            <textarea name={name} placeholder=" " defaultValue={value} disabled={readonly} />
+            <textarea
+              name={name}
+              placeholder=' '
+              value={value}
+              disabled={readonly}
+            />
             :
             <span className={`${mainClassName}__wrapper`}>
-              <input type={type} name={name} defaultValue={value} required={required} max={max} autoComplete={autoComplete} disabled={readonly} />
+              <input
+                type={type}
+                name={name}
+                value={value}
+                onChange={handleInputChange}
+                required={required}
+                max={max}
+                autoComplete={autoComplete}
+                disabled={readonly}
+              />
               {
                 (text)
                   ? <span className={`${mainClassName}__text`}>{text}</span>
