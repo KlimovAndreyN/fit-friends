@@ -9,6 +9,7 @@ const initialState: UserInfoProcess = {
   isCreateQuestionnaireExecuting: false,
   isFetchUserInfoExecuting: false,
   isUpdateUserInfoExecuting: false,
+  isUpdateUserInfoError: false,
   isReadyForTrainingChangeExecuting: false,
   existQuestionnaire: false,
   userInfo: null,
@@ -83,12 +84,14 @@ export const userInfoProcess = createSlice(
         .addCase(
           updateUserInfo.pending,
           (state) => {
+            state.isUpdateUserInfoError = false;
             state.isUpdateUserInfoExecuting = true;
           }
         )
         .addCase(
           updateUserInfo.rejected,
           (state) => {
+            state.isUpdateUserInfoError = true;
             state.isUpdateUserInfoExecuting = false;
           }
         )
@@ -96,6 +99,7 @@ export const userInfoProcess = createSlice(
           updateUserInfo.fulfilled,
           (state, action) => {
             state.userInfo = action.payload;
+            state.isUpdateUserInfoError = false;
             state.isUpdateUserInfoExecuting = false;
           }
         )

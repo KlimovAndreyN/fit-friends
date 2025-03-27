@@ -5,6 +5,7 @@ export type UserInfoProcess = {
   isCreateQuestionnaireExecuting: boolean;
   isFetchUserInfoExecuting: boolean;
   isUpdateUserInfoExecuting: boolean;
+  isUpdateUserInfoError: boolean;
   isReadyForTrainingChangeExecuting: boolean;
   existQuestionnaire: boolean;
   userInfo: IUserInfoRdo | null;

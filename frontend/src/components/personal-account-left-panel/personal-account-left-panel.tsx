@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useState } from 'react';
 
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
@@ -12,7 +12,7 @@ import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, Use
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateUserInfo } from '../../store/user-info-action';
 import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
-import { getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
+import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -31,11 +31,17 @@ type PersonalAccountLeftPanelProps = {
 }
 
 function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
-  //! если ошибка при сохранении то не переключать в просмотр, если все ок то переключить, убрать после dispatch - setIsEditing(false), наверное через дополнительный селектор
   //! обработка аватарки удалить и заменить
   const dispatch = useAppDispatch();
   const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
+  const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (!isUpdateUserInfoExecuting && !isUpdateUserInfoError) {
+      setIsEditing(false);
+    }
+  }, [isUpdateUserInfoExecuting, isUpdateUserInfoError]);
 
   const { user, questionnaire } = userInfo;
   const { name, avatarFilePath, about, metroStationName, gender } = user;
@@ -75,8 +81,6 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     };
 
     dispatch(updateUserInfo(dto));
-
-    setIsEditing(false);
   };
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
