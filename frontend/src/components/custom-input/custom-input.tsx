@@ -27,12 +27,12 @@ function CustomInput(props: CustomInputProps): JSX.Element {
   }, [value]);
 
   const isTextarea = type === 'textarea';
-  const mainType = (isTextarea) ? type : 'input';
-  const mainClassName = `custom-${mainType}`;
+  const mainClassName = `custom-${(isTextarea) ? type : 'input'}`;
   const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readonly }, divExtraClassName);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
+
     const { value: inputValue } = event.target;
 
     setCurrentValue(inputValue);
