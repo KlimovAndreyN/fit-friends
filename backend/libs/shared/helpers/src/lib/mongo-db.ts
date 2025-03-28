@@ -1,5 +1,6 @@
-import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 
 import { ConfigAlias } from '@backend/shared/core';
 
@@ -20,5 +21,33 @@ export function getMongooseOptions(): MongooseModuleAsyncOptions {
       }
     },
     inject: [ConfigService]
+  }
+}
+
+export function getEnvMongooseOptions(): MongooseModuleAsyncOptions {
+  return {
+    useFactory: async () => {
+      [
+        ConfigAlias.MongoDbHostEnv,
+        ConfigAlias.MongoDbPortEnv,
+        ConfigAlias.MongoDbUserEnv,
+        ConfigAlias.MongoDbPasswordEnv,
+        ConfigAlias.MongoDbDatabaseEnv,
+        ConfigAlias.MongoDbAuthBaseEnv,
+      ].map((itemEnv) => {
+        Logger.log(`${itemEnv}: ${process.env[itemEnv]}`, 'getEnvMongooseOptions');
+      });
+
+      return {
+        uri: getMongoConnectionString({
+          host: process.env[ConfigAlias.MongoDbHostEnv],
+          port: process.env[ConfigAlias.MongoDbPortEnv],
+          user: process.env[ConfigAlias.MongoDbUserEnv],
+          password: process.env[ConfigAlias.MongoDbPasswordEnv],
+          database: process.env[ConfigAlias.MongoDbDatabaseEnv],
+          authBase: process.env[ConfigAlias.MongoDbAuthBaseEnv]
+        })
+      }
+    }
   }
 }

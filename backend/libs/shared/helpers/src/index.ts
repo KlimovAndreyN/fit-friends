@@ -6,6 +6,6 @@ export * from './lib/headers';
 export { joinUrl } from './lib/join-url';
 export { getJwtOptions, createJwtPayload } from './lib/jwt';
 export { getMailerAsyncOptions } from './lib/mail';
-export { getMongooseOptions } from './lib/mongo-db';
+export { getMongooseOptions, getEnvMongooseOptions } from './lib/mongo-db';
 export { parseAxiosError } from './lib/parse-axios-error';
 export { parseTime, testParseTime } from './lib/parse-time';
