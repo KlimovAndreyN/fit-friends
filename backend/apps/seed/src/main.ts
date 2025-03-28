@@ -4,20 +4,25 @@ import { NestFactory } from '@nestjs/core';
 import { FitUserRepository } from '@backend/account/fit-user';
 
 import { AppModule } from './app/app.module';
+import { generateSportsmans } from './libs/generate-sportsmans';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   Logger.log('Seed runing...');
 
-  const fitUserRepository = app.get(FitUserRepository);
+  try {
+    const sportsmans = await generateSportsmans(app.get(FitUserRepository));
 
-  const testUser = await fitUserRepository.findByEmail('aaa@aaa.aaa');
+    Logger.log(`Sportsmans count: ${sportsmans.length}`);
+    Logger.log('🤘️ Database Account(mongoDb) was filled!');
 
-  console.log('testUser', testUser); // вариант вывода №1
-  Logger.log(JSON.stringify(testUser.toPOJO(), null, 2), 'SEED'); // вариант вывода №1
-
-  await app.close();
+    globalThis.process.exit(0);
+  } catch (error: unknown) {
+    console.error(error);
+  } finally {
+    globalThis.process.exit(1);
+  }
 }
 
 bootstrap();
