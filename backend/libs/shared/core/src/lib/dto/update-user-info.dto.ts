@@ -1,15 +1,12 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IntersectionType, OmitType } from '@nestjs/swagger';
 
 import { IUpdateUserInfoDto } from '../interfaces/dto/i-update-user-info.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UpdateQuestionnaireDto } from './update-questionnaire.dto';
 
-export class UpdateUserInfoDto implements IUpdateUserInfoDto {
-  @ApiProperty()
-  @ApiPropertyOptional()
-  user?: UpdateUserDto;
-
-  @ApiProperty()
-  @ApiPropertyOptional()
-  questionnaire?: UpdateQuestionnaireDto;
-}
+export class UpdateUserInfoDto
+  extends IntersectionType(
+    UpdateUserDto,
+    OmitType(UpdateQuestionnaireDto, ['readyForTraining'])
+  )
+  implements IUpdateUserInfoDto { };

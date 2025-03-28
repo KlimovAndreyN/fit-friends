@@ -9,7 +9,7 @@ export class UpdateUserDto
     [
       'name',
       'about',
-      'avatarFileId',
+      'avatarFile',
       'emptyAvatarFile',
       'metroStationName',
       'gender'

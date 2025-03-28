@@ -4,4 +4,4 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export type onFileInputChange = (filePath: string, file: File | null) => void;
+export type onFileInputChange = (filePath: string, file: File | undefined) => void;

@@ -5,6 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiServiceRoute, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo, IUpdateUserInfoDto, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, UserRole } from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
+import { multipartFormDataHeader } from '../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -72,7 +73,7 @@ export const updateUserInfo = createAsyncThunk<IUserInfoRdo, IUpdateUserInfoDto,
   Action.UPDATE_USER_INFO,
   async (dto, { extra }) => {
     const { api } = extra;
-    const { data } = await api.patch<IUserInfoRdo>(ApiServiceRoute.UserInfo, dto);
+    const { data } = await api.patch<IUserInfoRdo>(ApiServiceRoute.UserInfo, dto, { headers: multipartFormDataHeader });
 
     return data;
   }

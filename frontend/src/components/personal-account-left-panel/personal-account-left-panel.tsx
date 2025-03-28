@@ -36,8 +36,14 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
   const dispatch = useAppDispatch();
   const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
   const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
+
+  const { user, questionnaire } = userInfo;
+  const { name, avatarFilePath, about, metroStationName, gender } = user;
+  const { specializations, level } = questionnaire;
+
   const [isEditing, setIsEditing] = useState(false);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | undefined>();
+  const [emptyAvatarFile, setEmptyAvatarFile] = useState(!avatarFilePath);
 
   useEffect(() => {
     if (!isUpdateUserInfoExecuting && !isUpdateUserInfoError) {
@@ -45,17 +51,8 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     }
   }, [isUpdateUserInfoExecuting, isUpdateUserInfoError]);
 
-  const { user, questionnaire } = userInfo;
-  const { name, avatarFilePath, about, metroStationName, gender } = user;
-  const { specializations, level } = questionnaire;
-
-  const handleAvatarUploadChange = (_filePath: string, file: File | null) => {
-    //! отладка
-    // eslint-disable-next-line
-    console.log('_filePath', _filePath);
-    // eslint-disable-next-line
-    console.log('file', file);
-
+  const handleAvatarUploadChange = (_filePath: string, file: File | undefined) => {
+    setEmptyAvatarFile(!file);
     setAvatarFile(file);
   };
 
@@ -71,21 +68,15 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    //! отладка задать emptyAvatarFile и avatarFile
-    // eslint-disable-next-line
-    console.log('avatarFile', avatarFile);
-
     const dto: IUpdateUserInfoDto = {
-      user: {
-        name: formData.get(FormFieldName.Name)?.toString() || '',
-        about: formData.get(FormFieldName.About)?.toString() || '',
-        metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
-        gender: (formData.get(FormFieldName.Sex)?.toString() || '') as UserGender //! одинаковый код - в хелпер
-      },
-      questionnaire: {
-        specializations: formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)), //! одинаковый код - в хелпер
-        level: (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel //! одинаковый код - в хелпер
-      }
+      avatarFile,
+      emptyAvatarFile,
+      name: formData.get(FormFieldName.Name)?.toString() || '',
+      about: formData.get(FormFieldName.About)?.toString() || '',
+      metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
+      gender: (formData.get(FormFieldName.Sex)?.toString() || '') as UserGender, //! одинаковый код - в хелпер
+      specializations: formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)), //! одинаковый код - в хелпер
+      level: (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel //! одинаковый код - в хелпер
     };
 
     dispatch(updateUserInfo(dto));

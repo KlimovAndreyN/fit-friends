@@ -28,7 +28,7 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
       ? <img src={avatarFilePath} width="98" height="98" alt="user photo" />
       : svg;
 
-  const handleImageUploadInputChange = (filePath: string, file: File | null) => {
+  const handleImageUploadInputChange = (filePath: string, file: File | undefined) => {
     setAvatarFilePath(filePath);
     onChange?.(filePath, file);
   };
@@ -43,7 +43,7 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
     event.preventDefault();
 
     setAvatarFilePath('');
-    onChange?.('', null);
+    onChange?.('', undefined);
   };
 
   return (

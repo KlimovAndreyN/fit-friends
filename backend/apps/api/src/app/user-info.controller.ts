@@ -1,13 +1,21 @@
-import { Body, Controller, Delete, Get, Patch, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException, Body, Controller, Delete, Get, Patch,
+  Post, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { validate } from 'class-validator';
+import 'multer'; // Express.Multer.File
 
 import {
-  BearerAuth, ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
-  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute, UserInfoRdo,
-  UserRole, RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto
+  ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
+  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute,
+  RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto,
+  UserRole, UserAvatarOption, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
+  Specialization, UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -74,28 +82,45 @@ export class UserInfoController {
   }
 
   @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
   @Patch()
   public async update(
     @Body() dto: UpdateUserInfoDto,
-    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId
+    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
+    @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<UserInfoRdo> {
-    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в CreateQuestionnaireWithFileIdsDto
     //! перенести в сервис/сервисы?
-    //! отладка
-    console.log('UserInfoController - update - dto', dto);
+    //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
+    dto.specializations = [];
+    for (const key in dto) {
+      if (key.startsWith('specializations.')) {
+        dto.specializations.push(dto[key] as Specialization);
+      }
+    }
 
-    const user = await this.usersService.updateUser(dto.user, null, bearerAuth, requestId);
+    const updateDto = fillDto(UpdateUserInfoDto, dto);
+    const errors = await validate(updateDto);
+
+    if (errors.length > 0) {
+      throw new BadRequestException(`Validation failed! ${getValidationErrorString(errors)}`);
+    }
+
+    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, updateDto);
+    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, updateDto);
+    //
+
+    const user = await this.usersService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
 
     const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
     const headers = makeHeaders(requestId, null, userId);
-    const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto.questionnaire, headers);
+    const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, upadteQuestionnaireDto, headers);
 
     const userInfoRdo: UserInfoRdo = { user, questionnaire };
 
     //! отладка
     console.log('UserInfoController - update - userInfoRdo', userInfoRdo);
 
-    //! когда будет роль тренер нужно преобразовать id файлов в пути
     return userInfoRdo;
   }
 
