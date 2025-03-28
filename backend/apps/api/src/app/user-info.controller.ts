@@ -116,12 +116,7 @@ export class UserInfoController {
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, upadteQuestionnaireDto, headers);
 
-    const userInfoRdo: UserInfoRdo = { user, questionnaire };
-
-    //! отладка
-    console.log('UserInfoController - update - userInfoRdo', userInfoRdo);
-
-    return userInfoRdo;
+    return { user, questionnaire };
   }
 
   @Post(UserInfoRoute.ReadyForTraining)

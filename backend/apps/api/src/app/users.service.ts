@@ -3,10 +3,10 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute,
-  UserWithFileIdRdo, UserRdo, convertToUserRdo, UpdateUserDto
+  AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, UserRdo,
+  UserWithFileIdRdo, convertToUserRdo, UpdateUserDto, UpdateUserWithFileIdDto,
 } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { FilesService } from './files.service';
@@ -36,17 +36,27 @@ export class UsersService {
   }
 
   public async updateUser(dto: UpdateUserDto, avatarFile: Express.Multer.File, bearerAuth: string, requestId: string): Promise<UserRdo> {
-    //! с файлами нужно подумать!
-    //const avatar = await this.filesService.uploadFile(avatarFile, requestId);
-    //const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
+    const { emptyAvatarFile } = dto;
+    const updateUserDto: UpdateUserWithFileIdDto = fillDto(UpdateUserWithFileIdDto, dto);
+    let avatarFilePath = '';
+
+    if (emptyAvatarFile) {
+      updateUserDto.avatarFileId = '';
+    }
+    else {
+      const avatar = await this.filesService.uploadFile(avatarFile, requestId);
+
+      if (avatar) {
+        updateUserDto.avatarFileId = avatar.id;
+        avatarFilePath = this.filesService.makePath(avatar);
+      }
+    }
+
     const url = this.getUrl();
     const headers = makeHeaders(requestId, bearerAuth);
-    const { data: user } = await this.httpService.axiosRef.patch<UserWithFileIdRdo>(url, dto, headers);
-    //! тут файл
-    //const avatarFilePath = this.filesService.makePath(avatar);
+    const { data: updateUser } = await this.httpService.axiosRef.patch<UserWithFileIdRdo>(url, updateUserDto, headers);
 
-    //!return convertToUserRdo(registeredUser, avatarFilePath);
-    return convertToUserRdo(user, '');
+    return convertToUserRdo(updateUser, avatarFilePath);
   }
 
   public async getUser(id: string, requestId: string): Promise<UserRdo> {
