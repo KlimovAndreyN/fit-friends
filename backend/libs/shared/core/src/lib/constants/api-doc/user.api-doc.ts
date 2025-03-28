@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 import { User } from '../../interfaces/user.interface';
 import { TokenPayload } from '../../interfaces/token-payload.interface';
@@ -75,6 +75,10 @@ export class UserApiDoc {
   @ApiProperty(UserApiProperty.EmptyAvatarFile)
   @Expose()
   @IsOptional()
+  @Transform(({ value }) => {
+    // из-за 'multipart/form-data' приходит string, а при вторичной транформации, для валидации, уже boolean
+    return (typeof value === 'string') ? value === 'true' : value;
+  })
   public emptyAvatarFile?: IUpdateUserDto['emptyAvatarFile'];
 
   @ApiProperty(UserApiProperty.AvatarFilePath)
