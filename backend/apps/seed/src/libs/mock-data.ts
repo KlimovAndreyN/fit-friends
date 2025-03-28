@@ -1,6 +1,4 @@
-import { AuthUser, MetroStationName, UserGender, UserRole } from '@backend/shared/core';
-
-import { getRandomItem } from './random';
+import { UserGender } from "@backend/shared/core";
 
 export const MOCK_BACKGROUND_PATHS = [
   '/img/content/user-card-photo1.jpg',
@@ -9,17 +7,12 @@ export const MOCK_BACKGROUND_PATHS = [
 
 export const MOCK_DEFAULT_USER_PASSWORD = '123456';
 
-export const MOCK_SPORTSMANS: AuthUser[] = [
-  {
-    email: 'tom@local.ru',
-    name: 'Tom',
-    about: 'About Tom',
-    backgroundPath: getRandomItem(MOCK_BACKGROUND_PATHS),
-    gender: getRandomItem(Object.values(UserGender)),
-    metroStationName: getRandomItem(Object.values(MetroStationName)),
-    role: UserRole.Sportsman,
-    avatarFileId: '', //! позднее попробовать подкинуть аватарки
-    birthday: new Date('2000-01-01'), //! сделать разное
-    passwordHash: ''
-  }
+export const MOCK_SPORTSMANS = [
+  { name: 'Tom', gender: UserGender.Male },
+  { name: 'Jerry', gender: UserGender.NotMatter },
+  { name: 'Roxette', gender: UserGender.Female },
+  { name: 'Max', gender: UserGender.Male },
+  { name: 'Nataly', gender: UserGender.Female },
+  { name: 'Candy', gender: UserGender.Female },
+  { name: 'Jack', gender: UserGender.Male }
 ];
