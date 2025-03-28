@@ -17,6 +17,7 @@ cp notify/.env-example notify/.env
 cp account/.env-example account/.env
 cp fit/.env-example fit/.env
 cp api/.env-example api/.env
+cp seed/.env-example seed/.env
 cd ../../frontend
 cp .env-example .env
 
@@ -35,8 +36,8 @@ npx nx run fit:db:generate
 npx nx run fit:db:migrate
 
 # наполнение тестовыми данными
-#npx nx run account:db:seed
-#npx nx run fit:db:seed
+npx nx run seed:build
+node --env-file=./apps/seed/.env ./dist/apps/seed/main.js
 
 # запуск сервисов backend
 # file-storage
@@ -56,6 +57,7 @@ cd backend
 npx nx run api:serve
 
 # установка зависимостей для frontend
+cd ..
 cd frontend
 npm install
 
@@ -65,8 +67,40 @@ npm run start
 
 # Сценарии
 ## backend
-note: `cd ./backend`
+```bash
+cd backend
+
+npm run lint
+
+npx nx run file-storage:serve
+npx nx run file-storage:build
+
+npx nx run notify:serve
+npx nx run notify:build
+
+npx nx run account:serve
+npx nx run account:build
+
+npx nx run fit:serve
+npx nx run fit:build
+npx nx run fit:db:generate
+npx nx run fit:db:migrate
+npx nx run fit:db:lint
+npx nx run fit:db:reset
+
+npx nx run api:serve
+npx nx run api:build
+
+npx nx run seed:serve
+npx nx run seed:build
+
+```
 
 ## frontend
-note: `cd ./frontend`
+```bash
+cd frontend
 
+npm run start
+npm run build
+npm run lint
+```

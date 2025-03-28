@@ -33,9 +33,6 @@ aaa@aaa.aaa
   пройтись по ТЗ по опроснику - ограничения
 профиль
   по esc отменять изменниния и переключать в просмотр - если получится быстро
-
-npx nx run seed:build
-node --env-file=./apps/seed/.env ./dist/apps/seed/main.js  
   
   /fronted-index
   seed.ts x2
