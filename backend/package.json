@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "tsc --project ./tsconfig.base.json --noEmit && eslint {src,apps,libs,test}/**/*.ts"
+    "lint": "tsc --project ./tsconfig.base.json --noEmit && eslint {src,apps,libs,test}/**/*.ts",
+    "serve": "nx run-many -t serve -p file-storage notify account fit api",
+    "build": "nx run-many -t build -p file-storage notify account fit api seed"
   },
   "private": true,
   "dependencies": {

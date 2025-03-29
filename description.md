@@ -71,6 +71,8 @@ npm run start
 cd backend
 
 npm run lint
+npm run serve
+npm run build
 
 npx nx run file-storage:serve
 npx nx run file-storage:build
