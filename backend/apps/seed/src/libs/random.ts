@@ -1,3 +1,5 @@
+import { enumToArray } from './utils';
+
 //! функции есть на фронте, объеденить через хелпер
 export function getRandomNumber(min: number, max: number, numAfterDigit = 0): number {
   return +((Math.random() * (max - min)) + min).toFixed(numAfterDigit);
@@ -11,25 +13,30 @@ export function getRandomItem<T>(items: T[]): T {
   return items[getRandomNumber(0, items.length - 1)];
 }
 
-function enumToArray<T>(enumObj: T): T[keyof T][] {
-  return Object.values(enumObj) as T[keyof T][];
-}
-
 export function getRandomEnumItem<T>(enumObj: T): T[keyof T] {
   const enumItems = enumToArray(enumObj);
 
   return enumItems[getRandomNumber(0, enumItems.length - 1)];
 }
 
-/*
-export function getRandomUniqueItems<T>(items: T[], count: number): T {
-  if (items.length <= count) {
+function getUniqueRandomNumbers(numbersCount: number, min: number, max: number): number[] {
+  const uniqueNumbers = new Set<number>();
+  const maxCount = max - min + 1;
+  let count = numbersCount;
 
+  if (count > maxCount) {
+    count = maxCount;
   }
 
-  const indexes: number[] = [];
+  while (uniqueNumbers.size < count) {
+    uniqueNumbers.add(getRandomNumber(min, max));
+  }
 
-
-  return items[getRandomNumber(0, items.length - 1)];
+  return Array.from(uniqueNumbers);
 }
-*/
+
+export function getRandomUniqueItems<T>(items: T[], count: number): T[] {
+  const indexes: number[] = getUniqueRandomNumbers(count, 0, items.length);
+
+  return items.filter((_, index) => (indexes.includes(index)));
+}

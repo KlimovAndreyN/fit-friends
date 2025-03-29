@@ -23,3 +23,8 @@ export const MOCK_CALORIES = {
   wasteMin: 1000,
   wasteMax: 2000
 } as const;
+
+export const MOCK_SPECIALIZATIONS = {
+  minCount: 1,
+  maxCount: 3
+} as const;
