@@ -6,7 +6,7 @@ import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 import { getRandomItem } from './random';
 import { MOCK_SPORTSMANS, MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS } from './mock-data';
 
-export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed): Promise<FitUserEntity[]> {
+export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed: boolean): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
 
   if (resetBeforeSeed) {
@@ -36,7 +36,7 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository, r
     await fitUserRepository.save(userEntity);
     users.push(userEntity);
 
-    Logger.log(`Added sportsman: ${user.email} / ${MOCK_DEFAULT_USER_PASSWORD}`);
+    Logger.log(`Added sportsman: ${userEntity.email} / ${MOCK_DEFAULT_USER_PASSWORD} / ${userEntity.id}`);
   }
 
   return users;
