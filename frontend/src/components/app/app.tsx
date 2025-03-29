@@ -14,7 +14,7 @@ import FriendsList from '../../pages/friends-list/friends-list';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
-import { AppRoute } from '../../const';
+import { AppRoute, accessIndexForAll } from '../../const';
 
 function App(): JSX.Element {
   return (
@@ -24,11 +24,16 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Root}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <Index />
-                </QuestionnaireRoute>
-              </PrivateRoute>
+              //! отладка отображения страницы
+              (accessIndexForAll)
+                ?
+                <Index />
+                :
+                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                  <QuestionnaireRoute>
+                    <Index />
+                  </QuestionnaireRoute>
+                </PrivateRoute>
             }
           />
           <Route

@@ -1,5 +1,9 @@
 import { Duration, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
+
+import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
+
+export const accessIndexForAll = getViteEnvBooleanVariable('VITE_ACCESS_INDEX_FOR_ALL');
 
 const MAIN_TITLE = 'FitFriends';
 

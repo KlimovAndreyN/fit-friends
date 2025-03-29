@@ -10,6 +10,7 @@ import { HttpCode } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
 const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';
+
 const REQUEST_TIMEOUT = 5000;
 
 const baseURL = getViteEnvVariable(VITE_BACKEND_URL_ENV);
