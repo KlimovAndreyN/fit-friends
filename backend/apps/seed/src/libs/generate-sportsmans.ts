@@ -3,7 +3,7 @@ import { Logger } from '@nestjs/common';
 import { AuthUser, MetroStationName, UserRole } from '@backend/shared/core';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { getRandomItem } from './random';
+import { getRandomEnumItem, getRandomItem } from './random';
 import { MOCK_SPORTSMANS, MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS } from './mock-data';
 
 export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed: boolean): Promise<FitUserEntity[]> {
@@ -24,7 +24,7 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository, r
       about: `About: my name is ${name}`,
       backgroundPath: getRandomItem(MOCK_BACKGROUND_PATHS),
       gender,
-      metroStationName: getRandomItem(Object.values(MetroStationName)),
+      metroStationName: getRandomEnumItem(MetroStationName),
       role: UserRole.Sportsman,
       avatarFileId: '', //! позднее попробовать подкинуть аватарки
       birthday: new Date('2000-01-01'), //! сделать разное

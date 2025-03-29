@@ -10,3 +10,26 @@ export function getRandomBoolean(): boolean {
 export function getRandomItem<T>(items: T[]): T {
   return items[getRandomNumber(0, items.length - 1)];
 }
+
+function enumToArray<T>(enumObj: T): T[keyof T][] {
+  return Object.values(enumObj) as T[keyof T][];
+}
+
+export function getRandomEnumItem<T>(enumObj: T): T[keyof T] {
+  const enumItems = enumToArray(enumObj);
+
+  return enumItems[getRandomNumber(0, enumItems.length - 1)];
+}
+
+/*
+export function getRandomUniqueItems<T>(items: T[], count: number): T {
+  if (items.length <= count) {
+
+  }
+
+  const indexes: number[] = [];
+
+
+  return items[getRandomNumber(0, items.length - 1)];
+}
+*/

@@ -16,3 +16,10 @@ export const MOCK_SPORTSMANS = [
   { name: 'Candy', gender: UserGender.Female },
   { name: 'Jack', gender: UserGender.Male }
 ];
+
+export const MOCK_CALORIES = {
+  loseMin: 3000,
+  loseMax: 5000,
+  wasteMin: 1000,
+  wasteMax: 2000
+} as const;

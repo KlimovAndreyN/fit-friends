@@ -1,10 +1,12 @@
 import { Logger } from '@nestjs/common';
 
 import { Duration, Questionnaire, Specialization, UserLevel } from '@backend/shared/core';
+import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
 
-import { getRandomBoolean, getRandomItem, getRandomNumber } from './random';
-import { FitUserEntity } from '@backend/account/fit-user';
+import { getRandomBoolean, getRandomEnumItem, getRandomNumber } from './random';
+
+import { MOCK_CALORIES } from './mock-data';
 
 export async function generateQuestionnaires(
   questionnaireRepository: QuestionnaireRepository,
@@ -21,14 +23,14 @@ export async function generateQuestionnaires(
     const questionnaire: Questionnaire = {
       userId,
       specializations: [Specialization.Aerobics, Specialization.Crossfit], //!
-      level: getRandomItem(Object.values(UserLevel)),
+      level: getRandomEnumItem(UserLevel),
       readyForTraining: getRandomBoolean(),
-      time: getRandomItem(Object.values(Duration)),
-      caloriesLose: getRandomNumber(3000, 5000),
-      caloriesWaste: getRandomNumber(1000, 2000)
+      time: getRandomEnumItem(Duration),
+      caloriesLose: getRandomNumber(MOCK_CALORIES.loseMin, MOCK_CALORIES.loseMax),
+      caloriesWaste: getRandomNumber(MOCK_CALORIES.wasteMin, MOCK_CALORIES.wasteMax)
     }
-
     const questionnaireEntity = new QuestionnaireEntity(questionnaire);
+
     await questionnaireRepository.save(questionnaireEntity);
     questionnaires.push(questionnaireEntity);
 
