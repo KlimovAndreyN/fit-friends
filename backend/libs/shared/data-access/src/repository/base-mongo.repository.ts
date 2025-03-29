@@ -26,6 +26,12 @@ export abstract class BaseMongoRepository<
     return entity;
   }
 
+  public async getAllIds(): Promise<T['id'][]> {
+    const documents = await this.model.find(null, null, { fields: { id: true } }).exec();
+
+    return documents.map((document) => (document.id));
+  }
+
   public async findById(id: T['id']): Promise<T> {
     const document = await this.model.findById(id).exec();
 

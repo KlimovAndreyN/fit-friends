@@ -6,8 +6,16 @@ import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 import { getRandomItem } from './random';
 import { MOCK_SPORTSMANS, MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS } from './mock-data';
 
-export async function generateSportsmans(fitUserRepository: FitUserRepository): Promise<FitUserEntity[]> {
+export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
+
+  if (resetBeforeSeed) {
+    const ids = await fitUserRepository.getAllIds();
+
+    for (const id of ids) {
+      await fitUserRepository.deleteById(id);
+    }
+  }
 
   for (const { name, gender } of MOCK_SPORTSMANS) {
     const user: AuthUser = {
@@ -22,7 +30,6 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository): 
       birthday: new Date('2000-01-01'), //! сделать разное
       passwordHash: ''
     };
-
     const userEntity = new FitUserEntity(user);
 
     await userEntity.setPassword(MOCK_DEFAULT_USER_PASSWORD);
