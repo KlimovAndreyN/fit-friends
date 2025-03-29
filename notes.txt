@@ -45,6 +45,8 @@ aaa@aaa.aaa
   что за скрипты в маркапах ?
     <script src="js/vendor.min.js"></script>
     <script src="js/main.min.js"></script>
+  главная - специальное предложение
+    в макете нет ссылки перехода на карточку тренировнки, добавил на заголовок
 
 --------------
 export const EnumStatus = {

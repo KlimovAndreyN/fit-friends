@@ -1,3 +1,5 @@
+import { AppRoute } from '../const';
+
 export function joinUrl(...items: string[]): string {
   return [...items].join('/');
 }
@@ -27,4 +29,8 @@ export function getViteEnvBooleanVariable(envName: keyof ImportMetaEnv, showErro
   const value = getViteEnvVariable(envName, 'false', showError);
 
   return value === 'true';
+}
+
+export function getTrainingLink(trainingId: string): string {
+  return joinUrl(AppRoute.Training, trainingId);
 }

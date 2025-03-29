@@ -30,8 +30,7 @@ function PopularTrainingSection(): JSX.Element {
                 <div className="thumbnail-training__inner">
                   <div className="thumbnail-training__image">
                     <picture>
-                      <source type="image/webp" srcSet="img/content/thumbnails/training-06.webp, img/content/thumbnails/training-06@2x.webp 2x" />
-                      <img src="img/content/thumbnails/training-06.jpg" srcSet="img/content/thumbnails/training-06@2x.jpg 2x" width="330" height="190" alt="" />
+                      <img src="img/content/thumbnails/training-06.jpg" width="330" height="190" alt="" />
                     </picture>
                   </div>
                   <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1600</span><span>₽</span>
@@ -68,8 +67,7 @@ function PopularTrainingSection(): JSX.Element {
                 <div className="thumbnail-training__inner">
                   <div className="thumbnail-training__image">
                     <picture>
-                      <source type="image/webp" srcSet="img/content/thumbnails/training-07.webp, img/content/thumbnails/training-07@2x.webp 2x" />
-                      <img src="img/content/thumbnails/training-07.jpg" srcSet="img/content/thumbnails/training-07@2x.jpg 2x" width="330" height="190" alt="" />
+                      <img src="img/content/thumbnails/training-07.jpg" width="330" height="190" alt="" />
                     </picture>
                   </div>
                   <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1600</span><span>₽</span>
@@ -106,8 +104,7 @@ function PopularTrainingSection(): JSX.Element {
                 <div className="thumbnail-training__inner">
                   <div className="thumbnail-training__image">
                     <picture>
-                      <source type="image/webp" srcSet="img/content/thumbnails/training-11.webp, img/content/thumbnails/training-11@2x.webp 2x" />
-                      <img src="img/content/thumbnails/training-11.jpg" srcSet="img/content/thumbnails/training-11@2x.jpg 2x" width="330" height="190" alt="" />
+                      <img src="img/content/thumbnails/training-11.jpg" width="330" height="190" alt="" />
                     </picture>
                   </div>
                   <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">2200</span><span>₽</span>
@@ -144,8 +141,7 @@ function PopularTrainingSection(): JSX.Element {
                 <div className="thumbnail-training__inner">
                   <div className="thumbnail-training__image">
                     <picture>
-                      <source type="image/webp" srcSet="img/content/thumbnails/training-09.webp, img/content/thumbnails/training-09@2x.webp 2x" />
-                      <img src="img/content/thumbnails/training-09.jpg" srcSet="img/content/thumbnails/training-09@2x.jpg 2x" width="330" height="190" alt="" />
+                      <img src="img/content/thumbnails/training-09.jpg" width="330" height="190" alt="" />
                     </picture>
                   </div>
                   <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1800</span><span>₽</span>
