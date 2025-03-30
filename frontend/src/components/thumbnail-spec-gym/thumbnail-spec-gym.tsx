@@ -1,4 +1,5 @@
 function ThumbnailSpecGym(): JSX.Element {
+  //! разный текст и картинка? на разных страницах, сейчас поставил текст по ТЗ, есть блоки в ЛК тренера, ЛК спортсмена и главной, поискать еще есть ли где
   return (
     <div className="thumbnail-spec-gym">
       <div className="thumbnail-spec-gym__image">

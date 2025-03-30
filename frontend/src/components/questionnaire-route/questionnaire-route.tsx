@@ -20,7 +20,7 @@ function QuestionnaireRoute({ children, isQuestionnaire = false }: Questionnaire
   }
 
   if (isQuestionnaire && existQuestionnaire) {
-    return <Navigate to={AppRoute.Root} />;
+    return <Navigate to={AppRoute.Index} />;
   }
 
   if (!isQuestionnaire && !existQuestionnaire) {

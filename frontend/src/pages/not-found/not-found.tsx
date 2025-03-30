@@ -7,7 +7,7 @@ function NotFound(): JSX.Element {
   const navigate = useNavigate();
 
   const handlePopupFormSubmit = () => {
-    navigate(AppRoute.Root);
+    navigate(AppRoute.Index);
   };
 
   const popupFormProps = {

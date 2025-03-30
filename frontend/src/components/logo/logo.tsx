@@ -6,11 +6,11 @@ const logoSvg = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="
 
 function Logo(): JSX.Element {
   const location = useLocation();
-  const activeLink = location.pathname !== AppRoute.Root;
+  const activeLink = location.pathname !== AppRoute.Index;
 
   return (activeLink
     ?
-    <Link className="header__logo" to={AppRoute.Root} aria-label="Переход на главную">
+    <Link className="header__logo" to={AppRoute.Index} aria-label="Переход на главную">
       {logoSvg}
     </Link>
     :

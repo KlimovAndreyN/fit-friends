@@ -3,7 +3,7 @@ import { Duration, MetroStationName, Specialization, UserGender, UserLevel, User
 import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
 
-export const accessIndexForAll = getViteEnvBooleanVariable('VITE_ACCESS_INDEX_FOR_ALL');
+export const routeAccessDebug = getViteEnvBooleanVariable('VITE_ROUTE_ACCESS_DEBUG');
 
 const MAIN_TITLE = 'FitFriends';
 
@@ -24,7 +24,7 @@ export enum PageTitle {
 export const ID_PARAM = ':id';
 
 export enum AppRoute {
-  Root = '/',
+  Index = '/',
   Intro = '/intro',
   SignIn = '/sign-in',
   SignUp = '/sign-up',

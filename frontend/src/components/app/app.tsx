@@ -16,7 +16,7 @@ import Training from '../../pages/training/training';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
-import { AppRoute, accessIndexForAll } from '../../const';
+import { AppRoute, routeAccessDebug } from '../../const';
 
 function App(): JSX.Element {
   return (
@@ -24,10 +24,10 @@ function App(): JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route
-            path={AppRoute.Root}
+            path={AppRoute.Index}
             element={
               //! отладка отображения страницы
-              (accessIndexForAll)
+              (routeAccessDebug)
                 ?
                 <Index />
                 :
@@ -41,7 +41,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Intro}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
                 <Intro />
               </PrivateRoute>
             }
@@ -49,7 +49,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignIn}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
                 <SignIn />
               </PrivateRoute>
             }
@@ -57,7 +57,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignUp}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Root}>
+              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
                 <SignUp />
               </PrivateRoute>
             }
@@ -96,7 +96,7 @@ function App(): JSX.Element {
             path={AppRoute.TrainingCatalog}
             element={
               //! отладка отображения страницы
-              (accessIndexForAll)
+              (routeAccessDebug)
                 ?
                 <TrainingCatalog />
                 :
@@ -111,7 +111,7 @@ function App(): JSX.Element {
             path={AppRoute.TrainingDetail}
             element={
               //! отладка отображения страницы
-              (accessIndexForAll)
+              (routeAccessDebug)
                 ?
                 <Training />
                 :
@@ -122,7 +122,6 @@ function App(): JSX.Element {
                 </PrivateRoute>
             }
           />
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
