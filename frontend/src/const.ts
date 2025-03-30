@@ -27,7 +27,8 @@ export enum AppRoute {
   Questionnaire = '/questionnaire',
   PersonalAccount = '/personal-account',
   FriendsList = '/friends-list',
-  Training = '/training',
+  Training = '/training/:id', //!
+  TrainingReviews = `${Training}/reviews`, //! Reviews
   NotFound = '/404',
 }
 

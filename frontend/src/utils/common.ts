@@ -32,5 +32,9 @@ export function getViteEnvBooleanVariable(envName: keyof ImportMetaEnv, showErro
 }
 
 export function getTrainingLink(trainingId: string): string {
-  return joinUrl(AppRoute.Training, trainingId);
+  return AppRoute.Training.replace(':id', trainingId);
+}
+
+export function getTrainingReviewsLink(trainingId: string): string {
+  return AppRoute.TrainingReviews.replace(':id', trainingId);
 }

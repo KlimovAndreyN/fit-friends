@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { getTrainingLink } from '../../utils/common';
+import { getTrainingLink, getTrainingReviewsLink } from '../../utils/common';
 import { MOCK_POPULAR_TRAINING } from '../../mock';
 
 function PopularTrainingList(): JSX.Element {
@@ -44,7 +44,7 @@ function PopularTrainingList(): JSX.Element {
                     </div>
                     <div className="thumbnail-training__button-wrapper">
                       <Link className="btn btn--small thumbnail-training__button-catalog" to={getTrainingLink(id)}>Подробнее</Link>
-                      <a className="btn btn--small btn--outlined thumbnail-training__button-catalog" href="#">Отзывы</a>
+                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingReviewsLink(id)}>Отзывы</Link>
                     </div>
                   </div>
                 </div>

@@ -48,7 +48,7 @@ export const MOCK_SPECIAL_OFFERS = [
   {
     id: 'id-52',
     title: 'Fleksbend',
-    description: 'Горячие предложения на&nbsp;Тренировки с&nbsp;резинкой для фитнеса',
+    description: 'Горячие предложения на\u00A0Тренировки с\u00A0резинкой для фитнеса',
     picturePath: 'img/content/promo-2.png',
     price: 2400,
     oldPrice: 2800
@@ -56,7 +56,7 @@ export const MOCK_SPECIAL_OFFERS = [
   {
     id: 'id-53',
     title: 'Full Body Stretch',
-    description: 'Горячие предложения на&nbsp;Комплекс упражнений на&nbsp;растяжку всего тела для новичков',
+    description: 'Горячие предложения на\u00A0Комплекс упражнений на\u00A0растяжку всего тела для новичков',
     picturePath: 'img/content/promo-3.png',
     price: 1800,
     oldPrice: 2200
@@ -69,7 +69,7 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'run, forrest, run',
     specialization: SpecializationTitle[Specialization.Running],
     calorie: 500,
-    description: 'Узнайте правильную технику бега, развивайте выносливость и&nbsp;откройте для себя все секреты длительных пробежек.',
+    description: 'Узнайте правильную технику бега, развивайте выносливость и\u00A0откройте для себя все секреты длительных пробежек.',
     picturePath: 'img/content/thumbnails/training-06.jpg',
     price: 1600
   },
@@ -78,16 +78,16 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'fitball',
     specialization: SpecializationTitle[Specialization.Pilates],
     calorie: 200,
-    description: 'Тренировка на&nbsp;фитболе&nbsp;&mdash; отличном тренажере для развития чувства баланса и&nbsp;равновесия, улучшения координации.',
+    description: 'Тренировка на\u00A0фитболе\u00A0\u2013 отличном тренажере для развития чувства баланса и\u00A0равновесия, улучшения координации.',
     picturePath: 'img/content/thumbnails/training-07.jpg',
     price: 1600
   },
   {
     id: 'id-73',
-    title: 'devil&apos;s cindy',
-    specialization: SpecializationTitle[Specialization.Crossfit], // нужно вывести в нижнем регистре
+    title: 'devil\'s cindy',
+    specialization: SpecializationTitle[Specialization.Crossfit],
     calorie: 950,
-    description: 'Знаменитый кроссфит комплекс. Синди&nbsp;&mdash; универсальная тренировка для развития функциональной силы.',
+    description: 'Знаменитый кроссфит комплекс. Синди\u00A0\u2013 универсальная тренировка для развития функциональной силы.',
     picturePath: 'img/content/thumbnails/training-11.jpg',
     price: 2200
   },
@@ -96,7 +96,7 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'full body stretch - 2',
     specialization: SpecializationTitle[Specialization.Stretching],
     calorie: 500,
-    description: 'Комплекс упражнений на&nbsp;растяжку всего тела для новичков. Плавное погружение в&nbsp;стретчинг и&nbsp;умеренная нагрузка.',
+    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
     picturePath: 'img/content/thumbnails/training-09.jpg',
     price: 2000
   },
@@ -105,7 +105,7 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'run, forrest, run - 2',
     specialization: SpecializationTitle[Specialization.Running],
     calorie: 500,
-    description: 'Узнайте правильную технику бега, развивайте выносливость и&nbsp;откройте для себя все секреты длительных пробежек.',
+    description: 'Узнайте правильную технику бега, развивайте выносливость и\u00A0откройте для себя все секреты длительных пробежек.',
     picturePath: 'img/content/thumbnails/training-06.jpg',
     price: 2600
   },
@@ -114,16 +114,16 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'fitball - 2',
     specialization: SpecializationTitle[Specialization.Pilates],
     calorie: 150,
-    description: 'Тренировка на&nbsp;фитболе&nbsp;&mdash; отличном тренажере для развития чувства баланса и&nbsp;равновесия, улучшения координации.',
+    description: 'Тренировка на\u00A0фитболе\u00A0\u2013 отличном тренажере для развития чувства баланса и\u00A0равновесия, улучшения координации.',
     picturePath: 'img/content/thumbnails/training-07.jpg',
     price: 2200
   },
   {
     id: 'id-77',
-    title: 'devil&apos;s cindy - 2',
-    specialization: SpecializationTitle[Specialization.Crossfit], // нужно вывести в нижнем регистре
+    title: 'devil\'s cindy - 2',
+    specialization: SpecializationTitle[Specialization.Crossfit],
     calorie: 850,
-    description: 'Знаменитый кроссфит комплекс. Синди&nbsp;&mdash; универсальная тренировка для развития функциональной силы.',
+    description: 'Знаменитый кроссфит комплекс. Синди\u00A0\u2013 универсальная тренировка для развития функциональной силы.',
     picturePath: 'img/content/thumbnails/training-11.jpg',
     price: 2500
   },
@@ -132,7 +132,7 @@ export const MOCK_POPULAR_TRAINING = [
     title: 'full body stretch - 2',
     specialization: SpecializationTitle[Specialization.Stretching],
     calorie: 500,
-    description: 'Комплекс упражнений на&nbsp;растяжку всего тела для новичков. Плавное погружение в&nbsp;стретчинг и&nbsp;умеренная нагрузка.',
+    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
     picturePath: 'img/content/thumbnails/training-09.jpg',
     price: 2000
   }
