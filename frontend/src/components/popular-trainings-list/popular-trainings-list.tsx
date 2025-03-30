@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
-import { getTrainingLink, getTrainingReviewsLink } from '../../utils/common';
+import { getTrainingRoute, getTrainingReviewsRoute } from '../../utils/common';
 import { MOCK_POPULAR_TRAINING } from '../../mock';
 
 function PopularTrainingList(): JSX.Element {
+  //! specialization в русские названия переделать при отображении
+
   return (
     <ul className="popular-trainings__list">
       {
@@ -43,8 +45,8 @@ function PopularTrainingList(): JSX.Element {
                       <p className="thumbnail-training__text">{description}</p>
                     </div>
                     <div className="thumbnail-training__button-wrapper">
-                      <Link className="btn btn--small thumbnail-training__button-catalog" to={getTrainingLink(id)}>Подробнее</Link>
-                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingReviewsLink(id)}>Отзывы</Link>
+                      <Link className="btn btn--small thumbnail-training__button-catalog" to={getTrainingRoute(id)}>Подробнее</Link>
+                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingReviewsRoute(id)}>Отзывы</Link>
                     </div>
                   </div>
                 </div>

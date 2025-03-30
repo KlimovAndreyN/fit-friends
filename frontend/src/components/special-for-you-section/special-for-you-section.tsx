@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { getTrainingLink } from '../../utils/common';
+import { getTrainingRoute } from '../../utils/common';
 import { MOCK_OFFERS } from '../../mock';
 
 function SpecialForYouSection(): JSX.Element {
@@ -40,7 +40,7 @@ function SpecialForYouSection(): JSX.Element {
                       <div className="thumbnail-preview__inner">
                         <h3 className="thumbnail-preview__title">{specialization}</h3>
                         <div className="thumbnail-preview__button-wrapper">
-                          <Link className="btn btn--small thumbnail-preview__button" to={getTrainingLink(id)}>Подробнее</Link>
+                          <Link className="btn btn--small thumbnail-preview__button" to={getTrainingRoute(id)}>Подробнее</Link>
                         </div>
                       </div>
                     </div>

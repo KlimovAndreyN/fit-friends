@@ -1,4 +1,4 @@
-import { AppRoute } from '../const';
+import { AppRoute, ID_PARAM } from '../const';
 
 export function joinUrl(...items: string[]): string {
   return [...items].join('/');
@@ -31,10 +31,14 @@ export function getViteEnvBooleanVariable(envName: keyof ImportMetaEnv, showErro
   return value === 'true';
 }
 
-export function getTrainingLink(trainingId: string): string {
-  return AppRoute.Training.replace(':id', trainingId);
+export function getTrainingRoute(trainingId: string): string {
+  return AppRoute.Training.replace(ID_PARAM, trainingId);
 }
 
-export function getTrainingReviewsLink(trainingId: string): string {
-  return AppRoute.TrainingReviews.replace(':id', trainingId);
+export function getTrainingReviewsRoute(trainingId: string): string {
+  return AppRoute.TrainingReviews.replace(ID_PARAM, trainingId);
+}
+
+export function getUserRoute(trainingId: string): string {
+  return AppRoute.User.replace(ID_PARAM, trainingId);
 }

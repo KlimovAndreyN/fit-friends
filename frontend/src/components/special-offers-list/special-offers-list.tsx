@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { getTrainingLink } from '../../utils/common';
+import { getTrainingRoute } from '../../utils/common';
 import { MOCK_SPECIAL_OFFERS } from '../../mock';
 
 function SpecialOffersList(): JSX.Element {
@@ -28,7 +28,7 @@ function SpecialOffersList(): JSX.Element {
                     <img src={picturePath} width="1040" height="469" alt="promo-photo" />
                   </div>
                   <div className="promo-slider__header">
-                    <Link to={getTrainingLink(id)}>
+                    <Link to={getTrainingRoute(id)}>
                       <h3 className="promo-slider__title">{title}</h3>
                     </Link>
                     <div className="promo-slider__logo">

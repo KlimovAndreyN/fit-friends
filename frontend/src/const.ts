@@ -19,6 +19,8 @@ export enum PageTitle {
   NotFound = `404 — ${MAIN_TITLE}`
 }
 
+export const ID_PARAM = ':id';
+
 export enum AppRoute {
   Root = '/',
   Intro = '/intro',
@@ -27,8 +29,9 @@ export enum AppRoute {
   Questionnaire = '/questionnaire',
   PersonalAccount = '/personal-account',
   FriendsList = '/friends-list',
-  Training = '/training/:id', //!
+  Training = `/training/${ID_PARAM}`, //!
   TrainingReviews = `${Training}/reviews`, //! Reviews
+  User = `/user/${ID_PARAM}`, //! sportsman?
   NotFound = '/404',
 }
 

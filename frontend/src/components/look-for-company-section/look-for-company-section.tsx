@@ -3,6 +3,7 @@ import LookForCompanyList from '../look-for-company-list/look-for-company-list';
 function LookForCompanySection(): JSX.Element {
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
+  //! 'Смотреть все' - нужен раздел
 
   return (
     <section className="look-for-company">
@@ -10,7 +11,8 @@ function LookForCompanySection(): JSX.Element {
         <div className="look-for-company__wrapper">
           <div className="look-for-company__title-wrapper">
             <h2 className="look-for-company__title">Ищут компанию для тренировки</h2>
-            <button className="btn-flat btn-flat--light look-for-company__button" type="button"><span>Смотреть все</span>
+            <button className="btn-flat btn-flat--light look-for-company__button" type="button">
+              <span>Смотреть все</span>
               <svg width="14" height="10" aria-hidden="true">
                 <use xlinkHref="#arrow-right"></use>
               </svg>

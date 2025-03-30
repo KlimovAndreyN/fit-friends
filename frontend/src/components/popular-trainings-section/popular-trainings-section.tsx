@@ -3,6 +3,7 @@ import PopularTrainingList from '../popular-trainings-list/popular-trainings-lis
 function PopularTrainingSection(): JSX.Element {
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
+  //! 'Смотреть все' - нужен раздел
 
   return (
     <section className="popular-trainings">
