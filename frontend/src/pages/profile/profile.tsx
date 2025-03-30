@@ -12,7 +12,7 @@ import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-info-
 import { fetchUserInfo } from '../../store/user-info-action';
 import { PageTitle } from '../../const';
 
-function PersonalAccount(): JSX.Element {
+function Profile(): JSX.Element {
   const dispatch = useAppDispatch();
   const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
   const userRole = useAppSelector(getUserRole);
@@ -36,7 +36,7 @@ function PersonalAccount(): JSX.Element {
 
   return (
     <Fragment>
-      <Header title={PageTitle.PersonalAccount} />
+      <Header title={PageTitle.Profile} />
       <main>
         <section className="inner-page">
           <div className="container">
@@ -116,4 +116,4 @@ function PersonalAccount(): JSX.Element {
   );
 }
 
-export default PersonalAccount;
+export default Profile;

@@ -6,6 +6,7 @@ import { MOCK_USERS } from '../../mock';
 function LookForCompanyList(): JSX.Element {
   //! если аварата нет то svg с пустым пользователем от регистрации? что в ТЗ?
   //! specializations это массив? что в ТЗ? пока сделал массив... и его в русские названия переделать при отображении
+  //! этот раздел с тренерами? что в ТЗ?
 
   return (
     <ul className="look-for-company__list">

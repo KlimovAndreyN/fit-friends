@@ -9,8 +9,8 @@ import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
 import SignUp from '../../pages/sign-up/sign-up';
 import Questionnaire from '../../pages/questionnaire/questionnaire';
-import PersonalAccount from '../../pages/personal-account/personal-account';
-import FriendsList from '../../pages/friends-list/friends-list';
+import Profile from '../../pages/profile/profile';
+import Friends from '../../pages/friends/friends';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
@@ -71,21 +71,21 @@ function App(): JSX.Element {
             }
           />
           <Route
-            path={AppRoute.PersonalAccount}
+            path={AppRoute.Profile}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <PersonalAccount />
+                  <Profile />
                 </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
           <Route
-            path={AppRoute.FriendsList}
+            path={AppRoute.Friends}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <FriendsList />
+                  <Friends />
                 </QuestionnaireRoute>
               </PrivateRoute>
             }

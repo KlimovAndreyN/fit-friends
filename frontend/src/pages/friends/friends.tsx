@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 
 import { PageTitle } from '../../const';
 
-function FriendsList(): JSX.Element {
+function Friends(): JSX.Element {
   return (
     <Fragment>
       <Header title={PageTitle.FriendsList} />
@@ -410,4 +410,4 @@ function FriendsList(): JSX.Element {
   );
 }
 
-export default FriendsList;
+export default Friends;

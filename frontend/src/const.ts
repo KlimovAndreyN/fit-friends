@@ -14,7 +14,7 @@ export enum PageTitle {
   SignIn = `Войти — ${MAIN_TITLE}`,
   SignUp = `Регистрация — ${MAIN_TITLE}`,
   Questionnaire = `Опросник — ${MAIN_TITLE}`,
-  PersonalAccount = `Личный кабинет — ${MAIN_TITLE}`,
+  Profile = `Личный кабинет — ${MAIN_TITLE}`,
   FriendsList = `Список друзей — ${MAIN_TITLE}`,
   NotFound = `404 — ${MAIN_TITLE}`
 }
@@ -27,11 +27,11 @@ export enum AppRoute {
   SignIn = '/sign-in',
   SignUp = '/sign-up',
   Questionnaire = '/questionnaire',
-  PersonalAccount = '/personal-account',
-  FriendsList = '/friends-list',
-  Training = `/training/${ID_PARAM}`, //!
-  TrainingReviews = `${Training}/reviews`, //! Reviews
-  User = `/user/${ID_PARAM}`, //! sportsman?
+  Profile = '/profile',
+  Friends = '/friends',
+  Training = `/training/${ID_PARAM}`, //! + нужен заголовок + страница
+  TrainingReviews = `${Training}/reviews`, //! + нужен заголовок + страница
+  User = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница
   NotFound = '/404',
 }
 
