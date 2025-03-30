@@ -6,6 +6,7 @@ import { MOCK_OFFERS } from '../../mock';
 function SpecialForYouSection(): JSX.Element {
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
+  //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
 
   return (
     <section className="special-for-you">

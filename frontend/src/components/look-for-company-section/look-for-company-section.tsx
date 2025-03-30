@@ -4,6 +4,8 @@ function LookForCompanySection(): JSX.Element {
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
   //! 'Смотреть все' - нужен раздел
+  //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
+  //! пока заглушку - наверное 2 или 3й этап
 
   return (
     <section className="look-for-company">

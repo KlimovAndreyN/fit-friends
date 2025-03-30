@@ -32,11 +32,11 @@ export function getViteEnvBooleanVariable(envName: keyof ImportMetaEnv, showErro
 }
 
 export function getTrainingRoute(trainingId: string): string {
-  return AppRoute.Training.replace(ID_PARAM, trainingId);
+  return AppRoute.TrainingDetail.replace(ID_PARAM, trainingId);
 }
 
 export function getTrainingReviewsRoute(trainingId: string): string {
-  return AppRoute.TrainingReviews.replace(ID_PARAM, trainingId);
+  return AppRoute.TrainingDetailReviews.replace(ID_PARAM, trainingId);
 }
 
 export function getUserRoute(trainingId: string): string {

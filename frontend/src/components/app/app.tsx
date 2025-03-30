@@ -11,6 +11,8 @@ import SignUp from '../../pages/sign-up/sign-up';
 import Questionnaire from '../../pages/questionnaire/questionnaire';
 import Profile from '../../pages/profile/profile';
 import Friends from '../../pages/friends/friends';
+import TrainingCatalog from '../../pages/training-catalog/training-catalog';
+import Training from '../../pages/training/training';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
@@ -90,6 +92,37 @@ function App(): JSX.Element {
               </PrivateRoute>
             }
           />
+          <Route
+            path={AppRoute.TrainingCatalog}
+            element={
+              //! отладка отображения страницы
+              (accessIndexForAll)
+                ?
+                <TrainingCatalog />
+                :
+                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                  <QuestionnaireRoute>
+                    <TrainingCatalog />
+                  </QuestionnaireRoute>
+                </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.TrainingDetail}
+            element={
+              //! отладка отображения страницы
+              (accessIndexForAll)
+                ?
+                <Training />
+                :
+                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                  <QuestionnaireRoute>
+                    <Training />
+                  </QuestionnaireRoute>
+                </PrivateRoute>
+            }
+          />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

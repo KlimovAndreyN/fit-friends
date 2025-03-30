@@ -9,6 +9,8 @@ import LookForCompanySection from '../../components/look-for-company-section/loo
 import { PageTitle } from '../../const';
 
 function Index(): JSX.Element {
+  //! прокрутка на вверх при переходе с каталога и других страниц
+
   return (
     <Fragment>
       <Header title={PageTitle.Index} />
