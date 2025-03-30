@@ -5,6 +5,8 @@ import Header from '../../components/header/header';
 import { PageTitle } from '../../const';
 
 function Friends(): JSX.Element {
+  //! проверить консоль браузера на ошибки
+
   return (
     <Fragment>
       <Header title={PageTitle.Friends} />

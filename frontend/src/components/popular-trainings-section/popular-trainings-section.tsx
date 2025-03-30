@@ -9,6 +9,7 @@ function PopularTrainingSection(): JSX.Element {
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
   //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
+  //! проверить консоль браузера на ошибки
   const navigate = useNavigate();
 
   return (

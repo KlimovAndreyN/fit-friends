@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { getTrainingRoute, getTrainingReviewsRoute } from '../../utils/common';
+import { getTrainingRoute } from '../../utils/common';
 import { MOCK_POPULAR_TRAINING } from '../../mock';
 
 function PopularTrainingList(): JSX.Element {
   //! specialization в русские названия переделать при отображении
+  //! проверить консоль браузера на ошибки
+  //! куда веде сслыка отзывы, тоже на тренировку? карточки тренировок похожи с карточками в популярных тренировках
 
   return (
     <ul className="popular-trainings__list">
@@ -46,7 +48,7 @@ function PopularTrainingList(): JSX.Element {
                     </div>
                     <div className="thumbnail-training__button-wrapper">
                       <Link className="btn btn--small thumbnail-training__button-catalog" to={getTrainingRoute(id)}>Подробнее</Link>
-                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingReviewsRoute(id)}>Отзывы</Link>
+                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingRoute(id)}>Отзывы</Link>
                     </div>
                   </div>
                 </div>

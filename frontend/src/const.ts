@@ -33,7 +33,6 @@ export enum AppRoute {
   Friends = '/friends',
   TrainingCatalog = '/training',
   TrainingDetail = `${TrainingCatalog}/${ID_PARAM}`,
-  TrainingDetailReviews = `${TrainingDetail}/reviews`, //! может короче? + нужен заголовок + страница / попап?
   User = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница / попап? 2 или 3 итерация?
   NotFound = '/404',
 }

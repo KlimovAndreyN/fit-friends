@@ -8,6 +8,7 @@ import { PageTitle } from '../../const';
 function Training(): JSX.Element {
   //! прокрутка на вверх
   //! кнопка назад в отдельный компонент?, может там и прокручивать? еще есть на каталоге тренировок
+  //! проверить консоль браузера на ошибки
   const navigate = useNavigate();
 
   return (
