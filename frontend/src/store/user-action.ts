@@ -2,7 +2,10 @@ import { History } from 'history';
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AccountRoute, ApiServiceRoute, ILoginUserDto, ITokenPayloadRdo, IUserRdo, ILoggedUserRdo, ICreateUserDto } from '@backend/shared';
+import {
+  AccountRoute, ApiServiceRoute, ILoginUserDto, IUserRdo,
+  ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto
+} from '@backend/shared';
 
 import { isErrorNetwork } from '../utils/parse-axios-error';
 import { joinUrl } from '../utils/common';

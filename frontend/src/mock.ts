@@ -138,8 +138,17 @@ export const MOCK_POPULAR_TRAINING = [
   }
 ];
 
+export const MOCK_USERS: {
+  id: string;
+  name: string;
+  location: string;
+  specializations: Specialization[];
+  avatarPath: string;
+}[] = [];
+//! 2й или 3й этап
+/*
 export const MOCK_USERS = [
-  {
+    {
     id: 'id-91',
     name: 'Иван',
     location: 'Чёрная речка',
@@ -196,4 +205,9 @@ export const MOCK_USERS = [
     specializations: [SpecializationTitle[Specialization.Power], SpecializationTitle[Specialization.Boxing], SpecializationTitle[Specialization.Running]],
     avatarPath: 'img/content/thumbnails/user-05.jpg'
   }
+];
+*/
+
+export const MOCK_TRAINING = [
+
 ];

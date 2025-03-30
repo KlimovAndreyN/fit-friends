@@ -2,7 +2,10 @@ import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo, IUpdateUserInfoDto, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, UserRole } from '@backend/shared';
+import {
+  IUpdateUserInfoDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
+  ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, UserRole
+} from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
 import { multipartFormDataHeader } from '../const';

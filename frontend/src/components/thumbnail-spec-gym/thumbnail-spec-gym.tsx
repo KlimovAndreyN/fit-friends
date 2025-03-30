@@ -1,6 +1,5 @@
 function ThumbnailSpecGym(): JSX.Element {
   return (
-
     <div className="thumbnail-spec-gym">
       <div className="thumbnail-spec-gym__image">
         <picture>
@@ -14,7 +13,7 @@ function ThumbnailSpecGym(): JSX.Element {
         <div class="thumbnail-spec-gym__header", align ="center",>
       */}
       <div className="thumbnail-spec-gym__header">
-        <h3 className="thumbnail-spec-gym__title">Скоро здесь появится что - то полезное</h3>
+        <h3 className="thumbnail-spec-gym__title">Скоро здесь появится что-то полезное</h3>
       </div>
     </div>
   );
