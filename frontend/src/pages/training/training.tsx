@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from '../../components/header/header';
 
@@ -10,6 +10,10 @@ function Training(): JSX.Element {
   //! кнопка назад в отдельный компонент?, может там и прокручивать? еще есть на каталоге тренировок
   //! проверить консоль браузера на ошибки
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  // eslint-disable-next-line no-console
+  console.log(id);
 
   return (
     <Fragment>
@@ -38,8 +42,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-1.webp, img/content/avatars/users//photo-1@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-1.png" srcSet="/img/content/avatars/users//photo-1@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-1.webp, img/content/avatars/users/photo-1@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-1.png" srcSet="/img/content/avatars/users/photo-1@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Никита</span>
                         <div className="review__rating">
@@ -56,8 +60,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-2.webp, img/content/avatars/users//photo-2@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-2.png" srcSet="/img/content/avatars/users//photo-2@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-2.webp, img/content/avatars/users/photo-2@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-2.png" srcSet="/img/content/avatars/users/photo-2@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Дарья</span>
                         <div className="review__rating">
@@ -74,8 +78,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-3.webp, img/content/avatars/users//photo-3@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-3.png" srcSet="/img/content/avatars/users//photo-3@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-3.webp, img/content/avatars/users/photo-3@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-3.png" srcSet="/img/content/avatars/users/photo-3@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Катерина</span>
                         <div className="review__rating">
@@ -92,8 +96,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-4.webp, img/content/avatars/users//photo-4@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-4.png" srcSet="/img/content/avatars/users//photo-4@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-4.webp, img/content/avatars/users/photo-4@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-4.png" srcSet="/img/content/avatars/users/photo-4@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Татьяна</span>
                         <div className="review__rating">
@@ -110,8 +114,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-5.webp, img/content/avatars/users//photo-5@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-5.png" srcSet="/img/content/avatars/users//photo-5@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-5.webp, img/content/avatars/users/photo-5@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-5.png" srcSet="/img/content/avatars/users/photo-5@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Наталья</span>
                         <div className="review__rating">
@@ -128,8 +132,8 @@ function Training(): JSX.Element {
                       <div className="review__user-info">
                         <div className="review__user-photo">
                           <picture>
-                            <source type="image/webp" srcSet="/img/content/avatars/users//photo-1.webp, img/content/avatars/users//photo-1@2x.webp 2x" />
-                            <img src="/img/content/avatars/users//photo-1.png" srcSet="/img/content/avatars/users//photo-1@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
+                            <source type="image/webp" srcSet="/img/content/avatars/users/photo-1.webp, img/content/avatars/users/photo-1@2x.webp 2x" />
+                            <img src="/img/content/avatars/users/photo-1.png" srcSet="/img/content/avatars/users/photo-1@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
                           </picture>
                         </div><span className="review__user-name">Никита</span>
                         <div className="review__rating">
@@ -151,8 +155,8 @@ function Training(): JSX.Element {
                     <div className="training-info__coach">
                       <div className="training-info__photo">
                         <picture>
-                          <source type="image/webp" srcSet="/img/content/avatars/coaches//photo-1.webp, img/content/avatars/coaches//photo-1@2x.webp 2x" />
-                          <img src="/img/content/avatars/coaches//photo-1.png" srcSet="/img/content/avatars/coaches//photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
+                          <source type="image/webp" srcSet="/img/content/avatars/coaches/photo-1.webp, img/content/avatars/coaches/photo-1@2x.webp 2x" />
+                          <img src="/img/content/avatars/coaches/photo-1.png" srcSet="/img/content/avatars/coaches/photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
                         </picture>
                       </div>
                       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span><span className="training-info__name">Валерия</span></div>
@@ -164,14 +168,18 @@ function Training(): JSX.Element {
                         <div className="training-info__info-wrapper">
                           <div className="training-info__input training-info__input--training">
                             <label><span className="training-info__label">Название тренировки</span>
-                              <input type="text" name="training" value="energy" disabled />
+                              <input type="text" name="training" defaultValue="energy" disabled />
                             </label>
                             <div className="training-info__error">Обязательное поле</div>
                           </div>
                           <div className="training-info__textarea">
                             <label>
                               <span className="training-info__label">Описание тренировки</span>
-                              <textarea name="description" disabled >Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и&nbsp;координацию.</textarea>
+                              <textarea
+                                name="description"
+                                defaultValue="Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и&nbsp;координацию."
+                                disabled
+                              />
                             </label>
                           </div>
                         </div>
@@ -184,7 +192,7 @@ function Training(): JSX.Element {
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </span>
-                              <input type="number" name="rating" value="4" disabled />
+                              <input type="number" name="rating" defaultValue="4" disabled />
                             </label>
                           </div>
                           <ul className="training-info__list">
@@ -205,7 +213,7 @@ function Training(): JSX.Element {
                         <div className="training-info__price-wrapper">
                           <div className="training-info__input training-info__input--price">
                             <label><span className="training-info__label">Стоимость</span>
-                              <input type="text" name="price" value="800 ₽" disabled />
+                              <input type="text" name="price" defaultValue="800 ₽" disabled />
                             </label>
                             <div className="training-info__error">Введите число</div>
                           </div>

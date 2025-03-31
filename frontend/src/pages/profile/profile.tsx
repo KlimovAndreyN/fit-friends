@@ -79,26 +79,28 @@ function Profile(): JSX.Element {
                           ?
                           <ThumbnailSpecGym />
                           :
-                          <div className="personal-account-user__additional-info">
-                            <a className="thumbnail-link thumbnail-link--theme-light" href="#">
-                              <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                <svg width="30" height="26" aria-hidden="true">
-                                  <use xlinkHref="#icon-friends"></use>
-                                </svg>
-                              </div>
-                              <span className="thumbnail-link__text">Мои друзья</span>
-                            </a>
-                            <a className="thumbnail-link thumbnail-link--theme-light" href="#">
-                              <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                <svg width="30" height="26" aria-hidden="true">
-                                  <use xlinkHref="#icon-shopping-cart"></use>
-                                </svg>
-                              </div>
-                              <span className="thumbnail-link__text">Мои покупки</span>
-                            </a>
-                          </div>
+                          <Fragment>
+                            <div className="personal-account-user__additional-info">
+                              <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                                <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
+                                  <svg width="30" height="26" aria-hidden="true">
+                                    <use xlinkHref="#icon-friends"></use>
+                                  </svg>
+                                </div>
+                                <span className="thumbnail-link__text">Мои друзья</span>
+                              </a>
+                              <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                                <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
+                                  <svg width="30" height="26" aria-hidden="true">
+                                    <use xlinkHref="#icon-shopping-cart"></use>
+                                  </svg>
+                                </div>
+                                <span className="thumbnail-link__text">Мои покупки</span>
+                              </a>
+                            </div>
+                            <ThumbnailSpecGym />
+                          </Fragment>
                       }
-                      <ThumbnailSpecGym />
                     </div>
                     :
                     //! тут нужен тренер, если у него что то дополнительно загружается

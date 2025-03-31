@@ -26,8 +26,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-02.webp, img/content/thumbnails/training-02@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-02.jpg" srcSet="img/content/thumbnails/training-02@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-02.webp, img/content/thumbnails/training-02@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-02.jpg" srcSet="/img/content/thumbnails/training-02@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price">Бесплатно
@@ -63,8 +63,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-01.webp, img/content/thumbnails/training-01@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-01.jpg" srcSet="img/content/thumbnails/training-01@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-01.webp, img/content/thumbnails/training-01@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-01.jpg" srcSet="/img/content/thumbnails/training-01@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">800</span><span>₽</span>
@@ -100,8 +100,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-03.webp, img/content/thumbnails/training-03@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-03.jpg" srcSet="img/content/thumbnails/training-03@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-03.webp, img/content/thumbnails/training-03@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-03.jpg" srcSet="/img/content/thumbnails/training-03@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1000</span><span>₽</span>
@@ -137,8 +137,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-04.webp, img/content/thumbnails/training-04@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-04.jpg" srcSet="img/content/thumbnails/training-04@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-04.webp, img/content/thumbnails/training-04@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-04.jpg" srcSet="/img/content/thumbnails/training-04@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1200</span><span>₽</span>
@@ -174,8 +174,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-05.webp, img/content/thumbnails/training-05@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-05.jpg" srcSet="img/content/thumbnails/training-05@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-05.webp, img/content/thumbnails/training-05@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-05.jpg" srcSet="/img/content/thumbnails/training-05@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1400</span><span>₽</span>
@@ -211,8 +211,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-06.webp, img/content/thumbnails/training-06@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-06.jpg" srcSet="img/content/thumbnails/training-06@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-06.webp, img/content/thumbnails/training-06@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-06.jpg" srcSet="/img/content/thumbnails/training-06@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1600</span><span>₽</span>
@@ -248,8 +248,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-07.webp, img/content/thumbnails/training-07@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-07.jpg" srcSet="img/content/thumbnails/training-07@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-07.webp, img/content/thumbnails/training-07@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-07.jpg" srcSet="/img/content/thumbnails/training-07@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1600</span><span>₽</span>
@@ -285,8 +285,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-08.webp, img/content/thumbnails/training-08@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-08.jpg" srcSet="img/content/thumbnails/training-08@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-08.webp, img/content/thumbnails/training-08@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-08.jpg" srcSet="/img/content/thumbnails/training-08@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1800</span><span>₽</span>
@@ -322,8 +322,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-09.webp, img/content/thumbnails/training-09@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-09.jpg" srcSet="img/content/thumbnails/training-09@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-09.webp, img/content/thumbnails/training-09@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-09.jpg" srcSet="/img/content/thumbnails/training-09@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1800</span><span>₽</span>
@@ -359,8 +359,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-10.webp, img/content/thumbnails/training-10@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-10.jpg" srcSet="img/content/thumbnails/training-10@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-10.webp, img/content/thumbnails/training-10@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-10.jpg" srcSet="/img/content/thumbnails/training-10@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">2000</span><span>₽</span>
@@ -396,8 +396,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-11.webp, img/content/thumbnails/training-11@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-11.jpg" srcSet="img/content/thumbnails/training-11@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-11.webp, img/content/thumbnails/training-11@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-11.jpg" srcSet="/img/content/thumbnails/training-11@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">2200</span><span>₽</span>
@@ -433,8 +433,8 @@ function TrainingCatalog(): JSX.Element {
                       <div className="thumbnail-training__inner">
                         <div className="thumbnail-training__image">
                           <picture>
-                            <source type="image/webp" srcSet="img/content/thumbnails/training-12.webp, img/content/thumbnails/training-12@2x.webp 2x" />
-                            <img src="img/content/thumbnails/training-12.jpg" srcSet="img/content/thumbnails/training-12@2x.jpg 2x" width="330" height="190" alt="" />
+                            <source type="image/webp" srcSet="/img/content/thumbnails/training-12.webp, img/content/thumbnails/training-12@2x.webp 2x" />
+                            <img src="/img/content/thumbnails/training-12.jpg" srcSet="/img/content/thumbnails/training-12@2x.jpg 2x" width="330" height="190" alt="" />
                           </picture>
                         </div>
                         <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">2400</span><span>₽</span>
