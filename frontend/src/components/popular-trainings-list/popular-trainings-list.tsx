@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom';
 
 import { getTrainingRoute } from '../../utils/common';
-import { MOCK_POPULAR_TRAININGS } from '../../mock';
+import { MOCK_TRAININGS } from '../../mock';
 
 function PopularTrainingList(): JSX.Element {
   //! specialization в русские названия переделать при отображении
+  //! заголовок в нижнем регистре? или или там стили?
   //! проверить консоль браузера на ошибки
-  //! куда веде сслыка отзывы, тоже на тренировку? карточки тренировок похожи с карточками в популярных тренировках
+  //! куда ведут сслыка отзывы, тоже на тренировку? карточки тренировок похожи с карточками в популярных тренировках training-catalog__item/popular-trainings__item
 
   return (
     <ul className="popular-trainings__list">
       {
-        MOCK_POPULAR_TRAININGS.map(
+        MOCK_TRAININGS.map(
           (training) => {
             const { id, title, description, specialization, calorie, picturePath, price } = training;
+            const link = getTrainingRoute(id);
 
             return (
               <li className="popular-trainings__item" key={id}>
@@ -47,8 +49,8 @@ function PopularTrainingList(): JSX.Element {
                       <p className="thumbnail-training__text">{description}</p>
                     </div>
                     <div className="thumbnail-training__button-wrapper">
-                      <Link className="btn btn--small thumbnail-training__button-catalog" to={getTrainingRoute(id)}>Подробнее</Link>
-                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={getTrainingRoute(id)}>Отзывы</Link>
+                      <Link className="btn btn--small thumbnail-training__button-catalog" to={link}>Подробнее</Link>
+                      <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={link}>Отзывы</Link>
                     </div>
                   </div>
                 </div>

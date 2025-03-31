@@ -6,17 +6,18 @@ import NotFound from '../not-found/not-found';
 import Reviews from '../reviews/reviews';
 
 import { PageTitle } from '../../const';
-import { MOCK_POPULAR_TRAININGS } from '../../mock';
+import { MOCK_TRAININGS } from '../../mock';
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
   //! specialization по месту определять русское название и в нижний регистр
   //! picturePath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
+  //! как отборазить если бесплатно? есть что то в маркапах
   //! проверить консоль браузера на ошибки
   const { id: trainingId } = useParams();
 
   //! временно из моков
-  const training = MOCK_POPULAR_TRAININGS.find(({ id }) => (id === trainingId));
+  const training = MOCK_TRAININGS.find(({ id }) => (id === trainingId));
   //
 
   if (!training) {

@@ -63,7 +63,16 @@ export const MOCK_SPECIAL_OFFERS = [
   }
 ];
 
-export const MOCK_POPULAR_TRAININGS = [
+export const MOCK_TRAININGS = [
+  {
+    id: 'id-0',
+    title: 'run, forrest, run',
+    specialization: SpecializationTitle[Specialization.Running],
+    calorie: 500,
+    description: 'Узнайте правильную технику бега, развивайте выносливость и\u00A0откройте для себя все секреты длительных пробежек.',
+    picturePath: '/img/content/thumbnails/training-06.jpg',
+    price: 0
+  },
   {
     id: 'id-71',
     title: 'run, forrest, run',
@@ -207,10 +216,6 @@ export const MOCK_USERS = [
   }
 ];
 */
-
-export const MOCK_TRAININGS = [
-
-];
 
 export const MOCK_REVIEWS = [
   {
