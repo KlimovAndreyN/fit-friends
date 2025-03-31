@@ -9,11 +9,14 @@ import { generateSportsmans } from './libs/generate-sportsmans';
 import { generateQuestionnaires } from './libs/generate-questionnaires';
 
 async function bootstrap() {
+  //! возможно стоит сделать библиотеку с конфигом или проинициализировать конфиг
+  //! при запуске из dist, не подставляет занчения EMV в DATABASE_URL? проверить на других модулях
   const app = await NestFactory.create(AppModule);
   const resetBeforeSeed = process.env['RESET_BEFORE_SEED'] === 'true';
 
   Logger.log('Seed runing...');
   Logger.log(`Reset before seed is ${resetBeforeSeed}`);
+  Logger.log(`Fit postgres url: ${process.env['DATABASE_URL']}`);
 
   try {
     const sportsmans = await generateSportsmans(app.get(FitUserRepository), resetBeforeSeed);

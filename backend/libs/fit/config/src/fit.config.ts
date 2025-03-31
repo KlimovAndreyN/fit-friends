@@ -14,6 +14,7 @@ const validationSchema = Joi.object({
   ...postgresValidationSchema
 });
 
+//! перепроверить валидацию конфига fit, нужна только строка, а там все переменные... возможно стоит поменят название env и констнтой добавить в схему, возможно?
 function getConfig(): FitConfig {
   const config: FitConfig = {
     ...getApplicationConfig(),
