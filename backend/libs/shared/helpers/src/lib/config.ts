@@ -8,7 +8,7 @@ import {
 import { getPort } from './common';
 
 export interface ApplicationConfig {
-  environment: string;
+  environment: Environment;
   port: number;
 }
 
@@ -134,7 +134,7 @@ export const mailSmtpValidationSchema = {
 
 export function getApplicationConfig(): ApplicationConfig {
   const config: ApplicationConfig = {
-    environment: process.env[ConfigAlias.NodeEnv] as Environment,
+    environment: (process.env[ConfigAlias.NodeEnv] as Environment) || 'development', //! значение по умолчанию
     port: getPort(ConfigAlias.PortEnv, DEFAULT_PORT)
   };
 

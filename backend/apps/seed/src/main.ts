@@ -9,8 +9,10 @@ import { generateSportsmans } from './libs/generate-sportsmans';
 import { generateQuestionnaires } from './libs/generate-questionnaires';
 
 async function bootstrap() {
-  //! возможно стоит сделать библиотеку с конфигом или проинициализировать конфиг
-  //! при запуске из dist, не подставляет занчения EMV в DATABASE_URL? проверить на других модулях
+  //! возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
+  //! при запуске из dist, не подставляет занчения ENV в DATABASE_URL? проверить на других модулях - не работает
+  //! если при инициализации ConfigModule подставить "expandVariables: true", то из дист все ок
+  //! проставить всем конфигам expandVariables и типизировать параметры конфига - ConfigModuleOptions
   const app = await NestFactory.create(AppModule);
   const resetBeforeSeed = process.env['RESET_BEFORE_SEED'] === 'true';
 
