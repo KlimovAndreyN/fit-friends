@@ -13,6 +13,7 @@ async function bootstrap() {
   //! при запуске из dist, не подставляет занчения ENV в DATABASE_URL? проверить на других модулях - не работает
   //! если при инициализации ConfigModule подставить "expandVariables: true", то из дист все ок
   //! проставить всем конфигам expandVariables и типизировать параметры конфига - ConfigModuleOptions
+  //! и при запуске из дист, можно не указывать env-файл, может есть дополнительный ключ к --env-file... env-parse?
   const app = await NestFactory.create(AppModule);
   const resetBeforeSeed = process.env['RESET_BEFORE_SEED'] === 'true';
 
