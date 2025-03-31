@@ -1,3 +1,4 @@
+# //! разбить на отдельные в сервисах, задействовать env
 name: fit-friends
 services:
   mongo:
