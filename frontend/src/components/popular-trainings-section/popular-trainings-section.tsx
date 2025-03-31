@@ -1,12 +1,17 @@
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
 
 import TrainingCard from '../training-card/training-card';
 
 import { AppRoute } from '../../const';
 import { MOCK_TRAININGS } from '../../mock';
 
+const DEFAULT_SLIDE_COUNT = 4;
+
 function PopularTrainingSection(): JSX.Element {
-  //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
   //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
@@ -14,6 +19,9 @@ function PopularTrainingSection(): JSX.Element {
   //! обернуть в один компонет со специальнми предложениями?
   //! проверить консоль браузера на ошибки
   const navigate = useNavigate();
+  const previousButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const swiperRef = useRef<SwiperRef>(null);
 
   return (
     <section className="popular-trainings">
@@ -38,6 +46,10 @@ function PopularTrainingSection(): JSX.Element {
                 className="btn-icon popular-trainings__control"
                 type="button"
                 aria-label="previous"
+                ref={previousButtonRef}
+                onClick={() => {
+                  swiperRef.current?.swiper.slidePrev();
+                }}
               >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-left"></use>
@@ -47,6 +59,10 @@ function PopularTrainingSection(): JSX.Element {
                 className="btn-icon popular-trainings__control"
                 type="button"
                 aria-label="next"
+                ref={nextButtonRef}
+                onClick={() => {
+                  swiperRef.current?.swiper.slideNext();
+                }}
               >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
@@ -54,18 +70,27 @@ function PopularTrainingSection(): JSX.Element {
               </button>
             </div>
           </div>
-          <ul className="popular-trainings__list">
-            {
-              MOCK_TRAININGS.map(
-                (training) => {
-                  //! временно, потом передать training и в одну строку
-                  const { id } = training;
+          <Swiper
+            slidesPerView={DEFAULT_SLIDE_COUNT}
+            ref={swiperRef}
+          >
+            <ul className="popular-trainings__list">
+              {
+                MOCK_TRAININGS.map(
+                  (training) => {
+                    //! временно, потом передать training и в одну строку
+                    const { id } = training;
 
-                  return <TrainingCard prefixClassName='popular-trainings' trainingId={id} key={id} />;
-                }
-              )
-            }
-          </ul>
+                    return (
+                      <SwiperSlide key={id}>
+                        <TrainingCard prefixClassName='popular-trainings' trainingId={id} />
+                      </SwiperSlide>
+                    );
+                  }
+                )
+              }
+            </ul>
+          </Swiper>
         </div>
       </div>
     </section>
