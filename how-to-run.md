@@ -37,21 +37,7 @@ npx nx run seed:build
 node --env-file=./apps/seed/.env ./dist/apps/seed/main.js
 
 # запуск сервисов backend
-# file-storage
-cd backend
-npx nx run file-storage:serve
-# notify
-cd backend
-npx nx run notify:serve
-# account
-cd backend
-npx nx run account:serve
-# fit
-cd backend
-npx nx run fit:serve
-# api
-cd backend
-npx nx run api:serve
+npm run serve
 
 # установка зависимостей для frontend
 cd ..
