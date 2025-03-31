@@ -55,11 +55,11 @@ function SpecialForYouSection(): JSX.Element {
               </button>
             </div>
           </div>
-          <ul className="special-for-you__list">
-            <Swiper
-              slidesPerView={DEFAULT_SLIDE_COUNT}
-              ref={swiperRef}
-            >
+          <Swiper
+            slidesPerView={DEFAULT_SLIDE_COUNT}
+            ref={swiperRef}
+          >
+            <ul className="special-for-you__list">
               {
                 MOCK_OFFERS.map(
                   ({ id, picturePath, specialization }) => (
@@ -83,8 +83,8 @@ function SpecialForYouSection(): JSX.Element {
                   )
                 )
               }
-            </Swiper>
-          </ul>
+            </ul>
+          </Swiper>
         </div>
       </div>
     </section>

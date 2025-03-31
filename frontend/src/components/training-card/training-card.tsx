@@ -10,6 +10,8 @@ type TrainingCardProps = {
 }
 
 function TrainingCard({ prefixClassName, trainingId }: TrainingCardProps): JSX.Element {
+  //! specialization в русские названия переделать при отображении
+  //! заголовок в нижнем регистре? или или там стили?
   //! куда ведут сслыка отзывы, тоже на тренировку?
   const className = `${prefixClassName}__item`;
 

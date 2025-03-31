@@ -1,14 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 
-import PopularTrainingList from '../popular-trainings-list/popular-trainings-list';
+import TrainingCard from '../training-card/training-card';
 
 import { AppRoute } from '../../const';
+import { MOCK_TRAININGS } from '../../mock';
 
 function PopularTrainingSection(): JSX.Element {
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
   //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
+  //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
+  //! обернуть в один компонет со специальнми предложениями?
   //! проверить консоль браузера на ошибки
   const navigate = useNavigate();
 
@@ -31,19 +34,38 @@ function PopularTrainingSection(): JSX.Element {
               </svg>
             </button>
             <div className="popular-trainings__controls">
-              <button className="btn-icon popular-trainings__control" type="button" aria-label="previous">
+              <button
+                className="btn-icon popular-trainings__control"
+                type="button"
+                aria-label="previous"
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-left"></use>
                 </svg>
               </button>
-              <button className="btn-icon popular-trainings__control" type="button" aria-label="next">
+              <button
+                className="btn-icon popular-trainings__control"
+                type="button"
+                aria-label="next"
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
                 </svg>
               </button>
             </div>
           </div>
-          <PopularTrainingList />
+          <ul className="popular-trainings__list">
+            {
+              MOCK_TRAININGS.map(
+                (training) => {
+                  //! временно, потом передать training и в одну строку
+                  const { id } = training;
+
+                  return <TrainingCard prefixClassName='popular-trainings' trainingId={id} key={id} />;
+                }
+              )
+            }
+          </ul>
         </div>
       </div>
     </section>
