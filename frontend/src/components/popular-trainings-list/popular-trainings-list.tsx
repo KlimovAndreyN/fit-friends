@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { getTrainingRoute } from '../../utils/common';
-import { MOCK_POPULAR_TRAINING } from '../../mock';
+import { MOCK_POPULAR_TRAININGS } from '../../mock';
 
 function PopularTrainingList(): JSX.Element {
   //! specialization в русские названия переделать при отображении
@@ -11,7 +11,7 @@ function PopularTrainingList(): JSX.Element {
   return (
     <ul className="popular-trainings__list">
       {
-        MOCK_POPULAR_TRAINING.map(
+        MOCK_POPULAR_TRAININGS.map(
           (training) => {
             const { id, title, description, specialization, calorie, picturePath, price } = training;
 
