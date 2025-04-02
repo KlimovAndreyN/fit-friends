@@ -33,7 +33,7 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Level)
   @Expose()
   @IsEnum(TrainingLevel)
-  level: Questionnaire['level'];
+  trainingLevel: Questionnaire['trainingLevel'];
 
   @ApiProperty(QuestionnaireApiProperty.ReadyForTraining)
   @Expose()

@@ -2,5 +2,5 @@ import { ICreateQuestionnaireWithFileIdsDto } from './i-create-questionnaire-wit
 
 export type ICreateQuestionnaireSportsmanDto = Pick<
   Required<ICreateQuestionnaireWithFileIdsDto>,
-  'specializations' | 'level' | 'time' | 'caloriesLose' | 'caloriesWaste'
+  'specializations' | 'trainingLevel' | 'time' | 'caloriesLose' | 'caloriesWaste'
 >;

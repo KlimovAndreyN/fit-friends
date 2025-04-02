@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-import { Duration, Questionnaire, Specialization, UserLevel } from '@backend/shared/core';
+import { Duration, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
 
@@ -26,7 +26,7 @@ export async function generateQuestionnaires(
     const questionnaire: Questionnaire = {
       userId,
       specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(minCount, maxCount)),
-      level: getRandomEnumItem(UserLevel),
+      trainingLevel: getRandomEnumItem(TrainingLevel),
       readyForTraining: getRandomBoolean(),
       time: getRandomEnumItem(Duration),
       caloriesLose: getRandomNumber(loseMin, loseMax),

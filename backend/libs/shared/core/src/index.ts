@@ -77,9 +77,9 @@ export { Duration } from './lib/types/duration.enum';
 export { MetroStationName } from './lib/types/metro-station-name.enum';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { Specialization } from './lib/types/specialization.enum';
-export { UserLevel } from './lib/types/training-level.enum';
-export { UserGender } from './lib/types/gender.enum';
-export { UserRole } from './lib/types/role.enum';
+export { TrainingLevel } from './lib/types/training-level.enum';
+export { Gender } from './lib/types/gender.enum';
+export { Role } from './lib/types/role.enum';
 
 export * from './lib/utils/convert';
 export * from './lib/utils/transform';

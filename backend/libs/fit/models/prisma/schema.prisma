@@ -23,7 +23,7 @@ datasource db {
 model Questionnaire {
   userId             String   @id @unique @map("user_id") @db.VarChar(50) //! @id для того чтобы можно было в pgAdmin редактировать
   specializations    String[] @map("specializations") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
-  level              String   @map("level") @db.VarChar(50)
+  trainingLevel      String   @map("training_level") @db.VarChar(50)
   readyForTraining   Boolean  @map("ready_for_training")
   time               String?  @map("time") @db.VarChar(50)
   caloriesLose       Int?     @map("calories_lose")

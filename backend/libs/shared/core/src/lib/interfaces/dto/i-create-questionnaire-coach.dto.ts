@@ -3,7 +3,7 @@ import { ICreateQuestionnaireWithFileIdsDto } from './i-create-questionnaire-wit
 export interface ICreateQuestionnaireCoachDto
   extends Pick<
     Required<ICreateQuestionnaireWithFileIdsDto>,
-    'specializations' | 'level' | 'description' | 'individualTraining'
+    'specializations' | 'trainingLevel' | 'description' | 'individualTraining'
   > {
   files?: File[];
 }

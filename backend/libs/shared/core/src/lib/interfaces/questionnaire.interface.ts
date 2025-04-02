@@ -1,11 +1,11 @@
 import { Duration } from '../types/duration.enum';
 import { Specialization } from '../types/specialization.enum';
-import { UserLevel } from '../types/training-level.enum';
+import { TrainingLevel } from '../types/training-level.enum';
 
 export interface Questionnaire {
   userId: string;
   specializations: Specialization[];
-  level: UserLevel;
+  trainingLevel: TrainingLevel;
   readyForTraining: boolean;
   time?: Duration;
   caloriesLose?: number;

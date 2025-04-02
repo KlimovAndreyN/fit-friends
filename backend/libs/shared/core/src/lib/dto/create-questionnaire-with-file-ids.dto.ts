@@ -8,7 +8,7 @@ export class CreateQuestionnaireWithFileIdsDto
     PickType(QuestionnaireApiDoc,
       [
         'specializations',
-        'level'
+        'trainingLevel'
       ]
     ),
     PickType(PartialType(QuestionnaireApiDoc),

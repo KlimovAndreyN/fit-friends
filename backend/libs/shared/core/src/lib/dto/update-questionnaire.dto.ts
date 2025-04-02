@@ -9,7 +9,7 @@ export class UpdateQuestionnaireDto
     PartialType(QuestionnaireApiDoc),
     [
       'specializations',
-      'level',
+      'trainingLevel',
       'readyForTraining',
     ]
   )

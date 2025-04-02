@@ -14,7 +14,7 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
     const questionnaire: Questionnaire = {
       userId,
       specializations: dto.specializations, //! обязательно ли [...dto.specializations]
-      level: dto.level,
+      trainingLevel: dto.trainingLevel,
       readyForTraining: false, //! по ТЗ не уточнения как по умолчанию
       time: dto.time,
       caloriesLose: dto.caloriesLose,

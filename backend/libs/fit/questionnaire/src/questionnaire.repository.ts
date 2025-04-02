@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Duration, Questionnaire, Specialization, UserLevel } from '@backend/shared/core';
+import { Duration, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
 
 import { QuestionnaireEntity } from './questionnaire.entity';
 import { QuestionnaireFactory } from './questionnaire.factory';
@@ -25,13 +25,13 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
 
     const { readyForTraining, caloriesLose, caloriesWaste, description, fileIds, individualTraining } = record;
     const specializations: Specialization[] = record.specializations.map((specialization) => (specialization as Specialization));
-    const level: UserLevel = record.level as UserLevel;
+    const trainingLevel: TrainingLevel = record.trainingLevel as TrainingLevel;
     const time: Duration = record.time as Duration;
 
     const questionnaire: Questionnaire = {
       userId,
       specializations,
-      level,
+      trainingLevel,
       readyForTraining,
       time,
       caloriesLose,

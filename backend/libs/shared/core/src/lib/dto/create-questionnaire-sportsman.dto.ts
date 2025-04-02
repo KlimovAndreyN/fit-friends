@@ -8,7 +8,7 @@ export class CreateQuestionnaireSportsmanDto
     QuestionnaireApiDoc,
     [
       'specializations',
-      'level',
+      'trainingLevel',
       'time',
       'caloriesLose',
       'caloriesWaste'

@@ -8,7 +8,7 @@ export class QuestionnaireRdo
     QuestionnaireApiDoc,
     [
       'specializations',
-      'level',
+      'trainingLevel',
       'readyForTraining',
       'time',
       'caloriesLose',
