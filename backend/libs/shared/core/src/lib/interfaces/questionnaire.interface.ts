@@ -1,6 +1,6 @@
 import { Duration } from '../types/duration.enum';
 import { Specialization } from '../types/specialization.enum';
-import { UserLevel } from '../types/user-level.enum';
+import { UserLevel } from '../types/training-level.enum';
 
 export interface Questionnaire {
   userId: string;

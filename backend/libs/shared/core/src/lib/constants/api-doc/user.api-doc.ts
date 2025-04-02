@@ -10,8 +10,8 @@ import { ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
 import { MetroStationName } from '../../types/metro-station-name.enum';
-import { UserGender } from '../../types/user-gender.enum';
-import { UserRole } from '../../types/user-role.enum';
+import { UserGender } from '../../types/gender.enum';
+import { UserRole } from '../../types/role.enum';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
 import { UserValidation } from '../../constants/authentication.constant';
 

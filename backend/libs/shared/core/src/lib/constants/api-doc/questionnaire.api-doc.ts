@@ -9,7 +9,7 @@ import { Questionnaire } from '../../interfaces/questionnaire.interface';
 import { ICreateQuestionnaireCoachDto } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
 import { IQuestionnaireRdo } from '../../interfaces/rdo/i-questionnaire.rdo';
 import { Specialization } from '../../types/specialization.enum';
-import { UserLevel } from '../../types/user-level.enum';
+import { UserLevel } from '../../types/training-level.enum';
 import { Duration } from '../../types/duration.enum';
 import { QuestionnaireApiProperty } from '../../constants/api-property/questionnaire.api-property';
 import { QuestionnaireValidation } from '../../constants/authentication.constant';

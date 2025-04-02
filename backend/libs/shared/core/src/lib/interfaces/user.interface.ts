@@ -1,6 +1,6 @@
 import { MetroStationName } from '../types/metro-station-name.enum';
-import { UserGender } from '../types/user-gender.enum';
-import { UserRole } from '../types/user-role.enum';
+import { UserGender } from '../types/gender.enum';
+import { UserRole } from '../types/role.enum';
 
 export interface User {
   id?: string;

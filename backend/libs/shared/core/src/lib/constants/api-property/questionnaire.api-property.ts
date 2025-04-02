@@ -1,5 +1,5 @@
 import { Duration } from '../../types/duration.enum';
-import { UserLevel } from '../../types/user-level.enum';
+import { UserLevel } from '../../types/training-level.enum';
 
 //! типизировать через SchemaObjectMetadata не получается
 // или import { ApiPropertyOptions } from '@nestjs/swagger';
