@@ -48,8 +48,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-08.webp, img/content/thumbnails/friend-08@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-08.jpg" srcSet="/img/content/thumbnails/friend-08@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-08.webp, img/content/thumbnails/friend-08@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-08.jpg" srcSet="img/content/thumbnails/friend-08@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -95,8 +95,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-04.webp, img/content/thumbnails/friend-04@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-04.jpg" srcSet="/img/content/thumbnails/friend-04@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-04.webp, img/content/thumbnails/friend-04@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-04.jpg" srcSet="img/content/thumbnails/friend-04@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -142,8 +142,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-07.webp, img/content/thumbnails/friend-07@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-07.jpg" srcSet="/img/content/thumbnails/friend-07@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-07.webp, img/content/thumbnails/friend-07@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-07.jpg" srcSet="img/content/thumbnails/friend-07@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -185,8 +185,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-10.webp, img/content/thumbnails/friend-10@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-10.jpg" srcSet="/img/content/thumbnails/friend-10@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-10.webp, img/content/thumbnails/friend-10@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-10.jpg" srcSet="img/content/thumbnails/friend-10@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -228,8 +228,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-05.webp, img/content/thumbnails/friend-05@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-05.jpg" srcSet="/img/content/thumbnails/friend-05@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-05.webp, img/content/thumbnails/friend-05@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-05.jpg" srcSet="img/content/thumbnails/friend-05@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -266,8 +266,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-11.webp, img/content/thumbnails/friend-11@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-11.jpg" srcSet="/img/content/thumbnails/friend-11@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-11.webp, img/content/thumbnails/friend-11@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-11.jpg" srcSet="img/content/thumbnails/friend-11@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-offline"></div>-->
@@ -304,8 +304,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-12.webp, img/content/thumbnails/friend-12@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-12.jpg" srcSet="/img/content/thumbnails/friend-12@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-12.webp, img/content/thumbnails/friend-12@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-12.jpg" srcSet="img/content/thumbnails/friend-12@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-offline"></div>-->
@@ -339,8 +339,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-06.webp, img/content/thumbnails/friend-06@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-06.jpg" srcSet="/img/content/thumbnails/friend-06@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-06.webp, img/content/thumbnails/friend-06@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-06.jpg" srcSet="img/content/thumbnails/friend-06@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
@@ -374,8 +374,8 @@ function Friends(): JSX.Element {
                             <div className="thumbnail-friend__image-status">
                               <div className="thumbnail-friend__image">
                                 <picture>
-                                  <source type="image/webp" srcSet="/img/content/thumbnails/friend-13.webp, img/content/thumbnails/friend-13@2x.webp 2x" />
-                                  <img src="/img/content/thumbnails/friend-13.jpg" srcSet="/img/content/thumbnails/friend-13@2x.jpg 2x" width="78" height="78" alt="" />
+                                  <source type="image/webp" srcSet="img/content/thumbnails/friend-13.webp, img/content/thumbnails/friend-13@2x.webp 2x" />
+                                  <img src="img/content/thumbnails/friend-13.jpg" srcSet="img/content/thumbnails/friend-13@2x.jpg 2x" width="78" height="78" alt="" />
                                 </picture>
                                 {/* //! закоментировано в маркапах
                             <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->

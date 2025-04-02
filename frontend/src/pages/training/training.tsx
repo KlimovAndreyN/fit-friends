@@ -43,8 +43,8 @@ function Training(): JSX.Element {
                     <div className="training-info__coach">
                       <div className="training-info__photo">
                         <picture>
-                          <source type="image/webp" srcSet="/img/content/avatars/coaches/photo-1.webp, img/content/avatars/coaches/photo-1@2x.webp 2x" />
-                          <img src="/img/content/avatars/coaches/photo-1.png" srcSet="/img/content/avatars/coaches/photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
+                          <source type="image/webp" srcSet="img/content/avatars/coaches/photo-1.webp, img/content/avatars/coaches/photo-1@2x.webp 2x" />
+                          <img src="img/content/avatars/coaches/photo-1.png" srcSet="img/content/avatars/coaches/photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
                         </picture>
                       </div>
                       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span><span className="training-info__name">Валерия</span></div>
@@ -66,7 +66,7 @@ function Training(): JSX.Element {
                               <textarea
                                 name="description"
                                 defaultValue={description}
-                                disabled
+                                readOnly /*//! disabled  при просмотре поставил readOnly*/
                               />
                             </label>
                           </div>
@@ -116,8 +116,8 @@ function Training(): JSX.Element {
                   <div className="training-video__video">
                     <div className="training-video__thumbnail">
                       <picture>
-                        <source type="image/webp" srcSet="/img/content/training-video/video-thumbnail.webp, img/content/training-video/video-thumbnail@2x.webp 2x" />
-                        <img src="/img/content/training-video/video-thumbnail.png" srcSet="/img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
+                        <source type="image/webp" srcSet="img/content/training-video/video-thumbnail.webp, img/content/training-video/video-thumbnail@2x.webp 2x" />
+                        <img src="img/content/training-video/video-thumbnail.png" srcSet="img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
                       </picture>
                     </div>
                     <button className="training-video__play-button btn-reset">
