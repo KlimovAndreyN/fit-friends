@@ -1,0 +1,77 @@
+# docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
+name: ${APP_NAME}
+networks:
+  notify.networks:
+     driver: bridge
+volumes:
+  notify.mongo:
+  notify.rabbitmq:
+services:
+  notify.mongo:
+    image: mongo:4.4
+    container_name: notify.mongo
+    hostname: notify.mongo
+    restart: always
+    volumes:
+      - notify.mongo:/data/db
+      - notify.mongo:/data/configdb
+    networks:
+      - notify.networks
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/${MONGODB_AUTHBASE} --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  notify.mongo.ui:
+    image: mongo-express:1.0.2-20
+    container_name: notify.mongo.ui
+    hostname: notify.mongo.ui
+    restart: always
+    networks:
+      - notify.networks
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODB_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_AUTHBASE}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@notify.mongo:27017/
+
+  notify.fakesmtp:
+    image: gessnerfl/fake-smtp-server:2.2.0
+    container_name: notify.fakesmtp
+    hostname: notify.fakesmtp
+    restart: always
+    networks:
+      - notify.networks
+    ports:
+      - ${MAIL_SMTP_PORT}:8025
+      - ${MAIL_FAKESMTP_WEB_PORT}:8080
+
+  notify.rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: notify.rabbitmq
+    hostname: notify.rabbitmq
+    restart: always
+    volumes:
+      - notify.rabbitmq:/var/lib/rabbitmq
+    networks:
+      - notify.networks
+    ports:
+      - ${RABBITMQ_WEB_PORT}:15672
+      - ${RABBITMQ_PORT}:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
