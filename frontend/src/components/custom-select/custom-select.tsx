@@ -91,7 +91,9 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
                 <li
                   key={option.value}
                   className={`${mainClassName}__item`}
-                  onClick={() => handleListItemClick(option)}
+                  onClick={() => {
+                    handleListItemClick(option);
+                  }}
                 >
                   {titlePrefix + option.title}
                 </li>
