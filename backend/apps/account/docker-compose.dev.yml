@@ -1,0 +1,55 @@
+# docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
+name: ${APP_NAME}
+networks:
+  account.networks:
+     driver: bridge
+volumes:
+  account.mongo:
+services:
+  account.fakesmtp:
+    image: gessnerfl/fake-smtp-server:2.2.0
+    container_name: account.fakesmtp
+    hostname: account.fakesmtp
+    restart: always
+    networks:
+      - account.networks
+    ports:
+      - ${MAIL_SMTP_PORT}:8025
+      - ${MAIL_FAKESMTP_WEB_PORT}:8080
+
+  account.mongo:
+    image: mongo:4.4
+    container_name: account.mongo
+    hostname: account.mongo
+    restart: always
+    volumes:
+      - account.mongo:/data/db
+      - account.mongo:/data/configdb
+    networks:
+      - account.networks
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/${MONGODB_AUTHBASE} --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  account.mongo.ui:
+    image: mongo-express:1.0.2-20
+    container_name: account.mongo.ui
+    hostname: account.mongo.ui
+    restart: always
+    networks:
+      - account.networks
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODB_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_AUTHBASE}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@account.mongo:27017/
