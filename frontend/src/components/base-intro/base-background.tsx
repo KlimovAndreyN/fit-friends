@@ -26,9 +26,7 @@ function BaseBackground({ title, children }: BaseBackgroundProps): JSX.Element {
               <img src="img/content/sitemap/title-logo.png" srcSet="img/content/sitemap/title-logo@2x.png 2x" width="934" height="455" alt="Логотип Fit Friends" />
             </picture>
           </div>
-          <div className="intro__buttons">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     </main>
