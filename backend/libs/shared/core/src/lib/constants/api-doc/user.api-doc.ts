@@ -10,8 +10,8 @@ import { ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
 import { MetroStationName } from '../../types/metro-station-name.enum';
-import { UserGender } from '../../types/gender.enum';
-import { UserRole } from '../../types/role.enum';
+import { Gender } from '../../types/gender.enum';
+import { Role } from '../../types/role.enum';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
 import { UserValidation } from '../../constants/authentication.constant';
 
@@ -99,12 +99,12 @@ export class UserApiDoc {
 
   @ApiProperty(UserApiProperty.Gender)
   @Expose()
-  @IsEnum(UserGender)
+  @IsEnum(Gender)
   public gender: User['gender'];
 
   @ApiProperty(UserApiProperty.Role)
   @Expose()
-  @IsEnum(UserRole)
+  @IsEnum(Role)
   public role: User['role'];
 
   @ApiProperty(UserApiProperty.RegistrationDate)

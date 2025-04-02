@@ -1,6 +1,6 @@
 import { MetroStationName } from '../../types/metro-station-name.enum';
-import { UserGender } from '../../types/gender.enum';
-import { UserRole } from '../../types/role.enum';
+import { Gender } from '../../types/gender.enum';
+import { Role } from '../../types/role.enum';
 
 export const UserApiProperty = {
   Id: {
@@ -73,14 +73,14 @@ export const UserApiProperty = {
   Gender: {
     description: 'The user gender',
     type: 'string',
-    enum: UserGender,
-    example: UserGender.Male
+    enum: Gender,
+    example: Gender.Male
   },
   Role: {
     description: 'The user role',
     type: 'string',
-    enum: UserRole,
-    example: UserRole.Sportsman
+    enum: Role,
+    example: Role.Sportsman
   },
   RegistrationDate: {
     description: 'The user registration date',

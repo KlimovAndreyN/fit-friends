@@ -1,5 +1,5 @@
 import { Duration } from '../../types/duration.enum';
-import { UserLevel } from '../../types/training-level.enum';
+import { TrainingLevel } from '../../types/training-level.enum';
 
 //! типизировать через SchemaObjectMetadata не получается
 // или import { ApiPropertyOptions } from '@nestjs/swagger';
@@ -15,10 +15,10 @@ export const QuestionnaireApiProperty = {
     //name: 'specializations[]' // не корректная передача string[] через form-data //! нужно при swagger fromdata c api
   },
   Level: {
-    description: 'The user level',
+    description: 'The user training level',
     type: 'string',
-    enum: UserLevel,
-    example: UserLevel.Amateur
+    enum: TrainingLevel,
+    example: TrainingLevel.Amateur
   },
   ReadyForTraining: {
     description: 'ready for training',

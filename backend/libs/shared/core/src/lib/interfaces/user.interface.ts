@@ -1,6 +1,6 @@
 import { MetroStationName } from '../types/metro-station-name.enum';
-import { UserGender } from '../types/gender.enum';
-import { UserRole } from '../types/role.enum';
+import { Gender } from '../types/gender.enum';
+import { Role } from '../types/role.enum';
 
 export interface User {
   id?: string;
@@ -9,8 +9,8 @@ export interface User {
   birthday?: Date;
   metroStationName: MetroStationName;
   backgroundPath: string;
-  gender: UserGender;
-  role: UserRole;
+  gender: Gender;
+  role: Role;
   avatarFileId?: string;
   about?: string;
   createdAt?: Date;
