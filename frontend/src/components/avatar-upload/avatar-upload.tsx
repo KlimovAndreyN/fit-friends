@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent, useRef, useState } from 'react';
+import { Fragment, MouseEvent, useEffect, useRef, useState } from 'react';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
@@ -15,7 +15,7 @@ type AvatarUploadProps = {
 
 function AvatarUpload(props: AvatarUploadProps): JSX.Element {
   const { name, path = '', onChange, forPersonalAccount, isShowButtons, readonly } = props;
-  const [avatarFilePath, setAvatarFilePath] = useState<string>(path);
+  const [avatarFilePath, setAvatarFilePath] = useState<string>('');
   const imageUploadInputRef = useRef<HTMLInputElement | null>(null);
 
   const spanClassName = (avatarFilePath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
@@ -27,6 +27,14 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
     (avatarFilePath)
       ? <img src={avatarFilePath} width="98" height="98" alt="user photo" />
       : svg;
+
+  useEffect(() => {
+    setAvatarFilePath(path);
+
+    if (imageUploadInputRef.current) {
+      imageUploadInputRef.current.value = '';
+    }
+  }, [path, readonly]);
 
   const handleImageUploadInputChange = (filePath: string, file: File | undefined) => {
     setAvatarFilePath(filePath);
@@ -64,7 +72,6 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
         </label>
       </div>
       {
-        //! нужны обработчики на кнопки
         (isShowButtons)
           ?
           <div className="user-info-edit__controls">

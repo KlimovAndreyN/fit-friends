@@ -20,11 +20,11 @@ function CustomInput(props: CustomInputProps): JSX.Element {
   const [currentValue, setCurrentValue] = useState('');
 
   useEffect(() => {
-    // приходят новые значения из предка! при переключении режимо редактирования и повторной отрисовки формы после получения ответа
+    // приходят новые значения из предка! при переключении режима редактирования и повторной отрисовки формы после получения ответа
     if (value) {
       setCurrentValue(value);
     }
-  }, [value]);
+  }, [value, readonly]);
 
   const isTextarea = type === 'textarea';
   const mainClassName = `custom-${(isTextarea) ? type : 'input'}`;

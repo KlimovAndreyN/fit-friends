@@ -16,6 +16,7 @@ function ImageUploadInput(props: ImageUploadInputProps): JSX.Element {
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
+
     if (files) {
       const file = files[0];
 

@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useEffect, useState } from 'react';
+import { FormEvent, Fragment, useCallback, useEffect, useState } from 'react';
 
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
@@ -9,10 +9,10 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 
 import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, UserGender, UserLevel } from '@backend/shared';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { updateUserInfo } from '../../store/user-info-action';
-import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
+import { isEventEscKey } from '../../utils/common';
+import { useAppSelector } from '../../hooks';
 import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
+import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -28,12 +28,10 @@ enum FormFieldName {
 type PersonalAccountLeftPanelProps = {
   userInfo: IUserInfoRdo;
   isSpotsmanRole: boolean;
+  onSubmit: (updatedUserInfo: IUpdateUserInfoDto) => void;
 }
 
-function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountLeftPanelProps): JSX.Element {
-  //! возможно стоит разделить функционал - вынести форму отдельно
-  //! обработка аватарки удалить и заменить
-  const dispatch = useAppDispatch();
+function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
   const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
   const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
 
@@ -43,16 +41,30 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
 
   const [isEditing, setIsEditing] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | undefined>();
-  const [emptyAvatarFile, setEmptyAvatarFile] = useState(!avatarFilePath);
+  const [currentAvatarFilePath, setCurrentAvatarFilePath] = useState(avatarFilePath);
+
+  const handleWindowKeyDown = useCallback((event: KeyboardEvent) => {
+    if (isEventEscKey(event)) {
+      setCurrentAvatarFilePath(avatarFilePath);
+      setAvatarFile(undefined);
+      setIsEditing(false);
+    }
+  }, [avatarFilePath]);
 
   useEffect(() => {
     if (!isUpdateUserInfoExecuting && !isUpdateUserInfoError) {
       setIsEditing(false);
     }
-  }, [isUpdateUserInfoExecuting, isUpdateUserInfoError]);
 
-  const handleAvatarUploadChange = (_filePath: string, file: File | undefined) => {
-    setEmptyAvatarFile(!file);
+    window.addEventListener('keydown', handleWindowKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleWindowKeyDown);
+    };
+  }, [isUpdateUserInfoExecuting, isUpdateUserInfoError, handleWindowKeyDown, avatarFilePath]);
+
+  const handleAvatarUploadChange = (filePath: string, file: File | undefined) => {
+    setCurrentAvatarFilePath(filePath);
     setAvatarFile(file);
   };
 
@@ -68,9 +80,9 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const dto: IUpdateUserInfoDto = {
+    const updatedUserInfo: IUpdateUserInfoDto = {
       avatarFile,
-      emptyAvatarFile,
+      emptyAvatarFile: !currentAvatarFilePath,
       name: formData.get(FormFieldName.Name)?.toString() || '',
       about: formData.get(FormFieldName.About)?.toString() || '',
       metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
@@ -79,7 +91,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
       level: (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel //! одинаковый код - в хелпер
     };
 
-    dispatch(updateUserInfo(dto));
+    onSubmit(updatedUserInfo);
   };
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
@@ -90,7 +102,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole }: PersonalAccountL
       <div className={`${mainClassName}__header`}>
         <AvatarUpload
           name={FormFieldName.Avatar}
-          path={avatarFilePath}
+          path={currentAvatarFilePath}
           onChange={handleAvatarUploadChange}
           forPersonalAccount
           isShowButtons={isEditing}

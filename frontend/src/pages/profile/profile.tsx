@@ -5,12 +5,12 @@ import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-import { UserRole } from '@backend/shared';
+import { IUpdateUserInfoDto, UserRole } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-info-process/selectors';
-import { fetchUserInfo } from '../../store/user-info-action';
+import { fetchUserInfo, updateUserInfo } from '../../store/user-info-action';
 import { PageTitle } from '../../const';
 
 function Profile(): JSX.Element {
@@ -22,12 +22,13 @@ function Profile(): JSX.Element {
   const userRole = useAppSelector(getUserRole);
   const userInfo = useAppSelector(getUserInfo);
 
-  useEffect(
-    () => {
-      dispatch(fetchUserInfo());
-    },
-    [dispatch]
-  );
+  const handleLeftPanelSubmit = (updatedUserInfo: IUpdateUserInfoDto) => {
+    dispatch(updateUserInfo(updatedUserInfo));
+  };
+
+  useEffect(() => {
+    dispatch(fetchUserInfo());
+  }, [dispatch]);
 
   //! userInfo и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
   if (isFetchUserInfoExecuting || !userInfo || !userRole) {
@@ -46,7 +47,11 @@ function Profile(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              <PersonalAccountLeftPanel userInfo={userInfo} isSpotsmanRole={isSpotsmanRole} />
+              <PersonalAccountLeftPanel
+                userInfo={userInfo}
+                isSpotsmanRole={isSpotsmanRole}
+                onSubmit={handleLeftPanelSubmit}
+              />
               <div className="inner-page__content">
                 {
                   (isSpotsmanRole)
