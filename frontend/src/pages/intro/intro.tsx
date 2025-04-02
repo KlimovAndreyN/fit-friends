@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import BaseIntro from '../../components/base-intro/base-intro';
+import BaseBackground from '../../components/base-intro/base-background';
 
 import { AppRoute, PageTitle } from '../../const';
 
@@ -23,7 +23,7 @@ function Intro(): JSX.Element {
   };
 
   return (
-    <BaseIntro {...props} />
+    <BaseBackground {...props} />
   );
 }
 

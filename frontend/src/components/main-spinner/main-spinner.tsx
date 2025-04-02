@@ -1,4 +1,4 @@
-import BaseIntro from '../base-intro/base-intro';
+import BaseBackground from '../base-intro/base-background';
 
 import { PageTitle } from '../../const';
 
@@ -9,7 +9,7 @@ function MainSpinner(): JSX.Element {
   };
 
   return (
-    <BaseIntro {...props} />
+    <BaseBackground {...props} />
   );
 }
 

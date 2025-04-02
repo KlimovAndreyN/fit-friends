@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
-type BaseIntroProps = {
+type BaseBackgroundProps = {
   title: string;
   children: JSX.Element;
 }
 
-function BaseIntro({ title, children }: BaseIntroProps): JSX.Element {
+function BaseBackground({ title, children }: BaseBackgroundProps): JSX.Element {
   return (
     <main>
       <Helmet title={title} />
@@ -35,4 +35,4 @@ function BaseIntro({ title, children }: BaseIntroProps): JSX.Element {
   );
 }
 
-export default BaseIntro;
+export default BaseBackground;
