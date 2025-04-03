@@ -32,6 +32,8 @@ services:
     container_name: account.mongo.ui
     hostname: account.mongo.ui
     restart: always
+    depends_on:
+      - account.mongo
     networks:
       - account.networks
     ports:
