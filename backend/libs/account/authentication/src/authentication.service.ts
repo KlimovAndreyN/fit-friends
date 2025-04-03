@@ -35,7 +35,7 @@ export class AuthenticationService {
       password,
       backgroundPath,
       gender,
-      metroStationName,
+      location,
       role,
       avatarFileId,
       birthday
@@ -51,7 +51,7 @@ export class AuthenticationService {
       name,
       backgroundPath,
       gender,
-      metroStationName,
+      location,
       role,
       avatarFileId,
       birthday: (birthday) ? new Date(birthday) : undefined,

@@ -8,7 +8,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public email: AuthUser['email'];
   public name: AuthUser['name'];
   public birthday?: AuthUser['birthday'];
-  public metroStationName: AuthUser['metroStationName'];
+  public location: AuthUser['location'];
   public backgroundPath: AuthUser['backgroundPath'];
   public gender: AuthUser['gender'];
   public role: AuthUser['role'];
@@ -32,7 +32,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.email = user.email;
     this.name = user.name;
     this.birthday = user.birthday;
-    this.metroStationName = user.metroStationName;
+    this.location = user.location;
     this.backgroundPath = user.backgroundPath;
     this.gender = user.gender;
     this.role = user.role;
@@ -49,7 +49,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       email: this.email,
       name: this.name,
       birthday: this.birthday,
-      metroStationName: this.metroStationName,
+      location: this.location,
       backgroundPath: this.backgroundPath,
       gender: this.gender,
       role: this.role,

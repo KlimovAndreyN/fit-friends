@@ -72,14 +72,14 @@ export { RequestWithRequestId } from './lib/types/request/request-with-request-i
 export { RequestWithTokenPayload } from './lib/types/request/request-with-token-payload.type';
 export { RequestWithUserId } from './lib/types/request/request-with-user-id.type';
 
-export * from './lib/types/environment.type';
+export { Environment, ENVIRONMENTS } from './lib/types/environment.type';
 export { Duration } from './lib/types/duration.enum';
-export { MetroStationName } from './lib/types/metro-station-name.enum';
+export { Gender } from './lib/types/gender.enum';
+export { Location } from './lib/types/location.enum';
+export { Role } from './lib/types/role.enum';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
-export { Gender } from './lib/types/gender.enum';
-export { Role } from './lib/types/role.enum';
 
 export * from './lib/utils/convert';
 export * from './lib/utils/transform';

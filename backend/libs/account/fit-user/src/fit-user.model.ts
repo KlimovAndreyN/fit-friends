@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-import { AuthUser, MetroStationName, Gender, Role } from '@backend/shared/core';
+import { AuthUser, Location, Gender, Role } from '@backend/shared/core';
 
 @Schema({
   collection: 'accounts',
@@ -27,7 +27,7 @@ export class FitUserModel extends Document implements AuthUser {
   public birthday: Date;
 
   @Prop({ required: true, type: String })
-  public metroStationName: MetroStationName;
+  public location: Location;
 
   @Prop({ required: true })
   public backgroundPath: string;

@@ -3,5 +3,5 @@ import { User } from '../user.interface';
 export type IUpdateUserWithFileIdDto =
   Pick<
     Partial<User>,
-    'name' | 'about' | 'metroStationName' | 'gender' | 'avatarFileId'
+    'name' | 'about' | 'location' | 'gender' | 'avatarFileId'
   >;

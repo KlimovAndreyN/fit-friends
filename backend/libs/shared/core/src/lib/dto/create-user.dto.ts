@@ -12,7 +12,7 @@ export class CreateUserDto
       'password',
       'birthday',
       'avatarFile',
-      'metroStationName',
+      'location',
       'backgroundPath',
       'gender',
       'role'

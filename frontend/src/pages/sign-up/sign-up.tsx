@@ -8,7 +8,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserDto, MetroStationName, Gender, Role } from '@backend/shared';
+import { ICreateUserDto, Location, Gender, Role } from '@backend/shared';
 
 import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/user-action';
@@ -22,7 +22,7 @@ enum FormFieldName {
   Email = 'email',
   Password = 'password',
   Birthday = 'birthday',
-  Location = 'location',
+  UserLocation = 'location',
   Sex = 'sex',
   UserRole = 'role',
   Background = 'background',
@@ -49,7 +49,7 @@ function SignUp(): JSX.Element {
     const backgroundPath = formData.get(FormFieldName.Background)?.toString() || '';
     const gender = (formData.get(FormFieldName.Sex)?.toString() || '') as Gender;
     const role = (formData.get(FormFieldName.UserRole)?.toString() || '') as Role;
-    const metroStationName = (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName;
+    const location = (formData.get(FormFieldName.UserLocation)?.toString() || '') as Location;
     const avatarFile = (formData.get(FormFieldName.Avatar) as File) || undefined;
 
     const dto: ICreateUserDto =
@@ -61,7 +61,7 @@ function SignUp(): JSX.Element {
       backgroundPath,
       gender,
       role,
-      metroStationName,
+      location,
       avatarFile
     };
 
@@ -108,7 +108,7 @@ function SignUp(): JSX.Element {
             max='2099-12-31'
           />
           <CustomSelect
-            name={FormFieldName.Location}
+            name={FormFieldName.UserLocation}
             caption='Ваша локация'
             options={LOCATIONS}
           />

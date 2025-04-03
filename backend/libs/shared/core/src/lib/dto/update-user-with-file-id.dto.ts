@@ -10,7 +10,7 @@ export class UpdateUserWithFileIdDto
       'name',
       'about',
       'avatarFileId',
-      'metroStationName',
+      'location',
       'gender'
     ]
   )

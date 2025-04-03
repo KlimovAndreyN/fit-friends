@@ -13,7 +13,7 @@ export class UserWithFileIdRdo
       'email',
       'birthday',
       'avatarFileId',
-      'metroStationName',
+      'location',
       'backgroundPath',
       'gender',
       'role',

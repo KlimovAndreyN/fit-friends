@@ -11,7 +11,7 @@ export class UpdateUserDto
       'about',
       'avatarFile',
       'emptyAvatarFile',
-      'metroStationName',
+      'location',
       'gender'
     ]
   )

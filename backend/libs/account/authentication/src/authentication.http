@@ -11,7 +11,7 @@ Content-Type: application/json
   "password": "password",
   "birthday": "2005-03-20T00:00:00.000Z",
   "avatarFileId": "658170cbb954e9f5b905ddf4",
-  "metroStationName": "pionerskaya",
+  "location": "pionerskaya",
   "backgroundPath": "/some/path/img.jpg",
   "gender": "male",
   "role": "sportsman"

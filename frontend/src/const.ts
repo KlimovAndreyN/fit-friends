@@ -1,4 +1,4 @@
-import { Duration, MetroStationName, Specialization, Gender, TrainingLevel, Role } from '@backend/shared';
+import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared';
 
 import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
@@ -83,20 +83,20 @@ export const USER_GENDERS: Option[] = [
   { value: Gender.NotMatter, title: UserGenderTitle[Gender.NotMatter] }
 ];
 
-export const MetroStationTitle: { [key in MetroStationName]: string } = {
-  [MetroStationName.Petrogradskaya]: 'Петроградская',
-  [MetroStationName.Pionerskaya]: 'Пионерская',
-  [MetroStationName.Sportivnaya]: 'Спортивная',
-  [MetroStationName.Udelnaya]: 'Удельная',
-  [MetroStationName.Zvezdnaya]: 'Звёздная'
+export const LocationTitle: { [key in Location]: string } = {
+  [Location.Petrogradskaya]: 'Петроградская',
+  [Location.Pionerskaya]: 'Пионерская',
+  [Location.Sportivnaya]: 'Спортивная',
+  [Location.Udelnaya]: 'Удельная',
+  [Location.Zvezdnaya]: 'Звёздная'
 } as const;
 
 export const LOCATIONS: Option[] = [
-  { value: MetroStationName.Pionerskaya, title: MetroStationTitle[MetroStationName.Pionerskaya] },
-  { value: MetroStationName.Petrogradskaya, title: MetroStationTitle[MetroStationName.Petrogradskaya] },
-  { value: MetroStationName.Udelnaya, title: MetroStationTitle[MetroStationName.Udelnaya] },
-  { value: MetroStationName.Zvezdnaya, title: MetroStationTitle[MetroStationName.Zvezdnaya] },
-  { value: MetroStationName.Sportivnaya, title: MetroStationTitle[MetroStationName.Sportivnaya] }
+  { value: Location.Pionerskaya, title: LocationTitle[Location.Pionerskaya] },
+  { value: Location.Petrogradskaya, title: LocationTitle[Location.Petrogradskaya] },
+  { value: Location.Udelnaya, title: LocationTitle[Location.Udelnaya] },
+  { value: Location.Zvezdnaya, title: LocationTitle[Location.Zvezdnaya] },
+  { value: Location.Sportivnaya, title: LocationTitle[Location.Sportivnaya] }
 ];
 
 //! еще будет для тренера и должно подменятся при изменении роли

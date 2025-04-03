@@ -10,7 +10,7 @@ Content-Type: application/json
   "email": "user@local.local",
   "password": "password",
   "birthday": "2005-11-20",
-  "metroStationName": "pionerskaya",
+  "location": "pionerskaya",
   "backgroundPath": "/some/path/img.jpg",
   "gender": "male",
   "role": "sportsman"
@@ -39,7 +39,7 @@ Content-Disposition: form-data; name="password"
 
 123456
 --boundary
-Content-Disposition: form-data; name="metroStationName"
+Content-Disposition: form-data; name="location"
 
 pionerskaya
 --boundary

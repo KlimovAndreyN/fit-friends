@@ -1,4 +1,4 @@
-import { MetroStationName } from '../../types/metro-station-name.enum';
+import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
 import { Role } from '../../types/role.enum';
 
@@ -59,11 +59,11 @@ export const UserApiProperty = {
     example: '2025-03-20T00:00:00.000Z',
     required: false
   },
-  MetroStationName: {
+  Location: {
     description: 'The user metro station name',
     type: 'string',
-    enum: MetroStationName,
-    example: MetroStationName.Petrogradskaya
+    enum: Location,
+    example: Location.Petrogradskaya
   },
   BackgroundPath: {
     description: 'The user background path',

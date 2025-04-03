@@ -4,7 +4,7 @@ import { User } from '../user.interface';
 export interface IUserWithFileIdRdo
   extends Pick<
     User,
-    'name' | 'email' | 'metroStationName' | 'backgroundPath' | 'gender' | 'avatarFileId' | 'role' | 'about'
+    'name' | 'email' | 'location' | 'backgroundPath' | 'gender' | 'avatarFileId' | 'role' | 'about'
   > {
   id: User['id'];
   birthday?: ICreateUserWithFileIdDto['birthday'];

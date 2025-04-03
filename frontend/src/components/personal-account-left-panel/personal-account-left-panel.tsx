@@ -7,7 +7,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, Gender, TrainingLevel } from '@backend/shared';
+import { IUpdateUserInfoDto, IUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared';
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
@@ -20,7 +20,7 @@ enum FormFieldName {
   About = 'description',
   ReadyForTraining = 'ready-for-training',
   Spec = 'specialization',
-  Location = 'location',
+  UserLocation = 'location',
   Sex = 'sex',
   UserTrainingLevel = 'level'
 }
@@ -36,7 +36,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
   const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
 
   const { user, questionnaire } = userInfo;
-  const { name, avatarFilePath, about, metroStationName, gender } = user;
+  const { name, avatarFilePath, about, location, gender } = user;
   const { specializations, trainingLevel } = questionnaire;
 
   const [isEditing, setIsEditing] = useState(false);
@@ -85,7 +85,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
       emptyAvatarFile: !currentAvatarFilePath,
       name: formData.get(FormFieldName.Name)?.toString() || '',
       about: formData.get(FormFieldName.About)?.toString() || '',
-      metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
+      location: (formData.get(FormFieldName.UserLocation)?.toString() || '') as Location, //! одинаковый код - в хелпер
       gender: (formData.get(FormFieldName.Sex)?.toString() || '') as Gender, //! одинаковый код - в хелпер
       specializations: formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)), //! одинаковый код - в хелпер
       trainingLevel: (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel //! одинаковый код - в хелпер
@@ -158,9 +158,9 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
           />
         </PersonalAccountBlock>
         <CustomSelect //! в макете к названию станции добавлено "ст. м. ", добавил titlePrefix
-          name={FormFieldName.Location}
+          name={FormFieldName.UserLocation}
           caption='Локация'
-          value={metroStationName}
+          value={location}
           titlePrefix='ст. м. '
           options={LOCATIONS}
           extraClassName={`${mainClassName}__select`}

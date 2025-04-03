@@ -10,7 +10,7 @@ export function convertToUserRdo(user: UserWithFileIdRdo, avatarFilePath: UserRd
     birthday,
     backgroundPath,
     gender,
-    metroStationName,
+    location,
     registrationDate,
     role
   } = user;
@@ -22,7 +22,7 @@ export function convertToUserRdo(user: UserWithFileIdRdo, avatarFilePath: UserRd
     birthday,
     backgroundPath,
     gender,
-    metroStationName,
+    location,
     registrationDate,
     role,
     avatarFilePath

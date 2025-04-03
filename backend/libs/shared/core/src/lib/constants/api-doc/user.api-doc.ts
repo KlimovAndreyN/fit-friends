@@ -9,7 +9,7 @@ import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 import { ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
-import { MetroStationName } from '../../types/metro-station-name.enum';
+import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
 import { Role } from '../../types/role.enum';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
@@ -86,10 +86,10 @@ export class UserApiDoc {
   @IsOptional()
   public avatarFilePath?: IUserRdo['avatarFilePath'];
 
-  @ApiProperty(UserApiProperty.MetroStationName)
+  @ApiProperty(UserApiProperty.Location)
   @Expose()
-  @IsEnum(MetroStationName)
-  public metroStationName: User['metroStationName'];
+  @IsEnum(Location)
+  public location: User['location'];
 
   @ApiProperty(UserApiProperty.BackgroundPath) //! сделать проверку что это путь к файлу или regexp
   @Expose()

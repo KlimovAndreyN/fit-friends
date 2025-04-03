@@ -17,8 +17,8 @@ export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-pa
 export { type Tokens as ITokensRdo } from './lib/interfaces/tokens.interface';
 
 export { Duration } from './lib/types/duration.enum';
-export { MetroStationName } from './lib/types/metro-station-name.enum';
+export { Gender } from './lib/types/gender.enum';
+export { Location } from './lib/types/location.enum';
+export { Role } from './lib/types/role.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
-export { Gender } from './lib/types/gender.enum';
-export { Role } from './lib/types/role.enum';

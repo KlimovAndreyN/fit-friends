@@ -1,4 +1,4 @@
-import { MetroStationName } from '../types/metro-station-name.enum';
+import { Location } from '../types/location.enum';
 import { Gender } from '../types/gender.enum';
 import { Role } from '../types/role.enum';
 
@@ -7,7 +7,7 @@ export interface User {
   name: string;
   email: string;
   birthday?: Date;
-  metroStationName: MetroStationName;
+  location: Location;
   backgroundPath: string;
   gender: Gender;
   role: Role;

@@ -11,7 +11,7 @@ export class CreateUserWithFileIdDto extends PickType(
     'password',
     'birthday',
     'avatarFileId',
-    'metroStationName',
+    'location',
     'backgroundPath',
     'gender',
     'role'
