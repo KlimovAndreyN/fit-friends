@@ -3,6 +3,18 @@ name: ${APP_NAME}
 networks:
   fit.networks:
      driver: bridge
+configs:
+  servers.json:
+    content: |
+      {"Servers": {"1": {
+        "Group": "Servers",
+        "Name": "docker.fit.postgres",
+        "Host": "fit.postgres",
+        "Port": 5432,
+        "MaintenanceDB": "postgres",
+        "Username": "admin",
+        "Password": "test"
+      }}}
 volumes:
   fit.postgres:
   fit.pgadmin:
@@ -33,6 +45,9 @@ services:
     container_name: fit.pgadmin
     hostname: fit.pgadmin
     restart: always
+    configs:
+      - source: servers.json
+        target: /pgadmin4/servers.json
     volumes:
       - fit.pgadmin:/var/lib/pgadmin
     networks:
