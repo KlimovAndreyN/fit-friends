@@ -1,5 +1,5 @@
 # docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
-name: fit-friends.notify
+name: fit-friends-notify
 networks:
   notify.networks:
      driver: bridge
