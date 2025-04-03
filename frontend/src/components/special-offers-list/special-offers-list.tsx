@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { getTrainingRoute } from '../../utils/common';
 import { MOCK_SPECIAL_OFFERS } from '../../mock';
 
+const CHANGE_SLIDER_TIMEOUT = 7000;
+
 function SpecialOffersList(): JSX.Element {
   //! всегда только 3 штуки, отбирать на кленете...
   //! если меньше?
   //! если больше, то можно показывать разные при повторном входе на главную
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newActiveSliderIndex = (activeSliderIndex === (MOCK_SPECIAL_OFFERS.length - 1)) ? 0 : activeSliderIndex + 1;
+
+      setActiveSliderIndex(newActiveSliderIndex);
+    }, CHANGE_SLIDER_TIMEOUT);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeSliderIndex]);
 
   return (
     <ul className="special-offers__list">
