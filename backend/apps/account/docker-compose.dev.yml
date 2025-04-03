@@ -1,5 +1,5 @@
 # docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
-name: ${APP_NAME}
+name: fit-friends.account
 networks:
   account.networks:
      driver: bridge
