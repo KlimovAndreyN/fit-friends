@@ -1,0 +1,47 @@
+# docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
+name: ${APP_NAME}
+networks:
+  fit.networks:
+     driver: bridge
+volumes:
+  fit.postgres:
+  fit.pgadmin:
+services:
+  fit.postgres:
+    image: postgres:14-alpine
+    container_name: fit.postgres
+    hostname: fit.postgres
+    restart: always
+    volumes:
+      - fit.postgres:/var/lib/postgresql/data
+    networks:
+      - fit.networks
+    ports:
+      -  5433:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: test
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  fit.pgadmin:
+    image: dpage/pgadmin4
+    container_name: fit.pgadmin
+    hostname: fit.pgadmin
+    restart: always
+    volumes:
+      - fit.pgadmin:/var/lib/pgadmin
+    networks:
+      - fit.networks
+    ports:
+      - 8085:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@test.ru
+      PGADMIN_DEFAULT_PASSWORD: test
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    depends_on:
+      - fit.postgres
