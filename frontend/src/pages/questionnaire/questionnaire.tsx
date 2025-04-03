@@ -7,18 +7,18 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { Duration, ICreateQuestionnaireSportsmanDto, Specialization, UserLevel } from '@backend/shared';
+import { Duration, ICreateQuestionnaireSportsmanDto, Specialization, TrainingLevel } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsCreateQuestionnaireExecuting } from '../../store/user-info-process/selectors';
 import { createQuestionnaire } from '../../store/user-info-action';
-import { DefaultUser, PageTitle, TIMES, USER_LEVELS, UserRoleOption } from '../../const';
+import { DefaultUser, PageTitle, TIMES, TRAINING_LEVELS, UserRoleOption } from '../../const';
 
 enum FormFieldName {
   Spec = 'specialization',
   Time = 'time',
-  Level = 'level',
+  UserTrainingLevel = 'level',
   CaloriesLose = 'calories-lose',
   CaloriesWaste = 'calories-waste'
 }
@@ -40,13 +40,13 @@ function Questionnaire(): JSX.Element {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const level = (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel; //! одинаковый код - в хелпер
+    const trainingLevel = (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel; //! одинаковый код - в хелпер
     const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)); //! одинаковый код - в хелпер
     const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const dto: ICreateQuestionnaireSportsmanDto = {
-      level,
+      trainingLevel,
       specializations,
       time,
       caloriesLose,
@@ -84,10 +84,10 @@ function Questionnaire(): JSX.Element {
           </QuestionnairebBlock>
           <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={endingClassName} >
             <CustomToggleRadio
-              name={FormFieldName.Level}
+              name={FormFieldName.UserTrainingLevel}
               divExtraClassName={`questionnaire-${endingClassName}__radio`}
-              options={USER_LEVELS}
-              value={DefaultUser.LEVEL}
+              options={TRAINING_LEVELS}
+              value={DefaultUser.TRAINING_LEVEL}
             />
           </QuestionnairebBlock>
           <QuestionnairebBlock divExtraClassName={endingClassName} >

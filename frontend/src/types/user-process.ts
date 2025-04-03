@@ -1,4 +1,4 @@
-import { UserRole } from '@backend/shared';
+import { Role } from '@backend/shared';
 
 import { AuthorizationStatus } from './types';
 
@@ -6,5 +6,5 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   isSingInExecuting: boolean;
   isSingUpExecuting: boolean;
-  userRole: UserRole | null;
+  userRole: Role | null;
 }

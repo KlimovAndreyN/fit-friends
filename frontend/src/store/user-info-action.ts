@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUpdateUserInfoDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
-  ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, UserRole
+  ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, Role
 } from '@backend/shared';
 
 import { joinUrl } from '../utils/common';
@@ -34,7 +34,7 @@ export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: 
   }
 );
 
-export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestionnaireSportsmanDto; userRole: UserRole }, { extra: Extra }>(
+export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestionnaireSportsmanDto; userRole: Role }, { extra: Extra }>(
   Action.CREATE_QUESTIONNARE,
   async ({ dto, userRole }, { extra }) => {
     const { api } = extra;

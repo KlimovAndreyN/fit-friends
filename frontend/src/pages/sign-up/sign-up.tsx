@@ -8,7 +8,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserDto, MetroStationName, UserGender, UserRole } from '@backend/shared';
+import { ICreateUserDto, MetroStationName, Gender, Role } from '@backend/shared';
 
 import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/user-action';
@@ -24,7 +24,7 @@ enum FormFieldName {
   Birthday = 'birthday',
   Location = 'location',
   Sex = 'sex',
-  Role = 'role',
+  UserRole = 'role',
   Background = 'background',
   UserAgreement = 'user-agreement'
 }
@@ -47,8 +47,8 @@ function SignUp(): JSX.Element {
     const password = formData.get(FormFieldName.Password)?.toString() || '';
     const birthday = formData.get(FormFieldName.Birthday)?.toString() || undefined;
     const backgroundPath = formData.get(FormFieldName.Background)?.toString() || '';
-    const gender = (formData.get(FormFieldName.Sex)?.toString() || '') as UserGender;
-    const role = (formData.get(FormFieldName.Role)?.toString() || '') as UserRole;
+    const gender = (formData.get(FormFieldName.Sex)?.toString() || '') as Gender;
+    const role = (formData.get(FormFieldName.UserRole)?.toString() || '') as Role;
     const metroStationName = (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName;
     const avatarFile = (formData.get(FormFieldName.Avatar) as File) || undefined;
 
@@ -121,7 +121,7 @@ function SignUp(): JSX.Element {
           />
           <SignUpUserGengers name={FormFieldName.Sex} />
         </div>
-        <SignUpUserRoles name={FormFieldName.Role} />
+        <SignUpUserRoles name={FormFieldName.UserRole} />
         {/*//! добавил в разметку фоновую картинку */}
         <div className="sign-up__data">
           <CustomSelect

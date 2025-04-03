@@ -8,7 +8,7 @@ export class CreateQuestionnaireCoachDto
     QuestionnaireApiDoc,
     [
       'specializations',
-      'level',
+      'trainingLevel',
       'description',
       'files',
       'individualTraining'

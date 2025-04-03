@@ -1,4 +1,4 @@
-import { Duration, MetroStationName, Specialization, UserGender, UserLevel, UserRole } from '@backend/shared';
+import { Duration, MetroStationName, Specialization, Gender, TrainingLevel, Role } from '@backend/shared';
 
 import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
@@ -50,37 +50,37 @@ export enum HttpCode {
 export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' } as const;
 
 export const DefaultUser = {
-  ROLE: UserRole.Sportsman,
-  GENDER: UserGender.Female,
+  ROLE: Role.Sportsman,
+  GENDER: Gender.Female,
   SPECIALISATIONS: [
     Specialization.Boxing as string,
     Specialization.Crossfit as string,
     Specialization.Power as string
   ],
   TIME: Duration.Minutes_30_50,
-  LEVEL: UserLevel.Amateur
+  TRAINING_LEVEL: TrainingLevel.Amateur
 } as const;
 
-export const UserRoleOption: { [key in UserRole]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
-  [UserRole.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
-  [UserRole.Coach]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
+export const UserRoleOption: { [key in Role]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
+  [Role.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
+  [Role.Coach]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
 } as const;
 
 export const USER_ROLES = [
-  UserRole.Coach,
-  UserRole.Sportsman
+  Role.Coach,
+  Role.Sportsman
 ] as const;
 
-export const UserGenderTitle: { [key in UserGender]: string } = {
-  [UserGender.Female]: 'Женский',
-  [UserGender.Male]: 'Мужской',
-  [UserGender.NotMatter]: 'Неважно',
+export const UserGenderTitle: { [key in Gender]: string } = {
+  [Gender.Female]: 'Женский',
+  [Gender.Male]: 'Мужской',
+  [Gender.NotMatter]: 'Неважно',
 } as const;
 
 export const USER_GENDERS: Option[] = [
-  { value: UserGender.Male, title: UserGenderTitle[UserGender.Male] },
-  { value: UserGender.Female, title: UserGenderTitle[UserGender.Female] },
-  { value: UserGender.NotMatter, title: UserGenderTitle[UserGender.NotMatter] }
+  { value: Gender.Male, title: UserGenderTitle[Gender.Male] },
+  { value: Gender.Female, title: UserGenderTitle[Gender.Female] },
+  { value: Gender.NotMatter, title: UserGenderTitle[Gender.NotMatter] }
 ];
 
 export const MetroStationTitle: { [key in MetroStationName]: string } = {
@@ -134,14 +134,14 @@ export const TIMES: Option[] = [
   { value: Duration.Minutes_80_100, title: '80-100 мин' }
 ];
 
-export const UserLevelTitle: { [key in UserLevel]: string } = {
-  [UserLevel.Amateur]: 'Любитель',
-  [UserLevel.Beginner]: 'Новичок',
-  [UserLevel.Professional]: 'Профессионал'
+export const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
+  [TrainingLevel.Amateur]: 'Любитель',
+  [TrainingLevel.Beginner]: 'Новичок',
+  [TrainingLevel.Professional]: 'Профессионал'
 } as const;
 
-export const USER_LEVELS: Option[] = [
-  { value: UserLevel.Beginner, title: UserLevelTitle[UserLevel.Beginner] },
-  { value: UserLevel.Amateur, title: UserLevelTitle[UserLevel.Amateur] },
-  { value: UserLevel.Professional, title: UserLevelTitle[UserLevel.Professional] }
+export const TRAINING_LEVELS: Option[] = [
+  { value: TrainingLevel.Beginner, title: TrainingLevelTitle[TrainingLevel.Beginner] },
+  { value: TrainingLevel.Amateur, title: TrainingLevelTitle[TrainingLevel.Amateur] },
+  { value: TrainingLevel.Professional, title: TrainingLevelTitle[TrainingLevel.Professional] }
 ];

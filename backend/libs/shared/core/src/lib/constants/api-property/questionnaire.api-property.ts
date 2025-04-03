@@ -14,7 +14,7 @@ export const QuestionnaireApiProperty = {
     example: ['boxing'] // ['boxing', 'running'], из swagger-а не коректно передает пример, у значений убирает [] и ""
     //name: 'specializations[]' // не корректная передача string[] через form-data //! нужно при swagger fromdata c api
   },
-  Level: {
+  TrainingLevel: {
     description: 'The user training level',
     type: 'string',
     enum: TrainingLevel,

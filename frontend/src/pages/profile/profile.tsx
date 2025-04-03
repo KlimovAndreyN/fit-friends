@@ -5,7 +5,7 @@ import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-import { IUpdateUserInfoDto, UserRole } from '@backend/shared';
+import { IUpdateUserInfoDto, Role } from '@backend/shared';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -37,7 +37,7 @@ function Profile(): JSX.Element {
   }
 
   const { questionnaire: { caloriesWaste } } = userInfo;
-  const isSpotsmanRole = (userRole === UserRole.Sportsman);
+  const isSpotsmanRole = (userRole === Role.Sportsman);
 
   return (
     <Fragment>

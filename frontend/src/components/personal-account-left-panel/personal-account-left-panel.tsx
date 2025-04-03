@@ -7,12 +7,12 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, UserGender, UserLevel } from '@backend/shared';
+import { IUpdateUserInfoDto, IUserInfoRdo, MetroStationName, Specialization, Gender, TrainingLevel } from '@backend/shared';
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
 import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
-import { LOCATIONS, USER_GENDERS, USER_LEVELS } from '../../const';
+import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -22,7 +22,7 @@ enum FormFieldName {
   Spec = 'specialization',
   Location = 'location',
   Sex = 'sex',
-  Level = 'level'
+  UserTrainingLevel = 'level'
 }
 
 type PersonalAccountLeftPanelProps = {
@@ -37,7 +37,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
 
   const { user, questionnaire } = userInfo;
   const { name, avatarFilePath, about, metroStationName, gender } = user;
-  const { specializations, level } = questionnaire;
+  const { specializations, trainingLevel } = questionnaire;
 
   const [isEditing, setIsEditing] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | undefined>();
@@ -86,9 +86,9 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
       name: formData.get(FormFieldName.Name)?.toString() || '',
       about: formData.get(FormFieldName.About)?.toString() || '',
       metroStationName: (formData.get(FormFieldName.Location)?.toString() || '') as MetroStationName, //! одинаковый код - в хелпер
-      gender: (formData.get(FormFieldName.Sex)?.toString() || '') as UserGender, //! одинаковый код - в хелпер
+      gender: (formData.get(FormFieldName.Sex)?.toString() || '') as Gender, //! одинаковый код - в хелпер
       specializations: formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)), //! одинаковый код - в хелпер
-      level: (formData.get(FormFieldName.Level)?.toString() || '') as UserLevel //! одинаковый код - в хелпер
+      trainingLevel: (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel //! одинаковый код - в хелпер
     };
 
     onSubmit(updatedUserInfo);
@@ -175,10 +175,10 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
           readonly={!isEditing}
         />
         <CustomSelect
-          name={FormFieldName.Level}
+          name={FormFieldName.UserTrainingLevel}
           caption='Уровень'
-          value={level}
-          options={USER_LEVELS}
+          value={trainingLevel}
+          options={TRAINING_LEVELS}
           extraClassName={`${mainClassName}__select`}
           readonly={!isEditing}
         />

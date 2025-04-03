@@ -30,7 +30,7 @@ export class QuestionnaireApiDoc {
   @IsEnum(Specialization, { each: true })
   specializations: Questionnaire['specializations'];
 
-  @ApiProperty(QuestionnaireApiProperty.Level)
+  @ApiProperty(QuestionnaireApiProperty.TrainingLevel)
   @Expose()
   @IsEnum(TrainingLevel)
   trainingLevel: Questionnaire['trainingLevel'];
