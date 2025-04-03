@@ -20,7 +20,7 @@ async function bootstrap() {
 
   Logger.log('Seed runing...');
   Logger.log(`Reset before seed is ${resetBeforeSeed}`);
-  Logger.log(`Fit postgres url: ${process.env['DATABASE_URL']}`);
+  Logger.log(`Fit postgres url: ${process.env['FIT_DATABASE_URL']}`); //! на ENV!
 
   try {
     const sportsmans = await generateSportsmans(app.get(FitUserRepository), resetBeforeSeed);

@@ -2,7 +2,7 @@
 CREATE TABLE "questionnaires" (
     "user_id" VARCHAR(50) NOT NULL,
     "specializations" VARCHAR(50)[],
-    "level" VARCHAR(50) NOT NULL,
+    "training_level" VARCHAR(50) NOT NULL,
     "ready_for_training" BOOLEAN NOT NULL,
     "time" VARCHAR(50),
     "calories_lose" INTEGER,

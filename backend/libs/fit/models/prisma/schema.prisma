@@ -11,9 +11,10 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  //url      = "postgres://admin:test@localhost:5433/fit-friends"
-  // на windows при команде "npx nx run fit:db:migrate" не вводит название migrate
+  url      = env("FIT_DATABASE_URL")
+  // на windows при команде "npx nx run fit:db:migrate" не вводит для название migrate
+  // работает "npx nx run fit:db:migrate --name=init"
+  // или
   // cd backend
   // cd libs/fit/models/prisma
   // npx prisma migrate dev --schema ./schema.prisma --skip-generate --skip-seed
