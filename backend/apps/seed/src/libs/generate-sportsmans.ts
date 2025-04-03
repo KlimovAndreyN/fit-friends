@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-import { AuthUser, MetroStationName, UserRole } from '@backend/shared/core';
+import { AuthUser, MetroStationName, Role } from '@backend/shared/core';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
 import { getRandomEnumItem, getRandomItem } from './random';
@@ -25,7 +25,7 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository, r
       backgroundPath: getRandomItem(MOCK_BACKGROUND_PATHS),
       gender,
       metroStationName: getRandomEnumItem(MetroStationName),
-      role: UserRole.Sportsman,
+      role: Role.Sportsman,
       avatarFileId: '', //! позднее попробовать подкинуть аватарки
       birthday: new Date('2000-01-01'), //! сделать разное
       passwordHash: ''
