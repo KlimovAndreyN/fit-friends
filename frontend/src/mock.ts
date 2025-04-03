@@ -60,6 +60,14 @@ export const MOCK_SPECIAL_OFFERS = [
     picturePath: '/img/content/promo-3.png',
     price: 1800,
     oldPrice: 2200
+  },
+  {
+    id: 'id-54',
+    title: 'Full Body Stretch - 2',
+    description: 'Горячие предложения на\u00A0Комплекс упражнений на\u00A0растяжку всего тела для новичков',
+    picturePath: '/img/content/promo-3.png',
+    price: 2000,
+    oldPrice: 2500
   }
 ];
 

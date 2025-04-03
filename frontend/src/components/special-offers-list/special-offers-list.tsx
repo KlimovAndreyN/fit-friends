@@ -8,9 +8,12 @@ import { MOCK_SPECIAL_OFFERS } from '../../mock';
 const CHANGE_SLIDER_TIMEOUT = 7000;
 
 function SpecialOffersList(): JSX.Element {
-  //! всегда только 3 штуки, отбирать на кленете...
-  //! если меньше?
+  //! всегда только 3 штуки?, отбирать на кленете...
+  //! если меньше? 2 - как 3; 1 - нет кнопок; 0 - пусто
+  //! может немного разбить
   //! если больше, то можно показывать разные при повторном входе на главную
+
+  const specialOffers = MOCK_SPECIAL_OFFERS;
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
 
   useEffect(() => {
@@ -28,7 +31,7 @@ function SpecialOffersList(): JSX.Element {
   return (
     <ul className="special-offers__list">
       {
-        MOCK_SPECIAL_OFFERS.map(
+        specialOffers.map(
           (offer, index) => {
             const { id, title, description, picturePath, price, oldPrice } = offer;
             const isActive = index === activeSliderIndex;
@@ -55,22 +58,26 @@ function SpecialOffersList(): JSX.Element {
                   <div className="promo-slider__bottom-container">
                     <div className="promo-slider__slider-dots">
                       {
-                        MOCK_SPECIAL_OFFERS.map(
-                          (_, buttonIndex) => {
-                            const key = `dot-button-${buttonIndex}`;
-                            const className = (buttonIndex === activeSliderIndex)
-                              ? 'promo-slider__slider-dot--active promo-slider__slider-dot'
-                              : 'promo-slider__slider-dot';
+                        (specialOffers.length > 1)
+                          ?
+                          specialOffers.map(
+                            (_, buttonIndex) => {
+                              const key = `dot-button-${buttonIndex}`;
+                              const className = (buttonIndex === activeSliderIndex)
+                                ? 'promo-slider__slider-dot--active promo-slider__slider-dot'
+                                : 'promo-slider__slider-dot';
 
-                            const handleDotButtonClick = () => {
-                              setActiveSliderIndex(buttonIndex);
-                            };
+                              const handleDotButtonClick = () => {
+                                setActiveSliderIndex(buttonIndex);
+                              };
 
-                            return (
-                              <button key={key} className={className} aria-label={`${buttonIndex + 1} слайд`} onClick={handleDotButtonClick} />
-                            );
-                          }
-                        )
+                              return (
+                                <button key={key} className={className} aria-label={`${buttonIndex + 1} слайд`} onClick={handleDotButtonClick} />
+                              );
+                            }
+                          )
+                          :
+                          null
                       }
                     </div>
                     <div className="promo-slider__price-container">

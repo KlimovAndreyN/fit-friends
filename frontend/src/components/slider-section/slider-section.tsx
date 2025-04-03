@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
+
+import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 
 type SliderSectionProps = {
   title: string;
@@ -13,10 +15,8 @@ type SliderSectionProps = {
 }
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
-  //! перенести на этот-единый слайдер SpecialForYouSection и LookForCompanySection
-  //! В случае отсутствия контента для любого из блоков, отображается текст-заглушка: «Скоро здесь появится что-то полезное».
+  //! перенести на этот-единый слайдер LookForCompanySection
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
-
   const { title, showAllLink, sectionClassName, childrens, slidesCount } = props;
   const navigate = useNavigate();
   const swiperRef = useRef<SwiperRef>(null);
@@ -39,61 +39,70 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
     <section className={sectionClassName}>
       <div className="container">
         <div className={`${sectionClassName}__wrapper`}>
-          <div className={`${sectionClassName}__title-wrapper`}>
-            <h2 className={`${sectionClassName}__title`}>{title}</h2>
-            {
-              (showAllLink)
-                ?
-                <button
-                  className={`btn-flat ${sectionClassName}__button`}
-                  type="button"
-                  onClick={handleshowAllButtonClick}
-                >
-                  <span>Смотреть все</span>
-                  <svg width="14" height="10" aria-hidden="true">
-                    <use xlinkHref="#arrow-right"></use>
-                  </svg>
-                </button>
-                :
-                null
-            }
+          {
+            (childrens.length)
+              ?
+              <Fragment>
+                <div className={`${sectionClassName}__title-wrapper`}>
+                  <h2 className={`${sectionClassName}__title`}>{title}</h2>
+                  {
+                    (showAllLink)
+                      ?
+                      <button
+                        className={`btn-flat ${sectionClassName}__button`}
+                        type="button"
+                        onClick={handleshowAllButtonClick}
+                      >
+                        <span>Смотреть все</span>
+                        <svg width="14" height="10" aria-hidden="true">
+                          <use xlinkHref="#arrow-right"></use>
+                        </svg>
+                      </button>
+                      :
+                      null
+                  }
 
-            <div className={`${sectionClassName}__controls`}>
-              <button
-                className="btn-icon popular-trainings__control"
-                type="button"
-                aria-label="previous"
-                onClick={handlePreviousButtonClick}
-              >
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-left"></use>
-                </svg>
-              </button>
-              <button
-                className={`btn-icon ${sectionClassName}__control`}
-                type="button"
-                aria-label="next"
-                onClick={handleNextButtonClick}
-              >
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-right"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-          <Swiper slidesPerView={slidesCount} ref={swiperRef}>
-            <ul className={`${sectionClassName}__list`}>
-              {
-                childrens.map(
-                  (children) => (
-                    <SwiperSlide key={children.key}>
-                      {children}
-                    </SwiperSlide>
-                  )
-                )
-              }
-            </ul>
-          </Swiper>
+                  <div className={`${sectionClassName}__controls`}>
+                    <button
+                      className="btn-icon popular-trainings__control"
+                      type="button"
+                      aria-label="previous"
+                      onClick={handlePreviousButtonClick}
+                    >
+                      <svg width="16" height="14" aria-hidden="true">
+                        <use xlinkHref="#arrow-left"></use>
+                      </svg>
+                    </button>
+                    <button
+                      className={`btn-icon ${sectionClassName}__control`}
+                      type="button"
+                      aria-label="next"
+                      onClick={handleNextButtonClick}
+                    >
+                      <svg width="16" height="14" aria-hidden="true">
+                        <use xlinkHref="#arrow-right"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <Swiper slidesPerView={slidesCount} ref={swiperRef}>
+                  <ul className={`${sectionClassName}__list`}>
+                    {
+                      childrens.map(
+                        (children) => (
+                          <SwiperSlide key={children.key}>
+                            {children}
+                          </SwiperSlide>
+                        )
+                      )
+                    }
+                  </ul>
+                </Swiper>
+              </Fragment>
+              :
+              <ThumbnailSpecGym />
+
+          }
         </div>
       </div>
     </section>
