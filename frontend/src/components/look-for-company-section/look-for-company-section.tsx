@@ -6,10 +6,12 @@ import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 import { MOCK_USERS } from '../../mock';
 
 function LookForCompanySection(): JSX.Element {
+  //! переделать на SliderSection!
   //! сделать листание, добавленные тренировки вывелись правее
   //! заголовок с кнопками похож на всех трех блоках SpecialForYouSection, PopularTrainingSection и LookForCompanySection
   //! 'Смотреть все' - нужен раздел
   //! пока заглушку - наверное 2 или 3й этап
+  //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
 
   return (
