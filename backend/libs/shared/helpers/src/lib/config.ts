@@ -1,8 +1,8 @@
 import Joi, { ObjectSchema } from 'joi';
 
 import {
-  ConfigAlias, DEFAULT_MONGODB_PORT, DEFAULT_PORT, DEFAULT_POSTGRES_PORT,
-  DEFAULT_RABBIT_PORT, DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
+  DEFAULT_RABBIT_PORT, DEFAULT_MONGODB_PORT, DEFAULT_PORT,
+  ConfigAlias, DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
 } from '@backend/shared/core';
 
 import { getPort } from './common';
@@ -34,11 +34,6 @@ export interface MongoDbConfig {
 
 export interface PostgresConfig {
   postgres: {
-    host: string;
-    port: number;
-    user: string;
-    password: string;
-    database: string;
     databaseUrl: string;
   }
 }
@@ -96,11 +91,6 @@ export const mongoDbValidationSchema = {
 
 export const postgresValidationSchema = {
   postgres: Joi.object({
-    host: Joi.string().valid().hostname().required().label(ConfigAlias.PostgresHostEnv),
-    port: Joi.number().port().required().label(ConfigAlias.PostgresPortEnv),
-    user: Joi.string().required().label(ConfigAlias.PostgresPortEnv),
-    password: Joi.string().required().label(ConfigAlias.PostgresPasswordEnv),
-    database: Joi.string().required().label(ConfigAlias.PostgresDatabaseEnv),
     databaseUrl: Joi.string().required().label(ConfigAlias.PostgresDatabaseUrlEnv)
   })
 };
@@ -172,11 +162,6 @@ export function getMongoDbConfig(): MongoDbConfig {
 export function getPostgresConfig(): PostgresConfig {
   const config: PostgresConfig = {
     postgres: {
-      host: process.env[ConfigAlias.PostgresHostEnv],
-      port: getPort(ConfigAlias.PostgresPortEnv, DEFAULT_POSTGRES_PORT),
-      user: process.env[ConfigAlias.PostgresUserEnv],
-      password: process.env[ConfigAlias.PostgresPasswordEnv],
-      database: process.env[ConfigAlias.PostgresDatabaseEnv],
       databaseUrl: process.env[ConfigAlias.PostgresDatabaseUrlEnv]
     }
   };

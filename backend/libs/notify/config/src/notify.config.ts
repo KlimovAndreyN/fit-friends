@@ -14,7 +14,7 @@ export interface NotifyConfig extends ApplicationConfig, MongoDbConfig, RabbitSu
 
 const validationSchema = Joi.object({
   ...applicationValidationSchema,
-  fitFriendsUrlEnv: Joi.string().required().label(ConfigAlias.fitFriendsUrlEnv),
+  fitFriendsUrlEnv: Joi.string().required().label(ConfigAlias.FitFriendsUrlEnv),
   ...mongoDbValidationSchema,
   ...rabbitSubscriberValidationSchema,
   ...mailSmtpValidationSchema
@@ -23,7 +23,7 @@ const validationSchema = Joi.object({
 function getConfig(): NotifyConfig {
   const config: NotifyConfig = {
     ...getApplicationConfig(),
-    fitFriendsUrlEnv: process.env[ConfigAlias.fitFriendsUrlEnv],
+    fitFriendsUrlEnv: process.env[ConfigAlias.FitFriendsUrlEnv],
     ...getMongoDbConfig(),
     ...getRabbitSubscriberConfig(),
     ...getMailSmtpConfig()
