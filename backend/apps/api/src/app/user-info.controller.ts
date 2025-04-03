@@ -12,7 +12,7 @@ import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto,
-  UserRole, UserAvatarOption, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
+  Role, UserAvatarOption, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
   Specialization, UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -46,7 +46,7 @@ export class UserInfoController {
     return existQuestionnaire;
   }
 
-  @Post(joinUrl(QuestionnaireRoute.Questionnaire, UserRole.Sportsman))
+  @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Sportsman))
   public async create(
     @Body() dto: CreateQuestionnaireSportsmanDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
