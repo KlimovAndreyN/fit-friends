@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
+import { AVATAR_FILE_PROPERTY, ICreateUserDto } from '../interfaces/dto/i-create-user.dto';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class CreateUserDto
@@ -11,7 +11,7 @@ export class CreateUserDto
       'email',
       'password',
       'birthday',
-      'avatarFile',
+      AVATAR_FILE_PROPERTY,
       'location',
       'backgroundPath',
       'gender',

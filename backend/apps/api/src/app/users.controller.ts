@@ -11,7 +11,7 @@ import {
   AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
   RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, TokensRdo,
-  UserAvatarOption, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
+  AVATAR_FILE_PROPERTY, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
   UserRdo, ApiApiResponse
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
@@ -95,7 +95,7 @@ export class UsersController {
   @ApiBearerAuth(BearerAuth.AccessToken)
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckNotAuthGuard)
-  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
+  @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Post(AccountRoute.Register)
   public async register(
     @Body() dto: CreateUserDto,

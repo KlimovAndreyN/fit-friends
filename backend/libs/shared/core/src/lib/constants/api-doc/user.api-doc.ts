@@ -6,7 +6,7 @@ import { User } from '../../interfaces/user.interface';
 import { TokenPayload } from '../../interfaces/token-payload.interface';
 import { IUserRdo } from '../../interfaces/rdo/i-user.rdo';
 import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
-import { ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
+import { AVATAR_FILE_PROPERTY, ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
 import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
 import { Location } from '../../types/location.enum';
@@ -69,7 +69,7 @@ export class UserApiDoc {
   @ApiProperty(UserApiProperty.AvatarFile)
   @Expose()
   @IsOptional()
-  public avatarFile?: ICreateUserDto['avatarFile'];
+  public [AVATAR_FILE_PROPERTY]?: ICreateUserDto['avatarFile'];
 
 
   @ApiProperty(UserApiProperty.EmptyAvatarFile)

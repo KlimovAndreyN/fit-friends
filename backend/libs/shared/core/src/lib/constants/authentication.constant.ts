@@ -9,12 +9,6 @@ export const AuthenticationMessage = {
   RequireLogout: 'Require logout.'
 } as const;
 
-export const UserAvatarOption = {
-  KEY: 'avatarFile',
-  MAX_SIZE: 1024 * 1024,
-  MIME_TYPES: ['image/jpg', 'image/jpeg', 'image/png']
-} as const;
-
 export const UserValidation = {
   Name: {
     Regexp: /^[a-zA-Zа-яА-ЯёЁ]{1,15}$/
@@ -28,12 +22,8 @@ export const UserValidation = {
     MaxLength: 140
   },
   AvatarFile: {
-    Type: { fileType: UserAvatarOption.MIME_TYPES.join('|') },
-    MaxSize: { maxSize: UserAvatarOption.MAX_SIZE },
-    Build: {
-      fileIsRequired: UserApiProperty.AvatarFile.required,
-      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
-    }
+    Types: ['image/jpg', 'image/jpeg', 'image/png'],
+    MaxSize: 1024 * 1024
   },
   BackgroundPath: {
     Regexp: /\.(jpeg|jpg|png)$/
@@ -57,6 +47,9 @@ export const QuestionnaireValidation = {
 
 export const parseUserAvatarFilePipeBuilder =
   new ParseFilePipeBuilder()
-    .addFileTypeValidator(UserValidation.AvatarFile.Type)
-    .addMaxSizeValidator(UserValidation.AvatarFile.MaxSize)
-    .build(UserValidation.AvatarFile.Build);
+    .addFileTypeValidator({ fileType: UserValidation.AvatarFile.Types.join('|') })
+    .addMaxSizeValidator({ maxSize: UserValidation.AvatarFile.MaxSize })
+    .build({
+      fileIsRequired: UserApiProperty.AvatarFile.required,
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+    });

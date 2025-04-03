@@ -1,7 +1,7 @@
-import { ICreateUserDto } from './i-create-user.dto';
+import { AVATAR_FILE_PROPERTY, ICreateUserDto } from './i-create-user.dto';
 import { IUpdateUserWithFileIdDto } from './i-update-user-with-file-id.dto';
 
 export interface IUpdateUserDto extends Omit<IUpdateUserWithFileIdDto, 'avatarFileId'> {
-  avatarFile?: ICreateUserDto['avatarFile'];
+  [AVATAR_FILE_PROPERTY]?: ICreateUserDto['avatarFile'];
   emptyAvatarFile?: boolean;
 }

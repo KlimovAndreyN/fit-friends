@@ -36,6 +36,8 @@ export { UpdateUserInfoDto } from './lib/dto/update-user-info.dto';
 export { UpdateUserWithFileIdDto } from './lib/dto/update-user-with-file-id.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
+export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
+
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Comment } from './lib/interfaces/comment.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';

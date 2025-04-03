@@ -12,7 +12,7 @@ import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto,
-  Role, UserAvatarOption, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
+  Role, AVATAR_FILE_PROPERTY, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
   Specialization, UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -83,7 +83,7 @@ export class UserInfoController {
 
   @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor(UserAvatarOption.KEY))
+  @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Patch()
   public async update(
     @Body() dto: UpdateUserInfoDto,
