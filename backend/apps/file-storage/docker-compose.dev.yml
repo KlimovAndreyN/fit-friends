@@ -1,0 +1,44 @@
+# docker compose --file ./docker-compose.dev.yml --env-file ./docker-compose.dev.env up -d
+name: ${APP_NAME}
+networks:
+  file-storage.networks:
+     driver: bridge
+volumes:
+  file-storage.mongo:
+services:
+  file-storage.mongo:
+    image: mongo:4.4
+    container_name: file-storage.mongo
+    hostname: file-storage.mongo
+    restart: always
+    volumes:
+      - file-storage.mongo:/data/db
+      - file-storage.mongo:/data/configdb
+    networks:
+      - file-storage.networks
+    ports:
+      - ${MONGODB_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/${MONGODB_AUTHBASE} --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  file-storage.mongo.ui:
+    image: mongo-express:1.0.2-20
+    container_name: file-storage.mongo.ui
+    hostname: file-storage.mongo.ui
+    restart: always
+    networks:
+      - file-storage.networks
+    ports:
+      - ${MONGODB_EXPRESS_PORT}:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGODB_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_AUTHBASE}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@file-storage.mongo:27017/

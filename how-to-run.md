@@ -17,10 +17,14 @@ cp api/.env-example api/.env
 cp seed/.env-example seed/.env
 cd ../../frontend
 cp .env-example .env
+cd ..
 
 # добавить docker-compose
-cd ..
-docker compose --file docker-compose.dev.yml up -d
+cd backend
+docker compose --file ./apps/file-storage/docker-compose.dev.yml --env-file ./apps/file-storage/docker-compose.dev.env up -d
+docker compose --file ./apps/notify/docker-compose.dev.yml --env-file ./apps/notify/docker-compose.dev.env up -d
+docker compose --file ./apps/account/docker-compose.dev.yml --env-file ./apps/account/docker-compose.dev.env up -d
+docker compose --file ./apps/fit/docker-compose.dev.yml --env-file ./apps/fit/docker-compose.dev.env up -d
 
 # установка зависимостей для backend
 cd backend
