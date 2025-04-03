@@ -37,13 +37,7 @@ export enum ConfigAlias {
   AppMongoDbDatabase = `${AppMongoDb}.${Database}`,
   AppMongoDbAuthBase = `${AppMongoDb}.${AuthBase}`,
 
-  PostgresEnv = 'POSTGRES',
-  PostgresHostEnv = `${PostgresEnv}_${HostEnv}`,
-  PostgresPortEnv = `${PostgresEnv}_${PortEnv}`,
-  PostgresUserEnv = `${PostgresEnv}_${UserEnv}`,
-  PostgresPasswordEnv = `${PostgresEnv}_${PasswordEnv}`,
-  PostgresDatabaseEnv = `${PostgresEnv}_${DatabaseEnv}`,
-  PostgresDatabaseUrlEnv = 'DATABASE_URL',
+  PostgresDatabaseUrlEnv = 'POSTGRES_DATABASE_URL', // иcпользуется в prisma - npx nx run fit:db:generate
 
   AppPostgres = `${Application}.postgres`,
   AppPostgresHost = `${AppPostgres}.${Host}`,
@@ -102,5 +96,7 @@ export enum ConfigAlias {
   StaticFileServiceUrlEnv = `STATIC_FILE_${ServiceUrlEnv}`,
   FitServiceUrlEnv = `FIT_${ServiceUrlEnv}`,
   //
-  fitFriendsUrlEnv = `FIT_FRIENDS_URL`
+  FitFriendsUrlEnv = `FIT_FRIENDS_URL`,
+  //
+  ResetBeforeSeedEnv = `RESET_BEFORE_SEED`
 }

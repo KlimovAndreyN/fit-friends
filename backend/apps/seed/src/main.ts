@@ -1,6 +1,7 @@
 import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
+import { ConfigAlias } from '@backend/shared/core';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
@@ -16,11 +17,12 @@ async function bootstrap() {
   //! и при запуске из дист, можно не указывать env-файл, может есть дополнительный ключ к --env-file... env-parse?
   // может оставить запуск через serve, все подхватывает нормально...
   const app = await NestFactory.create(AppModule);
-  const resetBeforeSeed = process.env['RESET_BEFORE_SEED'] === 'true';
+  const resetBeforeSeed = process.env[ConfigAlias.ResetBeforeSeedEnv] === 'true';
+  const databaseUrlEnv = ConfigAlias.PostgresDatabaseUrlEnv;
 
   Logger.log('Seed runing...');
   Logger.log(`Reset before seed is ${resetBeforeSeed}`);
-  Logger.log(`Fit postgres url: ${process.env['FIT_DATABASE_URL']}`); //! на ENV!
+  Logger.log(`Fit postgres url (${databaseUrlEnv}): ${process.env[databaseUrlEnv]}`);
 
   try {
     const sportsmans = await generateSportsmans(app.get(FitUserRepository), resetBeforeSeed);
