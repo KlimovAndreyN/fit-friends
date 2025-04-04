@@ -87,17 +87,17 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
             ? null
             : options.map(
               //! а есть стиль для подсветки выбранного значения?
-              (option) => (
-                <li
-                  key={option.value}
-                  className={`${mainClassName}__item`}
-                  onClick={() => {
-                    handleListItemClick(option);
-                  }}
-                >
-                  {titlePrefix + option.title}
-                </li>
-              )
+              (option) => {
+                const handleClick = () => {
+                  handleListItemClick(option);
+                };
+
+                return (
+                  <li key={option.value} className={`${mainClassName}__item`} onClick={handleClick}>
+                    {titlePrefix + option.title}
+                  </li>
+                );
+              }
             )
         }
       </ul>

@@ -1,28 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-
 import BackButton from '../back-button/back-button';
 
 function TrainingCatalogForm(): JSX.Element {
   //! проверить консоль браузера на ошибки
-
-  const navigate = useNavigate();
 
   return (
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
         <BackButton className='gym-catalog-form' />
-        <button
-          className="btn-flat btn-flat--underlined gym-catalog-form__btnback"
-          type="button"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <svg width="14" height="10" aria-hidden="true">
-            <use xlinkHref="#arrow-left"></use>
-          </svg><span>Назад</span>
-        </button>
         <h3 className="gym-catalog-form__title">Фильтры</h3>
         <form className="gym-catalog-form__form">
           <div className="gym-catalog-form__block gym-catalog-form__block--price">

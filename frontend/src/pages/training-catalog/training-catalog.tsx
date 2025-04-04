@@ -12,6 +12,8 @@ function TrainingCatalog(): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! заголовок в нижнем регистре? или или там стили?
 
+  const trainings = MOCK_TRAININGS;
+
   return (
     <Fragment>
       <Header title={PageTitle.TrainingCatalog} />
@@ -24,12 +26,16 @@ function TrainingCatalog(): JSX.Element {
               <div className="training-catalog">
                 <ul className="training-catalog__list">
                   {
-                    MOCK_TRAININGS.map(
+                    trainings.map(
                       (training) => {
                         //! временно, потом передать training и в одну строку
                         const { id } = training;
 
-                        return <TrainingCard prefixClassName='training-catalog' trainingId={id} key={id} />;
+                        return (
+                          <li className='training-catalog__item' key={id}>
+                            <TrainingCard trainingId={id} />
+                          </li>
+                        );
                       }
                     )
                   }
