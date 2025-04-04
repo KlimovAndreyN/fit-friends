@@ -1,33 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import BackButton from '../back-button/back-button';
 
 import { MOCK_REVIEWS } from '../../mock';
 import { REVIEWS_ID } from '../../const';
 
-function Reviews(): JSX.Element {
-  //! кнопка назад в отдельный компонент?, может там и прокручивать? еще есть на каталоге тренировок
+function ReviewsPanel(): JSX.Element {
   //! если нет аватарки пользователь но вывести заглушку из профиля, возможно нужен отдельный компонет...
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! отзывы прокрутка или отображение последних? что поТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
 
   const reviews = MOCK_REVIEWS;
-  const navigate = useNavigate();
-
-  const handleBackButtonClick = () => {
-    navigate(-1);
-  };
 
   return (
     <aside className="reviews-side-bar">
-      <button
-        className="btn-flat btn-flat--underlined reviews-side-bar__back"
-        type="button"
-        onClick={handleBackButtonClick}
-      >
-        <svg width="14" height="10" aria-hidden="true">
-          <use xlinkHref="#arrow-left"></use>
-        </svg><span>Назад</span>
-      </button>
+      <BackButton className='reviews-side-bar' />
       <h2 className="reviews-side-bar__title" id={REVIEWS_ID}>Отзывы</h2>
       <ul className="reviews-side-bar__list">
         {
@@ -64,4 +50,4 @@ function Reviews(): JSX.Element {
   );
 }
 
-export default Reviews;
+export default ReviewsPanel;

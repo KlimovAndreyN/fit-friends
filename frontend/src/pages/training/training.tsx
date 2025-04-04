@@ -2,8 +2,8 @@ import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Header from '../../components/header/header';
+import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import NotFound from '../not-found/not-found';
-import Reviews from '../reviews/reviews';
 
 import { PageTitle } from '../../const';
 import { MOCK_TRAININGS } from '../../mock';
@@ -35,7 +35,7 @@ function Training(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Карточка тренировки</h1>
-              <Reviews />
+              <ReviewsPanel />
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>
