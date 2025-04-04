@@ -6,20 +6,21 @@ import 'swiper/css';
 
 import SliderButton from '../slider-button/slider-button';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
+import classNames from 'classnames';
 
 type SliderSectionProps = {
   title: string;
   showAllLink?: string;
+  isShowAllLight?: boolean;
   sectionClassName: string;
   childrens: JSX.Element[];
   slidesCount: number;
 }
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
-  //! перенести на этот-единый слайдер LookForCompanySection
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
 
-  const { title, showAllLink, sectionClassName, childrens, slidesCount } = props;
+  const { title, showAllLink, isShowAllLight, sectionClassName, childrens, slidesCount } = props;
   const swiperRef = useRef<SwiperRef>(null);
   const navigate = useNavigate();
 
@@ -39,14 +40,14 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
 
   const showAllSliderButtonOption = {
     title: 'Смотреть все',
-    className: `btn-flat ${sectionClassName}__button`,
+    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${sectionClassName}__button`),
     onClick: handleshowAllButtonClick,
     xlinkHref: '#arrow-right',
     width: 14,
     height: 10
   };
   const previousSliderButtonOption = {
-    className: `btn-icon ${sectionClassName}__control`,
+    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${sectionClassName}__control`),
     onClick: handlePreviousButtonClick,
     xlinkHref: '#arrow-left',
     width: 16,

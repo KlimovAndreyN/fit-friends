@@ -4,7 +4,7 @@ import SliderSection from '../slider-section/slider-section';
 import { AppRoute } from '../../const';
 import { MOCK_TRAININGS } from '../../mock';
 
-const DEFAULT_SLIDE_COUNT = 4;
+const SLIDE_COUNT = 4;
 
 function PopularTrainingSection(): JSX.Element {
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
@@ -29,7 +29,7 @@ function PopularTrainingSection(): JSX.Element {
       title='Популярные тренировки'
       showAllLink={AppRoute.TrainingCatalog}
       sectionClassName={className}
-      slidesCount={DEFAULT_SLIDE_COUNT}
+      slidesCount={SLIDE_COUNT}
       childrens={childrens}
     />
   );

@@ -5,7 +5,7 @@ import SliderSection from '../slider-section/slider-section';
 import { getTrainingRoute } from '../../utils/common';
 import { MOCK_OFFERS } from '../../mock';
 
-const DEFAULT_SLIDE_COUNT = 3;
+const SLIDE_COUNT = 3;
 
 function SpecialForYouSection(): JSX.Element {
   //! перепроверить разметку, шрифты, рус и eng
@@ -36,7 +36,7 @@ function SpecialForYouSection(): JSX.Element {
     <SliderSection
       title='Популярные тренировки'
       sectionClassName={className}
-      slidesCount={DEFAULT_SLIDE_COUNT}
+      slidesCount={SLIDE_COUNT}
       childrens={childrens}
     />
   );
