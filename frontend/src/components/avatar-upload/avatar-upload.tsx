@@ -2,12 +2,12 @@ import { Fragment, MouseEvent, useEffect, useRef, useState } from 'react';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
-import { onFileInputChange } from '../../types/types';
+import { OnFileInputChange } from '../../types/types';
 
 type AvatarUploadProps = {
   name: string;
   path?: string;
-  onChange?: onFileInputChange;
+  onChange?: OnFileInputChange;
   forPersonalAccount?: boolean;
   isShowButtons?: boolean;
   readonly?: boolean;

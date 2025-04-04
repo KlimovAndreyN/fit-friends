@@ -1,12 +1,12 @@
 import { ChangeEvent, MutableRefObject } from 'react';
 
-import { onFileInputChange } from '../../types/types';
+import { OnFileInputChange } from '../../types/types';
 
 type ImageUploadInputProps = {
   name?: string;
   className?: string;
   acceptTypes?: string;
-  onChange: onFileInputChange;
+  onChange: OnFileInputChange;
   readonly?: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }

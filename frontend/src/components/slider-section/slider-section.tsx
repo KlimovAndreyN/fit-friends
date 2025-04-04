@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import { Fragment, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 
+import SliderButton from '../slider-button/slider-button';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 
 type SliderSectionProps = {
@@ -17,9 +18,10 @@ type SliderSectionProps = {
 function SliderSection(props: SliderSectionProps): JSX.Element {
   //! перенести на этот-единый слайдер LookForCompanySection
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
+
   const { title, showAllLink, sectionClassName, childrens, slidesCount } = props;
-  const navigate = useNavigate();
   const swiperRef = useRef<SwiperRef>(null);
+  const navigate = useNavigate();
 
   const handleshowAllButtonClick = () => {
     if (showAllLink) {
@@ -35,6 +37,27 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
     swiperRef.current?.swiper.slideNext();
   };
 
+  const showAllSliderButtonOption = {
+    title: 'Смотреть все',
+    className: `btn-flat ${sectionClassName}__button`,
+    onClick: handleshowAllButtonClick,
+    xlinkHref: '#arrow-right',
+    width: 14,
+    height: 10
+  };
+  const previousSliderButtonOption = {
+    className: `btn-icon ${sectionClassName}__control`,
+    onClick: handlePreviousButtonClick,
+    xlinkHref: '#arrow-left',
+    width: 16,
+    height: 14
+  };
+  const nextSliderButtonOption = {
+    ...previousSliderButtonOption,
+    onClick: handleNextButtonClick,
+    xlinkHref: '#arrow-right'
+  };
+
   return (
     <section className={sectionClassName}>
       <div className="container">
@@ -46,43 +69,11 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                 <div className={`${sectionClassName}__title-wrapper`}>
                   <h2 className={`${sectionClassName}__title`}>{title}</h2>
                   {
-                    (showAllLink)
-                      ?
-                      <button
-                        className={`btn-flat ${sectionClassName}__button`}
-                        type="button"
-                        onClick={handleshowAllButtonClick}
-                      >
-                        <span>Смотреть все</span>
-                        <svg width="14" height="10" aria-hidden="true">
-                          <use xlinkHref="#arrow-right"></use>
-                        </svg>
-                      </button>
-                      :
-                      null
+                    (showAllLink) ? <SliderButton {...showAllSliderButtonOption} /> : null
                   }
-
                   <div className={`${sectionClassName}__controls`}>
-                    <button
-                      className="btn-icon popular-trainings__control"
-                      type="button"
-                      aria-label="previous"
-                      onClick={handlePreviousButtonClick}
-                    >
-                      <svg width="16" height="14" aria-hidden="true">
-                        <use xlinkHref="#arrow-left"></use>
-                      </svg>
-                    </button>
-                    <button
-                      className={`btn-icon ${sectionClassName}__control`}
-                      type="button"
-                      aria-label="next"
-                      onClick={handleNextButtonClick}
-                    >
-                      <svg width="16" height="14" aria-hidden="true">
-                        <use xlinkHref="#arrow-right"></use>
-                      </svg>
-                    </button>
+                    <SliderButton {...previousSliderButtonOption} />
+                    <SliderButton {...nextSliderButtonOption} />
                   </div>
                 </div>
                 <Swiper slidesPerView={slidesCount} ref={swiperRef}>
@@ -101,7 +92,6 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
               </Fragment>
               :
               <ThumbnailSpecGym />
-
           }
         </div>
       </div>
