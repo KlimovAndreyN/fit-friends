@@ -81,12 +81,13 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                 <ul className={`${sectionClassName}__list`}>
                   <Swiper slidesPerView={slidesCount} ref={swiperRef}>
                     {
-                      // попробовать сюда перенесмти li и сдесь выставить style={{ height: '100%' }}
                       childrens.map(
                         (children) => (
-                          <SwiperSlide key={children.key} style={{ height: '100%' }}>
-                            {children}
-                          </SwiperSlide>
+                          <li className={`${sectionClassName}__item`} key={children.key} >
+                            <SwiperSlide>
+                              {children}
+                            </SwiperSlide>
+                          </li>
                         )
                       )
                     }
