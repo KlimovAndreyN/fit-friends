@@ -29,6 +29,12 @@ aaa@aaa.aaa
     history.push
     useNavigate
 
+  {() = {...
+  {(...
+  
+  navigate(-1)
+  
+
   /fronted-index
   from 'libs/shared/....
 --------------

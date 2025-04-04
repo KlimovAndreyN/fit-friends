@@ -20,7 +20,7 @@ function LookForCompanySection(): JSX.Element {
       const { id, name, avatarPath, location, specializations } = user;
 
       return (
-        <li className={`${className}__item`} key={id}>
+        <li className={`${className}__item`} key={id} style={{ height: '100%' }}>
           <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark">
             <div className="thumbnail-user__image">
               <picture>

@@ -74,7 +74,7 @@ export const MOCK_SPECIAL_OFFERS = [
 export const MOCK_TRAININGS = [
   {
     id: 'id-0',
-    title: 'run, forrest, run',
+    title: 'run, forrest, run, forrest, run',
     specialization: SpecializationTitle[Specialization.Running],
     calorie: 500,
     description: 'Узнайте правильную технику бега, развивайте выносливость и\u00A0откройте для себя все секреты длительных пробежек.',
@@ -155,7 +155,7 @@ export const MOCK_TRAININGS = [
   }
 ];
 
-export const MOCK_USERS: {
+export const MOCK_USERS1: {
   id: string;
   name: string;
   location: string;
@@ -163,9 +163,9 @@ export const MOCK_USERS: {
   avatarPath: string;
 }[] = [];
 //! 2й или 3й этап
-/*
+/* */
 export const MOCK_USERS = [
-    {
+  {
     id: 'id-91',
     name: 'Иван',
     location: 'Чёрная речка',
@@ -223,7 +223,7 @@ export const MOCK_USERS = [
     avatarPath: '/img/content/thumbnails/user-05.jpg'
   }
 ];
-*/
+/**/
 
 export const MOCK_REVIEWS = [
   {

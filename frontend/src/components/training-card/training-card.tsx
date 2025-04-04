@@ -28,7 +28,7 @@ function TrainingCard({ prefixClassName, trainingId }: TrainingCardProps): JSX.E
   const link = getTrainingRoute(id);
 
   return (
-    <li className={className} key={id}>
+    <li className={className} key={id} style={{ height: '100%' }}>
       <div className="thumbnail-training">
         <div className="thumbnail-training__inner">
           <div className="thumbnail-training__image">
