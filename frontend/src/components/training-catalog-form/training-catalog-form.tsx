@@ -1,14 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 
+import BackButton from '../back-button/back-button';
+
 function TrainingCatalogForm(): JSX.Element {
-  //! кнопка назад в отдельный компонент?, может там и прокручивать? еще будет на странице с тренировкой
   //! проверить консоль браузера на ошибки
+
   const navigate = useNavigate();
 
   return (
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
+        <BackButton className='gym-catalog-form' />
         <button
           className="btn-flat btn-flat--underlined gym-catalog-form__btnback"
           type="button"

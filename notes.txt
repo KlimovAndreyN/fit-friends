@@ -29,10 +29,6 @@ aaa@aaa.aaa
     history.push
     useNavigate
 
-фокус на отзывы, а так можно? добавить параметр тогда
-
-слайдер переместить в список и элементы в строки
-
   /fronted-index
   from 'libs/shared/....
 --------------

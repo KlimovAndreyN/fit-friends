@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { getTrainingRoute } from '../../utils/common';
 import { MOCK_TRAININGS } from '../../mock';
+import { REVIEWS_ID } from '../../const';
 
 type TrainingCardProps = {
   prefixClassName: string;
@@ -12,7 +13,8 @@ type TrainingCardProps = {
 function TrainingCard({ prefixClassName, trainingId }: TrainingCardProps): JSX.Element {
   //! specialization в русские названия переделать при отображении
   //! заголовок в нижнем регистре? или или там стили?
-  //! куда ведут сслыка отзывы, тоже на тренировку?
+  //! куда ведут сслыка отзывы, тоже на тренировку? фокус на отзывы? - пока сдела #reviews, но не прокручивает на вверх... перепроверить!
+
   const className = `${prefixClassName}__item`;
 
   //! временно
@@ -63,7 +65,7 @@ function TrainingCard({ prefixClassName, trainingId }: TrainingCardProps): JSX.E
           </div>
           <div className="thumbnail-training__button-wrapper">
             <Link className="btn btn--small thumbnail-training__button-catalog" to={link}>Подробнее</Link>
-            <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={link}>Отзывы</Link>
+            <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={{ pathname: link, hash: REVIEWS_ID }} >Отзывы</Link>
           </div>
         </div>
       </div>

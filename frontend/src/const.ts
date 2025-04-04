@@ -23,6 +23,8 @@ export enum PageTitle {
 
 export const ID_PARAM = ':id';
 
+export const REVIEWS_ID = 'reviews';
+
 export enum AppRoute {
   Index = '/',
   Intro = '/intro',
