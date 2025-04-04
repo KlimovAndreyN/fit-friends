@@ -1,7 +1,4 @@
 function ThumbnailSpecGym(): JSX.Element {
-  //! разный текст и картинка? на разных страницах, сейчас поставил текст по ТЗ, есть блоки в ЛК тренера, ЛК спортсмена и главной, поискать еще есть ли где
-  // текст из ТЗ - "Скоро здесь появится что-то полезное"
-
   return (
     <div className="thumbnail-spec-gym">
       <div className="thumbnail-spec-gym__image">
@@ -11,11 +8,12 @@ function ThumbnailSpecGym(): JSX.Element {
         </picture>
       </div>
       {/*
-        //! закоментировано в маркапах
+        // закоментировано в маркапе
         <!-- <p class="thumbnail-spec-gym__type">Ближайший зал</p> -->
+        // ошибка в маркапе
         <div class="thumbnail-spec-gym__header", align ="center",>
       */}
-      <div className="thumbnail-spec-gym__header">
+      <div className="thumbnail-spec-gym__header" style={{ alignItems: 'center', justifyContent: 'center' }}>
         <h3 className="thumbnail-spec-gym__title">Скоро здесь появится что-то полезное</h3>
       </div>
     </div>
