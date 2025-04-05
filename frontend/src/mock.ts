@@ -1,6 +1,8 @@
 //! Удалить моки
 
 import { Specialization } from '@backend/shared/core';
+
+import { OfferType } from './types/types';
 import { SpecializationTitle } from './const';
 
 export const MOCK_OFFERS = [
@@ -36,7 +38,7 @@ export const MOCK_OFFERS = [
   }
 ];
 
-export const MOCK_SPECIAL_OFFERS = [
+export const MOCK_SPECIAL_OFFERS: OfferType[] = [
   {
     id: 'id-51',
     title: 'Fitball',

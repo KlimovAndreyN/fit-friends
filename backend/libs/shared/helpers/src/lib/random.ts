@@ -35,7 +35,7 @@ function getUniqueRandomNumbers(numbersCount: number, min: number, max: number):
 }
 
 export function getRandomUniqueItems<T>(items: T[], count: number): T[] {
-  const indexes: number[] = getUniqueRandomNumbers(count, 0, items.length);
+  const indexes: number[] = getUniqueRandomNumbers(count, 0, items.length - 1);
 
-  return items.filter((_, index) => (indexes.includes(index)));
+  return indexes.map((index) => (items[index]));
 }
