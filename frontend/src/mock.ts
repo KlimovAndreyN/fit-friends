@@ -73,7 +73,7 @@ export const MOCK_SPECIAL_OFFERS = [
 
 export const MOCK_TRAININGS = [
   {
-    id: 'id-0',
+    id: 'id-70',
     title: 'run, forrest, run, forrest, run',
     specialization: SpecializationTitle[Specialization.Running],
     calorie: 500,

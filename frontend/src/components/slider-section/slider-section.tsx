@@ -82,13 +82,18 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                   <Swiper slidesPerView={slidesCount} ref={swiperRef}>
                     {
                       childrens.map(
-                        (children) => (
-                          <li className={`${sectionClassName}__item`} key={children.key} >
-                            <SwiperSlide>
-                              {children}
-                            </SwiperSlide>
-                          </li>
-                        )
+                        (children) => {
+                          const itemKey = `item-${children.key || ''}`;
+                          const slideKey = `slide-${itemKey}`;
+
+                          return (
+                            <li className={`${sectionClassName}__item`} key={itemKey}>
+                              <SwiperSlide key={slideKey}>
+                                {children}
+                              </SwiperSlide>
+                            </li>
+                          );
+                        }
                       )
                     }
                   </Swiper>
