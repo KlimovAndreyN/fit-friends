@@ -155,15 +155,6 @@ export const MOCK_TRAININGS = [
   }
 ];
 
-export const MOCK_USERS1: {
-  id: string;
-  name: string;
-  location: string;
-  specializations: Specialization[];
-  avatarPath: string;
-}[] = [];
-//! 2й или 3й этап
-/* */
 export const MOCK_USERS = [
   {
     id: 'id-91',
@@ -223,7 +214,6 @@ export const MOCK_USERS = [
     avatarPath: '/img/content/thumbnails/user-05.jpg'
   }
 ];
-/**/
 
 export const MOCK_REVIEWS = [
   {

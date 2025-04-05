@@ -29,6 +29,14 @@ aaa@aaa.aaa
     history.push
     useNavigate
 
+seed
+  в helper..
+    utils.ts
+    random.ts
+  и задействовать на фронте
+  убрать на фронте дубли... joinUrl, getBearerAuthorization/`Bearer ${token}`
+  добавить getRandomUniqueItems для const specialOffers = MOCK_SPECIAL_OFFERS.slice(0, SLIDERS_COUNT);
+
   /fronted-index
   from 'libs/shared/....
 --------------
