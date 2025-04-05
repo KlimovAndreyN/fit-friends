@@ -1,6 +1,5 @@
 import { enumToArray } from './utils';
 
-//! функции есть на фронте, объеденить через хелпер
 export function getRandomNumber(min: number, max: number, numAfterDigit = 0): number {
   return +((Math.random() * (max - min)) + min).toFixed(numAfterDigit);
 }
@@ -13,7 +12,7 @@ export function getRandomItem<T>(items: T[]): T {
   return items[getRandomNumber(0, items.length - 1)];
 }
 
-export function getRandomEnumItem<T>(enumObj: T): T[keyof T] {
+export function getRandomEnumItem<T extends object>(enumObj: T): T[keyof T] {
   const enumItems = enumToArray(enumObj);
 
   return enumItems[getRandomNumber(0, enumItems.length - 1)];

@@ -1,11 +1,9 @@
 import { Logger } from '@nestjs/common';
 
 import { Duration, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
+import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems, enumToArray } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
-
-import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems } from './random';
-import { enumToArray } from './utils';
 
 import { MOCK_CALORIES, MOCK_SPECIALIZATIONS } from './mock-data';
 

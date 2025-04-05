@@ -1,9 +1,9 @@
 import { Logger } from '@nestjs/common';
 
 import { AuthUser, Location, Role } from '@backend/shared/core';
+import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { getRandomEnumItem, getRandomItem } from './random';
 import { MOCK_SPORTSMANS, MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS } from './mock-data';
 
 export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed: boolean): Promise<FitUserEntity[]> {

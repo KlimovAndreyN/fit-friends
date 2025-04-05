@@ -9,8 +9,8 @@ import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-use
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
 import { ICreateUserDto, Location, Gender, Role } from '@backend/shared/core';
+import { getRandomItem } from '@backend/shared/helpers';
 
-import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/user-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingUpExecuting } from '../../store/user-process/selectors';
