@@ -1,1 +1,1 @@
-export { joinUrl } from './lib/join-url';
+export { joinUrl } from './lib/utils';

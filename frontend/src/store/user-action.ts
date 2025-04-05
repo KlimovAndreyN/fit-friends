@@ -6,9 +6,9 @@ import {
   AccountRoute, ApiServiceRoute, ILoginUserDto, IUserRdo,
   ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto
 } from '@backend/shared/core';
+import { joinUrl } from '@backend/shared/helpers';
 
 import { isErrorNetwork } from '../utils/parse-axios-error';
-import { joinUrl } from '../utils/common';
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
 import { existQuestionnaire } from './user-info-action';
 import { multipartFormDataHeader } from '../const';

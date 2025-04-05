@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 
-import { joinUrl } from './common';
+import { joinUrl } from '@backend/shared/helpers';
 
 //! возможно на беке есть описание этого типа
 export type DataAxiosError = {

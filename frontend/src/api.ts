@@ -2,10 +2,11 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
 import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokensRdo } from '@backend/shared/core';
+import { joinUrl } from '@backend/shared/helpers';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
-import { joinUrl, getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
+import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { HttpCode } from './const';
 
 const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';

@@ -6,8 +6,8 @@ import {
   IUpdateUserInfoDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
   ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, Role
 } from '@backend/shared/core';
+import { joinUrl } from '@backend/shared/helpers';
 
-import { joinUrl } from '../utils/common';
 import { multipartFormDataHeader } from '../const';
 
 type Extra = {
