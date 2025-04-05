@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokensRdo } from '@backend/shared';
+import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokensRdo } from '@backend/shared/core';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';

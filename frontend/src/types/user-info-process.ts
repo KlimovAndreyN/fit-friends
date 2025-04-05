@@ -1,4 +1,4 @@
-import { IUserInfoRdo } from '@backend/shared';
+import { IUserInfoRdo } from '@backend/shared/core';
 
 export type UserInfoProcess = {
   isExistQuestionnaireExecuting: boolean;

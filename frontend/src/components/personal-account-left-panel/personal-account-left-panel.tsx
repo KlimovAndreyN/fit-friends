@@ -7,7 +7,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared';
+import { IUpdateUserInfoDto, IUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';

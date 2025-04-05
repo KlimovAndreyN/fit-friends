@@ -1,4 +1,4 @@
-import { Role } from '@backend/shared';
+import { Role } from '@backend/shared/core';
 
 import { AuthorizationStatus } from './types';
 

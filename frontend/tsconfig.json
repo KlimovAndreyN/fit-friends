@@ -26,8 +26,11 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@backend/shared": [
-        "../backend/libs/shared/core/src/fronted-index.ts"
+      "@backend/shared/core": [
+        "../backend/libs/shared/core/src/fronted-index.ts",
+      ],
+      "@backend/shared/helpers": [
+        "../backend/libs/shared/helpers/src/fronted-index.ts"
       ]
     }
   },

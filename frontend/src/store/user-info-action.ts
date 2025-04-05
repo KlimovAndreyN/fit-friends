@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   IUpdateUserInfoDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
   ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, Role
-} from '@backend/shared';
+} from '@backend/shared/core';
 
 import { joinUrl } from '../utils/common';
 import { multipartFormDataHeader } from '../const';

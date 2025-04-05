@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import PopupForm from '../../components/popup-form/popup-form';
 
-import { ILoginUserDto } from '@backend/shared';
+import { ILoginUserDto } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingInExecuting } from '../../store/user-process/selectors';

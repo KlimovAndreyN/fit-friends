@@ -1,4 +1,4 @@
-import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared';
+import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
 import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';

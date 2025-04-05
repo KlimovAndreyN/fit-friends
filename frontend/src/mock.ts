@@ -1,6 +1,6 @@
 //! Удалить моки
 
-import { Specialization } from '@backend/shared';
+import { Specialization } from '@backend/shared/core';
 import { SpecializationTitle } from './const';
 
 export const MOCK_OFFERS = [

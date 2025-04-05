@@ -7,7 +7,7 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { Duration, ICreateQuestionnaireSportsmanDto, Specialization, TrainingLevel } from '@backend/shared';
+import { Duration, ICreateQuestionnaireSportsmanDto, Specialization, TrainingLevel } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';

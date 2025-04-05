@@ -8,7 +8,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserDto, Location, Gender, Role } from '@backend/shared';
+import { ICreateUserDto, Location, Gender, Role } from '@backend/shared/core';
 
 import { getRandomItem } from '../../utils/random';
 import { registerUser } from '../../store/user-action';

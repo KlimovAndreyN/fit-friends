@@ -5,7 +5,7 @@ import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-import { IUpdateUserInfoDto, Role } from '@backend/shared';
+import { IUpdateUserInfoDto, Role } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
