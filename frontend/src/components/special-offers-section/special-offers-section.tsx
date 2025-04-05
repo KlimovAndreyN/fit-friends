@@ -8,8 +8,6 @@ import { MOCK_SPECIAL_OFFERS } from '../../mock';
 const SPECIAL_OFFERS_MIN_COUNT = 3;
 
 function SpecialOffersSection(): JSX.Element {
-  //! проверить консоль браузера на ошибки
-
   const specialOffers = MOCK_SPECIAL_OFFERS; //! временно
 
   return (

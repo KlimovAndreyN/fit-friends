@@ -12,8 +12,7 @@ type SpecialOffersListProps = {
 }
 
 function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | null {
-  //! переделать на Swiper?
-  //! может немного разбить
+  //! Как переходить на подробнее? пока сделал ссылку на заголовоке
 
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
 
