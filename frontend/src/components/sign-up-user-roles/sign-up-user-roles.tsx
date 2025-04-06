@@ -1,13 +1,18 @@
-import { DefaultUser, USER_ROLES, UserRoleOption } from '../../const';
+import { Role } from '@backend/shared/core';
+
+import { DefaultUser } from '../../const';
 
 type SignUpUserRolesProps = {
   name: string;
 }
 
 function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
+  //! значение по умолчанию принимать пропсами
+  //! переделать на управляемый
+
   return (
     /*
-    //! visually-hidden - спратал выбор роли, по умолчанию был coach
+    //! visually-hidden - спрятал выбор роли, по умолчанию был coach
     <div className="sign-up__role">
     <div className="sign-up__role visually-hidden">
     */
@@ -15,9 +20,10 @@ function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
       <h2 className="sign-up__legend">Выберите роль</h2>
       <div className="role-selector sign-up__role-selector">
         {
-          USER_ROLES.map(
+          [Role.Coach, Role.Sportsman].map(
             (userRole) => {
-              const { singUpTitle: title, svgIcon } = UserRoleOption[userRole];
+              const title = (userRole === Role.Sportsman) ? 'Я хочу тренироваться' : 'Я хочу тренировать';
+              const svgIcon = (userRole === Role.Sportsman) ? '#icon-weight' : '#icon-cup';
               const checked = userRole === DefaultUser.ROLE;
 
               return (

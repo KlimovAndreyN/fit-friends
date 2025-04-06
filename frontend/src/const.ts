@@ -64,32 +64,19 @@ export const DefaultUser = {
   TRAINING_LEVEL: TrainingLevel.Amateur
 } as const;
 
-//! перенести в компонент/страницу по месту?
-export const UserRoleOption: { [key in Role]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
-  [Role.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
-  [Role.Coach]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
-} as const;
-
-export const USER_ROLES = [
-  Role.Coach,
-  Role.Sportsman
-] as const;
-
-export const UserGenderTitle: { [key in Gender]: string } = {
+//! перенести в компонент/страницу по месту? или отдельный файл
+const UserGenderTitle: { [key in Gender]: string } = {
   [Gender.Female]: 'Женский',
   [Gender.Male]: 'Мужской',
   [Gender.NotMatter]: 'Неважно',
 } as const;
 
-//! переделвать как USER_DURATIONS
-//! перенести в компонент/страницу по месту?
-export const USER_GENDERS: Option[] = [
-  { value: Gender.Male, title: UserGenderTitle[Gender.Male] },
-  { value: Gender.Female, title: UserGenderTitle[Gender.Female] },
-  { value: Gender.NotMatter, title: UserGenderTitle[Gender.NotMatter] }
-];
+export const USER_GENDERS: Option[] = enumToArray(Gender).map(
+  (gender) => ({ value: gender, title: UserGenderTitle[gender] })
+);
 
-export const LocationTitle: { [key in Location]: string } = {
+//! перенести в компонент/страницу по месту? или отдельный файл
+const LocationTitle: { [key in Location]: string } = {
   [Location.Petrogradskaya]: 'Петроградская',
   [Location.Pionerskaya]: 'Пионерская',
   [Location.Sportivnaya]: 'Спортивная',
@@ -97,15 +84,9 @@ export const LocationTitle: { [key in Location]: string } = {
   [Location.Zvezdnaya]: 'Звёздная'
 } as const;
 
-//! переделвать как USER_DURATIONS
-//! перенести в компонент/страницу по месту?
-export const LOCATIONS: Option[] = [
-  { value: Location.Pionerskaya, title: LocationTitle[Location.Pionerskaya] },
-  { value: Location.Petrogradskaya, title: LocationTitle[Location.Petrogradskaya] },
-  { value: Location.Udelnaya, title: LocationTitle[Location.Udelnaya] },
-  { value: Location.Zvezdnaya, title: LocationTitle[Location.Zvezdnaya] },
-  { value: Location.Sportivnaya, title: LocationTitle[Location.Sportivnaya] }
-];
+export const LOCATIONS: Option[] = enumToArray(Location).map(
+  (location) => ({ value: location, title: LocationTitle[location] })
+);
 
 //! еще будет для тренера и должно подменятся при изменении роли
 export const USER_BACKGROUND_PATHS: Option[] = [
@@ -113,6 +94,7 @@ export const USER_BACKGROUND_PATHS: Option[] = [
   { value: '/img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
 ];
 
+//! перенести в компонент/страницу по месту? или отдельный файл
 export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Aerobics]: 'Аэробика',
   [Specialization.Boxing]: 'Бокс',
@@ -124,19 +106,11 @@ export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Yoga]: 'Йога'
 } as const;
 
-//! переделвать как USER_DURATIONS
-//! перенести в компонент/страницу по месту?
-export const SPECIALISATIONS: Option[] = [
-  { value: Specialization.Yoga, title: SpecializationTitle[Specialization.Yoga] },
-  { value: Specialization.Running, title: SpecializationTitle[Specialization.Running] },
-  { value: Specialization.Power, title: SpecializationTitle[Specialization.Power] },
-  { value: Specialization.Aerobics, title: SpecializationTitle[Specialization.Aerobics] },
-  { value: Specialization.Crossfit, title: SpecializationTitle[Specialization.Crossfit] },
-  { value: Specialization.Boxing, title: SpecializationTitle[Specialization.Boxing] },
-  { value: Specialization.Pilates, title: SpecializationTitle[Specialization.Pilates] },
-  { value: Specialization.Stretching, title: SpecializationTitle[Specialization.Stretching] }
-];
+export const SPECIALISATIONS: Option[] = enumToArray(Specialization).map(
+  (specialization) => ({ value: specialization, title: SpecializationTitle[specialization] })
+);
 
+//! перенести в компонент/страницу по месту? или отдельный файл
 const UserDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_10_30]: '10-30 мин',
   [Duration.Minutes_30_50]: '30-50 мин',
@@ -144,21 +118,17 @@ const UserDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_80_100]: '80-100 мин'
 } as const;
 
-//! перенести в компонент/страницу по месту?
 export const USER_DURATIONS: Option[] = enumToArray(Duration).map(
   (duration) => ({ value: duration, title: UserDurationTitle[duration] })
 );
 
-export const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
+//! перенести в компонент/страницу по месту? или отдельный файл
+const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
   [TrainingLevel.Amateur]: 'Любитель',
   [TrainingLevel.Beginner]: 'Новичок',
   [TrainingLevel.Professional]: 'Профессионал'
 } as const;
 
-//! переделвать как USER_DURATIONS
-//! перенести в компонент/страницу по месту?
-export const TRAINING_LEVELS: Option[] = [
-  { value: TrainingLevel.Beginner, title: TrainingLevelTitle[TrainingLevel.Beginner] },
-  { value: TrainingLevel.Amateur, title: TrainingLevelTitle[TrainingLevel.Amateur] },
-  { value: TrainingLevel.Professional, title: TrainingLevelTitle[TrainingLevel.Professional] }
-];
+export const TRAINING_LEVELS: Option[] = enumToArray(TrainingLevel).map(
+  (trainingLevel) => ({ value: trainingLevel, title: TrainingLevelTitle[trainingLevel] })
+);

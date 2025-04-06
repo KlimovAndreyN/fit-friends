@@ -5,6 +5,9 @@ type SignUpUserGengersProps = {
 }
 
 function SignUpUserGengers({ name }: SignUpUserGengersProps): JSX.Element {
+  //! перевести на компонет CustomToggleRadio
+  //! возможно совсем не нужно, передалть на всю форму на управляемые?
+
   return (
     <div className="sign-up__radio">
       <span className="sign-up__label">Пол</span>
