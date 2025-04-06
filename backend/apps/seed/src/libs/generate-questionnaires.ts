@@ -5,7 +5,7 @@ import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueIt
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
 
-import { MOCK_CALORIES, MOCK_SPECIALIZATIONS } from './mock-data';
+import { MockCalorieOption, MockSpecializationsOption } from './mock-data';
 
 export async function generateQuestionnaires(
   questionnaireRepository: QuestionnaireRepository,
@@ -13,8 +13,8 @@ export async function generateQuestionnaires(
   resetBeforeSeed: boolean
 ): Promise<QuestionnaireEntity[]> {
   const questionnaires: QuestionnaireEntity[] = [];
-  const { minCount, maxCount } = MOCK_SPECIALIZATIONS;
-  const { loseMin, loseMax, wasteMin, wasteMax } = MOCK_CALORIES;
+  const { MIN_COUNT, MAX_COUNT } = MockSpecializationsOption;
+  const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = MockCalorieOption;
 
   if (resetBeforeSeed) {
     await questionnaireRepository.client.questionnaire.deleteMany();
@@ -23,12 +23,12 @@ export async function generateQuestionnaires(
   for (const { id: userId } of sportsmans) {
     const questionnaire: Questionnaire = {
       userId,
-      specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(minCount, maxCount)),
+      specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(MIN_COUNT, MAX_COUNT)),
       trainingLevel: getRandomEnumItem(TrainingLevel),
       readyForTraining: getRandomBoolean(),
       duration: getRandomEnumItem(Duration),
-      caloriesLose: getRandomNumber(loseMin, loseMax),
-      caloriesWaste: getRandomNumber(wasteMin, wasteMax)
+      caloriesLose: getRandomNumber(LOSE_MIN, LOSE_MAX),
+      caloriesWaste: getRandomNumber(WASTE_MIN, WASTE_MAX)
     }
     const questionnaireEntity = new QuestionnaireEntity(questionnaire);
 

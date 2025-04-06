@@ -1,4 +1,4 @@
-import { Gender } from "@backend/shared/core";
+import { Gender } from '@backend/shared/core';
 
 export const MOCK_BACKGROUND_PATHS = [
   '/img/content/user-card-photo1.jpg',
@@ -17,14 +17,14 @@ export const MOCK_SPORTSMANS = [
   { name: 'Jack', gender: Gender.Male }
 ];
 
-export const MOCK_CALORIES = {
-  loseMin: 3000,
-  loseMax: 5000,
-  wasteMin: 1000,
-  wasteMax: 2000
+export const MockCalorieOption = {
+  LOSE_MIN: 3000,
+  LOSE_MAX: 5000,
+  WASTE_MIN: 1000,
+  WASTE_MAX: 2000
 } as const;
 
-export const MOCK_SPECIALIZATIONS = {
-  minCount: 1,
-  maxCount: 3
+export const MockSpecializationsOption = {
+  MIN_COUNT: 1,
+  MAX_COUNT: 3
 } as const;
