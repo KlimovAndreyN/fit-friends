@@ -14,11 +14,6 @@ datasource db {
   url      = env("POSTGRES_DATABASE_URL")
   // на windows при команде "npx nx run fit:db:migrate" не вводит для название migrate
   // работает "npx nx run fit:db:migrate --name=init"
-  // или
-  // cd backend
-  // cd libs/fit/models/prisma
-  // npx prisma migrate dev --schema ./schema.prisma --skip-generate --skip-seed
-  // cd ../../../..
 }
 
 model Questionnaire {
@@ -26,13 +21,87 @@ model Questionnaire {
   specializations    String[] @map("specializations") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
   trainingLevel      String   @map("training_level") @db.VarChar(50)
   readyForTraining   Boolean  @map("ready_for_training")
-  time               String?  @map("time") @db.VarChar(50)
+  duration           String?  @map("duration") @db.VarChar(50)
   caloriesLose       Int?     @map("calories_lose")
   caloriesWaste      Int?     @map("calories_waste")
   fileIds            String[] @map("file_ids") @db.VarChar(50) //! сработает ограниечение на каждый элемент или на все?
   description        String?  @map("description") @db.VarChar(5000)
   individualTraining Boolean? @map("individual_training")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
+  @@index([specializations])
+  @@index([trainingLevel])
+  @@index([readyForTraining])
+  @@index([duration])
+  @@index([individualTraining])
+  @@index([createdAt])
   @@map("questionnaires")
+}
+
+model Training {
+  id             String   @id @default(uuid()) @db.VarChar(50)
+  title          String   @map("title") @db.VarChar(50)
+  backgroundPath String   @map("background_path") @db.VarChar(100)
+  trainingLevel  String   @map("training_level") @db.VarChar(50)
+  specialization String   @map("specialization") @db.VarChar(50)
+  duration       String   @map("duration") @db.VarChar(50)
+  price          Int      @map("price")
+  caloriesWaste  Int      @map("calories_waste")
+  description    String   @map("description") @db.VarChar(200)
+  gender         String   @map("gender") @db.VarChar(50)
+  videoFileId    String   @map("video_file_id") @db.VarChar(50)
+  rating         Float    @default(0) @map("rating")
+  userId         String   @map("user_id") @db.VarChar(50)
+  isSpecial      Boolean  @default(false) @map("is_special")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  Order          Order[]
+  Review         Review[]
+
+  @@index([trainingLevel])
+  @@index([specialization])
+  @@index([duration])
+  @@index([price])
+  @@index([gender])
+  @@index([rating])
+  @@index([userId])
+  @@index([isSpecial])
+  @@index([createdAt])
+  @@map("trainings")
+}
+
+model Order {
+  id            String   @id @default(uuid()) @db.VarChar(50)
+  userId        String   @map("user_id") @db.VarChar(50)
+  type          String   @map("type") @db.VarChar(50) //! что такое "Вид покупки"? занятие или абонемент? / убрать
+  trainingId    String   @map("training_id") @db.VarChar(50)
+  trainingPrice Int      @map("training_price")
+  count         Int      @map("count")
+  sum           Int      @map("sum")
+  paymentMethod String   @map("payment_method")
+  createdAt     DateTime @default(now()) @map("created_at")
+  training      Training @relation(fields: [trainingId], references: [id])
+
+  @@index([userId])
+  @@index([trainingId])
+  @@index([userId, trainingId])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+model Review {
+  id         String   @id @default(uuid()) @db.VarChar(50)
+  userId     String   @map("user_id") @db.VarChar(50)
+  trainingId String   @map("training_id") @db.VarChar(50)
+  rating     Int      @map("rating")
+  message    String   @db.VarChar(1200)
+  createdAt  DateTime @default(now()) @map("created_at")
+  training   Training @relation(fields: [trainingId], references: [id])
+
+  @@unique([userId, trainingId])
+  @@index([trainingId])
+  @@index([userId])
+  @@map("reviews")
 }
