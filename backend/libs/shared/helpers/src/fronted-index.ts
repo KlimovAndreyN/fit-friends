@@ -1,2 +1,2 @@
 export * from './lib/random';
-export { joinUrl } from './lib/utils';
+export { joinUrl, enumToArray } from './lib/utils';

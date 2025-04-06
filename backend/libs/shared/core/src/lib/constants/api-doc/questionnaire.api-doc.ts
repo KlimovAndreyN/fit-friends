@@ -43,7 +43,7 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Time)
   @Expose()
   @IsEnum(Duration)
-  time: Questionnaire['time'];
+  duration: Questionnaire['duration'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()

@@ -26,7 +26,7 @@ export async function generateQuestionnaires(
       specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(minCount, maxCount)),
       trainingLevel: getRandomEnumItem(TrainingLevel),
       readyForTraining: getRandomBoolean(),
-      time: getRandomEnumItem(Duration),
+      duration: getRandomEnumItem(Duration),
       caloriesLose: getRandomNumber(loseMin, loseMax),
       caloriesWaste: getRandomNumber(wasteMin, wasteMax)
     }

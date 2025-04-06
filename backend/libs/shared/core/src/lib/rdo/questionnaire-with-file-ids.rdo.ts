@@ -10,7 +10,7 @@ export class QuestionnaireWithFileIdsRdo
       'specializations',
       'trainingLevel',
       'readyForTraining',
-      'time',
+      'duration',
       'caloriesLose',
       'caloriesWaste',
       'description',

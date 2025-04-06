@@ -9,7 +9,7 @@ export class CreateQuestionnaireSportsmanDto
     [
       'specializations',
       'trainingLevel',
-      'time',
+      'duration',
       'caloriesLose',
       'caloriesWaste'
     ]

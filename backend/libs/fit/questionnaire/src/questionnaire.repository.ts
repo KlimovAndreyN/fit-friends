@@ -26,14 +26,14 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
     const { readyForTraining, caloriesLose, caloriesWaste, description, fileIds, individualTraining } = record;
     const specializations: Specialization[] = record.specializations.map((specialization) => (specialization as Specialization));
     const trainingLevel: TrainingLevel = record.trainingLevel as TrainingLevel;
-    const time: Duration = record.time as Duration;
+    const duration: Duration = record.duration as Duration;
 
     const questionnaire: Questionnaire = {
       userId,
       specializations,
       trainingLevel,
       readyForTraining,
-      time,
+      duration,
       caloriesLose,
       caloriesWaste,
       description,

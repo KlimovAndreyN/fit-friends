@@ -7,10 +7,11 @@ export interface Questionnaire {
   specializations: Specialization[];
   trainingLevel: TrainingLevel;
   readyForTraining: boolean;
-  time?: Duration;
+  duration?: Duration;
   caloriesLose?: number;
   caloriesWaste?: number;
   fileIds?: string[];
   description?: string;
   individualTraining?: boolean;
+  createdAt?: Date;
 }

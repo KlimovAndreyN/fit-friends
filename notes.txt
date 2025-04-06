@@ -30,6 +30,7 @@ aaa@aaa.aaa
     useNavigate
 
 time?: Duration; -> duration?: Duration;
+'time'
 Questionnaire.createdAt
 Questionnaire.updatedAt
 

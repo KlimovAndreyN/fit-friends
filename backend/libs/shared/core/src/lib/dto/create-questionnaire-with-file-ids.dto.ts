@@ -13,7 +13,7 @@ export class CreateQuestionnaireWithFileIdsDto
     ),
     PickType(PartialType(QuestionnaireApiDoc),
       [
-        'time',
+        'duration',
         'caloriesLose',
         'caloriesWaste',
         'description',

@@ -2,6 +2,7 @@ import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from 
 
 import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
+import { enumToArray } from '../../backend/libs/shared/helpers/src/lib/utils';
 
 export const routeAccessDebug = getViteEnvBooleanVariable('VITE_ROUTE_ACCESS_DEBUG');
 
@@ -59,10 +60,11 @@ export const DefaultUser = {
     Specialization.Crossfit as string,
     Specialization.Power as string
   ],
-  TIME: Duration.Minutes_30_50,
+  DURATION: Duration.Minutes_30_50,
   TRAINING_LEVEL: TrainingLevel.Amateur
 } as const;
 
+//! перенести в компонент/страницу по месту?
 export const UserRoleOption: { [key in Role]: { singUpTitle: string; svgIcon: string; endingClassName: string } } = {
   [Role.Sportsman]: { singUpTitle: 'Я хочу тренироваться', svgIcon: '#icon-weight', endingClassName: 'user' },
   [Role.Coach]: { singUpTitle: 'Я хочу тренировать', svgIcon: '#icon-cup', endingClassName: 'coath' }
@@ -79,6 +81,8 @@ export const UserGenderTitle: { [key in Gender]: string } = {
   [Gender.NotMatter]: 'Неважно',
 } as const;
 
+//! переделвать как USER_DURATIONS
+//! перенести в компонент/страницу по месту?
 export const USER_GENDERS: Option[] = [
   { value: Gender.Male, title: UserGenderTitle[Gender.Male] },
   { value: Gender.Female, title: UserGenderTitle[Gender.Female] },
@@ -93,6 +97,8 @@ export const LocationTitle: { [key in Location]: string } = {
   [Location.Zvezdnaya]: 'Звёздная'
 } as const;
 
+//! переделвать как USER_DURATIONS
+//! перенести в компонент/страницу по месту?
 export const LOCATIONS: Option[] = [
   { value: Location.Pionerskaya, title: LocationTitle[Location.Pionerskaya] },
   { value: Location.Petrogradskaya, title: LocationTitle[Location.Petrogradskaya] },
@@ -118,6 +124,8 @@ export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Yoga]: 'Йога'
 } as const;
 
+//! переделвать как USER_DURATIONS
+//! перенести в компонент/страницу по месту?
 export const SPECIALISATIONS: Option[] = [
   { value: Specialization.Yoga, title: SpecializationTitle[Specialization.Yoga] },
   { value: Specialization.Running, title: SpecializationTitle[Specialization.Running] },
@@ -129,12 +137,17 @@ export const SPECIALISATIONS: Option[] = [
   { value: Specialization.Stretching, title: SpecializationTitle[Specialization.Stretching] }
 ];
 
-export const TIMES: Option[] = [
-  { value: Duration.Minutes_10_30, title: '10-30 мин' },
-  { value: Duration.Minutes_30_50, title: '30-50 мин' },
-  { value: Duration.Minutes_50_80, title: '50-80 мин' },
-  { value: Duration.Minutes_80_100, title: '80-100 мин' }
-];
+const UserDurationTitle: { [key in Duration]: string } = {
+  [Duration.Minutes_10_30]: '10-30 мин',
+  [Duration.Minutes_30_50]: '30-50 мин',
+  [Duration.Minutes_50_80]: '50-80 мин',
+  [Duration.Minutes_80_100]: '80-100 мин'
+} as const;
+
+//! перенести в компонент/страницу по месту?
+export const USER_DURATIONS: Option[] = enumToArray(Duration).map(
+  (duration) => ({ value: duration, title: UserDurationTitle[duration] })
+);
 
 export const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
   [TrainingLevel.Amateur]: 'Любитель',
@@ -142,6 +155,8 @@ export const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
   [TrainingLevel.Professional]: 'Профессионал'
 } as const;
 
+//! переделвать как USER_DURATIONS
+//! перенести в компонент/страницу по месту?
 export const TRAINING_LEVELS: Option[] = [
   { value: TrainingLevel.Beginner, title: TrainingLevelTitle[TrainingLevel.Beginner] },
   { value: TrainingLevel.Amateur, title: TrainingLevelTitle[TrainingLevel.Amateur] },

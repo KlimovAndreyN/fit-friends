@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsCreateQuestionnaireExecuting } from '../../store/user-info-process/selectors';
 import { createQuestionnaire } from '../../store/user-info-action';
-import { DefaultUser, PageTitle, TIMES, TRAINING_LEVELS, UserRoleOption } from '../../const';
+import { DefaultUser, PageTitle, TRAINING_LEVELS, USER_DURATIONS, UserRoleOption } from '../../const';
 
 enum FormFieldName {
   Spec = 'specialization',
@@ -42,13 +42,13 @@ function Questionnaire(): JSX.Element {
 
     const trainingLevel = (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel; //! одинаковый код - в хелпер
     const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)); //! одинаковый код - в хелпер
-    const time = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
+    const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const dto: ICreateQuestionnaireSportsmanDto = {
       trainingLevel,
       specializations,
-      time,
+      duration,
       caloriesLose,
       caloriesWaste
     };
@@ -78,8 +78,8 @@ function Questionnaire(): JSX.Element {
             <CustomToggleRadio
               name={FormFieldName.Time}
               divExtraClassName={`questionnaire-${endingClassName}__radio`}
-              options={TIMES}
-              value={DefaultUser.TIME}
+              options={USER_DURATIONS}
+              value={DefaultUser.DURATION}
             />
           </QuestionnairebBlock>
           <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={endingClassName} >

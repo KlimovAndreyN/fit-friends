@@ -5,7 +5,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
   public specializations: Questionnaire['specializations'];
   public trainingLevel: Questionnaire['trainingLevel'];
   public readyForTraining: Questionnaire['readyForTraining'];
-  public time?: Questionnaire['time'];
+  public duration?: Questionnaire['duration'];
   public caloriesLose?: Questionnaire['caloriesLose'];
   public caloriesWaste?: Questionnaire['caloriesWaste'];
   public fileIds?: Questionnaire['fileIds'];
@@ -27,7 +27,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
     this.specializations = [...questionnaire.specializations];
     this.trainingLevel = questionnaire.trainingLevel;
     this.readyForTraining = questionnaire.readyForTraining;
-    this.time = questionnaire.time;
+    this.duration = questionnaire.duration;
     this.caloriesLose = questionnaire.caloriesLose;
     this.caloriesWaste = questionnaire.caloriesWaste;
     this.fileIds = (questionnaire.fileIds) ? [...questionnaire.fileIds] : [];
@@ -41,7 +41,7 @@ export class QuestionnaireEntity extends Entity implements StorableEntity<Questi
       specializations: this.specializations,
       trainingLevel: this.trainingLevel,
       readyForTraining: this.readyForTraining,
-      time: this.time,
+      duration: this.duration,
       caloriesLose: this.caloriesLose,
       caloriesWaste: this.caloriesWaste,
       fileIds: this.fileIds,
