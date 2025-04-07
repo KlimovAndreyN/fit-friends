@@ -11,6 +11,7 @@ export class QuestionnaireService {
   constructor(
     private readonly questionnaireRepository: QuestionnaireRepository
   ) { }
+
   public async findByUserId(userId: string): Promise<QuestionnaireEntity> {
     const entity = await this.questionnaireRepository.findByUserId(userId);
 

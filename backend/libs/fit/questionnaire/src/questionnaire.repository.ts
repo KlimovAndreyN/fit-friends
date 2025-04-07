@@ -46,6 +46,7 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
 
   public async save(entity: QuestionnaireEntity): Promise<void> {
     const pojoEntity = entity.toPOJO();
+
     await this.client.questionnaire.create({
       data: { ...pojoEntity }
     });

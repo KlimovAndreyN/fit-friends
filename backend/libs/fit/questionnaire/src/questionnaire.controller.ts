@@ -17,6 +17,7 @@ export class QuestionnaireController {
     private readonly questionnaireService: QuestionnaireService
   ) { }
 
+  //! добавить описание
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
