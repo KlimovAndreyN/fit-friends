@@ -49,9 +49,12 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
   public async save(entity: TrainingEntity): Promise<void> {
     const pojoEntity = entity.toPOJO();
 
-    await this.client.training.create({
+    const record = await this.client.training.create({
       data: { ...pojoEntity }
     });
+
+    entity.id = record.id;
+    entity.createdAt = record.createdAt;
   }
 
   public async update(entity: TrainingEntity): Promise<void> {

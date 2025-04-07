@@ -89,9 +89,10 @@ export const LOCATIONS: Option[] = enumToArray(Location).map(
 );
 
 //! еще будет для тренера и должно подменятся при изменении роли
+//! проверить работает ли "img/" или нужно "/img/"
 export const USER_BACKGROUND_PATHS: Option[] = [
-  { value: '/img/content/user-card-photo1.jpg', title: 'Фоновая картинка №1' },
-  { value: '/img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
+  { value: 'img/content/user-card-photo1.jpg', title: 'Фоновая картинка №1' },
+  { value: 'img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
 ];
 
 //! перенести в компонент/страницу по месту? или отдельный файл

@@ -4,7 +4,7 @@ import { AuthUser, Location, Role } from '@backend/shared/core';
 import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS, MockUser } from './mock-data';
+import { MOCK_DEFAULT_USER_PASSWORD, MOCK_SPORTSMANS_BACKGROUND_PATHS, MockUser } from './mock-data';
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
   const ids = await fitUserRepository.getAllIds();
@@ -18,11 +18,12 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
   const users: FitUserEntity[] = [];
 
   for (const { name, gender } of mockUsers) {
+    //! попробовать создавать через DTO и сервис не указывая не нужные и не делая вызов генерации пароля
     const user: AuthUser = {
       email: `${name.toLocaleLowerCase()}@local.ru`,
       name,
       about: `About: my name is ${name}`,
-      backgroundPath: getRandomItem(MOCK_BACKGROUND_PATHS),
+      backgroundPath: getRandomItem(MOCK_SPORTSMANS_BACKGROUND_PATHS),
       gender,
       location: getRandomEnumItem(Location),
       role,

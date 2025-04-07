@@ -1,12 +1,5 @@
 import { Gender } from '@backend/shared/core';
 
-export const MOCK_BACKGROUND_PATHS = [
-  '/img/content/user-card-photo1.jpg',
-  '/img/content/user-card-photo2.jpg'
-];
-
-export const MOCK_DEFAULT_USER_PASSWORD = '123456';
-
 export type MockUser = { name: string; gender: Gender; };
 
 export const MOCK_SPORTSMANS: MockUser[] = [
@@ -27,6 +20,15 @@ export const MOCK_COACHES: MockUser[] = [
   { name: 'Tim', gender: Gender.Male }
 ];
 
+export const MOCK_DEFAULT_USER_PASSWORD = '123456';
+
+//! сделать компактнее и есть на фронте
+//! проверить работает ли "img/" или нужно "/img/"
+export const MOCK_SPORTSMANS_BACKGROUND_PATHS = [
+  'img/content/user-card-photo1.jpg',
+  'img/content/user-card-photo2.jpg'
+];
+
 export const MockCalorieOption = {
   LOSE_MIN: 3000,
   LOSE_MAX: 5000,
@@ -38,3 +40,29 @@ export const MockSpecializationsOption = {
   MIN_COUNT: 1,
   MAX_COUNT: 3
 } as const;
+
+export const MockTrainingsOption = {
+  MIN_COUNT: 0,
+  MAX_COUNT: 20,
+  MIN_PRICE: 0,
+  MAX_PRICE: 10000,
+  MIN_CALORIES: 1000,
+  MAX_CALORIES: 5000
+} as const;
+
+//! сделать компактнее и возможно будут на фронте
+//! проверить работает ли "img/" или нужно "/img/"
+export const MOCK_TRAININGS_BACKGROUND_PATHS = [
+  'img/content/thumbnails/training-01@2x.jpg',
+  'img/content/thumbnails/training-02@2x.jpg',
+  'img/content/thumbnails/training-03@2x.jpg',
+  'img/content/thumbnails/training-04@2x.jpg',
+  'img/content/thumbnails/training-05@2x.jpg',
+  'img/content/thumbnails/training-06@2x.jpg',
+  'img/content/thumbnails/training-07@2x.jpg',
+  'img/content/thumbnails/training-08@2x.jpg',
+  'img/content/thumbnails/training-09@2x.jpg',
+  'img/content/thumbnails/training-10@2x.jpg',
+  'img/content/thumbnails/training-11@2x.jpg',
+  'img/content/thumbnails/training-12@2x.jpg'
+];

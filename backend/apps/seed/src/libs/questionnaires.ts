@@ -17,6 +17,7 @@ export async function seedSportsmansQuestionnaires(questionnaireRepository: Ques
   const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = MockCalorieOption;
 
   for (const { id: userId } of sportsmans) {
+    //! попробовать добавлять через сервис QuestionnaireService
     const questionnaire: Questionnaire = {
       userId,
       specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(MIN_COUNT, MAX_COUNT)),
