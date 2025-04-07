@@ -7,14 +7,24 @@ export const MOCK_BACKGROUND_PATHS = [
 
 export const MOCK_DEFAULT_USER_PASSWORD = '123456';
 
-export const MOCK_SPORTSMANS = [
+export type MockUser = { name: string; gender: Gender; };
+
+export const MOCK_SPORTSMANS: MockUser[] = [
   { name: 'Tom', gender: Gender.Male },
   { name: 'Jerry', gender: Gender.NotMatter },
   { name: 'Roxette', gender: Gender.Female },
-  { name: 'Max', gender: Gender.Male },
-  { name: 'Nataly', gender: Gender.Female },
   { name: 'Candy', gender: Gender.Female },
-  { name: 'Jack', gender: Gender.Male }
+  { name: 'Jack', gender: Gender.Male },
+  { name: 'Mike', gender: Gender.Male },
+  { name: 'David', gender: Gender.Male },
+  { name: 'Mary', gender: Gender.Female }
+];
+
+export const MOCK_COACHES: MockUser[] = [
+  { name: 'Nataly', gender: Gender.Female },
+  { name: 'Max', gender: Gender.Male },
+  { name: 'Susan', gender: Gender.Female },
+  { name: 'Tim', gender: Gender.Male }
 ];
 
 export const MockCalorieOption = {

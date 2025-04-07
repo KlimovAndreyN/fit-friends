@@ -7,18 +7,14 @@ import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/quest
 
 import { MockCalorieOption, MockSpecializationsOption } from './mock-data';
 
-export async function generateQuestionnaires(
-  questionnaireRepository: QuestionnaireRepository,
-  sportsmans: FitUserEntity[],
-  resetBeforeSeed: boolean
-): Promise<QuestionnaireEntity[]> {
+export async function clearQuestionnaires(questionnaireRepository: QuestionnaireRepository): Promise<void> {
+  await questionnaireRepository.client.questionnaire.deleteMany();
+}
+
+export async function seedSportsmansQuestionnaires(questionnaireRepository: QuestionnaireRepository, sportsmans: FitUserEntity[]): Promise<QuestionnaireEntity[]> {
   const questionnaires: QuestionnaireEntity[] = [];
   const { MIN_COUNT, MAX_COUNT } = MockSpecializationsOption;
   const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = MockCalorieOption;
-
-  if (resetBeforeSeed) {
-    await questionnaireRepository.client.questionnaire.deleteMany();
-  }
 
   for (const { id: userId } of sportsmans) {
     const questionnaire: Questionnaire = {

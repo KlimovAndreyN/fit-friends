@@ -4,20 +4,20 @@ import { AuthUser, Location, Role } from '@backend/shared/core';
 import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { MOCK_SPORTSMANS, MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS } from './mock-data';
+import { MOCK_DEFAULT_USER_PASSWORD, MOCK_BACKGROUND_PATHS, MockUser } from './mock-data';
 
-export async function generateSportsmans(fitUserRepository: FitUserRepository, resetBeforeSeed: boolean): Promise<FitUserEntity[]> {
+export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
+  const ids = await fitUserRepository.getAllIds();
+
+  for (const id of ids) {
+    await fitUserRepository.deleteById(id);
+  }
+}
+
+export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
 
-  if (resetBeforeSeed) {
-    const ids = await fitUserRepository.getAllIds();
-
-    for (const id of ids) {
-      await fitUserRepository.deleteById(id);
-    }
-  }
-
-  for (const { name, gender } of MOCK_SPORTSMANS) {
+  for (const { name, gender } of mockUsers) {
     const user: AuthUser = {
       email: `${name.toLocaleLowerCase()}@local.ru`,
       name,
@@ -25,7 +25,7 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository, r
       backgroundPath: getRandomItem(MOCK_BACKGROUND_PATHS),
       gender,
       location: getRandomEnumItem(Location),
-      role: Role.Sportsman,
+      role,
       avatarFileId: '', //! позднее попробовать подкинуть аватарки
       birthday: new Date('2000-01-01'), //! сделать разное
       passwordHash: ''
@@ -36,7 +36,7 @@ export async function generateSportsmans(fitUserRepository: FitUserRepository, r
     await fitUserRepository.save(userEntity);
     users.push(userEntity);
 
-    Logger.log(`Added sportsman: ${userEntity.email} / ${MOCK_DEFAULT_USER_PASSWORD} / ${userEntity.id}`);
+    Logger.log(`Added user(${role}): ${userEntity.email} / ${MOCK_DEFAULT_USER_PASSWORD} / ${userEntity.id}`);
   }
 
   return users;

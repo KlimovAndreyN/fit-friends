@@ -1,13 +1,14 @@
 import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { ConfigAlias } from '@backend/shared/core';
+import { ConfigAlias, Role } from '@backend/shared/core';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { AppModule } from './app/app.module';
-import { generateSportsmans } from './libs/generate-sportsmans';
-import { generateQuestionnaires } from './libs/generate-questionnaires';
+import { clearUsers, seedUsers } from './libs/users';
+import { clearQuestionnaires, seedSportsmansQuestionnaires } from './libs/questionnaires';
+import { MOCK_COACHES, MOCK_SPORTSMANS } from './libs/mock-data';
 
 async function bootstrap() {
   //! возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
@@ -19,14 +20,34 @@ async function bootstrap() {
   Logger.log(`Reset before seed is ${resetBeforeSeed}`);
   Logger.log(`Fit postgres url (${databaseUrlEnv}): ${process.env[databaseUrlEnv]}`);
 
+  const fitUserRepository = app.get(FitUserRepository);
+  const questionnaireRepository = app.get(QuestionnaireRepository);
+
   try {
-    const sportsmans = await generateSportsmans(app.get(FitUserRepository), resetBeforeSeed);
+    if (resetBeforeSeed) {
+      clearQuestionnaires(questionnaireRepository);
+      clearUsers(fitUserRepository);
+    }
+
+    const sportsmans = await seedUsers(fitUserRepository, MOCK_SPORTSMANS, Role.Sportsman);
 
     Logger.log(`Sportsmans count: ${sportsmans.length}`);
+
+    const coaches = await seedUsers(fitUserRepository, MOCK_COACHES, Role.Coach);
+
+    Logger.log(`Coaches count: ${coaches.length}`);
+
     Logger.log('🤘️ Database Account(mongoDb) was filled!');
 
-    const questionnaires = await generateQuestionnaires(app.get(QuestionnaireRepository), sportsmans, resetBeforeSeed);
-    Logger.log(`Questionnaires count: ${questionnaires.length}`);
+    const sportsmansQuestionnaires = await seedSportsmansQuestionnaires(app.get(QuestionnaireRepository), sportsmans);
+
+    Logger.log(`Questionnaires sportsmans count: ${sportsmansQuestionnaires.length}`);
+
+    //! нужно еще опросники тренеров
+    //const coachesQuestionnaires = await seedCoachesQuestionnaires(app.get(QuestionnaireRepository), coaches);
+
+    //Logger.log(`Questionnaires coaches count: ${coachesQuestionnaires.length}`);
+
     Logger.log('🤘️ Database Fit(postgres) was filled!');
 
     globalThis.process.exit(0);
