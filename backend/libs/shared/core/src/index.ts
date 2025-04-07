@@ -53,6 +53,7 @@ export { Subscriber } from './lib/interfaces/subscriber.interface';
 export { Subscription } from './lib/interfaces/subscription.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Tokens } from './lib/interfaces/tokens.interface';
+export { Training } from './lib/interfaces/training.interface';
 export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
