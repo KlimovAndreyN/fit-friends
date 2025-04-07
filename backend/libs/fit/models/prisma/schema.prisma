@@ -75,7 +75,7 @@ model Training {
 model Order {
   id            String   @id @default(uuid()) @db.VarChar(50)
   userId        String   @map("user_id") @db.VarChar(50)
-  type          String   @map("type") @db.VarChar(50) //! что такое "Вид покупки"? занятие или абонемент? / убрать
+  type          String   @map("type") @db.VarChar(50) //! что такое "Вид покупки"? занятие или абонемент? / убрать?
   trainingId    String   @map("training_id") @db.VarChar(50)
   trainingPrice Int      @map("training_price")
   count         Int      @map("count")
