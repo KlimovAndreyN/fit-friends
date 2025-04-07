@@ -1,7 +1,7 @@
 export interface Review {
   id?: string;
   userId: string;
-  traningId: string;
+  trainingId: string;
   rating: number;
   message: string;
   createdAt?: Date;

@@ -13,6 +13,8 @@ export enum ServiceRoute {
   Account = 'auth',
   Questionnaire = 'questionnaire',
   Training = 'training',
+  Order = 'order',
+  Review = 'review',
   FileStorage = 'files'
 }
 

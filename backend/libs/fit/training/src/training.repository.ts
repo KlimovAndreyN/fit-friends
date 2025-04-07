@@ -35,7 +35,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
 
     if (!record) {
       //! вынести в константы
-      throw new NotFoundException(' Training Not Found');
+      throw new NotFoundException('Training Not Found');
     }
 
     const training: Training = {

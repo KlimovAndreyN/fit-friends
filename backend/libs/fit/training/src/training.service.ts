@@ -27,7 +27,7 @@ export class TrainingService {
     return foundTraining;
   }
 
-  //! временно Training потом будет CreateQuestionnaireWithFileIdsDto
+  //! временно, потом будет CreateTrainingWithFileIdDto
   public async create(dto: Training, userId: string): Promise<TrainingEntity> {
     const entity: TrainingEntity = TrainingFactory.createFromDto(dto, userId);
 

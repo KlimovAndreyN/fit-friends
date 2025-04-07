@@ -10,7 +10,7 @@ export class TrainingFactory implements EntityFactory<TrainingEntity> {
     return new TrainingEntity(entityPlainData);
   }
 
-  //! временно потом будет Training  CreateTrainingWithFileIdsDto
+  //! временно? потом будет CreateTrainingWithFileIdDto и преобразование
   public static createFromDto(dto: Training, userId: string): TrainingEntity {
     const training: Training = {
       title: dto.title,
