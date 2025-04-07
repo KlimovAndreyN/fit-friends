@@ -11,7 +11,7 @@ import { ReviewRepository } from '@backend/fit/review';
 import { AppModule } from './app/app.module';
 import { clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedSportsmansQuestionnaires } from './libs/questionnaires';
-import { clearTrainings, seedTrainings } from './libs/trainings';
+import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
 import { MOCK_COACHES, MOCK_SPORTSMANS } from './libs/mock-data';
 import { clearOrders, seedOrders } from './libs/orders';
 import { clearReviews, seedReviews } from './libs/reviews';
@@ -34,11 +34,11 @@ async function bootstrap() {
 
   try {
     if (resetBeforeSeed) {
-      clearReviews(reviewRepository)
-      clearOrders(orderRepository);
-      clearTrainings(trainingRepository);
-      clearQuestionnaires(questionnaireRepository);
-      clearUsers(fitUserRepository);
+      await clearReviews(reviewRepository)
+      await clearOrders(orderRepository);
+      await clearTrainings(trainingRepository);
+      await clearQuestionnaires(questionnaireRepository);
+      await clearUsers(fitUserRepository);
     }
 
     // пользователи
@@ -77,7 +77,8 @@ async function bootstrap() {
 
     Logger.log(`Reviews count: ${reviews.length}`);
 
-    //! запустить пересчет среднего рейтинга тренировки
+    // пересчет среднего рейтинга тренировок
+    await updateRatingTrainings(trainingRepository, trainings);
 
     Logger.log('🤘️ Database Fit(postgres) was filled!');
 

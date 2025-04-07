@@ -54,3 +54,14 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
 
   return trainings;
 }
+
+export async function updateRatingTrainings(trainingRepository: TrainingRepository, trainings: TrainingEntity[]): Promise<void> {
+  for (const { id: trainingId } of trainings) {
+    //! потом можно запустить через сервис
+    const existTraining = await trainingRepository.findById(trainingId);
+
+    existTraining.rating = 3;//! доделать пересчет среднего рейтинга тренировки через репозитарий/сервис отзывов
+    await trainingRepository.update(existTraining);
+    Logger.log(`Update rating trainingId: ${trainingId} / rating: ${existTraining.rating}`);
+  }
+}
