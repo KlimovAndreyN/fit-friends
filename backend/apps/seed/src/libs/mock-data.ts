@@ -47,7 +47,9 @@ export const MockTrainingOption = {
   MIN_PRICE: 0,
   MAX_PRICE: 10000,
   MIN_CALORIES: 1000,
-  MAX_CALORIES: 5000
+  MAX_CALORIES: 5000,
+  MIN_DATE: new Date(2025, 0, 1),
+  MAX_DATE: new Date(2025, 3, 1),
 } as const;
 
 //! сделать компактнее и возможно будут на фронте
