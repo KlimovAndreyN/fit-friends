@@ -69,6 +69,11 @@ export const MOCK_TRAININGS_BACKGROUND_PATHS = [
   'img/content/thumbnails/training-12@2x.jpg'
 ];
 
+export const MockOrderOption = {
+  MIN_COUNT: 1,
+  MAX_COUNT: 10
+} as const;
+
 export const MockReviewOption = {
   MIN_RATING: 1,
   MAX_RATING: 5

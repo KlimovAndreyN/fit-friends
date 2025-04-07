@@ -1,10 +1,12 @@
 import { Logger } from '@nestjs/common';
 
-import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
+import { Order, PaymentMethod } from '@backend/shared/core';
+import { getRandomDate, getRandomEnumItem, getRandomNumber, getRandomUniqueItems } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity } from '@backend/fit/training';
 import { OrderEntity, OrderRepository } from '@backend/fit/order';
 
+import { MockOrderOption, MockTrainingOption } from './mock-data';
 
 export async function clearOrders(orderRepository: OrderRepository): Promise<void> {
   await orderRepository.client.order.deleteMany();
@@ -16,43 +18,35 @@ export async function seedOrders(
   sportsmans: FitUserEntity[]
 ): Promise<OrderEntity[]> {
   const orders: OrderEntity[] = [];
+  const { MIN_COUNT, MAX_COUNT } = MockOrderOption;
+  const { MIN_DATE, MAX_DATE } = MockTrainingOption;
 
-  /*
   for (const { id: userId } of sportsmans) {
-    const trainingsCount = getRandomNumber(MIN_COUNT, MAX_COUNT);
+    const userTrainingsCount = getRandomNumber(0, trainings.length / 2);
+    const userTrainings = getRandomUniqueItems(trainings, userTrainingsCount);
 
-    for (let trainingIndex = 1; trainingIndex <= trainingsCount; trainingIndex++) {
-      const trainingIndexPrefix = `#${trainingGlobalIndex}-${trainingIndex}`;
-
-      //! потом можно создавать через DTO и сервис, указав id-пользователя и не указывая не нужные поля - rating
-      const training: Training = {
-        title: `Training title ${trainingIndexPrefix}`,
-        backgroundPath: getRandomItem(MOCK_TRAININGS_BACKGROUND_PATHS),
-        trainingLevel: getRandomEnumItem(TrainingLevel),
-        specialization: getRandomEnumItem(Specialization),
-        duration: getRandomEnumItem(Duration),
-        price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-        caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),
-        description: `Training description ${trainingIndexPrefix}`,
-        gender: getRandomEnumItem(Gender),
-        videoFileId: '1111-2222-3333-4444', //! как бы видео загрузить на file-storage....
+    for (const { id: trainingId, price: trainingPrice } of userTrainings) {
+      //! потом можно создавать через DTO и сервис
+      const count = getRandomNumber(MIN_COUNT, MAX_COUNT);
+      const sum = count * trainingPrice;
+      const order: Order = {
         userId,
-        rating: getRandomNumber(MIN_RATING, MAX_RATING), //! временно, пока нет сервиса для пересчета рейтинга...
-        //! возможно так и отсавить... следующая добавленная оценка расчитает корректный рейтинг
-        //! или сформировать отзывы и актуализировать райтинг
-        isSpecial: getRandomBoolean(),
+        type: 'type?', //! что такое "Вид покупки"? занятие или абонемент? / убрать?
+        trainingId,
+        trainingPrice,
+        count,
+        sum,
+        paymentMethod: getRandomEnumItem(PaymentMethod),
         createdAt: getRandomDate(MIN_DATE, MAX_DATE)
       }
-      const trainingEntity = new TrainingEntity(training);
+      const orderEntity = new OrderEntity(order);
 
-      await trainingRepository.save(trainingEntity);
-      trainings.push(trainingEntity);
+      await orderRepository.save(orderEntity);
+      orders.push(orderEntity);
 
-      Logger.log(`Added training: ${trainingEntity.id} for coachId: ${userId}`);
+      Logger.log(`Added order: userId: ${userId} / trainingId: ${trainingId}`);
     }
-    trainingGlobalIndex++;
   }
-  */
 
   return orders;
 }

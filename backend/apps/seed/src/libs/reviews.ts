@@ -1,58 +1,38 @@
 import { Logger } from '@nestjs/common';
 
-import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
-import { FitUserEntity } from '@backend/account/fit-user';
-import { TrainingEntity } from '@backend/fit/training';
+import { Review } from '@backend/shared/core'
+import { getRandomBoolean, getRandomDate, getRandomNumber } from '@backend/shared/helpers';
+import { OrderEntity } from '@backend/fit/order';
 import { ReviewEntity, ReviewRepository } from '@backend/fit/review';
 
+import { MockReviewOption, MockTrainingOption } from './mock-data';
 
 export async function clearReviews(reviewRepository: ReviewRepository): Promise<void> {
   await reviewRepository.client.review.deleteMany();
 }
 
-export async function seedReviews(
-  reviewRepository: ReviewRepository,
-  trainings: TrainingEntity[],
-  sportsmans: FitUserEntity[]
-): Promise<ReviewEntity[]> {
+export async function seedReviews(reviewRepository: ReviewRepository, orders: OrderEntity[]): Promise<ReviewEntity[]> {
   const reviews: ReviewEntity[] = [];
+  const { MIN_RATING, MAX_RATING } = MockReviewOption;
+  const { MIN_DATE, MAX_DATE } = MockTrainingOption;
 
-  /*
-  for (const { id: userId } of sportsmans) {
-    const trainingsCount = getRandomNumber(MIN_COUNT, MAX_COUNT);
-
-    for (let trainingIndex = 1; trainingIndex <= trainingsCount; trainingIndex++) {
-      const trainingIndexPrefix = `#${trainingGlobalIndex}-${trainingIndex}`;
-
-      //! потом можно создавать через DTO и сервис, указав id-пользователя и не указывая не нужные поля - rating
-      const training: Training = {
-        title: `Training title ${trainingIndexPrefix}`,
-        backgroundPath: getRandomItem(MOCK_TRAININGS_BACKGROUND_PATHS),
-        trainingLevel: getRandomEnumItem(TrainingLevel),
-        specialization: getRandomEnumItem(Specialization),
-        duration: getRandomEnumItem(Duration),
-        price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-        caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),
-        description: `Training description ${trainingIndexPrefix}`,
-        gender: getRandomEnumItem(Gender),
-        videoFileId: '1111-2222-3333-4444', //! как бы видео загрузить на file-storage....
+  for (const { userId, trainingId } of orders) {
+    if (getRandomBoolean()) {
+      const review: Review = {
         userId,
-        rating: getRandomNumber(MIN_RATING, MAX_RATING), //! временно, пока нет сервиса для пересчета рейтинга...
-        //! возможно так и отсавить... следующая добавленная оценка расчитает корректный рейтинг
-        //! или сформировать отзывы и актуализировать райтинг
-        isSpecial: getRandomBoolean(),
+        trainingId,
+        rating: getRandomNumber(MIN_RATING, MAX_RATING),
+        message: `Review message... userId(${userId}) for trainingId(${trainingId})`,
         createdAt: getRandomDate(MIN_DATE, MAX_DATE)
       }
-      const trainingEntity = new TrainingEntity(training);
+      const reviewEntity = new ReviewEntity(review);
 
-      await trainingRepository.save(trainingEntity);
-      trainings.push(trainingEntity);
+      await reviewRepository.save(reviewEntity);
+      reviews.push(reviewEntity);
 
-      Logger.log(`Added training: ${trainingEntity.id} for coachId: ${userId}`);
+      Logger.log(`Added review: userId: ${userId} / trainingId: ${trainingId}`);
     }
-    trainingGlobalIndex++;
   }
-  */
 
   return reviews;
 }

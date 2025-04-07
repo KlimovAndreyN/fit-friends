@@ -73,9 +73,11 @@ async function bootstrap() {
     Logger.log(`Orders count: ${orders.length}`);
 
     // отзывы
-    const reviews = await seedReviews(reviewRepository, trainings, sportsmans);
+    const reviews = await seedReviews(reviewRepository, orders);
 
     Logger.log(`Reviews count: ${reviews.length}`);
+
+    //! запустить пересчет среднего рейтинга тренировки
 
     Logger.log('🤘️ Database Fit(postgres) was filled!');
 
