@@ -1,23 +1,24 @@
 import { Logger } from '@nestjs/common';
 
-import { Duration, Gender, Specialization, Training, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
-import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
+import { TrainingEntity } from '@backend/fit/training';
+import { OrderEntity, OrderRepository } from '@backend/fit/order';
 
-import { MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
 
-export async function clearTrainings(trainingRepository: TrainingRepository): Promise<void> {
-  await trainingRepository.client.training.deleteMany();
+export async function clearOrders(orderRepository: OrderRepository): Promise<void> {
+  await orderRepository.client.order.deleteMany();
 }
 
-export async function seedTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
-  const trainings: TrainingEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT, MIN_PRICE, MAX_PRICE, MIN_CALORIES, MAX_CALORIES, MIN_DATE, MAX_DATE } = MockTrainingOption;
-  const { MIN_RATING, MAX_RATING } = MockReviewOption;
-  let trainingGlobalIndex = 1;
+export async function seedOrders(
+  orderRepository: OrderRepository,
+  trainings: TrainingEntity[],
+  sportsmans: FitUserEntity[]
+): Promise<OrderEntity[]> {
+  const orders: OrderEntity[] = [];
 
-  for (const { id: userId } of coaches) {
+  /*
+  for (const { id: userId } of sportsmans) {
     const trainingsCount = getRandomNumber(MIN_COUNT, MAX_COUNT);
 
     for (let trainingIndex = 1; trainingIndex <= trainingsCount; trainingIndex++) {
@@ -51,6 +52,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
     }
     trainingGlobalIndex++;
   }
+  */
 
-  return trainings;
+  return orders;
 }

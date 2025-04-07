@@ -1,11 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 
-import { Training } from '@backend/shared/core';
+import { Review } from '@backend/shared/core';
 
 import { ReviewRepository } from './review.repository';
 import { ReviewEntity } from './review.entity';
-import { ReviewFactory } from './review.factory';
-import { Review } from '@prisma/client';
 
 @Injectable()
 export class ReviewService {

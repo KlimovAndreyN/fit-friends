@@ -29,8 +29,11 @@ aaa@aaa.aaa
     history.push
     useNavigate
 
+  тренер может выступать в качестве спортсмена? покупать тренировки других тренеров? писать отзывы? как написано в ТЗ
+
   /fronted-index
   from 'libs/shared/....
+  @prisma/client
 --------------
   на главной у среднего блока <section class="special-offers"
     появляется вертикальная прокрутка так как

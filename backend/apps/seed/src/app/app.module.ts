@@ -6,6 +6,8 @@ import { FitUserModule } from '@backend/account/fit-user';
 import { PrismaClientModule } from '@backend/fit/models';
 import { QuestionnaireModule } from '@backend/fit/questionnaire';
 import { TrainingModule } from '@backend/fit/training';
+import { OrderModule } from '@backend/fit/order';
+import { ReviewModule } from '@backend/fit/review';
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { TrainingModule } from '@backend/fit/training';
     MongooseModule.forRootAsync(getEnvMongooseOptions()),
     PrismaClientModule,
     QuestionnaireModule,
-    TrainingModule
+    TrainingModule,
+    OrderModule,
+    ReviewModule
   ]
 })
 export class AppModule { };
