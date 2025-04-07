@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { UserInfoProcess } from '../../types/user-info-process';
-import { changeReadyForTraning, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-info-action';
+import { changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-info-action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserInfoProcess = {
@@ -104,19 +104,19 @@ export const userInfoProcess = createSlice(
           }
         )
         .addCase(
-          changeReadyForTraning.pending,
+          changeReadyForTraining.pending,
           (state) => {
             state.isReadyForTrainingChangeExecuting = true;
           }
         )
         .addCase(
-          changeReadyForTraning.rejected,
+          changeReadyForTraining.rejected,
           (state) => {
             state.isReadyForTrainingChangeExecuting = false;
           }
         )
         .addCase(
-          changeReadyForTraning.fulfilled,
+          changeReadyForTraining.fulfilled,
           (state, action) => {
             state.readyForTraining = action.payload;
             state.isReadyForTrainingChangeExecuting = false;

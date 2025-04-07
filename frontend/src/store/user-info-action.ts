@@ -56,7 +56,7 @@ export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: 
   }
 );
 
-export const changeReadyForTraning = createAsyncThunk<boolean, boolean, { extra: Extra }>(
+export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra: Extra }>(
   Action.CHANGE_READY,
   async (ready, { extra }) => {
     const { api } = extra;

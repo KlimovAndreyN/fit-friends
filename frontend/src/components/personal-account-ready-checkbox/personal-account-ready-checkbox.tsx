@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/user-info-process/selectors';
-import { changeReadyForTraning } from '../../store/user-info-action';
+import { changeReadyForTraining } from '../../store/user-info-action';
 
 type PersonalAccountReadyCheckboxProps = {
   name: string;
@@ -20,7 +20,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
 
     const checked = !readyForTraining;
 
-    dispatch(changeReadyForTraning(checked));
+    dispatch(changeReadyForTraining(checked));
   };
 
   return (
