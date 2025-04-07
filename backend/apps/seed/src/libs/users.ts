@@ -18,7 +18,7 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
   const users: FitUserEntity[] = [];
 
   for (const { name, gender } of mockUsers) {
-    //! попробовать создавать через DTO и сервис не указывая не нужные и не делая вызов генерации пароля
+    // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
     const user: AuthUser = {
       email: `${name.toLocaleLowerCase()}@local.ru`,
       name,

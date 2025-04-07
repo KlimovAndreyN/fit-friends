@@ -41,7 +41,7 @@ export const MockSpecializationsOption = {
   MAX_COUNT: 3
 } as const;
 
-export const MockTrainingsOption = {
+export const MockTrainingOption = {
   MIN_COUNT: 0,
   MAX_COUNT: 20,
   MIN_PRICE: 0,
@@ -66,3 +66,8 @@ export const MOCK_TRAININGS_BACKGROUND_PATHS = [
   'img/content/thumbnails/training-11@2x.jpg',
   'img/content/thumbnails/training-12@2x.jpg'
 ];
+
+export const MockReviewOption = {
+  MIN_RATING: 1,
+  MAX_RATING: 5
+} as const;

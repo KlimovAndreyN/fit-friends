@@ -4,7 +4,7 @@ import { Duration, Gender, Specialization, Training, TrainingLevel } from '@back
 import { getRandomBoolean, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
-import { MOCK_TRAININGS_BACKGROUND_PATHS, MockTrainingsOption } from './mock-data';
+import { MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
 
 export async function clearTrainings(trainingRepository: TrainingRepository): Promise<void> {
   await trainingRepository.client.training.deleteMany();
@@ -12,7 +12,8 @@ export async function clearTrainings(trainingRepository: TrainingRepository): Pr
 
 export async function seedCoachesTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
   const trainings: TrainingEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT, MIN_PRICE, MAX_PRICE, MIN_CALORIES, MAX_CALORIES } = MockTrainingsOption;
+  const { MIN_COUNT, MAX_COUNT, MIN_PRICE, MAX_PRICE, MIN_CALORIES, MAX_CALORIES } = MockTrainingOption;
+  const { MIN_RATING, MAX_RATING } = MockReviewOption;
   let trainingGlobalIndex = 1;
 
   for (const { id: userId } of coaches) {
@@ -32,9 +33,9 @@ export async function seedCoachesTrainings(trainingRepository: TrainingRepositor
         caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),
         description: `Training description ${trainingIndexPrefix}`,
         gender: getRandomEnumItem(Gender),
-        videoFileId: '1111-2222-3333-4444', //! как бы видео закинуть на file-storage....
+        videoFileId: '1111-2222-3333-4444', //! как бы видео загрузить на file-storage....
         userId,
-        rating: 0,
+        rating: getRandomNumber(MIN_RATING, MAX_RATING), //! временно, пока нет сервиса для пересчета рейтинга... возможно так и отсавить... следующая добавленная оценка расчитает корректный рейтинг
         isSpecial: getRandomBoolean()
       }
       const trainingEntity = new TrainingEntity(training);
@@ -42,8 +43,7 @@ export async function seedCoachesTrainings(trainingRepository: TrainingRepositor
       await trainingRepository.save(trainingEntity);
       trainings.push(trainingEntity);
 
-      Logger.log(`Added training for coachId : ${userId}`);
-      console.log(trainingEntity);
+      Logger.log(`Added training: ${trainingEntity.id} for coachId: ${userId}`);
     }
     trainingGlobalIndex++;
   }
