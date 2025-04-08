@@ -1,6 +1,6 @@
-import { IQuestionnaireWithFileIdsRdo } from './i-questionnaire-with-file-ids.rdo';
+import { IBasicQuestionnaireRdo } from './i-basic-questionnaire.rdo';
 
 export interface IQuestionnaireRdo
-  extends Omit<IQuestionnaireWithFileIdsRdo, 'fileIds'> {
+  extends Omit<IBasicQuestionnaireRdo, 'fileIds'> {
   filePaths?: string[];
 }

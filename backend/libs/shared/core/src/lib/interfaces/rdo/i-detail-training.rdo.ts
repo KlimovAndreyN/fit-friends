@@ -1,9 +1,9 @@
-import { Training } from '../training.interface';
+import { IBasicDetailTrainingRdo } from './i-basic-detail-training.rdo';
 import { IUserRdo } from './i-user.rdo';
 
 export interface IDetailTrainingRdo
   extends Pick<
-    Training,
+    IBasicDetailTrainingRdo,
     'id'
     | 'title'
     | 'backgroundPath'
@@ -16,7 +16,7 @@ export interface IDetailTrainingRdo
     | 'gender'
     | 'rating'
     | 'isSpecial'
-    | 'createdAt'
+    | 'createdDate'
   > {
   videoFilePath: string;
   coach: IUserRdo;

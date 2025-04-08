@@ -1,6 +1,6 @@
 import { Questionnaire } from '../questionnaire.interface';
 
-export type IQuestionnaireWithFileIdsRdo = Pick<
+export type IBasicQuestionnaireRdo = Pick<
   Questionnaire,
   'specializations'
   | 'trainingLevel'
@@ -12,5 +12,3 @@ export type IQuestionnaireWithFileIdsRdo = Pick<
   | 'fileIds'
   | 'individualTraining'
 >;
-
-//! переделать!
