@@ -9,7 +9,7 @@ export type OfferType = {
   id: string;
   title: string;
   description: string;
-  picturePath: string;
+  backgroundPath: string;
   price: number;
   oldPrice: number;
 };

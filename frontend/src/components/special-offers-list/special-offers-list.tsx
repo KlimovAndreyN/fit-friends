@@ -33,7 +33,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
       {
         offers.map(
           (offer, index) => {
-            const { id, title, description, picturePath, price, oldPrice } = offer;
+            const { id, title, description, backgroundPath, price, oldPrice } = offer;
             const isActive = index === activeSliderIndex;
             const itemClassName = classNames('special-offers__item', { 'is-active': isActive });
 
@@ -42,7 +42,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
                 <aside className="promo-slider">
                   <div className="promo-slider__overlay"></div>
                   <div className="promo-slider__image">
-                    <img src={picturePath} width="1040" height="469" alt="promo-photo" />
+                    <img src={backgroundPath} width="1040" height="469" alt="promo-photo" />
                   </div>
                   <div className="promo-slider__header">
                     <Link to={getTrainingRoute(id)}>

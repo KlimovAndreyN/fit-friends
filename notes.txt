@@ -31,8 +31,9 @@ aaa@aaa.aaa
 
   тренер может выступать в качестве спортсмена? покупать тренировки других тренеров? писать отзывы? как написано в ТЗ
   
-  переделать: withfile withuser -> basic
-
+  i-user-info.rdo -> i-detail-user-info.rdo
+  i-user-info.rdo нужна для краткого представления...
+  
   /fronted-index
   from 'libs/shared/....
   @prisma/client

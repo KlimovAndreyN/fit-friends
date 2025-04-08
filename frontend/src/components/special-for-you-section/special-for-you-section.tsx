@@ -13,11 +13,11 @@ function SpecialForYouSection(): JSX.Element {
 
   const offers = MOCK_OFFERS;
   const childrens = offers.map(
-    ({ id, picturePath, specialization }) => (
+    ({ id, backgroundPath, specialization }) => (
       <div className="thumbnail-preview" key={id}>
         <div className="thumbnail-preview__image">
           <picture>
-            <img src={picturePath} width="452" height="191" alt="" />
+            <img src={backgroundPath} width="452" height="191" alt="" />
           </picture>
         </div>
         <div className="thumbnail-preview__inner">
@@ -32,7 +32,7 @@ function SpecialForYouSection(): JSX.Element {
 
   return (
     <SliderSection
-      title='Популярные тренировки'
+      title='Специально подобрано для вас'
       sectionClassName='special-for-you'
       slidesCount={SLIDE_COUNT}
       childrens={childrens}

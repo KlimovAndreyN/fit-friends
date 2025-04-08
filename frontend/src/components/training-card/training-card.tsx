@@ -21,7 +21,7 @@ function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
   }
   //
 
-  const { id, title, description, specialization, calorie, picturePath, price } = training;
+  const { id, title, description, specialization, calorie, backgroundPath, price, rating } = training;
   const link = getTrainingRoute(id);
 
   return (
@@ -29,7 +29,7 @@ function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
       <div className="thumbnail-training__inner">
         <div className="thumbnail-training__image">
           <picture>
-            <img src={picturePath} width="330" height="190" alt="" />
+            <img src={backgroundPath} width="330" height="190" alt="" />
           </picture>
         </div>
         <p className="thumbnail-training__price">
@@ -53,7 +53,7 @@ function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
             <svg width="16" height="16" aria-hidden="true">
               <use xlinkHref="#icon-star"></use>
             </svg>
-            <span className="thumbnail-training__rate-value">5</span>
+            <span className="thumbnail-training__rate-value">{rating}</span>
           </div>
         </div>
         <div className="thumbnail-training__text-wrapper">
