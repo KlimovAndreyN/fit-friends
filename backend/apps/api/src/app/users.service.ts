@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, UserRdo,
+  AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, DetailUserRdo,
   UserWithFileIdRdo, convertToUserRdo, UpdateUserDto, UpdateUserWithFileIdDto,
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -24,7 +24,7 @@ export class UsersService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, route);
   }
 
-  public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<UserRdo> {
+  public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<DetailUserRdo> {
     const avatar = await this.filesService.uploadFile(avatarFile, requestId);
     const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
@@ -35,7 +35,7 @@ export class UsersService {
     return convertToUserRdo(registeredUser, avatarFilePath);
   }
 
-  public async updateUser(dto: UpdateUserDto, avatarFile: Express.Multer.File, bearerAuth: string, requestId: string): Promise<UserRdo> {
+  public async updateUser(dto: UpdateUserDto, avatarFile: Express.Multer.File, bearerAuth: string, requestId: string): Promise<DetailUserRdo> {
     const { emptyAvatarFile } = dto;
     const updateUserDto: UpdateUserWithFileIdDto = fillDto(UpdateUserWithFileIdDto, dto);
     let avatarFilePath = '';
@@ -59,12 +59,12 @@ export class UsersService {
     return convertToUserRdo(updateUser, avatarFilePath);
   }
 
-  public async getUser(id: string, requestId: string): Promise<UserRdo> {
+  public async getUser(id: string, requestId: string): Promise<DetailUserRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.get<UserWithFileIdRdo>(url, headers);
     const filePath = await this.filesService.getFilePath(data.avatarFileId, requestId);
-    const user: UserRdo = convertToUserRdo(data, filePath);
+    const user: DetailUserRdo = convertToUserRdo(data, filePath);
 
     return user;
   }

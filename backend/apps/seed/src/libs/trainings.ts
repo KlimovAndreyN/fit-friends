@@ -28,7 +28,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
         title: `Training title ${trainingIndexPrefix}`,
         backgroundPath: getRandomItem(MOCK_TRAININGS_BACKGROUND_PATHS),
         trainingLevel: getRandomEnumItem(TrainingLevel),
-        specialization: getRandomEnumItem(Specialization),
+        specialization: getRandomEnumItem(Specialization), //! скорректировать только своих специализаций! coach.specializations! что в ТЗ?
         duration: getRandomEnumItem(Duration),
         price: getRandomNumber(MIN_PRICE, MAX_PRICE),
         caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),

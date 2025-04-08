@@ -8,11 +8,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
 import {
-  AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
+  AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth, DetailUserRdo,
   LoggedUserRdo, LoginUserDto, RequestWithRequestId, RequestWithRequestIdAndBearerAuth,
-  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, TokensRdo,
-  AVATAR_FILE_PROPERTY, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto,
-  UserRdo, ApiApiResponse
+  RequestWithTokenPayload, ApiServiceRoute, TokenPayloadRdo, TokensRdo, ApiApiResponse,
+  AVATAR_FILE_PROPERTY, parseUserAvatarFilePipeBuilder, AccountRoute, CreateUserDto
 } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -101,7 +100,7 @@ export class UsersController {
     @Body() dto: CreateUserDto,
     @Req() { requestId }: RequestWithRequestId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserRdo> {
+  ): Promise<DetailUserRdo> {
     const registeredUser = await this.usersService.registerUser(dto, avatarFile, requestId);
 
     return registeredUser;
@@ -121,7 +120,7 @@ export class UsersController {
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { requestId }: RequestWithRequestId
-  ): Promise<UserRdo> {
+  ): Promise<DetailUserRdo> {
     const user = await this.usersService.getUser(userId, requestId);
 
     return user;

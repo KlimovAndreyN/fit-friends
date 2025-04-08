@@ -1,13 +1,13 @@
-import { UserRdo } from '../../rdo/user.rdo';
+import { DetailUserRdo } from '../../rdo/detail-user.rdo';
 import { AuthenticationApiResponse } from './authentication.api-response';
 
 export const ApiApiResponse = {
   UserCreated: {
     ...AuthenticationApiResponse.UserCreated,
-    type: UserRdo
+    type: DetailUserRdo
   },
   UserFound: {
     ...AuthenticationApiResponse.UserFound,
-    type: UserRdo
+    type: DetailUserRdo
   }
 } as const;
