@@ -12,7 +12,7 @@ import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto,
-  Role, AVATAR_FILE_PROPERTY, BearerAuth, UserInfoRdo, parseUserAvatarFilePipeBuilder,
+  Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserInfoRdo, parseUserAvatarFilePipeBuilder,
   Specialization, UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -72,16 +72,16 @@ export class UserInfoController {
   //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Coach
 
 
-  @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
   @Get()
-  public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserInfoRdo> {
+  public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserInfoRdo> {
     const user = await this.usersService.getUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
   }
 
-  @ApiResponse({ type: UserInfoRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Patch()
@@ -89,7 +89,7 @@ export class UserInfoController {
     @Body() dto: UpdateUserInfoDto,
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<UserInfoRdo> {
+  ): Promise<DetailUserInfoRdo> {
     //! перенести в сервис/сервисы?
     //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
     dto.specializations = [];

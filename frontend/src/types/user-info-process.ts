@@ -1,4 +1,4 @@
-import { IUserInfoRdo } from '@backend/shared/core';
+import { IDetailUserInfoRdo } from '@backend/shared/core';
 
 export type UserInfoProcess = {
   isExistQuestionnaireExecuting: boolean;
@@ -8,6 +8,6 @@ export type UserInfoProcess = {
   isUpdateUserInfoError: boolean;
   isReadyForTrainingChangeExecuting: boolean;
   existQuestionnaire: boolean;
-  userInfo: IUserInfoRdo | null;
+  userInfo: IDetailUserInfoRdo | null;
   readyForTraining?: boolean;
 }

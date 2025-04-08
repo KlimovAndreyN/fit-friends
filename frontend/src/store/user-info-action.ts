@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUpdateUserInfoDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
-  ApiServiceRoute, IUserInfoRdo, QuestionnaireRoute, UserInfoRoute, Role
+  ApiServiceRoute, IDetailUserInfoRdo, QuestionnaireRoute, UserInfoRoute, Role
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -46,11 +46,11 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestion
   }
 );
 
-export const fetchUserInfo = createAsyncThunk<IUserInfoRdo, undefined, { extra: Extra }>(
+export const fetchUserInfo = createAsyncThunk<IDetailUserInfoRdo, undefined, { extra: Extra }>(
   Action.GET_USER_INFO,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<IUserInfoRdo>(ApiServiceRoute.UserInfo);
+    const { data } = await api.get<IDetailUserInfoRdo>(ApiServiceRoute.UserInfo);
 
     return data;
   }
@@ -72,11 +72,11 @@ export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra
   }
 );
 
-export const updateUserInfo = createAsyncThunk<IUserInfoRdo, IUpdateUserInfoDto, { extra: Extra }>(
+export const updateUserInfo = createAsyncThunk<IDetailUserInfoRdo, IUpdateUserInfoDto, { extra: Extra }>(
   Action.UPDATE_USER_INFO,
   async (dto, { extra }) => {
     const { api } = extra;
-    const { data } = await api.patch<IUserInfoRdo>(ApiServiceRoute.UserInfo, dto, { headers: multipartFormDataHeader });
+    const { data } = await api.patch<IDetailUserInfoRdo>(ApiServiceRoute.UserInfo, dto, { headers: multipartFormDataHeader });
 
     return data;
   }

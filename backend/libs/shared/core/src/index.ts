@@ -60,13 +60,13 @@ export { PageQuery } from './lib/query/page.query';
 
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
+export { DetailUserInfoRdo } from './lib/rdo/detail-user-info.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
-export { UserInfoRdo } from './lib/rdo/user-info.rdo';
 
 export { RequestWithBearerAuth } from './lib/types/request/request-with-bearer-auth.type';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request/request-with-request-id-and-bearer-auth.type';

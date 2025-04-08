@@ -1,6 +1,6 @@
 import { IDetailTrainingRdo } from './i-detail-training.rdo';
 
-export type ITrainingRdo = Pick<
+export type ISpecialTrainingRdo = Pick<
   IDetailTrainingRdo,
   'id'
   | 'title'

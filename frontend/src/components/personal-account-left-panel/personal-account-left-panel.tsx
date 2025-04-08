@@ -7,7 +7,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
+import { IUpdateUserInfoDto, IDetailUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
@@ -26,7 +26,7 @@ enum FormFieldName {
 }
 
 type PersonalAccountLeftPanelProps = {
-  userInfo: IUserInfoRdo;
+  userInfo: IDetailUserInfoRdo;
   isSpotsmanRole: boolean;
   onSubmit: (updatedUserInfo: IUpdateUserInfoDto) => void;
 }

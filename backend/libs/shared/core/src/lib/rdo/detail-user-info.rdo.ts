@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IUserInfoRdo } from '../interfaces/rdo/i-user-info.rdo';
+import { IDetailUserInfoRdo } from '../interfaces/rdo/i-detail-user-info.rdo';
 import { DetailUserRdo } from './detail-user.rdo';
 import { QuestionnaireRdo } from './questionnaire.rdo';
 
-export class UserInfoRdo implements IUserInfoRdo {
+export class DetailUserInfoRdo implements IDetailUserInfoRdo {
   @ApiProperty()
   @Expose()
   public user: DetailUserRdo;
