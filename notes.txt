@@ -31,7 +31,7 @@ aaa@aaa.aaa
 
   тренер может выступать в качестве спортсмена? покупать тренировки других тренеров? писать отзывы? как написано в ТЗ
   
-  переделать dto: withfile withuser -> basic
+  переделать: withfile withuser -> basic
 
   /fronted-index
   from 'libs/shared/....

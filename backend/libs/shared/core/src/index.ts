@@ -25,15 +25,16 @@ export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
-export { CreateQuestionnaireWithFileIdsDto } from './lib/dto/create-questionnaire-with-file-ids.dto';
+export { CreateBasicQuestionnaireDto as CreateQuestionnaireWithFileIdsDto } from './lib/dto/create-basic-questionnaire.dto';
+export { CreateBasicUserDto as CreateUserWithFileIdDto } from './lib/dto/create-basic-user.dto';
+export { CreateQuestionnaireCoachDto } from './lib/dto/create-questionnaire-coach.dto';
 export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
-export { CreateUserWithFileIdDto } from './lib/dto/create-user-with-file-id.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
+export { UpdateBasicUserDto as UpdateUserWithFileIdDto } from './lib/dto/update-basic-user.dto';
 export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
 export { UpdateUserInfoDto } from './lib/dto/update-user-info.dto';
-export { UpdateUserWithFileIdDto } from './lib/dto/update-user-with-file-id.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
