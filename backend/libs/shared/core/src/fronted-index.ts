@@ -8,6 +8,7 @@ export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-ques
 export { type IUpdateUserInfoDto } from './lib/interfaces/dto/i-update-user-info.dto';
 export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
 
+export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';
 export { type IUserInfoRdo } from './lib/interfaces/rdo/i-user-info.rdo';
