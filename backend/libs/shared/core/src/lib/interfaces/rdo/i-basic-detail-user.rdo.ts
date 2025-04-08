@@ -1,10 +1,11 @@
 import { ICreateUserWithFileIdDto } from '../dto/i-create-user-with-file-id.dto';
 import { User } from '../user.interface';
 
-export interface IUserWithFileIdRdo
+export interface IBasicDetailUserRdo
   extends Pick<
     User,
-    'name'
+    'id'
+    | 'name'
     | 'email'
     | 'location'
     | 'backgroundPath'
@@ -13,7 +14,6 @@ export interface IUserWithFileIdRdo
     | 'role'
     | 'about'
   > {
-  id: User['id'];
   birthday?: ICreateUserWithFileIdDto['birthday'];
   registrationDate: string;
 };

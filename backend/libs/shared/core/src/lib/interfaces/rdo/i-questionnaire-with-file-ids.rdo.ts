@@ -12,3 +12,5 @@ export type IQuestionnaireWithFileIdsRdo = Pick<
   | 'fileIds'
   | 'individualTraining'
 >;
+
+//! переделать!

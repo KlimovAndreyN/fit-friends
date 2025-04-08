@@ -8,7 +8,7 @@ import { IUserRdo } from '../../interfaces/rdo/i-user.rdo';
 import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 import { AVATAR_FILE_PROPERTY, ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
-import { IUserWithFileIdRdo } from '../../interfaces/rdo/i-user-with-file-id.rdo';
+import { IBasicDetailUserRdo } from '../../interfaces/rdo/i-basic-detail-user.rdo';
 import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
 import { Role } from '../../types/role.enum';
@@ -109,5 +109,5 @@ export class UserApiDoc {
 
   @ApiProperty(UserApiProperty.RegistrationDate)
   @Expose({ name: 'createdAt' })
-  public registrationDate: IUserWithFileIdRdo['registrationDate'];
+  public registrationDate: IBasicDetailUserRdo['registrationDate'];
 }
