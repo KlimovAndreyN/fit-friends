@@ -6,14 +6,17 @@ import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import NotFound from '../not-found/not-found';
 
 import { PageTitle } from '../../const';
-import { MOCK_TRAININGS } from '../../mock';
+import { MOCK_TRAININGS, MOCK_USERS } from '../../mock';
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
   //! specialization по месту определять русское название и в нижний регистр
   //! picturePath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
   //! как отборазить если бесплатно? есть что то в маркапах
+  //! нужные еще поля genderь, duration, coach {id, avatar, name}
+  //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
   //! проверить консоль браузера на ошибки
+
   const { id: trainingId } = useParams();
 
   //! временно из моков
@@ -26,6 +29,12 @@ function Training(): JSX.Element {
   }
 
   const { title, specialization, calorie, description, price } = training;
+  //! временно
+  const gender = 'для_всех';
+  const duration = '30_50минут';
+  const coach = MOCK_USERS[1];
+  const { avatarPath, name } = coach;
+  //
 
   return (
     <Fragment>
@@ -43,11 +52,12 @@ function Training(): JSX.Element {
                     <div className="training-info__coach">
                       <div className="training-info__photo">
                         <picture>
-                          <source type="image/webp" srcSet="img/content/avatars/coaches/photo-1.webp, img/content/avatars/coaches/photo-1@2x.webp 2x" />
-                          <img src="img/content/avatars/coaches/photo-1.png" srcSet="img/content/avatars/coaches/photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
+                          <img src={avatarPath} width="64" height="64" alt="Изображение тренера" />
                         </picture>
                       </div>
-                      <div className="training-info__coach-info"><span className="training-info__label">Тренер</span><span className="training-info__name">Валерия</span></div>
+                      <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
+                        <span className="training-info__name">{name}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="training-info__main-content">
@@ -88,13 +98,13 @@ function Training(): JSX.Element {
                               <div className="hashtag hashtag--white"><span>#{specialization.toLocaleLowerCase()}</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#для_всех</span></div>
+                              <div className="hashtag hashtag--white"><span>#{gender}</span></div>
                             </li>
                             <li className="training-info__item">
                               <div className="hashtag hashtag--white"><span>#{calorie}ккал</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#30_50минут</span></div>
+                              <div className="hashtag hashtag--white"><span>#{duration}</span></div>
                             </li>
                           </ul>
                         </div>
