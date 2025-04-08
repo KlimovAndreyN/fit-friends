@@ -1,7 +1,7 @@
-import { UserWithFileIdRdo } from '../rdo/user-with-file-id.rdo';
+import { BasicDetailUserRdo } from '../rdo/basic-detail-user.rdo';
 import { DetailUserRdo } from '../rdo/detail-user.rdo';
 
-export function convertToUserRdo(user: UserWithFileIdRdo, avatarFilePath: DetailUserRdo['avatarFilePath']): DetailUserRdo {
+export function convertToUserRdo(user: BasicDetailUserRdo, avatarFilePath: DetailUserRdo['avatarFilePath']): DetailUserRdo {
   const {
     id,
     name,

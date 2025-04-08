@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 
 import {
   AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, DetailUserRdo,
-  UserWithFileIdRdo, convertToUserRdo, UpdateUserDto, UpdateUserWithFileIdDto,
+  BasicDetailUserRdo, convertToUserRdo, UpdateUserDto, UpdateUserWithFileIdDto,
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -29,7 +29,7 @@ export class UsersService {
     const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
-    const { data: registeredUser } = await this.httpService.axiosRef.post<UserWithFileIdRdo>(url, createUser, headers);
+    const { data: registeredUser } = await this.httpService.axiosRef.post<BasicDetailUserRdo>(url, createUser, headers);
     const avatarFilePath = this.filesService.makePath(avatar);
 
     return convertToUserRdo(registeredUser, avatarFilePath);
@@ -54,7 +54,7 @@ export class UsersService {
 
     const url = this.getUrl();
     const headers = makeHeaders(requestId, bearerAuth);
-    const { data: updateUser } = await this.httpService.axiosRef.patch<UserWithFileIdRdo>(url, updateUserDto, headers);
+    const { data: updateUser } = await this.httpService.axiosRef.patch<BasicDetailUserRdo>(url, updateUserDto, headers);
 
     return convertToUserRdo(updateUser, avatarFilePath);
   }
@@ -62,7 +62,7 @@ export class UsersService {
   public async getUser(id: string, requestId: string): Promise<DetailUserRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
-    const { data } = await this.httpService.axiosRef.get<UserWithFileIdRdo>(url, headers);
+    const { data } = await this.httpService.axiosRef.get<BasicDetailUserRdo>(url, headers);
     const filePath = await this.filesService.getFilePath(data.avatarFileId, requestId);
     const user: DetailUserRdo = convertToUserRdo(data, filePath);
 

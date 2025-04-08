@@ -8,7 +8,7 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
   AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, User,
-  UpdateUserWithFileIdDto, UserWithFileIdRdo, CreateUserWithFileIdDto
+  UpdateUserWithFileIdDto, BasicDetailUserRdo, CreateUserWithFileIdDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -87,22 +87,22 @@ export class AuthenticationController {
   public async register(
     @Body() dto: CreateUserWithFileIdDto,
     @Req() { requestId }: RequestWithRequestId
-  ): Promise<UserWithFileIdRdo> {
+  ): Promise<BasicDetailUserRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
 
-    return fillDto(UserWithFileIdRdo, newUser.toPOJO());
+    return fillDto(BasicDetailUserRdo, newUser.toPOJO());
   }
 
-  @ApiResponse({ type: UserWithFileIdRdo }) //! перенести в описание
+  @ApiResponse({ type: BasicDetailUserRdo }) //! перенести в описание
   @UseGuards(JwtAuthGuard) // разрешено менять только себя, но по правильному и токеп пейлоад обновить там имя... или исключить его из токеп пейлоад
   @Patch()
   public async update(
     @Body() dto: UpdateUserWithFileIdDto,
     @Req() { user: { sub: id } }: RequestWithTokenPayload
-  ): Promise<UserWithFileIdRdo> {
+  ): Promise<BasicDetailUserRdo> {
     const user = await this.authService.updateUser(id, dto);
 
-    return fillDto(UserWithFileIdRdo, user.toPOJO());
+    return fillDto(BasicDetailUserRdo, user.toPOJO());
   }
 
   //! испльзуется? нужен? доступ только авторизированным или себе/по себе?
@@ -112,9 +112,9 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
   @Get(USER_ID_PARAM)
-  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id']): Promise<UserWithFileIdRdo> {
+  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id']): Promise<BasicDetailUserRdo> {
     const existUser = await this.authService.getUser(userId);
 
-    return fillDto(UserWithFileIdRdo, existUser.toPOJO());
+    return fillDto(BasicDetailUserRdo, existUser.toPOJO());
   }
 }
