@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { ICreateUserWithFileIdDto } from '../interfaces/dto/i-create-user-with-file-id.dto';
+import { ICreateBasicUserDto } from '../interfaces/dto/i-create-basic-user.dto';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class CreateUserWithFileIdDto extends PickType(
@@ -17,4 +17,4 @@ export class CreateUserWithFileIdDto extends PickType(
     'role'
   ]
 )
-  implements ICreateUserWithFileIdDto { }
+  implements ICreateBasicUserDto { }

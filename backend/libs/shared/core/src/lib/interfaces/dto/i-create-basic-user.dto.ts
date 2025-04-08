@@ -1,6 +1,6 @@
 import { User } from '../user.interface';
 
-export interface ICreateUserWithFileIdDto
+export interface ICreateBasicUserDto
   extends Omit<
     User,
     'id'

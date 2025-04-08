@@ -1,7 +1,7 @@
 import { IntersectionType, PartialType, PickType } from '@nestjs/swagger';
 
 import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
-import { ICreateQuestionnaireWithFileIdsDto } from '../interfaces/dto/i-create-questionnaire-with-file-ids.dto';
+import { ICreateBasicQuestionnaireDto } from '../interfaces/dto/i-create-basic-questionnaire.dto';
 
 export class CreateQuestionnaireWithFileIdsDto
   extends IntersectionType(
@@ -22,4 +22,4 @@ export class CreateQuestionnaireWithFileIdsDto
       ]
     )
   )
-  implements ICreateQuestionnaireWithFileIdsDto { }
+  implements ICreateBasicQuestionnaireDto { }

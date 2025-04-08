@@ -1,6 +1,6 @@
 import { PartialType, PickType } from '@nestjs/swagger';
 
-import { IUpdateUserWithFileIdDto } from '../interfaces/dto/i-update-user-with-file-id.dto';
+import { IUpdateBasicUserDto } from '../interfaces/dto/i-update-basic-user.dto';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class UpdateUserWithFileIdDto
@@ -14,4 +14,4 @@ export class UpdateUserWithFileIdDto
       'gender'
     ]
   )
-  implements IUpdateUserWithFileIdDto { }
+  implements IUpdateBasicUserDto { }

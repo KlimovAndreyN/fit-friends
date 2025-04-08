@@ -6,7 +6,7 @@ import {
 import { Expose } from 'class-transformer';
 
 import { Questionnaire } from '../../interfaces/questionnaire.interface';
-import { ICreateQuestionnaireCoachDto } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
+import { FILES_PROPERTY, ICreateQuestionnaireCoachDto } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
 import { IQuestionnaireRdo } from '../../interfaces/rdo/i-questionnaire.rdo';
 import { Specialization } from '../../types/specialization.enum';
 import { TrainingLevel } from '../../types/training-level.enum';
@@ -70,7 +70,7 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Files)
   @Expose()
   @IsOptional()
-  files?: ICreateQuestionnaireCoachDto['files']; //! ограничения есть в ТЗ?
+  [FILES_PROPERTY]?: ICreateQuestionnaireCoachDto['files']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FilePaths)
   @Expose()

@@ -1,6 +1,6 @@
 import { User } from '../user.interface';
 
-export type IUpdateUserWithFileIdDto =
+export type IUpdateBasicUserDto =
   Pick<
     Partial<User>,
     'name'

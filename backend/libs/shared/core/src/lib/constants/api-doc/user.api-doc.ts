@@ -7,7 +7,7 @@ import { TokenPayload } from '../../interfaces/token-payload.interface';
 import { IDetailUserRdo } from '../../interfaces/rdo/i-detail-user.rdo';
 import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 import { AVATAR_FILE_PROPERTY, ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
-import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
+import { ICreateBasicUserDto } from '../../interfaces/dto/i-create-basic-user.dto';
 import { IBasicDetailUserRdo } from '../../interfaces/rdo/i-basic-detail-user.rdo';
 import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
@@ -45,7 +45,7 @@ export class UserApiDoc {
   @IsString()
   @MinLength(UserValidation.Password.MinLength)
   @MaxLength(UserValidation.Password.MaxLength)
-  public password: ICreateUserWithFileIdDto['password'];
+  public password: ICreateBasicUserDto['password'];
 
   @ApiProperty(UserApiProperty.About)
   @Expose()
@@ -59,7 +59,7 @@ export class UserApiDoc {
   @Expose()
   @IsDateString()
   @IsOptional()
-  public birthday?: ICreateUserWithFileIdDto['birthday'];
+  public birthday?: ICreateBasicUserDto['birthday'];
 
   @ApiProperty(UserApiProperty.AvatarFileId)
   @Expose()

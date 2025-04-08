@@ -1,7 +1,7 @@
-import { ICreateQuestionnaireWithFileIdsDto } from './i-create-questionnaire-with-file-ids.dto';
+import { ICreateBasicQuestionnaireDto } from './i-create-basic-questionnaire.dto';
 
 export type ICreateQuestionnaireSportsmanDto = Pick<
-  Required<ICreateQuestionnaireWithFileIdsDto>,
+  Required<ICreateBasicQuestionnaireDto>,
   'specializations'
   | 'trainingLevel'
   | 'duration'

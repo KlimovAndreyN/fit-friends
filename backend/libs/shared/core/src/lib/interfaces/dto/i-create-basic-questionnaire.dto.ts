@@ -1,6 +1,6 @@
 import { Questionnaire } from '../questionnaire.interface';
 
-export type ICreateQuestionnaireWithFileIdsDto = Pick<
+export type ICreateBasicQuestionnaireDto = Pick<
   Questionnaire,
   'specializations'
   | 'trainingLevel'

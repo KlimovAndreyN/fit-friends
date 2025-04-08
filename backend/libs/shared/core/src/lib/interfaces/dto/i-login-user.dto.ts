@@ -1,7 +1,7 @@
-import { ICreateUserWithFileIdDto } from './i-create-user-with-file-id.dto';
+import { ICreateBasicUserDto } from './i-create-basic-user.dto';
 
 export type ILoginUserDto = Pick<
-  ICreateUserWithFileIdDto,
+  ICreateBasicUserDto,
   'email'
   | 'password'
 >;

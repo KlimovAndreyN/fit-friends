@@ -1,12 +1,14 @@
-import { ICreateQuestionnaireWithFileIdsDto } from './i-create-questionnaire-with-file-ids.dto';
+import { ICreateBasicQuestionnaireDto } from './i-create-basic-questionnaire.dto';
+
+export const FILES_PROPERTY = 'files';
 
 export interface ICreateQuestionnaireCoachDto
   extends Pick<
-    Required<ICreateQuestionnaireWithFileIdsDto>,
+    Required<ICreateBasicQuestionnaireDto>,
     'specializations'
     | 'trainingLevel'
     | 'description'
     | 'individualTraining'
   > {
-  files?: File[];
+  [FILES_PROPERTY]?: File[];
 }

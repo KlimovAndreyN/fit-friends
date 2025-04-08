@@ -1,4 +1,4 @@
-import { ICreateUserWithFileIdDto } from '../dto/i-create-user-with-file-id.dto';
+import { ICreateBasicUserDto } from '../dto/i-create-basic-user.dto';
 import { User } from '../user.interface';
 
 export interface IBasicDetailUserRdo
@@ -14,6 +14,6 @@ export interface IBasicDetailUserRdo
     | 'role'
     | 'about'
   > {
-  birthday?: ICreateUserWithFileIdDto['birthday'];
+  birthday?: ICreateBasicUserDto['birthday'];
   registrationDate: string;
 };
