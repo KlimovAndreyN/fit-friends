@@ -1,7 +1,7 @@
 import { IQuestionnaireRdo } from './i-questionnaire.rdo';
-import { IUserRdo } from './i-user.rdo';
+import { IDetailUserRdo } from './i-detail-user.rdo';
 
 export interface IUserInfoRdo {
-  user: IUserRdo;
+  user: IDetailUserRdo;
   questionnaire: IQuestionnaireRdo;
 }

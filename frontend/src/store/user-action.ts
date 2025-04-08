@@ -3,7 +3,7 @@ import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  AccountRoute, ApiServiceRoute, ILoginUserDto, IUserRdo,
+  AccountRoute, ApiServiceRoute, ILoginUserDto, IDetailUserRdo,
   ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
@@ -97,7 +97,7 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
-    await api.post<IUserRdo>(url, dto, { headers: multipartFormDataHeader });
+    await api.post<IDetailUserRdo>(url, dto, { headers: multipartFormDataHeader });
 
     const { email, password } = dto;
 

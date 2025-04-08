@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { IUserRdo } from '../interfaces/rdo/i-user.rdo';
+import { IDetailUserRdo } from '../interfaces/rdo/i-detail-user.rdo';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 
 export class UserRdo
@@ -20,5 +20,5 @@ export class UserRdo
       'registrationDate'
     ]
   )
-  implements IUserRdo {
+  implements IDetailUserRdo {
 }

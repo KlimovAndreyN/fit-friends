@@ -4,7 +4,7 @@ import { Expose, Transform } from 'class-transformer';
 
 import { User } from '../../interfaces/user.interface';
 import { TokenPayload } from '../../interfaces/token-payload.interface';
-import { IUserRdo } from '../../interfaces/rdo/i-user.rdo';
+import { IDetailUserRdo } from '../../interfaces/rdo/i-detail-user.rdo';
 import { IUpdateUserDto } from '../../interfaces/dto/i-update-user.dto';
 import { AVATAR_FILE_PROPERTY, ICreateUserDto } from '../../interfaces/dto/i-create-user.dto';
 import { ICreateUserWithFileIdDto } from '../../interfaces/dto/i-create-user-with-file-id.dto';
@@ -84,7 +84,7 @@ export class UserApiDoc {
   @ApiProperty(UserApiProperty.AvatarFilePath)
   @Expose()
   @IsOptional()
-  public avatarFilePath?: IUserRdo['avatarFilePath'];
+  public avatarFilePath?: IDetailUserRdo['avatarFilePath'];
 
   @ApiProperty(UserApiProperty.Location)
   @Expose()

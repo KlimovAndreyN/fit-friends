@@ -1,8 +1,22 @@
-import { IDetailTrainingWithUserIdFileIdRdo } from './i-detail-training-with-user-id-file-id.rdo';
+import { Training } from '../training.interface';
 
 export interface IDetailTrainingRdo
-  extends Omit<IDetailTrainingWithUserIdFileIdRdo, 'videoFileId'> {
+  extends Pick<
+    Training,
+    'id'
+    | 'title'
+    | 'backgroundPath'
+    | 'trainingLevel'
+    | 'specialization'
+    | 'duration'
+    | 'price'
+    | 'caloriesWaste'
+    | 'description'
+    | 'gender'
+    | 'rating'
+    | 'isSpecial'
+    | 'createdAt'
+  > {
   videoFilePath: string;
+  //coach: IUserRdo;//! убрать userId и добавить coach:{id, name, avatar}
 }
-
-//! убрать userId и добавить user:{id, name, avatar}
