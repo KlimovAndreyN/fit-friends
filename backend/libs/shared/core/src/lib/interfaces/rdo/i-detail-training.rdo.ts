@@ -1,4 +1,5 @@
 import { Training } from '../training.interface';
+import { IUserRdo } from './i-user.rdo';
 
 export interface IDetailTrainingRdo
   extends Pick<
@@ -18,5 +19,5 @@ export interface IDetailTrainingRdo
     | 'createdAt'
   > {
   videoFilePath: string;
-  //coach: IUserRdo;//! убрать userId и добавить coach:{id, name, avatar}
+  coach: IUserRdo;
 }
