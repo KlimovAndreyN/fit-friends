@@ -17,6 +17,7 @@ export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';
 export { type ISpecialTrainingRdo } from './lib/interfaces/rdo/i-special-training.rdo';
 export { type ITrainingRdo } from './lib/interfaces/rdo/i-training.rdo';
+export { type IUserInfoRdo } from './lib/interfaces/rdo/i-user-info.rdo';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 
 export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';

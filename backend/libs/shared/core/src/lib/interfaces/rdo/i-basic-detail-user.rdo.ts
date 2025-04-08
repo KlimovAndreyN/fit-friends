@@ -4,8 +4,7 @@ import { User } from '../user.interface';
 export interface IBasicDetailUserRdo
   extends Pick<
     User,
-    'id'
-    | 'name'
+    'name'
     | 'email'
     | 'location'
     | 'backgroundPath'
@@ -14,6 +13,7 @@ export interface IBasicDetailUserRdo
     | 'role'
     | 'about'
   > {
+  id: User['id']; //для обязательности
   birthday?: ICreateBasicUserDto['birthday'];
   registrationDate: string;
 };

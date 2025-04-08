@@ -2,7 +2,7 @@ import { Training } from '../training.interface';
 
 export interface IBasicDetailTrainingRdo
   extends Pick<
-    Training,
+    Required<Training>,
     'id'
     | 'title'
     | 'backgroundPath'
