@@ -2,7 +2,7 @@ import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ServiceRoute, CreateQuestionnaireWithFileIdsDto, QuestionnaireWithFileIdsRdo,
+  ServiceRoute, CreateQuestionnaireWithFileIdsDto, BasicQuestionnaireRdo,
   RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
@@ -20,33 +20,33 @@ export class QuestionnaireController {
   //! добавить описание
   //@ApiOperation(AuthenticationApiOperation.Show)
   //@ApiResponse(AuthenticationApiResponse.UserFound)
-  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
+  @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
   @Post()
   public async create(
     @Body() dto: CreateQuestionnaireWithFileIdsDto,
     @Req() { userId }: RequestWithUserId
-  ): Promise<QuestionnaireWithFileIdsRdo> {
+  ): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.create(dto, userId);
 
-    return fillDto(QuestionnaireWithFileIdsRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity);
   }
 
-  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
+  @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
   @Patch()
   public async update(
     @Body() dto: UpdateQuestionnaireDto,
     @Req() { userId }: RequestWithUserId
-  ): Promise<QuestionnaireWithFileIdsRdo> {
+  ): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.update(dto, userId);
 
-    return fillDto(QuestionnaireWithFileIdsRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity);
   }
 
-  @ApiResponse({ type: QuestionnaireWithFileIdsRdo }) //! вынести в описание
+  @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
   @Get()
-  public async show(@Req() { userId }: RequestWithUserId): Promise<QuestionnaireWithFileIdsRdo> {
+  public async show(@Req() { userId }: RequestWithUserId): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.findByUserId(userId);
 
-    return fillDto(QuestionnaireWithFileIdsRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity);
   }
 }

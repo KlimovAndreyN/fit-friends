@@ -58,9 +58,9 @@ export { User } from './lib/interfaces/user.interface';
 export { PageQuery } from './lib/query/page.query';
 
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
+export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
-export { QuestionnaireWithFileIdsRdo } from './lib/rdo/questionnaire-with-file-ids.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';

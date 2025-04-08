@@ -3,7 +3,7 @@ import { PickType } from '@nestjs/swagger';
 import { IBasicQuestionnaireRdo } from '../interfaces/rdo/i-basic-questionnaire.rdo';
 import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
 
-export class QuestionnaireWithFileIdsRdo
+export class BasicQuestionnaireRdo
   extends PickType(
     QuestionnaireApiDoc,
     [
