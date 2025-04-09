@@ -28,8 +28,8 @@ export class TrainingController {
   //! добавить описание
   //@ApiResponse({ type: TrainingWithFileIdRdo }) //! вынести в описание
   @Get()
-  public async index(@Req() { userId }: RequestWithUserId): Promise<Training> {
-    const entity = await this.trainingService.findById('1', userId);
+  public async index(): Promise<Training> {
+    const entity = await this.trainingService.findById('1');
 
     //! временно
     return entity;
@@ -39,8 +39,8 @@ export class TrainingController {
   //! добавить описание
   //@ApiResponse({ type: TrainingWithFileIdRdo }) //! вынести в описание
   @Get(':trainingId')
-  public async show(@Req() { userId }: RequestWithUserId, @Param() id: string): Promise<Training> {
-    const entity = await this.trainingService.findById(id, userId);
+  public async show(@Param() id: string): Promise<Training> {
+    const entity = await this.trainingService.findById(id);
 
     //! временно
     return entity;

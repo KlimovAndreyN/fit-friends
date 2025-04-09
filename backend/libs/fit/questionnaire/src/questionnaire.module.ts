@@ -11,6 +11,7 @@ import { QuestionnaireService } from './questionnaire.service';
     QuestionnaireService,
     QuestionnaireRepository,
     QuestionnaireFactory
-  ]
+  ],
+  exports: [QuestionnaireRepository]
 })
 export class QuestionnaireModule { }

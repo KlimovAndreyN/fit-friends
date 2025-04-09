@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, Order } from '@backend/shared/core';
+import { ServiceRoute, XApiHeaderOptions, Order } from '@backend/shared/core';
 
 import { OrderService } from './order.service';
 
@@ -16,8 +16,8 @@ export class OrderController {
   //! добавить описание
   //@ApiResponse({ type: OrderRdo }) //! вынести в описание
   @Get()
-  public async show(@Req() { userId }: RequestWithUserId, @Param() id: string): Promise<Order> {
-    const entity = await this.orderService.findById(id, userId);
+  public async show(@Param() id: string): Promise<Order> {
+    const entity = await this.orderService.findById(id);
 
     //! временно
     return entity;

@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { Review } from '@backend/shared/core';
 
@@ -12,7 +12,7 @@ export class ReviewService {
   ) { }
 
   //! временно, нужно ли будет?
-  public async findById(id: string, userId: string): Promise<ReviewEntity> {
+  public async findById(id: string): Promise<ReviewEntity> {
     const foundReview = await this.reviewRepository.findById(id);
 
     return foundReview;

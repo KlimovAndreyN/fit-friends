@@ -3,9 +3,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import { Duration, Gender, Specialization, Training, TrainingLevel } from '@backend/shared/core';
+import { Training as PrismaTraining } from '@prisma/client';
 
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
+
+const MAX_COUNT = 50;
 
 @Injectable()
 export class TrainingRepository extends BasePostgresRepository<TrainingEntity, Training> {
@@ -16,35 +19,32 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     super(entityFactory, client);
   }
 
-  private convertFields({ trainingLevel, specialization, duration, gender }): {
-    trainingLevel: TrainingLevel;
-    specialization: Specialization;
-    duration: Duration;
-    gender: Gender;
-  } {
-    return {
+  private convertPrismaTraining(record: PrismaTraining): TrainingEntity {
+    const { trainingLevel, specialization, duration, gender } = record
+    const training: Training = {
+      ...record,
       trainingLevel: trainingLevel as TrainingLevel,
       specialization: specialization as Specialization,
       duration: duration as Duration,
       gender: gender as Gender
     };
+
+    return this.createEntityFromDocument(training);
   }
 
-  public async find(userId: string): Promise<TrainingEntity[]> {
-    const records = await this.client.training.findMany();
-
+  private convertPrismaTrainings(records: PrismaTraining[]): TrainingEntity[] {
     const trainings: TrainingEntity[] = records.map(
-      (record) => {
-        const training = {
-          ...record,
-          ...this.convertFields(record)
-        }
-
-        return this.createEntityFromDocument(training);
-      }
+      (record) => (this.convertPrismaTraining(record))
     );
 
     return trainings;
+  }
+
+  public async find(specializations: Specialization[] = [], take: number = MAX_COUNT): Promise<TrainingEntity[]> {
+    //! позже вынести where отдельно и получение параметров через объект
+    const records = await this.client.training.findMany({ where: { specialization: { in: specializations } }, take });
+
+    return this.convertPrismaTrainings(records);
   }
 
   public async findById(id: string): Promise<TrainingEntity> {
@@ -55,12 +55,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       throw new NotFoundException('Training Not Found');
     }
 
-    const training: Training = {
-      ...record,
-      ...this.convertFields(record)
-    };
-
-    return this.createEntityFromDocument(training);
+    return this.convertPrismaTraining(record);
   }
 
   public async save(entity: TrainingEntity): Promise<void> {

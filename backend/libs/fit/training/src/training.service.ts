@@ -1,24 +1,31 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { Training } from '@backend/shared/core';
+import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
+const FOR_SPOTRSMAN_COUNT = 9;
+
 @Injectable()
 export class TrainingService {
   constructor(
+    private readonly questionnaireRepository: QuestionnaireRepository,
     private readonly trainingRepository: TrainingRepository
   ) { }
 
   public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
-    const foundTrainings = await this.trainingRepository.find(userId);
+    //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
+    //! пока только специализации
+    const { specializations } = await this.questionnaireRepository.findByUserId(userId);
+    const foundTrainings = await this.trainingRepository.find(specializations, FOR_SPOTRSMAN_COUNT);
 
     return foundTrainings;
   }
 
-  public async findById(id: string, userId: string): Promise<TrainingEntity> {
+  public async findById(id: string): Promise<TrainingEntity> {
     const foundTraining = await this.trainingRepository.findById(id);
 
     return foundTraining;

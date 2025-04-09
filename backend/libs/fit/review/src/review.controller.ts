@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, Review } from '@backend/shared/core';
+import { ServiceRoute, XApiHeaderOptions, Review } from '@backend/shared/core';
 
 import { ReviewService } from './review.service';
 
@@ -16,8 +16,8 @@ export class ReviewController {
   //! добавить описание
   //@ApiResponse({ type: ReviewRdo }) //! вынести в описание
   @Get()
-  public async show(@Req() { userId }: RequestWithUserId, @Param() id: string): Promise<Review> {
-    const entity = await this.reviewService.findById(id, userId);
+  public async show(@Param() id: string): Promise<Review> {
+    const entity = await this.reviewService.findById(id);
 
     //! временно
     return entity;
