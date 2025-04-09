@@ -20,7 +20,23 @@ export class TrainingService {
     //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
     //! пока только специализации
     const { specializations } = await this.questionnaireRepository.findByUserId(userId);
-    const foundTrainings = await this.trainingRepository.find(specializations, FOR_SPOTRSMAN_COUNT);
+    const foundTrainings = await this.trainingRepository.find(0, 5, undefined, specializations, FOR_SPOTRSMAN_COUNT);
+
+    return foundTrainings;
+  }
+
+  public async getSpecial(): Promise<TrainingEntity[]> {
+    const foundTrainings = await this.trainingRepository.find(0, 5, true);
+
+    return foundTrainings;
+  }
+
+  public async getPopular(): Promise<TrainingEntity[]> {
+    //! по ТЗ не ясно, только с 5 или наивысший из имеющихся?
+    //! а если рейтирнг тренировки будет до первого знака?
+    //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга... а пока в моках нет пересчета рейтинга от 3
+    //! но нужно убрать в константы
+    const foundTrainings = await this.trainingRepository.find(3, 5);
 
     return foundTrainings;
   }

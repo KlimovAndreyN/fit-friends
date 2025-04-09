@@ -40,9 +40,17 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return trainings;
   }
 
-  public async find(specializations: Specialization[] = [], take: number = MAX_COUNT): Promise<TrainingEntity[]> {
+  public async find(ratingMin: number, ratingMax: number, isSpecial?: boolean, specializations?: Specialization[], take: number = MAX_COUNT): Promise<TrainingEntity[]> {
     //! позже вынести where отдельно и получение параметров через объект
-    const records = await this.client.training.findMany({ where: { specialization: { in: specializations } }, take });
+
+    const records = await this.client.training.findMany({
+      where: {
+        specialization: { in: specializations }, //! когда будет отдельное условмие, то вынести отдельной строкой если есть, но работает и так с undefined
+        isSpecial,
+        rating: { gte: ratingMin, lte: ratingMax }
+      },
+      take
+    });
 
     return this.convertPrismaTrainings(records);
   }

@@ -6,6 +6,7 @@ import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, Training, TrainingR
 import { TrainingService } from './training.service';
 import { TrainingEntity } from './training.entity';
 
+//! добавить описание для всех маршрутов
 @ApiTags('training')
 @ApiHeaders(XApiHeaderOptions)
 @Controller(ServiceRoute.Training)
@@ -14,36 +15,48 @@ export class TrainingController {
     private readonly trainingService: TrainingService
   ) { }
 
-  //! добавить описание
-  //@ApiResponse({ type: TrainingWithFileIdRdo }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingEntity[]> {
-    const entity = await this.trainingService.getForSportsman(userId);
+    const data = await this.trainingService.getForSportsman(userId);
 
     //! временно
-    return entity;
-    //return fillDto(Training, entity);
+    return data;
+    //return fillDto(TrainingRdo, data);
   }
 
-  //! добавить описание
-  //@ApiResponse({ type: TrainingWithFileIdRdo }) //! вынести в описание
+  @Get(TrainingRoute.Special)
+  public async getSpecial(): Promise<TrainingEntity[]> {
+    const data = await this.trainingService.getSpecial();
+
+    //! временно
+    return data;
+    //return fillDto(TrainingRdo, data);
+  }
+
+  @Get(TrainingRoute.Popular)
+  public async getPopular(): Promise<TrainingEntity[]> {
+    const data = await this.trainingService.getPopular();
+
+    //! временно
+    return data;
+    //return fillDto(TrainingRdo, data);
+  }
+
   @Get()
   public async index(): Promise<Training> {
     const entity = await this.trainingService.findById('1');
 
     //! временно
     return entity;
-    //return fillDto(Training, entity);
+    //return fillDto(TrainingRdo, entity);
   }
 
-  //! добавить описание
-  //@ApiResponse({ type: TrainingWithFileIdRdo }) //! вынести в описание
-  @Get(':trainingId')
+  @Get(':trainingId') //! в констнты
   public async show(@Param() id: string): Promise<Training> {
     const entity = await this.trainingService.findById(id);
 
     //! временно
     return entity;
-    //return fillDto(Training, entity);
+    //return fillDto(DetailTrainingRdo, entity);
   }
 }
