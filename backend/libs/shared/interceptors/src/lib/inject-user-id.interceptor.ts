@@ -11,7 +11,7 @@ export class InjectUserIdInterceptor implements NestInterceptor {
     const userId = request.headers[XHeader.UserId];
 
     if (!userId) {
-      throw new UnauthorizedException(`XHeader[${XHeader.UserId}] is empty!`);
+      throw new UnauthorizedException(`Header '${XHeader.UserId}' is empty!`);
     }
 
     request[RequestProperty.UserId] = userId; //! можно доделать валидацию по GuidValidationPipe

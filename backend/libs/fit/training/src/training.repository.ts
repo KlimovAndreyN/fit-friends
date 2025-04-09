@@ -30,6 +30,23 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     };
   }
 
+  public async find(userId: string): Promise<TrainingEntity[]> {
+    const records = await this.client.training.findMany();
+
+    const trainings: TrainingEntity[] = records.map(
+      (record) => {
+        const training = {
+          ...record,
+          ...this.convertFields(record)
+        }
+
+        return this.createEntityFromDocument(training);
+      }
+    );
+
+    return trainings;
+  }
+
   public async findById(id: string): Promise<TrainingEntity> {
     const record = await this.client.training.findFirst({ where: { id } });
 

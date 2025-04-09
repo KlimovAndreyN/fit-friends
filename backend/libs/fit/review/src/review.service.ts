@@ -11,17 +11,8 @@ export class ReviewService {
     private readonly reviewRepository: ReviewRepository
   ) { }
 
-  private checkAuthorization(userId: string): void {
-    if (!userId) {
-      //! вынести в константы - ! у всех одна проверка вынести в хелперы
-      throw new UnauthorizedException('Unauthorized.');
-    }
-  }
-
   //! временно, нужно ли будет?
   public async findById(id: string, userId: string): Promise<ReviewEntity> {
-    this.checkAuthorization(userId);
-
     const foundReview = await this.reviewRepository.findById(id);
 
     return foundReview;

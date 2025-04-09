@@ -11,17 +11,8 @@ export class OrderService {
     private readonly orderRepository: OrderRepository
   ) { }
 
-  private checkAuthorization(userId: string): void {
-    if (!userId) {
-      //! вынести в константы ! одна проверка - перенети в хелперы
-      throw new UnauthorizedException('Unauthorized.');
-    }
-  }
-
   //! временно, нужно будет?
   public async findById(id: string, userId: string): Promise<OrderEntity> {
-    this.checkAuthorization(userId);
-
     const foundOrder = await this.orderRepository.findById(id);
 
     return foundOrder;

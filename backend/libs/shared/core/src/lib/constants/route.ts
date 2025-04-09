@@ -31,6 +31,11 @@ export enum QuestionnaireRoute {
   Questionnaire = 'questionnaire'
 }
 
+export enum TrainingRoute {
+  ForSportsman = 'for-sportsman',
+  Special = 'special'
+}
+
 export enum UserInfoRoute {
   ReadyForTraining = 'ready-for-training'
 }

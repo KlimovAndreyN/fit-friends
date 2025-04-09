@@ -12,16 +12,13 @@ export class TrainingService {
     private readonly trainingRepository: TrainingRepository
   ) { }
 
-  private checkAuthorization(userId: string): void {
-    if (!userId) {
-      //! вынести в константы
-      throw new UnauthorizedException('Unauthorized.');
-    }
+  public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
+    const foundTrainings = await this.trainingRepository.find(userId);
+
+    return foundTrainings;
   }
 
   public async findById(id: string, userId: string): Promise<TrainingEntity> {
-    this.checkAuthorization(userId);
-
     const foundTraining = await this.trainingRepository.findById(id);
 
     return foundTraining;
