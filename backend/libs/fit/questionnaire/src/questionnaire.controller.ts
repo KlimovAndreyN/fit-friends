@@ -28,7 +28,7 @@ export class QuestionnaireController {
   ): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.create(dto, userId);
 
-    return fillDto(BasicQuestionnaireRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity.toPOJO());
   }
 
   @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
@@ -39,7 +39,7 @@ export class QuestionnaireController {
   ): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.update(dto, userId);
 
-    return fillDto(BasicQuestionnaireRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity.toPOJO());
   }
 
   @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
@@ -47,6 +47,6 @@ export class QuestionnaireController {
   public async show(@Req() { userId }: RequestWithUserId): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.findByUserId(userId);
 
-    return fillDto(BasicQuestionnaireRdo, entity);
+    return fillDto(BasicQuestionnaireRdo, entity.toPOJO());
   }
 }

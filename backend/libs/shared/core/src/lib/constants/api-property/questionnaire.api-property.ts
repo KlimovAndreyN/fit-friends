@@ -25,7 +25,7 @@ export const QuestionnaireApiProperty = {
     type: 'boolean',
     example: false
   },
-  Time: {
+  Duration: {
     description: 'The user time',
     type: 'string',
     enum: Duration,

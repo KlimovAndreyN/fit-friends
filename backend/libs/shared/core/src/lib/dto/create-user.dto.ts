@@ -18,5 +18,4 @@ export class CreateUserDto
       'role'
     ]
   )
-  implements ICreateUserDto {
-}
+  implements ICreateUserDto { }

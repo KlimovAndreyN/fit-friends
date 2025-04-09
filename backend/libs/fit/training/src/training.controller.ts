@@ -1,10 +1,11 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, Training, TrainingRoute } from '@backend/shared/core';
+import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, Training, TrainingRoute, TrainingRdo } from '@backend/shared/core';
 
 import { TrainingService } from './training.service';
 import { TrainingEntity } from './training.entity';
+import { fillDto } from '@backend/shared/helpers';
 
 //! добавить описание для всех маршрутов
 @ApiTags('training')
@@ -16,12 +17,10 @@ export class TrainingController {
   ) { }
 
   @Get(TrainingRoute.ForSportsman)
-  public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingEntity[]> {
+  public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getForSportsman(userId);
 
-    //! временно
-    return data;
-    //return fillDto(TrainingRdo, data);
+    return data.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
   }
 
   @Get(TrainingRoute.Special)
@@ -30,7 +29,7 @@ export class TrainingController {
 
     //! временно
     return data;
-    //return fillDto(TrainingRdo, data);
+    //return fillDto(TrainingRdo, data.toPOJO());
   }
 
   @Get(TrainingRoute.Popular)
@@ -39,7 +38,7 @@ export class TrainingController {
 
     //! временно
     return data;
-    //return fillDto(TrainingRdo, data);
+    //return fillDto(TrainingRdo, data.toPOJO());
   }
 
   @Get()
@@ -48,7 +47,7 @@ export class TrainingController {
 
     //! временно
     return entity;
-    //return fillDto(TrainingRdo, entity);
+    //return fillDto(TrainingRdo, entity.toPOJO());
   }
 
   @Get(':trainingId') //! в констнты
@@ -57,6 +56,6 @@ export class TrainingController {
 
     //! временно
     return entity;
-    //return fillDto(DetailTrainingRdo, entity);
+    //return fillDto(DetailTrainingRdo, entity.toPOJO());
   }
 }

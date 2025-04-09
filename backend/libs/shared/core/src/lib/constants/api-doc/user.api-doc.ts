@@ -67,10 +67,8 @@ export class UserApiDoc {
   public avatarFileId?: User['avatarFileId'];
 
   @ApiProperty(UserApiProperty.AvatarFile)
-  @Expose()
   @IsOptional()
   public [AVATAR_FILE_PROPERTY]?: ICreateUserDto['avatarFile'];
-
 
   @ApiProperty(UserApiProperty.EmptyAvatarFile)
   @Expose()

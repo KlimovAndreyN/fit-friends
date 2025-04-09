@@ -21,6 +21,6 @@ export class ReviewController {
 
     //! временно
     return entity;
-    //return fillDto(Review, entity);
+    //return fillDto(Review, entity.toPOJO());
   }
 }

@@ -20,5 +20,4 @@ export class DetailUserRdo
       'registrationDate'
     ]
   )
-  implements IDetailUserRdo {
-}
+  implements IDetailUserRdo { }

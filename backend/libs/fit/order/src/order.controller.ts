@@ -21,6 +21,6 @@ export class OrderController {
 
     //! временно
     return entity;
-    //return fillDto(Order, entity);
+    //return fillDto(Order, entity.toPOJO());
   }
 }

@@ -40,7 +40,7 @@ export class QuestionnaireApiDoc {
   @IsBoolean()
   readyForTraining: Questionnaire['readyForTraining'];
 
-  @ApiProperty(QuestionnaireApiProperty.Time)
+  @ApiProperty(QuestionnaireApiProperty.Duration)
   @Expose()
   @IsEnum(Duration)
   duration: Questionnaire['duration'];

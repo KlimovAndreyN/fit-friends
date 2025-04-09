@@ -66,6 +66,7 @@ export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
+export { TrainingRdo } from './lib/rdo/training.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 
 export { RequestWithBearerAuth } from './lib/types/request/request-with-bearer-auth.type';
