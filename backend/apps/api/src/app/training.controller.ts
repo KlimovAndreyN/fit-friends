@@ -3,7 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId, ServiceRoute } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 import { apiConfig } from '@backend/api/config';
@@ -25,7 +25,7 @@ export class TrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
-    const url = this.apiOptions.fitServiceUrl + '/' + TrainingRoute.ForSportsman;
+    const url = this.apiOptions.fitServiceUrl + '/' + ServiceRoute.Trainings + '/' + TrainingRoute.ForSportsman;
     console.log(url);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
@@ -33,14 +33,6 @@ export class TrainingController {
     console.log(data);
 
     return data;
-
-
-    /*
-        const user = await this.usersService.getUser(userId, requestId);
-        const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
-
-        return { user, questionnaire };
-    */
   }
 
   /*
