@@ -10,15 +10,17 @@ import { UsersController } from './users.controller';
 import { UserInfoController } from './user-info.controller';
 import { TrainingController } from './training.controller';
 
-const HTTP_CLIENT_MAX_REDIRECTS = 5;
-const HTTP_CLIENT_TIMEOUT = 3000;
+const HttpClient = {
+  MAX_REDIRECTS: 5,
+  TIMEOUT: 3000
+} as const;
 
 @Module({
   imports: [
     ApiConfigModule,
     HttpModule.register({
-      timeout: HTTP_CLIENT_TIMEOUT,
-      maxRedirects: HTTP_CLIENT_MAX_REDIRECTS
+      timeout: HttpClient.TIMEOUT,
+      maxRedirects: HttpClient.MAX_REDIRECTS
     })
   ],
   controllers: [
