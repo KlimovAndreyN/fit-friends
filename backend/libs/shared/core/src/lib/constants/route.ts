@@ -5,16 +5,16 @@ export enum GlobalRoute {
 
 export enum ApiServiceRoute {
   Users = 'users',
-  FitQuestionnaires = 'fit-questions',
-  UserInfo = 'user-info'
+  UserInfo = 'user-info',
+  Trainings = 'trainings',
 }
 
 export enum ServiceRoute {
   Account = 'auth',
   Questionnaire = 'questionnaire',
-  Training = 'training',
-  Order = 'order',
-  Review = 'review',
+  Trainings = 'trainings',
+  Orders = 'orders',
+  Reviews = 'reviews',
   FileStorage = 'files'
 }
 

@@ -5,9 +5,9 @@ import { ServiceRoute, XApiHeaderOptions, Order } from '@backend/shared/core';
 
 import { OrderService } from './order.service';
 
-@ApiTags('order')
+@ApiTags(ServiceRoute.Orders)
 @ApiHeaders(XApiHeaderOptions)
-@Controller(ServiceRoute.Order)
+@Controller(ServiceRoute.Orders)
 export class OrderController {
   constructor(
     private readonly orderService: OrderService

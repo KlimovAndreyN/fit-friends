@@ -5,9 +5,9 @@ import { ServiceRoute, XApiHeaderOptions, Review } from '@backend/shared/core';
 
 import { ReviewService } from './review.service';
 
-@ApiTags('review')
+@ApiTags(ServiceRoute.Reviews)
 @ApiHeaders(XApiHeaderOptions)
-@Controller(ServiceRoute.Review)
+@Controller(ServiceRoute.Reviews)
 export class ReviewController {
   constructor(
     private readonly reviewService: ReviewService

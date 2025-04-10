@@ -8,6 +8,7 @@ import { UsersService } from './users.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UsersController } from './users.controller';
 import { UserInfoController } from './user-info.controller';
+import { TrainingController } from './training.controller';
 
 const HTTP_CLIENT_MAX_REDIRECTS = 5;
 const HTTP_CLIENT_TIMEOUT = 3000;
@@ -22,7 +23,8 @@ const HTTP_CLIENT_TIMEOUT = 3000;
   ],
   controllers: [
     UsersController,
-    UserInfoController
+    UserInfoController,
+    TrainingController
   ],
   providers: [
     FilesService,

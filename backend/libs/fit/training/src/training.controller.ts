@@ -8,9 +8,9 @@ import { TrainingEntity } from './training.entity';
 import { fillDto } from '@backend/shared/helpers';
 
 //! добавить описание для всех маршрутов
-@ApiTags('training')
+@ApiTags(ServiceRoute.Trainings)
 @ApiHeaders(XApiHeaderOptions)
-@Controller(ServiceRoute.Training)
+@Controller(ServiceRoute.Trainings)
 export class TrainingController {
   constructor(
     private readonly trainingService: TrainingService
