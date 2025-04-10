@@ -1,10 +1,10 @@
 import { Logger } from '@nestjs/common';
 
-import { AuthUser, Location, Role } from '@backend/shared/core';
+import { AuthUser, Location, Role, UserApiProperty } from '@backend/shared/core';
 import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { MOCK_DEFAULT_USER_PASSWORD, MOCK_SPORTSMANS_BACKGROUND_PATHS, MockUser } from './mock-data';
+import { MOCK_DEFAULT_USER_PASSWORD, MOCK_SPORTSMANS_BACKGROUND_PATHS, MOCK_SWAGGER_USER, MockUser } from './mock-data';
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
   const ids = await fitUserRepository.getAllIds();
@@ -34,7 +34,17 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
     const userEntity = new FitUserEntity(user);
 
     await userEntity.setPassword(MOCK_DEFAULT_USER_PASSWORD);
-    await fitUserRepository.save(userEntity);
+
+    if (name === MOCK_SWAGGER_USER) {
+      // для удобства тестирования запросов из свагера
+      userEntity.id = UserApiProperty.Id.example;
+
+      await fitUserRepository.insertOrUpdate(userEntity);
+    }
+    else {
+      await fitUserRepository.save(userEntity);
+    }
+
     users.push(userEntity);
 
     Logger.log(`Added user(${role}): ${userEntity.email} / ${MOCK_DEFAULT_USER_PASSWORD} / ${userEntity.id}`);

@@ -2,7 +2,10 @@ import { Gender } from '@backend/shared/core';
 
 export type MockUser = { name: string; gender: Gender; };
 
+export const MOCK_SWAGGER_USER = 'Swagger';
+
 export const MOCK_SPORTSMANS: MockUser[] = [
+  { name: MOCK_SWAGGER_USER, gender: Gender.Male },
   { name: 'Tom', gender: Gender.Male },
   { name: 'Jerry', gender: Gender.NotMatter },
   { name: 'Roxette', gender: Gender.Female },

@@ -12,10 +12,10 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public backgroundPath: AuthUser['backgroundPath'];
   public gender: AuthUser['gender'];
   public role: AuthUser['role'];
-  public avatarFileId: AuthUser['avatarFileId'];
-  public about: AuthUser['about'];
+  public avatarFileId?: AuthUser['avatarFileId'];
+  public about?: AuthUser['about'];
   public passwordHash: AuthUser['passwordHash'];
-  public createdAt: AuthUser['createdAt'];
+  public createdAt?: AuthUser['createdAt'];
 
   constructor(user?: AuthUser) {
     super();

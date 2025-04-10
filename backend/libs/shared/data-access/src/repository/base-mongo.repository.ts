@@ -15,6 +15,17 @@ export abstract class BaseMongoRepository<
     protected readonly model: Model<DocumentType>
   ) { }
 
+  private fillFields(entity: T, document: DocumentType) {
+    //! протестировать, что при вставке, обновлении все без ошибок?
+
+    // может отдельная настройка есть?
+    ['createdAt', 'updatedAt'].forEach((key) => {
+      if (Object.keys(entity).includes(key)) {
+        entity[key] = document[key];
+      }
+    });
+  }
+
   protected createEntityFromDocument(document: DocumentType): T | null {
     if (!document) {
       return null;
@@ -39,17 +50,11 @@ export abstract class BaseMongoRepository<
   }
 
   public async save(entity: T): Promise<void> {
-    const newEntity = new this.model(entity.toPOJO());
+    const newDocument = new this.model(entity.toPOJO());
 
-    await newEntity.save();
-    entity.id = newEntity._id.toString();
-
-    // может отдельная настройка есть?
-    ['createdAt', 'updatedAt'].forEach((key) => {
-      if (Object.keys(entity).includes(key)) {
-        entity[key] = newEntity[key];
-      }
-    });
+    await newDocument.save();
+    entity.id = newDocument._id.toString();
+    this.fillFields(entity, newDocument);
   }
 
   public async update(entity: T): Promise<void> {
@@ -62,6 +67,28 @@ export abstract class BaseMongoRepository<
     if (!updatedDocument) {
       throw new NotFoundException(`Entity with id ${entity.id} not found`);
     }
+
+    this.fillFields(entity, updatedDocument);
+  }
+
+  public async insertOrUpdate(entity: T): Promise<void> {
+    const data = entity.toPOJO();
+    const updateData = {};
+
+    //! в хелпер, но нужно типизировать... или lodash
+    Object.keys(data).forEach((key) => {
+      if (key !== 'createdAt') {
+        updateData[key] = data[key];
+      }
+    });
+
+    const updatedDocument = await this.model.findOneAndUpdate(
+      { _id: entity.id },
+      updateData,
+      { new: true, upsert: true, runValidators: true }
+    ).exec();
+
+    this.fillFields(entity, updatedDocument);
   }
 
   public async deleteById(id: T['id']): Promise<void> {
