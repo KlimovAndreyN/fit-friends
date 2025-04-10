@@ -15,30 +15,29 @@ export class TrainingController {
   constructor(
     private readonly trainingService: TrainingService
   ) { }
+  private convertTrainingEntities(entities: TrainingEntity[]): TrainingRdo[] {
+    return entities.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
+  }
 
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getForSportsman(userId);
 
-    return data.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
+    return this.convertTrainingEntities(data);
   }
 
   @Get(TrainingRoute.Special)
-  public async getSpecial(): Promise<TrainingEntity[]> {
+  public async getSpecial(): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getSpecial();
 
-    //! временно
-    return data;
-    //return fillDto(TrainingRdo, data.toPOJO());
+    return this.convertTrainingEntities(data);
   }
 
   @Get(TrainingRoute.Popular)
-  public async getPopular(): Promise<TrainingEntity[]> {
+  public async getPopular(): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getPopular();
 
-    //! временно
-    return data;
-    //return fillDto(TrainingRdo, data.toPOJO());
+    return this.convertTrainingEntities(data);
   }
 
   @Get()
