@@ -9,9 +9,9 @@ import { fillDto } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
 
-@ApiTags(ServiceRoute.Questionnaire)
+@ApiTags(ServiceRoute.Questionnaires)
 @ApiHeaders(XApiHeaderOptions)
-@Controller(ServiceRoute.Questionnaire)
+@Controller(ServiceRoute.Questionnaires)
 export class QuestionnaireController {
   constructor(
     private readonly questionnaireService: QuestionnaireService
