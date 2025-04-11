@@ -2,7 +2,7 @@ import { IQuestionnaireRdo } from './i-questionnaire.rdo';
 import { IDetailUserRdo } from './i-detail-user.rdo';
 
 //! для списка - Ищут компанию для тренировки
-export interface IUserInfoRdo
+export interface IUserProfileRdo
   extends Pick<
     IDetailUserRdo,
     'id'

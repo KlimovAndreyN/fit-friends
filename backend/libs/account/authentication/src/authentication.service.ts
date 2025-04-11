@@ -7,8 +7,8 @@ import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'node:crypto';
 
 import {
-  AuthenticationMessage, AuthUser, CreateUserWithFileIdDto,
-  LoginUserDto, Tokens, UpdateUserWithFileIdDto, User
+  AuthenticationMessage, AuthUser, CreateBasicUserDto,
+  LoginUserDto, Tokens, UpdateBasicUserDto, User
 } from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
@@ -29,7 +29,7 @@ export class AuthenticationService {
     private readonly refreshTokenService: RefreshTokenService
   ) { }
 
-  public async registerUser(dto: CreateUserWithFileIdDto, requestId: string): Promise<FitUserEntity> {
+  public async registerUser(dto: CreateBasicUserDto, requestId: string): Promise<FitUserEntity> {
     const {
       email,
       name,
@@ -69,7 +69,7 @@ export class AuthenticationService {
     return userEntity;
   }
 
-  public async updateUser(id: string, dto: UpdateUserWithFileIdDto): Promise<FitUserEntity> {
+  public async updateUser(id: string, dto: UpdateBasicUserDto): Promise<FitUserEntity> {
     const existUser = await this.fitUserRepository.findById(id);
 
     let hasChanges = false;

@@ -1,24 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { UserInfoProcess } from '../../types/user-profile-process';
-import { changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-profile-action';
+import { UserProfileProcess } from '../../types/user-profile-process';
+import { changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserProfile, updateUserProfile } from '../user-profile-action';
 import { StoreSlice } from '../../const';
 
-const initialState: UserInfoProcess = {
+const initialState: UserProfileProcess = {
   isExistQuestionnaireExecuting: false,
   isCreateQuestionnaireExecuting: false,
-  isFetchUserInfoExecuting: false,
-  isUpdateUserInfoExecuting: false,
-  isUpdateUserInfoError: false,
+  isFetchUserProfileExecuting: false,
+  isUpdateUserProfileExecuting: false,
+  isUpdateUserProfileError: false,
   isReadyForTrainingChangeExecuting: false,
   existQuestionnaire: false,
-  userInfo: null,
+  userProfile: null,
   readyForTraining: undefined
 };
 
-export const userInfoProcess = createSlice(
+export const userProfileProcess = createSlice(
   {
-    name: StoreSlice.UserInfoProcess,
+    name: StoreSlice.UserProfileProcess,
     initialState,
     reducers: {},
     extraReducers(builder) {
@@ -62,45 +62,45 @@ export const userInfoProcess = createSlice(
           }
         )
         .addCase(
-          fetchUserInfo.pending,
+          fetchUserProfile.pending,
           (state) => {
-            state.isFetchUserInfoExecuting = true;
+            state.isFetchUserProfileExecuting = true;
           }
         )
         .addCase(
-          fetchUserInfo.rejected,
+          fetchUserProfile.rejected,
           (state) => {
-            state.isFetchUserInfoExecuting = false;
+            state.isFetchUserProfileExecuting = false;
           }
         )
         .addCase(
-          fetchUserInfo.fulfilled,
+          fetchUserProfile.fulfilled,
           (state, action) => {
-            state.userInfo = action.payload;
+            state.userProfile = action.payload;
             state.readyForTraining = action.payload.questionnaire.readyForTraining;
-            state.isFetchUserInfoExecuting = false;
+            state.isFetchUserProfileExecuting = false;
           }
         )
         .addCase(
-          updateUserInfo.pending,
+          updateUserProfile.pending,
           (state) => {
-            state.isUpdateUserInfoError = false;
-            state.isUpdateUserInfoExecuting = true;
+            state.isUpdateUserProfileError = false;
+            state.isUpdateUserProfileExecuting = true;
           }
         )
         .addCase(
-          updateUserInfo.rejected,
+          updateUserProfile.rejected,
           (state) => {
-            state.isUpdateUserInfoError = true;
-            state.isUpdateUserInfoExecuting = false;
+            state.isUpdateUserProfileError = true;
+            state.isUpdateUserProfileExecuting = false;
           }
         )
         .addCase(
-          updateUserInfo.fulfilled,
+          updateUserProfile.fulfilled,
           (state, action) => {
-            state.userInfo = action.payload;
-            state.isUpdateUserInfoError = false;
-            state.isUpdateUserInfoExecuting = false;
+            state.userProfile = action.payload;
+            state.isUpdateUserProfileError = false;
+            state.isUpdateUserProfileExecuting = false;
           }
         )
         .addCase(

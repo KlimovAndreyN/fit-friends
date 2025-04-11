@@ -24,16 +24,16 @@ export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
-export { CreateBasicQuestionnaireDto as CreateQuestionnaireWithFileIdsDto } from './lib/dto/create-basic-questionnaire.dto';
-export { CreateBasicUserDto as CreateUserWithFileIdDto } from './lib/dto/create-basic-user.dto';
+export { CreateBasicQuestionnaireDto } from './lib/dto/create-basic-questionnaire.dto';
+export { CreateBasicUserDto } from './lib/dto/create-basic-user.dto';
 export { CreateQuestionnaireCoachDto } from './lib/dto/create-questionnaire-coach.dto';
 export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
 export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
-export { UpdateBasicUserDto as UpdateUserWithFileIdDto } from './lib/dto/update-basic-user.dto';
+export { UpdateBasicUserDto } from './lib/dto/update-basic-user.dto';
 export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
-export { UpdateUserInfoDto } from './lib/dto/update-user-profile.dto';
+export { UpdateUserProfileDto } from './lib/dto/update-user-profile.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
@@ -59,7 +59,7 @@ export { PageQuery } from './lib/query/page.query';
 
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
-export { DetailUserInfoRdo } from './lib/rdo/detail-user-profile.rdo';
+export { DetailUserProfileRdo } from './lib/rdo/detail-user-profile.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';

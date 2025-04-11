@@ -1,13 +1,13 @@
-import { IDetailUserInfoRdo } from '@backend/shared/core';
+import { IDetailUserProfileRdo } from '@backend/shared/core';
 
-export type UserInfoProcess = {
+export type UserProfileProcess = {
   isExistQuestionnaireExecuting: boolean;
   isCreateQuestionnaireExecuting: boolean;
-  isFetchUserInfoExecuting: boolean;
-  isUpdateUserInfoExecuting: boolean;
-  isUpdateUserInfoError: boolean;
+  isFetchUserProfileExecuting: boolean;
+  isUpdateUserProfileExecuting: boolean;
+  isUpdateUserProfileError: boolean;
   isReadyForTrainingChangeExecuting: boolean;
   existQuestionnaire: boolean;
-  userInfo: IDetailUserInfoRdo | null;
+  userProfile: IDetailUserProfileRdo | null;
   readyForTraining?: boolean;
 }

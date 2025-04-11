@@ -2,7 +2,7 @@ import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ServiceRoute, CreateQuestionnaireWithFileIdsDto, BasicQuestionnaireRdo,
+  ServiceRoute, CreateBasicQuestionnaireDto, BasicQuestionnaireRdo,
   RequestWithUserId, XApiHeaderOptions, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
@@ -23,7 +23,7 @@ export class QuestionnaireController {
   @ApiResponse({ type: BasicQuestionnaireRdo }) //! вынести в описание
   @Post()
   public async create(
-    @Body() dto: CreateQuestionnaireWithFileIdsDto,
+    @Body() dto: CreateBasicQuestionnaireDto,
     @Req() { userId }: RequestWithUserId
   ): Promise<BasicQuestionnaireRdo> {
     const entity = await this.questionnaireService.create(dto, userId);

@@ -9,10 +9,10 @@ import { validate } from 'class-validator';
 import 'multer'; // Express.Multer.File
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserInfoDto,
-  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserInfoRoute,
-  RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireWithFileIdsDto,
-  Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserInfoRdo, parseUserAvatarFilePipeBuilder,
+  ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserProfileDto,
+  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserProfileRoute,
+  RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateBasicQuestionnaireDto,
+  Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   Specialization, UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
@@ -22,12 +22,12 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
-@ApiTags(ApiServiceRoute.UserInfo)
+@ApiTags(ApiServiceRoute.UserProfiles)
 @ApiBearerAuth(BearerAuth.AccessToken)
-@Controller(ApiServiceRoute.UserInfo)
+@Controller(ApiServiceRoute.UserProfiles)
 @UseGuards(CheckAuthGuard)
 @UseFilters(AxiosExceptionFilter)
-export class UserInfoController {
+export class UserProfileController {
   constructor(
     private readonly httpService: HttpService,
     private userService: UserService,
@@ -55,7 +55,7 @@ export class UserInfoController {
     //! нужна функция пригодиться для тренера, а может где еще
     //! CheckAuthGuard складывает в request[RequestProperty.User] = data {sub, name, role....};
     //! может сделать RequestWithUser...
-    const createDto: CreateQuestionnaireWithFileIdsDto = { ...dto };
+    const createDto: CreateBasicQuestionnaireDto = { ...dto };
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в - fileIds: []
     //! можно сразу вызвать проверку исходную дто заполеннности полей в зависимости от роли
     //! перенести в сервис?
@@ -72,24 +72,24 @@ export class UserInfoController {
   //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Coach
 
 
-  @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
-  public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserInfoRdo> {
+  public async getUserProfile(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserProfileRdo> {
     const user = await this.userService.getUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
   }
 
-  @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Patch()
   public async update(
-    @Body() dto: UpdateUserInfoDto,
+    @Body() dto: UpdateUserProfileDto,
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<DetailUserInfoRdo> {
+  ): Promise<DetailUserProfileRdo> {
     //! перенести в сервис/сервисы?
     //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
     dto.specializations = [];
@@ -99,7 +99,7 @@ export class UserInfoController {
       }
     }
 
-    const updateDto = fillDto(UpdateUserInfoDto, dto);
+    const updateDto = fillDto(UpdateUserProfileDto, dto);
     const errors = await validate(updateDto);
 
     if (errors.length > 0) {
@@ -119,12 +119,12 @@ export class UserInfoController {
     return { user, questionnaire };
   }
 
-  @Post(UserInfoRoute.ReadyForTraining)
+  @Post(UserProfileRoute.ReadyForTraining)
   public async readyForTraining(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
     await this.fitQuestionnaireService.updateReadyForTraining(true, userId, requestId);
   }
 
-  @Delete(UserInfoRoute.ReadyForTraining)
+  @Delete(UserProfileRoute.ReadyForTraining)
   public async notReadyForTraining(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
     await this.fitQuestionnaireService.updateReadyForTraining(false, userId, requestId);
   }

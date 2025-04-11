@@ -7,7 +7,7 @@ import { FileService } from './file.service';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UserController } from './user.controller';
-import { UserInfoController } from './user-profile.controller';
+import { UserProfileController } from './user-profile.controller';
 import { FitTrainingController } from './fit-training.controller';
 
 const HttpClient = {
@@ -25,7 +25,7 @@ const HttpClient = {
   ],
   controllers: [
     UserController,
-    UserInfoController,
+    UserProfileController,
     FitTrainingController
   ],
   providers: [

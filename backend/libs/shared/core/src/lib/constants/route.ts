@@ -5,7 +5,7 @@ export enum GlobalRoute {
 
 export enum ApiServiceRoute {
   Users = 'users',
-  UserInfo = 'user-info',
+  UserProfiles = 'user-profiles',
   Trainings = 'trainings',
 }
 
@@ -37,7 +37,7 @@ export enum TrainingRoute {
   Popular = 'popular'
 }
 
-export enum UserInfoRoute {
+export enum UserProfileRoute {
   ReadyForTraining = 'ready-for-training'
 }
 

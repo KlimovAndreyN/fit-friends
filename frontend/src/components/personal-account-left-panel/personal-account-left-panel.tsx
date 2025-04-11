@@ -7,11 +7,11 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserInfoDto, IDetailUserInfoRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
+import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
-import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-profile-process/selectors';
+import { getIsUpdateUserProfileError, getIsUpdateUserProfileExecuting } from '../../store/user-profile-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
 
 enum FormFieldName {
@@ -26,16 +26,16 @@ enum FormFieldName {
 }
 
 type PersonalAccountLeftPanelProps = {
-  userInfo: IDetailUserInfoRdo;
+  UserProfile: IDetailUserProfileRdo;
   isSpotsmanRole: boolean;
-  onSubmit: (updatedUserInfo: IUpdateUserInfoDto) => void;
+  onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
 }
 
-function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
-  const isUpdateUserInfoExecuting = useAppSelector(getIsUpdateUserInfoExecuting);
-  const isUpdateUserInfoError = useAppSelector(getIsUpdateUserInfoError);
+function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
+  const isUpdateUserProfileExecuting = useAppSelector(getIsUpdateUserProfileExecuting);
+  const isUpdateUserProfileError = useAppSelector(getIsUpdateUserProfileError);
 
-  const { user, questionnaire } = userInfo;
+  const { user, questionnaire } = UserProfile;
   const { name, avatarFilePath, about, location, gender } = user;
   const { specializations, trainingLevel } = questionnaire;
 
@@ -52,7 +52,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
   }, [avatarFilePath]);
 
   useEffect(() => {
-    if (!isUpdateUserInfoExecuting && !isUpdateUserInfoError) {
+    if (!isUpdateUserProfileExecuting && !isUpdateUserProfileError) {
       setIsEditing(false);
     }
 
@@ -61,7 +61,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
     return () => {
       window.removeEventListener('keydown', handleWindowKeyDown);
     };
-  }, [isUpdateUserInfoExecuting, isUpdateUserInfoError, handleWindowKeyDown, avatarFilePath]);
+  }, [isUpdateUserProfileExecuting, isUpdateUserProfileError, handleWindowKeyDown, avatarFilePath]);
 
   const handleAvatarUploadChange = (filePath: string, file: File | undefined) => {
     setCurrentAvatarFilePath(filePath);
@@ -80,7 +80,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const updatedUserInfo: IUpdateUserInfoDto = {
+    const updatedUserProfile: IUpdateUserProfileDto = {
       avatarFile,
       emptyAvatarFile: !currentAvatarFilePath,
       name: formData.get(FormFieldName.Name)?.toString() || '',
@@ -91,7 +91,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
       trainingLevel: (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel //! одинаковый код - в хелпер
     };
 
-    onSubmit(updatedUserInfo);
+    onSubmit(updatedUserProfile);
   };
 
   const mainClassName = `user-info${(isEditing) ? '-edit' : ''}`;
@@ -115,7 +115,7 @@ function PersonalAccountLeftPanel({ userInfo, isSpotsmanRole, onSubmit }: Person
           type={(isEditing) ? 'submit' : 'button'}
           aria-label={buttonCaption}
           onClick={(isEditing) ? undefined : handleButtonClick}
-          disabled={isUpdateUserInfoExecuting}
+          disabled={isUpdateUserProfileExecuting}
         >
           <svg width="12" height="12" aria-hidden="true">
             <use xlinkHref="#icon-edit"></use>

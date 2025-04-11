@@ -8,7 +8,7 @@ import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
   AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, User,
-  UpdateUserWithFileIdDto, BasicDetailUserRdo, CreateUserWithFileIdDto
+  UpdateBasicUserDto, BasicDetailUserRdo, CreateBasicUserDto
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -85,7 +85,7 @@ export class AuthenticationController {
   @UseInterceptors(InjectBearerAuthInterceptor)
   @Post(AccountRoute.Register)
   public async register(
-    @Body() dto: CreateUserWithFileIdDto,
+    @Body() dto: CreateBasicUserDto,
     @Req() { requestId }: RequestWithRequestId
   ): Promise<BasicDetailUserRdo> {
     const newUser = await this.authService.registerUser(dto, requestId);
@@ -97,7 +97,7 @@ export class AuthenticationController {
   @UseGuards(JwtAuthGuard) // разрешено менять только себя, но по правильному и токеп пейлоад обновить там имя... или исключить его из токеп пейлоад
   @Patch()
   public async update(
-    @Body() dto: UpdateUserWithFileIdDto,
+    @Body() dto: UpdateBasicUserDto,
     @Req() { user: { sub: id } }: RequestWithTokenPayload
   ): Promise<BasicDetailUserRdo> {
     const user = await this.authService.updateUser(id, dto);

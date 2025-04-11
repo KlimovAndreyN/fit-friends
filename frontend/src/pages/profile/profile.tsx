@@ -5,12 +5,12 @@ import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-import { IUpdateUserInfoDto, Role } from '@backend/shared/core';
+import { IUpdateUserProfileDto, Role } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-profile-process/selectors';
-import { fetchUserInfo, updateUserInfo } from '../../store/user-profile-action';
+import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
+import { fetchUserProfile, updateUserProfile } from '../../store/user-profile-action';
 import { PageTitle } from '../../const';
 
 function Profile(): JSX.Element {
@@ -18,25 +18,25 @@ function Profile(): JSX.Element {
   const firstRound = true;
   //! обработать отображении информации о тренере (2 или 3 этап)
   const dispatch = useAppDispatch();
-  const isFetchUserInfoExecuting = useAppSelector(getIsFetchUserInfoExecuting);
+  const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting);
   const userRole = useAppSelector(getUserRole);
-  const userInfo = useAppSelector(getUserInfo);
+  const UserProfile = useAppSelector(getUserProfile);
 
-  const handleLeftPanelSubmit = (updatedUserInfo: IUpdateUserInfoDto) => {
-    dispatch(updateUserInfo(updatedUserInfo));
+  const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
+    dispatch(updateUserProfile(updatedUserProfile));
   };
 
   useEffect(() => {
-    dispatch(fetchUserInfo());
+    dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  //! userInfo и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
-  if (isFetchUserInfoExecuting || !userInfo || !userRole) {
+  //! UserProfile и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
+  if (isFetchUserProfileExecuting || !UserProfile || !userRole) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
 
-  const { questionnaire: { caloriesWaste } } = userInfo;
+  const { questionnaire: { caloriesWaste } } = UserProfile;
   const isSpotsmanRole = (userRole === Role.Sportsman);
 
   return (
@@ -48,7 +48,7 @@ function Profile(): JSX.Element {
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
               <PersonalAccountLeftPanel
-                userInfo={userInfo}
+                UserProfile={UserProfile}
                 isSpotsmanRole={isSpotsmanRole}
                 onSubmit={handleLeftPanelSubmit}
               />

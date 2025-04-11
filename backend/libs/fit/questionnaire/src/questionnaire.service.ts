@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateQuestionnaireWithFileIdsDto, UpdateQuestionnaireDto } from '@backend/shared/core';
+import { CreateBasicQuestionnaireDto, UpdateQuestionnaireDto } from '@backend/shared/core';
 
 import { QuestionnaireRepository } from './questionnaire.repository';
 import { QuestionnaireEntity } from './questionnaire.entity';
@@ -18,7 +18,7 @@ export class QuestionnaireService {
     return entity;
   }
 
-  public async create(dto: CreateQuestionnaireWithFileIdsDto, userId: string): Promise<QuestionnaireEntity> {
+  public async create(dto: CreateBasicQuestionnaireDto, userId: string): Promise<QuestionnaireEntity> {
     const entity: QuestionnaireEntity = QuestionnaireFactory.createFromDto(dto, userId);
 
     await this.questionnaireRepository.save(entity);

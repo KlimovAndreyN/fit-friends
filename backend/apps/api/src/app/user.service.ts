@@ -3,8 +3,8 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
 import {
-  AccountRoute, CreateUserWithFileIdDto, CreateUserDto, ServiceRoute, DetailUserRdo,
-  BasicDetailUserRdo, convertToUserRdo, UpdateUserDto, UpdateUserWithFileIdDto,
+  AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute, DetailUserRdo,
+  BasicDetailUserRdo, convertToUserRdo, UpdateUserDto, UpdateBasicUserDto,
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -26,7 +26,7 @@ export class UserService {
 
   public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<DetailUserRdo> {
     const avatar = await this.fileService.uploadFile(avatarFile, requestId);
-    const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
+    const createUser: CreateBasicUserDto = { ...dto, avatarFileId: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<BasicDetailUserRdo>(url, createUser, headers);
@@ -37,7 +37,7 @@ export class UserService {
 
   public async updateUser(dto: UpdateUserDto, avatarFile: Express.Multer.File, bearerAuth: string, requestId: string): Promise<DetailUserRdo> {
     const { emptyAvatarFile } = dto;
-    const updateUserDto: UpdateUserWithFileIdDto = fillDto(UpdateUserWithFileIdDto, dto);
+    const updateUserDto: UpdateBasicUserDto = fillDto(UpdateBasicUserDto, dto);
     let avatarFilePath = '';
 
     if (emptyAvatarFile) {

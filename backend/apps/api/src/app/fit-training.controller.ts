@@ -44,9 +44,9 @@ export class FitTrainingController {
     return this.convertTrainingEntities(data);
   }
 
-  @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
-  public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserInfoRdo> {
+  public async getUserProfile(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserProfileRdo> {
     const user = await this.userService.getUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
