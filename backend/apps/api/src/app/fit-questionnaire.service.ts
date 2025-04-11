@@ -20,7 +20,7 @@ export class FitQuestionnaireService {
   }
 
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
-    const url = this.getUrl(ServiceRoute.Questionnaire);
+    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
 
@@ -45,9 +45,10 @@ export class FitQuestionnaireService {
   }
 
   public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {
-    const url = this.getUrl(ServiceRoute.Questionnaire);
+    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    const dto: UpdateQuestionnaireDto = { readyForTraining }
+    const dto: UpdateQuestionnaireDto = { readyForTraining };
+
     await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
   }
 }

@@ -11,7 +11,7 @@ export enum ApiServiceRoute {
 
 export enum ServiceRoute {
   Account = 'auth',
-  Questionnaire = 'questionnaire',
+  Questionnaires = 'questionnaires',
   Trainings = 'trainings',
   Orders = 'orders',
   Reviews = 'reviews',

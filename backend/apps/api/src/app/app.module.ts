@@ -3,12 +3,12 @@ import { HttpModule } from '@nestjs/axios';
 
 import { ApiConfigModule } from '@backend/api/config';
 
-import { FilesService } from './files.service';
-import { UsersService } from './users.service';
+import { FileService } from './file.service';
+import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
-import { UsersController } from './users.controller';
+import { UserController } from './user.controller';
 import { UserInfoController } from './user-info.controller';
-import { TrainingController } from './training.controller';
+import { FitTrainingController } from './fit-training.controller';
 
 const HttpClient = {
   MAX_REDIRECTS: 5,
@@ -24,13 +24,13 @@ const HttpClient = {
     })
   ],
   controllers: [
-    UsersController,
+    UserController,
     UserInfoController,
-    TrainingController
+    FitTrainingController
   ],
   providers: [
-    FilesService,
-    UsersService,
+    FileService,
+    UserService,
     FitQuestionnaireService
   ]
 })

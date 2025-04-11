@@ -9,13 +9,13 @@ import {
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
-import { FilesService } from './files.service';
+import { FileService } from './file.service';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly filesService: FilesService,
+    private readonly fileService: FileService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
@@ -25,12 +25,12 @@ export class UsersService {
   }
 
   public async registerUser(dto: CreateUserDto, avatarFile: Express.Multer.File, requestId: string): Promise<DetailUserRdo> {
-    const avatar = await this.filesService.uploadFile(avatarFile, requestId);
+    const avatar = await this.fileService.uploadFile(avatarFile, requestId);
     const createUser: CreateUserWithFileIdDto = { ...dto, avatarFileId: avatar?.id };
     const url = this.getUrl(AccountRoute.Register);
     const headers = makeHeaders(requestId);
     const { data: registeredUser } = await this.httpService.axiosRef.post<BasicDetailUserRdo>(url, createUser, headers);
-    const avatarFilePath = this.filesService.makePath(avatar);
+    const avatarFilePath = this.fileService.makePath(avatar);
 
     return convertToUserRdo(registeredUser, avatarFilePath);
   }
@@ -44,11 +44,11 @@ export class UsersService {
       updateUserDto.avatarFileId = '';
     }
     else {
-      const avatar = await this.filesService.uploadFile(avatarFile, requestId);
+      const avatar = await this.fileService.uploadFile(avatarFile, requestId);
 
       if (avatar) {
         updateUserDto.avatarFileId = avatar.id;
-        avatarFilePath = this.filesService.makePath(avatar);
+        avatarFilePath = this.fileService.makePath(avatar);
       }
     }
 
@@ -63,7 +63,7 @@ export class UsersService {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.get<BasicDetailUserRdo>(url, headers);
-    const filePath = await this.filesService.getFilePath(data.avatarFileId, requestId);
+    const filePath = await this.fileService.getFilePath(data.avatarFileId, requestId);
     const user: DetailUserRdo = convertToUserRdo(data, filePath);
 
     return user;

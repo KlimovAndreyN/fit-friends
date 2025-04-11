@@ -15,7 +15,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 @Controller(ApiServiceRoute.Trainings)
 @UseGuards(CheckAuthGuard)
 @UseFilters(AxiosExceptionFilter)
-export class TrainingController {
+export class FitTrainingController {
   constructor(
     private readonly httpService: HttpService,
     @Inject(apiConfig.KEY)
@@ -30,6 +30,7 @@ export class TrainingController {
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
 
+    //! отладка
     console.log(data);
 
     return data;
@@ -46,7 +47,7 @@ export class TrainingController {
   @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserInfoRdo> {
-    const user = await this.usersService.getUser(userId, requestId);
+    const user = await this.userService.getUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };

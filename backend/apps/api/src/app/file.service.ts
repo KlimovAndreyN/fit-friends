@@ -8,8 +8,8 @@ import { joinUrl, makeHeaders, multerFileToFormData } from '@backend/shared/help
 import { apiConfig } from '@backend/api/config';
 
 @Injectable()
-export class FilesService {
-  private readonly logger = new Logger(FilesService.name);
+export class FileService {
+  private readonly logger = new Logger(FileService.name);
 
   constructor(
     private readonly httpService: HttpService,

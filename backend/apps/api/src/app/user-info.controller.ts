@@ -19,7 +19,7 @@ import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backen
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @ApiTags(ApiServiceRoute.UserInfo)
@@ -30,7 +30,7 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 export class UserInfoController {
   constructor(
     private readonly httpService: HttpService,
-    private usersService: UsersService,
+    private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
   ) { }
 
@@ -59,7 +59,7 @@ export class UserInfoController {
     //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в - fileIds: []
     //! можно сразу вызвать проверку исходную дто заполеннности полей в зависимости от роли
     //! перенести в сервис?
-    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
+    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
 
@@ -75,7 +75,7 @@ export class UserInfoController {
   @ApiResponse({ type: DetailUserInfoRdo }) //! вынести в описание
   @Get()
   public async getUserInfo(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserInfoRdo> {
-    const user = await this.usersService.getUser(userId, requestId);
+    const user = await this.userService.getUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
@@ -110,9 +110,9 @@ export class UserInfoController {
     const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, updateDto);
     //
 
-    const user = await this.usersService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
+    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
 
-    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaire);
+    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
     const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, upadteQuestionnaireDto, headers);
 
