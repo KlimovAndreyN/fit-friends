@@ -6,6 +6,7 @@ import { ApiConfigModule } from '@backend/api/config';
 import { FileService } from './file.service';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
+import { FitTrainingService } from './fit-training.service';
 import { UserController } from './user.controller';
 import { UserProfileController } from './user-profile.controller';
 import { FitTrainingController } from './fit-training.controller';
@@ -31,7 +32,8 @@ const HttpClient = {
   providers: [
     FileService,
     UserService,
-    FitQuestionnaireService
+    FitQuestionnaireService,
+    FitTrainingService
   ]
 })
 export class AppModule { }

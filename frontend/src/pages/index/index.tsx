@@ -7,8 +7,8 @@ import SpecialOffersSection from '../../components/special-offers-section/specia
 import PopularTrainingSection from '../../components/popular-trainings-section/popular-trainings-section';
 import LookForCompanySection from '../../components/look-for-company-section/look-for-company-section';
 
-import { getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings, getPopularTrainings } from '../../store/training-process/selectors';
-import { getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
+import { getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings, getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting } from '../../store/training-process/selectors';
+import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/training-action';
 import { fetchLookForCompanyUserProfiles } from '../../store/user-profile-action';
@@ -16,11 +16,15 @@ import { PageTitle } from '../../const';
 
 function Index(): JSX.Element {
   //! прокрутка на вверх при переходе с каталога и других страниц
+
   const dispatch = useAppDispatch();
   const isFetchForSportsmanTrainingsExecuting = useAppSelector(getIsFetchForSportsmanTrainingsExecuting);
   const forSportsmanTrainings = useAppSelector(getForSportsmanTrainings);
+  const isFetchFetchSpecialTrainingsExecuting = useAppSelector(getIsFetchSpecialTrainingsExecuting);
   const specialTrainings = useAppSelector(getSpecialTrainings);
+  const isFetchPopularTrainingsExecuting = useAppSelector(getIsFetchPopularTrainingsExecuting);
   const popularTrainings = useAppSelector(getPopularTrainings);
+  const isFetchLookForCompanyUserProfilesExecuting = useAppSelector(getIsFetchLookForCompanyUserProfilesExecuting);
   const lookForCompanyUserProfiles = useAppSelector(getLookForCompanyUserProfiles);
 
   useEffect(() => {
@@ -30,8 +34,7 @@ function Index(): JSX.Element {
     dispatch(fetchLookForCompanyUserProfiles());
   }, [dispatch]);
 
-  //! добавить и остальное получение данных
-  if (isFetchForSportsmanTrainingsExecuting) {
+  if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {
     return <MainSpinner />;
   }
 

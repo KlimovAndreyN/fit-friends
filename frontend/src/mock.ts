@@ -103,7 +103,7 @@ export const MOCK_REVIEWS = [
   {
     userId: 'userId-6',
     userName: 'Никита',
-    userAvatarPath: '/img/content/avatars/users/photo-6.png',
+    userAvatarPath: '/img/content/avatars/users/photo-1.png',
     rating: 5,
     comment: 'Эта тренировка для меня зарядка по\u00A0утрам, помогает проснуться.'
   }
