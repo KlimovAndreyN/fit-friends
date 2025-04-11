@@ -1,3 +1,4 @@
-export const ADD_SUBSCRIBER_SUBJECT = 'Подписка на рассылку оформлена';
-
-export const ADD_SUBCRIBER_TEMPLATE = './add-subscriber';
+export const AddSubcriber = {
+  SUBJECT: 'Подписка на рассылку оформлена',
+  TEMPLATE: './add-subscriber'
+} as const;

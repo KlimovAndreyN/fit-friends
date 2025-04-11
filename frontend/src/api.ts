@@ -9,14 +9,15 @@ import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/pa
 import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { HttpCode } from './const';
 
-//! объеденить в одну константу
-const VITE_BACKEND_URL_ENV = 'VITE_BACKEND_URL';
-const VITE_SHOW_URL_AXIOS_ERROR_ENV = 'VITE_SHOW_URL_AXIOS_ERROR';
+const ViteEnvOption = {
+  BACKEND_URL: 'VITE_BACKEND_URL',
+  URL_AXIOS_ERROR: 'VITE_SHOW_URL_AXIOS_ERROR'
+} as const;
 
 const REQUEST_TIMEOUT = 5000;
 
-const baseURL = getViteEnvVariable(VITE_BACKEND_URL_ENV);
-const showUrlAxiosError = getViteEnvBooleanVariable(VITE_SHOW_URL_AXIOS_ERROR_ENV);
+const baseURL = getViteEnvVariable(ViteEnvOption.BACKEND_URL);
+const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
 
 export function createAPI(): AxiosInstance {
   const api = axios.create({

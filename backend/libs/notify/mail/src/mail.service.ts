@@ -5,7 +5,7 @@ import { ConfigType } from '@nestjs/config';
 import { Subscriber } from '@backend/shared/core';
 import { notifyConfig } from '@backend/notify/config';
 
-import { ADD_SUBCRIBER_TEMPLATE, ADD_SUBSCRIBER_SUBJECT } from './mail.constant';
+import { AddSubcriber } from './mail.constant';
 
 @Injectable()
 export class MailService {
@@ -20,12 +20,13 @@ export class MailService {
     const { name, email } = subscriber;
     const { mailSmtp: { from } } = this.notifyConfig;
     const { fitFriendsUrlEnv: url } = this.notifyConfig;
+    const { SUBJECT: subject, TEMPLATE: template } = AddSubcriber;
 
     const sendMailOption: ISendMailOptions = {
       from,
       to: email,
-      subject: ADD_SUBSCRIBER_SUBJECT,
-      template: ADD_SUBCRIBER_TEMPLATE,
+      subject,
+      template,
       context: { name, email, url, urlTitle: 'FitFriends' }
     };
 
