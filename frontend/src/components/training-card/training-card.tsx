@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Specialization } from '@backend/shared/core';
+
 import { getTrainingRoute } from '../../utils/common';
-import { MOCK_TRAININGS } from '../../mock';
-import { REVIEWS_ID } from '../../const';
+import { REVIEWS_ID, SpecializationTitle } from '../../const';
 
 type TrainingCardProps = {
   trainingId: string; // временно, потом просто training
@@ -14,8 +15,20 @@ function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
   //! заголовок в нижнем регистре? или или там стили?
   //! куда ведут сслыка отзывы, тоже на тренировку? фокус на отзывы? - пока сдела #reviews, но не прокручивает на вверх... перепроверить!
 
-  //! временно
-  const training = MOCK_TRAININGS.find(({ id }) => (id === trainingId));
+  //! временно! отладка!
+  // eslint-disable-next-line no-console
+  console.log('TrainingCard - trainingId', trainingId);
+
+  const training = {
+    id: 'id-78',
+    title: 'full body stretch - 2',
+    specialization: SpecializationTitle[Specialization.Stretching],
+    calorie: 500,
+    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
+    backgroundPath: '/img/content/thumbnails/training-09.jpg',
+    price: 2000,
+    rating: 3
+  };
   if (!training) {
     return <>Ошибка</>;
   }

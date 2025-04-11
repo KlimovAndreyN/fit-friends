@@ -1,12 +1,14 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Specialization } from '@backend/shared/core';
+
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import NotFound from '../not-found/not-found';
 
-import { PageTitle } from '../../const';
-import { MOCK_TRAININGS, MOCK_USERS } from '../../mock';
+import { PageTitle, SpecializationTitle } from '../../const';
+import { MOCK_USERS } from '../../mock';
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
@@ -19,8 +21,20 @@ function Training(): JSX.Element {
 
   const { id: trainingId } = useParams();
 
-  //! временно из моков
-  const training = MOCK_TRAININGS.find(({ id }) => (id === trainingId));
+  //! временно! отладка!
+  // eslint-disable-next-line no-console
+  console.log('Training - trainingId', trainingId);
+
+  const training = {
+    id: 'id-78',
+    title: 'full body stretch - 2',
+    specialization: SpecializationTitle[Specialization.Stretching],
+    calorie: 500,
+    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
+    backgroundPath: '/img/content/thumbnails/training-09.jpg',
+    price: 2000,
+    rating: 3
+  };
   //
 
   if (!training) {

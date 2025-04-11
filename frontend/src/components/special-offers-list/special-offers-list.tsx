@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
+import { ITrainingRdo } from '@backend/shared/core';
+
 import { getTrainingRoute } from '../../utils/common';
-import { OfferType } from '../../types/types';
 
 const CHANGE_SLIDER_TIMEOUT = 7000;
 
 type SpecialOffersListProps = {
-  offers: OfferType[]; //! временно
+  offers: ITrainingRdo[];
 }
 
 function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | null {
@@ -33,7 +34,8 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
       {
         offers.map(
           (offer, index) => {
-            const { id, title, description, backgroundPath, price, oldPrice } = offer;
+            const { id, title, description, backgroundPath, price } = offer;
+            const oldPrice = price - price * 10 / 100; //! все верно? по ТЗ? округлить?
             const isActive = index === activeSliderIndex;
             const itemClassName = classNames('special-offers__item', { 'is-active': isActive });
 

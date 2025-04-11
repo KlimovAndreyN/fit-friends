@@ -1,12 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { TrainingProcess } from '../../types/training-process';
-import { fetchForSportsmanTrainings } from '../training-action';
+import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../training-action';
 import { StoreSlice } from '../../const';
 
 const initialState: TrainingProcess = {
   isFetchForSportsmanTrainingsExecuting: false,
-  forSportsmanTrainings: []
+  forSportsmanTrainings: [],
+  isFetchSpecialTrainingsExecuting: false,
+  specialTrainings: [],
+  isFetchPopularTrainingsExecuting: false,
+  popularTrainings: [],
+  isFetchTrainingsExecuting: false,
+  trainings: [],
+  isFetchDetailTrainingExecuting: false,
+  detailTraining: null
 };
 
 export const trainingProcess = createSlice(
@@ -33,6 +41,82 @@ export const trainingProcess = createSlice(
           (state, action) => {
             state.forSportsmanTrainings = action.payload;
             state.isFetchForSportsmanTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchSpecialTrainings.pending,
+          (state) => {
+            state.isFetchSpecialTrainingsExecuting = true;
+          }
+        )
+        .addCase(
+          fetchSpecialTrainings.rejected,
+          (state) => {
+            state.isFetchSpecialTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchSpecialTrainings.fulfilled,
+          (state, action) => {
+            state.specialTrainings = action.payload;
+            state.isFetchSpecialTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchPopularTrainings.pending,
+          (state) => {
+            state.isFetchPopularTrainingsExecuting = true;
+          }
+        )
+        .addCase(
+          fetchPopularTrainings.rejected,
+          (state) => {
+            state.isFetchPopularTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchPopularTrainings.fulfilled,
+          (state, action) => {
+            state.popularTrainings = action.payload;
+            state.isFetchPopularTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchTrainings.pending,
+          (state) => {
+            state.isFetchTrainingsExecuting = true;
+          }
+        )
+        .addCase(
+          fetchTrainings.rejected,
+          (state) => {
+            state.isFetchTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchTrainings.fulfilled,
+          (state, action) => {
+            state.trainings = action.payload;
+            state.isFetchTrainingsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchDetailTraining.pending,
+          (state) => {
+            state.isFetchDetailTrainingExecuting = true;
+          }
+        )
+        .addCase(
+          fetchDetailTraining.rejected,
+          (state) => {
+            state.isFetchDetailTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          fetchDetailTraining.fulfilled,
+          (state, action) => {
+            state.detailTraining = action.payload;
+            state.isFetchDetailTrainingExecuting = false;
           }
         );
     }

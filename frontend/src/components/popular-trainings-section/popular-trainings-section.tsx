@@ -1,17 +1,21 @@
 import TrainingCard from '../training-card/training-card';
 import SliderSection from '../slider-section/slider-section';
 
+import { ITrainingRdo } from '@backend/shared/core';
+
 import { AppRoute } from '../../const';
-import { MOCK_TRAININGS } from '../../mock';
 
 const SLIDES_COUNT = 4;
 
-function PopularTrainingSection(): JSX.Element {
+type PopularTrainingSectionProps = {
+  trainings: ITrainingRdo[];
+}
+
+function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX.Element {
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
   //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
 
-  const trainings = MOCK_TRAININGS;
   const childrens = trainings.map(
     (training) => (
       <TrainingCard

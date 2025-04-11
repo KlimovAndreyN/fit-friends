@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { IUserProfileRdo } from '@backend/shared/core';
+
 import SliderSection from '../slider-section/slider-section';
 
 import { getUserRoute } from '../../utils/common';
@@ -8,10 +10,18 @@ import { AppRoute } from '../../const';
 
 const SLIDES_COUNT = 4;
 
-function LookForCompanySection(): JSX.Element {
+type LookForCompanySectionProps = {
+  userProfiles: IUserProfileRdo[];
+}
+
+function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JSX.Element {
   //! 'Смотреть все' - нужен раздел? - пока на корень!
   //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
+
+  //! временно! отладка!
+  // eslint-disable-next-line no-console
+  console.log('LookForCompanySection - userProfiles', userProfiles);
 
   const users = MOCK_USERS;
   const childrens = users.map(

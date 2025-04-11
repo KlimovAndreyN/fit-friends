@@ -1,18 +1,25 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import Header from '../../components/header/header';
 import TrainingCatalogForm from '../../components/training-catalog-form/training-catalog-form';
 import TrainingCard from '../../components/training-card/training-card';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getTrainings } from '../../store/training-process/selectors';
+import { fetchTrainings } from '../../store/training-action';
 import { PageTitle } from '../../const';
-import { MOCK_TRAININGS } from '../../mock';
 
 function TrainingCatalog(): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! проверить консоль браузера на ошибки
   //! заголовок в нижнем регистре? или или там стили?
 
-  const trainings = MOCK_TRAININGS;
+  const dispatch = useAppDispatch();
+  const trainings = useAppSelector(getTrainings);
+
+  useEffect(() => {
+    dispatch(fetchTrainings());
+  }, [dispatch]);
 
   return (
     <Fragment>

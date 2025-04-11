@@ -4,7 +4,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUpdateUserProfileDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
-  ApiServiceRoute, IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute, Role
+  ApiServiceRoute, IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute, Role,
+   Role,IUserProfileRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -20,7 +21,9 @@ export const Action = {
   CREATE_QUESTIONNARE: 'user-profile/create-questionnaire',
   FETCH_USER_PROFILE: 'user-profile/fetch',
   UPDATE_USER_PROFILE: 'user-profile/update',
-  CHANGE_READY: 'user-profile/change-ready'
+  CHANGE_READY: 'user-profile/change-ready',
+  FETCH_LOOK_FOR_COMPANY_USER_PROFILES: 'look-for-company-user-profile/fetch',
+  FETCH_USER_PROFILES: 'user-profiles/fetch'
 };
 
 export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
@@ -79,5 +82,31 @@ export const updateUserProfile = createAsyncThunk<IDetailUserProfileRdo, IUpdate
     const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles, dto, { headers: multipartFormDataHeader });
 
     return data;
+  }
+);
+
+export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
+  Action.FETCH_LOOK_FOR_COMPANY_USER_PROFILES,
+  async (_, { extra }) => {
+    const { api } = extra;
+    //! временно
+    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);
+    // eslint-disable-next-line no-console
+    console.log('fetchLookForCompanyUserProfiles', data);
+
+    return [];
+  }
+);
+
+export const fetchUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
+  Action.FETCH_LOOK_FOR_COMPANY_USER_PROFILES,
+  async (_, { extra }) => {
+    const { api } = extra;
+    //! временно
+    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);
+    // eslint-disable-next-line no-console
+    console.log('fetchUserProfiles', data);
+
+    return [];
   }
 );

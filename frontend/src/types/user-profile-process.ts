@@ -1,4 +1,4 @@
-import { IDetailUserProfileRdo } from '@backend/shared/core';
+import { IDetailUserProfileRdo, IUserProfileRdo } from '@backend/shared/core';
 
 export type UserProfileProcess = {
   isExistQuestionnaireExecuting: boolean;
@@ -10,4 +10,8 @@ export type UserProfileProcess = {
   existQuestionnaire: boolean;
   userProfile: IDetailUserProfileRdo | null;
   readyForTraining?: boolean;
+  isFetchLookForCompanyUserProfilesExecuting: boolean;
+  lookForCompanyUserProfiles: IUserProfileRdo[];
+  isFetchUserProfilesExecuting: boolean;
+  userProfiles: IUserProfileRdo[];
 }
