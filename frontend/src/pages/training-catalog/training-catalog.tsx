@@ -34,16 +34,11 @@ function TrainingCatalog(): JSX.Element {
                 <ul className="training-catalog__list">
                   {
                     trainings.map(
-                      (training) => {
-                        //! временно, потом передать training и в одну строку
-                        const { id } = training;
-
-                        return (
-                          <li className='training-catalog__item' key={id}>
-                            <TrainingCard trainingId={id} />
-                          </li>
-                        );
-                      }
+                      (training) => (
+                        <li className='training-catalog__item' key={training.id}>
+                          <TrainingCard training={training} />
+                        </li>
+                      )
                     )
                   }
                 </ul>

@@ -22,6 +22,7 @@ export class FitTrainingController {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
+  //! все одинаковое! объеденить
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
@@ -36,36 +37,31 @@ export class FitTrainingController {
     return data;
   }
 
-  /*
-  @Get(TrainingRoute.ForSportsman)
-  public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingRdo[]> {
-    const data = await this.trainingService.getForSportsman(userId);
-
-    return this.convertTrainingEntities(data);
-  }
-
-  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
-  @Get()
-  public async getUserProfile(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getUser(userId, requestId);
-    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
-
-    return { user, questionnaire };
-  }
-
-
+  @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Special)
-  public async getSpecial(): Promise<TrainingRdo[]> {
-    const data = await this.trainingService.getSpecial();
+  public async getSpecial(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
+    const url = this.apiOptions.fitServiceUrl + '/' + ServiceRoute.Trainings + '/' + TrainingRoute.Special;
+    console.log(url);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
 
-    return this.convertTrainingEntities(data);
+    //! отладка
+    console.log(data);
+
+    return data;
   }
 
+  @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Popular)
-  public async getPopular(): Promise<TrainingRdo[]> {
-    const data = await this.trainingService.getPopular();
+  public async getPopular(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
+    const url = this.apiOptions.fitServiceUrl + '/' + ServiceRoute.Trainings + '/' + TrainingRoute.Popular;
+    console.log(url);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
 
-    return this.convertTrainingEntities(data);
+    //! отладка
+    console.log(data);
+
+    return data;
   }
-*/
 }

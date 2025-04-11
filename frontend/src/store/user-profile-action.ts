@@ -4,8 +4,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUpdateUserProfileDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
-  ApiServiceRoute, IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute, Role,
-   Role,IUserProfileRdo
+  ApiServiceRoute, IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute,
+  Role, IUserProfileRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -99,7 +99,7 @@ export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[
 );
 
 export const fetchUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
-  Action.FETCH_LOOK_FOR_COMPANY_USER_PROFILES,
+  Action.FETCH_USER_PROFILES,
   async (_, { extra }) => {
     const { api } = extra;
     //! временно

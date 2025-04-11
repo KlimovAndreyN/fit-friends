@@ -18,11 +18,7 @@ function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX
 
   const childrens = trainings.map(
     (training) => (
-      <TrainingCard
-        key={training.id}
-        //! временно, потом передать весь training
-        trainingId={training.id}
-      />
+      <TrainingCard key={training.id} training={training} />
     )
   );
 

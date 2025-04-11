@@ -1,40 +1,21 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Specialization } from '@backend/shared/core';
+import { ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
 import { REVIEWS_ID, SpecializationTitle } from '../../const';
 
 type TrainingCardProps = {
-  trainingId: string; // временно, потом просто training
+  training: ITrainingRdo;
 }
 
-function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
+function TrainingCard({ training }: TrainingCardProps): JSX.Element {
   //! specialization в русские названия переделать при отображении
   //! заголовок в нижнем регистре? или или там стили?
   //! куда ведут сслыка отзывы, тоже на тренировку? фокус на отзывы? - пока сдела #reviews, но не прокручивает на вверх... перепроверить!
 
-  //! временно! отладка!
-  // eslint-disable-next-line no-console
-  console.log('TrainingCard - trainingId', trainingId);
-
-  const training = {
-    id: 'id-78',
-    title: 'full body stretch - 2',
-    specialization: SpecializationTitle[Specialization.Stretching],
-    calorie: 500,
-    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
-    backgroundPath: '/img/content/thumbnails/training-09.jpg',
-    price: 2000,
-    rating: 3
-  };
-  if (!training) {
-    return <>Ошибка</>;
-  }
-  //
-
-  const { id, title, description, specialization, calorie, backgroundPath, price, rating } = training;
+  const { id, title, description, specialization, caloriesWaste, backgroundPath, price, rating } = training;
   const link = getTrainingRoute(id);
 
   return (
@@ -56,10 +37,10 @@ function TrainingCard({ trainingId }: TrainingCardProps): JSX.Element {
         <div className="thumbnail-training__info">
           <ul className="thumbnail-training__hashtags-list">
             <li className="thumbnail-training__hashtags-item">
-              <div className="hashtag thumbnail-training__hashtag"><span>#{specialization.toLocaleLowerCase()}</span></div>
+              <div className="hashtag thumbnail-training__hashtag"><span>#{SpecializationTitle[specialization].toLocaleLowerCase()}</span></div>
             </li>
             <li className="thumbnail-training__hashtags-item">
-              <div className="hashtag thumbnail-training__hashtag"><span>#{calorie}ккал</span></div>
+              <div className="hashtag thumbnail-training__hashtag"><span>#{caloriesWaste}ккал</span></div>
             </li>
           </ul>
           <div className="thumbnail-training__rate">
