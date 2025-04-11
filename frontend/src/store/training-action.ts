@@ -51,7 +51,7 @@ export const fetchTrainings = createAsyncThunk<ITrainingRdo[], undefined, { extr
   Action.FETCH_TRAININGS,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.ForSportsman)); //! временно и нужны параметры для поиска
+    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.Popular)); //! временно и нужны параметры для поиска
 
     return data;
   }
@@ -61,7 +61,7 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, undefine
   Action.FETCH_DETAIL_TRAINING,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.ForSportsman)); //! временно и нужны параметры для поиска
+    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.ForSportsman)); //! временно и нужен trainingId
 
     //! временно! отладка!
     // eslint-disable-next-line no-console

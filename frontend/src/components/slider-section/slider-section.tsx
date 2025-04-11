@@ -19,6 +19,9 @@ type SliderSectionProps = {
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
+  //! если карточек мало, то они схопываются!!! как по ТЗ в разных сециях?
+  //   временно добавил (childrensCount < slidesCount) ? childrensCount : slidesCount... карточки по центру... и кнопки слайдера видны пока...
+  //   как быть если количество карточек меньше чем количество слайдов
   // по кругу Swiper.loop boolean
 
   const { title, showAllLink, isShowAllLight, sectionClassName, childrens, slidesCount } = props;
@@ -59,13 +62,14 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
     onClick: handleNextButtonClick,
     xlinkHref: '#arrow-right'
   };
+  const childrensCount = childrens.length;
 
   return (
     <section className={sectionClassName}>
       <div className="container">
         <div className={`${sectionClassName}__wrapper`}>
           {
-            (childrens.length)
+            (childrensCount)
               ?
               <Fragment>
                 <div className={`${sectionClassName}__title-wrapper`}>
@@ -79,7 +83,7 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                   </div>
                 </div>
                 <ul className={`${sectionClassName}__list`}>
-                  <Swiper slidesPerView={slidesCount} ref={swiperRef}>
+                  <Swiper slidesPerView={(childrensCount < slidesCount) ? childrensCount : slidesCount} ref={swiperRef}>
                     {
                       childrens.map(
                         (children) => {
