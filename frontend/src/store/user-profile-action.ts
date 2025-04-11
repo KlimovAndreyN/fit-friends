@@ -18,7 +18,7 @@ type Extra = {
 export const Action = {
   EXIST_QUESTIONNARE: 'user-profile/exist-questionnaire',
   CREATE_QUESTIONNARE: 'user-profile/create-questionnaire',
-  GET_USER_PROFILE: 'user-profile/get',
+  FETCH_USER_PROFILE: 'user-profile/fetch',
   UPDATE_USER_PROFILE: 'user-profile/update',
   CHANGE_READY: 'user-profile/change-ready'
 };
@@ -47,7 +47,7 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestion
 );
 
 export const fetchUserProfile = createAsyncThunk<IDetailUserProfileRdo, undefined, { extra: Extra }>(
-  Action.GET_USER_PROFILE,
+  Action.FETCH_USER_PROFILE,
   async (_, { extra }) => {
     const { api } = extra;
     const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);

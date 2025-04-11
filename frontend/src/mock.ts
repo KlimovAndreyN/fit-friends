@@ -5,39 +5,6 @@ import { Specialization } from '@backend/shared/core';
 import { OfferType } from './types/types';
 import { SpecializationTitle } from './const';
 
-export const MOCK_OFFERS = [
-  {
-    id: 'id-11',
-    backgroundPath: '/img/content/thumbnails/preview-03.jpg',
-    specialization: Specialization.Crossfit
-  },
-  {
-    id: 'id-12',
-    backgroundPath: '/img/content/thumbnails/preview-02.jpg',
-    specialization: Specialization.Power
-  },
-  {
-    id: 'id-13',
-    backgroundPath: '/img/content/thumbnails/preview-01.jpg',
-    specialization: Specialization.Boxing
-  },
-  {
-    id: 'id-21',
-    backgroundPath: '/img/content/thumbnails/training-11.jpg',
-    specialization: Specialization.Power
-  },
-  {
-    id: 'id-22',
-    backgroundPath: '/img/content/thumbnails/training-09.jpg',
-    specialization: Specialization.Stretching
-  },
-  {
-    id: 'id-23',
-    backgroundPath: '/img/content/thumbnails/training-10.jpg',
-    specialization: Specialization.Power
-  }
-];
-
 export const MOCK_SPECIAL_OFFERS: OfferType[] = [
   {
     id: 'id-51',

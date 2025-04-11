@@ -1,18 +1,22 @@
 import { Link } from 'react-router-dom';
 
+import { ITrainingRdo } from '@backend/shared/core';
+
 import SliderSection from '../slider-section/slider-section';
 
 import { getTrainingRoute } from '../../utils/common';
-import { MOCK_OFFERS } from '../../mock';
 
-const SLIDE_COUNT = 3;
+const SLIDES_COUNT = 3;
 
-function SpecialForYouSection(): JSX.Element {
+type SpecialForYouSectionProps = {
+  trainings: ITrainingRdo[];
+}
+
+function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Element {
   //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
 
-  const offers = MOCK_OFFERS;
-  const childrens = offers.map(
+  const childrens = trainings.map(
     ({ id, backgroundPath, specialization }) => (
       <div className="thumbnail-preview" key={id}>
         <div className="thumbnail-preview__image">
@@ -34,7 +38,7 @@ function SpecialForYouSection(): JSX.Element {
     <SliderSection
       title='Специально подобрано для вас'
       sectionClassName='special-for-you'
-      slidesCount={SLIDE_COUNT}
+      slidesCount={SLIDES_COUNT}
       childrens={childrens}
     />
   );

@@ -6,7 +6,7 @@ import { getUserRoute } from '../../utils/common';
 import { MOCK_USERS } from '../../mock';
 import { AppRoute } from '../../const';
 
-const SLIDE_COUNT = 4;
+const SLIDES_COUNT = 4;
 
 function LookForCompanySection(): JSX.Element {
   //! 'Смотреть все' - нужен раздел? - пока на корень!
@@ -65,7 +65,7 @@ function LookForCompanySection(): JSX.Element {
       showAllLink={AppRoute.Index}
       isShowAllLight
       sectionClassName='look-for-company'
-      slidesCount={SLIDE_COUNT}
+      slidesCount={SLIDES_COUNT}
       childrens={childrens}
     />
   );
