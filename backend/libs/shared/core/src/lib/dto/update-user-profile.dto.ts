@@ -1,6 +1,6 @@
 import { IntersectionType, OmitType } from '@nestjs/swagger';
 
-import { IUpdateUserInfoDto } from '../interfaces/dto/i-update-user-info.dto';
+import { IUpdateUserInfoDto } from '../interfaces/dto/i-update-user-profile.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UpdateQuestionnaireDto } from './update-questionnaire.dto';
 

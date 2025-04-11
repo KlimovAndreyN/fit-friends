@@ -9,8 +9,8 @@ import { IUpdateUserInfoDto, Role } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-info-process/selectors';
-import { fetchUserInfo, updateUserInfo } from '../../store/user-info-action';
+import { getIsFetchUserInfoExecuting, getUserInfo } from '../../store/user-profile-process/selectors';
+import { fetchUserInfo, updateUserInfo } from '../../store/user-profile-action';
 import { PageTitle } from '../../const';
 
 function Profile(): JSX.Element {

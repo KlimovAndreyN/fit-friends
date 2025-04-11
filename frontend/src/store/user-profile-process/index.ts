@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { UserInfoProcess } from '../../types/user-info-process';
-import { changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-info-action';
+import { UserInfoProcess } from '../../types/user-profile-process';
+import { changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserInfo, updateUserInfo } from '../user-profile-action';
 import { StoreSlice } from '../../const';
 
 const initialState: UserInfoProcess = {

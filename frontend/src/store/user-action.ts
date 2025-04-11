@@ -10,7 +10,7 @@ import { joinUrl } from '@backend/shared/helpers';
 
 import { isErrorNetwork } from '../utils/parse-axios-error';
 import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
-import { existQuestionnaire } from './user-info-action';
+import { existQuestionnaire } from './user-profile-action';
 import { multipartFormDataHeader } from '../const';
 
 type Extra = {

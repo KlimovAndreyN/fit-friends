@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import { userProcess } from './user-process';
-import { userInfoProcess } from './user-info-process';
+import { userInfoProcess } from './user-profile-process';
 import { StoreSlice } from '../const';
 
 const reducers = {

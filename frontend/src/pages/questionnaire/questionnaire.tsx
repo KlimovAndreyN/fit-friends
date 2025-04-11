@@ -11,8 +11,8 @@ import { Duration, ICreateQuestionnaireSportsmanDto, Role, Specialization, Train
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { getIsCreateQuestionnaireExecuting } from '../../store/user-info-process/selectors';
-import { createQuestionnaire } from '../../store/user-info-action';
+import { getIsCreateQuestionnaireExecuting } from '../../store/user-profile-process/selectors';
+import { createQuestionnaire } from '../../store/user-profile-action';
 import { DefaultUser, PageTitle, TRAINING_LEVELS, USER_DURATIONS } from '../../const';
 
 enum FormFieldName {

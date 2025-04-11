@@ -11,7 +11,7 @@ import { IUpdateUserInfoDto, IDetailUserInfoRdo, Location, Specialization, Gende
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
-import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-info-process/selectors';
+import { getIsUpdateUserInfoError, getIsUpdateUserInfoExecuting } from '../../store/user-profile-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
 
 enum FormFieldName {
