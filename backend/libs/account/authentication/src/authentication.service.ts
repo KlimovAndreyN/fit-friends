@@ -4,6 +4,7 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { randomUUID } from 'node:crypto';
 
 import {
   AuthenticationMessage, AuthUser, CreateUserWithFileIdDto,
@@ -90,7 +91,7 @@ export class AuthenticationService {
 
   public async createUserTokens(user: User): Promise<Tokens> {
     const accessTokenPayload = createJwtPayload(user);
-    const refreshTokenPayload = { ...accessTokenPayload, tokenId: crypto.randomUUID() };
+    const refreshTokenPayload = { ...accessTokenPayload, tokenId: randomUUID() };
 
     await this.refreshTokenService.createRefreshSession(refreshTokenPayload);
 

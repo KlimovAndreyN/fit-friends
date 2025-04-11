@@ -1,4 +1,4 @@
-import * as crypto from 'crypto';
+import { randomUUID } from 'node:crypto';
 import { CanActivate, ExecutionContext, Injectable, Logger } from '@nestjs/common';
 
 import { RequestProperty } from '@backend/shared/core';
@@ -6,7 +6,7 @@ import { RequestProperty } from '@backend/shared/core';
 @Injectable()
 export class InjectRequestIdGuard implements CanActivate {
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requestId = crypto.randomUUID();
+    const requestId = randomUUID();
     const request = context.switchToHttp().getRequest<Request>();
 
     request[RequestProperty.RequestId] = requestId;
