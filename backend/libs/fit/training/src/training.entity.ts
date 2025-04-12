@@ -37,7 +37,7 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
     this.caloriesWaste = training.caloriesWaste;
     this.description = training.description;
     this.gender = training.gender;
-    this.videoFileId = training.userId;
+    this.videoFileId = training.videoFileId;
     this.rating = training.rating ?? undefined;
     this.userId = training.userId;
     this.isSpecial = training.isSpecial;

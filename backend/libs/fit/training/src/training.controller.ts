@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute, TrainingRdo, DetailTrainingRdo } from '@backend/shared/core';
+import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute, TrainingRdo, BasicDetailTrainingRdo } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { TrainingService } from './training.service';
@@ -48,9 +48,9 @@ export class TrainingController {
   }
 
   @Get(':trainingId') //! в константы
-  public async show(@Param() id: string): Promise<DetailTrainingRdo> {
-    const entity = await this.trainingService.findById(id);
+  public async show(@Param('trainingId') trainingId: string): Promise<BasicDetailTrainingRdo> {
+    const entity = await this.trainingService.findById(trainingId);
 
-    return fillDto(DetailTrainingRdo, entity.toPOJO());
+    return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }
 }
