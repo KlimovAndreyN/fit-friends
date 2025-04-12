@@ -5,13 +5,15 @@ import { ICreateBasicQuestionnaireDto } from '../interfaces/dto/i-create-basic-q
 
 export class CreateBasicQuestionnaireDto
   extends IntersectionType(
-    PickType(QuestionnaireApiDoc,
+    PickType(
+      QuestionnaireApiDoc,
       [
         'specializations',
         'trainingLevel'
       ]
     ),
-    PickType(PartialType(QuestionnaireApiDoc),
+    PickType(
+      PartialType(QuestionnaireApiDoc),
       [
         'duration',
         'caloriesLose',

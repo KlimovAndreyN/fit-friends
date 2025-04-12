@@ -7,6 +7,7 @@ import { TrainingLevel } from '../../types/training-level.enum';
 import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { Gender } from '../../types/gender.enum';
+import { UserRdo } from '../../rdo/user.rdo';
 
 //! описание и ограничения для всего, часть можно взять с опросника только пользователя заменить на тренировку
 export class TrainingApiDoc {
@@ -80,6 +81,10 @@ export class TrainingApiDoc {
   @ApiProperty() //! тут как пропользоватлея, но это тренер
   @Expose()
   public userId: Training['userId'];
+
+  @ApiProperty()
+  @Expose()
+  public coach: UserRdo;
 
   @ApiProperty()
   @Expose()

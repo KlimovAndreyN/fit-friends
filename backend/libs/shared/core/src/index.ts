@@ -59,6 +59,7 @@ export { PageQuery } from './lib/query/page.query';
 
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
+export { DetailTrainingRdo } from './lib/rdo/detail-training.rdo';
 export { DetailUserProfileRdo } from './lib/rdo/detail-user-profile.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
@@ -67,6 +68,8 @@ export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
 export { TrainingRdo } from './lib/rdo/training.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
+export { UserProfileRdo } from './lib/rdo/user-profile.rdo';
+export { UserRdo } from './lib/rdo/user.rdo';
 
 export { RequestWithBearerAuth } from './lib/types/request/request-with-bearer-auth.type';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request/request-with-request-id-and-bearer-auth.type';
