@@ -77,6 +77,13 @@ export const USER_GENDERS: Option[] = enumToArray(Gender).map(
 );
 
 //! перенести в компонент/страницу по месту? или отдельный файл
+export const TrainingGenderTitle: { [key in Gender]: string } = {
+  [Gender.Female]: 'женщин',
+  [Gender.Male]: 'мужчин',
+  [Gender.NotMatter]: 'всех',
+} as const;
+
+//! перенести в компонент/страницу по месту? или отдельный файл
 const LocationTitle: { [key in Location]: string } = {
   [Location.Petrogradskaya]: 'Петроградская',
   [Location.Pionerskaya]: 'Пионерская',
@@ -114,15 +121,24 @@ export const SPECIALISATIONS: Option[] = enumToArray(Specialization).map(
 
 //! перенести в компонент/страницу по месту? или отдельный файл
 const UserDurationTitle: { [key in Duration]: string } = {
-  [Duration.Minutes_10_30]: '10-30 мин',
-  [Duration.Minutes_30_50]: '30-50 мин',
-  [Duration.Minutes_50_80]: '50-80 мин',
-  [Duration.Minutes_80_100]: '80-100 мин'
+  [Duration.Minutes_10_30]: '10-30',
+  [Duration.Minutes_30_50]: '30-50',
+  [Duration.Minutes_50_80]: '50-80',
+  [Duration.Minutes_80_100]: '80-100'
 } as const;
 
 export const USER_DURATIONS: Option[] = enumToArray(Duration).map(
-  (duration) => ({ value: duration, title: UserDurationTitle[duration] })
+  (duration) => ({ value: duration, title: `${UserDurationTitle[duration]} мин` })
 );
+
+//! перенести в компонент/страницу по месту? или отдельный файл
+//! можно преобазовать из UserDurationTitle
+export const TrainingDurationTitle: { [key in Duration]: string } = {
+  [Duration.Minutes_10_30]: '10_30',
+  [Duration.Minutes_30_50]: '30_50',
+  [Duration.Minutes_50_80]: '50_80',
+  [Duration.Minutes_80_100]: '80_100'
+} as const;
 
 //! перенести в компонент/страницу по месту? или отдельный файл
 const TrainingLevelTitle: { [key in TrainingLevel]: string } = {

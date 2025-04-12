@@ -41,7 +41,7 @@ export class FitTrainingService {
     const { userId: coachId, videoFileId, ...training } = data;
     const user = await this.userService.getUser(coachId, requestId);
     const { id, name, avatarFilePath } = user;
-    const coach: UserRdo = { id, name, avatarFilePath }
+    const coach: UserRdo = { id, name, avatarFilePath };
 
     //! временно
     const videoFilePath = 'video/sample-video-mp4.mp4';

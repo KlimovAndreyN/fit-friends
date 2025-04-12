@@ -9,15 +9,13 @@ import NotFound from '../not-found/not-found';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchDetailTraining } from '../../store/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
-import { PageTitle, SpecializationTitle } from '../../const';
+import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
-  //! specialization по месту определять русское название и в нижний регистр
   //! backgroundPath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
   //! как отборазить если бесплатно? есть что то в маркапах
-  //! нужные еще поля gender, duration, coach {id, avatar, name}
-  //! обработать пустой avatarFilePath
+  //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
   //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы?
@@ -42,11 +40,11 @@ function Training(): JSX.Element {
     return <NotFound />;
   }
 
-  const { title, specialization, caloriesWaste, description, price, rating, videoFilePath, coach } = training;
+  const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach } = training;
   const { id: coachId, avatarFilePath, name } = coach;
-  //! временно
-  const gender = 'для_всех';
-  const duration = '30_50минут';
+  const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
+  const genderText = TrainingGenderTitle[gender];
+  const durationText = TrainingDurationTitle[duration];
 
   // eslint-disable-next-line no-console
   console.log('Training - coachId', coachId);
@@ -69,9 +67,24 @@ function Training(): JSX.Element {
                   <div className="training-info__header">
                     <div className="training-info__coach">
                       <div className="training-info__photo">
-                        <picture>
-                          <img src={avatarFilePath} width="64" height="64" alt="Изображение тренера" />
-                        </picture>
+                        {
+                          (avatarFilePath)
+                            ?
+                            <img src={avatarFilePath} width="64" height="64" alt="Изображение тренера" />
+                            :
+                            <div style={{
+                              backgroundColor: 'white',
+                              width: 64,
+                              height: 64,
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderRadius: '50%'
+                            }}
+                            >
+                              <svg aria-hidden="true" width="40" height="48"><use xlinkHref="#icon-user" /></svg>
+                            </div>
+                        }
                       </div>
                       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
                         <span className="training-info__name">{name}</span>
@@ -113,16 +126,16 @@ function Training(): JSX.Element {
                           </div>
                           <ul className="training-info__list">
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{SpecializationTitle[specialization].toLocaleLowerCase()}</span></div>
+                              <div className="hashtag hashtag--white"><span>#{specializationText}</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{gender}</span></div>
+                              <div className="hashtag hashtag--white"><span>#для_{genderText}</span></div>
                             </li>
                             <li className="training-info__item">
                               <div className="hashtag hashtag--white"><span>#{caloriesWaste}ккал</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{duration}</span></div>
+                              <div className="hashtag hashtag--white"><span>#{durationText}мин</span></div>
                             </li>
                           </ul>
                         </div>
