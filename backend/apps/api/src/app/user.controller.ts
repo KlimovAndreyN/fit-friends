@@ -105,25 +105,4 @@ export class UserController {
 
     return registeredUser;
   }
-
-  /*
-  @ApiOperation(AuthenticationApiOperation.Show)
-  @ApiResponse(ApiApiResponse.UserFound)
-  @ApiResponse(AuthenticationApiResponse.UserNotFound)
-  @ApiResponse(AuthenticationApiResponse.BadRequest)
-  @ApiResponse(AuthenticationApiResponse.Unauthorized)
-  @ApiParam(ApiParamOption.UserId)
-  @ApiBearerAuth(BearerAuth.AccessToken)
-  @UseGuards(CheckAuthGuard)
-  //! возможно не понадобится
-  @Get(ParamIdOption.USER)
-  public async show(
-    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
-    @Req() { requestId }: RequestWithRequestId
-  ): Promise<DetailUserRdo> {
-    const user = await this.userService.getUser(userId, requestId);
-
-    return user;
-  }
-  */
 }

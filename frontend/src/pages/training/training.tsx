@@ -17,9 +17,10 @@ function Training(): JSX.Element {
   //! backgroundPath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
   //! как отборазить если бесплатно? есть что то в маркапах
   //! нужные еще поля gender, duration, coach {id, avatar, name}
-  //! обрабоать пустой avatarFilePath
+  //! обработать пустой avatarFilePath
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
+  //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы?
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
@@ -41,11 +42,16 @@ function Training(): JSX.Element {
     return <NotFound />;
   }
 
-  const { title, specialization, caloriesWaste, description, price, rating, coach } = training;
+  const { title, specialization, caloriesWaste, description, price, rating, videoFilePath, coach } = training;
+  const { id: coachId, avatarFilePath, name } = coach;
   //! временно
   const gender = 'для_всех';
   const duration = '30_50минут';
-  const { avatarFilePath, name } = coach;
+
+  // eslint-disable-next-line no-console
+  console.log('Training - coachId', coachId);
+  // eslint-disable-next-line no-console
+  console.log('Training - videoFilePath', videoFilePath);
   //
 
   return (
