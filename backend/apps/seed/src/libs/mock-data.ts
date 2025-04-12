@@ -3,6 +3,7 @@ import { Gender } from '@backend/shared/core';
 export type MockUser = { name: string; gender: Gender; };
 
 export const MOCK_SWAGGER_USER = 'Swagger';
+export const MOCK_SWAGGER_COACH = 'SwaggerCoach';
 
 export const MOCK_SPORTSMANS: MockUser[] = [
   { name: MOCK_SWAGGER_USER, gender: Gender.Male },
@@ -17,6 +18,7 @@ export const MOCK_SPORTSMANS: MockUser[] = [
 ];
 
 export const MOCK_COACHES: MockUser[] = [
+  { name: MOCK_SWAGGER_COACH, gender: Gender.Male },
   { name: 'Nataly', gender: Gender.Female },
   { name: 'Max', gender: Gender.Male },
   { name: 'Susan', gender: Gender.Female },

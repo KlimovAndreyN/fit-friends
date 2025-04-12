@@ -1,11 +1,11 @@
 import { Logger } from '@nestjs/common';
 
-import { Duration, Gender, Specialization, Training, TrainingLevel } from '@backend/shared/core';
+import { Duration, Gender, Specialization, Training, TrainingApiProperty, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
 
-import { MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
+import { MOCK_SWAGGER_COACH, MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
 
 export async function clearTrainings(trainingRepository: TrainingRepository): Promise<void> {
   await trainingRepository.client.training.deleteMany();
@@ -17,7 +17,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
   const { MIN_RATING, MAX_RATING } = MockReviewOption;
   let trainingGlobalIndex = 1;
 
-  for (const { id: userId } of coaches) {
+  for (const { id: userId, name: userName } of coaches) {
     const trainingsCount = getRandomNumber(MIN_COUNT, MAX_COUNT);
 
     for (let trainingIndex = 1; trainingIndex <= trainingsCount; trainingIndex++) {
@@ -42,6 +42,12 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
         isSpecial: getRandomBoolean(),
         createdAt: getRandomDate(MIN_DATE, MAX_DATE)
       }
+
+      // для удобства тестирования запросов из свагера
+      if ((userName === MOCK_SWAGGER_COACH) && (trainingGlobalIndex === 1) && (trainingIndex === 1)) {
+        training.id = TrainingApiProperty.Id.example;
+      }
+
       const trainingEntity = new TrainingEntity(training);
 
       await trainingRepository.save(trainingEntity);

@@ -3,6 +3,7 @@ export { Entity } from './lib/base/entity';
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
 export { FileApiProperty } from './lib/constants/api-property/file.api-property';
+export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
 export { UserApiProperty } from './lib/constants/api-property/user.api-property';
 
 export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
