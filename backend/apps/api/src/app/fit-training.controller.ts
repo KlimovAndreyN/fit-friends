@@ -1,11 +1,8 @@
-import { Controller, Get, Inject, Req, UseFilters, UseGuards } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import { HttpService } from '@nestjs/axios';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId, ApiParamOption, IdParam, DetailTrainingRdo } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
-import { apiConfig } from '@backend/api/config';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { FitTrainingService } from './fit-training.service';
@@ -17,10 +14,7 @@ import { FitTrainingService } from './fit-training.service';
 @UseFilters(AxiosExceptionFilter)
 export class FitTrainingController {
   constructor(
-    private readonly httpService: HttpService,
-    private fitTrainingService: FitTrainingService,
-    @Inject(apiConfig.KEY)
-    private readonly apiOptions: ConfigType<typeof apiConfig>
+    private fitTrainingService: FitTrainingService
   ) { }
 
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
@@ -45,5 +39,17 @@ export class FitTrainingController {
     const data = await this.fitTrainingService.getTrainings(TrainingRoute.Popular, request);
 
     return data;
+  }
+
+  @ApiResponse({ type: DetailTrainingRdo })
+  @ApiParam(ApiParamOption.TrainingId)
+  @Get(IdParam.TRAINING)
+  public async show(
+    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Req() request: RequestWithRequestIdAndUserId
+  ): Promise<DetailTrainingRdo> {
+    const training = await this.fitTrainingService.findById(trainingId, request);
+
+    return training;
   }
 }

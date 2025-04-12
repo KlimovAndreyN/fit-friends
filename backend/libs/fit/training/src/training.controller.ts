@@ -54,6 +54,7 @@ export class TrainingController {
   @Get(IdParam.TRAINING)
   public async show(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicDetailTrainingRdo> {
     const entity = await this.trainingService.findById(trainingId);
+    //! возможно тут проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }

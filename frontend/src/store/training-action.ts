@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, Duration, Gender, IDetailTrainingRdo, ITrainingRdo, Specialization, TrainingLevel, TrainingRoute } from '@backend/shared/core';
+import { ApiServiceRoute, IDetailTrainingRdo, ITrainingRdo, TrainingRoute } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
 type Extra = {
@@ -57,40 +57,12 @@ export const fetchTrainings = createAsyncThunk<ITrainingRdo[], undefined, { extr
   }
 );
 
-export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, undefined, { extra: Extra }>(
+export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, { extra: Extra }>(
   Action.FETCH_DETAIL_TRAINING,
-  async (_, { extra }) => {
+  async (trainingId, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.ForSportsman)); //! временно и нужен trainingId
+    const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, trainingId));
 
-    //! временно! отладка!
-    // eslint-disable-next-line no-console
-    console.log('fetchDetailTraining - data', data);
-
-    const rdo: IDetailTrainingRdo = {
-      backgroundPath: '',
-      caloriesWaste: 10,
-      coach: {
-        id: '1112222',
-        name: '111111',
-        avatarFilePath: '3333'
-      },
-      createdDate: '2025-01-01',
-      description: '',
-      duration: Duration.Minutes_10_30,
-      gender: Gender.Female,
-      id: '1122',
-      isSpecial: true,
-      price: 100,
-      rating: 4,
-      specialization: Specialization.Aerobics,
-      title: '1111',
-      trainingLevel: TrainingLevel.Amateur,
-      videoFilePath: ''
-    };
-    return rdo;
-    //
-
-    //!return data;
+    return data;
   }
 );

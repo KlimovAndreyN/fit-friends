@@ -1,53 +1,51 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Specialization } from '@backend/shared/core';
-
+import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import NotFound from '../not-found/not-found';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchDetailTraining } from '../../store/training-action';
+import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle, SpecializationTitle } from '../../const';
-import { MOCK_USERS } from '../../mock';
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
   //! specialization по месту определять русское название и в нижний регистр
   //! backgroundPath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
   //! как отборазить если бесплатно? есть что то в маркапах
-  //! нужные еще поля genderь, duration, coach {id, avatar, name}
+  //! нужные еще поля gender, duration, coach {id, avatar, name}
+  //! обрабоать пустой avatarFilePath
+  //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
   //! проверить консоль браузера на ошибки
 
+  const dispatch = useAppDispatch();
   const { id: trainingId } = useParams();
+  const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
+  const training = useAppSelector(getDetailTraining);
 
-  //! временно! отладка!
-  // eslint-disable-next-line no-console
-  console.log('Training - trainingId', trainingId);
+  useEffect(() => {
+    dispatch(fetchDetailTraining(trainingId || '')); //! а как без ''?
+  }, [dispatch, trainingId]);
 
-  const training = {
-    id: 'id-78',
-    title: 'full body stretch - 2',
-    specialization: SpecializationTitle[Specialization.Stretching],
-    calorie: 500,
-    description: 'Комплекс упражнений на\u00A0растяжку всего тела для новичков. Плавное погружение в\u00A0стретчинг и\u00A0умеренная нагрузка.',
-    backgroundPath: '/img/content/thumbnails/training-09.jpg',
-    price: 2000,
-    rating: 3
-  };
-  //
+  if (isFetchDetailTrainingExecuting) {
+    //! свой спинер бы
+    return <MainSpinner />;
+  }
 
-  if (!training) {
+  if (!trainingId || !training) {
     //! еще бы дополнительный текст добавить
     return <NotFound />;
   }
 
-  const { title, specialization, calorie, description, price } = training;
+  const { title, specialization, caloriesWaste, description, price, rating, coach } = training;
   //! временно
   const gender = 'для_всех';
   const duration = '30_50минут';
-  const coach = MOCK_USERS[1];
-  const { avatarPath, name } = coach;
+  const { avatarFilePath, name } = coach;
   //
 
   return (
@@ -66,7 +64,7 @@ function Training(): JSX.Element {
                     <div className="training-info__coach">
                       <div className="training-info__photo">
                         <picture>
-                          <img src={avatarPath} width="64" height="64" alt="Изображение тренера" />
+                          <img src={avatarFilePath} width="64" height="64" alt="Изображение тренера" />
                         </picture>
                       </div>
                       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
@@ -104,18 +102,18 @@ function Training(): JSX.Element {
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </span>
-                              <input type="number" name="rating" defaultValue="4" disabled />
+                              <input type="number" name="rating" defaultValue={rating} disabled />
                             </label>
                           </div>
                           <ul className="training-info__list">
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{specialization.toLocaleLowerCase()}</span></div>
+                              <div className="hashtag hashtag--white"><span>#{SpecializationTitle[specialization].toLocaleLowerCase()}</span></div>
                             </li>
                             <li className="training-info__item">
                               <div className="hashtag hashtag--white"><span>#{gender}</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{calorie}ккал</span></div>
+                              <div className="hashtag hashtag--white"><span>#{caloriesWaste}ккал</span></div>
                             </li>
                             <li className="training-info__item">
                               <div className="hashtag hashtag--white"><span>#{duration}</span></div>
