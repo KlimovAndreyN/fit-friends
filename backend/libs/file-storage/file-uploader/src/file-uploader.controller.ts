@@ -4,8 +4,8 @@ import { ApiBody, ApiConsumes, ApiHeader, ApiParam, ApiResponse, ApiTags } from 
 import 'multer'; // Express.Multer.File
 
 import {
-  FILE_KEY, ApiParamOption, FileUploaderApiResponse, FileUploaderFileApiBody, ServiceRoute,
-  UploadedFileRdo, FILE_ID_PARAM, FileStorageRoute, XRequestIdApiHeaderOptions
+  FILE_KEY, FileUploaderApiResponse, FileUploaderFileApiBody, ServiceRoute, IdParam,
+  ApiParamOption, UploadedFileRdo, FileStorageRoute, XRequestIdApiHeaderOptions
 } from '@backend/shared/core';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { fillDto } from '@backend/shared/helpers';
@@ -36,7 +36,7 @@ export class FileUploaderController {
   @ApiResponse(FileUploaderApiResponse.FileNotFound)
   @ApiResponse(FileUploaderApiResponse.BadRequest)
   @ApiParam(ApiParamOption.FileId)
-  @Get(FILE_ID_PARAM)
+  @Get(IdParam.FILE)
   public async show(@Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string): Promise<UploadedFileRdo> {
     const existFile = await this.fileUploaderService.getFile(fileId);
 

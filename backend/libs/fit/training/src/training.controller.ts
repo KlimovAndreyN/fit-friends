@@ -1,7 +1,10 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
-import { ApiHeaders, ApiTags } from '@nestjs/swagger';
+import { ApiHeaders, ApiParam, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute, TrainingRdo, BasicDetailTrainingRdo, ParamIdOption, ApiParamOption } from '@backend/shared/core';
+import {
+  ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute,
+  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam
+} from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
 import { TrainingService } from './training.service';
@@ -47,7 +50,8 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
-  @Get(ParamIdOption.TRANING) //! в константы
+  @ApiParam(ApiParamOption.TrainingId)
+  @Get(IdParam.TRAINING)
   public async show(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicDetailTrainingRdo> {
     const entity = await this.trainingService.findById(trainingId);
 

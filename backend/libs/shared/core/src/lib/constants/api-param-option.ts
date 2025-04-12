@@ -16,13 +16,3 @@ export const ApiParamOption = {
     schema: TrainingApiProperty.Id
   }
 } as const;
-
-export const ParamIdOption = {
-  USER: `:${ApiParamOption.UserId.name}`,
-  FILE: `:${ApiParamOption.FileId.name}`,
-  TRANING: `:${ApiParamOption.TrainingId.name}`
-} as const;
-
-//! переделать на ParamId и проверить!
-export const USER_ID_PARAM = `:${ApiParamOption.UserId.name}`;
-export const FILE_ID_PARAM = `:${ApiParamOption.FileId.name}`;

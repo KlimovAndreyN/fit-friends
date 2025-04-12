@@ -7,8 +7,8 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
-  AccountRoute, USER_ID_PARAM, LoginUserDto, TokensRdo, ServiceRoute, User,
-  UpdateBasicUserDto, BasicDetailUserRdo, CreateBasicUserDto
+  AccountRoute, LoginUserDto, TokensRdo, ServiceRoute, User, UpdateBasicUserDto,
+  BasicDetailUserRdo, CreateBasicUserDto, IdParam
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
@@ -111,7 +111,7 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
-  @Get(USER_ID_PARAM)
+  @Get(IdParam.USER)
   public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id']): Promise<BasicDetailUserRdo> {
     const existUser = await this.authService.getUser(userId);
 

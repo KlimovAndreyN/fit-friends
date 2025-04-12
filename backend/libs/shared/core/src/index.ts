@@ -11,13 +11,14 @@ export { AuthenticationApiResponse } from './lib/constants/api-response/authenti
 export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploader.api-response';
 
 export * from './lib/constants/api-header-option';
-export * from './lib/constants/api-param-option';
+export { ApiParamOption } from './lib/constants/api-param-option';
 export * from './lib/constants/authentication.constant';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { DateFormat } from './lib/constants/date-format';
 export * from './lib/constants/default-port';
 export * from './lib/constants/file-uploader.constant';
+export { IdParam } from './lib/constants/id-param';
 export { PageQueryApiProperty } from './lib/constants/page-query-api-property';
 export { PaginationApiProperty } from './lib/constants/pagination-api-property';
 export { RabbitRouting } from './lib/constants/rabbit-routing';
