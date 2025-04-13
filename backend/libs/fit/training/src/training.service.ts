@@ -26,7 +26,7 @@ export class TrainingService {
   }
 
   public async getSpecial(): Promise<TrainingEntity[]> {
-    const foundTrainings = await this.trainingRepository.find(0, 5, true);
+    const foundTrainings = await this.trainingRepository.find(0, 5, true); //! 0 и 5 временно
 
     return foundTrainings;
   }

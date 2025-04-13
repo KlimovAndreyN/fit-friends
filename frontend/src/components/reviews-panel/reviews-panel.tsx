@@ -1,13 +1,43 @@
+import { useEffect } from 'react';
+
 import BackButton from '../back-button/back-button';
+import MainSpinner from '../main-spinner/main-spinner';
 
-import { MOCK_REVIEWS } from '../../mock';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
+import { fetchReviews } from '../../store/review-action';
 import { REVIEWS_ID } from '../../const';
+import { MOCK_REVIEWS } from '../../mock';
 
-function ReviewsPanel(): JSX.Element {
-  //! если нет аватарки пользователь но вывести заглушку из профиля, возможно нужен отдельный компонет...
+type ReviewsPanelProps = {
+  trainingId: string;
+}
+
+function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
+  //! если нет аватарки пользователь но вывести заглушку из профиля, возможно нужен отдельный компонет... есть в тренировке
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
+
+  const dispatch = useAppDispatch();
+  const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);
+  const reviews1 = useAppSelector(getReviews);
+
+  //! отладка
+  // eslint-disable-next-line no-console
+  console.log('isFetchReviewsExecuting', isFetchReviewsExecuting);
+  // eslint-disable-next-line no-console
+  console.log('reviews1', reviews1);
+  //
+
+  useEffect(() => {
+    dispatch(fetchReviews(trainingId));
+  }, [dispatch, trainingId]);
+
+  if (isFetchReviewsExecuting) {
+    //! свой спинер бы
+    return <MainSpinner />;
+  }
 
   const reviews = MOCK_REVIEWS;
 

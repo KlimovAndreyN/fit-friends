@@ -19,7 +19,7 @@ const initialState: TrainingProcess = {
 
 export const trainingProcess = createSlice(
   {
-    name: StoreSlice.UserProfileProcess,
+    name: StoreSlice.TrainingProcess,
     initialState,
     reducers: {},
     extraReducers(builder) {

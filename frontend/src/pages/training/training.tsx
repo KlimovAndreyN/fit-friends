@@ -13,7 +13,8 @@ import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTi
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
-  //! backgroundPath не нужен, нужно видео, фон видео, гендер, время, рейтинг, информация о тренере (картинка и имя и id)
+  //! сделать меньше... можно вынести <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
+  //! аватарку пользователя без аватарки сделать отдельно, т.к. нужна в нескольких местах, отзывы, профиль, ищит компанию, список друзей и тренировки...
   //! как отборазить если бесплатно? есть что то в маркапах
   //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
@@ -36,6 +37,7 @@ function Training(): JSX.Element {
   }
 
   if (!trainingId || !training) {
+    //! проверить как будет выглядеть
     //! еще бы дополнительный текст добавить
     return <NotFound />;
   }
@@ -60,7 +62,7 @@ function Training(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Карточка тренировки</h1>
-              <ReviewsPanel />
+              <ReviewsPanel trainingId={trainingId} />
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>

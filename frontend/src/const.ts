@@ -43,7 +43,8 @@ export enum AppRoute {
 export enum StoreSlice {
   UserProcess = 'USER_PROCESS',
   UserProfileProcess = 'USER_PROFILE_PROCESS',
-  TrainingProcess = 'TRAINING_PROCESS'
+  TrainingProcess = 'TRAINING_PROCESS',
+  ReviewProcess = 'REVIEW_PROCESS'
 }
 
 export enum HttpCode {
