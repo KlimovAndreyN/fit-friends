@@ -4,7 +4,7 @@ import Header from '../../components/header/header';
 
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-function User(): JSX.Element {
+function UserDetail(): JSX.Element {
   //! временно
   return (
     <Fragment>
@@ -22,4 +22,4 @@ function User(): JSX.Element {
   );
 }
 
-export default User;
+export default UserDetail;

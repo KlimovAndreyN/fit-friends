@@ -18,6 +18,7 @@ export class TrainingController {
   constructor(
     private readonly trainingService: TrainingService
   ) { }
+
   private convertTrainingEntities(entities: TrainingEntity[]): TrainingRdo[] {
     return entities.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
   }
