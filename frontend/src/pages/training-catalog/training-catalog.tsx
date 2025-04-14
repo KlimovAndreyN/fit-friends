@@ -2,23 +2,26 @@ import { Fragment, useEffect } from 'react';
 
 import Header from '../../components/header/header';
 import TrainingCatalogForm from '../../components/training-catalog-form/training-catalog-form';
-import TrainingCard from '../../components/training-card/training-card';
+import TrainingsList from '../../components/trainings-list/trainings-list';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { getTrainings } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/training-action';
 import { PageTitle } from '../../const';
 
 function TrainingCatalog(): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
+  //! проверить еще раз разметку и оформление
   //! проверить консоль браузера на ошибки
-  //! заголовок в нижнем регистре? или или там стили?
+  useScrollToTop(); //! а если в useEffect?
 
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
 
   useEffect(() => {
     dispatch(fetchTrainings());
+
   }, [dispatch]);
 
   return (
@@ -31,17 +34,7 @@ function TrainingCatalog(): JSX.Element {
               <h1 className="visually-hidden">Каталог тренировок</h1>
               <TrainingCatalogForm />
               <div className="training-catalog">
-                <ul className="training-catalog__list">
-                  {
-                    trainings.map(
-                      (training) => (
-                        <li className='training-catalog__item' key={training.id}>
-                          <TrainingCard training={training} />
-                        </li>
-                      )
-                    )
-                  }
-                </ul>
+                <TrainingsList trainings={trainings} />
                 <div className="show-more training-catalog__show-more">
                   <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
                   <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>

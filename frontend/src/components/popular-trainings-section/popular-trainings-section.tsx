@@ -13,6 +13,7 @@ type PopularTrainingSectionProps = {
 
 function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX.Element {
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
+  //! что делать когда мало карточек? что по ТЗ?
   //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
 

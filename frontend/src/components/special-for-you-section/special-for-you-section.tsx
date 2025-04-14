@@ -14,6 +14,7 @@ type SpecialForYouSectionProps = {
 
 function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Element {
   //! перепроверить разметку, шрифты, рус и eng
+  //! что делать когда мало карточек? что по ТЗ?
   //! проверить консоль браузера на ошибки
 
   const childrens = trainings.map(

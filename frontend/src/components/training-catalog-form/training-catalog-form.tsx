@@ -7,7 +7,7 @@ function TrainingCatalogForm(): JSX.Element {
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
-        <BackButton className='gym-catalog-form' />
+        <BackButton className='gym-catalog-form' classPrefix />
         <h3 className="gym-catalog-form__title">Фильтры</h3>
         <form className="gym-catalog-form__form">
           <div className="gym-catalog-form__block gym-catalog-form__block--price">

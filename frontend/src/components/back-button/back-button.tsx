@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom';
 
 type BackButtonProps = {
   className: string;
+  classPrefix?: boolean;
 }
 
-function BackButton({ className }: BackButtonProps): JSX.Element {
+function BackButton({ className, classPrefix }: BackButtonProps): JSX.Element {
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
@@ -13,7 +14,7 @@ function BackButton({ className }: BackButtonProps): JSX.Element {
 
   return (
     <button
-      className={`btn-flat btn-flat--underlined ${className}__back`}
+      className={`btn-flat btn-flat--underlined ${className}__${(classPrefix) ? 'btn' : ''}back`}
       type="button"
       onClick={handleBackButtonClick}
     >
