@@ -91,11 +91,15 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                           const slideKey = `slide-${itemKey}`;
 
                           return (
-                            <li className={`${sectionClassName}__item`} key={itemKey}>
-                              <SwiperSlide key={slideKey}>
+                            <SwiperSlide key={slideKey}>
+                              <li
+                                className={`${sectionClassName}__item`}
+                                style={{ height: '100%' /*карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке */ }}
+                                key={itemKey}
+                              >
                                 {children}
-                              </SwiperSlide>
-                            </li>
+                              </li>
+                            </SwiperSlide>
                           );
                         }
                       )
