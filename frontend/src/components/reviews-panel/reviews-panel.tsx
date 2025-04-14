@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
 import { fetchReviews } from '../../store/review-action';
 import { REVIEWS_ANCHOR } from '../../const';
-import { MOCK_REVIEWS } from '../../mock';
 
 type ReviewsPanelProps = {
   trainingId: string;
@@ -15,19 +14,18 @@ type ReviewsPanelProps = {
 
 function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
   //! если нет аватарки пользователь но вывести заглушку из профиля, возможно нужен отдельный компонет... есть в тренировке
+  //! если нет отзывов, то вывести текст "отзывов еще нет...", как по ТЗ
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
   const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);
-  const reviews1 = useAppSelector(getReviews);
+  const reviews = useAppSelector(getReviews);
 
   //! отладка
   // eslint-disable-next-line no-console
   console.log('isFetchReviewsExecuting', isFetchReviewsExecuting);
-  // eslint-disable-next-line no-console
-  console.log('reviews1', reviews1);
   //
 
   useEffect(() => {
@@ -39,8 +37,6 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
     return <MainSpinner />;
   }
 
-  const reviews = MOCK_REVIEWS;
-
   return (
     <aside className="reviews-side-bar">
       <BackButton className='reviews-side-bar' />
@@ -49,7 +45,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
         {
           reviews.map(
             (review) => {
-              const { userId, userName, userAvatarPath, rating, comment } = review;
+              const { user: { id: userId, name: userName, avatarFilePath: userAvatarFilePath }, rating, message } = review;
 
               return (
                 <li className="reviews-side-bar__item" key={userId}>
@@ -57,7 +53,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
                     <div className="review__user-info">
                       <div className="review__user-photo">
                         <picture>
-                          <img src={userAvatarPath} width="64" height="64" alt="Изображение пользователя" />
+                          <img src={userAvatarFilePath} width="64" height="64" alt="Изображение пользователя" />
                         </picture>
                       </div><span className="review__user-name">{userName}</span>
                       <div className="review__rating">
@@ -67,7 +63,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
                         <span>{rating}</span>
                       </div>
                     </div>
-                    <p className="review__comment">{comment}</p>
+                    <p className="review__comment">{message}</p>
                   </div>
                 </li>
               );

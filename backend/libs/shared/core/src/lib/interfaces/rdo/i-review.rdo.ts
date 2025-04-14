@@ -1,5 +1,5 @@
 import { IBasicReviewRdo } from './i-basic-review.rdo';
-import { IUserProfileRdo } from './i-user-profile.rdo';
+import { IUserRdo } from './i-user.rdo';
 
 export interface IReviewRdo
   extends Pick<
@@ -8,5 +8,5 @@ export interface IReviewRdo
     | 'rating'
     | 'createdAt'
   > {
-  user: IUserProfileRdo;
+  user: IUserRdo;
 }

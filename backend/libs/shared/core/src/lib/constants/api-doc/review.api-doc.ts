@@ -4,7 +4,7 @@ import { Expose } from 'class-transformer';
 
 import { Review } from '../../interfaces/review.interface';
 import { IBasicReviewRdo } from '../../interfaces/rdo/i-basic-review.rdo';
-import { UserProfileRdo } from '../../rdo/user-profile.rdo';
+import { IUserRdo } from '../../interfaces/rdo/i-user.rdo';
 import { ReviewApiProperty } from '../api-property/review.api-property';
 
 //! типизировать через SchemaObjectMetadata не получается
@@ -40,5 +40,5 @@ export class ReviewApiDoc {
   //! @ApiProperty(ReviewApiProperty.CreatedAt)
   @Expose()
   @IsString()
-  public user: UserProfileRdo;
+  public user: IUserRdo;
 }

@@ -7,6 +7,7 @@ export enum ApiServiceRoute {
   Users = 'users',
   UserProfiles = 'user-profiles',
   Trainings = 'trainings',
+  Reviews = 'reviews'
 }
 
 export enum ServiceRoute {

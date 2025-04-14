@@ -1,7 +1,7 @@
 import { BasicDetailUserRdo } from '../rdo/basic-detail-user.rdo';
 import { DetailUserRdo } from '../rdo/detail-user.rdo';
 
-export function convertToUserRdo(user: BasicDetailUserRdo, avatarFilePath: DetailUserRdo['avatarFilePath']): DetailUserRdo {
+export function convertToDetailUserRdo(user: BasicDetailUserRdo, avatarFilePath: DetailUserRdo['avatarFilePath']): DetailUserRdo {
   const {
     id,
     name,

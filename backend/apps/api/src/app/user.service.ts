@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 
 import {
   AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute, DetailUserRdo,
-  BasicDetailUserRdo, convertToUserRdo, UpdateUserDto, UpdateBasicUserDto,
+  BasicDetailUserRdo, convertToDetailUserRdo, UpdateUserDto, UpdateBasicUserDto, UserRdo,
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -32,7 +32,7 @@ export class UserService {
     const { data: registeredUser } = await this.httpService.axiosRef.post<BasicDetailUserRdo>(url, createUser, headers);
     const avatarFilePath = this.fileService.makePath(avatar);
 
-    return convertToUserRdo(registeredUser, avatarFilePath);
+    return convertToDetailUserRdo(registeredUser, avatarFilePath);
   }
 
   public async updateUser(dto: UpdateUserDto, avatarFile: Express.Multer.File, bearerAuth: string, requestId: string): Promise<DetailUserRdo> {
@@ -56,15 +56,23 @@ export class UserService {
     const headers = makeHeaders(requestId, bearerAuth);
     const { data: updateUser } = await this.httpService.axiosRef.patch<BasicDetailUserRdo>(url, updateUserDto, headers);
 
-    return convertToUserRdo(updateUser, avatarFilePath);
+    return convertToDetailUserRdo(updateUser, avatarFilePath);
   }
 
-  public async getUser(id: string, requestId: string): Promise<DetailUserRdo> {
+  public async getDetailUser(id: string, requestId: string): Promise<DetailUserRdo> {
     const url = this.getUrl(id);
     const headers = makeHeaders(requestId);
     const { data } = await this.httpService.axiosRef.get<BasicDetailUserRdo>(url, headers);
     const filePath = await this.fileService.getFilePath(data.avatarFileId, requestId);
-    const user: DetailUserRdo = convertToUserRdo(data, filePath);
+    const user: DetailUserRdo = convertToDetailUserRdo(data, filePath);
+
+    return user;
+  }
+
+  public async getUser(id: string, requestId: string): Promise<UserRdo> {
+    const detailUser = await this.getDetailUser(id, requestId);
+    const { name, avatarFilePath } = detailUser;
+    const user: UserRdo = { id, name, avatarFilePath };
 
     return user;
   }

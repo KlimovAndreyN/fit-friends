@@ -39,7 +39,7 @@ export class FitTrainingService {
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const { userId: coachId, videoFileId, ...training } = data;
-    const user = await this.userService.getUser(coachId, requestId);
+    const user = await this.userService.getDetailUser(coachId, requestId);
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
 

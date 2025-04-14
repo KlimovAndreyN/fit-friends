@@ -75,7 +75,7 @@ export class UserProfileController {
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
   public async getUserProfile(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getUser(userId, requestId);
+    const user = await this.userService.getDetailUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
