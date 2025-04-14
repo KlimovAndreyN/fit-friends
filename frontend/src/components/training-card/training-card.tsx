@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
-import { REVIEWS_ID, SpecializationTitle } from '../../const';
+import { REVIEWS_ANCHOR, SpecializationTitle } from '../../const';
 
 type TrainingCardProps = {
   training: ITrainingRdo;
@@ -55,7 +55,7 @@ function TrainingCard({ training }: TrainingCardProps): JSX.Element {
         </div>
         <div className="thumbnail-training__button-wrapper">
           <Link className="btn btn--small thumbnail-training__button-catalog" to={link}>Подробнее</Link>
-          <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={{ pathname: link, hash: REVIEWS_ID }} >Отзывы</Link>
+          <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={{ pathname: link, hash: REVIEWS_ANCHOR }} >Отзывы</Link>
         </div>
       </div>
     </div>

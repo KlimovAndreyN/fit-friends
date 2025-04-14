@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Req } from '@nestjs/common';
-import { ApiHeaders, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute,
@@ -22,6 +22,7 @@ export class TrainingController {
     return entities.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
   }
 
+  @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getForSportsman(userId);
@@ -29,6 +30,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get(TrainingRoute.Special)
   public async getSpecial(): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getSpecial();
@@ -36,6 +38,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get(TrainingRoute.Popular)
   public async getPopular(): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getPopular();
@@ -43,6 +46,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get()
   public async index(): Promise<TrainingRdo[]> {
     const data = await this.trainingService.getPopular();//! временно
@@ -50,6 +54,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  @ApiResponse({ type: TrainingRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
   public async show(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicDetailTrainingRdo> {

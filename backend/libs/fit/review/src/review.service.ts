@@ -12,10 +12,10 @@ export class ReviewService {
   ) { }
 
   //! временно, нужно ли будет?
-  public async findById(id: string): Promise<ReviewEntity> {
-    const foundReview = await this.reviewRepository.findById(id);
+  public async findByTrainingId(trainingId: string): Promise<ReviewEntity[]> {
+    const foundReviews = await this.reviewRepository.findByTrainingId(trainingId);
 
-    return foundReview;
+    return foundReviews;
   }
 
   //! временно Review потом будет CreateReviewDto

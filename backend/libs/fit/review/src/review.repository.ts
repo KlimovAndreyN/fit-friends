@@ -17,15 +17,10 @@ export class ReviewRepository extends BasePostgresRepository<ReviewEntity, Revie
   }
 
   //! временно, нужно будет?
-  public async findById(id: string): Promise<ReviewEntity> {
-    const record = await this.client.review.findFirst({ where: { id } });
+  public async findByTrainingId(trainingId: string): Promise<ReviewEntity[]> {
+    const records = await this.client.review.findMany({ where: { trainingId } });
 
-    if (!record) {
-      //! вынести в константы
-      throw new NotFoundException('Training Not Found');
-    }
-
-    return new ReviewEntity({ ...record });
+    return records.map((record => (new ReviewEntity({ ...record }))));
   }
 
   public async save(entity: ReviewEntity): Promise<void> {

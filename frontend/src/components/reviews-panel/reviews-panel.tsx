@@ -6,7 +6,7 @@ import MainSpinner from '../main-spinner/main-spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
 import { fetchReviews } from '../../store/review-action';
-import { REVIEWS_ID } from '../../const';
+import { REVIEWS_ANCHOR } from '../../const';
 import { MOCK_REVIEWS } from '../../mock';
 
 type ReviewsPanelProps = {
@@ -44,7 +44,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
   return (
     <aside className="reviews-side-bar">
       <BackButton className='reviews-side-bar' />
-      <h2 className="reviews-side-bar__title" id={REVIEWS_ID}>Отзывы</h2>
+      <h2 className="reviews-side-bar__title" id={REVIEWS_ANCHOR}>Отзывы</h2>
       <ul className="reviews-side-bar__list">
         {
           reviews.map(
