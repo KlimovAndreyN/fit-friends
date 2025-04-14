@@ -70,7 +70,7 @@ export function createAPI(): AxiosInstance {
         return api(originalRequestConfig);
       }
 
-      //! отладка обработки ошибок / при выставленной переменной окружения showUrlAxiosError
+      //! отладка обработки ошибок / при выставленной переменной окружения VITE_SHOW_URL_AXIOS_ERROR
       if (showUrlAxiosError) {
         //! проверить обработку ошибок
         // eslint-disable-next-line no-console

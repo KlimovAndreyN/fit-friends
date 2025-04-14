@@ -29,10 +29,16 @@ function Index(): JSX.Element {
   const lookForCompanyUserProfiles = useAppSelector(getLookForCompanyUserProfiles);
 
   useEffect(() => {
-    dispatch(fetchForSportsmanTrainings());
-    dispatch(fetchSpecialTrainings());
-    dispatch(fetchPopularTrainings());
-    dispatch(fetchLookForCompanyUserProfiles());
+    const fetchData = async () => {
+      // попытка решить проблему при обновления токенов, т.к. вызовы били асинхронные, а получение токенов происходит при ошибке выполениня запроса,
+      // то были сдучаю удаления токенов при втором запросе, т.к. первый уже получил токены, а второй обновлял старые, а их уже нет...
+      await dispatch(fetchForSportsmanTrainings());
+      await dispatch(fetchSpecialTrainings());
+      await dispatch(fetchPopularTrainings());
+      await dispatch(fetchLookForCompanyUserProfiles());
+    };
+
+    fetchData();
   }, [dispatch]);
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {
