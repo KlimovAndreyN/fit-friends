@@ -3,38 +3,31 @@ import { Link } from 'react-router-dom';
 import { IUserProfileRdo } from '@backend/shared/core';
 
 import SliderSection from '../slider-section/slider-section';
+import UserPhoto from '../user-photo/user-photo';
 
 import { getUserRoute } from '../../utils/common';
-import { MOCK_USERS } from '../../mock';
 import { AppRoute } from '../../const';
 
 const SLIDES_COUNT = 4;
+const USER_PHOTO_SIZE = 82;
 
 type LookForCompanySectionProps = {
   userProfiles: IUserProfileRdo[];
 }
 
 function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JSX.Element {
-  //! 'Смотреть все' - нужен раздел? - пока на корень!
+  //! 'Смотреть все' - направил на "Друзья", нужно что то другое? - наверное будет в 3 части
+  //! что показывать если пользователй меньше 4? что по ТЗ?
   //! перепроверить разметку, шрифты, рус и eng
   //! проверить консоль браузера на ошибки
 
-  //! временно! отладка!
-  // eslint-disable-next-line no-console
-  console.log('LookForCompanySection - userProfiles', userProfiles);
-
-  const users = MOCK_USERS;
-  const childrens = users.map(
+  const childrens = userProfiles.map(
     (user) => {
-      const { id, name, avatarPath, location, specializations } = user;
+      const { id, name, avatarFilePath, location, specializations } = user;
 
       return (
         <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark" key={id}>
-          <div className="thumbnail-user__image">
-            <picture>
-              <img src={avatarPath} width="82" height="82" alt="" />
-            </picture>
-          </div>
+          <UserPhoto path={avatarFilePath} className='thumbnail-user__image' size={USER_PHOTO_SIZE} />
           {/*
             //! закоментировано в маркапах
             <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">

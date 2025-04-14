@@ -31,8 +31,8 @@ export function getTrainingRoute(trainingId: string): string {
   return AppRoute.TrainingDetail.replace(ID_PARAM, trainingId);
 }
 
-export function getUserRoute(trainingId: string): string {
-  return AppRoute.User.replace(ID_PARAM, trainingId);
+export function getUserRoute(userId: string): string {
+  return AppRoute.User.replace(ID_PARAM, userId);
 }
 
 export function isEventEscKey(event: KeyboardEvent): boolean {

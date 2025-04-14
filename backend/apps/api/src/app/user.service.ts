@@ -76,4 +76,10 @@ export class UserService {
 
     return user;
   }
+
+  public async getDetailUsers(requestId: string): Promise<DetailUserRdo[]> {
+    const detailUsers = [await this.getDetailUser('658170cbb954e9f5b905ccf4', requestId)]; //! временно
+
+    return detailUsers;
+  }
 }

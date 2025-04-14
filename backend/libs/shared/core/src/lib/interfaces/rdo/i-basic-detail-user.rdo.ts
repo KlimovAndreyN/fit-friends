@@ -13,7 +13,7 @@ export interface IBasicDetailUserRdo
     | 'role'
     | 'about'
   > {
-  id: User['id']; //для обязательности
+  id: string;// для обязательности User['id'] - string | undefined;
   birthday?: ICreateBasicUserDto['birthday'];
   registrationDate: string;
 };

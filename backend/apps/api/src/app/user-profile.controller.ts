@@ -13,7 +13,7 @@ import {
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserProfileRoute,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateBasicQuestionnaireDto,
   Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  Specialization, UpdateUserDto, UpdateQuestionnaireDto
+  Specialization, UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo, RequestWithRequestId
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -32,6 +32,7 @@ export class UserProfileController {
     private readonly httpService: HttpService,
     private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
+    //! может сделать UserProfileService ?
   ) { }
 
   @Get(QuestionnaireRoute.Exist)
@@ -70,7 +71,6 @@ export class UserProfileController {
   //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
   //@Post(joinUrl(QuestionnaireRoute.Questionnaire, UserRole.Coach))
   //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Coach
-
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
@@ -127,5 +127,23 @@ export class UserProfileController {
   @Delete(UserProfileRoute.ReadyForTraining)
   public async notReadyForTraining(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
     await this.fitQuestionnaireService.updateReadyForTraining(false, userId, requestId);
+  }
+
+  @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
+  @Get(UserProfileRoute.LookForCompany)
+  public async getLookForCompany(@Req() { requestId }: RequestWithRequestId): Promise<UserProfileRdo[]> {
+    const detailUsers = await this.userService.getDetailUsers(requestId);
+    const userProfiles: UserProfileRdo[] = [];
+
+    for (const detailUser of detailUsers) {
+      const { id, name, location, avatarFilePath } = detailUser;
+      const questionnaire = await this.fitQuestionnaireService.findByUserId(id, requestId);
+      const { specializations } = questionnaire;
+      const userProfile: UserProfileRdo = { id, name, location, avatarFilePath, specializations };
+
+      userProfiles.push(userProfile);
+    }
+
+    return userProfiles;
   }
 }

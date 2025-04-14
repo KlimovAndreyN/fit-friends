@@ -89,12 +89,10 @@ export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[
   Action.FETCH_LOOK_FOR_COMPANY_USER_PROFILES,
   async (_, { extra }) => {
     const { api } = extra;
-    //! временно, заготовка!
-    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);
-    // eslint-disable-next-line no-console
-    console.log('fetchLookForCompanyUserProfiles', data);
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.LookForCompany);
+    const { data } = await api.get<IUserProfileRdo[]>(url);
 
-    return [];
+    return data;
   }
 );
 
@@ -102,11 +100,12 @@ export const fetchUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, 
   Action.FETCH_USER_PROFILES,
   async (_, { extra }) => {
     const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.LookForCompany);
     //! временно, заготовка!
-    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);
+    const { data } = await api.get<IUserProfileRdo[]>(url);
     // eslint-disable-next-line no-console
     console.log('fetchUserProfiles', data);
 
-    return [];
+    return [];//! временно, заготовка!
   }
 );

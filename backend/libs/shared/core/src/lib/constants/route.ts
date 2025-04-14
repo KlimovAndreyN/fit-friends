@@ -39,7 +39,8 @@ export enum TrainingRoute {
 }
 
 export enum UserProfileRoute {
-  ReadyForTraining = 'ready-for-training'
+  ReadyForTraining = 'ready-for-training',
+  LookForCompany = 'look-for-company'
 }
 
 export enum FileStorageRoute {
