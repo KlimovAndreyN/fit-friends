@@ -32,7 +32,7 @@ export function getTrainingRoute(trainingId: string): string {
 }
 
 export function getUserRoute(userId: string): string {
-  return AppRoute.User.replace(ID_PARAM, userId);
+  return AppRoute.UserDetail.replace(ID_PARAM, userId);
 }
 
 export function isEventEscKey(event: KeyboardEvent): boolean {

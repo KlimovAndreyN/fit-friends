@@ -1,10 +1,7 @@
 import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
-import { getViteEnvBooleanVariable } from './utils/common';
 import { Option } from './types/option';
 import { enumToArray } from '../../backend/libs/shared/helpers/src/lib/utils';
-
-export const routeAccessDebug = getViteEnvBooleanVariable('VITE_ROUTE_ACCESS_DEBUG');
 
 const MAIN_TITLE = 'FitFriends';
 
@@ -36,7 +33,7 @@ export enum AppRoute {
   Friends = '/friends',
   TrainingCatalog = '/training',
   TrainingDetail = `${TrainingCatalog}/${ID_PARAM}`,
-  User = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница / попап? 2 или 3 итерация?
+  UserDetail = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница / попап? 2 или 3 итерация?
   NotFound = '/404',
 }
 
@@ -85,7 +82,7 @@ export const TrainingGenderTitle: { [key in Gender]: string } = {
 } as const;
 
 //! перенести в компонент/страницу по месту? или отдельный файл
-const LocationTitle: { [key in Location]: string } = {
+export const LocationTitle: { [key in Location]: string } = {
   [Location.Petrogradskaya]: 'Петроградская',
   [Location.Pionerskaya]: 'Пионерская',
   [Location.Sportivnaya]: 'Спортивная',

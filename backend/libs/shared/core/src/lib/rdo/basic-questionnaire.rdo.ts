@@ -7,6 +7,7 @@ export class BasicQuestionnaireRdo
   extends PickType(
     QuestionnaireApiDoc,
     [
+      'userId',
       'specializations',
       'trainingLevel',
       'readyForTraining',

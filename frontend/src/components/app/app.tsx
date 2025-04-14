@@ -11,14 +11,17 @@ import SignUp from '../../pages/sign-up/sign-up';
 import Questionnaire from '../../pages/questionnaire/questionnaire';
 import Profile from '../../pages/profile/profile';
 import Friends from '../../pages/friends/friends';
+import User from '../../pages/user/user';
 import TrainingCatalog from '../../pages/training-catalog/training-catalog';
 import Training from '../../pages/training/training';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
-import { AppRoute, routeAccessDebug } from '../../const';
+import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
+  //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -26,16 +29,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Index}
             element={
-              //! отладка отображения страницы
-              (routeAccessDebug)
-                ?
-                <Index />
-                :
-                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                  <QuestionnaireRoute>
-                    <Index />
-                  </QuestionnaireRoute>
-                </PrivateRoute>
+              <Index />
             }
           />
           <Route
@@ -93,33 +87,29 @@ function App(): JSX.Element {
             }
           />
           <Route
+            path={AppRoute.UserDetail}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <User />
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
             path={AppRoute.TrainingCatalog}
             element={
-              //! отладка отображения страницы
-              (routeAccessDebug)
-                ?
+              <QuestionnaireRoute>
                 <TrainingCatalog />
-                :
-                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                  <QuestionnaireRoute>
-                    <TrainingCatalog />
-                  </QuestionnaireRoute>
-                </PrivateRoute>
+              </QuestionnaireRoute>
             }
           />
           <Route
             path={AppRoute.TrainingDetail}
             element={
-              //! отладка отображения страницы
-              (routeAccessDebug)
-                ?
+              <QuestionnaireRoute>
                 <Training />
-                :
-                <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                  <QuestionnaireRoute>
-                    <Training />
-                  </QuestionnaireRoute>
-                </PrivateRoute>
+              </QuestionnaireRoute>
             }
           />
           <Route path="*" element={<NotFound />} />

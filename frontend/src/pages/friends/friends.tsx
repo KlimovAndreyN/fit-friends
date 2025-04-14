@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 
 import Header from '../../components/header/header';
+import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
 import { PageTitle } from '../../const';
-import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
 function Friends(): JSX.Element {
   //! 2 или 3 этап

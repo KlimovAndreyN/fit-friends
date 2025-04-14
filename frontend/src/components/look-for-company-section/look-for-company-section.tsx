@@ -6,7 +6,7 @@ import SliderSection from '../slider-section/slider-section';
 import UserPhoto from '../user-photo/user-photo';
 
 import { getUserRoute } from '../../utils/common';
-import { AppRoute } from '../../const';
+import { AppRoute, LocationTitle, SpecializationTitle } from '../../const';
 
 const SLIDES_COUNT = 4;
 const USER_PHOTO_SIZE = 82;
@@ -19,6 +19,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
   //! 'Смотреть все' - направил на "Друзья", нужно что то другое? - наверное будет в 3 части
   //! что показывать если пользователй меньше 4? что по ТЗ?
   //! перепроверить разметку, шрифты, рус и eng
+  //! выделить thumbnail-user__hashtags-list, еще есть у карточер трнировок thumbnail-training__hashtags-list и в самой тренировке training-info__list
   //! проверить консоль браузера на ошибки
 
   const childrens = userProfiles.map(
@@ -42,7 +43,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
               <svg width="14" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-location"></use>
               </svg>
-              <address className="thumbnail-user__location-address">{location}</address>
+              <address className="thumbnail-user__location-address">{LocationTitle[location]}</address>
             </div>
           </div>
           <ul className="thumbnail-user__hashtags-list">
@@ -50,7 +51,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
               specializations.map(
                 (specialization) => (
                   <li className="thumbnail-user__hashtags-item" key={specialization}>
-                    <div className="hashtag thumbnail-user__hashtag"><span>#{specialization.toLocaleLowerCase()}</span></div>
+                    <div className="hashtag thumbnail-user__hashtag"><span>#{SpecializationTitle[specialization].toLocaleLowerCase()}</span></div>
                   </li>
                 )
               )

@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 import { AxiosError } from 'axios';
 
-import { QuestionnaireRdo, ServiceRoute, UpdateQuestionnaireDto } from '@backend/shared/core';
+import { QuestionnaireMiniRdo, QuestionnaireRdo, ServiceRoute, Specialization, UpdateQuestionnaireDto } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -22,6 +22,7 @@ export class FitQuestionnaireService {
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
+    //! отдает BasicQuestionnaireRdo
     const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
 
     return data;
@@ -49,6 +50,26 @@ export class FitQuestionnaireService {
     const headers = makeHeaders(requestId, null, userId);
     const dto: UpdateQuestionnaireDto = { readyForTraining };
 
+    //! отдает BasicQuestionnaireRdo
     await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
   }
+
+  public async getReadyForTraining(requestId: string): Promise<QuestionnaireMiniRdo[]> {
+    //! временно
+    const questionnaire: QuestionnaireMiniRdo = {
+      userId: '658170cbb954e9f5b905ccf4',
+      specializations: [Specialization.Aerobics, Specialization.Boxing]
+    };
+    const questionnaires: QuestionnaireMiniRdo[] = [questionnaire];
+
+    /*
+    const url = this.getUrl(ServiceRoute.Questionnaires);
+    const headers = makeHeaders(requestId, null, userId);
+    const dto: UpdateQuestionnaireDto = { readyForTraining };
+
+    await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
+    */
+    return questionnaires;
+  }
+
 }
