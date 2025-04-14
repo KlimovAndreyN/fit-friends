@@ -8,6 +8,7 @@ import UserPhoto from '../../components/user-photo/user-photo';
 import NotFound from '../not-found/not-found';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { fetchDetailTraining } from '../../store/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
@@ -26,6 +27,8 @@ function Training(): JSX.Element {
   const { id: trainingId } = useParams();
   const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
   const training = useAppSelector(getDetailTraining);
+
+  useScrollToTop(); //! а если в useEffect?
 
   useEffect(() => {
     dispatch(fetchDetailTraining(trainingId || '')); //! а как без ''?

@@ -14,10 +14,11 @@ function TrainingCatalog(): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! проверить еще раз разметку и оформление
   //! проверить консоль браузера на ошибки
-  useScrollToTop(); //! а если в useEffect?
 
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
+
+  useScrollToTop(); //! а если в useEffect?
 
   useEffect(() => {
     dispatch(fetchTrainings());
