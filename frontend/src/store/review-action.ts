@@ -16,8 +16,7 @@ export const fetchReviews = createAsyncThunk<IReviewRdo[], string, { extra: Extr
   Action.FETCH_REVIEWS,
   async (trainingId, { extra }) => {
     const { api } = extra;
-    //! временно
-    const { data } = await api.get<IReviewRdo[]>(joinUrl(ApiServiceRoute.Reviews, trainingId)); //! временно и нужны параметры для поиска
+    const { data } = await api.get<IReviewRdo[]>(joinUrl(ApiServiceRoute.Reviews, trainingId));
 
     return data;
   }

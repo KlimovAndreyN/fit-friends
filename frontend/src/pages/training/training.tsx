@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
+import UserPhoto from '../../components/user-photo/user-photo';
 import NotFound from '../not-found/not-found';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -14,7 +15,6 @@ import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTi
 function Training(): JSX.Element {
   //! прокрутка на вверх
   //! сделать меньше... можно вынести <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
-  //! аватарку пользователя без аватарки сделать отдельно, т.к. нужна в нескольких местах, отзывы, профиль, ищит компанию, список друзей и тренировки...
   //! как отборазить если бесплатно? есть что то в маркапах
   //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
@@ -68,26 +68,7 @@ function Training(): JSX.Element {
                   <h2 className="visually-hidden">Информация о тренировке</h2>
                   <div className="training-info__header">
                     <div className="training-info__coach">
-                      <div className="training-info__photo">
-                        {
-                          (avatarFilePath)
-                            ?
-                            <img src={avatarFilePath} width="64" height="64" alt="Изображение тренера" />
-                            :
-                            <div style={{
-                              backgroundColor: 'white',
-                              width: 64,
-                              height: 64,
-                              display: 'flex',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              borderRadius: '50%'
-                            }}
-                            >
-                              <svg aria-hidden="true" width="40" height="48"><use xlinkHref="#icon-user" /></svg>
-                            </div>
-                        }
-                      </div>
+                      <UserPhoto path={avatarFilePath} className='training-info__photo' />
                       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
                         <span className="training-info__name">{name}</span>
                       </div>

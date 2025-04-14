@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import BackButton from '../back-button/back-button';
 import MainSpinner from '../main-spinner/main-spinner';
+import UserPhoto from '../user-photo/user-photo';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
@@ -13,7 +14,6 @@ type ReviewsPanelProps = {
 }
 
 function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
-  //! если нет аватарки пользователь но вывести заглушку из профиля, возможно нужен отдельный компонет... есть в тренировке
   //! если нет отзывов, то вывести текст "отзывов еще нет...", как по ТЗ
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
@@ -51,11 +51,8 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
                 <li className="reviews-side-bar__item" key={userId}>
                   <div className="review">
                     <div className="review__user-info">
-                      <div className="review__user-photo">
-                        <picture>
-                          <img src={userAvatarFilePath} width="64" height="64" alt="Изображение пользователя" />
-                        </picture>
-                      </div><span className="review__user-name">{userName}</span>
+                      <UserPhoto path={userAvatarFilePath} className='review__user-photo' />
+                      <span className="review__user-name">{userName}</span>
                       <div className="review__rating">
                         <svg width="16" height="16" aria-hidden="true">
                           <use xlinkHref="#icon-star"></use>
