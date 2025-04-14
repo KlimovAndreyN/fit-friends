@@ -18,9 +18,9 @@ export class ReviewController {
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
   public async index(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicReviewRdo[]> {
-    const entitys = await this.reviewService.findByTrainingId(trainingId);
+    const entities = await this.reviewService.findByTrainingId(trainingId);
     //! возможно тут проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
-    return entitys.map((entity) => (fillDto(BasicReviewRdo, entity.toPOJO())));
+    return entities.map((entity) => (fillDto(BasicReviewRdo, entity.toPOJO())));
   }
 }

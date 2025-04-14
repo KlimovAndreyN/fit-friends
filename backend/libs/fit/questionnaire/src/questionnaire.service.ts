@@ -44,4 +44,10 @@ export class QuestionnaireService {
 
     return existsPost;
   }
+
+  public async getReadyForTraining(): Promise<QuestionnaireEntity[]> {
+    const entities = await this.questionnaireRepository.getReadyForTraining();
+
+    return entities;
+  }
 }

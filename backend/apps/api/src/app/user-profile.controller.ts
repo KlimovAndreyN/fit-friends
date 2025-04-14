@@ -13,7 +13,7 @@ import {
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserProfileRoute,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateBasicQuestionnaireDto,
   Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  Specialization, UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo, RequestWithRequestId
+  Specialization, UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
 } from '@backend/shared/core';
 import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -131,12 +131,12 @@ export class UserProfileController {
 
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
   @Get(UserProfileRoute.LookForCompany)
-  public async getLookForCompany(@Req() { requestId }: RequestWithRequestId): Promise<UserProfileRdo[]> {
+  public async getLookForCompany(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserProfileRdo[]> {
     const userProfiles: UserProfileRdo[] = [];
     //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика
     //! все в обну базу: пользователи, общие опросники, опросники спортцменов и опросники тренеров
     //! может авторизацию оставить в монго, а все роли, опросники и остальное в постгресс
-    const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(requestId);
+    const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);
 
     for (const { userId, specializations } of questionnaires) {
       const user = await this.userService.getDetailUser(userId, requestId);

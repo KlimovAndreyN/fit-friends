@@ -40,6 +40,6 @@ export class FileUploaderController {
   public async show(@Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string): Promise<UploadedFileRdo> {
     const existFile = await this.fileUploaderService.getFile(fileId);
 
-    return fillDto(UploadedFileRdo, existFile);
+    return fillDto(UploadedFileRdo, existFile.toPOJO());
   }
 }
