@@ -29,7 +29,7 @@ function TrainingCatalogForm(): JSX.Element {
   const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
   //! временно
   // eslint-disable-next-line no-console
-  console.log(setPage);
+  console.log('page', page, 'setPage', setPage);
   const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ выщитывать максимальную цену?
   const [caloriesLose, setCaloriesLose] = useState<MinMaxRange>({ min: undefined, max: undefined });
   const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
@@ -37,10 +37,6 @@ function TrainingCatalogForm(): JSX.Element {
   const [sortType, setSortType] = useState<SortType>(Default.SORT_TYPE);
 
   useEffect(() => {
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('TrainingCatalogForm - useEffect', { price, caloriesLose, rating, specializations, sortType });
-
     const query: ITrainingQuery = {
       page,
       priceMin: price.min,

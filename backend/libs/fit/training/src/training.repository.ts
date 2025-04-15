@@ -2,13 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Duration, Gender, Specialization, Training, TrainingLevel } from '@backend/shared/core';
-import { Training as PrismaTraining } from '@prisma/client';
+import { Duration, Gender, ITrainingRepository, SortDirection, SortType, Specialization, Training, TrainingLevel } from '@backend/shared/core';
+import { Prisma, Training as PrismaTraining } from '@prisma/client';
 
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
-const MAX_COUNT = 50;
+const Default = {
+  PAGE: 1,
+  SORT_TYPE: SortType.LowPrice
+} as const;
 
 @Injectable()
 export class TrainingRepository extends BasePostgresRepository<TrainingEntity, Training> {
@@ -40,15 +43,47 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return trainings;
   }
 
-  public async find(ratingMin: number, ratingMax: number, isSpecial?: boolean, specializations?: Specialization[], take: number = MAX_COUNT): Promise<TrainingEntity[]> {
-    //! позже вынести where отдельно и получение параметров через объект
+  public async find(query: ITrainingRepository, take: number): Promise<TrainingEntity[]> {
+    const {
+      page: currentPage = Default.PAGE,
+      priceMin,
+      priceMax,
+      caloriesLoseMin,
+      caloriesLoseMax,
+      ratingMin,
+      ratingMax,
+      specializations,
+      sortType = Default.SORT_TYPE,
+      isSpecial
+    } = query;
+    const skip = (currentPage - 1) * take;
+    const where: Prisma.TrainingWhereInput = {};
+    const orderBy: Prisma.TrainingOrderByWithRelationInput = {};
+
+    if (sortType === SortType.ForFree) {
+      where.price = 0;
+    } else {
+      where.price = { gte: priceMin, lte: priceMax };
+    }
+
+    where.caloriesWaste = { gte: caloriesLoseMin, lte: caloriesLoseMax };
+    where.rating = { gte: ratingMin, lte: ratingMax };
+    where.isSpecial = isSpecial;
+    where.specialization = { in: specializations };
+
+    switch (sortType) {
+      case SortType.LowPrice:
+        orderBy.price = SortDirection.Asc;
+        break;
+      case SortType.HighPrice:
+        orderBy.price = SortDirection.Desc;
+        break;
+    }
 
     const records = await this.client.training.findMany({
-      where: {
-        specialization: { in: specializations }, //! когда будет отдельное условмие, то вынести отдельной строкой если есть, но работает и так с undefined
-        isSpecial,
-        rating: { gte: ratingMin, lte: ratingMax }
-      },
+      where,
+      orderBy,
+      skip,
       take
     });
 

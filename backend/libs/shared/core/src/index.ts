@@ -38,6 +38,7 @@ export { UpdateUserProfileDto } from './lib/dto/update-user-profile.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
+export { ITrainingRepository } from './lib/interfaces/query/i-training-repository.query';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
@@ -90,6 +91,7 @@ export { Gender } from './lib/types/gender.enum';
 export { Location } from './lib/types/location.enum';
 export { PaymentMethod } from './lib/types/payment-method.enum'
 export { Role } from './lib/types/role.enum';
+export { SortDirection } from './lib/types/sort-direction.enum';
 export { SortType } from './lib/types/sort-type.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';

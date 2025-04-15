@@ -6,7 +6,7 @@ import { ITrainingQuery } from '../interfaces/query/i-training.query';
 import { PageQuery } from './page.query';
 import { SortType } from '../types/sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
-import { transformNumber } from '../utils/transform';
+import { transformArray, transformNumber } from '../utils/transform';
 
 export class TrainingQuery
   extends PageQuery
@@ -68,6 +68,7 @@ export class TrainingQuery
   })
   @IsEnum(Specialization, { each: true })
   @IsOptional()
+  @Transform(transformArray<Specialization>)
   public specializations?: ITrainingQuery['specializations'];
 
   @ApiProperty({

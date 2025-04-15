@@ -26,12 +26,9 @@ export class TrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get()
   public async index(@Query() query: TrainingQuery): Promise<TrainingRdo[]> {
-    //! отладка
-    console.log('index - query', query);
+    const data = await this.trainingService.find(query);
 
-    const data = await this.trainingService.getPopular();//! временно
-
-    return this.convertTrainingEntities(data);
+    return this.convertTrainingEntities(data); //! тут нужна пагинация!
   }
 
   @ApiResponse({ type: TrainingRdo, isArray: true })

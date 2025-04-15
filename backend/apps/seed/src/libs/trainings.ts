@@ -13,7 +13,7 @@ export async function clearTrainings(trainingRepository: TrainingRepository): Pr
 
 export async function seedTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
   const trainings: TrainingEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT, MIN_PRICE, MAX_PRICE, MIN_CALORIES, MAX_CALORIES, MIN_DATE, MAX_DATE } = MockTrainingOption;
+  const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, MIN_DATE, MAX_DATE } = MockTrainingOption;
   const { MIN_RATING, MAX_RATING } = MockReviewOption;
   let trainingGlobalIndex = 1;
 
@@ -22,6 +22,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
 
     for (let trainingIndex = 1; trainingIndex <= trainingsCount; trainingIndex++) {
       const trainingIndexPrefix = `#${trainingGlobalIndex}-${trainingIndex}`;
+      const isZeroPrice = getRandomItem([true, ...Array(NOT_ZERO_PRICE_FACTOR).fill(false)]); // добавлю немного бесплатных
 
       //! потом можно создавать через DTO и сервис, указав id-пользователя и не указывая не нужные поля - rating
       const training: Training = {
@@ -30,7 +31,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
         trainingLevel: getRandomEnumItem(TrainingLevel),
         specialization: getRandomEnumItem(Specialization), //! скорректировать только своих специализаций! coach.specializations! что в ТЗ?
         duration: getRandomEnumItem(Duration),
-        price: getRandomNumber(MIN_PRICE, MAX_PRICE),
+        price: (isZeroPrice) ? 0 : getRandomNumber(MIN_PRICE, MAX_PRICE) * PRICE_FACTOR,
         caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),
         description: `Training description ${trainingIndexPrefix}`,
         gender: getRandomEnumItem(Gender),

@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 
-import { Training } from '@backend/shared/core';
+import { Training, TrainingQuery } from '@backend/shared/core';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
-const FOR_SPOTRSMAN_COUNT = 9;
+const DefaultCount = {
+  //! отладка MAX: 50,
+  MAX: 20, //!
+  FOR_SPOTRSMAN: 9,
+} as const;
 
 @Injectable()
 export class TrainingService {
@@ -16,17 +20,23 @@ export class TrainingService {
     private readonly trainingRepository: TrainingRepository
   ) { }
 
+  public async find(query: TrainingQuery): Promise<TrainingEntity[]> {
+    const foundTrainings = await this.trainingRepository.find(query, DefaultCount.MAX);
+
+    return foundTrainings;
+  }
+
   public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
     //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
     //! пока только специализации
     const { specializations } = await this.questionnaireRepository.findByUserId(userId);
-    const foundTrainings = await this.trainingRepository.find(0, 5, undefined, specializations, FOR_SPOTRSMAN_COUNT);
+    const foundTrainings = await this.trainingRepository.find({ specializations }, DefaultCount.FOR_SPOTRSMAN);
 
     return foundTrainings;
   }
 
   public async getSpecial(): Promise<TrainingEntity[]> {
-    const foundTrainings = await this.trainingRepository.find(0, 5, true); //! 0 и 5 временно
+    const foundTrainings = await this.trainingRepository.find({ isSpecial: true }, DefaultCount.MAX); //! 0 и 5 временно
 
     return foundTrainings;
   }
@@ -36,7 +46,7 @@ export class TrainingService {
     //! а если рейтирнг тренировки будет до первого знака?
     //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга... а пока в моках нет пересчета рейтинга от 3
     //! но нужно убрать в константы
-    const foundTrainings = await this.trainingRepository.find(3, 5);
+    const foundTrainings = await this.trainingRepository.find({ ratingMin: 3, ratingMax: 5 }, DefaultCount.MAX);
 
     return foundTrainings;
   }

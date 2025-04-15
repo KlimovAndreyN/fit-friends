@@ -49,8 +49,10 @@ export const MockSpecializationsOption = {
 export const MockTrainingOption = {
   MIN_COUNT: 0,
   MAX_COUNT: 20,
-  MIN_PRICE: 0,
-  MAX_PRICE: 10000,
+  NOT_ZERO_PRICE_FACTOR: 4,
+  MIN_PRICE: 1,
+  MAX_PRICE: 100,
+  PRICE_FACTOR: 100,
   MIN_CALORIES: 1000,
   MAX_CALORIES: 5000,
   MIN_DATE: new Date(2025, 0, 1),

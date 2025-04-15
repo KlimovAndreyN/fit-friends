@@ -27,3 +27,7 @@ function parseStringNumber(value: string): number | undefined {
 export function transformNumber({ value }): number {
   return parseStringNumber(value);
 }
+
+export function transformArray<T>({ value }): T[] {
+  return (Array.isArray(value) ? value : [value]);
+}
