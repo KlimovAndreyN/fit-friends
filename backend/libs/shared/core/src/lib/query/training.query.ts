@@ -1,26 +1,82 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsInt, IsOptional } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 import { ITrainingQuery } from '../interfaces/query/i-training.query';
 import { PageQuery } from './page.query';
 import { SortType } from '../types/sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
+import { transformNumber } from '../utils/transform';
 
 export class TrainingQuery
   extends PageQuery
   implements ITrainingQuery {
-  @ApiProperty(/*TrainingQueryApiProperty....*/) //! тут сделать описание!
-  @IsInt()
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
   @IsOptional()
+  @Transform(transformNumber) // трансформ срабатывает раньше @IsInt()
   public priceMin?: ITrainingQuery['priceMin'];
 
-  @ApiProperty(/*TrainingQueryApiProperty....*/{ isArray: true }) //! тут сделать описание!
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
+  @IsOptional()
+  @Transform(transformNumber)
+  public priceMax?: ITrainingQuery['priceMax'];
+
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
+  @IsOptional()
+  @Transform(transformNumber)
+  public caloriesLoseMin?: ITrainingQuery['caloriesLoseMin'];
+
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
+  @IsOptional()
+  @Transform(transformNumber)
+  public caloriesLoseMax?: ITrainingQuery['caloriesLoseMax'];
+
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
+  @IsOptional()
+  @Transform(transformNumber)
+  public ratingMin?: ITrainingQuery['ratingMin'];
+
+  @ApiProperty({
+    type: 'integer',
+    required: false
+  })
+  @IsOptional()
+  @Transform(transformNumber)
+  public ratingMax?: ITrainingQuery['ratingMax'];
+
+  @ApiProperty({
+    isArray: true,
+    type: 'string',
+    enum: Specialization,
+    example: [Specialization.Aerobics, Specialization.Boxing],
+    required: false
+  })
   @IsEnum(Specialization, { each: true })
   @IsOptional()
   public specializations?: ITrainingQuery['specializations'];
 
-  @ApiProperty(/*TrainingQueryApiProperty.SortType*/) //! тут сделать описание!
+  @ApiProperty({
+    type: 'string',
+    enum: SortType,
+    example: SortType.LowPrice,
+    required: false
+  })
   @IsEnum(SortType)
   @IsOptional()
-  public sortType?: ITrainingQuery['sortType']/* = Default.SORT_TYPE*/; //! тут сделать описание!
+  public sortType?: ITrainingQuery['sortType'];
 }

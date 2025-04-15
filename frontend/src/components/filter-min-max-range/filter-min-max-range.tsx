@@ -1,7 +1,8 @@
 import { FormEvent } from 'react';
 
+import { parseStringNumber } from '@backend/shared/helpers';
+
 import { MinMaxRange } from '../../types/types';
-import { parseStringNumber } from '../../utils/common';
 
 type FilterMinMaxRangeProps = {
   title: string;

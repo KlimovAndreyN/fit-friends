@@ -49,6 +49,9 @@ export class TrainingService {
 
   //! временно, потом будет CreateTrainingWithFileIdDto
   public async create(dto: Training, userId: string): Promise<TrainingEntity> {
+    //! обработать - Unique constraint failed on the fields: (`user_id`)
+    // или тут поиском по userId или в репозитарии при вставке данных
+
     const entity: TrainingEntity = TrainingFactory.createFromDto(dto, userId);
 
     await this.trainingRepository.save(entity);

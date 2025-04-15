@@ -19,8 +19,7 @@ export { DateFormat } from './lib/constants/date-format';
 export * from './lib/constants/default-port';
 export * from './lib/constants/file-uploader.constant';
 export { IdParam } from './lib/constants/id-param';
-export { PageQueryApiProperty } from './lib/constants/page-query-api-property';
-export { PaginationApiProperty } from './lib/constants/pagination-api-property';
+export { PaginationApiProperty } from './lib/constants/pagination-api-property'; //! нужно ли ?
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';
