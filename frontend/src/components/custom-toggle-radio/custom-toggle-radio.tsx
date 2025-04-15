@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import { Option } from '../../types/option';
+import { Option } from '../../types/types';
 
 type CustomToggleRadioProps = {
   divExtraClassName: string;

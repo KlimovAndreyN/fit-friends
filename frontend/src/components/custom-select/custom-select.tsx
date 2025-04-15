@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-import { Option } from '../../types/option';
+import { Option } from '../../types/types';
 
 type CustomSelectProps = {
   name: string;

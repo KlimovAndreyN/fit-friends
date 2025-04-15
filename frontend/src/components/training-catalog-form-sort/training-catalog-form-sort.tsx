@@ -27,7 +27,7 @@ function TrainingCatalogFormSort({ sortType, onChange }: TrainingCatalogFormSort
                   }
                 }
               >
-                <input type="radio" name="sort" checked={sort === sortType} />
+                <input type="radio" name="sort" checked={sort === sortType} readOnly />
                 <span className="btn-radio-sort__label">{SortTypeTitle[sort]}</span>
               </label>
             )

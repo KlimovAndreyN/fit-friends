@@ -1,5 +1,6 @@
 import { FormEvent } from 'react';
 
+import { MinMaxRange } from '../../types/types';
 import { parseStringNumber } from '../../utils/common';
 
 type FilterMinMaxRangeProps = {
@@ -7,14 +8,13 @@ type FilterMinMaxRangeProps = {
   nameMin?: string;
   nameMax?: string;
   prefixClassName: string;
-  minValue: number | undefined;
-  maxValue: number | undefined;
+  value: MinMaxRange;
   showInputs?: boolean;
-  onChange: (min: number | undefined, max: number | undefined) => void;
+  onChange: (newValue: MinMaxRange) => void;
 }
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
-  const { title, nameMin, nameMax, prefixClassName, minValue, maxValue, showInputs, onChange } = props;
+  const { title, nameMin, nameMax, prefixClassName, value, showInputs, onChange } = props;
 
   return (
     <div className={`gym-catalog-form__block gym-catalog-form__block--${prefixClassName}`}>
@@ -30,11 +30,11 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
                 type="number"
                 id={nameMin}
                 name={nameMin}
-                defaultValue={minValue}
+                value={value.min ?? ''}
                 onInput={(event: FormEvent<HTMLInputElement>) => {
                   event.preventDefault();
 
-                  onChange(parseStringNumber(event.currentTarget.value), maxValue);
+                  onChange({ min: parseStringNumber(event.currentTarget.value), max: value.max });
                 }}
               />
               <label htmlFor={nameMin}>от</label>
@@ -44,11 +44,11 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
                 type="number"
                 id={nameMax}
                 name={nameMax}
-                defaultValue={maxValue}
+                value={value.max ?? ''}
                 onInput={(event: FormEvent<HTMLInputElement>) => {
                   event.preventDefault();
 
-                  onChange(minValue, parseStringNumber(event.currentTarget.value));
+                  onChange({ min: value.min, max: parseStringNumber(event.currentTarget.value) });
                 }}
               />
               <label htmlFor={nameMax}>до</label>

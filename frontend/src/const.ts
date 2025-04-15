@@ -1,6 +1,6 @@
 import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
-import { Option } from './types/option';
+import { Option } from './types/types';
 import { enumToArray } from '../../backend/libs/shared/helpers/src/lib/utils';
 
 const MAIN_TITLE = 'FitFriends';

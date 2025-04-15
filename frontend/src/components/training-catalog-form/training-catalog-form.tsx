@@ -9,6 +9,7 @@ import TrainingCatalogFormSort from '../training-catalog-form-sort/training-cata
 
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/training-action';
+import { MinMaxRange } from '../../types/types';
 import { SortType } from '../../const';
 
 const DEFAULT_SORT_TYPE = SortType.LowPrice;
@@ -21,27 +22,19 @@ function TrainingCatalogForm(): JSX.Element {
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
-  //! может парами в стейт закидывать?
-  const [priceMin, setPriceMin] = useState<number | undefined>(0);
-  const [priceMax, setPriceMax] = useState<number | undefined>(100000); //! 100000 временно! нужно получить максимальную цену? что по ТЗ?
-  //! может парами в стейт закидывать?
-  const [caloriesLoseMin, setCaloriesLoseMin] = useState<number | undefined>();
-  const [caloriesLoseMax, setCaloriesLoseMax] = useState<number | undefined>();
-  //! может парами в стейт закидывать?
-  const [ratingMin, setRatingMin] = useState<number | undefined>(1); //!
-  const [ratingMax, setRatingMax] = useState<number | undefined>(5); //!
+  const [price, setPrice] = useState<MinMaxRange>({ min: 0, max: 100000 }); //! 100000 времнно, что по ТЗ выщитывать максимальную цену?
+  const [caloriesLose, setCaloriesLose] = useState<MinMaxRange>({ min: undefined, max: undefined });
+  const [rating, setRating] = useState<MinMaxRange>({ min: 1, max: 5 }); //!
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
   const [sortType, setSortType] = useState(DEFAULT_SORT_TYPE);
 
   useEffect(() => {
     //! отладка
     // eslint-disable-next-line no-console
-    console.log('TrainingCatalogForm - useEffect', { priceMin, priceMax, caloriesLoseMin, caloriesLoseMax, ratingMin, ratingMax, specializations, sortType });
-    // eslint-disable-next-line no-console
-    console.log('TrainingCatalogForm - useEffect', { sortType });
+    console.log('TrainingCatalogForm - useEffect', { price, caloriesLose, rating, specializations, sortType });
 
     dispatch(fetchTrainings());
-  }, [dispatch, priceMin, priceMax, caloriesLoseMin, caloriesLoseMax, ratingMin, ratingMax, specializations, sortType]);
+  }, [dispatch, price, caloriesLose, rating, specializations, sortType]);
 
   const handleSpecializationsChange = (specialization: Specialization) => {
     setSpecializations((prevItems) => {
@@ -69,12 +62,10 @@ function TrainingCatalogForm(): JSX.Element {
             nameMin='text-min'
             nameMax='text-max'
             prefixClassName='price'
-            minValue={priceMin}
-            maxValue={priceMax}
+            value={price}
             showInputs
-            onChange={(min, max) => {
-              setPriceMin(min);
-              setPriceMax(max);
+            onChange={(value) => {
+              setPrice(value);
             }}
           />
           <FilterMinMaxRange
@@ -82,24 +73,18 @@ function TrainingCatalogForm(): JSX.Element {
             nameMin='text-min-cal'
             nameMax='text-max-cal'
             prefixClassName='calories'
-            minValue={caloriesLoseMin}
-            maxValue={caloriesLoseMax}
+            value={caloriesLose}
             showInputs
-            onChange={(min, max) => {
-              setCaloriesLoseMin(min);
-              setCaloriesLoseMax(max);
+            onChange={(value) => {
+              setCaloriesLose(value);
             }}
           />
           <FilterMinMaxRange
             title='Рейтинг'
             prefixClassName='rating'
-            minValue={ratingMin}
-            maxValue={ratingMax}
-            onChange={(min, max) => {
-              // eslint-disable-next-line no-console
-              console.log(min, max);//! временно!
-              setRatingMin(min);
-              setRatingMax(max);
+            value={rating}
+            onChange={(value) => {
+              setRating(value);
             }}
           />
           <FilterSpecializations
