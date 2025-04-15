@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Specialization } from '@backend/shared/core';
+import { enumToArray } from '@backend/shared/helpers';
 
 import BackButton from '../back-button/back-button';
 import FilterSpecializations from '../filter-specializations/filter-specializations';
@@ -8,10 +9,15 @@ import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/training-action';
+import { SortType, SortTypeTitle } from '../../const';
+
+const DEFAULT_SORT_TYPE = SortType.LowPrice;
 
 function TrainingCatalogForm(): JSX.Element {
   //! может на изменения добавить задержку по времени?
-  //! добавить перечисление для сортировки, пока выставил sort1, sort2, sort3
+  //! показать еще - добавить в стейт номер страницы
+  //! если последняя страница, то показать еще прячем и показываем кнопку наверх
+  //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
@@ -25,7 +31,7 @@ function TrainingCatalogForm(): JSX.Element {
   const [ratingMin, setRatingMin] = useState<number | undefined>(1); //!
   const [ratingMax, setRatingMax] = useState<number | undefined>(5); //!
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
-  const [sortType, setSortType] = useState('sort1'); //! временно
+  const [sortType, setSortType] = useState(DEFAULT_SORT_TYPE);
 
   useEffect(() => {
     //! отладка
@@ -105,15 +111,23 @@ function TrainingCatalogForm(): JSX.Element {
           <div className="gym-catalog-form__block gym-catalog-form__block--sort">
             <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
             <div className="btn-radio-sort gym-catalog-form__radio">
-              <label>
-                <input type="radio" name="sort" defaultChecked value='sort1' /><span className="btn-radio-sort__label">Дешевле</span>
-              </label>
-              <label>
-                <input type="radio" name="sort" value='sort2' /><span className="btn-radio-sort__label">Дороже</span>
-              </label>
-              <label>
-                <input type="radio" name="sort" value='sort3' /><span className="btn-radio-sort__label">Бесплатные</span>
-              </label>
+              {
+                enumToArray(SortType).map(
+                  (sort) => (
+                    <label
+                      key={sort}
+                      onClick={
+                        () => {
+                          setSortType(sort);
+                        }
+                      }
+                    >
+                      <input type="radio" name="sort" defaultChecked={sort === sortType} value={sort} />
+                      <span className="btn-radio-sort__label">{SortTypeTitle[sort]}</span>
+                    </label>
+                  )
+                )
+              }
             </div>
           </div>
         </form>

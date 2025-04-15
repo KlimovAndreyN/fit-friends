@@ -148,3 +148,15 @@ const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
 export const TRAINING_LEVELS: Option[] = enumToArray(TrainingLevel).map(
   (trainingLevel) => ({ value: trainingLevel, title: TrainingLevelTitle[trainingLevel] })
 );
+
+export enum SortType {
+  LowPrice = 'lowPrice',
+  HighPrice = 'highPrice',
+  ForFree = 'forFree'
+}
+
+export const SortTypeTitle: { [key in SortType]: string } = {
+  [SortType.LowPrice]: 'Дешевле',
+  [SortType.HighPrice]: 'Дороже',
+  [SortType.ForFree]: 'Бесплатные'
+} as const;
