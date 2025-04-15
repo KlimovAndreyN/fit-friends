@@ -1,12 +1,11 @@
-import { ITrainingRdo } from '@backend/shared/core';
-
 import TrainingCard from '../training-card/training-card';
 
-type TrainingsListProps = {
-  trainings: ITrainingRdo[];
-}
+import { useAppSelector } from '../../hooks';
+import { getTrainings } from '../../store/training-process/selectors';
 
-function TrainingsList({ trainings }: TrainingsListProps): JSX.Element {
+function TrainingsList(): JSX.Element {
+  const trainings = useAppSelector(getTrainings);
+
   return (
     <ul className="training-catalog__list">
       {

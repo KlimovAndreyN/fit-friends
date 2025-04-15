@@ -38,3 +38,9 @@ export function getUserRoute(userId: string): string {
 export function isEventEscKey(event: KeyboardEvent): boolean {
   return event.key === 'Escape';
 }
+
+export function parseStringNumber(value: string): number | undefined {
+  const parsedValue = parseInt(value, 10);
+
+  return (isNaN(parsedValue)) ? undefined : parsedValue;
+}
