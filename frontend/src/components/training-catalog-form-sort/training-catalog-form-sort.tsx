@@ -16,21 +16,20 @@ function TrainingCatalogFormSort({ sortType, onChange }: TrainingCatalogFormSort
       <div className="btn-radio-sort gym-catalog-form__radio">
         {
           enumToArray(SortType).map(
-            (sort) => (
-              <label
-                key={sort}
-                onClick={
-                  (event: FormEvent<HTMLLabelElement>) => {
-                    event.preventDefault();
+            (sort) => {
+              const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
+                event.preventDefault();
 
-                    onChange(sort);
-                  }
-                }
-              >
-                <input type="radio" name="sort" checked={sort === sortType} readOnly />
-                <span className="btn-radio-sort__label">{SortTypeTitle[sort]}</span>
-              </label>
-            )
+                onChange(sort);
+              };
+
+              return (
+                <label key={sort} onClick={handleLabelClick}>
+                  <input type="radio" name="sort" checked={sort === sortType} readOnly />
+                  <span className="btn-radio-sort__label">{SortTypeTitle[sort]}</span>
+                </label>
+              );
+            }
           )
         }
       </div>

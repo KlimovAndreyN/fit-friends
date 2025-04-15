@@ -13,6 +13,7 @@ import { MinMaxRange } from '../../types/types';
 import { SortType } from '../../const';
 
 const DEFAULT_SORT_TYPE = SortType.LowPrice;
+const DEFAULT_RATING: MinMaxRange = { min: 1, max: 5 };
 
 function TrainingCatalogForm(): JSX.Element {
   //! может на изменения добавить задержку по времени?
@@ -24,7 +25,7 @@ function TrainingCatalogForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [price, setPrice] = useState<MinMaxRange>({ min: 0, max: 100000 }); //! 100000 времнно, что по ТЗ выщитывать максимальную цену?
   const [caloriesLose, setCaloriesLose] = useState<MinMaxRange>({ min: undefined, max: undefined });
-  const [rating, setRating] = useState<MinMaxRange>({ min: 1, max: 5 }); //!
+  const [rating, setRating] = useState<MinMaxRange>(DEFAULT_RATING);
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
   const [sortType, setSortType] = useState(DEFAULT_SORT_TYPE);
 
@@ -35,6 +36,18 @@ function TrainingCatalogForm(): JSX.Element {
 
     dispatch(fetchTrainings());
   }, [dispatch, price, caloriesLose, rating, specializations, sortType]);
+
+  const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
+    setPrice(value);
+  };
+
+  const handleCaloriesLoseFilterMinMaxRangeChange = (value: MinMaxRange) => {
+    setCaloriesLose(value);
+  };
+
+  const handleRatingFilterMinMaxRangeChange = (value: MinMaxRange) => {
+    setRating(value);
+  };
 
   const handleSpecializationsChange = (specialization: Specialization) => {
     setSpecializations((prevItems) => {
@@ -48,6 +61,10 @@ function TrainingCatalogForm(): JSX.Element {
 
       return newItems;
     });
+  };
+
+  const handleTrainingCatalogFormSortChange = (sort: SortType) => {
+    setSortType(sort);
   };
 
   return (
@@ -64,9 +81,7 @@ function TrainingCatalogForm(): JSX.Element {
             prefixClassName='price'
             value={price}
             showInputs
-            onChange={(value) => {
-              setPrice(value);
-            }}
+            onChange={handlePriceFilterMinMaxRangeChange}
           />
           <FilterMinMaxRange
             title='Калории'
@@ -75,17 +90,13 @@ function TrainingCatalogForm(): JSX.Element {
             prefixClassName='calories'
             value={caloriesLose}
             showInputs
-            onChange={(value) => {
-              setCaloriesLose(value);
-            }}
+            onChange={handleCaloriesLoseFilterMinMaxRangeChange}
           />
           <FilterMinMaxRange
             title='Рейтинг'
             prefixClassName='rating'
             value={rating}
-            onChange={(value) => {
-              setRating(value);
-            }}
+            onChange={handleRatingFilterMinMaxRangeChange}
           />
           <FilterSpecializations
             specializations={specializations}
@@ -93,11 +104,7 @@ function TrainingCatalogForm(): JSX.Element {
           />
           <TrainingCatalogFormSort
             sortType={sortType}
-            onChange={
-              (sort) => {
-                setSortType(sort);
-              }
-            }
+            onChange={handleTrainingCatalogFormSortChange}
           />
         </form>
       </div >

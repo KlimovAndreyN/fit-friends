@@ -25,17 +25,16 @@ function FilterSpecializations({ specializations, onChange }: FilterSpecializati
                   const specialization = value as Specialization;
                   const checked = specializations.has(specialization);
 
+                  const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
+                    event.preventDefault();
+
+                    onChange(specialization);
+                  };
+
                   return (
                     <li className="gym-catalog-form__check-list-item" key={value}>
                       <div className="custom-toggle custom-toggle--checkbox">
-                        <label onClick={
-                          (event: FormEvent<HTMLLabelElement>) => {
-                            event.preventDefault();
-
-                            onChange(specialization);
-                          }
-                        }
-                        >
+                        <label onClick={handleLabelClick}>
                           <input type="checkbox" checked={checked} name="type" readOnly />
                           <span className="custom-toggle__icon" >
                             <svg width="9" height="6" aria-hidden="true">
