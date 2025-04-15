@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId, ApiParamOption, IdParam, DetailTrainingRdo } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, TrainingRoute, TrainingRdo, RequestWithRequestIdAndUserId, ApiParamOption, IdParam, DetailTrainingRdo, TrainingQuery } from '@backend/shared/core';
+import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -16,6 +17,17 @@ export class FitTrainingController {
   constructor(
     private fitTrainingService: FitTrainingService
   ) { }
+
+  @ApiResponse({ type: TrainingRdo, isArray: true })
+  @Get()
+  public async index(
+    @Query() query: TrainingQuery,
+    @Req() request: RequestWithRequestIdAndUserId
+  ): Promise<TrainingRdo[]> {
+    const data = await this.fitTrainingService.getTrainings(getQueryString(query), request);
+
+    return data;
+  }
 
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)

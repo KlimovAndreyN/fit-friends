@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Specialization, SortType } from '@backend/shared/core';
+import { Specialization, SortType, ITrainingQuery } from '@backend/shared/core';
 
 import BackButton from '../back-button/back-button';
 import FilterSpecializations from '../filter-specializations/filter-specializations';
@@ -11,30 +11,50 @@ import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/training-action';
 import { MinMaxRange } from '../../types/types';
 
-const DEFAULT_SORT_TYPE = SortType.LowPrice;
-const DEFAULT_RATING: MinMaxRange = { min: 1, max: 5 };
+const Default = {
+  PAGE: 1,
+  PRICE_MIN: 0,
+  RATING: { min: 1, max: 5 },
+  SORT_TYPE: SortType.LowPrice
+} as const;
 
 function TrainingCatalogForm(): JSX.Element {
   //! может на изменения добавить задержку по времени?
-  //! показать еще - добавить в стейт номер страницы
+  //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
-  const [price, setPrice] = useState<MinMaxRange>({ min: 0, max: 100000 }); //! 100000 времнно, что по ТЗ выщитывать максимальную цену?
+  const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
+  //! временно
+  // eslint-disable-next-line no-console
+  console.log(setPage);
+  const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ выщитывать максимальную цену?
   const [caloriesLose, setCaloriesLose] = useState<MinMaxRange>({ min: undefined, max: undefined });
-  const [rating, setRating] = useState<MinMaxRange>(DEFAULT_RATING);
+  const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
-  const [sortType, setSortType] = useState(DEFAULT_SORT_TYPE);
+  const [sortType, setSortType] = useState<SortType>(Default.SORT_TYPE);
 
   useEffect(() => {
     //! отладка
     // eslint-disable-next-line no-console
     console.log('TrainingCatalogForm - useEffect', { price, caloriesLose, rating, specializations, sortType });
 
-    dispatch(fetchTrainings());
-  }, [dispatch, price, caloriesLose, rating, specializations, sortType]);
+    const query: ITrainingQuery = {
+      page,
+      priceMin: price.min,
+      priceMax: price.max,
+      caloriesLoseMin: caloriesLose.min,
+      caloriesLoseMax: caloriesLose.max,
+      ratingMin: rating.min,
+      ratingMax: rating.max,
+      specializations: Array.from(specializations),
+      sortType
+    };
+
+    dispatch(fetchTrainings(query));
+  }, [dispatch, page, price, caloriesLose, rating, specializations, sortType]);
 
   const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
     setPrice(value);

@@ -1,2 +1,2 @@
 export * from './lib/random';
-export { joinUrl, enumToArray, parseStringNumber } from './lib/utils';
+export { joinUrl, enumToArray, parseStringNumber, getQueryString } from './lib/utils';

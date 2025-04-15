@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ApiServiceRoute, IDetailTrainingRdo, ITrainingRdo, TrainingRoute } from '@backend/shared/core';
-import { joinUrl } from '@backend/shared/helpers';
+import { ApiServiceRoute, IDetailTrainingRdo, ITrainingQuery, ITrainingRdo, TrainingRoute } from '@backend/shared/core';
+import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
 type Extra = {
   api: AxiosInstance;
@@ -47,11 +47,12 @@ export const fetchPopularTrainings = createAsyncThunk<ITrainingRdo[], undefined,
   }
 );
 
-export const fetchTrainings = createAsyncThunk<ITrainingRdo[], undefined, { extra: Extra }>(
+export const fetchTrainings = createAsyncThunk<ITrainingRdo[], ITrainingQuery, { extra: Extra }>(
   Action.FETCH_TRAININGS,
-  async (_, { extra }) => {
+  async (query, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, TrainingRoute.Popular)); //! временно и нужны параметры для поиска
+    const queryString = getQueryString(query);
+    const { data } = await api.get<ITrainingRdo[]>(joinUrl(ApiServiceRoute.Trainings, queryString));
 
     return data;
   }

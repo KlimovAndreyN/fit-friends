@@ -13,3 +13,21 @@ export function parseStringNumber(value: string): number | undefined {
 
   return (isNaN(parsedValue)) ? undefined : parsedValue;
 }
+
+export function getQueryString(query: object): string {
+  const queryParams: string[] = [];
+
+  for (const [key, value] of Object.entries(query)) {
+    if (value) {
+      if (Array.isArray(value)) {
+        value.map((item) => {
+          queryParams.push(`${key}=${item}`);
+        });
+      } else {
+        queryParams.push(`${key}=${value}`);
+      }
+    }
+  }
+
+  return `?${queryParams.join('&')}`;
+}
