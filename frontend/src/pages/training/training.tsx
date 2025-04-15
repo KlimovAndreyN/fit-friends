@@ -15,8 +15,9 @@ import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTi
 
 function Training(): JSX.Element {
   //! прокрутка на вверх
-  //! сделать меньше... можно вынести <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
+  //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
+  //! сделал для video__thumbnail - backgroundPath из rdo? как по ТЗ
   //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
@@ -45,7 +46,7 @@ function Training(): JSX.Element {
     return <NotFound />;
   }
 
-  const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach } = training;
+  const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
   const { id: coachId, avatarFilePath, name } = coach;
   const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
   const genderText = TrainingGenderTitle[gender];
@@ -143,8 +144,7 @@ function Training(): JSX.Element {
                   <div className="training-video__video">
                     <div className="training-video__thumbnail">
                       <picture>
-                        <source type="image/webp" srcSet="img/content/training-video/video-thumbnail.webp, img/content/training-video/video-thumbnail@2x.webp 2x" />
-                        <img src="img/content/training-video/video-thumbnail.png" srcSet="img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
+                        <img src={backgroundPath} width="922" height="566" alt="Обложка видео" />
                       </picture>
                     </div>
                     <button className="training-video__play-button btn-reset">
