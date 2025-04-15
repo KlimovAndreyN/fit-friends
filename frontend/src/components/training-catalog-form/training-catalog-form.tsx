@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Specialization } from '@backend/shared/core';
+import { Specialization, SortType } from '@backend/shared/core';
 
 import BackButton from '../back-button/back-button';
 import FilterSpecializations from '../filter-specializations/filter-specializations';
@@ -10,7 +10,6 @@ import TrainingCatalogFormSort from '../training-catalog-form-sort/training-cata
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/training-action';
 import { MinMaxRange } from '../../types/types';
-import { SortType } from '../../const';
 
 const DEFAULT_SORT_TYPE = SortType.LowPrice;
 const DEFAULT_RATING: MinMaxRange = { min: 1, max: 5 };

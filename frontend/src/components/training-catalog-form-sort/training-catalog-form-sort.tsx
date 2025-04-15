@@ -1,8 +1,9 @@
 import { FormEvent } from 'react';
 
+import { SortType } from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
 
-import { SortType, SortTypeTitle } from '../../const';
+import { SortTypeTitle } from '../../const';
 
 type TrainingCatalogFormSortProps = {
   sortType: SortType;

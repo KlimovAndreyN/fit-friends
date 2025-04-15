@@ -1,9 +1,9 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute,
-  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam
+  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam, TrainingQuery
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
@@ -49,7 +49,12 @@ export class TrainingController {
 
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get()
-  public async index(): Promise<TrainingRdo[]> {
+  public async index(
+    @Query() query: TrainingQuery
+  ): Promise<TrainingRdo[]> {
+    //! отладка
+    console.log('index - query', query);
+
     const data = await this.trainingService.getPopular();//! временно
 
     return this.convertTrainingEntities(data);

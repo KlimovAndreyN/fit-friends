@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, Min,
-  IsEnum, IsNumber, IsOptional, IsString, Max, IsBoolean
+  IsEnum, IsInt, IsOptional, IsString, Max, IsBoolean
 } from 'class-validator';
 import { Expose } from 'class-transformer';
 
@@ -47,14 +47,14 @@ export class QuestionnaireApiDoc {
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt() //! проверить
   @Min(QuestionnaireValidation.CaloriesLose.Min)
   @Max(QuestionnaireValidation.CaloriesLose.Max)
   caloriesLose: Questionnaire['caloriesLose'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesWaste)
   @Expose()
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt() //! проверить! нужен ли @IsNumber({ maxDecimalPlaces: 0 })?
   @Min(QuestionnaireValidation.CaloriesWaste.Min)
   @Max(QuestionnaireValidation.CaloriesWaste.Max)
   caloriesWaste: Questionnaire['caloriesWaste'];

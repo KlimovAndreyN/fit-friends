@@ -9,6 +9,9 @@ export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-ques
 export { type IUpdateUserProfileDto } from './lib/interfaces/dto/i-update-user-profile.dto';
 export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
 
+export { type IPageQuery } from './lib/interfaces/query/i-page.query';
+export { type ITrainingQuery as IProductQuery } from './lib/interfaces/query/i-training.query';
+
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type IDetailUserProfileRdo } from './lib/interfaces/rdo/i-detail-user-profile.rdo';
 export { type IDetailUserRdo } from './lib/interfaces/rdo/i-detail-user.rdo';
@@ -28,5 +31,6 @@ export { Duration } from './lib/types/duration.enum';
 export { Gender } from './lib/types/gender.enum';
 export { Location } from './lib/types/location.enum';
 export { Role } from './lib/types/role.enum';
+export { SortType } from './lib/types/sort-type.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';

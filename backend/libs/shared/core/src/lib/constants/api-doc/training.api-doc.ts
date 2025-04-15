@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsEnum, IsInt, IsNumber, IsString } from 'class-validator';
 import { Expose } from 'class-transformer';
 
 import { Training } from '../../interfaces/training.interface';
@@ -43,12 +43,12 @@ export class TrainingApiDoc {
 
   @ApiProperty()
   @Expose()
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt() //! проверить
   price: Training['price'];
 
   @ApiProperty()
   @Expose()
-  @IsNumber({ maxDecimalPlaces: 0 })
+  @IsInt() //! проверить! нужен ли @IsNumber({ maxDecimalPlaces: 0 })?
   caloriesWaste: Training['caloriesWaste'];
 
   @ApiProperty()
