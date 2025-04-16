@@ -4,6 +4,7 @@ import { Duration, Gender, Specialization, Training, TrainingApiProperty, Traini
 import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
+import { ReviewRepository } from '@backend/fit/review';
 
 import { MOCK_SWAGGER_COACH, MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
 
@@ -62,13 +63,19 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
   return trainings;
 }
 
-export async function updateRatingTrainings(trainingRepository: TrainingRepository, trainings: TrainingEntity[]): Promise<void> {
+export async function updateRatingTrainings(
+  trainingRepository: TrainingRepository,
+  reviewRepository: ReviewRepository,
+  trainings: TrainingEntity[]
+): Promise<void> {
   for (const { id: trainingId } of trainings) {
     //! потом можно запустить через сервис
     const existTraining = await trainingRepository.findById(trainingId);
 
-    existTraining.rating = 3;//! доделать пересчет среднего рейтинга тренировки через репозитарий/сервис отзывов
-    await trainingRepository.update(existTraining);
-    Logger.log(`Update rating trainingId: ${trainingId} / rating: ${existTraining.rating}`);
+    if (existTraining) {
+      existTraining.rating = await reviewRepository.getAverageTrainingRating(trainingId);
+      await trainingRepository.update(existTraining);
+      Logger.log(`Update rating trainingId: ${trainingId} / rating: ${existTraining.rating}`);
+    }
   }
 }

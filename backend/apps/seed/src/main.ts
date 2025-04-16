@@ -78,7 +78,7 @@ async function bootstrap() {
     Logger.log(`Reviews count: ${reviews.length}`);
 
     // пересчет среднего рейтинга тренировок
-    await updateRatingTrainings(trainingRepository, trainings);
+    await updateRatingTrainings(trainingRepository, reviewRepository, trainings);
 
     Logger.log('🤘️ Database Fit(postgres) was filled!');
 

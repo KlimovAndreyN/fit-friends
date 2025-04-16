@@ -17,6 +17,8 @@ function Training(): JSX.Element {
   //! прокрутка на вверх
   //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
+  //! а как выглядят со скидкой? как по ТЗ? как окрулять?
+  //! как округлять рейтинг? как по ТЗ? пока округлил до целых
   //! сделал для video__thumbnail - backgroundPath из rdo? как по ТЗ
   //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
@@ -51,6 +53,7 @@ function Training(): JSX.Element {
   const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
   const genderText = TrainingGenderTitle[gender];
   const durationText = TrainingDurationTitle[duration];
+  const ratingText = rating.toFixed(0);
 
   // eslint-disable-next-line no-console
   console.log('Training - coachId', coachId);
@@ -108,7 +111,7 @@ function Training(): JSX.Element {
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </span>
-                              <input type="number" name="rating" defaultValue={rating} disabled />
+                              <input type="number" name="rating" defaultValue={ratingText} disabled />
                             </label>
                           </div>
                           <ul className="training-info__list">

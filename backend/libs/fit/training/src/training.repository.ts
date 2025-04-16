@@ -54,11 +54,12 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       ratingMax,
       specializations,
       sortType = Default.SORT_TYPE,
-      isSpecial
+      isSpecial,
+      isPopular
     } = query;
     const skip = (currentPage - 1) * take;
     const where: Prisma.TrainingWhereInput = {};
-    const orderBy: Prisma.TrainingOrderByWithRelationInput = {};
+    const orderBy: Prisma.TrainingOrderByWithRelationInput[] = [];
 
     if (sortType === SortType.ForFree) {
       where.price = 0;
@@ -71,12 +72,16 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     where.isSpecial = isSpecial;
     where.specialization = { in: specializations };
 
+    if (isPopular) {
+      orderBy.push({ rating: SortDirection.Desc });
+    }
+
     switch (sortType) {
       case SortType.LowPrice:
-        orderBy.price = SortDirection.Asc;
+        orderBy.push({ price: SortDirection.Asc });
         break;
       case SortType.HighPrice:
-        orderBy.price = SortDirection.Desc;
+        orderBy.push({ price: SortDirection.Desc });
         break;
     }
 

@@ -33,4 +33,14 @@ export class ReviewRepository extends BasePostgresRepository<ReviewEntity, Revie
     entity.id = record.id;
     entity.createdAt = record.createdAt;
   }
+
+  public async getAverageTrainingRating(trainingId: string): Promise<number> {
+    const averageTrainingRatings = await this.client.review.groupBy({ by: ['trainingId'], _avg: { rating: true }, where: { trainingId } });
+
+    if (averageTrainingRatings.length > 0) {
+      return averageTrainingRatings[0]._avg.rating;
+    }
+
+    return 0;
+  }
 }

@@ -10,8 +10,10 @@ import { TrainingFactory } from './training.factory';
 const DefaultCount = {
   //! отладка MAX: 50,
   MAX: 20, //!
-  FOR_SPOTRSMAN: 9,
+  FOR_SPOTRSMAN: 9
 } as const;
+
+const POPULAR_RATING = { ratingMin: 4, ratingMax: 5, isPopular: true } as const;
 
 @Injectable()
 export class TrainingService {
@@ -44,9 +46,8 @@ export class TrainingService {
   public async getPopular(): Promise<TrainingEntity[]> {
     //! по ТЗ не ясно, только с 5 или наивысший из имеющихся?
     //! а если рейтирнг тренировки будет до первого знака?
-    //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга... а пока в моках нет пересчета рейтинга от 3
-    //! но нужно убрать в константы
-    const foundTrainings = await this.trainingRepository.find({ ratingMin: 3, ratingMax: 5 }, DefaultCount.MAX);
+    //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга
+    const foundTrainings = await this.trainingRepository.find(POPULAR_RATING, DefaultCount.MAX);
 
     return foundTrainings;
   }

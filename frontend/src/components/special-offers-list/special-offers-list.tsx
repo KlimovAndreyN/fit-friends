@@ -13,7 +13,8 @@ type SpecialOffersListProps = {
 }
 
 function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | null {
-  //! Как переходить на подробнее? пока сделал ссылку на заголовоке
+  //! Как переходить на подробнее? пока сделал ссылку на заголовке
+  //! Как правильно округлить цену со скидкой? как ТЗ?
 
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
 
@@ -35,7 +36,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
         offers.map(
           (offer, index) => {
             const { id, title, description, backgroundPath, price } = offer;
-            const oldPrice = price - price * 10 / 100; //! все верно? по ТЗ? округлить?
+            const oldPrice = Math.round(price - price * 10 / 100);
             const isActive = index === activeSliderIndex;
             const itemClassName = classNames('special-offers__item', { 'is-active': isActive });
 
