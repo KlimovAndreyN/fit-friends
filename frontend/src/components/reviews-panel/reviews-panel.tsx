@@ -6,7 +6,7 @@ import UserPhoto from '../user-photo/user-photo';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
-import { fetchReviews } from '../../store/review-action';
+import { fetchReviews } from '../../store/actions/review-action';
 import { REVIEWS_ANCHOR } from '../../const';
 
 type ReviewsPanelProps = {

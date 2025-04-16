@@ -1,5 +1,5 @@
 import { State } from '../../types/state';
-import { UserProfileProcess } from '../../types/user-profile-process';
+import { UserProfileProcess } from '../../types/process/user-profile.process';
 import { StoreSlice } from '../../const';
 
 export const getIsExistQuestionnaireExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isExistQuestionnaireExecuting'] => USER_PROFILE_PROCESS.isExistQuestionnaireExecuting;

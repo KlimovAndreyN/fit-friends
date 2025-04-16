@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { ReviewProcess } from '../../types/review-process';
-import { fetchReviews } from '../review-action';
+import { ReviewProcess } from '../../types/process/review.process';
+import { fetchReviews } from '../actions/review-action';
 import { StoreSlice } from '../../const';
 
 const initialState: ReviewProcess = {

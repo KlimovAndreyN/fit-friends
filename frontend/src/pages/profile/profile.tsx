@@ -10,7 +10,7 @@ import { IUpdateUserProfileDto, Role } from '@backend/shared/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
-import { fetchUserProfile, updateUserProfile } from '../../store/user-profile-action';
+import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-profile-action';
 import { PageTitle } from '../../const';
 
 function Profile(): JSX.Element {

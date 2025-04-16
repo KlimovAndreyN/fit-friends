@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/user-profile-process/selectors';
-import { changeReadyForTraining } from '../../store/user-profile-action';
+import { changeReadyForTraining } from '../../store/actions/user-profile-action';
 
 type PersonalAccountReadyCheckboxProps = {
   name: string;

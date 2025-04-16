@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { TrainingProcess } from '../../types/training-process';
-import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../training-action';
+import { TrainingProcess } from '../../types/process/training.process';
+import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../actions/training-action';
 import { StoreSlice } from '../../const';
 
 const initialState: TrainingProcess = {

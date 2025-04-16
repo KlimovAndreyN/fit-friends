@@ -9,7 +9,7 @@ import NotFound from '../not-found/not-found';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
-import { fetchDetailTraining } from '../../store/training-action';
+import { fetchDetailTraining } from '../../store/actions/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 

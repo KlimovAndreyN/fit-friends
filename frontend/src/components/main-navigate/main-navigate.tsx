@@ -2,7 +2,7 @@ import MainNavigateItem from '../main-navigate-item/main-navigate-item';
 import MainNavigateNotifications from '../main-navigate-notifications/main-navigate-notifications';
 
 import { useAppDispatch } from '../../hooks';
-import { logoutUser } from '../../store/user-action';
+import { logoutUser } from '../../store/actions/user-action';
 import { AppRoute } from '../../const';
 
 const SvgOption = {

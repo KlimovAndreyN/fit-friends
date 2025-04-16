@@ -7,7 +7,7 @@ import { ILoginUserDto } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingInExecuting } from '../../store/user-process/selectors';
-import { loginUser } from '../../store/user-action';
+import { loginUser } from '../../store/actions/user-action';
 import { PageTitle } from '../../const';
 import CustomInput from '../../components/custom-input/custom-input';
 

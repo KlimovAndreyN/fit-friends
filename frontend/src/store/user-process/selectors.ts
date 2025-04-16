@@ -1,5 +1,5 @@
 import { State } from '../../types/state';
-import { UserProcess } from '../../types/user-process';
+import { UserProcess } from '../../types/process/user.process';
 import { StoreSlice } from '../../const';
 
 export const getAuthorizationStatus = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['authorizationStatus'] => USER_PROCESS.authorizationStatus;

@@ -8,10 +8,10 @@ import {
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
-import { isErrorNetwork } from '../utils/parse-axios-error';
-import { AccessTokenStore, RefreshTokenStore } from '../utils/token-store';
+import { isErrorNetwork } from '../../utils/parse-axios-error';
+import { AccessTokenStore, RefreshTokenStore } from '../../utils/token-store';
 import { existQuestionnaire } from './user-profile-action';
-import { multipartFormDataHeader } from '../const';
+import { multipartFormDataHeader } from '../../const';
 
 type Extra = {
   api: AxiosInstance;

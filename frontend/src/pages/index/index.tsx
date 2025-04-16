@@ -10,8 +10,8 @@ import LookForCompanySection from '../../components/look-for-company-section/loo
 import { getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings, getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting } from '../../store/training-process/selectors';
 import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/training-action';
-import { fetchLookForCompanyUserProfiles } from '../../store/user-profile-action';
+import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
+import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { PageTitle } from '../../const';
 
 function Index(): JSX.Element {

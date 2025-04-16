@@ -1,6 +1,6 @@
 import { Role } from '@backend/shared/core';
 
-import { AuthorizationStatus } from './types';
+import { AuthorizationStatus } from '../types';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;

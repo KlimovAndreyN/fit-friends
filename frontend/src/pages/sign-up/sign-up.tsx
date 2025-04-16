@@ -11,7 +11,7 @@ import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-ro
 import { ICreateUserDto, Location, Gender, Role } from '@backend/shared/core';
 import { getRandomItem } from '@backend/shared/helpers';
 
-import { registerUser } from '../../store/user-action';
+import { registerUser } from '../../store/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingUpExecuting } from '../../store/user-process/selectors';
 import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';

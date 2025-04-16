@@ -9,7 +9,7 @@ import {
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
-import { multipartFormDataHeader } from '../const';
+import { multipartFormDataHeader } from '../../const';
 
 type Extra = {
   api: AxiosInstance;

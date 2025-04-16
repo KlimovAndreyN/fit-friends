@@ -8,7 +8,7 @@ import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
 import TrainingCatalogFormSort from '../training-catalog-form-sort/training-catalog-form-sort';
 
 import { useAppDispatch } from '../../hooks';
-import { fetchTrainings } from '../../store/training-action';
+import { fetchTrainings } from '../../store/actions/training-action';
 import { MinMaxRange } from '../../types/types';
 
 const Default = {
