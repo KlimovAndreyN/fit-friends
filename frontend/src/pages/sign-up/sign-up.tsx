@@ -8,13 +8,15 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserDto, Location, Gender, Role } from '@backend/shared/core';
+import { ICreateUserDto, Location, Gender, Role, BackgroundPaths } from '@backend/shared/core';
 import { getRandomItem } from '@backend/shared/helpers';
 
 import { registerUser } from '../../store/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingUpExecuting } from '../../store/user-process/selectors';
-import { LOCATIONS, PageTitle, USER_BACKGROUND_PATHS } from '../../const';
+import { isSportsmanRole } from '../../utils/common';
+import { Option } from '../../types/types';
+import { DefaultUser, LOCATIONS, PageTitle } from '../../const';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -30,15 +32,24 @@ enum FormFieldName {
 }
 
 function SignUp(): JSX.Element {
+  //! сделать страницу и ссылку на политику компании для sign-up__checkbox-label
+
   const dispatch = useAppDispatch();
   const [checkedUserAgreementInput, setCheckedUserAgreementInput] = useState(false);
+  const [userRole, setUserRole] = useState<Role>(DefaultUser.ROLE);
   const isSingUpExecuting = useAppSelector(getIsSingUpExecuting);
 
   const handleUserAgreementInputChange = () => {
     setCheckedUserAgreementInput(!checkedUserAgreementInput);
   };
 
+  const handleSignUpUserRolesChange = (newValue: Role) => {
+    setUserRole(newValue);
+  };
+
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); //! работает? почемуто изначально не было
+
     const form = event.currentTarget;
     const formData = new FormData(form);
 
@@ -48,7 +59,6 @@ function SignUp(): JSX.Element {
     const birthday = formData.get(FormFieldName.Birthday)?.toString() || undefined;
     const backgroundPath = formData.get(FormFieldName.Background)?.toString() || '';
     const gender = (formData.get(FormFieldName.Sex)?.toString() || '') as Gender;
-    const role = (formData.get(FormFieldName.UserRole)?.toString() || '') as Role;
     const location = (formData.get(FormFieldName.UserLocation)?.toString() || '') as Location;
     const avatarFile = (formData.get(FormFieldName.Avatar) as File) || undefined;
 
@@ -60,7 +70,7 @@ function SignUp(): JSX.Element {
       birthday,
       backgroundPath,
       gender,
-      role,
+      role: userRole,
       location,
       avatarFile
     };
@@ -76,7 +86,9 @@ function SignUp(): JSX.Element {
   };
 
   const submitClassName = classNames('btn sign-up__button', { 'is-disabled': !checkedUserAgreementInput || isSingUpExecuting });
-  const backgroundPath = getRandomItem(USER_BACKGROUND_PATHS).value;
+  const backgroundPaths = isSportsmanRole(userRole) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS;
+  const optionBackgroundPaths: Option[] = backgroundPaths.map((item) => ({ value: item, title: item }));
+  const backgroundPath = getRandomItem(optionBackgroundPaths).value;
 
   return (
     <PopupForm {...popupFormProps} >
@@ -121,14 +133,18 @@ function SignUp(): JSX.Element {
           />
           <SignUpUserGengers name={FormFieldName.Sex} />
         </div>
-        <SignUpUserRoles name={FormFieldName.UserRole} />
+        <SignUpUserRoles
+          name={FormFieldName.UserRole}
+          value={userRole}
+          onChange={handleSignUpUserRolesChange}
+        />
         {/*//! добавил в разметку фоновую картинку */}
         <div className="sign-up__data">
           <CustomSelect
             name={FormFieldName.Background}
             value={backgroundPath}
             caption='Фоновая картика'
-            options={USER_BACKGROUND_PATHS}
+            options={optionBackgroundPaths}
           />
         </div>
         <div className="sign-up__checkbox">

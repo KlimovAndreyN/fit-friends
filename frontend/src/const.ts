@@ -54,7 +54,7 @@ export enum HttpCode {
 export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' } as const;
 
 export const DefaultUser = {
-  ROLE: Role.Sportsman,
+  ROLE: Role.Coach,
   GENDER: Gender.Female,
   SPECIALISATIONS: [
     Specialization.Boxing as string,
@@ -95,12 +95,6 @@ export const LocationTitle: { [key in Location]: string } = {
 export const LOCATIONS: Option[] = enumToArray(Location).map(
   (location) => ({ value: location, title: LocationTitle[location] })
 );
-
-//! еще будет для тренера и должно подменятся при изменении роли
-export const USER_BACKGROUND_PATHS: Option[] = [
-  { value: 'img/content/user-card-photo1.jpg', title: 'Фоновая картинка №1' },
-  { value: 'img/content/user-card-photo2.jpg', title: 'Фоновая картинка №2' }
-];
 
 //! перенести в компонент/страницу по месту? или отдельный файл
 export const SpecializationTitle: { [key in Specialization]: string } = {

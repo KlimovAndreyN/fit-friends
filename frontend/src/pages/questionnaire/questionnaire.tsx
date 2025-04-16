@@ -24,12 +24,14 @@ enum FormFieldName {
 }
 
 function Questionnaire(): JSX.Element | null {
+  //! перепроверить разметку! что то вид не очень! может это часть спортсмена а класс от тренера
+
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();
 
   if (!userRole) {
-    //! сделать компонет с ошибкой и вывести ошибку или 404 с текстом
+    //! сделать компонет с ошибкой и вывести ошибку или 404 с текстом и убрать "| null"
     return null;
   }
 

@@ -5,7 +5,7 @@ import { getRandomBoolean, getRandomDate, getRandomNumber } from '@backend/share
 import { OrderEntity } from '@backend/fit/order';
 import { ReviewEntity, ReviewRepository } from '@backend/fit/review';
 
-import { MockReviewOption, MockTrainingOption } from './mock-data';
+import { ReviewOption, TrainingOption } from './mock-data';
 
 export async function clearReviews(reviewRepository: ReviewRepository): Promise<void> {
   await reviewRepository.client.review.deleteMany();
@@ -13,8 +13,8 @@ export async function clearReviews(reviewRepository: ReviewRepository): Promise<
 
 export async function seedReviews(reviewRepository: ReviewRepository, orders: OrderEntity[]): Promise<ReviewEntity[]> {
   const reviews: ReviewEntity[] = [];
-  const { MIN_RATING, MAX_RATING } = MockReviewOption;
-  const { MIN_DATE, MAX_DATE } = MockTrainingOption;
+  const { MIN_RATING, MAX_RATING } = ReviewOption;
+  const { MIN_DATE, MAX_DATE } = TrainingOption;
 
   for (const { userId, trainingId } of orders) {
     if (getRandomBoolean()) {

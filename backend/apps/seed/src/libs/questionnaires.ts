@@ -5,7 +5,7 @@ import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueIt
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
 
-import { MockCalorieOption, MockSpecializationsOption } from './mock-data';
+import { CalorieOption, SpecializationsOption } from './mock-data';
 
 export async function clearQuestionnaires(questionnaireRepository: QuestionnaireRepository): Promise<void> {
   await questionnaireRepository.client.questionnaire.deleteMany();
@@ -13,8 +13,8 @@ export async function clearQuestionnaires(questionnaireRepository: Questionnaire
 
 export async function seedQuestionnaires(questionnaireRepository: QuestionnaireRepository, users: FitUserEntity[]): Promise<QuestionnaireEntity[]> {
   const questionnaires: QuestionnaireEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT } = MockSpecializationsOption;
-  const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = MockCalorieOption;
+  const { MIN_COUNT, MAX_COUNT } = SpecializationsOption;
+  const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = CalorieOption;
 
   for (const { id: userId, role } of users) {
     //! попробовать добавлять через сервис QuestionnaireService

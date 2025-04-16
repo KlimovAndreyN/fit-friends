@@ -12,7 +12,7 @@ import { AppModule } from './app/app.module';
 import { clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
-import { MOCK_COACHES, MOCK_SPORTSMANS } from './libs/mock-data';
+import { COACHES, SPORTSMANS } from './libs/mock-data';
 import { clearOrders, seedOrders } from './libs/orders';
 import { clearReviews, seedReviews } from './libs/reviews';
 
@@ -42,11 +42,11 @@ async function bootstrap() {
     }
 
     // пользователи
-    const sportsmans = await seedUsers(fitUserRepository, MOCK_SPORTSMANS, Role.Sportsman);
+    const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman);
 
     Logger.log(`Sportsmans count: ${sportsmans.length}`);
 
-    const coaches = await seedUsers(fitUserRepository, MOCK_COACHES, Role.Coach);
+    const coaches = await seedUsers(fitUserRepository, COACHES, Role.Coach);
 
     Logger.log(`Coaches count: ${coaches.length}`);
 

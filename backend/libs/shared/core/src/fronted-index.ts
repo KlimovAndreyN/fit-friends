@@ -1,3 +1,4 @@
+export { BackgroundPaths } from './lib/constants/background-paths';
 export { AUTH_NAME } from './lib/constants/bearer-auth';
 export { ApiServiceRoute, AccountRoute, QuestionnaireRoute, UserProfileRoute, TrainingRoute } from './lib/constants/route';
 

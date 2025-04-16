@@ -1,12 +1,12 @@
 import { Logger } from '@nestjs/common';
 
-import { Duration, Gender, Specialization, Training, TrainingApiProperty, TrainingLevel } from '@backend/shared/core';
+import { BackgroundPaths, Duration, Gender, Specialization, Training, TrainingApiProperty, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
 import { ReviewRepository } from '@backend/fit/review';
 
-import { MOCK_SWAGGER_COACH, MOCK_TRAININGS_BACKGROUND_PATHS, MockReviewOption, MockTrainingOption } from './mock-data';
+import { SWAGGER_COACH, ReviewOption, TrainingOption } from './mock-data';
 
 export async function clearTrainings(trainingRepository: TrainingRepository): Promise<void> {
   await trainingRepository.client.training.deleteMany();
@@ -14,8 +14,9 @@ export async function clearTrainings(trainingRepository: TrainingRepository): Pr
 
 export async function seedTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
   const trainings: TrainingEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, CALORIES_FACTOR, MIN_DATE, MAX_DATE } = MockTrainingOption;
-  const { MIN_RATING, MAX_RATING } = MockReviewOption;
+  const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, CALORIES_FACTOR, MIN_DATE, MAX_DATE } = TrainingOption;
+  const { MIN_RATING, MAX_RATING } = ReviewOption;
+  const backgroundPaths = [...BackgroundPaths.TRAININGS];
   let trainingGlobalIndex = 1;
 
   for (const { id: userId, name: userName } of coaches) {
@@ -28,7 +29,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
       //! потом можно создавать через DTO и сервис, указав id-пользователя и не указывая не нужные поля - rating
       const training: Training = {
         title: `Training title ${trainingIndexPrefix}`,
-        backgroundPath: getRandomItem(MOCK_TRAININGS_BACKGROUND_PATHS),
+        backgroundPath: getRandomItem(backgroundPaths),
         trainingLevel: getRandomEnumItem(TrainingLevel),
         specialization: getRandomEnumItem(Specialization), //! скорректировать только своих специализаций! coach.specializations! что в ТЗ?
         duration: getRandomEnumItem(Duration),
@@ -46,7 +47,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
       }
 
       // для удобства тестирования запросов из свагера
-      if ((userName === MOCK_SWAGGER_COACH) && (trainingGlobalIndex === 1) && (trainingIndex === 1)) {
+      if ((userName === SWAGGER_COACH) && (trainingGlobalIndex === 1) && (trainingIndex === 1)) {
         training.id = TrainingApiProperty.Id.example;
       }
 

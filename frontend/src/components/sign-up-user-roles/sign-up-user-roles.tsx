@@ -1,41 +1,42 @@
 import { Role } from '@backend/shared/core';
-
-import { DefaultUser } from '../../const';
+import { isSportsmanRole } from '../../utils/common';
 
 type SignUpUserRolesProps = {
   name: string;
+  value: Role;
+  onChange: (newValue: Role) => void;
 }
 
-function SignUpUserRoles({ name }: SignUpUserRolesProps): JSX.Element {
-  //! значение по умолчанию принимать пропсами
-  //! переделать на управляемый
-
+function SignUpUserRoles({ name, value, onChange }: SignUpUserRolesProps): JSX.Element {
   return (
-    /*
-    //! visually-hidden - спрятал выбор роли, по умолчанию был coach
     <div className="sign-up__role">
-    <div className="sign-up__role visually-hidden">
-    */
-    <div className="sign-up__role visually-hidden">
       <h2 className="sign-up__legend">Выберите роль</h2>
       <div className="role-selector sign-up__role-selector">
         {
           [Role.Coach, Role.Sportsman].map(
-            (userRole) => {
-              const title = (userRole === Role.Sportsman) ? 'Я хочу тренироваться' : 'Я хочу тренировать';
-              const svgIcon = (userRole === Role.Sportsman) ? '#icon-weight' : '#icon-cup';
-              const checked = userRole === DefaultUser.ROLE;
+            (role) => {
+              const isSportsman = isSportsmanRole(role);
+
+              const handleRationInputChange = () => {
+                onChange(role);
+              };
 
               return (
-                <div className="role-btn" key={userRole}>
+                <div className="role-btn" key={role}>
                   <label>
-                    <input className="visually-hidden" type="radio" name={name} value={userRole} defaultChecked={checked} />
+                    <input
+                      className="visually-hidden"
+                      type="radio"
+                      name={name}
+                      checked={role === value}
+                      onChange={handleRationInputChange}
+                    />
                     <span className="role-btn__icon">
                       <svg width="12" height="13" aria-hidden="true">
-                        <use xlinkHref={svgIcon} />
+                        <use xlinkHref={isSportsman ? '#icon-weight' : '#icon-cup'} />
                       </svg>
                     </span>
-                    <span className="role-btn__btn">{title}</span>
+                    <span className="role-btn__btn">{isSportsman ? 'Я хочу тренироваться' : 'Я хочу тренировать'}</span>
                   </label>
                 </div>
               );

@@ -43,7 +43,7 @@ swagger@local.ru
   а как выйти?
     Bad Request; Require logout. Token:
 
-заполнить seed для опросников тренеров
+вынести isSportsmanRole в общие, "=== Role." убрать и сделать проверку на пусто и там убрать undefined
 
 !старницы и ссылки по ролям, а потом моки
   Profile

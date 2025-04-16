@@ -6,7 +6,7 @@ import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity } from '@backend/fit/training';
 import { OrderEntity, OrderRepository } from '@backend/fit/order';
 
-import { MockOrderOption, MockTrainingOption } from './mock-data';
+import { OrderOption, TrainingOption } from './mock-data';
 
 export async function clearOrders(orderRepository: OrderRepository): Promise<void> {
   await orderRepository.client.order.deleteMany();
@@ -18,8 +18,8 @@ export async function seedOrders(
   sportsmans: FitUserEntity[]
 ): Promise<OrderEntity[]> {
   const orders: OrderEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT } = MockOrderOption;
-  const { MIN_DATE, MAX_DATE } = MockTrainingOption;
+  const { MIN_COUNT, MAX_COUNT } = OrderOption;
+  const { MIN_DATE, MAX_DATE } = TrainingOption;
 
   for (const { id: userId } of sportsmans) {
     const userTrainingsCount = getRandomNumber(0, trainings.length / 2);

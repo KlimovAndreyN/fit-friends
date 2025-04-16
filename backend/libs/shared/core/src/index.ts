@@ -13,6 +13,7 @@ export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploa
 export * from './lib/constants/api-header-option';
 export { ApiParamOption } from './lib/constants/api-param-option';
 export * from './lib/constants/authentication.constant';
+export { BackgroundPaths } from './lib/constants/background-paths';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { DateFormat } from './lib/constants/date-format';
