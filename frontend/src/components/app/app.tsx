@@ -2,8 +2,11 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Role } from '@backend/shared/core';
+
 import PrivateRoute from '../private-route/private-route';
 import QuestionnaireRoute from '../questionnaire-route/questionnaire-route';
+import RoleRoute from '../role-route/role-route';
 import Index from '../../pages/index/index';
 import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -14,6 +17,8 @@ import Friends from '../../pages/friends/friends';
 import UserDetail from '../../pages/user-detail/user-detail';
 import TrainingCatalog from '../../pages/training-catalog/training-catalog';
 import Training from '../../pages/training/training';
+import MyOrders from '../../pages/my-orders/my-orders';
+import MyPurchases from '../../pages/my-purchases/my-purchases';
 import NotFound from '../../pages/not-found/not-found';
 
 import { AuthorizationStatus } from '../../types/types';
@@ -30,7 +35,11 @@ function App(): JSX.Element {
             path={AppRoute.Index}
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
-                <Index />
+                <QuestionnaireRoute>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                    <Index />
+                  </RoleRoute>
+                </QuestionnaireRoute>
               </PrivateRoute>
             }
           />
@@ -103,7 +112,9 @@ function App(): JSX.Element {
             element={
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <TrainingCatalog />
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                    <TrainingCatalog />
+                  </RoleRoute>
                 </QuestionnaireRoute>
               </PrivateRoute>
             }
@@ -114,6 +125,30 @@ function App(): JSX.Element {
               <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <Training />
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.MyOrders}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                    <MyOrders />
+                  </RoleRoute>
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.MyPurchases}
+            element={
+              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                    <MyPurchases />
+                  </RoleRoute>
                 </QuestionnaireRoute>
               </PrivateRoute>
             }

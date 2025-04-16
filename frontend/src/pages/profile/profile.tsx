@@ -3,7 +3,6 @@ import { Fragment, useEffect } from 'react';
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
-import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
 import { IUpdateUserProfileDto, Role } from '@backend/shared/core';
 
@@ -15,8 +14,8 @@ import { PageTitle } from '../../const';
 
 function Profile(): JSX.Element {
   //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
-  const firstRound = true;
   //! обработать отображении информации о тренере (2 или 3 этап)
+
   const dispatch = useAppDispatch();
   const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting);
   const userRole = useAppSelector(getUserRole);
@@ -79,33 +78,24 @@ function Profile(): JSX.Element {
                           </div>
                         </form>
                       </div>
-                      {
-                        (firstRound)
-                          ?
-                          <ThumbnailSpecGym />
-                          :
-                          <Fragment>
-                            <div className="personal-account-user__additional-info">
-                              <a className="thumbnail-link thumbnail-link--theme-light" href="#">
-                                <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                  <svg width="30" height="26" aria-hidden="true">
-                                    <use xlinkHref="#icon-friends"></use>
-                                  </svg>
-                                </div>
-                                <span className="thumbnail-link__text">Мои друзья</span>
-                              </a>
-                              <a className="thumbnail-link thumbnail-link--theme-light" href="#">
-                                <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                  <svg width="30" height="26" aria-hidden="true">
-                                    <use xlinkHref="#icon-shopping-cart"></use>
-                                  </svg>
-                                </div>
-                                <span className="thumbnail-link__text">Мои покупки</span>
-                              </a>
-                            </div>
-                            <ThumbnailSpecGym />
-                          </Fragment>
-                      }
+                      <div className="personal-account-user__additional-info">
+                        <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                          <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
+                            <svg width="30" height="26" aria-hidden="true">
+                              <use xlinkHref="#icon-friends"></use>
+                            </svg>
+                          </div>
+                          <span className="thumbnail-link__text">Мои друзья</span>
+                        </a>
+                        <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                          <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
+                            <svg width="30" height="26" aria-hidden="true">
+                              <use xlinkHref="#icon-shopping-cart"></use>
+                            </svg>
+                          </div>
+                          <span className="thumbnail-link__text">Мои покупки</span>
+                        </a>
+                      </div>
                     </div>
                     :
                     //! тут нужен тренер, если у него что то дополнительно загружается

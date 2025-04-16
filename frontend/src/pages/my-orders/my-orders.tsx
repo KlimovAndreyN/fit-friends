@@ -4,13 +4,13 @@ import Header from '../../components/header/header';
 
 import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
 
-function UserDetail(): JSX.Element {
+function MyOrders(): JSX.Element {
   //! заголовок в константы
   //! временно
 
   return (
     <Fragment>
-      <Header title={'Пользователь'} />
+      <Header title={'MyOrders'} />
       <main>
         <section className="friends-list">
           <div className="container">
@@ -24,4 +24,4 @@ function UserDetail(): JSX.Element {
   );
 }
 
-export default UserDetail;
+export default MyOrders;

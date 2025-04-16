@@ -34,6 +34,8 @@ export enum AppRoute {
   TrainingCatalog = '/training',
   TrainingDetail = `${TrainingCatalog}/${ID_PARAM}`,
   UserDetail = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница / попап? 2 или 3 итерация?
+  MyPurchases = 'my-purchases',
+  MyOrders = 'my-orders',
   NotFound = '/404',
 }
 
