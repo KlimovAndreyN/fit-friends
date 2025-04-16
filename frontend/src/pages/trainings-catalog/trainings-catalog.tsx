@@ -1,13 +1,13 @@
 import { Fragment } from 'react';
 
 import Header from '../../components/header/header';
-import TrainingCatalogForm from '../../components/training-catalog-form/training-catalog-form';
+import TrainingsCatalogForm from '../../components/trainings-catalog-form/trainings-catalog-form';
 import TrainingsList from '../../components/trainings-list/trainings-list';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { PageTitle } from '../../const';
 
-function TrainingCatalog(): JSX.Element {
+function TrainingsCatalog(): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
   //! проверить еще раз разметку и оформление
@@ -23,7 +23,7 @@ function TrainingCatalog(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Каталог тренировок</h1>
-              <TrainingCatalogForm />
+              <TrainingsCatalogForm />
               <div className="training-catalog">
                 <TrainingsList />
                 <div className="show-more training-catalog__show-more">
@@ -39,4 +39,4 @@ function TrainingCatalog(): JSX.Element {
   );
 }
 
-export default TrainingCatalog;
+export default TrainingsCatalog;

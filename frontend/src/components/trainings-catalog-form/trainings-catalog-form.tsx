@@ -5,7 +5,7 @@ import { Specialization, SortType, ITrainingQuery } from '@backend/shared/core';
 import BackButton from '../back-button/back-button';
 import FilterSpecializations from '../filter-specializations/filter-specializations';
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
-import TrainingCatalogFormSort from '../training-catalog-form-sort/training-catalog-form-sort';
+import TrainingsCatalogFormSort from '../trainings-catalog-form-sort/trainings-catalog-form-sort';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/actions/training-action';
@@ -17,7 +17,7 @@ const Default = {
   RATING: { min: 1, max: 5 }
 } as const;
 
-function TrainingCatalogForm(): JSX.Element {
+function TrainingsCatalogForm(): JSX.Element {
   //! может на изменения добавить задержку по времени?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
@@ -116,7 +116,7 @@ function TrainingCatalogForm(): JSX.Element {
             specializations={specializations}
             onChange={handleSpecializationsChange}
           />
-          <TrainingCatalogFormSort
+          <TrainingsCatalogFormSort
             sortType={sortType}
             onChange={handleTrainingCatalogFormSortChange}
           />
@@ -126,4 +126,4 @@ function TrainingCatalogForm(): JSX.Element {
   );
 }
 
-export default TrainingCatalogForm;
+export default TrainingsCatalogForm;

@@ -13,9 +13,10 @@ import SignIn from '../../pages/sign-in/sign-in';
 import SignUp from '../../pages/sign-up/sign-up';
 import Questionnaire from '../../pages/questionnaire/questionnaire';
 import Profile from '../../pages/profile/profile';
-import Friends from '../../pages/friends/friends';
+import UsersCatalog from '../../pages/users-catalog/users-catalog';
 import UserDetail from '../../pages/user-detail/user-detail';
-import TrainingCatalog from '../../pages/training-catalog/training-catalog';
+import Friends from '../../pages/friends/friends';
+import TrainingsCatalog from '../../pages/trainings-catalog/trainings-catalog';
 import Training from '../../pages/training/training';
 import MyOrders from '../../pages/my-orders/my-orders';
 import MyPurchases from '../../pages/my-purchases/my-purchases';
@@ -93,11 +94,11 @@ function App(): JSX.Element | null {
             }
           />
           <Route
-            path={AppRoute.Friends}
+            path={AppRoute.UsersCatalog}
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <Friends />
+                  <UsersCatalog />
                 </QuestionnaireRoute>
               </PrivateRoute>
             }
@@ -113,12 +114,22 @@ function App(): JSX.Element | null {
             }
           />
           <Route
-            path={AppRoute.TrainingCatalog}
+            path={AppRoute.Friends}
+            element={
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <Friends />
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.TrainingsCatalog}
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
-                    <TrainingCatalog />
+                    <TrainingsCatalog />
                   </RoleRoute>
                 </QuestionnaireRoute>
               </PrivateRoute>

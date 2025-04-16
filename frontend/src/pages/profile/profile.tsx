@@ -10,11 +10,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
 import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-profile-action';
-import { PageTitle } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
+import { Link } from 'react-router-dom';
 
 function Profile(): JSX.Element {
   //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
-  //! обработать отображении информации о тренере (2 или 3 этап)
+  //! обработать отображение и редактирвоание информации о тренере
+  //! одинаковое большие кнопки thumbnail-link thumbnail-link--theme-light, а как у тренера?
 
   const dispatch = useAppDispatch();
   const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting);
@@ -79,22 +81,22 @@ function Profile(): JSX.Element {
                         </form>
                       </div>
                       <div className="personal-account-user__additional-info">
-                        <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                        <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.Friends}>
                           <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
                             <svg width="30" height="26" aria-hidden="true">
                               <use xlinkHref="#icon-friends"></use>
                             </svg>
                           </div>
                           <span className="thumbnail-link__text">Мои друзья</span>
-                        </a>
-                        <a className="thumbnail-link thumbnail-link--theme-light" href="#">
+                        </Link>
+                        <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.MyPurchases}>
                           <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
                             <svg width="30" height="26" aria-hidden="true">
                               <use xlinkHref="#icon-shopping-cart"></use>
                             </svg>
                           </div>
                           <span className="thumbnail-link__text">Мои покупки</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     :

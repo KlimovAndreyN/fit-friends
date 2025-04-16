@@ -5,12 +5,12 @@ import { enumToArray } from '@backend/shared/helpers';
 
 import { SortTypeTitle } from '../../const';
 
-type TrainingCatalogFormSortProps = {
+type TrainingsCatalogFormSortProps = {
   sortType?: SortType;
   onChange: (sort: SortType) => void;
 }
 
-function TrainingCatalogFormSort({ sortType, onChange }: TrainingCatalogFormSortProps): JSX.Element {
+function TrainingsCatalogFormSort({ sortType, onChange }: TrainingsCatalogFormSortProps): JSX.Element {
   return (
     <div className="gym-catalog-form__block gym-catalog-form__block--sort">
       <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
@@ -38,4 +38,4 @@ function TrainingCatalogFormSort({ sortType, onChange }: TrainingCatalogFormSort
   );
 }
 
-export default TrainingCatalogFormSort;
+export default TrainingsCatalogFormSort;

@@ -31,11 +31,12 @@ export enum AppRoute {
   Questionnaire = '/questionnaire',
   Profile = '/profile',
   Friends = '/friends',
-  TrainingCatalog = '/training',
-  TrainingDetail = `${TrainingCatalog}/${ID_PARAM}`,
-  UserDetail = `/user/${ID_PARAM}`, //! sportsman? + нужен заголовок + страница / попап? 2 или 3 итерация?
-  MyPurchases = 'my-purchases',
-  MyOrders = 'my-orders',
+  TrainingsCatalog = '/trainings',
+  TrainingDetail = `/training/${ID_PARAM}`,
+  UsersCatalog = '/users',
+  UserDetail = `/user/${ID_PARAM}`,
+  MyPurchases = '/my-purchases',
+  MyOrders = '/my-orders',
   NotFound = '/404',
 }
 
