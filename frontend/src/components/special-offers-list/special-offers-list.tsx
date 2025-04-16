@@ -15,6 +15,8 @@ type SpecialOffersListProps = {
 function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | null {
   //! Как переходить на подробнее? пока сделал ссылку на заголовке
   //! Как правильно округлить цену со скидкой? как ТЗ?
+  //! в маркапах были "серые" картинки, а когда взял цветные,
+  //! то на этих елементов нет такого экекта как на отальных карточках, сначала "серые", а при наведении цветные
 
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
 
