@@ -21,11 +21,17 @@ import MyOrders from '../../pages/my-orders/my-orders';
 import MyPurchases from '../../pages/my-purchases/my-purchases';
 import NotFound from '../../pages/not-found/not-found';
 
+import { useAppSelector } from '../../hooks';
+import { getUserRole } from '../../store/user-process/selectors';
+import { isCoachRole } from '../../utils/common';
 import { AuthorizationStatus } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function App(): JSX.Element {
   //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
+
+  const userRole = useAppSelector(getUserRole);
+  const noAuthRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
 
   return (
     <HelmetProvider>
@@ -34,7 +40,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Index}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
                     <Index />
@@ -46,7 +52,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Intro}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
                 <Intro />
               </PrivateRoute>
             }
@@ -54,7 +60,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignIn}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
                 <SignIn />
               </PrivateRoute>
             }
@@ -62,7 +68,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignUp}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Index}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
                 <SignUp />
               </PrivateRoute>
             }
@@ -70,7 +76,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Questionnaire}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute isQuestionnaire>
                   <Questionnaire />
                 </QuestionnaireRoute>
@@ -80,7 +86,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Profile}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <Profile />
                 </QuestionnaireRoute>
@@ -90,7 +96,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Friends}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <Friends />
                 </QuestionnaireRoute>
@@ -100,7 +106,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.UserDetail}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <UserDetail />
                 </QuestionnaireRoute>
@@ -110,7 +116,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.TrainingCatalog}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
                     <TrainingCatalog />
@@ -122,7 +128,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.TrainingDetail}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <Training />
                 </QuestionnaireRoute>
@@ -132,7 +138,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.MyOrders}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
                     <MyOrders />
@@ -144,7 +150,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.MyPurchases}
             element={
-              <PrivateRoute restrictedFor={AuthorizationStatus.NoAuth} redirectTo={AppRoute.Intro}>
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
                     <MyPurchases />

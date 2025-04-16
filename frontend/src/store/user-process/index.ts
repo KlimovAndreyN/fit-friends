@@ -9,7 +9,7 @@ const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isSingInExecuting: false,
   isSingUpExecuting: false,
-  userRole: null
+  userRole: undefined
 };
 
 export const userProcess = createSlice(

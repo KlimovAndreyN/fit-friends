@@ -1,3 +1,5 @@
+import { Role } from '@backend/shared/core';
+
 import { AppRoute, ID_PARAM } from '../const';
 
 export function getBearerAuthorization(token: string): string {
@@ -37,4 +39,12 @@ export function getUserRoute(userId: string): string {
 
 export function isEventEscKey(event: KeyboardEvent): boolean {
   return event.key === 'Escape';
+}
+
+export function isCoachRole(role: Role | undefined): boolean {
+  return role === Role.Coach;
+}
+
+export function isSportsmanRole(role: Role | undefined): boolean {
+  return role === Role.Sportsman;
 }

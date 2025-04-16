@@ -8,12 +8,12 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AppRoute } from '../../const';
 
 type PrivateRouteProps = {
-  restrictedFor: AuthorizationStatus;
+  allowedFor: AuthorizationStatus;
   redirectTo: AppRoute;
   children: JSX.Element;
 }
 
-function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps): JSX.Element {
+function PrivateRoute({ children, allowedFor, redirectTo }: PrivateRouteProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {
@@ -21,7 +21,7 @@ function PrivateRoute({ children, restrictedFor, redirectTo }: PrivateRouteProps
   }
 
   return (
-    (authorizationStatus !== restrictedFor)
+    (authorizationStatus === allowedFor)
       ? children
       : <Navigate to={redirectTo} />
   );
