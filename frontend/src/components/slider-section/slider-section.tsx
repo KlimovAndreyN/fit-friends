@@ -19,6 +19,8 @@ type SliderSectionProps = {
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
+  //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
+  //!   вообще убрать ul и li, т.к. все на div
   //! если карточек мало, то они схопываются!!! как по ТЗ в разных сециях?
   //   временно добавил (childrensCount < slidesCount) ? childrensCount : slidesCount... карточки по центру... и кнопки слайдера видны пока...
   //   как быть если количество карточек меньше чем количество слайдов
@@ -54,13 +56,17 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
     className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${sectionClassName}__control`),
     onClick: handlePreviousButtonClick,
     xlinkHref: '#arrow-left',
+    ariaLabel: 'previous',
     width: 16,
     height: 14
   };
   const nextSliderButtonOption = {
     ...previousSliderButtonOption,
     onClick: handleNextButtonClick,
-    xlinkHref: '#arrow-right'
+    xlinkHref: '#arrow-right',
+    ariaLabel: 'next',
+    width: 16,
+    height: 14
   };
   const childrensCount = childrens.length;
 
@@ -86,22 +92,21 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
                   <Swiper slidesPerView={(childrensCount < slidesCount) ? childrensCount : slidesCount} ref={swiperRef}>
                     {
                       childrens.map(
-                        (children) => {
-                          const itemKey = `item-${children.key || ''}`;
-                          const slideKey = `slide-${itemKey}`;
-
-                          return (
-                            <SwiperSlide key={slideKey}>
-                              <li
-                                className={`${sectionClassName}__item`}
-                                style={{ height: '100%' /*карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке */ }}
-                                key={itemKey}
-                              >
-                                {children}
-                              </li>
-                            </SwiperSlide>
-                          );
-                        }
+                        (children) => (
+                          <SwiperSlide
+                            key={children.key}
+                          >
+                            <li
+                              className={`${sectionClassName}__item`}
+                              style={{
+                                height: '100%', // карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке
+                              }}
+                              key={children.key}
+                            >
+                              {children}
+                            </li>
+                          </SwiperSlide>
+                        )
                       )
                     }
                   </Swiper>
