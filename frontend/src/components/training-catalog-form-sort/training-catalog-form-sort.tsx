@@ -6,7 +6,7 @@ import { enumToArray } from '@backend/shared/helpers';
 import { SortTypeTitle } from '../../const';
 
 type TrainingCatalogFormSortProps = {
-  sortType: SortType;
+  sortType?: SortType;
   onChange: (sort: SortType) => void;
 }
 

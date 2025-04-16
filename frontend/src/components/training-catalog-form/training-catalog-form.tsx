@@ -14,8 +14,7 @@ import { MinMaxRange } from '../../types/types';
 const Default = {
   PAGE: 1,
   PRICE_MIN: 0,
-  RATING: { min: 1, max: 5 },
-  SORT_TYPE: SortType.LowPrice
+  RATING: { min: 1, max: 5 }
 } as const;
 
 function TrainingCatalogForm(): JSX.Element {
@@ -34,7 +33,7 @@ function TrainingCatalogForm(): JSX.Element {
   const [caloriesWaste, setCaloriesWaste] = useState<MinMaxRange>({ min: undefined, max: undefined });
   const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
-  const [sortType, setSortType] = useState<SortType>(Default.SORT_TYPE);
+  const [sortType, setSortType] = useState<SortType>();
 
   useEffect(() => {
     const query: ITrainingQuery = {

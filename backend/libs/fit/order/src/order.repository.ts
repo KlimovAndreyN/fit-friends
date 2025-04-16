@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Order, PaymentMethod } from '@backend/shared/core';
+import { Order, PaymentMethod, SortDirection } from '@backend/shared/core';
 
 import { OrderEntity } from './order.entity';
 import { OrderFactory } from './order.factory';
@@ -22,7 +22,7 @@ export class OrderRepository extends BasePostgresRepository<OrderEntity, Order> 
 
   //! временно, нужно будет?
   public async findById(id: string): Promise<OrderEntity> {
-    const record = await this.client.order.findFirst({ where: { id } });
+    const record = await this.client.order.findFirst({ where: { id }, orderBy: { createdAt: SortDirection.Desc } });
 
     if (!record) {
       //! вынести в константы

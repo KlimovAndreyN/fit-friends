@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Duration, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
+import { Duration, Questionnaire, SortDirection, Specialization, TrainingLevel } from '@backend/shared/core';
 import { Questionnaire as PrismaQuestionnaire } from '@prisma/client';
 
 import { QuestionnaireEntity } from './questionnaire.entity';
@@ -68,7 +68,7 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
   }
 
   public async getReadyForTraining(): Promise<QuestionnaireEntity[]> {
-    const records = await this.client.questionnaire.findMany({ where: { readyForTraining: true } });
+    const records = await this.client.questionnaire.findMany({ where: { readyForTraining: true }, orderBy: { createdAt: SortDirection.Desc } });
 
     return records.map((record) => (this.convertPrismaQuestionnaire(record)));
   }

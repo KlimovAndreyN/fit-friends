@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Review } from '@backend/shared/core';
+import { Review, SortDirection } from '@backend/shared/core';
 
 import { ReviewEntity } from './review.entity';
 import { ReviewFactory } from './review.factory';
@@ -18,7 +18,7 @@ export class ReviewRepository extends BasePostgresRepository<ReviewEntity, Revie
 
   //! временно, нужно будет?
   public async findByTrainingId(trainingId: string): Promise<ReviewEntity[]> {
-    const records = await this.client.review.findMany({ where: { trainingId } });
+    const records = await this.client.review.findMany({ where: { trainingId }, orderBy: { createdAt: SortDirection.Desc } });
 
     return records.map((record => (new ReviewEntity({ ...record }))));
   }

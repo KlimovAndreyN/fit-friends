@@ -1,19 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
-import { Training, TrainingQuery } from '@backend/shared/core';
+import { SortType, Training, TrainingQuery } from '@backend/shared/core';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
-const DefaultCount = {
+const Default = {
   //! отладка MAX: 50,
-  MAX: 20, //!
-  FOR_SPOTRSMAN: 9
+  MAX_COUNT: 20, //!
+  FOR_SPOTRSMAN_COUNT: 9,
+  POPULAR_RATING: { ratingMin: 4, ratingMax: 5, isPopular: true, isSortCreatedDate: true }
 } as const;
-
-const POPULAR_RATING = { ratingMin: 4, ratingMax: 5, isPopular: true } as const;
 
 @Injectable()
 export class TrainingService {
@@ -23,7 +22,9 @@ export class TrainingService {
   ) { }
 
   public async find(query: TrainingQuery): Promise<TrainingEntity[]> {
-    const foundTrainings = await this.trainingRepository.find(query, DefaultCount.MAX);
+    const { sortType } = query;
+    const isSortCreatedDate = (!sortType) || (sortType === SortType.ForFree)
+    const foundTrainings = await this.trainingRepository.find({ ...query, isSortCreatedDate }, Default.MAX_COUNT);
 
     return foundTrainings;
   }
@@ -31,14 +32,15 @@ export class TrainingService {
   public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
     //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
     //! пока только специализации
+
     const { specializations } = await this.questionnaireRepository.findByUserId(userId);
-    const foundTrainings = await this.trainingRepository.find({ specializations }, DefaultCount.FOR_SPOTRSMAN);
+    const foundTrainings = await this.trainingRepository.find({ specializations, isSortCreatedDate: true }, Default.FOR_SPOTRSMAN_COUNT);
 
     return foundTrainings;
   }
 
   public async getSpecial(): Promise<TrainingEntity[]> {
-    const foundTrainings = await this.trainingRepository.find({ isSpecial: true }, DefaultCount.MAX); //! 0 и 5 временно
+    const foundTrainings = await this.trainingRepository.find({ isSpecial: true, isSortCreatedDate: true }, Default.MAX_COUNT); //! 0 и 5 временно
 
     return foundTrainings;
   }
@@ -47,7 +49,7 @@ export class TrainingService {
     //! по ТЗ не ясно, только с 5 или наивысший из имеющихся?
     //! а если рейтирнг тренировки будет до первого знака?
     //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга
-    const foundTrainings = await this.trainingRepository.find(POPULAR_RATING, DefaultCount.MAX);
+    const foundTrainings = await this.trainingRepository.find(Default.POPULAR_RATING, Default.MAX_COUNT);
 
     return foundTrainings;
   }
