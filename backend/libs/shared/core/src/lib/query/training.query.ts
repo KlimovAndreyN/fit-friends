@@ -33,7 +33,7 @@ export class TrainingQuery
   })
   @IsOptional()
   @Transform(transformNumber)
-  public caloriesLoseMin?: ITrainingQuery['caloriesLoseMin'];
+  public caloriesWasteMin?: ITrainingQuery['caloriesWasteMin'];
 
   @ApiProperty({
     type: 'integer',
@@ -41,7 +41,7 @@ export class TrainingQuery
   })
   @IsOptional()
   @Transform(transformNumber)
-  public caloriesLoseMax?: ITrainingQuery['caloriesLoseMax'];
+  public caloriesWasteMax?: ITrainingQuery['caloriesWasteMax'];
 
   @ApiProperty({
     type: 'integer',

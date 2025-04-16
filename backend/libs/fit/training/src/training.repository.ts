@@ -48,8 +48,8 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       page: currentPage = Default.PAGE,
       priceMin,
       priceMax,
-      caloriesLoseMin,
-      caloriesLoseMax,
+      caloriesWasteMin,
+      caloriesWasteMax,
       ratingMin,
       ratingMax,
       specializations,
@@ -66,7 +66,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       where.price = { gte: priceMin, lte: priceMax };
     }
 
-    where.caloriesWaste = { gte: caloriesLoseMin, lte: caloriesLoseMax };
+    where.caloriesWaste = { gte: caloriesWasteMin, lte: caloriesWasteMax };
     where.rating = { gte: ratingMin, lte: ratingMax };
     where.isSpecial = isSpecial;
     where.specialization = { in: specializations };

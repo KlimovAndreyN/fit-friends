@@ -31,7 +31,7 @@ function TrainingCatalogForm(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('page', page, 'setPage', setPage);
   const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ выщитывать максимальную цену?
-  const [caloriesLose, setCaloriesLose] = useState<MinMaxRange>({ min: undefined, max: undefined });
+  const [caloriesWaste, setCaloriesWaste] = useState<MinMaxRange>({ min: undefined, max: undefined });
   const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
   const [sortType, setSortType] = useState<SortType>(Default.SORT_TYPE);
@@ -41,8 +41,8 @@ function TrainingCatalogForm(): JSX.Element {
       page,
       priceMin: price.min,
       priceMax: price.max,
-      caloriesLoseMin: caloriesLose.min,
-      caloriesLoseMax: caloriesLose.max,
+      caloriesWasteMin: caloriesWaste.min,
+      caloriesWasteMax: caloriesWaste.max,
       ratingMin: rating.min,
       ratingMax: rating.max,
       specializations: Array.from(specializations),
@@ -50,14 +50,14 @@ function TrainingCatalogForm(): JSX.Element {
     };
 
     dispatch(fetchTrainings(query));
-  }, [dispatch, page, price, caloriesLose, rating, specializations, sortType]);
+  }, [dispatch, page, price, caloriesWaste, rating, specializations, sortType]);
 
   const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
     setPrice(value);
   };
 
-  const handleCaloriesLoseFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    setCaloriesLose(value);
+  const handleCaloriesWasteFilterMinMaxRangeChange = (value: MinMaxRange) => {
+    setCaloriesWaste(value);
   };
 
   const handleRatingFilterMinMaxRangeChange = (value: MinMaxRange) => {
@@ -103,9 +103,9 @@ function TrainingCatalogForm(): JSX.Element {
             nameMin='text-min-cal'
             nameMax='text-max-cal'
             prefixClassName='calories'
-            value={caloriesLose}
+            value={caloriesWaste}
             showInputs
-            onChange={handleCaloriesLoseFilterMinMaxRangeChange}
+            onChange={handleCaloriesWasteFilterMinMaxRangeChange}
           />
           <FilterMinMaxRange
             title='Рейтинг'

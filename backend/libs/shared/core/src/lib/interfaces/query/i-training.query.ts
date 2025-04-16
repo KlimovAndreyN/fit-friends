@@ -5,8 +5,8 @@ import { IPageQuery } from './i-page.query';
 export interface ITrainingQuery extends IPageQuery {
   priceMin?: number;
   priceMax?: number;
-  caloriesLoseMin?: number;
-  caloriesLoseMax?: number;
+  caloriesWasteMin?: number;
+  caloriesWasteMax?: number;
   ratingMin?: number;
   ratingMax?: number;
   specializations?: Specialization[]; //! может string?

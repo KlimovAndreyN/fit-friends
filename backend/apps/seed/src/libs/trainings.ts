@@ -13,7 +13,7 @@ export async function clearTrainings(trainingRepository: TrainingRepository): Pr
 
 export async function seedTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
   const trainings: TrainingEntity[] = [];
-  const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, MIN_DATE, MAX_DATE } = MockTrainingOption;
+  const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, CALORIES_FACTOR, MIN_DATE, MAX_DATE } = MockTrainingOption;
   const { MIN_RATING, MAX_RATING } = MockReviewOption;
   let trainingGlobalIndex = 1;
 
@@ -32,7 +32,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
         specialization: getRandomEnumItem(Specialization), //! скорректировать только своих специализаций! coach.specializations! что в ТЗ?
         duration: getRandomEnumItem(Duration),
         price: (isZeroPrice) ? 0 : getRandomNumber(MIN_PRICE, MAX_PRICE) * PRICE_FACTOR,
-        caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES),
+        caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES) * CALORIES_FACTOR,
         description: `Training description ${trainingIndexPrefix}`,
         gender: getRandomEnumItem(Gender),
         videoFileId: '1111-2222-3333-4444', //! как бы видео загрузить на file-storage....
