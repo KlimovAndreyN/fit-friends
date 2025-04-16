@@ -2,7 +2,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Role } from '@backend/shared/core';
+import { isCoachRole, Role } from '@backend/shared/core';
 
 import PrivateRoute from '../private-route/private-route';
 import QuestionnaireRoute from '../questionnaire-route/questionnaire-route';
@@ -23,14 +23,19 @@ import NotFound from '../../pages/not-found/not-found';
 
 import { useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { isCoachRole } from '../../utils/common';
 import { AuthorizationStatus } from '../../types/types';
 import { AppRoute } from '../../const';
 
-function App(): JSX.Element {
+function App(): JSX.Element | null {
   //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
 
   const userRole = useAppSelector(getUserRole);
+
+  if (!userRole) {
+    //! нужен компонент с ошибкой
+    return null;
+  }
+
   const authRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
 
   return (

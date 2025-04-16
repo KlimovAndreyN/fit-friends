@@ -40,10 +40,8 @@ swagger@local.ru
     !можно поискать аналог criticalSection для JavaScript
     !может сделать одно действие fetchIndexPageData, а там синхронно вызвать нужные действия, и таже для других страниц
 
-  а как выйти?
+  а как выйти? может, какая ссылка или автовыход...
     Bad Request; Require logout. Token:
-
-вынести isSportsmanRole в общие, "=== Role." убрать и сделать проверку на пусто и там убрать undefined
 
 !старницы и ссылки по ролям, а потом моки
   Profile

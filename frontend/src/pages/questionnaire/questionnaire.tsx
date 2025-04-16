@@ -7,7 +7,7 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
-import { Duration, ICreateQuestionnaireSportsmanDto, Role, Specialization, TrainingLevel } from '@backend/shared/core';
+import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Specialization, TrainingLevel } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -35,7 +35,7 @@ function Questionnaire(): JSX.Element | null {
     return null;
   }
 
-  const endingClassName = (userRole === Role.Sportsman) ? 'user' : 'coath';
+  const endingClassName = isSportsmanRole(userRole) ? 'user' : 'coath';
   const divClassName = `questionnaire-${endingClassName}`;
   const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
 

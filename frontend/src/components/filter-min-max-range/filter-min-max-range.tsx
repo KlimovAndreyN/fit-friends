@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 
-import { parseStringNumber } from '@backend/shared/helpers';
+import { parseStringNumber } from '@backend/shared/core';
 
 import { MinMaxRange } from '../../types/types';
 

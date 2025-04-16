@@ -97,5 +97,6 @@ export { SortType } from './lib/types/sort-type.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
 
+export * from './lib/utils/common';
 export * from './lib/utils/convert';
 export * from './lib/utils/transform';

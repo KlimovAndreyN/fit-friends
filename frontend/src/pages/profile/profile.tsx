@@ -4,7 +4,7 @@ import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import PersonalAccountLeftPanel from '../../components/personal-account-left-panel/personal-account-left-panel';
 
-import { IUpdateUserProfileDto, Role } from '@backend/shared/core';
+import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -36,7 +36,7 @@ function Profile(): JSX.Element {
   }
 
   const { questionnaire: { caloriesWaste } } = UserProfile;
-  const isSpotsmanRole = (userRole === Role.Sportsman);
+  const isSpotsman = isSportsmanRole(userRole);
 
   return (
     <Fragment>
@@ -48,12 +48,12 @@ function Profile(): JSX.Element {
               <h1 className="visually-hidden">Личный кабинет</h1>
               <PersonalAccountLeftPanel
                 UserProfile={UserProfile}
-                isSpotsmanRole={isSpotsmanRole}
+                isSpotsmanRole={isSpotsman}
                 onSubmit={handleLeftPanelSubmit}
               />
               <div className="inner-page__content">
                 {
-                  (isSpotsmanRole)
+                  (isSpotsman)
                     ?
                     <div className="personal-account-user">
                       <div className="personal-account-user__schedule">

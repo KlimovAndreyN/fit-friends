@@ -8,12 +8,6 @@ export function enumToArray<T extends object>(enumObj: T): T[keyof T][] {
   return items;
 }
 
-export function parseStringNumber(value: string): number | undefined {
-  const parsedValue = parseInt(value, 10);
-
-  return (isNaN(parsedValue)) ? undefined : parsedValue;
-}
-
 export function getQueryString(query: object): string {
   const queryParams: string[] = [];
 

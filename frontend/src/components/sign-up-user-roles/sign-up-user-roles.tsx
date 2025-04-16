@@ -1,5 +1,4 @@
-import { Role } from '@backend/shared/core';
-import { isSportsmanRole } from '../../utils/common';
+import { isSportsmanRole, Role } from '@backend/shared/core';
 
 type SignUpUserRolesProps = {
   name: string;

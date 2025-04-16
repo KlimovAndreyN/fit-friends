@@ -8,13 +8,12 @@ import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
 
-import { ICreateUserDto, Location, Gender, Role, BackgroundPaths } from '@backend/shared/core';
+import { ICreateUserDto, Location, Gender, Role, BackgroundPaths, isSportsmanRole } from '@backend/shared/core';
 import { getRandomItem } from '@backend/shared/helpers';
 
 import { registerUser } from '../../store/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingUpExecuting } from '../../store/user-process/selectors';
-import { isSportsmanRole } from '../../utils/common';
 import { Option } from '../../types/types';
 import { DefaultUser, LOCATIONS, PageTitle } from '../../const';
 
@@ -48,7 +47,7 @@ function SignUp(): JSX.Element {
   };
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); //! работает? почемуто изначально не было
+    event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);

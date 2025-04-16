@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-import { Duration, Questionnaire, Role, Specialization, TrainingLevel } from '@backend/shared/core';
+import { Duration, isSportsmanRole, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems, enumToArray } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
@@ -26,7 +26,7 @@ export async function seedQuestionnaires(questionnaireRepository: QuestionnaireR
       readyForTraining: getRandomBoolean() || getRandomBoolean() // удвоим
     }
 
-    if (role === Role.Sportsman) {
+    if (isSportsmanRole(role)) {
       questionnaire.duration = getRandomEnumItem(Duration);
       questionnaire.caloriesLose = getRandomNumber(LOSE_MIN, LOSE_MAX);
       questionnaire.caloriesWaste = getRandomNumber(WASTE_MIN, WASTE_MAX);

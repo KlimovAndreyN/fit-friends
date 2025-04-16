@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-import { AuthUser, BackgroundPaths, Location, Role, UserApiProperty } from '@backend/shared/core';
+import { AuthUser, BackgroundPaths, isSportsmanRole, Location, Role, UserApiProperty } from '@backend/shared/core';
 import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
@@ -16,7 +16,7 @@ export async function clearUsers(fitUserRepository: FitUserRepository): Promise<
 
 export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
-  const backgroundPaths = [...((role === Role.Sportsman) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
+  const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
 
   for (const { name, gender } of mockUsers) {
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
