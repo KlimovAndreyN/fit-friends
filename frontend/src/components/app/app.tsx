@@ -30,12 +30,6 @@ function App(): JSX.Element | null {
   //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
 
   const userRole = useAppSelector(getUserRole);
-
-  if (!userRole) {
-    //! нужен компонент с ошибкой
-    return null;
-  }
-
   const authRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
 
   return (

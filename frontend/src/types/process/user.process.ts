@@ -6,5 +6,5 @@ export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
   isSingInExecuting: boolean;
   isSingUpExecuting: boolean;
-  userRole?: Role;
+  userRole: Role;
 }

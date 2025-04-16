@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { UserProcess } from '../../types/process/user.process';
 import { AuthorizationStatus } from '../../types/types';
 import { fetchUserStatus, loginUser, logoutUser, registerUser } from '../actions/user-action';
-import { StoreSlice } from '../../const';
+import { DefaultUser, StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isSingInExecuting: false,
   isSingUpExecuting: false,
-  userRole: undefined
+  userRole: DefaultUser.ROLE
 };
 
 export const userProcess = createSlice(

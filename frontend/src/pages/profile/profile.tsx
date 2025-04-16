@@ -30,7 +30,7 @@ function Profile(): JSX.Element {
   }, [dispatch]);
 
   //! UserProfile и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
-  if (isFetchUserProfileExecuting || !UserProfile || !userRole) {
+  if (isFetchUserProfileExecuting || !UserProfile) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }

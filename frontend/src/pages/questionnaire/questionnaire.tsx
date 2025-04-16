@@ -29,12 +29,6 @@ function Questionnaire(): JSX.Element | null {
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();
-
-  if (!userRole) {
-    //! сделать компонет с ошибкой и вывести ошибку или 404 с текстом и убрать "| null"
-    return null;
-  }
-
   const endingClassName = isSportsmanRole(userRole) ? 'user' : 'coath';
   const divClassName = `questionnaire-${endingClassName}`;
   const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
