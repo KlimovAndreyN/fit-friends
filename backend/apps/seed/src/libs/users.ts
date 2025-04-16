@@ -4,7 +4,7 @@ import { AuthUser, Location, Role, UserApiProperty } from '@backend/shared/core'
 import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { MOCK_DEFAULT_USER_PASSWORD, MOCK_SPORTSMANS_BACKGROUND_PATHS, MOCK_SWAGGER_USER, MockUser } from './mock-data';
+import { MOCK_COACHS_BACKGROUND_PATHS, MOCK_DEFAULT_USER_PASSWORD, MOCK_SPORTSMANS_BACKGROUND_PATHS, MOCK_SWAGGER_USER, MockUser } from './mock-data';
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
   const ids = await fitUserRepository.getAllIds();
@@ -16,6 +16,7 @@ export async function clearUsers(fitUserRepository: FitUserRepository): Promise<
 
 export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
+  const backgroundPaths = (role === Role.Sportsman) ? MOCK_SPORTSMANS_BACKGROUND_PATHS : MOCK_COACHS_BACKGROUND_PATHS;
 
   for (const { name, gender } of mockUsers) {
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
@@ -23,7 +24,7 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
       email: `${name.toLocaleLowerCase()}@local.ru`,
       name,
       about: `About: my name is ${name}`,
-      backgroundPath: getRandomItem(MOCK_SPORTSMANS_BACKGROUND_PATHS),
+      backgroundPath: getRandomItem(backgroundPaths),
       gender,
       location: getRandomEnumItem(Location),
       role,
@@ -35,6 +36,7 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
 
     await userEntity.setPassword(MOCK_DEFAULT_USER_PASSWORD);
 
+    //! может и для тренера MOCK_SWAGGER_COACH боже добавить постоянный id....
     if (name === MOCK_SWAGGER_USER) {
       // для удобства тестирования запросов из свагера
       userEntity.id = UserApiProperty.Id.example;

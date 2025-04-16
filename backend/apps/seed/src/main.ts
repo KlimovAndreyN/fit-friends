@@ -10,7 +10,7 @@ import { ReviewRepository } from '@backend/fit/review';
 
 import { AppModule } from './app/app.module';
 import { clearUsers, seedUsers } from './libs/users';
-import { clearQuestionnaires, seedSportsmansQuestionnaires } from './libs/questionnaires';
+import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
 import { MOCK_COACHES, MOCK_SPORTSMANS } from './libs/mock-data';
 import { clearOrders, seedOrders } from './libs/orders';
@@ -53,14 +53,9 @@ async function bootstrap() {
     Logger.log('🤘️ Database Account(mongoDb) was filled!');
 
     // опросники
-    const sportsmansQuestionnaires = await seedSportsmansQuestionnaires(questionnaireRepository, sportsmans);
+    const questionnaires = await seedQuestionnaires(questionnaireRepository, [...sportsmans, ...coaches]);
 
-    Logger.log(`Questionnaires sportsmans count: ${sportsmansQuestionnaires.length}`);
-
-    //! нужно еще опросники тренеров
-    //const coachesQuestionnaires = await seedCoachesQuestionnaires(questionnaireRepository, coaches);
-
-    //Logger.log(`Questionnaires coaches count: ${coachesQuestionnaires.length}`);
+    Logger.log(`Questionnaires count: ${questionnaires.length}`);
 
     // тренировки
     const trainings = await seedTrainings(trainingRepository, coaches);

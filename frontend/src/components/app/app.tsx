@@ -31,7 +31,7 @@ function App(): JSX.Element {
   //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
 
   const userRole = useAppSelector(getUserRole);
-  const noAuthRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
+  const authRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
 
   return (
     <HelmetProvider>
@@ -52,7 +52,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Intro}
             element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
                 <Intro />
               </PrivateRoute>
             }
@@ -60,7 +60,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignIn}
             element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
                 <SignIn />
               </PrivateRoute>
             }
@@ -68,7 +68,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignUp}
             element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={noAuthRedirectTo}>
+              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
                 <SignUp />
               </PrivateRoute>
             }

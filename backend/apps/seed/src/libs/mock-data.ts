@@ -28,10 +28,15 @@ export const MOCK_COACHES: MockUser[] = [
 export const MOCK_DEFAULT_USER_PASSWORD = '123456';
 
 //! сделать компактнее и есть на фронте
-//! проверить работает ли "img/" или нужно "/img/"
 export const MOCK_SPORTSMANS_BACKGROUND_PATHS = [
   'img/content/user-card-photo1.jpg',
   'img/content/user-card-photo2.jpg'
+];
+
+//! сделать компактнее и есть на фронте
+export const MOCK_COACHS_BACKGROUND_PATHS = [
+  'img/content/user-coach-photo1.jpg',
+  'img/content/user-coach-photo2.jpg'
 ];
 
 export const MockCalorieOption = {
@@ -48,7 +53,7 @@ export const MockSpecializationsOption = {
 
 export const MockTrainingOption = {
   MIN_COUNT: 0,
-  MAX_COUNT: 20,
+  MAX_COUNT: 30,
   NOT_ZERO_PRICE_FACTOR: 4,
   MIN_PRICE: 1,
   MAX_PRICE: 100,
@@ -61,7 +66,6 @@ export const MockTrainingOption = {
 } as const;
 
 //! сделать компактнее и возможно будут на фронте
-//! проверить работает ли "img/" или нужно "/img/"
 export const MOCK_TRAININGS_BACKGROUND_PATHS = [
   'img/content/thumbnails/training-01@2x.jpg',
   'img/content/thumbnails/training-02@2x.jpg',

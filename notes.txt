@@ -40,6 +40,9 @@ swagger@local.ru
     !можно поискать аналог criticalSection для JavaScript
     !может сделать одно действие fetchIndexPageData, а там синхронно вызвать нужные действия, и таже для других страниц
 
+  а как выйти?
+    Bad Request; Require logout. Token:
+
 заполнить seed для опросников тренеров
 
 !старницы и ссылки по ролям, а потом моки
