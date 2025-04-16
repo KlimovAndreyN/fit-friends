@@ -17,7 +17,7 @@ function TrainingsCatalog(): JSX.Element {
 
   return (
     <Fragment>
-      <Header title={PageTitle.TrainingCatalog} />
+      <Header title={PageTitle.TrainingsCatalog} />
       <main>
         <section className="inner-page">
           <div className="container">

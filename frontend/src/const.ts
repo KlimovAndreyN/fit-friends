@@ -13,9 +13,13 @@ export enum PageTitle {
   SignUp = `Регистрация — ${MAIN_TITLE}`,
   Questionnaire = `Опросник — ${MAIN_TITLE}`,
   Profile = `Личный кабинет — ${MAIN_TITLE}`,
-  Friends = `Список друзей — ${MAIN_TITLE}`,
-  TrainingCatalog = `Каталог тренировок — ${MAIN_TITLE}`,
+  TrainingsCatalog = `Каталог тренировок — ${MAIN_TITLE}`,
   TrainingDetail = `Карточка тренировки — ${MAIN_TITLE}`,
+  UsersCatalog = `Каталог пользователей — ${MAIN_TITLE}`,
+  UserDetail = `Карточка пользователя — ${MAIN_TITLE}`,
+  Friends = `Список друзей — ${MAIN_TITLE}`,
+  MyPurchases = `Мои покупки — ${MAIN_TITLE}`,
+  MyOrders = `Мои заказы — ${MAIN_TITLE}`,
   NotFound = `404 — ${MAIN_TITLE}`
 }
 
@@ -30,11 +34,11 @@ export enum AppRoute {
   SignUp = '/sign-up',
   Questionnaire = '/questionnaire',
   Profile = '/profile',
-  Friends = '/friends',
   TrainingsCatalog = '/trainings',
   TrainingDetail = `/training/${ID_PARAM}`,
   UsersCatalog = '/users',
   UserDetail = `/user/${ID_PARAM}`,
+  Friends = '/friends',
   MyPurchases = '/my-purchases',
   MyOrders = '/my-orders',
   NotFound = '/404',

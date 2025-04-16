@@ -45,11 +45,13 @@ swagger@local.ru
     и на странице с опросом
 
 !старницы и ссылки от тренера
-  Profile
+  нужно заполнить Profile
 
-!сделать заголовки + времанку, а потом моки
+!сделать времянки, а потом моки
+  Questionnaire для тренера
   Friends
-  Users
+  UsersCatalog
+  UsersDetail
   MyOrders
   MyPurchases
   
