@@ -8,6 +8,8 @@ type HeaderProps = {
 }
 
 function Header(props: HeaderProps): JSX.Element {
+  //! делать блок поиска? что по ТЗ?
+
   return (
     <header className="header">
       <Helmet {...props} />

@@ -1,121 +1,12 @@
-import { Fragment, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import Slider, { SliderProps } from '../slider/slider';
 
-import 'swiper/css';
-
-import SliderButton from '../slider-button/slider-button';
-import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
-import classNames from 'classnames';
-
-type SliderSectionProps = {
-  title: string;
-  showAllLink?: string;
-  isShowAllLight?: boolean;
-  sectionClassName: string;
-  childrens: JSX.Element[];
-  slidesCount: number;
-}
+type SliderSectionProps = SliderProps;
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
-  //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
-  //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
-  //!   вообще убрать ul и li, т.к. все на div
-  //! если карточек мало, то они схопываются!!! как по ТЗ в разных сециях?
-  //   временно добавил (childrensCount < slidesCount) ? childrensCount : slidesCount... карточки по центру... и кнопки слайдера видны пока...
-  //   как быть если количество карточек меньше чем количество слайдов
-  // по кругу Swiper.loop boolean
-
-  const { title, showAllLink, isShowAllLight, sectionClassName, childrens, slidesCount } = props;
-  const swiperRef = useRef<SwiperRef>(null);
-  const navigate = useNavigate();
-
-  const handleshowAllButtonClick = () => {
-    if (showAllLink) {
-      navigate(showAllLink);
-    }
-  };
-
-  const handlePreviousButtonClick = () => {
-    swiperRef.current?.swiper.slidePrev();
-  };
-
-  const handleNextButtonClick = () => {
-    swiperRef.current?.swiper.slideNext();
-  };
-
-  const showAllSliderButtonOption = {
-    title: 'Смотреть все',
-    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${sectionClassName}__button`),
-    onClick: handleshowAllButtonClick,
-    xlinkHref: '#arrow-right',
-    width: 14,
-    height: 10
-  };
-  const previousSliderButtonOption = {
-    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${sectionClassName}__control`),
-    onClick: handlePreviousButtonClick,
-    xlinkHref: '#arrow-left',
-    ariaLabel: 'previous',
-    width: 16,
-    height: 14
-  };
-  const nextSliderButtonOption = {
-    ...previousSliderButtonOption,
-    onClick: handleNextButtonClick,
-    xlinkHref: '#arrow-right',
-    ariaLabel: 'next',
-    width: 16,
-    height: 14
-  };
-  const childrensCount = childrens.length;
-
   return (
-    <section className={sectionClassName}>
+    <section className={props.sectionClassName}>
       <div className="container">
-        <div className={`${sectionClassName}__wrapper`}>
-          {
-            (childrensCount)
-              ?
-              <Fragment>
-                <div className={`${sectionClassName}__title-wrapper`}>
-                  <h2 className={`${sectionClassName}__title`}>{title}</h2>
-                  {
-                    (showAllLink) ? <SliderButton {...showAllSliderButtonOption} /> : null
-                  }
-                  <div className={`${sectionClassName}__controls`}>
-                    <SliderButton {...previousSliderButtonOption} />
-                    <SliderButton {...nextSliderButtonOption} />
-                  </div>
-                </div>
-                <ul className={`${sectionClassName}__list`}>
-                  <Swiper slidesPerView={(childrensCount < slidesCount) ? childrensCount : slidesCount} ref={swiperRef}>
-                    {
-                      childrens.map(
-                        (children) => (
-                          <SwiperSlide
-                            key={children.key}
-                          >
-                            <li
-                              className={`${sectionClassName}__item`}
-                              style={{
-                                height: '100%', // карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке
-                              }}
-                              key={children.key}
-                            >
-                              {children}
-                            </li>
-                          </SwiperSlide>
-                        )
-                      )
-                    }
-                  </Swiper>
-                </ul>
-              </Fragment>
-              :
-              <ThumbnailSpecGym />
-          }
-        </div>
+        <Slider {...props} />
       </div>
     </section>
   );
