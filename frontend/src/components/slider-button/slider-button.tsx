@@ -1,7 +1,8 @@
 import { OnClick } from '../../types/types';
 
 type SliderButtonProps = {
-  title?: string;
+  firstTitle?: string;
+  secondTitle?: string;
   className: string;
   ariaLabel?: string;
   onClick: OnClick;
@@ -11,7 +12,7 @@ type SliderButtonProps = {
 }
 
 function SliderButton(props: SliderButtonProps): JSX.Element {
-  const { title, className, ariaLabel, onClick, xlinkHref, width, height } = props;
+  const { firstTitle, secondTitle, className, ariaLabel, onClick, xlinkHref, width, height } = props;
 
   return (
     <button
@@ -21,11 +22,14 @@ function SliderButton(props: SliderButtonProps): JSX.Element {
       onClick={onClick}
     >
       {
-        (title) ? <span>{title}</span> : null
+        (firstTitle) ? <span>{firstTitle}</span> : null
       }
       <svg width={width} height={height} aria-hidden="true">
         <use xlinkHref={xlinkHref} />
       </svg>
+      {
+        (secondTitle) ? <span>{secondTitle}</span> : null
+      }
     </button>
   );
 }
