@@ -21,9 +21,11 @@ function SignIn(): JSX.Element {
   const isSingInExecuting = useAppSelector(getIsSingInExecuting);
 
   const submitClassName = classNames('btn sign-in__button', { 'is-disabled': isSingInExecuting });
-  const divExtraClassName = 'sign-in__input';
+  const divExtraClassName = 'sign-in';
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); //! проверить! опять не было...
+
     const form = event.currentTarget;
     const formData = new FormData(form);
     const email = formData.get(FormFieldName.Email)?.toString() || '';
@@ -44,17 +46,17 @@ function SignIn(): JSX.Element {
     <PopupForm {...popupFormProps} >
       <div className="sign-in">
         <CustomInput
-          divExtraClassName={divExtraClassName}
           name={FormFieldName.Email}
           type='email'
           label='E-mail'
+          divExtraClassName={divExtraClassName}
           required
         />
         <CustomInput
-          divExtraClassName={divExtraClassName}
           name={FormFieldName.Password}
           type='password'
           label='Пароль'
+          divExtraClassName={divExtraClassName}
           required
           autoComplete='off'
         />

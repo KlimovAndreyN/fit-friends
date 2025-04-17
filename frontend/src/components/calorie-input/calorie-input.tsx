@@ -6,14 +6,16 @@ type CalorieProps = {
 }
 
 function CalorieInput({ name, caption }: CalorieProps): JSX.Element {
+  //! сменить имя на QuestionnaireUserCalorie
+
   return (
     <div className={`questionnaire-user__${name}`}>
       <span className="questionnaire-user__legend">{caption}</span>
       <CustomInput
-        type='number'
         name={name}
+        type='number'
         text='ккал'
-        divExtraClassName='custom-input--with-text-right questionnaire-user__input'
+        divExtraClassName='custom-input--with-text-right questionnaire-user'
       />
     </div>
   );

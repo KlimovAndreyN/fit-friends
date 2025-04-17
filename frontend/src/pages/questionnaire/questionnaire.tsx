@@ -6,6 +6,7 @@ import QuestionnairebBlock from '../../components/questionnaire-block/questionna
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 import CalorieInput from '../../components/calorie-input/calorie-input';
+import CustomInput from '../../components/custom-input/custom-input';
 
 import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Specialization, TrainingLevel } from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
@@ -38,15 +39,14 @@ enum FormFieldName {
 
 function Questionnaire(): JSX.Element | null {
   //! сделать блоки для тренера
+  //! много кода! поделить как нибуть!
 
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();
-  const endingClassName = isSportsmanRole(userRole) ? 'user' : 'coach';
-  const divClassName = `questionnaire-${endingClassName}`;
-  const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); //! проверить! опять не было...
 
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -67,9 +67,12 @@ function Questionnaire(): JSX.Element | null {
     dispatch(createQuestionnaire({ dto, userRole }));
   };
 
+  const isSportsman = isSportsmanRole(userRole);
+  const divClassName = `questionnaire-${isSportsman ? 'user' : 'coach'}`;
+  const submitClassName = classNames(`btn ${divClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
   const popupFormProps = {
     title: PageTitle.Questionnaire,
-    extraClass: `popup-form--questionnaire-${endingClassName}`,
+    extraClass: `popup-form--${divClassName}`,
     onSubmit: handlePopupFormSubmit
   };
 
@@ -77,36 +80,76 @@ function Questionnaire(): JSX.Element | null {
     <PopupForm {...popupFormProps} >
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
-        <div className={`questionnaire-${endingClassName}__wrapper`}>
-          <QuestionnairebBlock legend='Ваша специализация (тип) тренировок' divExtraClassName={endingClassName} >
+        <div className={`${divClassName}__wrapper`}>
+          <QuestionnairebBlock legend='Ваша специализация (тип) тренировок' divExtraClassName={divClassName} >
             <SpecializationsCheckbox
               name={FormFieldName.Spec}
               values={[...DefaultUser.SPECIALISATIONS]}
-              divExtraClassName={`questionnaire-${endingClassName}__specializations`}
+              divExtraClassName={divClassName}
             />
           </QuestionnairebBlock>
-          <QuestionnairebBlock legend='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={endingClassName} >
-            <CustomToggleRadio
-              name={FormFieldName.Time}
-              divExtraClassName={`questionnaire-${endingClassName}__radio`}
-              options={USER_DURATIONS}
-              value={DefaultUser.DURATION}
-            />
-          </QuestionnairebBlock>
-          <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={endingClassName} >
+          {
+            isSportsman &&
+            <QuestionnairebBlock legend='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={divClassName} >
+              <CustomToggleRadio
+                name={FormFieldName.Time}
+                divExtraClassName={divClassName}
+                options={USER_DURATIONS}
+                value={DefaultUser.DURATION}
+              />
+            </QuestionnairebBlock>
+          }
+          <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={divClassName} >
             <CustomToggleRadio
               name={FormFieldName.UserTrainingLevel}
-              divExtraClassName={`questionnaire-${endingClassName}__radio`}
+              divExtraClassName={divClassName}
               options={TRAINING_LEVELS}
               value={DefaultUser.TRAINING_LEVEL}
             />
           </QuestionnairebBlock>
-          <QuestionnairebBlock divExtraClassName={endingClassName} >
-            <Fragment>
-              <CalorieInput name={FormFieldName.CaloriesLose} caption='Сколько калорий хотите сбросить' />
-              <CalorieInput name={FormFieldName.CaloriesWaste} caption='Сколько калорий тратить в день' />
-            </Fragment>
-          </QuestionnairebBlock>
+          {
+            isSportsman &&
+            <QuestionnairebBlock divExtraClassName={divClassName} >
+              <Fragment>
+                <CalorieInput name={FormFieldName.CaloriesLose} caption='Сколько калорий хотите сбросить' />
+                <CalorieInput name={FormFieldName.CaloriesWaste} caption='Сколько калорий тратить в день' />
+              </Fragment>
+            </QuestionnairebBlock>
+          }
+          {
+            !isSportsman &&
+            <QuestionnairebBlock legend='Ваши дипломы и сертификаты' divExtraClassName={divClassName} >
+              <div className="drag-and-drop questionnaire-coach__drag-and-drop">
+                <label>
+                  <span className="drag-and-drop__label" tabIndex={0}>Загрузите сюда файлы формата PDF, JPG или PNG
+                    <svg width="20" height="20" aria-hidden="true">
+                      <use xlinkHref="#icon-import"></use>
+                    </svg>
+                  </span>
+                  <input type="file" name="import" tabIndex={-1} accept=".pdf, .jpg, .png" />
+                </label>
+              </div>
+            </QuestionnairebBlock>
+          }
+          {
+            !isSportsman &&
+            <QuestionnairebBlock legend='Расскажите о своём опыте, который мы сможем проверить' divExtraClassName={divClassName} >
+              <Fragment>
+                <CustomInput name='description' type='textarea' divExtraClassName={divClassName} />
+                <div className="questionnaire-coach__checkbox">
+                  <label>
+                    <input type="checkbox" value="individual-training" name="individual-training" checked />
+                    <span className="questionnaire-coach__checkbox-icon">
+                      <svg width="9" height="6" aria-hidden="true">
+                        <use xlinkHref="#arrow-check"></use>
+                      </svg>
+                    </span>
+                    <span className="questionnaire-coach__checkbox-label">Хочу дополнительно индивидуально тренировать</span>
+                  </label>
+                </div>
+              </Fragment>
+            </QuestionnairebBlock>
+          }
         </div>
         <button className={submitClassName} type="submit">Продолжить</button>
       </div>

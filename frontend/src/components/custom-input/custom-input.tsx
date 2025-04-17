@@ -12,11 +12,14 @@ type CustomInputProps = {
   required?: boolean;
   max?: string;
   autoComplete?: string;
-  readonly?: boolean;
+  readOnly?: boolean;
 }
 
 function CustomInput(props: CustomInputProps): JSX.Element {
-  const { divExtraClassName, name, type, value, label, text, onChange, required, max, autoComplete, readonly } = props;
+  //! выделить отдельно CustomTextArea и CustomBase
+  //! возможно и остальные CustomText, InputNumber....
+
+  const { divExtraClassName, name, type, value, label, text, onChange, required, max, autoComplete, readOnly } = props;
   const [currentValue, setCurrentValue] = useState('');
 
   useEffect(() => {
@@ -24,11 +27,13 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     if (value) {
       setCurrentValue(value);
     }
-  }, [value, readonly]);
+  }, [value, readOnly]);
 
   const isTextarea = type === 'textarea';
-  const mainClassName = `custom-${(isTextarea) ? type : 'input'}`;
-  const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readonly }, divExtraClassName);
+  const typePrefixClassName = (isTextarea) ? type : 'input';
+  const mainClassName = `custom-${typePrefixClassName}`;
+  const divClassName = divExtraClassName && `${divExtraClassName}__${typePrefixClassName}`;
+  const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readOnly }, divClassName);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
@@ -44,7 +49,7 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     value: currentValue,
     onChange: handleChange,
     required,
-    disabled: readonly
+    disabled: readOnly
   };
 
   const labelSpan = (!label) ? null : <span className={`${mainClassName}__label`}>{label}</span>;

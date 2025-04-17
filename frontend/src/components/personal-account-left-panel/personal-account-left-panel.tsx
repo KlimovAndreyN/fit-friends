@@ -32,6 +32,8 @@ type PersonalAccountLeftPanelProps = {
 }
 
 function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
+  //! много кода! поделить как нибуть!
+
   const isUpdateUserProfileExecuting = useAppSelector(getIsUpdateUserProfileExecuting);
   const isUpdateUserProfileError = useAppSelector(getIsUpdateUserProfileError);
 
@@ -125,20 +127,20 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} title='Обо мне' >
           <Fragment>
             <CustomInput
-              type='text'
               name={FormFieldName.Name}
+              type='text'
               label='Имя'
               value={name}
-              divExtraClassName={`${mainClassName}__input`}
-              readonly={!isEditing}
+              divExtraClassName={mainClassName}
+              readOnly={!isEditing}
             />
             <CustomInput
-              type='textarea'
               name={FormFieldName.About}
+              type='textarea'
               label='Описание'
               value={about}
-              divExtraClassName={`${mainClassName}__textarea`}
-              readonly={!isEditing}
+              divExtraClassName={mainClassName}
+              readOnly={!isEditing}
             />
           </Fragment>
         </PersonalAccountBlock>

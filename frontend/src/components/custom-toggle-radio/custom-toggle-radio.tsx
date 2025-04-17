@@ -1,5 +1,3 @@
-import classNames from 'classnames';
-
 import { Option } from '../../types/types';
 
 type CustomToggleRadioProps = {
@@ -11,10 +9,9 @@ type CustomToggleRadioProps = {
 
 function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
   const { divExtraClassName, name, options, value } = props;
-  const divClassName = classNames('custom-toggle-radio custom-toggle-radio--big', divExtraClassName);
 
   return (
-    <div className={divClassName}>
+    <div className={`custom-toggle-radio custom-toggle-radio--big ${divExtraClassName}__radio`}>
       {
         options.map(
           ({ value: curretnValue, title }) => {

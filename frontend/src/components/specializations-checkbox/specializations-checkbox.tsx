@@ -10,7 +10,7 @@ type SpecializationsCheckboxProps = {
 }
 
 function SpecializationsCheckbox({ name, values, divExtraClassName, readonly }: SpecializationsCheckboxProps): JSX.Element {
-  const className = classNames('specialization-checkbox', divExtraClassName);
+  const className = classNames('specialization-checkbox', `${divExtraClassName}__specializations`);
 
   return (
     <div className={className}>
