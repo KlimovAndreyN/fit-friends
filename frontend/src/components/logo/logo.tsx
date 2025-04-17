@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
 
-const logoSvg = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="#logo"></use></svg>;
+const LOGO_SVG = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="#logo"></use></svg>;
 
 function Logo(): JSX.Element {
   const location = useLocation();
@@ -11,11 +11,11 @@ function Logo(): JSX.Element {
   return (activeLink
     ?
     <Link className="header__logo" to={AppRoute.Index} aria-label="Переход на главную">
-      {logoSvg}
+      {LOGO_SVG}
     </Link>
     :
     <span className="header__logo">
-      {logoSvg}
+      {LOGO_SVG}
     </span>
   );
 }

@@ -21,6 +21,7 @@ import TrainingDetail from '../../pages/training-detail/training-detail';
 import MyPurchases from '../../pages/my-purchases/my-purchases';
 import MyOrders from '../../pages/my-orders/my-orders';
 import MyTrainings from '../../pages/my-trainings/my-trainings';
+import CreateTraining from '../../pages/create-training/create-training';
 import NotFound from '../../pages/not-found/not-found';
 
 import { useAppSelector } from '../../hooks';
@@ -177,6 +178,18 @@ function App(): JSX.Element | null {
                 <QuestionnaireRoute>
                   <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
                     <MyTrainings />
+                  </RoleRoute>
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.CreateTraining}
+            element={
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                    <CreateTraining />
                   </RoleRoute>
                 </QuestionnaireRoute>
               </PrivateRoute>
