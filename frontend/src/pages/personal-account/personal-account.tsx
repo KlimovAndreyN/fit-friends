@@ -13,7 +13,7 @@ import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-pr
 import { AppRoute, PageTitle } from '../../const';
 import { Link } from 'react-router-dom';
 
-function Profile(): JSX.Element {
+function PersonalAccount(): JSX.Element {
   //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
   //! обработать отображение и редактирвоание информации о тренере
   //! одинаковое большие кнопки thumbnail-link thumbnail-link--theme-light, а как у тренера?
@@ -42,7 +42,7 @@ function Profile(): JSX.Element {
 
   return (
     <Fragment>
-      <Header title={PageTitle.Profile} />
+      <Header title={PageTitle.PersonalAccount} />
       <main>
         <section className="inner-page">
           <div className="container">
@@ -112,4 +112,4 @@ function Profile(): JSX.Element {
   );
 }
 
-export default Profile;
+export default PersonalAccount;

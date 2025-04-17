@@ -12,7 +12,7 @@ import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
 import SignUp from '../../pages/sign-up/sign-up';
 import Questionnaire from '../../pages/questionnaire/questionnaire';
-import Profile from '../../pages/profile/profile';
+import PersonalAccount from '../../pages/personal-account/personal-account';
 import UsersCatalog from '../../pages/users-catalog/users-catalog';
 import UserDetail from '../../pages/user-detail/user-detail';
 import Friends from '../../pages/friends/friends';
@@ -31,7 +31,7 @@ function App(): JSX.Element | null {
   //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
 
   const userRole = useAppSelector(getUserRole);
-  const authRedirectTo = isCoachRole(userRole) ? AppRoute.Profile : AppRoute.Index;
+  const authRedirectTo = isCoachRole(userRole) ? AppRoute.PersonalAccount : AppRoute.Index;
 
   return (
     <HelmetProvider>
@@ -42,7 +42,7 @@ function App(): JSX.Element | null {
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
                     <Index />
                   </RoleRoute>
                 </QuestionnaireRoute>
@@ -84,11 +84,11 @@ function App(): JSX.Element | null {
             }
           />
           <Route
-            path={AppRoute.Profile}
+            path={AppRoute.PersonalAccount}
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <Profile />
+                  <PersonalAccount />
                 </QuestionnaireRoute>
               </PrivateRoute>
             }
@@ -128,7 +128,7 @@ function App(): JSX.Element | null {
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
                     <TrainingsCatalog />
                   </RoleRoute>
                 </QuestionnaireRoute>
@@ -162,7 +162,7 @@ function App(): JSX.Element | null {
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.Profile}>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
                     <MyPurchases />
                   </RoleRoute>
                 </QuestionnaireRoute>

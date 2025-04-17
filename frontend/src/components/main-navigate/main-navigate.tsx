@@ -25,7 +25,7 @@ function MainNavigate(): JSX.Element {
     <nav className="main-nav">
       <ul className="main-nav__list">
         <MainNavigateItem title='На главную' linkTo={AppRoute.Index} svg={SvgOption.HOME} />
-        <MainNavigateItem title='Личный кабинет' linkTo={AppRoute.Profile} svg={SvgOption.PERSONAL_ACCOUNT} />
+        <MainNavigateItem title='Личный кабинет' linkTo={AppRoute.PersonalAccount} svg={SvgOption.PERSONAL_ACCOUNT} />
         <MainNavigateItem title='Друзья' linkTo={AppRoute.Friends} svg={SvgOption.FRIENDS_LIST} />
         <MainNavigateItem title='Уведомления' svg={SvgOption.NOTIFICATIONS}>
           <MainNavigateNotifications />
