@@ -27,7 +27,7 @@ function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX
     <SliderSection
       title='Популярные тренировки'
       showAllLink={AppRoute.TrainingsCatalog}
-      sectionClassName='popular-trainings'
+      className='popular-trainings'
       slidesCount={SLIDES_COUNT}
       childrens={childrens}
     />
