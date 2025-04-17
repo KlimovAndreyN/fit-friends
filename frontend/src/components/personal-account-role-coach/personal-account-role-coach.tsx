@@ -3,6 +3,9 @@ import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 
 import { AppRoute } from '../../const';
 import CertificateCard from '../certificate-card/certificate-card';
+import Slider from '../slider/slider';
+
+const SLIDERS_COUNT = 3;
 
 const MOCK_CERTIFICATES = [
   {
@@ -42,6 +45,14 @@ function PersonalAccountRoleCoach(): JSX.Element {
   //! сделать в слайдер
   //! реализовать логику
 
+  const additionalTitleElement: JSX.Element = (
+    <button className="btn-flat btn-flat--underlined personal-account-coach__button" type="button">
+      <svg width="14" height="14" aria-hidden="true">
+        <use xlinkHref="#icon-import"></use>
+      </svg><span>Загрузить</span>
+    </button>
+  );
+
   return (
     <div className="inner-page__content">
       <div className="personal-account-coach">
@@ -70,27 +81,16 @@ function PersonalAccountRoleCoach(): JSX.Element {
             <ThumbnailSpecGym text='Скоро тут будет интересно' />
           </div>
         </div>
+        <Slider
+          title='Дипломы и сертификаты'
+          isLabel
+          additionalTitleElement={additionalTitleElement}
+          childrens={[]}
+          classNamePrefix='personal-account-coach'
+          divClassName='personal-account-coach__additional-info'
+          slidesCount={SLIDERS_COUNT}
+        />
         <div className="personal-account-coach__additional-info">
-          <div className="personal-account-coach__label-wrapper">
-            <h2 className="personal-account-coach__label">Дипломы и сертификаты</h2>
-            <button className="btn-flat btn-flat--underlined personal-account-coach__button" type="button">
-              <svg width="14" height="14" aria-hidden="true">
-                <use xlinkHref="#icon-import"></use>
-              </svg><span>Загрузить</span>
-            </button>
-            <div className="personal-account-coach__controls">
-              <button className="btn-icon personal-account-coach__control" type="button" aria-label="previous">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-left"></use>
-                </svg>
-              </button>
-              <button className="btn-icon personal-account-coach__control" type="button" aria-label="next">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-right"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
           <ul className="personal-account-coach__list">
             {
               MOCK_CERTIFICATES.map(

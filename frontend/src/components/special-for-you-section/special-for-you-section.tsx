@@ -38,7 +38,7 @@ function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Ele
   return (
     <SliderSection
       title='Специально подобрано для вас'
-      className='special-for-you'
+      sectionClassName='special-for-you'
       slidesCount={SLIDES_COUNT}
       childrens={childrens}
     />

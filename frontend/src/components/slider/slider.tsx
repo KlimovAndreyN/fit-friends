@@ -9,14 +9,18 @@ import classNames from 'classnames';
 
 export type SliderProps = {
   title: string;
+  isLabel?: boolean;
+  additionalTitleElement?: JSX.Element;
   showAllLink?: string;
   isShowAllLight?: boolean;
-  className: string;
+  classNamePrefix: string;
+  divClassName: string;
   childrens: JSX.Element[];
   slidesCount: number;
 }
 
 function Slider(props: SliderProps): JSX.Element {
+  //! выделить отдельно <SliderButton {...showAllSliderButtonOption} /> и снаружи передавать в additionalTitleElement
   //! слайдер отключение кнопок в угловых? или прокуртку по кругу? как в ТЗ
   //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
   //!   вообще убрать ul и li, т.к. все на div
@@ -25,7 +29,7 @@ function Slider(props: SliderProps): JSX.Element {
   //   как быть если количество карточек меньше чем количество слайдов
   // по кругу Swiper.loop boolean
 
-  const { title, showAllLink, isShowAllLight, className, childrens, slidesCount } = props;
+  const { title, isLabel, additionalTitleElement, showAllLink, isShowAllLight, classNamePrefix, divClassName, childrens, slidesCount } = props;
   const swiperRef = useRef<SwiperRef>(null);
   const navigate = useNavigate();
 
@@ -45,14 +49,14 @@ function Slider(props: SliderProps): JSX.Element {
 
   const showAllSliderButtonOption = {
     title: 'Смотреть все',
-    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${className}__button`),
+    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${classNamePrefix}__button`),
     onClick: handleshowAllButtonClick,
     xlinkHref: '#arrow-right',
     width: 14,
     height: 10
   };
   const previousSliderButtonOption = {
-    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${className}__control`),
+    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${classNamePrefix}__control`),
     onClick: handlePreviousButtonClick,
     xlinkHref: '#arrow-left',
     ariaLabel: 'previous',
@@ -68,34 +72,30 @@ function Slider(props: SliderProps): JSX.Element {
     height: 14
   };
   const childrensCount = childrens.length;
+  const titlePrefix = (isLabel) ? 'label' : 'title';
 
   return (
-    <div className={`${className}__wrapper`}>
-      <div className={`${className}__title-wrapper`}>
-        <h2 className={`${className}__title`}>{title}</h2>
+    <div className={divClassName}>
+      <div className={`${classNamePrefix}__${titlePrefix}-wrapper`}>
+        <h2 className={`${classNamePrefix}__${titlePrefix}`}>{title}</h2>
+        {
+          additionalTitleElement
+        }
         {
           (showAllLink) ? <SliderButton {...showAllSliderButtonOption} /> : null
         }
-        <div className={`${className}__controls`}>
+        <div className={`${classNamePrefix}__controls`}>
           <SliderButton {...previousSliderButtonOption} />
           <SliderButton {...nextSliderButtonOption} />
         </div>
       </div>
-      <ul className={`${className}__list`}>
+      <ul className={`${classNamePrefix}__list`}>
         <Swiper slidesPerView={(childrensCount < slidesCount) ? childrensCount : slidesCount} ref={swiperRef}>
           {
             childrens.map(
               (children) => (
-                <SwiperSlide
-                  key={children.key}
-                >
-                  <li
-                    className={`${className}__item`}
-                    style={{
-                      height: '100%', // карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке
-                    }}
-                    key={children.key}
-                  >
+                <SwiperSlide key={children.key}>
+                  <li className={`${classNamePrefix}__item`} style={{ height: '100%' /* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}>
                     {children}
                   </li>
                 </SwiperSlide>
