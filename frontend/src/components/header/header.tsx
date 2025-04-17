@@ -3,16 +3,18 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
 
+import { getPageTitle } from '../../utils/common';
+
 type HeaderProps = {
   title: string;
 }
 
-function Header(props: HeaderProps): JSX.Element {
+function Header({ title }: HeaderProps): JSX.Element {
   //! делать блок поиска? что по ТЗ?
 
   return (
     <header className="header">
-      <Helmet {...props} />
+      <Helmet title={getPageTitle(title)} />
       <div className="container">
         <Logo />
         <MainNavigate />

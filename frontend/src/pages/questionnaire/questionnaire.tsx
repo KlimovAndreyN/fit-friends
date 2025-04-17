@@ -8,12 +8,25 @@ import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggl
 import CalorieInput from '../../components/calorie-input/calorie-input';
 
 import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Specialization, TrainingLevel } from '@backend/shared/core';
+import { enumToArray } from '@backend/shared/helpers';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsCreateQuestionnaireExecuting } from '../../store/user-profile-process/selectors';
 import { createQuestionnaire } from '../../store/actions/user-profile-action';
-import { DefaultUser, PageTitle, TRAINING_LEVELS, USER_DURATIONS } from '../../const';
+import { Option } from '../../types/types';
+import { DefaultUser, PageTitle, TRAINING_LEVELS } from '../../const';
+
+const UserDurationTitle: { [key in Duration]: string } = {
+  [Duration.Minutes_10_30]: '10-30',
+  [Duration.Minutes_30_50]: '30-50',
+  [Duration.Minutes_50_80]: '50-80',
+  [Duration.Minutes_80_100]: '80-100'
+} as const;
+
+const USER_DURATIONS: Option[] = enumToArray(Duration).map(
+  (duration) => ({ value: duration, title: `${UserDurationTitle[duration]} мин` })
+);
 
 enum FormFieldName {
   Spec = 'specialization',

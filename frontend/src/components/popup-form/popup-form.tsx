@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import { FormEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 
+import { getPageTitle } from '../../utils/common';
+
 type PopupFormProps = {
   title: string;
   caption?: string;
@@ -22,7 +24,7 @@ function PopupForm(props: PopupFormProps): JSX.Element {
 
   return (
     <main>
-      <Helmet title={title} />
+      <Helmet title={getPageTitle(title)} />
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
           <use xlinkHref="#logo-big"></use>

@@ -7,7 +7,11 @@ import { joinUrl } from '@backend/shared/helpers';
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
 import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
-import { HttpCode } from './const';
+
+export enum HttpCode {
+  OK = 200,
+  NoAuth = 401
+}
 
 const ViteEnvOption = {
   BACKEND_URL: 'VITE_BACKEND_URL',

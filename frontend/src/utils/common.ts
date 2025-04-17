@@ -1,4 +1,8 @@
-import { AppRoute, ID_PARAM } from '../const';
+import { AppRoute, ID_PARAM, MAIN_TITLE } from '../const';
+
+export function getPageTitle(title: string): string {
+  return (title === MAIN_TITLE) ? MAIN_TITLE : `${title} — ${MAIN_TITLE}`;
+}
 
 export function getBearerAuthorization(token: string): string {
   return `Bearer ${token}`;

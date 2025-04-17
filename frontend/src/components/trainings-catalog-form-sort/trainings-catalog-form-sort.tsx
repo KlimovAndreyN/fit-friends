@@ -3,7 +3,11 @@ import { FormEvent } from 'react';
 import { SortType } from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
 
-import { SortTypeTitle } from '../../const';
+const SortTypeTitle: { [key in SortType]: string } = {
+  [SortType.LowPrice]: 'Дешевле',
+  [SortType.HighPrice]: 'Дороже',
+  [SortType.ForFree]: 'Бесплатные'
+} as const;
 
 type TrainingsCatalogFormSortProps = {
   sortType?: SortType;
