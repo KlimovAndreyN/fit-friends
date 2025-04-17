@@ -37,12 +37,12 @@ enum FormFieldName {
 }
 
 function Questionnaire(): JSX.Element | null {
-  //! перепроверить разметку! что то вид не очень! может это часть спортсмена а класс от тренера
+  //! сделать блоки для тренера
 
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();
-  const endingClassName = isSportsmanRole(userRole) ? 'user' : 'coath';
+  const endingClassName = isSportsmanRole(userRole) ? 'user' : 'coach';
   const divClassName = `questionnaire-${endingClassName}`;
   const submitClassName = classNames(`btn questionnaire-${endingClassName}__button`, { 'is-disabled': isCreateExistQuestionnaireExecuting });
 
