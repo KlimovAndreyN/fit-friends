@@ -1,13 +1,11 @@
 import CustomInput from '../custom-input/custom-input';
 
-type CalorieProps = {
+type QuestionnaireUserCalorieProps = {
   name: string;
   caption: string;
 }
 
-function CalorieInput({ name, caption }: CalorieProps): JSX.Element {
-  //! сменить имя на QuestionnaireUserCalorie
-
+function QuestionnaireUserCalorie({ name, caption }: QuestionnaireUserCalorieProps): JSX.Element {
   return (
     <div className={`questionnaire-user__${name}`}>
       <span className="questionnaire-user__legend">{caption}</span>
@@ -21,4 +19,4 @@ function CalorieInput({ name, caption }: CalorieProps): JSX.Element {
   );
 }
 
-export default CalorieInput;
+export default QuestionnaireUserCalorie;

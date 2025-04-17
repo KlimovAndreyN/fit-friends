@@ -2,10 +2,10 @@ import { FormEvent, Fragment } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../../components/popup-form/popup-form';
-import QuestionnairebBlock from '../../components/questionnaire-block/questionnaire-block';
+import Block from '../../components/block/block';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
-import CalorieInput from '../../components/calorie-input/calorie-input';
+import QuestionnaireUserCalorie from '../../components/questionnaire-user-calorie/questionnaire-user-calorie';
 import CustomInput from '../../components/custom-input/custom-input';
 
 import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Specialization, TrainingLevel } from '@backend/shared/core';
@@ -81,44 +81,44 @@ function Questionnaire(): JSX.Element | null {
       <div className={divClassName}>
         <h1 className="visually-hidden">Опросник</h1>
         <div className={`${divClassName}__wrapper`}>
-          <QuestionnairebBlock legend='Ваша специализация (тип) тренировок' divExtraClassName={divClassName} >
+          <Block legend='Ваша специализация (тип) тренировок' className={divClassName} >
             <SpecializationsCheckbox
               name={FormFieldName.Spec}
               values={[...DefaultUser.SPECIALISATIONS]}
               divExtraClassName={divClassName}
             />
-          </QuestionnairebBlock>
+          </Block>
           {
             isSportsman &&
-            <QuestionnairebBlock legend='Сколько времени вы готовы уделять на тренировку в день' divExtraClassName={divClassName} >
+            <Block legend='Сколько времени вы готовы уделять на тренировку в день' className={divClassName} >
               <CustomToggleRadio
                 name={FormFieldName.Time}
                 divExtraClassName={divClassName}
                 options={USER_DURATIONS}
                 value={DefaultUser.DURATION}
               />
-            </QuestionnairebBlock>
+            </Block>
           }
-          <QuestionnairebBlock legend='Ваш уровень' divExtraClassName={divClassName} >
+          <Block legend='Ваш уровень' className={divClassName} >
             <CustomToggleRadio
               name={FormFieldName.UserTrainingLevel}
               divExtraClassName={divClassName}
               options={TRAINING_LEVELS}
               value={DefaultUser.TRAINING_LEVEL}
             />
-          </QuestionnairebBlock>
+          </Block>
           {
             isSportsman &&
-            <QuestionnairebBlock divExtraClassName={divClassName} >
+            <Block className={divClassName} >
               <Fragment>
-                <CalorieInput name={FormFieldName.CaloriesLose} caption='Сколько калорий хотите сбросить' />
-                <CalorieInput name={FormFieldName.CaloriesWaste} caption='Сколько калорий тратить в день' />
+                <QuestionnaireUserCalorie name={FormFieldName.CaloriesLose} caption='Сколько калорий хотите сбросить' />
+                <QuestionnaireUserCalorie name={FormFieldName.CaloriesWaste} caption='Сколько калорий тратить в день' />
               </Fragment>
-            </QuestionnairebBlock>
+            </Block>
           }
           {
             !isSportsman &&
-            <QuestionnairebBlock legend='Ваши дипломы и сертификаты' divExtraClassName={divClassName} >
+            <Block legend='Ваши дипломы и сертификаты' className={divClassName} >
               <div className="drag-and-drop questionnaire-coach__drag-and-drop">
                 <label>
                   <span className="drag-and-drop__label" tabIndex={0}>Загрузите сюда файлы формата PDF, JPG или PNG
@@ -129,11 +129,11 @@ function Questionnaire(): JSX.Element | null {
                   <input type="file" name="import" tabIndex={-1} accept=".pdf, .jpg, .png" />
                 </label>
               </div>
-            </QuestionnairebBlock>
+            </Block>
           }
           {
             !isSportsman &&
-            <QuestionnairebBlock legend='Расскажите о своём опыте, который мы сможем проверить' divExtraClassName={divClassName} >
+            <Block legend='Расскажите о своём опыте, который мы сможем проверить' className={divClassName} >
               <Fragment>
                 <CustomInput name='description' type='textarea' divExtraClassName={divClassName} />
                 <div className="questionnaire-coach__checkbox">
@@ -148,7 +148,7 @@ function Questionnaire(): JSX.Element | null {
                   </label>
                 </div>
               </Fragment>
-            </QuestionnairebBlock>
+            </Block>
           }
         </div>
         <button className={submitClassName} type="submit">Продолжить</button>
