@@ -17,7 +17,7 @@ import UsersCatalog from '../../pages/users-catalog/users-catalog';
 import UserDetail from '../../pages/user-detail/user-detail';
 import Friends from '../../pages/friends/friends';
 import TrainingsCatalog from '../../pages/trainings-catalog/trainings-catalog';
-import Training from '../../pages/training/training';
+import TrainingDetail from '../../pages/training-detail/training-detail';
 import MyOrders from '../../pages/my-orders/my-orders';
 import MyPurchases from '../../pages/my-purchases/my-purchases';
 import NotFound from '../../pages/not-found/not-found';
@@ -140,7 +140,7 @@ function App(): JSX.Element | null {
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <Training />
+                  <TrainingDetail />
                 </QuestionnaireRoute>
               </PrivateRoute>
             }

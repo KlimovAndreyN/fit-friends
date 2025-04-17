@@ -13,7 +13,7 @@ import { fetchDetailTraining } from '../../store/actions/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
-function Training(): JSX.Element {
+function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
   //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
@@ -170,4 +170,4 @@ function Training(): JSX.Element {
   );
 }
 
-export default Training;
+export default TrainingDetail;
