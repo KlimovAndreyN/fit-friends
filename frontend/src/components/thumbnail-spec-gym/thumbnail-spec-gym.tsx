@@ -1,4 +1,8 @@
-function ThumbnailSpecGym(): JSX.Element {
+type ThumbnailSpecGymProps = {
+  text?: string;
+}
+
+function ThumbnailSpecGym({ text }: ThumbnailSpecGymProps): JSX.Element {
   return (
     <div className="thumbnail-spec-gym">
       <div className="thumbnail-spec-gym__image">
@@ -13,8 +17,8 @@ function ThumbnailSpecGym(): JSX.Element {
         // ошибка в маркапе
         <div class="thumbnail-spec-gym__header", align ="center",>
       */}
-      <div className="thumbnail-spec-gym__header" style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <h3 className="thumbnail-spec-gym__title">Скоро здесь появится что-то полезное</h3>
+      <div className="thumbnail-spec-gym__header" style={{ textAlign: 'center' }}>
+        <h3 className="thumbnail-spec-gym__title">{text || 'Скоро здесь появится что-то полезное'}</h3>
       </div>
     </div>
   );

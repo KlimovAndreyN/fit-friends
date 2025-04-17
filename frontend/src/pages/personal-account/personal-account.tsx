@@ -12,8 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
 import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-profile-action';
-import { AppRoute, PageTitle } from '../../const';
-import { Link } from 'react-router-dom';
+import { PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
   //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
@@ -59,7 +58,7 @@ function PersonalAccount(): JSX.Element {
                 {
                   (isSpotsman)
                     ?
-                    <PersonalAccountRoleSportsman />
+                    <PersonalAccountRoleSportsman caloriesWaste={caloriesWaste} />
                     /*
                     <div className="personal-account-user">
                       <div className="personal-account-user__schedule">
