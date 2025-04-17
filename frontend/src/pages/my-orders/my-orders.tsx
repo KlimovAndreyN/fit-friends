@@ -6,21 +6,13 @@ import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec
 import { PageTitle } from '../../const';
 
 function MyOrders(): JSX.Element {
-  //! заголовок в константы
   //! временно
 
   return (
     <Fragment>
       <Header title={PageTitle.MyOrders} />
-      <main>
-        <section className="friends-list">
-          <div className="container">
-            <div className="friends-list__wrapper">
-              <ThumbnailSpecGym />
-            </div>
-          </div>
-        </section>
-      </main>
+      <h1>{PageTitle.MyOrders}</h1>
+      <ThumbnailSpecGym />
     </Fragment>
   );
 }
