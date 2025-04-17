@@ -16,9 +16,11 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
   //! Как переходить на подробнее? пока сделал ссылку на заголовке
   //! Как правильно округлить цену со скидкой? как ТЗ?
   //! в маркапах были "серые" картинки, а когда взял цветные,
-  //! то на этих елементов нет такого экекта как на отальных карточках, сначала "серые", а при наведении цветные
+  //    то на этих елементов нет такого экекта как на отальных карточках, сначала "серые", а при наведении цветные
+  //    сделал const [isHover, setIsHover] = useState(false);
 
   const [activeSliderIndex, setActiveSliderIndex] = useState(0);
+  const [isHover, setIsHover] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,6 +34,14 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
     };
   }, [activeSliderIndex, offers]);
 
+  const handleMouseAsideEnter = () => {
+    setIsHover(true);
+  };
+
+  const handleMouseAsideLeave = () => {
+    setIsHover(false);
+  };
+
   return (
     <ul className="special-offers__list">
       {
@@ -44,9 +54,12 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
 
             return (
               <li className={itemClassName} key={id}>
-                <aside className="promo-slider">
+                <aside className="promo-slider"
+                  onMouseEnter={handleMouseAsideEnter}
+                  onMouseLeave={handleMouseAsideLeave}
+                >
                   <div className="promo-slider__overlay"></div>
-                  <div className="promo-slider__image">
+                  <div className="promo-slider__image" style={{ filter: `grayscale(${(isHover) ? 0 : 1})` }}>
                     <img src={backgroundPath} width="1040" height="469" alt="promo-photo" />
                   </div>
                   <div className="promo-slider__header">
