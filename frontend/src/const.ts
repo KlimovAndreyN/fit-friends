@@ -20,6 +20,7 @@ export enum PageTitle {
   Friends = `Список друзей — ${MAIN_TITLE}`,
   MyPurchases = `Мои покупки — ${MAIN_TITLE}`,
   MyOrders = `Мои заказы — ${MAIN_TITLE}`,
+  MyTrainings = `Мои тренировки — ${MAIN_TITLE}`,
   NotFound = `404 — ${MAIN_TITLE}`
 }
 
@@ -41,6 +42,7 @@ export enum AppRoute {
   Friends = '/friends',
   MyPurchases = '/my-purchases',
   MyOrders = '/my-orders',
+  MyTrainings = '/my-trainings',
   NotFound = '/404',
 }
 

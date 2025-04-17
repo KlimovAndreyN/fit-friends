@@ -18,8 +18,9 @@ import UserDetail from '../../pages/user-detail/user-detail';
 import Friends from '../../pages/friends/friends';
 import TrainingsCatalog from '../../pages/trainings-catalog/trainings-catalog';
 import TrainingDetail from '../../pages/training-detail/training-detail';
-import MyOrders from '../../pages/my-orders/my-orders';
 import MyPurchases from '../../pages/my-purchases/my-purchases';
+import MyOrders from '../../pages/my-orders/my-orders';
+import MyTrainings from '../../pages/my-trainings/my-trainings';
 import NotFound from '../../pages/not-found/not-found';
 
 import { useAppSelector } from '../../hooks';
@@ -146,6 +147,18 @@ function App(): JSX.Element | null {
             }
           />
           <Route
+            path={AppRoute.MyPurchases}
+            element={
+              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+                <QuestionnaireRoute>
+                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
+                    <MyPurchases />
+                  </RoleRoute>
+                </QuestionnaireRoute>
+              </PrivateRoute>
+            }
+          />
+          <Route
             path={AppRoute.MyOrders}
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
@@ -158,12 +171,12 @@ function App(): JSX.Element | null {
             }
           />
           <Route
-            path={AppRoute.MyPurchases}
+            path={AppRoute.MyTrainings}
             element={
               <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
                 <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
-                    <MyPurchases />
+                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                    <MyTrainings />
                   </RoleRoute>
                 </QuestionnaireRoute>
               </PrivateRoute>
