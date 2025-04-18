@@ -18,7 +18,6 @@ export class CheckAuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const url = joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, AccountRoute.Check);
     const requestId = request[RequestProperty.RequestId];
     const authorization = request.headers[AUTH_NAME];
 
@@ -28,6 +27,7 @@ export class CheckAuthGuard implements CanActivate {
       throw new UnauthorizedException(ERROR_MESSAGE);
     }
 
+    const url = joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Account, AccountRoute.Check);
     const { data } = await this.httpService.axiosRef.get<TokenPayloadRdo>(url, makeHeaders(requestId, authorization));
     const userId = data.sub;
 

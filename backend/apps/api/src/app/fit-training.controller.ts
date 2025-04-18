@@ -6,6 +6,7 @@ import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CheckSportsmanGuard } from './guards/check-sportsman.guard';
 import { FitTrainingService } from './fit-training.service';
 
 @ApiTags(ApiServiceRoute.Trainings)
@@ -18,6 +19,7 @@ export class FitTrainingController {
     private fitTrainingService: FitTrainingService
   ) { }
 
+  @UseGuards(CheckSportsmanGuard)
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get()
   public async index(
@@ -29,6 +31,7 @@ export class FitTrainingController {
     return data;
   }
 
+  @UseGuards(CheckSportsmanGuard)
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() request: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
@@ -37,6 +40,7 @@ export class FitTrainingController {
     return data;
   }
 
+  @UseGuards(CheckSportsmanGuard)
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Special)
   public async getSpecial(@Req() request: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
@@ -45,6 +49,7 @@ export class FitTrainingController {
     return data;
   }
 
+  @UseGuards(CheckSportsmanGuard)
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Popular)
   public async getPopular(@Req() request: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
@@ -53,6 +58,7 @@ export class FitTrainingController {
     return data;
   }
 
+  @UseGuards(CheckSportsmanGuard)//! тут бы разрешить на свои тернировки в самон сервисе, а наверное разбить на разные контроллеры, что доступно тренеру а что спортсмену и обоим...
   @ApiResponse({ type: DetailTrainingRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)

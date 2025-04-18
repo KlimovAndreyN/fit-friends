@@ -4,7 +4,7 @@ import { AUTH_NAME, AuthenticationMessage, RequestProperty } from '@backend/shar
 
 @Injectable()
 export class CheckNotAuthGuard implements CanActivate {
-  public async canActivate(context: ExecutionContext): Promise<boolean> {
+  public canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
     const requestId = request[RequestProperty.RequestId];
     const bearerAuth: string = request.headers[AUTH_NAME] || '';
