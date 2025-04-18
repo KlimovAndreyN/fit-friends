@@ -46,7 +46,7 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
   return (
     <div className={mainDivClassName}>
       <label onClick={handleLabelClick}>
-        <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} />
+        <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} readOnly />
         <span className={spanIconClassName}>
           <svg width="9" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-check" />

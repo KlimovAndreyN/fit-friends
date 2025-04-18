@@ -5,6 +5,7 @@ export interface ICreateBasicUserDto
     User,
     'id'
     | 'birthday'
+    | 'about'
   > {
   password: string;
   birthday?: string;
