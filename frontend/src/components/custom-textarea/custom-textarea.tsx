@@ -1,25 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-type CustomInputProps = {
+type CustomTextareaProps = {
   name: string;
-  type: string;
   value?: string;
   label?: string;
-  spanText?: string;
   divExtraClassName?: string;
-  onChange?: (newValue: string) => void;
-  required?: boolean;
-  max?: string;
-  autoComplete?: string;
   readOnly?: boolean;
 }
 
-function CustomInput(props: CustomInputProps): JSX.Element {
+function CustomTextarea(props: CustomTextareaProps): JSX.Element {
   //! выделить отдельно CustomBase
-  //! возможно и остальные CustomText, InputNumber....
 
-  const { divExtraClassName, name, type, value, label, spanText, onChange, required, max, autoComplete, readOnly } = props;
+  const { divExtraClassName, name, value, label, readOnly } = props;
   const [currentValue, setCurrentValue] = useState('');
 
   useEffect(() => {
@@ -29,9 +22,12 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     }
   }, [value, readOnly]);
 
-  const mainClassName = 'custom-input';
-  const divClassName = divExtraClassName && `${divExtraClassName}__input`;
-  const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readOnly }, divClassName);
+  const mainClassName = 'custom-textarea';
+  const divClassName = classNames(
+    mainClassName,
+    { [`${mainClassName}--readonly`]: readOnly },
+    divExtraClassName && `${divExtraClassName}__textarea`
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
@@ -39,33 +35,24 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     const { value: inputValue } = event.target;
 
     setCurrentValue(inputValue);
-    onChange?.(inputValue);
   };
 
-  const inputProps = {
+  const textareaProps = {
     name,
-    type,
-    autoComplete,
     value: currentValue,
     onChange: handleChange,
-    required,
-    max,
+    placeholder: ' ',
     disabled: readOnly
   };
 
   return (
-    <div className={divClassNames}>
+    <div className={divClassName}>
       <label>
         {label && <span className={`${mainClassName}__label`}>{label}</span>}
-        {
-          <span className={`${mainClassName}__wrapper`}>
-            <input {...inputProps} />
-            {!spanText && <span className={`${mainClassName}__text`}>{spanText}</span>}
-          </span>
-        }
+        <textarea {...textareaProps} />
       </label>
     </div>
   );
 }
 
-export default CustomInput;
+export default CustomTextarea;

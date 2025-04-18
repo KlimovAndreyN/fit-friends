@@ -12,7 +12,7 @@ function QuestionnaireUserCalorie({ name, caption }: QuestionnaireUserCaloriePro
       <CustomInput
         name={name}
         type='number'
-        text='ккал'
+        spanText='ккал'
         divExtraClassName='custom-input--with-text-right questionnaire-user'
       />
     </div>

@@ -15,6 +15,7 @@ import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTi
 
 function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
+  //! есть компоты для разных елементов, нужны при редактировании
   //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
   //! а как выглядят со скидкой? как по ТЗ? как окрулять?
@@ -108,7 +109,7 @@ function TrainingDetail(): JSX.Element {
                               <span className="training-info__label">Рейтинг</span>
                               <span className="training-info__rating-icon">
                                 <svg width="18" height="18" aria-hidden="true">
-                                  <use xlinkHref="#icon-star"/>
+                                  <use xlinkHref="#icon-star" />
                                 </svg>
                               </span>
                               <input type="number" name="rating" defaultValue={ratingText} disabled />
@@ -152,7 +153,7 @@ function TrainingDetail(): JSX.Element {
                     </div>
                     <button className="training-video__play-button btn-reset">
                       <svg width="18" height="30" aria-hidden="true">
-                        <use xlinkHref="#icon-arrow"/>
+                        <use xlinkHref="#icon-arrow" />
                       </svg>
                     </button>
                   </div>
