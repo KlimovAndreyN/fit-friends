@@ -13,8 +13,7 @@ type CustomCheckboxProps = {
 }
 
 function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
-  //! базовыцй бы класс CustomBase...
-  //! иконки можно выделить
+  //! иконки можно выделить отдельно
 
   const { name, spanText, value = false, onChange, isDisabled, divExtraClassName, divClassName, isSwitch } = props;
   const [currentValue, setCurrentValue] = useState<boolean>(value);
@@ -39,20 +38,21 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
     `${mainClassName}--${(isSwitch ? 'switch' : 'checkbox')}`,
     divExtraClassName && `${divExtraClassName}__toggle`
   );
-  const mainDivClassName = (!divClassName) ? className : `${divClassName}__checkbox`;
-  const spanIconClassName = (!divClassName) ? `${mainClassName}__icon` : `${divClassName}__checkbox-icon`;
-  const spanLabelClassName = (!divClassName) ? `${mainClassName}__label` : `${divClassName}__checkbox-label`;
+  const divCheckboxClassName = divClassName && `${divClassName}__checkbox`;
+  const mainDivClassName = (divCheckboxClassName) ? `${divCheckboxClassName}` : className;
+  const spanIconClassName = (divCheckboxClassName) ? `${divCheckboxClassName}-` : `${mainClassName}__`;
+  const spanLabelClassName = (divCheckboxClassName) ? `${divCheckboxClassName}-` : `${mainClassName}__`;
 
   return (
     <div className={mainDivClassName}>
       <label onClick={handleLabelClick}>
         <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} readOnly />
-        <span className={spanIconClassName}>
+        <span className={`${spanIconClassName}icon`}>
           <svg width="9" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-check" />
           </svg>
         </span>
-        <span className={spanLabelClassName}>{spanText}</span>
+        <span className={`${spanLabelClassName}label`} >{spanText}</span>
       </label>
     </div>
   );

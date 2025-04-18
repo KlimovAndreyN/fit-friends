@@ -19,8 +19,8 @@ function CustomInput(props: CustomInputProps): JSX.Element {
   //! выделить отдельно CustomBase
   //! возможно и остальные CustomText, InputNumber....
 
-  const { divExtraClassName, name, type, value, label, spanText, onChange, required, max, autoComplete, readOnly } = props;
-  const [currentValue, setCurrentValue] = useState('');
+  const { name, type, value = '', label, spanText, divExtraClassName, onChange, required, max, autoComplete, readOnly } = props;
+  const [currentValue, setCurrentValue] = useState(value);
 
   useEffect(() => {
     // приходят новые значения из предка! при переключении режима редактирования и повторной отрисовки формы после получения ответа
