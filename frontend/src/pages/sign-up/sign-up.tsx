@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, Fragment, useState } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../../components/popup-form/popup-form';
@@ -7,6 +7,7 @@ import CustomSelect from '../../components/custom-select/custom-select';
 import CustomInput from '../../components/custom-input/custom-input';
 import SignUpUserGengers from '../../components/sign-up-user-gengers/sign-up-user-gengers';
 import SignUpUserRoles from '../../components/sign-up-user-roles/sign-up-user-roles';
+import CustomCheckbox from '../../components/custom-checkbox/custom-checkbox';
 
 import { ICreateUserDto, Location, Gender, Role, BackgroundPaths, isSportsmanRole } from '@backend/shared/core';
 import { getRandomItem } from '@backend/shared/helpers';
@@ -38,7 +39,7 @@ function SignUp(): JSX.Element {
   const [userRole, setUserRole] = useState<Role>(DefaultUser.ROLE);
   const isSingUpExecuting = useAppSelector(getIsSingUpExecuting);
 
-  const handleUserAgreementInputChange = () => {
+  const handleUserAgreementCheckboxChange = () => {
     setCheckedUserAgreementInput(!checkedUserAgreementInput);
   };
 
@@ -146,23 +147,12 @@ function SignUp(): JSX.Element {
             options={optionBackgroundPaths}
           />
         </div>
-        <div className="sign-up__checkbox">
-          <label>
-            <input
-              type="checkbox"
-              value="user-agreement"
-              name={FormFieldName.UserAgreement}
-              checked={checkedUserAgreementInput}
-              onChange={handleUserAgreementInputChange}
-            />
-            <span className="sign-up__checkbox-icon">
-              <svg width="9" height="6" aria-hidden="true">
-                <use xlinkHref="#arrow-check" />
-              </svg>
-            </span>
-            <span className="sign-up__checkbox-label">Я соглашаюсь с <span>политикой конфиденциальности</span> компании</span>
-          </label>
-        </div>
+        <CustomCheckbox
+          name={FormFieldName.UserAgreement}
+          spanText={<Fragment>Я соглашаюсь с <span>политикой конфиденциальности</span> компании</Fragment>}
+          onChange={handleUserAgreementCheckboxChange}
+          divClassName='sign-up'
+        />
         <button className={submitClassName} type="submit">Продолжить</button>
       </div>
     </PopupForm>

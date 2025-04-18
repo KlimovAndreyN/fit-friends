@@ -3,16 +3,20 @@ import classNames from 'classnames';
 
 type CustomCheckboxProps = {
   name: string;
-  spanText: string;
+  spanText: string | JSX.Element;
   value?: boolean;
   onChange?: (newValue: boolean) => void;
   isDisabled?: boolean;
-  divExtraClassName: string;
+  divClassName?: string;
+  divExtraClassName?: string;
   isSwitch?: boolean;
 }
 
 function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
-  const { name, spanText, value = false, onChange, isDisabled, divExtraClassName, isSwitch } = props;
+  //! базовыцй бы класс CustomBase...
+  //! иконки можно выделить
+
+  const { name, spanText, value = false, onChange, isDisabled, divExtraClassName, divClassName, isSwitch } = props;
   const [currentValue, setCurrentValue] = useState<boolean>(value);
 
   useEffect(() => {
@@ -29,22 +33,26 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
     onChange?.(!currentValue);
   };
 
+  const mainClassName = 'custom-toggle';
   const className = classNames(
-    'custom-toggle',
-    `custom-toggle--${(isSwitch ? 'switch' : 'checkbox')}`,
+    mainClassName,
+    `${mainClassName}--${(isSwitch ? 'switch' : 'checkbox')}`,
     divExtraClassName && `${divExtraClassName}__toggle`
   );
+  const mainDivClassNAme = (!divClassName) ? className : `${divClassName}__checkbox`;
+  const spanIconClassName = (!divClassName) ? `${mainClassName}__icon` : `${divClassName}__checkbox-icon`;
+  const spanLabelClassName = (!divClassName) ? `${mainClassName}__label` : `${divClassName}__checkbox-label`;
 
   return (
-    <div className={className}>
+    <div className={mainDivClassNAme}>
       <label onClick={handleLabelClick}>
         <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} />
-        <span className="custom-toggle__icon">
+        <span className={spanIconClassName}>
           <svg width="9" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-check" />
           </svg>
         </span>
-        <span className="custom-toggle__label">{spanText}</span>
+        <span className={spanLabelClassName}>{spanText}</span>
       </label>
     </div>
   );

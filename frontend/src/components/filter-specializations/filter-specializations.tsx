@@ -16,34 +16,29 @@ function FilterSpecializations({ specializations, onChange }: FilterSpecializati
     <div className="gym-catalog-form__block gym-catalog-form__block--type">
       <h4 className="gym-catalog-form__block-title">Тип</h4>
       <ul className="gym-catalog-form__check-list">
-        <div className="gym-catalog-form__block gym-catalog-form__block--type">
-          <h4 className="gym-catalog-form__block-title">Тип</h4>
-          <ul className="gym-catalog-form__check-list">
-            {
-              SPECIALISATIONS.map(
-                ({ value, title }) => {
-                  const specialization = value as Specialization;
-                  const checked = specializations.has(specialization);
+        {
+          SPECIALISATIONS.map(
+            ({ value, title }) => {
+              const specialization = value as Specialization;
+              const checked = specializations.has(specialization);
 
-                  const handleCustomCheckboxChange = () => {
-                    onChange(specialization);
-                  };
+              const handleCustomCheckboxChange = () => {
+                onChange(specialization);
+              };
 
-                  return (
-                    <li className="gym-catalog-form__check-list-item" key={value}>
-                      <CustomCheckbox
-                        name='type'
-                        spanText={title.toLocaleLowerCase()}
-                        value={checked}
-                        onChange={handleCustomCheckboxChange}
-                      />
-                    </li>
-                  );
-                }
-              )
+              return (
+                <li className="gym-catalog-form__check-list-item" key={value}>
+                  <CustomCheckbox
+                    name='type'
+                    spanText={title.toLocaleLowerCase()}
+                    value={checked}
+                    onChange={handleCustomCheckboxChange}
+                  />
+                </li>
+              );
             }
-          </ul>
-        </div>
+          )
+        }
       </ul>
     </div>
   );
