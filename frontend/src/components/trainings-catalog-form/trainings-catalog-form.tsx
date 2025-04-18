@@ -109,6 +109,7 @@ function TrainingsCatalogForm(): JSX.Element {
           <FilterMinMaxRange
             title='Рейтинг'
             prefixClassName='rating'
+            prefixLabelClassName='raiting' // опечатка в css
             value={rating}
             onChange={handleRatingFilterMinMaxRangeChange}
           />
