@@ -9,4 +9,5 @@ export { getMongooseOptions, getEnvMongooseOptions } from './lib/mongo-db';
 export { parseAxiosError } from './lib/parse-axios-error';
 export { parseTime, testParseTime } from './lib/parse-time';
 export * from './lib/random';
+export * from './lib/role-guard';
 export * from './lib/utils';

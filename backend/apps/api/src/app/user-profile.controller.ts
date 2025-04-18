@@ -19,6 +19,7 @@ import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backen
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CheckSportsmanGuard } from './guards/check-sportsman.guard';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
@@ -47,6 +48,7 @@ export class UserProfileController {
     return existQuestionnaire;
   }
 
+  @UseGuards(CheckSportsmanGuard)
   @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Sportsman))
   public async create(
     @Body() dto: CreateQuestionnaireSportsmanDto,
