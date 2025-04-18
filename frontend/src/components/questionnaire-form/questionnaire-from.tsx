@@ -9,7 +9,10 @@ import QuestionnaireUserCalorie from '../questionnaire-user-calorie/questionnair
 import CustomInput from '../custom-input/custom-input';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
-import { Duration, isSportsmanRole, Role, Specialization, TrainingLevel } from '@backend/shared/core';
+import {
+  Duration, isSportsmanRole, Role, Specialization, TrainingLevel,
+  ICreateQuestionnaireCoachDto, ICreateQuestionnaireSportsmanDto
+} from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
 
 import { CreateQuestionnaireDto, Option } from '../../types/types';
@@ -48,6 +51,7 @@ type QuestionnaireFormProps = {
 function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireFormProps): JSX.Element | null {
   //! сделать файлы-сертификаты для тренера
   //! может еще можно разбить файл...
+  const isSportsman = isSportsmanRole(userRole);
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //! проверить! опять не было...
@@ -62,20 +66,29 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const description = formData.get(FormFieldName.Description)?.toString() || '';
     const individualTraining = formData.get(FormFieldName.IndividualTraining)?.toString() === 'on';
-    const dto: CreateQuestionnaireDto = {
-      trainingLevel,
-      specializations,
-      duration,
-      caloriesLose,
-      caloriesWaste,
-      description,
-      individualTraining
-    };
 
-    onSubmit(dto);
+    if (isSportsman) {
+      const dto: ICreateQuestionnaireSportsmanDto = {
+        trainingLevel,
+        specializations,
+        duration,
+        caloriesLose,
+        caloriesWaste
+      };
+
+      onSubmit(dto);
+    } else {
+      const dto: ICreateQuestionnaireCoachDto = {
+        trainingLevel,
+        specializations,
+        description,
+        individualTraining
+      };
+
+      onSubmit(dto);
+    }
   };
 
-  const isSportsman = isSportsmanRole(userRole);
   const divClassName = `questionnaire-${isSportsman ? 'user' : 'coach'}`;
   const submitClassName = classNames(`btn ${divClassName}__button`, { 'is-disabled': isDisabled });
   const popupFormProps = {

@@ -11,7 +11,7 @@ import 'multer'; // Express.Multer.File
 import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserProfileDto,
   QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserProfileRoute,
-  RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateBasicQuestionnaireDto,
+  RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   Specialization, UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
 } from '@backend/shared/core';
@@ -20,6 +20,7 @@ import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckSportsmanGuard } from './guards/check-sportsman.guard';
+import { CheckCoachGuard } from './guards/check-coach.guard';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
@@ -50,29 +51,26 @@ export class UserProfileController {
 
   @UseGuards(CheckSportsmanGuard)
   @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Sportsman))
-  public async create(
+  public async createQuestionnaireSportsman(
     @Body() dto: CreateQuestionnaireSportsmanDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<QuestionnaireRdo> {
-    //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Sportsman
-    //! нужна функция пригодиться для тренера, а может где еще
-    //! CheckAuthGuard складывает в request[RequestProperty.User] = data {sub, name, role....};
-    //! может сделать RequestWithUser...
-    const createDto: CreateBasicQuestionnaireDto = { ...dto };
-    //! когда будет роль тренер нужно загрузить файлы и конвернтнуть в - fileIds: []
-    //! можно сразу вызвать проверку исходную дто заполеннности полей в зависимости от роли
-    //! перенести в сервис?
-    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaires);
-    const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
+    const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
 
-    //! когда будет роль тренер нужно преобразовать id файлов в пути
-    return data;
+    return questionnaire;
   }
 
   //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
-  //@Post(joinUrl(QuestionnaireRoute.Questionnaire, UserRole.Coach))
-  //! проверить роль пользователя узнав через запрос от Sub или отдельно добавить через guard как и userId на UserRole.Coach
+  @UseGuards(CheckCoachGuard)
+  @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Coach))
+  public async createQuestionnaireCoach(
+    @Body() dto: CreateQuestionnaireCoachDto,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<QuestionnaireRdo> {
+    const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
+
+    return questionnaire;
+  }
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
@@ -94,6 +92,7 @@ export class UserProfileController {
   ): Promise<DetailUserProfileRdo> {
     //! перенести в сервис/сервисы?
     //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
+
     dto.specializations = [];
     for (const key in dto) {
       if (key.startsWith('specializations.')) {
@@ -134,10 +133,11 @@ export class UserProfileController {
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserProfileRdo[]> {
-    const userProfiles: UserProfileRdo[] = [];
     //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика
     //! все в обну базу: пользователи, общие опросники, опросники спортцменов и опросники тренеров
     //! может авторизацию оставить в монго, а все роли, опросники и остальное в постгресс
+
+    const userProfiles: UserProfileRdo[] = [];
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);
 
     for (const { userId, specializations } of questionnaires) {
