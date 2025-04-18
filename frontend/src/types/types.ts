@@ -1,3 +1,5 @@
+import { ICreateQuestionnaireCoachDto, ICreateQuestionnaireSportsmanDto } from '@backend/shared/core';
+
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
@@ -17,3 +19,5 @@ export type MinMaxRange = {
   min: number | undefined;
   max: number | undefined;
 }
+
+export type CreateQuestionnaireDto = ICreateQuestionnaireSportsmanDto | ICreateQuestionnaireCoachDto;

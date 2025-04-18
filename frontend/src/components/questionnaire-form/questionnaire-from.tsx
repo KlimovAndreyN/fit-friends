@@ -9,10 +9,10 @@ import QuestionnaireUserCalorie from '../questionnaire-user-calorie/questionnair
 import CustomInput from '../custom-input/custom-input';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
-import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Role, Specialization, TrainingLevel } from '@backend/shared/core';
+import { Duration, isSportsmanRole, Role, Specialization, TrainingLevel } from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
 
-import { Option } from '../../types/types';
+import { CreateQuestionnaireDto, Option } from '../../types/types';
 import { DefaultUser, PageTitle, TRAINING_LEVELS } from '../../const';
 
 const DEFAULT_INDIVIDUAL_TRAINING = true;
@@ -35,12 +35,13 @@ enum FormFieldName {
   CaloriesLose = 'calories-lose',
   CaloriesWaste = 'calories-waste',
   Files = 'import',
+  Description = 'description',
   IndividualTraining = 'individual-training'
 }
 
 type QuestionnaireFormProps = {
   userRole: Role;
-  onSubmit: (dto: ICreateQuestionnaireSportsmanDto) => void;
+  onSubmit: (dto: CreateQuestionnaireDto) => void;
   isDisabled: boolean;
 }
 
@@ -59,15 +60,18 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
     const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
-    const dto: ICreateQuestionnaireSportsmanDto = {
+    const description = formData.get(FormFieldName.Description)?.toString() || '';
+    const individualTraining = formData.get(FormFieldName.IndividualTraining)?.toString() === 'on';
+    const dto: CreateQuestionnaireDto = {
       trainingLevel,
       specializations,
       duration,
       caloriesLose,
-      caloriesWaste
+      caloriesWaste,
+      description,
+      individualTraining
     };
 
-    //! вызвать OnSubmit для нужно ролей, а может единый...
     onSubmit(dto);
   };
 
@@ -139,7 +143,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
             !isSportsman &&
             <Block legend='Расскажите о своём опыте, который мы сможем проверить' className={divClassName} >
               <Fragment>
-                <CustomInput name='description' type='textarea' divExtraClassName={divClassName} />
+                <CustomInput name={FormFieldName.Description} type='textarea' divExtraClassName={divClassName} />
                 <CustomCheckbox
                   name={FormFieldName.IndividualTraining}
                   spanText='Хочу дополнительно индивидуально тренировать'

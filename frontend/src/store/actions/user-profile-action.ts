@@ -3,13 +3,13 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, ICreateQuestionnaireSportsmanDto, IQuestionnaireRdo,
-  ApiServiceRoute, IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute,
-  Role, IUserProfileRdo
+  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, ApiServiceRoute,
+  IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute, Role
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
 import { multipartFormDataHeader } from '../../const';
+import { CreateQuestionnaireDto } from '../../types/types';
 
 type Extra = {
   api: AxiosInstance;
@@ -37,7 +37,7 @@ export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: 
   }
 );
 
-export const createQuestionnaire = createAsyncThunk<void, { dto: ICreateQuestionnaireSportsmanDto; userRole: Role }, { extra: Extra }>(
+export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionnaireDto; userRole: Role }, { extra: Extra }>(
   Action.CREATE_QUESTIONNARE,
   async ({ dto, userRole }, { extra }) => {
     const { api } = extra;
