@@ -6,7 +6,6 @@ import PersonalAccountReadyCheckbox from '../personal-account-ready-checkbox/per
 import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
-import CustomTextarea from '../custom-textarea/custom-textarea';
 
 import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
 
@@ -135,8 +134,9 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
               divExtraClassName={mainClassName}
               readOnly={!isEditing}
             />
-            <CustomTextarea
+            <CustomInput
               name={FormFieldName.About}
+              type='textarea'
               label='Описание'
               value={about}
               divExtraClassName={mainClassName}

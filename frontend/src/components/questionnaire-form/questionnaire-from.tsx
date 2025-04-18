@@ -6,7 +6,7 @@ import Block from '../block/block';
 import SpecializationsCheckbox from '../specializations-checkbox/specializations-checkbox';
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
 import QuestionnaireUserCalorie from '../questionnaire-user-calorie/questionnaire-user-calorie';
-import CustomTextarea from '../custom-textarea/custom-textarea';
+import CustomInput from '../custom-input/custom-input';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Role, Specialization, TrainingLevel } from '@backend/shared/core';
@@ -139,7 +139,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
             !isSportsman &&
             <Block legend='Расскажите о своём опыте, который мы сможем проверить' className={divClassName} >
               <Fragment>
-                <CustomTextarea name='description' divExtraClassName={divClassName} />
+                <CustomInput name='description' type='textarea' divExtraClassName={divClassName} />
                 <CustomCheckbox
                   name={FormFieldName.IndividualTraining}
                   spanText='Хочу дополнительно индивидуально тренировать'

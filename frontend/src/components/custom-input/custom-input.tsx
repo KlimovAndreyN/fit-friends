@@ -16,9 +16,6 @@ type CustomInputProps = {
 }
 
 function CustomInput(props: CustomInputProps): JSX.Element {
-  //! выделить отдельно CustomBase
-  //! возможно и остальные CustomText, InputNumber....
-
   const { name, type, value = '', label, spanText, divExtraClassName, onChange, required, max, autoComplete, readOnly } = props;
   const [currentValue, setCurrentValue] = useState(value);
 
@@ -29,8 +26,10 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     }
   }, [value, readOnly]);
 
-  const mainClassName = 'custom-input';
-  const divClassName = divExtraClassName && `${divExtraClassName}__input`;
+  const isTextarea = type === 'textarea';
+  const mainPostfixClassName = (isTextarea) ? type : 'input';
+  const mainClassName = `custom-${mainPostfixClassName}`;
+  const divClassName = divExtraClassName && `${divExtraClassName}__${mainPostfixClassName}`;
   const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readOnly }, divClassName);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -42,15 +41,19 @@ function CustomInput(props: CustomInputProps): JSX.Element {
     onChange?.(inputValue);
   };
 
-  const inputProps = {
+  const textareaProps = {
     name,
-    type,
-    autoComplete,
     value: currentValue,
     onChange: handleChange,
-    required,
-    max,
     disabled: readOnly
+  };
+
+  const inputProps = {
+    type,
+    ...textareaProps,
+    autoComplete,
+    required,
+    max
   };
 
   return (
@@ -59,7 +62,9 @@ function CustomInput(props: CustomInputProps): JSX.Element {
         {label && <span className={`${mainClassName}__label`}>{label}</span>}
         {
           <span className={`${mainClassName}__wrapper`}>
-            <input {...inputProps} />
+            {
+              (isTextarea) ? <textarea {...textareaProps} placeholder=' ' /> : <input {...inputProps} />
+            }
             {!spanText && <span className={`${mainClassName}__text`}>{spanText}</span>}
           </span>
         }
