@@ -16,12 +16,12 @@ function Friends(): JSX.Element {
             <div className="friends-list__wrapper">
               <button className="btn-flat friends-list__back" type="button">
                 <svg width="14" height="10" aria-hidden="true">
-                  <use xlinkHref="#arrow-left"/>
+                  <use xlinkHref="#arrow-left" />
                 </svg><span>Назад</span>
               </button>
               <div className="friends-list__title-wrapper">
                 <h1 className="friends-list__title">Мои друзья</h1>
-                {/* //! закоментировано в маркапах
+                {/* //! закоментировано в маркапах? есть компонет CustomCheckbox
                 <!--<div className="custom-toggle custom-toggle--switch custom-toggle--switch-right" data-validate-type="checkbox">
                   <label>
                     <input type="checkbox" value="user-agreement-1" name="user-agreement"><span className="custom-toggle__icon">
@@ -51,7 +51,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Елизавета</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Петроградская</address>
                         </div>
@@ -66,7 +66,7 @@ function Friends(): JSX.Element {
                         </div>
                         <button className="thumbnail-friend__invite-button" type="button">
                           <svg width="43" height="46" aria-hidden="true" focusable="false">
-                            <use xlinkHref="#icon-invite"/>
+                            <use xlinkHref="#icon-invite" />
                           </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
                         </button>
                       </div>
@@ -98,7 +98,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Татьяна</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Площадь Александра Невского</address>
                         </div>
@@ -113,7 +113,7 @@ function Friends(): JSX.Element {
                         </div>
                         <button className="thumbnail-friend__invite-button" type="button">
                           <svg width="43" height="46" aria-hidden="true" focusable="false">
-                            <use xlinkHref="#icon-invite"/>
+                            <use xlinkHref="#icon-invite" />
                           </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
                         </button>
                       </div>
@@ -145,7 +145,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Ксения</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Проспект Просвещения</address>
                         </div>
@@ -160,7 +160,7 @@ function Friends(): JSX.Element {
                         </div>
                         <button className="thumbnail-friend__invite-button is-disabled" type="button">
                           <svg width="43" height="46" aria-hidden="true" focusable="false">
-                            <use xlinkHref="#icon-invite"/>
+                            <use xlinkHref="#icon-invite" />
                           </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
                         </button>
                       </div>
@@ -188,7 +188,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Ева</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Проспект Большевиков</address>
                         </div>
@@ -203,7 +203,7 @@ function Friends(): JSX.Element {
                         </div>
                         <button className="thumbnail-friend__invite-button" type="button">
                           <svg width="43" height="46" aria-hidden="true" focusable="false">
-                            <use xlinkHref="#icon-invite"/>
+                            <use xlinkHref="#icon-invite" />
                           </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
                         </button>
                       </div>
@@ -231,7 +231,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Станислав</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Спортивная</address>
                         </div>
@@ -269,7 +269,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Мария</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Политехническая</address>
                         </div>
@@ -307,7 +307,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Диана</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Невский проспект</address>
                         </div>
@@ -342,7 +342,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Марк</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Технологический Институт</address>
                         </div>
@@ -377,7 +377,7 @@ function Friends(): JSX.Element {
                         <h2 className="thumbnail-friend__name">Алёна</h2>
                         <div className="thumbnail-friend__location">
                           <svg width="14" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-location"/>
+                            <use xlinkHref="#icon-location" />
                           </svg>
                           <address className="thumbnail-friend__location-address">Петроградская</address>
                         </div>
@@ -392,7 +392,7 @@ function Friends(): JSX.Element {
                         </div>
                         <button className="thumbnail-friend__invite-button" type="button">
                           <svg width="43" height="46" aria-hidden="true" focusable="false">
-                            <use xlinkHref="#icon-invite"/>
+                            <use xlinkHref="#icon-invite" />
                           </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
                         </button>
                       </div>

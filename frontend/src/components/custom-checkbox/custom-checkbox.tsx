@@ -39,12 +39,12 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
     `${mainClassName}--${(isSwitch ? 'switch' : 'checkbox')}`,
     divExtraClassName && `${divExtraClassName}__toggle`
   );
-  const mainDivClassNAme = (!divClassName) ? className : `${divClassName}__checkbox`;
+  const mainDivClassName = (!divClassName) ? className : `${divClassName}__checkbox`;
   const spanIconClassName = (!divClassName) ? `${mainClassName}__icon` : `${divClassName}__checkbox-icon`;
   const spanLabelClassName = (!divClassName) ? `${mainClassName}__label` : `${divClassName}__checkbox-label`;
 
   return (
-    <div className={mainDivClassNAme}>
+    <div className={mainDivClassName}>
       <label onClick={handleLabelClick}>
         <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} />
         <span className={spanIconClassName}>

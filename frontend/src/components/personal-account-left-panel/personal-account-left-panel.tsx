@@ -144,7 +144,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
             />
           </Fragment>
         </PersonalAccountBlock>
-        <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' title='Статус' >
+        <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='status' extraClassNameForDiv title='Статус' >
           <PersonalAccountReadyCheckbox
             name={FormFieldName.ReadyForTraining}
             mainClassName={mainClassName}

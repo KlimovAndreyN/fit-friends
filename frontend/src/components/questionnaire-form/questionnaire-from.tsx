@@ -7,6 +7,7 @@ import SpecializationsCheckbox from '../specializations-checkbox/specializations
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
 import QuestionnaireUserCalorie from '../questionnaire-user-calorie/questionnaire-user-calorie';
 import CustomInput from '../custom-input/custom-input';
+import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { Duration, ICreateQuestionnaireSportsmanDto, isSportsmanRole, Role, Specialization, TrainingLevel } from '@backend/shared/core';
 import { enumToArray } from '@backend/shared/helpers';
@@ -32,7 +33,9 @@ enum FormFieldName {
   Time = 'time',
   UserTrainingLevel = 'level',
   CaloriesLose = 'calories-lose',
-  CaloriesWaste = 'calories-waste'
+  CaloriesWaste = 'calories-waste',
+  Files = 'import',
+  IndividualTraining = 'individual-training'
 }
 
 type QuestionnaireFormProps = {
@@ -43,6 +46,7 @@ type QuestionnaireFormProps = {
 
 function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireFormProps): JSX.Element | null {
   //! сделать файлы-сертификаты для тренера
+  //! может еще можно разбить файл...
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //! проверить! опять не было...
@@ -126,7 +130,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
                       <use xlinkHref="#icon-import" />
                     </svg>
                   </span>
-                  <input type="file" name="import" tabIndex={-1} accept=".pdf, .jpg, .png" />
+                  <input type="file" name={FormFieldName.Files} tabIndex={-1} accept=".pdf, .jpg, .png" />
                 </label>
               </div>
             </Block>
@@ -136,17 +140,12 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
             <Block legend='Расскажите о своём опыте, который мы сможем проверить' className={divClassName} >
               <Fragment>
                 <CustomInput name='description' type='textarea' divExtraClassName={divClassName} />
-                <div className="questionnaire-coach__checkbox">
-                  <label>
-                    <input type="checkbox" value="individual-training" name="individual-training" checked={DEFAULT_INDIVIDUAL_TRAINING} />
-                    <span className="questionnaire-coach__checkbox-icon">
-                      <svg width="9" height="6" aria-hidden="true">
-                        <use xlinkHref="#arrow-check" />
-                      </svg>
-                    </span>
-                    <span className="questionnaire-coach__checkbox-label">Хочу дополнительно индивидуально тренировать</span>
-                  </label>
-                </div>
+                <CustomCheckbox
+                  name={FormFieldName.IndividualTraining}
+                  spanText='Хочу дополнительно индивидуально тренировать'
+                  value={DEFAULT_INDIVIDUAL_TRAINING}
+                  divClassName={divClassName}
+                />
               </Fragment>
             </Block>
           }
