@@ -19,7 +19,7 @@ function BackButton({ className, classPrefix }: BackButtonProps): JSX.Element {
       onClick={handleBackButtonClick}
     >
       <svg width="14" height="10" aria-hidden="true">
-        <use xlinkHref="#arrow-left"></use>
+        <use xlinkHref="#arrow-left"/>
       </svg><span>Назад</span>
     </button>
   );

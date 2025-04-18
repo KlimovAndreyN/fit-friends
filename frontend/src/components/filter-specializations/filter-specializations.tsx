@@ -38,7 +38,7 @@ function FilterSpecializations({ specializations, onChange }: FilterSpecializati
                           <input type="checkbox" checked={checked} name="type" readOnly />
                           <span className="custom-toggle__icon" >
                             <svg width="9" height="6" aria-hidden="true">
-                              <use xlinkHref="#arrow-check"></use>
+                              <use xlinkHref="#arrow-check"/>
                             </svg>
                           </span>
                           <span className="custom-toggle__label">{title.toLocaleLowerCase()}</span>

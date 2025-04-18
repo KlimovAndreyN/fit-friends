@@ -49,7 +49,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
     { [`${mainClassName}--readonly`]: readonly },
     mainClassName,
     { [`${mainClassName}--not-selected`]: !value, 'is-open': isOpen },
-    extraClassName
+    extraClassName && `${extraClassName}__select`
   );
 
   const title = options.find((option) => (option.value === selectedValue))?.title || '';

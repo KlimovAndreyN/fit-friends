@@ -35,7 +35,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
         />
         <span className="custom-toggle__icon">
           <svg width="9" height="6" aria-hidden="true">
-            <use xlinkHref="#arrow-check"></use>
+            <use xlinkHref="#arrow-check"/>
           </svg>
         </span>
         <span className="custom-toggle__label">{(isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать'}</span>

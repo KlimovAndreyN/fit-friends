@@ -77,12 +77,12 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
           <div className="user-info-edit__controls">
             <button className="user-info-edit__control-btn" aria-label="обновить" onClick={handleEditButtonClick}>
               <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-change"></use>
+                <use xlinkHref="#icon-change"/>
               </svg>
             </button>
             <button className="user-info-edit__control-btn" aria-label="удалить" onClick={handleDeleteButtonClick}>
               <svg width="14" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-trash"></use>
+                <use xlinkHref="#icon-trash"/>
               </svg>
             </button>
           </div>

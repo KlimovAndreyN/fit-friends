@@ -120,7 +120,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           disabled={isUpdateUserProfileExecuting}
         >
           <svg width="12" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-edit"></use>
+            <use xlinkHref="#icon-edit"/>
           </svg>
           <span>{buttonCaption}</span>
         </button>
@@ -155,8 +155,9 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           <SpecializationsCheckbox
             name={FormFieldName.Spec}
             values={specializations}
-            divExtraClassName={`${mainClassName}__specialization`}
+            divExtraClassName={mainClassName}
             readonly={!isEditing}
+            fromPersonalAccount
           />
         </PersonalAccountBlock>
         <CustomSelect //! в макете к названию станции добавлено "ст. м. ", добавил titlePrefix
@@ -165,7 +166,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           value={location}
           titlePrefix='ст. м. '
           options={LOCATIONS}
-          extraClassName={`${mainClassName}__select`}
+          extraClassName={mainClassName}
           readonly={!isEditing}
         />
         <CustomSelect
@@ -173,7 +174,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           caption='Пол'
           value={gender}
           options={USER_GENDERS}
-          extraClassName={`${mainClassName}__select`}
+          extraClassName={mainClassName}
           readonly={!isEditing}
         />
         <CustomSelect
@@ -181,7 +182,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           caption='Уровень'
           value={trainingLevel}
           options={TRAINING_LEVELS}
-          extraClassName={`${mainClassName}__select`}
+          extraClassName={mainClassName}
           readonly={!isEditing}
         />
       </form>

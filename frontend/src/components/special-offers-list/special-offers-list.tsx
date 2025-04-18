@@ -68,7 +68,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
                     </Link>
                     <div className="promo-slider__logo">
                       <svg width="74" height="74" aria-hidden="true">
-                        <use xlinkHref="#logotype"></use>
+                        <use xlinkHref="#logotype"/>
                       </svg>
                     </div>
                   </div>

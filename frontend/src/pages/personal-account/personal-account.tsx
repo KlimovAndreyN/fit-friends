@@ -89,7 +89,7 @@ function PersonalAccount(): JSX.Element {
                                             <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.Friends}>
                                               <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
                                                 <svg width="30" height="26" aria-hidden="true">
-                                                  <use xlinkHref="#icon-friends"></use>
+                                                  <use xlinkHref="#icon-friends"/>
                                                 </svg>
                                               </div>
                                               <span className="thumbnail-link__text">Мои друзья</span>
@@ -97,7 +97,7 @@ function PersonalAccount(): JSX.Element {
                                             <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.MyPurchases}>
                                               <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
                                                 <svg width="30" height="26" aria-hidden="true">
-                                                  <use xlinkHref="#icon-shopping-cart"></use>
+                                                  <use xlinkHref="#icon-shopping-cart"/>
                                                 </svg>
                                               </div>
                                               <span className="thumbnail-link__text">Мои покупки</span>

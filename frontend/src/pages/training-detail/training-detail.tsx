@@ -108,7 +108,7 @@ function TrainingDetail(): JSX.Element {
                               <span className="training-info__label">Рейтинг</span>
                               <span className="training-info__rating-icon">
                                 <svg width="18" height="18" aria-hidden="true">
-                                  <use xlinkHref="#icon-star"></use>
+                                  <use xlinkHref="#icon-star"/>
                                 </svg>
                               </span>
                               <input type="number" name="rating" defaultValue={ratingText} disabled />
@@ -152,7 +152,7 @@ function TrainingDetail(): JSX.Element {
                     </div>
                     <button className="training-video__play-button btn-reset">
                       <svg width="18" height="30" aria-hidden="true">
-                        <use xlinkHref="#icon-arrow"></use>
+                        <use xlinkHref="#icon-arrow"/>
                       </svg>
                     </button>
                   </div>

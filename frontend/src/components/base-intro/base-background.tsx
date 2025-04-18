@@ -20,7 +20,7 @@ function BaseBackground({ title, children }: BaseBackgroundProps): JSX.Element {
         </div>
         <div className="intro__wrapper">
           <svg className="intro__icon" width="60" height="60" aria-hidden="true">
-            <use xlinkHref="#icon-logotype"></use>
+            <use xlinkHref="#icon-logotype"/>
           </svg>
           <div className="intro__title-logo">
             <picture>

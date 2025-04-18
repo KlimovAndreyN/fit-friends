@@ -24,7 +24,7 @@ function Header({ title }: HeaderProps): JSX.Element {
               <span className="search__label">Поиск</span>
               <input type="search" name="search" />
               <svg className="search__icon" width="20" height="20" aria-hidden="true">
-                <use xlinkHref="#icon-search"></use>
+                <use xlinkHref="#icon-search"/>
               </svg>
             </label>
             <ul className="search__list">

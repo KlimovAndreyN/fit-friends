@@ -33,7 +33,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
             //! закоментировано в маркапах
             <!--<div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
               <svg width="12" height="12" aria-hidden="true">
-                <use xlinkHref="#icon-crown"></use>
+                <use xlinkHref="#icon-crown"/>
               </svg>
             </div>-->
             */}
@@ -41,7 +41,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
             <h3 className="thumbnail-user__name">{name}</h3>
             <div className="thumbnail-user__location">
               <svg width="14" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-location"></use>
+                <use xlinkHref="#icon-location"/>
               </svg>
               <address className="thumbnail-user__location-address">{LocationTitle[location]}</address>
             </div>

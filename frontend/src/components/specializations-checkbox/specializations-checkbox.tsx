@@ -7,10 +7,12 @@ type SpecializationsCheckboxProps = {
   values: string[];
   divExtraClassName: string;
   readonly?: boolean;
+  fromPersonalAccount?: boolean;
 }
 
-function SpecializationsCheckbox({ name, values, divExtraClassName, readonly }: SpecializationsCheckboxProps): JSX.Element {
-  const className = classNames('specialization-checkbox', `${divExtraClassName}__specializations`);
+function SpecializationsCheckbox({ name, values, divExtraClassName, readonly, fromPersonalAccount }: SpecializationsCheckboxProps): JSX.Element {
+  const classNamePostfix = (fromPersonalAccount) ? 'specialization' : 'specializations';
+  const className = classNames('specialization-checkbox', `${divExtraClassName}__${classNamePostfix}`);
 
   return (
     <div className={className}>

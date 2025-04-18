@@ -49,7 +49,7 @@ function TrainingCard({ training }: TrainingCardProps): JSX.Element {
           </ul>
           <div className="thumbnail-training__rate">
             <svg width="16" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-star"></use>
+              <use xlinkHref="#icon-star"/>
             </svg>
             <span className="thumbnail-training__rate-value">{ratingText}</span>
           </div>

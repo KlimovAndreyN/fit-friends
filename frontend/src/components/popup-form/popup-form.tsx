@@ -27,10 +27,10 @@ function PopupForm(props: PopupFormProps): JSX.Element {
       <Helmet title={getPageTitle(title)} />
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
-          <use xlinkHref="#logo-big"></use>
+          <use xlinkHref="#logo-big"/>
         </svg>
         <svg className="background-logo__icon" width="343" height="343" aria-hidden="true">
-          <use xlinkHref="#icon-logotype"></use>
+          <use xlinkHref="#icon-logotype"/>
         </svg>
       </div>
       <div className={className}>

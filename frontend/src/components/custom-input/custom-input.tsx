@@ -18,6 +18,7 @@ type CustomInputProps = {
 function CustomInput(props: CustomInputProps): JSX.Element {
   //! выделить отдельно CustomTextArea и CustomBase
   //! возможно и остальные CustomText, InputNumber....
+  //! добавить input type="checkbox"  xlinkHref="#arrow-check"
 
   const { divExtraClassName, name, type, value, label, text, onChange, required, max, autoComplete, readOnly } = props;
   const [currentValue, setCurrentValue] = useState('');

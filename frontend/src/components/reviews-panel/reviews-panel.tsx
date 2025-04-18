@@ -55,7 +55,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
                       <span className="review__user-name">{userName}</span>
                       <div className="review__rating">
                         <svg width="16" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-star"></use>
+                          <use xlinkHref="#icon-star"/>
                         </svg>
                         <span>{rating}</span>
                       </div>
