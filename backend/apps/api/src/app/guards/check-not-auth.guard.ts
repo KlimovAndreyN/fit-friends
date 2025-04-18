@@ -6,17 +6,21 @@ import { AUTH_NAME, AuthenticationMessage, RequestProperty } from '@backend/shar
 export class CheckNotAuthGuard implements CanActivate {
   public canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
-    const requestId = request[RequestProperty.RequestId];
-    const bearerAuth: string = request.headers[AUTH_NAME] || '';
+    const { RequestId: requestIdKey } = RequestProperty;
+    const requestId = request[requestIdKey];
+    const { method, url, headers } = request;
+    const authorization: string = headers[AUTH_NAME];
+    const logMessage = [method, url, requestIdKey, requestId, `Authorization ${authorization ? 'exist' : 'is empty'}`].join(': ')
 
-    Logger.log(`${request.method}: ${request.url}: ${RequestProperty.RequestId}: ${requestId}: Authorization ${bearerAuth ? 'exist' : 'is empty'} `, CheckNotAuthGuard.name);
+    Logger.log(logMessage, CheckNotAuthGuard.name);
 
-    if (bearerAuth) {
-      const [, token] = bearerAuth.split(' ');
-
-      throw new BadRequestException([AuthenticationMessage.RequireLogout, 'Token:', token].join(' '));
+    if (!authorization) {
+      return true;
     }
 
-    return true;
+    const [, token] = authorization.split(' ');
+    const errorMessage = [AuthenticationMessage.RequireLogout, 'Token:', token].join(' ');
+
+    throw new BadRequestException(errorMessage); //! возможно UnauthorizedException, т.к. клиент не обработать BadRequestException
   }
 }

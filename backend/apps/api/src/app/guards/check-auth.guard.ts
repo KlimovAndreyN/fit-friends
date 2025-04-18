@@ -18,11 +18,15 @@ export class CheckAuthGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const requestId = request[RequestProperty.RequestId];
-    const authorization = request.headers[AUTH_NAME];
+    const { RequestId: requestIdKey, UserId: userIdKey } = RequestProperty;
+    const requestId = request[requestIdKey];
+    const { method, url: requestUrl, headers } = request;
+    const authorization = headers[AUTH_NAME];
 
     if (!authorization) {
-      Logger.log(`${request.method}: ${request.url}: ${RequestProperty.RequestId}: ${requestId}: ${ERROR_MESSAGE}`, CheckAuthGuard.name);
+      const logMessage = [method, requestUrl, requestIdKey, requestId, ERROR_MESSAGE].join(': ')
+
+      Logger.log(logMessage, CheckAuthGuard.name);
 
       throw new UnauthorizedException(ERROR_MESSAGE);
     }
@@ -31,9 +35,12 @@ export class CheckAuthGuard implements CanActivate {
     const { data } = await this.httpService.axiosRef.get<TokenPayloadRdo>(url, makeHeaders(requestId, authorization));
     const userId = data.sub;
 
-    request[RequestProperty.User] = data; // для UsersController.checkToken
-    request[RequestProperty.UserId] = userId; // для всех
-    Logger.log(`${request.method}: ${request.url}: ${RequestProperty.UserId} is ${userId || 'empty'}`, CheckAuthGuard.name);
+    request[RequestProperty.User] = data; // для UsersController.checkToken, CheckSportsmanGuard, CheckCoachGuard
+    request[userIdKey] = userId; // для всех
+
+    const logMessage = [method, requestUrl, `${userIdKey} is ${userId || 'empty'}`].join(': ')
+
+    Logger.log(logMessage, CheckAuthGuard.name);
 
     return true;
   }
