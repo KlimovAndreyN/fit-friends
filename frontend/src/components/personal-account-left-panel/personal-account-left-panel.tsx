@@ -120,7 +120,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           disabled={isUpdateUserProfileExecuting}
         >
           <svg width="12" height="12" aria-hidden="true">
-            <use xlinkHref="#icon-edit"/>
+            <use xlinkHref="#icon-edit" />
           </svg>
           <span>{buttonCaption}</span>
         </button>
@@ -167,7 +167,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           titlePrefix='ст. м. '
           options={LOCATIONS}
           extraClassName={mainClassName}
-          readonly={!isEditing}
+          readOnly={!isEditing}
         />
         <CustomSelect
           name={FormFieldName.Sex}
@@ -175,7 +175,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           value={gender}
           options={USER_GENDERS}
           extraClassName={mainClassName}
-          readonly={!isEditing}
+          readOnly={!isEditing}
         />
         <CustomSelect
           name={FormFieldName.UserTrainingLevel}
@@ -183,7 +183,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           value={trainingLevel}
           options={TRAINING_LEVELS}
           extraClassName={mainClassName}
-          readonly={!isEditing}
+          readOnly={!isEditing}
         />
       </form>
     </section>

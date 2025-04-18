@@ -11,11 +11,11 @@ type CustomSelectProps = {
   value?: string;
   titlePrefix?: string;
   extraClassName?: string;
-  readonly?: boolean;
+  readOnly?: boolean;
 }
 
 function CustomSelect(props: CustomSelectProps): JSX.Element {
-  const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readonly } = props;
+  const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readOnly } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
 
@@ -46,9 +46,9 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
 
   const mainClassName = 'custom-select';
   const divClassName = classNames(
-    { [`${mainClassName}--readonly`]: readonly },
+    { [`${mainClassName}--readonly`]: readOnly },
     mainClassName,
-    { [`${mainClassName}--not-selected`]: !value, 'is-open': isOpen },
+    { [`${mainClassName}--not-selected`]: !selectedValue, 'is-open': isOpen },
     extraClassName && `${extraClassName}__select`
   );
 
@@ -61,18 +61,14 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       возможно ошибка в css .custom-select.is-open .custom-select__label
       */}
       <span className={`${mainClassName}__label`} style={{ opacity: 1 }}>{caption}</span>
-      <div className={`${mainClassName}__placeholder`}>{titlePrefix + title}</div>
-      {
-        (readonly)
-          ? null
-          : <input className='visually-hidden' type="text" name={name} value={selectedValue} readOnly />
-      }
+      {selectedValue && <div className={`${mainClassName}__placeholder`}>{titlePrefix + title}</div>}
+      {!readOnly && <input className='visually-hidden' type="text" name={name} value={selectedValue} readOnly />}
       <button
         className={`${mainClassName}__button`}
         type="button"
         aria-label="Выберите одну из опций"
         onClick={toggleDropdown}
-        disabled={readonly}
+        disabled={readOnly}
       >
         <span className={`${mainClassName}__text`} />
         <span className={`${mainClassName}__icon`}>
@@ -82,24 +78,20 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
         </span>
       </button>
       <ul className={`${mainClassName}__list`} role="listbox">
-        {
-          (readonly)
-            ? null
-            : options.map(
-              //! а есть стиль для подсветки выбранного значения?
-              (option) => {
-                const handleClick = () => {
-                  handleListItemClick(option);
-                };
+        {!readOnly && options.map(
+          //! а есть стиль для подсветки выбранного значения?
+          (option) => {
+            const handleClick = () => {
+              handleListItemClick(option);
+            };
 
-                return (
-                  <li key={option.value} className={`${mainClassName}__item`} onClick={handleClick}>
-                    {titlePrefix + option.title}
-                  </li>
-                );
-              }
-            )
-        }
+            return (
+              <li key={option.value} className={`${mainClassName}__item`} onClick={handleClick}>
+                {titlePrefix + option.title}
+              </li>
+            );
+          }
+        )}
       </ul>
     </div>
   );
