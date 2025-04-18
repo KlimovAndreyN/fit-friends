@@ -1,6 +1,6 @@
-import { FormEvent } from 'react';
-
 import { Specialization } from '@backend/shared/core';
+
+import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { SPECIALISATIONS } from '../../const';
 
@@ -25,25 +25,18 @@ function FilterSpecializations({ specializations, onChange }: FilterSpecializati
                   const specialization = value as Specialization;
                   const checked = specializations.has(specialization);
 
-                  const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
-                    event.preventDefault();
-
+                  const handleCustomCheckboxChange = () => {
                     onChange(specialization);
                   };
 
                   return (
                     <li className="gym-catalog-form__check-list-item" key={value}>
-                      <div className="custom-toggle custom-toggle--checkbox">
-                        <label onClick={handleLabelClick}>
-                          <input type="checkbox" checked={checked} name="type" readOnly />
-                          <span className="custom-toggle__icon" >
-                            <svg width="9" height="6" aria-hidden="true">
-                              <use xlinkHref="#arrow-check"/>
-                            </svg>
-                          </span>
-                          <span className="custom-toggle__label">{title.toLocaleLowerCase()}</span>
-                        </label>
-                      </div>
+                      <CustomCheckbox
+                        name='type'
+                        spanText={title.toLocaleLowerCase()}
+                        value={checked}
+                        onChange={handleCustomCheckboxChange}
+                      />
                     </li>
                   );
                 }
