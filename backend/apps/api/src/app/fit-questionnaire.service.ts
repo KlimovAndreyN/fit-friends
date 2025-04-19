@@ -1,7 +1,6 @@
-import { HttpStatus, Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
-import { AxiosError } from 'axios';
 
 import {
   CreateBasicQuestionnaireDto, QuestionnaireMiniRdo, QuestionnaireRdo,
@@ -32,20 +31,9 @@ export class FitQuestionnaireService {
   }
 
   public async exist(userId: string, requestId: string): Promise<boolean> {
-    try {
-      await this.findByUserId(userId, requestId);
+    await this.findByUserId(userId, requestId);
 
-      return true;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === HttpStatus.NOT_FOUND) {
-          return false;
-        }
-      }
-
-      Logger.log('Error check exist questionnaire', FitQuestionnaireService.name);
-      throw new InternalServerErrorException('Error check exist questionnaire');
-    }
+    return true;
   }
 
   public async createQuestionnaire(dto: CreateBasicQuestionnaireDto, userId: string, requestId: string): Promise<QuestionnaireRdo> {

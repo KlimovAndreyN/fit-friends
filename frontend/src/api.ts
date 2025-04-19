@@ -1,16 +1,17 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { AccountRoute, ApiServiceRoute, AUTH_NAME, ITokensRdo } from '@backend/shared/core';
-import { joinUrl } from '@backend/shared/helpers';
+import { AUTH_NAME, ITokensRdo } from '@backend/shared/core';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
 import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
+import { ApiRoute } from './const';
 
 export enum HttpCode {
   OK = 200,
-  NoAuth = 401
+  NoAuth = 401,
+  NotFound = 404
 }
 
 const ViteEnvOption = {
@@ -20,24 +21,20 @@ const ViteEnvOption = {
 
 const REQUEST_TIMEOUT = 5000;
 
-const baseURL = getViteEnvVariable(ViteEnvOption.BACKEND_URL);
-const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
-
 export function createAPI(): AxiosInstance {
   const api = axios.create({
-    baseURL,
+    baseURL: getViteEnvVariable(ViteEnvOption.BACKEND_URL),
     timeout: REQUEST_TIMEOUT
   });
 
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       const { headers } = config;
+      const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
-        const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
-        const logoutUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
         const url = config.url;
-        const token = (url && [refreshUrl, logoutUrl].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
+        const token = (url && [REFRESH, LOGOUT].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
 
         if (token) {
           headers[AUTH_NAME] = getBearerAuthorization(token);
@@ -51,27 +48,35 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      const { response, config: { url } } = error;
-      const refreshUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh);
-      const loginUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
-      const logoutUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
+      const { response, config: { url, resultForNotFound } } = error;
       const originalRequestConfig = error.config;
+      const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
+      const { REFRESH, LOGIN, LOGOUT } = ApiRoute;
 
       // пробуем обновить токены
-      if (![refreshUrl, loginUrl, logoutUrl].includes(url || '') && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
+      if (![REFRESH, LOGIN, LOGOUT].includes(url || '') && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
         originalRequestConfig.retry = true;
 
         if (!RefreshTokenStore.getToken()) {
           return Promise.reject('RefreshToken is empty!');
         }
 
-        const { data: { accessToken, refreshToken } } = await api.post<ITokensRdo>(refreshUrl);
+        const { data: { accessToken, refreshToken } } = await api.post<ITokensRdo>(REFRESH);
 
         AccessTokenStore.save(accessToken);
         RefreshTokenStore.save(refreshToken);
 
         //! нужен ли await?
         return api(originalRequestConfig);
+      }
+
+      if ((response?.status === HttpCode.NotFound) || resultForNotFound) {
+        if (showUrlAxiosError) {
+          // eslint-disable-next-line no-console
+          console.log('resultForNotFound', resultForNotFound);
+        }
+
+        return Promise.resolve({ data: resultForNotFound });
       }
 
       //! отладка обработки ошибок / при выставленной переменной окружения VITE_SHOW_URL_AXIOS_ERROR
@@ -89,7 +94,7 @@ export function createAPI(): AxiosInstance {
       toast.warn(getAxiosErrorMessage(error, showUrlAxiosError));
 
       // если ошибка при обновлении токенов
-      if (url === refreshUrl) {
+      if (url === REFRESH) {
         // если ошибка не по связи
         if (!isErrorNetwork(error)) {
           // то удалим токены

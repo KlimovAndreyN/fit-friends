@@ -31,7 +31,7 @@ export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: 
   async (_, { extra }) => {
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.UserProfiles, QuestionnaireRoute.Exist);
-    const { data } = await api.get<boolean>(url);
+    const { data } = await api.get<boolean>(url, { resultForNotFound: false });
 
     return data;
   }

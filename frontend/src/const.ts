@@ -1,7 +1,7 @@
-import { Duration, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
+import { Duration, Location, Specialization, Gender, TrainingLevel, Role, ApiServiceRoute, AccountRoute } from '@backend/shared/core';
+import { enumToArray, joinUrl } from '@backend/shared/helpers';
 
 import { Option } from './types/types';
-import { enumToArray } from '../../backend/libs/shared/helpers/src/lib/utils';
 
 export const MAIN_TITLE = 'FitFriends';
 export const ID_PARAM = ':id';
@@ -45,6 +45,15 @@ export enum AppRoute {
   MyTrainings = '/my-trainings',
   NotFound = '/404',
 }
+
+export const ApiRoute = {
+  LOGIN: joinUrl(ApiServiceRoute.Users, AccountRoute.Login),
+  LOGOUT: joinUrl(ApiServiceRoute.Users, AccountRoute.Logout),
+  REFRESH: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
+  CHECK: joinUrl(ApiServiceRoute.Users, AccountRoute.Check),
+  REGISTER: joinUrl(ApiServiceRoute.Users, AccountRoute.Register)
+  //! эти используются в действиях и в апи, остальные сюда тащить?
+} as const;
 
 export enum StoreSlice {
   UserProcess = 'USER_PROCESS',

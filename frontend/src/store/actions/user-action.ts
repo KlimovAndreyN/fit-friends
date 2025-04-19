@@ -2,16 +2,12 @@ import { History } from 'history';
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import {
-  AccountRoute, ApiServiceRoute, ILoginUserDto, IDetailUserRdo,
-  ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto
-} from '@backend/shared/core';
-import { joinUrl } from '@backend/shared/helpers';
+import { ILoginUserDto, IDetailUserRdo, ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto } from '@backend/shared/core';
 
 import { isErrorNetwork } from '../../utils/parse-axios-error';
 import { AccessTokenStore, RefreshTokenStore } from '../../utils/token-store';
 import { existQuestionnaire } from './user-profile-action';
-import { multipartFormDataHeader } from '../../const';
+import { ApiRoute, multipartFormDataHeader } from '../../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -35,8 +31,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
     }
 
     const { api } = extra;
-    const checkUrl = joinUrl(ApiServiceRoute.Users, AccountRoute.Check);
-    const { data } = await api.get<ITokenPayloadRdo>(checkUrl);
+    const { data } = await api.get<ITokenPayloadRdo>(ApiRoute.CHECK);
 
     dispatch(existQuestionnaire());
 
@@ -48,8 +43,7 @@ export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { ext
   Action.LOGIN_USER,
   async ({ email, password }, { extra, dispatch }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Login);
-    const { data } = await api.post<ILoggedUserRdo>(url, { email, password });
+    const { data } = await api.post<ILoggedUserRdo>(ApiRoute.LOGIN, { email, password });
     const {
       tokens: { accessToken, refreshToken },
       id: sub,
@@ -70,11 +64,10 @@ export const logoutUser = createAsyncThunk<boolean, undefined, { extra: Extra }>
   Action.LOGOUT_USER,
   async (_, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Logout);
     let needDropTokens = true;
 
     try {
-      await api.delete<ITokenPayloadRdo>(url);
+      await api.delete<ITokenPayloadRdo>(ApiRoute.LOGOUT);
 
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -95,9 +88,8 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
   Action.REGISTER_USER,
   async (dto, { extra, dispatch }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.Users, AccountRoute.Register);
 
-    await api.post<IDetailUserRdo>(url, dto, { headers: multipartFormDataHeader });
+    await api.post<IDetailUserRdo>(ApiRoute.REGISTER, dto, { headers: multipartFormDataHeader });
 
     const { email, password } = dto;
 
