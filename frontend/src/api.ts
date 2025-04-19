@@ -8,8 +8,7 @@ import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/pa
 import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
 import { ApiRoute } from './const';
 
-export enum HttpCode {
-  OK = 200,
+enum HttpCode {
   NoAuth = 401,
   NotFound = 404
 }
@@ -33,7 +32,7 @@ export function createAPI(): AxiosInstance {
       const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
-        const url = config.url;
+        const { url = '' } = config;
         const token = (url && [REFRESH, LOGOUT].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
 
         if (token) {
@@ -48,13 +47,18 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      const { response, config: { url, resultForNotFound } } = error;
+      const { response, config: { url = '', resultForNotFound } } = error;
+      const status = response?.status;
       const originalRequestConfig = error.config;
       const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
       const { REFRESH, LOGIN, LOGOUT } = ApiRoute;
 
       // пробуем обновить токены
-      if (![REFRESH, LOGIN, LOGOUT].includes(url || '') && (response?.status === HttpCode.NoAuth) && !originalRequestConfig.retry) {
+      if (
+        ![REFRESH, LOGIN, LOGOUT].includes(url)
+        && (status === HttpCode.NoAuth)
+        && !originalRequestConfig.retry
+      ) {
         originalRequestConfig.retry = true;
 
         if (!RefreshTokenStore.getToken()) {
@@ -70,10 +74,11 @@ export function createAPI(): AxiosInstance {
         return api(originalRequestConfig);
       }
 
-      if ((response?.status === HttpCode.NotFound) || resultForNotFound) {
+      if ((status === HttpCode.NotFound) && resultForNotFound !== undefined) {
+        //! отладка обработки ошибок / при выставленной переменной окружения VITE_SHOW_URL_AXIOS_ERROR
         if (showUrlAxiosError) {
           // eslint-disable-next-line no-console
-          console.log('resultForNotFound', resultForNotFound);
+          console.log('resultForNotFound =', resultForNotFound, ':', typeof resultForNotFound);
         }
 
         return Promise.resolve({ data: resultForNotFound });
