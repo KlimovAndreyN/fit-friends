@@ -25,6 +25,7 @@ export const reviewProcess = createSlice(
         .addCase(
           fetchReviews.rejected,
           (state) => {
+            state.reviews = initialState.reviews;
             state.isFetchReviewsExecuting = false;
           }
         )

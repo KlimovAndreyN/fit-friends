@@ -39,6 +39,7 @@ export const userProfileProcess = createSlice(
         .addCase(
           existQuestionnaire.rejected,
           (state) => {
+            state.existQuestionnaire = false;
             state.isExistQuestionnaireExecuting = false;
           }
         )
@@ -77,6 +78,7 @@ export const userProfileProcess = createSlice(
         .addCase(
           fetchUserProfile.rejected,
           (state) => {
+            state.userProfile = initialState.userProfile;
             state.isFetchUserProfileExecuting = false;
           }
         )
@@ -138,6 +140,7 @@ export const userProfileProcess = createSlice(
         .addCase(
           fetchLookForCompanyUserProfiles.rejected,
           (state) => {
+            state.lookForCompanyUserProfiles = initialState.lookForCompanyUserProfiles;
             state.isFetchLookForCompanyUserProfilesExecuting = false;
           }
         )
@@ -157,6 +160,7 @@ export const userProfileProcess = createSlice(
         .addCase(
           fetchUserProfiles.rejected,
           (state) => {
+            state.userProfiles = initialState.userProfiles;
             state.isFetchUserProfilesExecuting = false;
           }
         )

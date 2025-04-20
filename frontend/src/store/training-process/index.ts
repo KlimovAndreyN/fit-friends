@@ -33,6 +33,7 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchForSportsmanTrainings.rejected,
           (state) => {
+            state.forSportsmanTrainings = initialState.forSportsmanTrainings;
             state.isFetchForSportsmanTrainingsExecuting = false;
           }
         )
@@ -52,6 +53,7 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchSpecialTrainings.rejected,
           (state) => {
+            state.specialTrainings = initialState.specialTrainings;
             state.isFetchSpecialTrainingsExecuting = false;
           }
         )
@@ -71,6 +73,7 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchPopularTrainings.rejected,
           (state) => {
+            state.popularTrainings = initialState.popularTrainings;
             state.isFetchPopularTrainingsExecuting = false;
           }
         )
@@ -90,6 +93,7 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchTrainings.rejected,
           (state) => {
+            state.trainings = initialState.trainings;
             state.isFetchTrainingsExecuting = false;
           }
         )
@@ -109,6 +113,7 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchDetailTraining.rejected,
           (state) => {
+            state.detailTraining = initialState.detailTraining;
             state.isFetchDetailTrainingExecuting = false;
           }
         )
