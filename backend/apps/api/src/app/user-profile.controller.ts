@@ -1,5 +1,5 @@
 import {
-  BadRequestException, Body, Controller, Delete, Get, Patch,
+  BadRequestException, Body, Controller, Delete, Get, NotFoundException, Patch,
   Post, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
@@ -54,16 +54,44 @@ export class UserProfileController {
     return questionnaire;
   }
 
-  //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
+  @ApiConsumes('multipart/form-data')
   @UseGuards(CheckCoachGuard)
+  @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY)) //! нужное описание файлов files...?
   @Post(UserProfileRoute.QuestionnaireCoach)
   public async createQuestionnaireCoach(
     @Body() dto: CreateQuestionnaireCoachDto,
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
+    @UploadedFile(parseUserAvatarFilePipeBuilder) files?: Express.Multer.File[] //! а так сразу можно? проверить как 1 как несколько
   ): Promise<QuestionnaireRdo> {
-    const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
+    //! отладка
+    console.log('createQuestionnaireCoach - dto', dto);
 
-    return questionnaire;
+    //! перенести в сервис/сервисы?
+    //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
+
+    dto.specializations = [];
+    for (const key in dto) {
+      if (key.startsWith('specializations.')) {
+        dto.specializations.push(dto[key] as Specialization);
+        delete dto[key];
+      }
+    }
+
+    //! тут можно свалидировать только .specializations
+    const createDto = fillDto(CreateQuestionnaireCoachDto, dto);
+    const errors = await validate(createDto);
+
+    if (errors.length > 0) {
+      throw new BadRequestException(`Validation failed! ${getValidationErrorString(errors)}`);
+    }
+
+    //! отладка
+    console.log('createQuestionnaireCoach - createDto', createDto);
+    throw new NotFoundException('debug');
+
+    //const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
+
+    //return questionnaire;
   }
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
@@ -91,9 +119,11 @@ export class UserProfileController {
     for (const key in dto) {
       if (key.startsWith('specializations.')) {
         dto.specializations.push(dto[key] as Specialization);
+        delete dto[key];
       }
     }
 
+    //! тут можно свалидировать только .specializations
     const updateDto = fillDto(UpdateUserProfileDto, dto);
     const errors = await validate(updateDto);
 

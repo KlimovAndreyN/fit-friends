@@ -43,8 +43,7 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
     const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
 
     //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
-    //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
-    await api.post<IQuestionnaireRdo>(url, dto);
+    await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
   }
 );
 
