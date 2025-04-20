@@ -47,7 +47,7 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      const { response, config: { url = '', resultForNotFound } } = error;
+      const { response, config: { url = '', notFoundToReject } } = error;
       const status = response?.status;
       const originalRequestConfig = error.config;
       const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
@@ -74,14 +74,14 @@ export function createAPI(): AxiosInstance {
         return api(originalRequestConfig);
       }
 
-      if ((status === HttpCode.NotFound) && resultForNotFound !== undefined) {
+      if ((status === HttpCode.NotFound) && notFoundToReject) {
         //! отладка обработки ошибок / при выставленной переменной окружения VITE_SHOW_URL_AXIOS_ERROR
         if (showUrlAxiosError) {
           // eslint-disable-next-line no-console
-          console.log('resultForNotFound =', resultForNotFound, ':', typeof resultForNotFound);
+          console.log('notFoundToReject - ', url, ': error - ', error);
         }
 
-        return Promise.resolve({ data: resultForNotFound });
+        return Promise.reject(error);
       }
 
       //! отладка обработки ошибок / при выставленной переменной окружения VITE_SHOW_URL_AXIOS_ERROR

@@ -10,12 +10,12 @@ import 'multer'; // Express.Multer.File
 
 import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserProfileDto,
-  QuestionnaireRdo, QuestionnaireRoute, CreateQuestionnaireSportsmanDto, UserProfileRoute,
+  QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, Specialization,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
-  Role, AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  Specialization, UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
+  AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
+  UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
 } from '@backend/shared/core';
-import { fillDto, getValidationErrorString, joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { fillDto, getValidationErrorString, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -37,20 +37,14 @@ export class UserProfileController {
     //! может сделать UserProfileService ?
   ) { }
 
-  @Get(QuestionnaireRoute.Exist)
-  //! может дополнять при входе и при проверке токена
-  //! или коды ответов сделать разные
-  //! или на клиенте обработать 404 без олтображения ошибки
-  public async exist(
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
-  ): Promise<boolean> {
-    const existQuestionnaire = await this.fitQuestionnaireService.exist(userId, requestId);
-
-    return existQuestionnaire;
+  //! в описание: 200 - есть, 404 - нету
+  @Get(UserProfileRoute.Questionnaire)
+  public async exist(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
+    await this.fitQuestionnaireService.findByUserId(userId, requestId)
   }
 
   @UseGuards(CheckSportsmanGuard)
-  @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Sportsman))
+  @Post(UserProfileRoute.QuestionnaireSportsman)
   public async createQuestionnaireSportsman(
     @Body() dto: CreateQuestionnaireSportsmanDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
@@ -62,7 +56,7 @@ export class UserProfileController {
 
   //!@UseInterceptors(FileInterceptor(files...?)) и в клиенте поставить multipartFormData
   @UseGuards(CheckCoachGuard)
-  @Post(joinUrl(QuestionnaireRoute.Questionnaire, Role.Coach))
+  @Post(UserProfileRoute.QuestionnaireCoach)
   public async createQuestionnaireCoach(
     @Body() dto: CreateQuestionnaireCoachDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId

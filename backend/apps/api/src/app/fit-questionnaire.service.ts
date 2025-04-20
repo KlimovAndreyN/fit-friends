@@ -30,12 +30,6 @@ export class FitQuestionnaireService {
     return data;
   }
 
-  public async exist(userId: string, requestId: string): Promise<boolean> {
-    await this.findByUserId(userId, requestId);
-
-    return true;
-  }
-
   public async createQuestionnaire(dto: CreateBasicQuestionnaireDto, userId: string, requestId: string): Promise<QuestionnaireRdo> {
     //! признак тренера можно передать, а можно проще если есть файлы, то нужно обработать, возможно будет отдельная переменая, массив...
     //! у тренера нужно загрузить файлы и конвернтнуть в - fileIds: []

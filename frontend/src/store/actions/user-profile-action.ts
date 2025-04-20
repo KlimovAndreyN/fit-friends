@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, ApiServiceRoute,
-  IDetailUserProfileRdo, QuestionnaireRoute, UserProfileRoute, Role
+  IDetailUserProfileRdo, UserProfileRoute, Role, isSportsmanRole
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -26,14 +26,12 @@ export const Action = {
   FETCH_USER_PROFILES: 'user-profiles/fetch'
 };
 
-export const existQuestionnaire = createAsyncThunk<boolean, undefined, { extra: Extra }>(
+export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Extra }>(
   Action.EXIST_QUESTIONNARE,
   async (_, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, QuestionnaireRoute.Exist);
-    const { data } = await api.get<boolean>(url, { resultForNotFound: false });
-
-    return data;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Questionnaire);
+    await api.get<boolean>(url, { notFoundToReject: true });
   }
 );
 
@@ -41,7 +39,8 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
   Action.CREATE_QUESTIONNARE,
   async ({ dto, userRole }, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, QuestionnaireRoute.Questionnaire, userRole);
+    const subUrl = isSportsmanRole(userRole) ? UserProfileRoute.QuestionnaireSportsman : UserProfileRoute.QuestionnaireCoach;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
 
     //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
     //await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });

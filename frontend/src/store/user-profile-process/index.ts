@@ -44,8 +44,8 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           existQuestionnaire.fulfilled,
-          (state, action) => {
-            state.existQuestionnaire = action.payload;
+          (state) => {
+            state.existQuestionnaire = true;
             state.isExistQuestionnaireExecuting = false;
           }
         )

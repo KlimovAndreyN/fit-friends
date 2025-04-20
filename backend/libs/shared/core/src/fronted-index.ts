@@ -1,6 +1,6 @@
 export { BackgroundPaths } from './lib/constants/background-paths';
 export { AUTH_NAME } from './lib/constants/bearer-auth';
-export { ApiServiceRoute, AccountRoute, QuestionnaireRoute, UserProfileRoute, TrainingRoute } from './lib/constants/route';
+export { ApiServiceRoute, AccountRoute, UserProfileRoute, TrainingRoute } from './lib/constants/route';
 
 export { type ICreateQuestionnaireCoachDto } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';
 export { type ICreateQuestionnaireSportsmanDto } from './lib/interfaces/dto/i-create-questionnaire-sportsman.dto';

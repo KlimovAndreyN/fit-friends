@@ -1,3 +1,5 @@
+import { Role } from "../types/role.enum";
+
 export enum GlobalRoute {
   Api = 'api',
   Swagger = 'spec'
@@ -27,11 +29,6 @@ export enum AccountRoute {
   Register = 'register'
 }
 
-export enum QuestionnaireRoute {
-  Exist = 'exist',
-  Questionnaire = 'questionnaire'
-}
-
 export enum TrainingRoute {
   ForSportsman = 'for-sportsman',
   Special = 'special',
@@ -39,6 +36,9 @@ export enum TrainingRoute {
 }
 
 export enum UserProfileRoute {
+  Questionnaire = 'questionnaire',
+  QuestionnaireSportsman = `${Questionnaire}/${Role.Sportsman}`,
+  QuestionnaireCoach = `${Questionnaire}/${Role.Coach}`,
   ReadyForTraining = 'ready-for-training',
   LookForCompany = 'look-for-company'
 }
