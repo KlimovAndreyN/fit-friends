@@ -13,8 +13,7 @@ import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
 import { Role } from '../../types/role.enum';
 import { transformStringBooleanOrBoolean } from '../../utils/transform';
-import { UserApiProperty } from '../../constants/api-property/user.api-property';
-import { UserValidation } from '../../constants/authentication.constant';
+import { UserApiProperty, UserValidation } from '../../constants/api-property/user.api-property';
 
 //! типизировать через SchemaObjectMetadata не получается
 // или import { ApiPropertyOptions } from '@nestjs/swagger';

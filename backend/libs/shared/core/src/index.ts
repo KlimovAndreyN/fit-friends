@@ -2,9 +2,12 @@ export { Entity } from './lib/base/entity';
 
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
-export { FileApiProperty } from './lib/constants/api-property/file.api-property';
+export { FileApiProperty, FILE_KEY, FileUploaderFileApiBody } from './lib/constants/api-property/file.api-property';
+export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property'; //! нужно ли ?
+export { QuestionnaireApiProperty, QuestionnaireValidation } from './lib/constants/api-property/questionnaire.api-property';
+export { ReviewApiProperty } from './lib/constants/api-property/review.api-property';
 export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
-export { UserApiProperty } from './lib/constants/api-property/user.api-property';
+export { UserApiProperty, UserValidation, AuthenticationMessage, parseUserAvatarFilePipeBuilder } from './lib/constants/api-property/user.api-property';
 
 export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
 export { AuthenticationApiResponse } from './lib/constants/api-response/authentication.api-response';
@@ -12,15 +15,12 @@ export { FileUploaderApiResponse } from './lib/constants/api-response/file-uploa
 
 export * from './lib/constants/api-header-option';
 export { ApiParamOption } from './lib/constants/api-param-option';
-export * from './lib/constants/authentication.constant';
 export { BackgroundPaths } from './lib/constants/background-paths';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { DateFormat } from './lib/constants/date-format';
 export * from './lib/constants/default-port';
-export * from './lib/constants/file-uploader.constant';
 export { IdParam } from './lib/constants/id-param';
-export { PaginationApiProperty } from './lib/constants/pagination-api-property'; //! нужно ли ?
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
 export * from './lib/constants/route';

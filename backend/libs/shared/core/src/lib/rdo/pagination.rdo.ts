@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { PaginationApiProperty } from '../constants/pagination-api-property';
+import { PaginationApiProperty } from '../constants/api-property/pagination-api-property';
 
 export class PaginationRdo {
   @ApiProperty(PaginationApiProperty.TotalPages)

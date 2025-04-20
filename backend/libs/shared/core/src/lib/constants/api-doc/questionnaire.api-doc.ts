@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, Min,
-  IsEnum, IsInt, IsOptional, IsString, Max, IsBoolean
+  ArrayMaxSize, ArrayMinSize, ArrayUnique, IsArray, Min, IsEnum,
+  IsInt, IsOptional, IsString, Max, IsBoolean, MinLength, MaxLength
 } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 import { Questionnaire } from '../../interfaces/questionnaire.interface';
 import { FILES_PROPERTY, ICreateQuestionnaireCoachDto } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
@@ -11,9 +11,9 @@ import { IQuestionnaireRdo } from '../../interfaces/rdo/i-questionnaire.rdo';
 import { Specialization } from '../../types/specialization.enum';
 import { TrainingLevel } from '../../types/training-level.enum';
 import { Duration } from '../../types/duration.enum';
-import { QuestionnaireApiProperty } from '../../constants/api-property/questionnaire.api-property';
-import { QuestionnaireValidation } from '../../constants/authentication.constant';
+import { transformStringBooleanOrBoolean } from '../../utils/transform';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
+import { QuestionnaireApiProperty, QuestionnaireValidation } from '../../constants/api-property/questionnaire.api-property';
 
 export class QuestionnaireApiDoc {
   @ApiProperty(UserApiProperty.Id)
@@ -61,6 +61,8 @@ export class QuestionnaireApiDoc {
 
   @ApiProperty(QuestionnaireApiProperty.Description)
   @Expose()
+  @MinLength(QuestionnaireValidation.Description.MinLength)
+  @MaxLength(QuestionnaireValidation.Description.MaxLength)
   description: Questionnaire['description']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
@@ -79,5 +81,6 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()
   @IsBoolean()
+  @Transform(transformStringBooleanOrBoolean) //! проверить когда от тренера будет приходить файл
   individualTraining: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
 }

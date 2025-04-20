@@ -4,7 +4,7 @@ import { BasicDetailUserRdo } from '../../rdo/basic-detail-user.rdo';
 import { TokensRdo } from '../../rdo/tokens.rdo';
 import { LoggedUserRdo } from '../../rdo/logged-user.rdo';
 import { TokenPayloadRdo } from '../../rdo/token-payload.rdo';
-import { AuthenticationMessage } from '../authentication.constant';
+import { AuthenticationMessage } from '../api-property/user.api-property';
 
 export const AuthenticationApiResponse = {
   CheckSuccess: {

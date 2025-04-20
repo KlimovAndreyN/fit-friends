@@ -70,3 +70,22 @@ export const QuestionnaireApiProperty = {
     example: false
   }
 } as const;
+
+export const QuestionnaireValidation = {
+  Specializations: {
+    ArrayMinSize: 1,
+    ArrayMaxSize: 3
+  },
+  CaloriesLose: {
+    Min: 1000,
+    Max: 5000
+  },
+  CaloriesWaste: {
+    Min: 1000,
+    Max: 5000
+  },
+  Description: {
+    MinLength: 10,
+    MaxLength: 140
+  }
+} as const;
