@@ -50,7 +50,7 @@ swagger@local.ru
     и на странице с опросом
 
 опросник от тренера
-  файлы
+  файлы - <embed src="path/to/your/document.pdf" width="600" height="500" type="application/pdf">
   переименовать сервис из FitQuestionnaireService в UserProfileService ?
 
 !сделать времянки, а потом моки

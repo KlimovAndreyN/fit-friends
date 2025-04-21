@@ -28,7 +28,7 @@ export function createAPI(): AxiosInstance {
 
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-      const { headers } = config;
+      const { headers, useMultipartFormData } = config;
       const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
@@ -37,6 +37,14 @@ export function createAPI(): AxiosInstance {
 
         if (token) {
           headers[AUTH_NAME] = getBearerAuthorization(token);
+        }
+
+        if (useMultipartFormData) {
+          headers['Content-Type'] = 'multipart/form-data'; //! убрать из констант multipartFormDataHeader;
+
+          //! отладка
+          // eslint-disable-next-line no-console
+          console.log('config.data', config.data);
         }
       }
 

@@ -1,4 +1,4 @@
-import { FormEvent, Fragment } from 'react';
+import { FormEvent, Fragment, useRef } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../popup-form/popup-form';
@@ -51,6 +51,9 @@ type QuestionnaireFormProps = {
 function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireFormProps): JSX.Element | null {
   //! сделать файлы-сертификаты для тренера
   //! может еще можно разбить файл...
+
+  //! временно, отладка, еще нужно выветси название или количество выбранных файловЮ может в хинте илии снизу, задать максимум
+  const filesInputRef = useRef<HTMLInputElement | null>(null);
   const isSportsman = isSportsmanRole(userRole);
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -66,6 +69,9 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const description = formData.get(FormFieldName.Description)?.toString() || '';
     const individualTraining = formData.get(FormFieldName.IndividualTraining)?.toString() === 'on';
+    //! доделать
+    const fileList = filesInputRef.current?.files;
+    const files = (fileList) ? Array.from(fileList) : undefined;
 
     if (isSportsman) {
       const dto: ICreateQuestionnaireSportsmanDto = {
@@ -81,6 +87,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
       const dto: ICreateQuestionnaireCoachDto = {
         trainingLevel,
         specializations,
+        files,
         description,
         individualTraining
       };
@@ -147,7 +154,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
                       <use xlinkHref="#icon-import" />
                     </svg>
                   </span>
-                  <input type="file" name={FormFieldName.Files} tabIndex={-1} accept=".pdf, .jpg, .png" />
+                  <input type="file" name={FormFieldName.Files} tabIndex={-1} accept=".pdf, .jpg, .png" multiple ref={filesInputRef} />
                 </label>
               </div>
             </Block>
