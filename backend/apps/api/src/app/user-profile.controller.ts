@@ -1,11 +1,10 @@
 import {
-  BadRequestException, Body, Controller, Delete, Get, NotFoundException, Patch,
-  Post, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
+  Body, Controller, Delete, Get, NotFoundException, Patch, Post,
+  Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { validate } from 'class-validator';
 import 'multer'; // Express.Multer.File
 
 import {
@@ -15,7 +14,7 @@ import {
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
 } from '@backend/shared/core';
-import { fillDto, getValidationErrorString, makeHeaders } from '@backend/shared/helpers';
+import { fillDto, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -66,27 +65,7 @@ export class UserProfileController {
     //! отладка
     console.log('createQuestionnaireCoach - dto', dto);
 
-    //! перенести в сервис/сервисы?
-    //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
-
-    dto.specializations = [];
-    for (const key in dto) {
-      if (key.startsWith('specializations.')) {
-        dto.specializations.push(dto[key] as Specialization);
-        delete dto[key];
-      }
-    }
-
-    //! тут можно свалидировать только .specializations
-    const createDto = fillDto(CreateQuestionnaireCoachDto, dto);
-    const errors = await validate(createDto);
-
-    if (errors.length > 0) {
-      throw new BadRequestException(`Validation failed! ${getValidationErrorString(errors)}`);
-    }
-
     //! отладка
-    console.log('createQuestionnaireCoach - createDto', createDto);
     throw new NotFoundException('debug');
 
     //const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
@@ -112,28 +91,8 @@ export class UserProfileController {
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<DetailUserProfileRdo> {
-    //! перенести в сервис/сервисы?
-    //! вынести преобразование и валидацю отдельно! возможно пригодится и в другом месте
-
-    dto.specializations = [];
-    for (const key in dto) {
-      if (key.startsWith('specializations.')) {
-        dto.specializations.push(dto[key] as Specialization);
-        delete dto[key];
-      }
-    }
-
-    //! тут можно свалидировать только .specializations
-    const updateDto = fillDto(UpdateUserProfileDto, dto);
-    const errors = await validate(updateDto);
-
-    if (errors.length > 0) {
-      throw new BadRequestException(`Validation failed! ${getValidationErrorString(errors)}`);
-    }
-
-    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, updateDto);
-    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, updateDto);
-    //
+    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
+    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
 
     const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
 

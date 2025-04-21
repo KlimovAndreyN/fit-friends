@@ -39,11 +39,12 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
   Action.CREATE_QUESTIONNARE,
   async ({ dto, userRole }, { extra }) => {
     const { api } = extra;
-    const subUrl = isSportsmanRole(userRole) ? UserProfileRoute.QuestionnaireSportsman : UserProfileRoute.QuestionnaireCoach;
+    const isSportsman = isSportsmanRole(userRole);
+    const subUrl = isSportsman ? UserProfileRoute.QuestionnaireSportsman : UserProfileRoute.QuestionnaireCoach;
     const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
+    const config = isSportsman ? {} : { headers: multipartFormDataHeader };
 
-    //! multipartFormDataHeader перепроверить когда будут файлы от тренера, т.к. сейчас нет @UseInterceptors(FileInterceptor(files...?)) в контроллере
-    await api.post<IQuestionnaireRdo>(url, dto, { headers: multipartFormDataHeader });
+    await api.post<IQuestionnaireRdo>(url, dto, config);
   }
 );
 
