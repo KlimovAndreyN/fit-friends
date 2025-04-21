@@ -21,7 +21,7 @@ function CustomInput(props: CustomInputProps): JSX.Element {
 
   useEffect(() => {
     // приходят новые значения из предка! при переключении режима редактирования и повторной отрисовки формы после получения ответа
-    if (value) {
+    if (value !== undefined) {
       setCurrentValue(value);
     }
   }, [value, readOnly]);
@@ -37,8 +37,11 @@ function CustomInput(props: CustomInputProps): JSX.Element {
 
     const { value: inputValue } = event.target;
 
-    setCurrentValue(inputValue);
-    onChange?.(inputValue);
+    if (onChange) {
+      onChange(inputValue);
+    } else {
+      setCurrentValue(inputValue);
+    }
   };
 
   const textareaProps = {

@@ -9,7 +9,7 @@ export type UserProfileProcess = {
   isReadyForTrainingChangeExecuting: boolean;
   existQuestionnaire: boolean;
   userProfile: IDetailUserProfileRdo | null;
-  readyForTraining?: boolean;
+  readyForTraining: boolean;
   isFetchLookForCompanyUserProfilesExecuting: boolean;
   lookForCompanyUserProfiles: IUserProfileRdo[];
   isFetchUserProfilesExecuting: boolean;

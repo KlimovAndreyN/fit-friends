@@ -16,7 +16,7 @@ const initialState: UserProfileProcess = {
   isReadyForTrainingChangeExecuting: false,
   existQuestionnaire: false,
   userProfile: null,
-  readyForTraining: undefined,
+  readyForTraining: false,
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
   isFetchUserProfilesExecuting: false,

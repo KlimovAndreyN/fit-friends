@@ -14,7 +14,7 @@ export function transformToStringArray({ value, obj, key }): string[] {
     }
   }
 
-  return items;
+  return (items.length) ? items : undefined;
 }
 
 export function transformStringBooleanOrBoolean({ value }): boolean {

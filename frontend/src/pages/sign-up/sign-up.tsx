@@ -149,6 +149,7 @@ function SignUp(): JSX.Element {
         </div>
         <CustomCheckbox
           name={FormFieldName.UserAgreement}
+          value={checkedUserAgreementInput}
           spanText={<Fragment>Я соглашаюсь с <span>политикой конфиденциальности</span> компании</Fragment>}
           onChange={handleUserAgreementCheckboxChange}
           divClassName='sign-up'

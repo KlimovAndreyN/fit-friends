@@ -17,15 +17,14 @@ type CustomSelectProps = {
 function CustomSelect(props: CustomSelectProps): JSX.Element {
   const { name, caption, options, onChange, value = '', titlePrefix = '', extraClassName, readOnly } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(value);
 
   useEffect(() => {
     // приходят новые значения из предка! при переключении режимо редактирования и повторной отрисовки формы после получения ответа
-    if (value) {
+    if (value !== undefined) {
       setSelectedValue(value);
     }
   }, [value]);
-
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -33,8 +32,13 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
 
   const handleListItemClick = (option: Option) => {
     //! что то одно Option или sting?
-    setSelectedValue(option.value);
-    onChange?.(option);
+
+    if (onChange) {
+      onChange(option);
+    } else {
+      setSelectedValue(option.value);
+    }
+
     setIsOpen(false);
   };
 

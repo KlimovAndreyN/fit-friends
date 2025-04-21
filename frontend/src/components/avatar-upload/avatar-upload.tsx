@@ -15,7 +15,7 @@ type AvatarUploadProps = {
 
 function AvatarUpload(props: AvatarUploadProps): JSX.Element {
   const { name, path = '', onChange, forPersonalAccount, isShowButtons, readonly } = props;
-  const [avatarFilePath, setAvatarFilePath] = useState<string>('');
+  const [avatarFilePath, setAvatarFilePath] = useState<string>(path);
   const imageUploadInputRef = useRef<HTMLInputElement | null>(null);
 
   const spanClassName = (avatarFilePath) ? 'input-load-avatar__avatar' : 'input-load-avatar__btn';
@@ -37,8 +37,11 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
   }, [path, readonly]);
 
   const handleImageUploadInputChange = (filePath: string, file: File | undefined) => {
-    setAvatarFilePath(filePath);
-    onChange?.(filePath, file);
+    if (onChange) {
+      onChange(filePath, file);
+    } else {
+      setAvatarFilePath(filePath);
+    }
   };
 
   const handleEditButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -50,8 +53,15 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
   const handleDeleteButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    setAvatarFilePath('');
-    onChange?.('', undefined);
+    if (onChange) {
+      onChange('', undefined);
+    } else {
+      setAvatarFilePath('');
+    }
+
+    if (imageUploadInputRef.current) {
+      imageUploadInputRef.current.value = '';
+    }
   };
 
   return (
@@ -72,22 +82,19 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
         </label>
       </div>
       {
-        (isShowButtons)
-          ?
-          <div className="user-info-edit__controls">
-            <button className="user-info-edit__control-btn" aria-label="обновить" onClick={handleEditButtonClick}>
-              <svg width="16" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-change"/>
-              </svg>
-            </button>
-            <button className="user-info-edit__control-btn" aria-label="удалить" onClick={handleDeleteButtonClick}>
-              <svg width="14" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-trash"/>
-              </svg>
-            </button>
-          </div>
-          :
-          null
+        isShowButtons &&
+        <div className="user-info-edit__controls">
+          <button className="user-info-edit__control-btn" aria-label="обновить" onClick={handleEditButtonClick}>
+            <svg width="16" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-change" />
+            </svg>
+          </button>
+          <button className="user-info-edit__control-btn" aria-label="удалить" onClick={handleDeleteButtonClick}>
+            <svg width="14" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-trash" />
+            </svg>
+          </button>
+        </div>
       }
     </Fragment>
   );

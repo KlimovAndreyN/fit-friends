@@ -15,10 +15,8 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
   const isReadyForTrainingChangeExecuting = useAppSelector(getIsReadyForTrainingChangeExecuting);
   const readyForTraining = useAppSelector(getReadyForTraining);
 
-  const handleeadyForTrainingCheckboxChange = () => {
-    const checked = !readyForTraining;
-
-    dispatch(changeReadyForTraining(checked));
+  const handleReadyForTrainingCheckboxChange = () => {
+    dispatch(changeReadyForTraining(!readyForTraining));
   };
 
   return (
@@ -27,7 +25,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
       spanText={(isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать'}
       value={readyForTraining}
       isSwitch
-      onChange={handleeadyForTrainingCheckboxChange}
+      onChange={handleReadyForTrainingCheckboxChange}
       divExtraClassName={mainClassName}
       isDisabled={isReadyForTrainingChangeExecuting}
     />

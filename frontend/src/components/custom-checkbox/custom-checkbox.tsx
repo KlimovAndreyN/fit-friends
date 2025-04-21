@@ -20,7 +20,7 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
 
   useEffect(() => {
     // приходят новые значения из предка! при переключении режима редактирования и повторной отрисовки формы после получения ответа
-    if (value) {
+    if (value !== undefined) {
       setCurrentValue(value);
     }
   }, [value]);
@@ -28,8 +28,11 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
   const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
     event.preventDefault();
 
-    setCurrentValue(!currentValue);
-    onChange?.(!currentValue);
+    if (onChange) {
+      onChange(!currentValue);
+    } else {
+      setCurrentValue(!currentValue);
+    }
   };
 
   const mainClassName = 'custom-toggle';
