@@ -1,6 +1,6 @@
 import {
-  Body, Controller, Delete, Get, NotFoundException, Patch, Post,
-  Req, UploadedFile, UseFilters, UseGuards, UseInterceptors
+  Body, Controller, Delete, Get, Patch, Post, Req,
+  UploadedFile, UseFilters, UseGuards, UseInterceptors
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -9,10 +9,10 @@ import 'multer'; // Express.Multer.File
 
 import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserProfileDto,
-  QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, Specialization,
+  QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, UserProfileRdo,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  UpdateUserDto, UpdateQuestionnaireDto, UserProfileRdo
+  UpdateUserDto, UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder
 } from '@backend/shared/core';
 import { fillDto, makeHeaders } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -55,22 +55,16 @@ export class UserProfileController {
 
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckCoachGuard)
-  @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY)) //! нужное описание файлов files...?
+  @UseInterceptors(FileInterceptor(FILES_PROPERTY)) //! нужное описание файлов files...?
   @Post(UserProfileRoute.QuestionnaireCoach)
   public async createQuestionnaireCoach(
     @Body() dto: CreateQuestionnaireCoachDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
-    @UploadedFile(parseUserAvatarFilePipeBuilder) files?: Express.Multer.File[] //! а так сразу можно? проверить как 1 как несколько
+    @UploadedFile(parseQuestionnaireFilesPipeBuilder) files?: Express.Multer.File[] //! а так сразу можно? проверить как 1 как несколько
   ): Promise<QuestionnaireRdo> {
-    //! отладка
-    console.log('createQuestionnaireCoach - dto', dto);
+    const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId, files);
 
-    //! отладка
-    throw new NotFoundException('debug');
-
-    //const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId);
-
-    //return questionnaire;
+    return questionnaire;
   }
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание

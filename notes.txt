@@ -49,7 +49,9 @@ swagger@local.ru
     Bad Request; Require logout. Token:
     и на странице с опросом
 
-опросник от тренера - файлы
+опросник от тренера
+  файлы
+  переименовать сервис из FitQuestionnaireService в UserProfileService ?
 
 !сделать времянки, а потом моки
   Questionnaire для тренера

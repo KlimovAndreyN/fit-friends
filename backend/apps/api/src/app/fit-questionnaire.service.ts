@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
@@ -30,14 +30,42 @@ export class FitQuestionnaireService {
     return data;
   }
 
-  public async createQuestionnaire(dto: CreateBasicQuestionnaireDto, userId: string, requestId: string): Promise<QuestionnaireRdo> {
+  public async createQuestionnaire(
+    dto: CreateBasicQuestionnaireDto,
+    userId: string,
+    requestId: string,
+    files?: Express.Multer.File[]
+  ): Promise<QuestionnaireRdo> {
     //! признак тренера можно передать, а можно проще если есть файлы, то нужно обработать, возможно будет отдельная переменая, массив...
     //! у тренера нужно загрузить файлы и конвернтнуть в - fileIds: []
     //! у тренера нужно преобразовать id файлов в пути
 
+    //! отладка
+    console.log('FitQuestionnaireService.createQuestionnaire');
+    console.log('dto', dto);
+    console.log('files', files);
+
     const createDto: CreateBasicQuestionnaireDto = { ...dto };
+
+    if (files) {
+      //! отладка
+      console.log('files', files);
+
+      createDto.fileIds = [];
+      // отправить все файлы и получить fileIds
+      //for(const file of files){...}
+      //createDto.fileIds.push
+    }
+
+    //! отладка
+    console.log('dto', dto);
+
     const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
+
+    //! отладка
+    throw new NotFoundException('debug');
+
     const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
 
     return data;

@@ -1,3 +1,4 @@
+import { HttpStatus, ParseFilePipeBuilder } from '@nestjs/common';
 import { Duration } from '../../types/duration.enum';
 import { TrainingLevel } from '../../types/training-level.enum';
 
@@ -10,6 +11,7 @@ export const QuestionnaireApiProperty = {
   Specializations: { //! перепроверить в Swagger когда будет multiFormData
     description: 'The user specializations',
     isArray: true,
+    type: 'string',
     //description: 'Specializations - warning! not correct send string[] on swagger!',  //! нужно при swagger fromdata c api
     example: ['boxing'] // ['boxing', 'running'], из swagger-а не коректно передает пример, у значений убирает [] и ""
     //name: 'specializations[]' // не корректная передача string[] через form-data //! нужно при swagger fromdata c api
@@ -89,3 +91,13 @@ export const QuestionnaireValidation = {
     MaxLength: 140
   }
 } as const;
+
+//! доопределить
+export const parseQuestionnaireFilesPipeBuilder =
+  new ParseFilePipeBuilder()
+    .addFileTypeValidator({ fileType: '.jpg'/*UserValidation.AvatarFile.Types.join('|') */ })
+    .addMaxSizeValidator({ maxSize: 1000000/*UserValidation.AvatarFile.MaxSize*/ })
+    .build({
+      fileIsRequired: QuestionnaireApiProperty.Files.required,
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+    });

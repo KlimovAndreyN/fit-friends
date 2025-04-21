@@ -4,7 +4,7 @@ export { AuthenticationApiOperation } from './lib/constants/api-operation/authen
 
 export { FileApiProperty, FILE_KEY, FileUploaderFileApiBody } from './lib/constants/api-property/file.api-property';
 export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property'; //! нужно ли ?
-export { QuestionnaireApiProperty, QuestionnaireValidation } from './lib/constants/api-property/questionnaire.api-property';
+export { QuestionnaireApiProperty, QuestionnaireValidation, parseQuestionnaireFilesPipeBuilder } from './lib/constants/api-property/questionnaire.api-property';
 export { ReviewApiProperty } from './lib/constants/api-property/review.api-property';
 export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
 export { UserApiProperty, UserValidation, AuthenticationMessage, parseUserAvatarFilePipeBuilder } from './lib/constants/api-property/user.api-property';
@@ -39,6 +39,7 @@ export { UpdateUserProfileDto } from './lib/dto/update-user-profile.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
+export { FILES_PROPERTY } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';
 export { ITrainingRepository } from './lib/interfaces/query/i-training-repository.query';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
