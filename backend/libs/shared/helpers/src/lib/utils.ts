@@ -25,3 +25,19 @@ export function getQueryString(query: object): string {
 
   return `?${queryParams.join('&')}`;
 }
+
+export function convertDtoToFormData<T extends object>(dto: T): FormData {
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(dto)) {
+    if (Array.isArray(value)) {
+      value.forEach((item) => {
+        formData.append(key, item);
+      });
+    } else {
+      formData.append(key, value);
+    }
+  }
+
+  return formData;
+}

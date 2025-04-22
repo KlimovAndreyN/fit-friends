@@ -35,26 +35,6 @@ export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Ext
   }
 );
 
-//! временно
-export function dtoToFormData<T extends object>(dto: T): FormData {
-  const formData = new FormData();
-
-  for (const [key, value] of Object.entries(dto)) {
-    // если массив, то все значения добавляем отдельно
-    if (Array.isArray(value)) {
-      value.forEach((item) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        formData.append(key, item);
-      });
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      formData.append(key, value);
-    }
-  }
-
-  return formData;
-}
-
 export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionnaireDto; userRole: Role }, { extra: Extra }>(
   Action.CREATE_QUESTIONNARE,
   async ({ dto, userRole }, { extra }) => {
@@ -63,11 +43,7 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
     const subUrl = isSportsman ? UserProfileRoute.QuestionnaireSportsman : UserProfileRoute.QuestionnaireCoach;
     const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
 
-    console.log('dtoToFormData(dto)', dtoToFormData(dto));
-
-    //! отладка
-    //await api.post<IQuestionnaireRdo>(url, dtoToFormData(dto), { useMultipartFormData: !isSportsman }); //! тест
-    //!await api.post<IQuestionnaireRdo>(url, dto, { useMultipartFormData: !isSportsman }); //! тест
+    await api.post<IQuestionnaireRdo>(url, dto, { useMultipartFormData: !isSportsman });
   }
 );
 

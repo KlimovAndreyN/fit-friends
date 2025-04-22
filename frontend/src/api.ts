@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
 import { AUTH_NAME, ITokensRdo } from '@backend/shared/core';
+import { convertDtoToFormData } from '@backend/shared/helpers';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
@@ -40,11 +41,7 @@ export function createAPI(): AxiosInstance {
         }
 
         if (useMultipartFormData) {
-          headers['Content-Type'] = 'multipart/form-data'; //! убрать из констант multipartFormDataHeader;
-
-          //! отладка
-          // eslint-disable-next-line no-console
-          console.log('config.data', config.data);
+          config.transformRequest = convertDtoToFormData;
         }
       }
 
