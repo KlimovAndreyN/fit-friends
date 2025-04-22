@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
@@ -8,11 +8,13 @@ import {
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
+import { FileService } from './file.service';
 
 @Injectable()
 export class FitQuestionnaireService {
   constructor(
     private readonly httpService: HttpService,
+    private readonly fileService: FileService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
@@ -36,37 +38,22 @@ export class FitQuestionnaireService {
     requestId: string,
     files?: Express.Multer.File[]
   ): Promise<QuestionnaireRdo> {
-    //! признак тренера можно передать, а можно проще если есть файлы, то нужно обработать, возможно будет отдельная переменая, массив...
-    //! у тренера нужно загрузить файлы и конвернтнуть в - fileIds: []
-    //! у тренера нужно преобразовать id файлов в пути
     //! проверить имена файлов на русском языке
-
-    //! отладка
-    console.log('FitQuestionnaireService.createQuestionnaire');
-    console.log('dto', dto);
-    console.log('files', files);
 
     const createDto: CreateBasicQuestionnaireDto = { ...dto };
 
     if (files) {
-      //! отладка
-      console.log('files', files);
-
       createDto.fileIds = [];
-      // отправить все файлы и получить fileIds
-      //for(const file of files){...}
-      //createDto.fileIds.push
-    }
 
-    //! отладка
-    console.log('dto', dto);
+      for (const file of files) {
+        const { id } = await this.fileService.uploadFile(file, requestId);
+
+        createDto.fileIds.push(id);
+      }
+    }
 
     const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-
-    //! отладка
-    throw new NotFoundException('debug');
-
     const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
 
     return data;

@@ -68,6 +68,7 @@ export class QuestionnaireApiDoc {
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
   @Expose()
+  @IsOptional()
   fileIds: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
 
   @ApiProperty(QuestionnaireApiProperty.Files)

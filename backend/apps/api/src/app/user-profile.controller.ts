@@ -33,7 +33,6 @@ export class UserProfileController {
     private readonly httpService: HttpService,
     private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
-    //! может сделать UserProfileService ?
   ) { }
 
   //! в описание: 200 - есть, 404 - нету
@@ -55,12 +54,12 @@ export class UserProfileController {
 
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckCoachGuard)
-  @UseInterceptors(FilesInterceptor(FILES_PROPERTY, 5)) //! нужное описание файлов files...?  //! 5 временно
+  @UseInterceptors(FilesInterceptor(FILES_PROPERTY))
   @Post(UserProfileRoute.QuestionnaireCoach)
   public async createQuestionnaireCoach(
     @Body() dto: CreateQuestionnaireCoachDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
-    @UploadedFiles(parseQuestionnaireFilesPipeBuilder) files?: Express.Multer.File[] //! а так сразу можно? проверить как 1 как несколько
+    @UploadedFiles(parseQuestionnaireFilesPipeBuilder) files?: Express.Multer.File[]
   ): Promise<QuestionnaireRdo> {
     const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId, files);
 
