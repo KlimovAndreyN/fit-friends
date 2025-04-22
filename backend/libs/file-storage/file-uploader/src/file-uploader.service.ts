@@ -41,7 +41,7 @@ export class FileUploaderService {
     return join(year, month);
   }
 
-  public async writeFile(file: Express.Multer.File): Promise<StoredFile> {
+  private async writeFile(file: Express.Multer.File): Promise<StoredFile> {
     try {
       const uploadDirectoryPath = this.getUploadDirectoryPath();
       const subDirectory = this.getSubUploadDirectoryPath();
@@ -69,10 +69,13 @@ export class FileUploaderService {
     if (!file) {
       throw new BadRequestException('File not sending.');
     }
-
     const storedFile = await this.writeFile(file);
     const fileEntity = new FileUploaderFactory().create({
-      originalName: file.originalname,
+      // проблемма с кодировкой в имени файла, даже из swagger приходят кривые имена
+      // можно в 'ascii', а потом ''
+      // еще есть encodeURIComponent и decodeURIComponent
+      // возможно стоит проверить версии бибилотек multer, nest.js ...
+      originalName: Buffer.from(file.originalname, 'latin1').toString('utf8'),
       hashName: storedFile.fileName,
       subDirectory: storedFile.subDirectory,
       path: storedFile.path,
