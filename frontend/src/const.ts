@@ -62,8 +62,6 @@ export enum StoreSlice {
   ReviewProcess = 'REVIEW_PROCESS'
 }
 
-export const multipartFormDataHeader = { 'Content-Type': 'multipart/form-data' } as const; //! удалить!
-
 export const DefaultUser = {
   ROLE: Role.Coach,
   GENDER: Gender.Female,

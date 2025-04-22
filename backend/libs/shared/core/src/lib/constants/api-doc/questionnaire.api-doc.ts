@@ -11,7 +11,7 @@ import { IQuestionnaireRdo } from '../../interfaces/rdo/i-questionnaire.rdo';
 import { Specialization } from '../../types/specialization.enum';
 import { TrainingLevel } from '../../types/training-level.enum';
 import { Duration } from '../../types/duration.enum';
-import { transformStringBooleanOrBoolean, transformToStringArray } from '../../utils/transform';
+import { transformToArray, transformStringBooleanOrBoolean } from '../../utils/transform';
 import { UserApiProperty } from '../../constants/api-property/user.api-property';
 import { QuestionnaireApiProperty, QuestionnaireValidation } from '../../constants/api-property/questionnaire.api-property';
 
@@ -28,7 +28,7 @@ export class QuestionnaireApiDoc {
   @ArrayMaxSize(QuestionnaireValidation.Specializations.ArrayMaxSize)
   @IsString({ each: true })
   @IsEnum(Specialization, { each: true })
-  @Transform(transformToStringArray) // т.к. будет JSON и multipart/form-data
+  @Transform(transformToArray)
   specializations: Questionnaire['specializations'];
 
   @ApiProperty(QuestionnaireApiProperty.TrainingLevel)

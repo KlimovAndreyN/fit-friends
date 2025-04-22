@@ -29,7 +29,7 @@ export function createAPI(): AxiosInstance {
 
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-      const { headers, useMultipartFormData } = config;
+      const { headers, useMultipartFormData, retry } = config;
       const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
@@ -39,10 +39,10 @@ export function createAPI(): AxiosInstance {
         if (token) {
           headers[AUTH_NAME] = getBearerAuthorization(token);
         }
+      }
 
-        if (useMultipartFormData) {
-          config.transformRequest = convertDtoToFormData;
-        }
+      if (useMultipartFormData && !retry) {
+        config.transformRequest = convertDtoToFormData;
       }
 
       return config;

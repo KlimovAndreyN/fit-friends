@@ -30,10 +30,18 @@ export function convertDtoToFormData<T extends object>(dto: T): FormData {
   const formData = new FormData();
 
   for (const [key, value] of Object.entries(dto)) {
+    if (value === undefined) {
+      continue;
+    }
+
     if (Array.isArray(value)) {
-      value.forEach((item) => {
-        formData.append(key, item);
-      });
+      if (value.length) {
+        value.forEach((item) => {
+          formData.append(key, item);
+        });
+      } else {
+        formData.append(key, ''); // для отработки валидации
+      }
     } else {
       formData.append(key, value);
     }

@@ -7,7 +7,7 @@ import { ILoginUserDto, IDetailUserRdo, ITokenPayloadRdo, ILoggedUserRdo, ICreat
 import { isErrorNetwork } from '../../utils/parse-axios-error';
 import { AccessTokenStore, RefreshTokenStore } from '../../utils/token-store';
 import { existQuestionnaire } from './user-profile-action';
-import { ApiRoute, multipartFormDataHeader } from '../../const';
+import { ApiRoute } from '../../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -89,7 +89,7 @@ export const registerUser = createAsyncThunk<void, ICreateUserDto, { extra: Extr
   async (dto, { extra, dispatch }) => {
     const { api } = extra;
 
-    await api.post<IDetailUserRdo>(ApiRoute.REGISTER, dto, { headers: multipartFormDataHeader });
+    await api.post<IDetailUserRdo>(ApiRoute.REGISTER, dto, { useMultipartFormData: true });
 
     const { email, password } = dto;
 

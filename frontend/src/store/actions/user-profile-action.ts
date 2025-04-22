@@ -9,7 +9,6 @@ import {
 import { joinUrl } from '@backend/shared/helpers';
 
 import { CreateQuestionnaireDto } from '../../types/types';
-import { multipartFormDataHeader } from '../../const';
 
 type Extra = {
   api: AxiosInstance;
@@ -77,7 +76,7 @@ export const updateUserProfile = createAsyncThunk<IDetailUserProfileRdo, IUpdate
   Action.UPDATE_USER_PROFILE,
   async (dto, { extra }) => {
     const { api } = extra;
-    const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles, dto, { headers: multipartFormDataHeader });
+    const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles, dto, { useMultipartFormData: true });
 
     return data;
   }
