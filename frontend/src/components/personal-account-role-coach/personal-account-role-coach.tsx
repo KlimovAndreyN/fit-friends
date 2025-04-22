@@ -13,12 +13,10 @@ import { AppRoute } from '../../const';
 const SLIDERS_COUNT = 3;
 
 type PersonalAccountRoleCoachProps = {
-  //! временно
   certificates?: ICertificateRdo[];
 }
 
 function PersonalAccountRoleCoach({ certificates = [] }: PersonalAccountRoleCoachProps): JSX.Element {
-  //! удалить моки
   //! реализовать логику
 
   const handleLoadCertificateButtonClick = () => {

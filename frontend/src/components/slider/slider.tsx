@@ -18,12 +18,6 @@ export type SliderProps = {
 }
 
 function Slider(props: SliderProps): JSX.Element {
-  //! слайдер отключение кнопок в крайних положениях!
-  //    если childrensCount===slidesCount, то наверное не показывать или обе выключить, как по ТЗ?
-  //! если карточек мало, то они схопываются!!! как по ТЗ в разных сециях?
-  //   временно добавил (childrensCount < slidesCount) ? childrensCount : slidesCount... карточки по центру... и кнопки слайдера видны пока...
-  //   как быть если количество карточек меньше чем количество слайдов
-  //   если мало карточек, то может совсем прятать кнопки
   //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
   //    вообще убрать ul и li, т.к. все на div
 
@@ -45,11 +39,6 @@ function Slider(props: SliderProps): JSX.Element {
     setSlideActiveIndex(swiper.activeIndex);
   };
 
-  console.log('slideActiveIndex', slideActiveIndex);
-  console.log('childrensCount', childrensCount);
-  console.log('realySlidesCount', realySlidesCount);
-
-
   const previousSliderButtonOption = {
     className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${classNamePrefix}__control`),
     onClick: handlePreviousButtonClick,
@@ -62,7 +51,7 @@ function Slider(props: SliderProps): JSX.Element {
   const nextSliderButtonOption = {
     ...previousSliderButtonOption,
     onClick: handleNextButtonClick,
-    disabled: !realySlidesCount || (slideActiveIndex === childrensCount - realySlidesCount - 1),
+    disabled: (childrensCount === realySlidesCount) || (slideActiveIndex === childrensCount - realySlidesCount),
     xlinkHref: '#arrow-right',
     ariaLabel: 'next',
     width: 16,
