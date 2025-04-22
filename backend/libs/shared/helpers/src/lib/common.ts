@@ -41,3 +41,10 @@ export function getValidationErrorString(errors: ValidationError[]): string {
 
   return errorList.join(', ');
 }
+
+export function cutExtention(filename: string): string {
+  const [, ...words] = filename.split('.').reverse();
+
+  return words.join('.');
+}
+

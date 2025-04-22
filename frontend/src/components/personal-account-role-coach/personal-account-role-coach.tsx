@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 
+import { ICertificateRdo } from '@backend/shared/core';
+
 import ThumbnailLink from '../thumbnail-link/thumbnail-link';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 import CertificateCard from '../certificate-card/certificate-card';
@@ -10,55 +12,14 @@ import { AppRoute } from '../../const';
 
 const SLIDERS_COUNT = 3;
 
-const MOCK_CERTIFICATES = [
-  {
-    id: 'id-1',
-    title: 'Сертификат - Биомеханика ударов в боксе',
-    filePath: 'img/content/certificates-and-diplomas/certificate-1.jpg',
-    isEditing: true
-  },
-  {
-    id: 'id-2',
-    title: 'Сертификат - Организационно-методическая подготовка и проведение групповых и индивидуальных физкультурно-оздоровительных занятий',
-    filePath: 'img/content/certificates-and-diplomas/certificate-2.jpg',
-    isEditing: false
-  },
-  {
-    id: 'id-3',
-    title: 'Сертифиционный курс по кроссфиту 2-го уровня',
-    filePath: 'img/content/certificates-and-diplomas/certificate-3.jpg',
-    isEditing: false
-  },
-  {
-    id: 'id-4',
-    title: 'Сертификат инструкторов йоги',
-    filePath: 'img/content/certificates-and-diplomas/certificate-4.jpg',
-    isEditing: false
-  },
-  {
-    id: 'id-5',
-    title: 'Сертификат фитне аэробики',
-    filePath: 'img/content/certificates-and-diplomas/certificate-5.jpg',
-    isEditing: false
-  },
-  {
-    id: 'id-6',
-    title: 'Сертификат фитне аэробики',
-    filePath: 'img/content/certificates-and-diplomas/certificate-6.jpg',
-    isEditing: false
-  }
-];
-
 type PersonalAccountRoleCoachProps = {
   //! временно
-  certificates: { id: string; title: string; filePath: string; isEditing: boolean }[];
+  certificates?: ICertificateRdo[];
 }
 
-function PersonalAccountRoleCoach({ certificates }: PersonalAccountRoleCoachProps): JSX.Element {
+function PersonalAccountRoleCoach({ certificates = [] }: PersonalAccountRoleCoachProps): JSX.Element {
   //! удалить моки
   //! реализовать логику
-
-  const aaa = (certificates.length) ? certificates : MOCK_CERTIFICATES;
 
   const handleLoadCertificateButtonClick = () => {
     // eslint-disable-next-line no-console
@@ -74,6 +35,12 @@ function PersonalAccountRoleCoach({ certificates }: PersonalAccountRoleCoachProp
     width: 14,
     height: 14
   };
+
+  const childrens: JSX.Element[] = certificates.map(
+    ({ fileId, filePath, title }) => (
+      <CertificateCard {...{ filePath, title, isEditing: false }} key={fileId} />
+    )
+  );
 
   return (
     <div className="inner-page__content">
@@ -107,7 +74,7 @@ function PersonalAccountRoleCoach({ certificates }: PersonalAccountRoleCoachProp
           title='Дипломы и сертификаты'
           isLabel
           additionalTitleElement={<SliderButton {...loadCertificateButtonOption} />}
-          childrens={aaa.map((item) => (<CertificateCard {...item} key={item.id} />))}
+          childrens={childrens}
           classNamePrefix={classNamePrefix}
           divClassName={`${classNamePrefix}__additional-info`}
           slidesCount={SLIDERS_COUNT}

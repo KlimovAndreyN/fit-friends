@@ -38,7 +38,7 @@ function PersonalAccount(): JSX.Element {
     return <MainSpinner />;
   }
 
-  const { questionnaire: { caloriesWaste, filePaths } } = UserProfile;
+  const { questionnaire: { caloriesWaste, certificates } } = UserProfile;
   const isSpotsman = isSportsmanRole(userRole);
 
   return (
@@ -58,7 +58,7 @@ function PersonalAccount(): JSX.Element {
                 {
                   (isSpotsman)
                     ? <PersonalAccountRoleSportsman caloriesWaste={caloriesWaste} />
-                    : <PersonalAccountRoleCoach certificates={(filePaths) ? filePaths?.map((filePath, index) => ({ id: index.toFixed(), title: 'title', filePath, isEditing: false })) : []} />
+                    : <PersonalAccountRoleCoach certificates={certificates} />
                 }
               </div>
             </div>

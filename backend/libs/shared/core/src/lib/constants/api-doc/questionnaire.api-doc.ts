@@ -76,9 +76,9 @@ export class QuestionnaireApiDoc {
   @IsOptional()
   [FILES_PROPERTY]?: ICreateQuestionnaireCoachDto['files']; //! ограничения есть в ТЗ?
 
-  @ApiProperty(QuestionnaireApiProperty.FilePaths)
+  @ApiProperty(QuestionnaireApiProperty.Certificates)
   @Expose()
-  filePaths?: IQuestionnaireRdo['filePaths'];
+  certificates?: IQuestionnaireRdo['certificates'];
 
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()

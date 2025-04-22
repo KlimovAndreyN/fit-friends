@@ -28,36 +28,23 @@ export class FileService {
     return src;
   }
 
-  public async getFilePath(fileId: string, requestId: string): Promise<string> {
+
+  public async getFile(fileId: string, requestId: string): Promise<UploadedFileRdo> {
     if (!fileId) {
-      return '';
+      return null;
     }
 
     const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, fileId);
     const headers = makeHeaders(requestId);
-    const { data: file } = await this.httpService.axiosRef.get<UploadedFileRdo>(url, headers);
+    const { data } = await this.httpService.axiosRef.get<UploadedFileRdo>(url, headers);
 
-    return this.makePath(file);
+    return data;
   }
 
-  public async getFilePaths(fileIds: string[] | undefined, requestId: string): Promise<string[] | undefined> {
-    if (!fileIds) {
-      return undefined;
-    }
+  public async getFilePath(fileId: string, requestId: string): Promise<string> {
+    const file = await this.getFile(fileId, requestId);
 
-    if (!fileIds.length) {
-      return [];
-    }
-
-    const filePaths = [];
-
-    for (const fileId of fileIds) {
-      const filePath = await this.getFilePath(fileId, requestId);
-
-      filePaths.push(filePath);
-    }
-
-    return filePaths;
+    return this.makePath(file);
   }
 
   public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {

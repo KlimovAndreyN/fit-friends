@@ -3,10 +3,10 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
 import {
-  BasicQuestionnaireRdo, CreateBasicQuestionnaireDto, QuestionnaireMiniRdo,
+  BasicQuestionnaireRdo, CertificateRdo, CreateBasicQuestionnaireDto, QuestionnaireMiniRdo,
   QuestionnaireRdo, ServiceRoute, UpdateQuestionnaireDto, UserProfileRoute
 } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { cutExtention, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 import { FileService } from './file.service';
 
@@ -23,11 +23,34 @@ export class FitQuestionnaireService {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
   }
 
+  public async getCertificates(fileIds: string[] | undefined, requestId: string): Promise<CertificateRdo[] | undefined> {
+    if (!fileIds) {
+      return undefined;
+    }
+
+    if (!fileIds.length) {
+      return [];
+    }
+
+    const certificates: CertificateRdo[] = [];
+
+    for (const fileId of fileIds) {
+      const file = await this.fileService.getFile(fileId, requestId);
+      const filePath = this.fileService.makePath(file);
+      const title = cutExtention(file.originalName)
+      const certificate: CertificateRdo = { fileId, filePath, title };
+
+      certificates.push(certificate);
+    }
+
+    return certificates;
+  }
+
   private async convertToQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
     const { fileIds, ...fields } = rdo;
-    const filePaths = await this.fileService.getFilePaths(fileIds, requestId);
+    const certificates = await this.getCertificates(fileIds, requestId);
 
-    return { ...fields, filePaths };
+    return { ...fields, certificates };
   }
 
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
@@ -85,7 +108,6 @@ export class FitQuestionnaireService {
     const headers = makeHeaders(requestId, null, userId);
     const dto: UpdateQuestionnaireDto = { readyForTraining };
 
-    //! отдает BasicQuestionnaireRdo
     await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
   }
 
@@ -96,5 +118,4 @@ export class FitQuestionnaireService {
 
     return data;
   }
-
 }

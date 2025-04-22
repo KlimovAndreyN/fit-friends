@@ -48,23 +48,21 @@ export const QuestionnaireApiProperty = {
     type: 'string',
     example: 'The coach description'
   },
-  FileIds: { //! перепроверить в Swagger когда будет multiFormData
+  FileIds: {
     description: 'The coach fileIds',
     isArray: true,
     example: ['111222333444']
   },
-  Files: {//! перепроверить в Swagger когда будет multiFormData
+  Files: { //! перепроверить в Swagger когда будет multiFormData
     description: 'The coach files',
     isArray: true,
     type: 'string',
     format: 'binary',
     required: false
   },
-  FilePaths: {//! перепроверить в Swagger когда будет multiFormData
-    description: 'The coach files paths',
-    isArray: true,
-    type: 'string',
-    example: ['/some/file']
+  Certificates: {
+    description: 'The coach certificates',
+    isArray: true
   },
   IndividualTraining: {
     description: 'The coach individual training',

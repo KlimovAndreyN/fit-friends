@@ -14,7 +14,7 @@ export class QuestionnaireRdo
       'caloriesLose',
       'caloriesWaste',
       'description',
-      'filePaths',
+      'certificates',
       'individualTraining'
     ]
   )

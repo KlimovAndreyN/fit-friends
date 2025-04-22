@@ -43,6 +43,7 @@ export { FILES_PROPERTY } from './lib/interfaces/dto/i-create-questionnaire-coac
 export { ITrainingRepository } from './lib/interfaces/query/i-training-repository.query';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
+export { Certificate } from './lib/interfaces/certificate.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
@@ -66,6 +67,7 @@ export { BasicDetailTrainingRdo } from './lib/rdo/basic-detail-training.rdo';
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
 export { BasicReviewRdo } from './lib/rdo/basic-review.rdo';
+export { CertificateRdo } from './lib/rdo/certificate.rdo';
 export { DetailTrainingRdo } from './lib/rdo/detail-training.rdo';
 export { DetailUserProfileRdo } from './lib/rdo/detail-user-profile.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
