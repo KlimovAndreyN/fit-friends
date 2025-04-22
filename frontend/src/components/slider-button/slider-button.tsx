@@ -9,10 +9,11 @@ type SliderButtonProps = {
   xlinkHref: string;
   width: number;
   height: number;
+  disabled?: boolean;
 }
 
 function SliderButton(props: SliderButtonProps): JSX.Element {
-  const { firstTitle, secondTitle, className, ariaLabel, onClick, xlinkHref, width, height } = props;
+  const { firstTitle, secondTitle, className, ariaLabel, onClick, xlinkHref, width, height, disabled } = props;
 
   return (
     <button
@@ -20,6 +21,7 @@ function SliderButton(props: SliderButtonProps): JSX.Element {
       type="button"
       aria-label={ariaLabel}
       onClick={onClick}
+      disabled={disabled}
     >
       {
         (firstTitle) ? <span>{firstTitle}</span> : null
