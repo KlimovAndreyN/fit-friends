@@ -2,19 +2,18 @@ import {
   Body, Controller, Delete, Get, Patch, Post, UseInterceptors,
   Req, UploadedFile, UploadedFiles, UseFilters, UseGuards
 } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
 import { ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, ServiceRoute, UpdateUserProfileDto,
+  ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateUserProfileDto, UpdateUserDto,
   QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, UserProfileRdo,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  UpdateUserDto, UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder
+  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder
 } from '@backend/shared/core';
-import { fillDto, makeHeaders } from '@backend/shared/helpers';
+import { fillDto } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -30,7 +29,6 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 @UseFilters(AxiosExceptionFilter)
 export class UserProfileController {
   constructor(
-    private readonly httpService: HttpService,
     private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
   ) { }
@@ -88,10 +86,7 @@ export class UserProfileController {
     const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
 
     const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
-
-    const url = this.fitQuestionnaireService.getUrl(ServiceRoute.Questionnaires);
-    const headers = makeHeaders(requestId, null, userId);
-    const { data: questionnaire } = await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, upadteQuestionnaireDto, headers);
+    const questionnaire = await this.fitQuestionnaireService.updateQuestionnaire(upadteQuestionnaireDto, userId, requestId);
 
     return { user, questionnaire };
   }

@@ -49,9 +49,16 @@ const MOCK_CERTIFICATES = [
   }
 ];
 
-function PersonalAccountRoleCoach(): JSX.Element {
+type PersonalAccountRoleCoachProps = {
+  //! временно
+  certificates: { id: string; title: string; filePath: string; isEditing: boolean }[];
+}
+
+function PersonalAccountRoleCoach({ certificates }: PersonalAccountRoleCoachProps): JSX.Element {
   //! удалить моки
   //! реализовать логику
+
+  const aaa = (certificates.length) ? certificates : MOCK_CERTIFICATES;
 
   const handleLoadCertificateButtonClick = () => {
     // eslint-disable-next-line no-console
@@ -100,7 +107,7 @@ function PersonalAccountRoleCoach(): JSX.Element {
           title='Дипломы и сертификаты'
           isLabel
           additionalTitleElement={<SliderButton {...loadCertificateButtonOption} />}
-          childrens={MOCK_CERTIFICATES.map((item) => (<CertificateCard {...item} key={item.id} />))}
+          childrens={aaa.map((item) => (<CertificateCard {...item} key={item.id} />))}
           classNamePrefix={classNamePrefix}
           divClassName={`${classNamePrefix}__additional-info`}
           slidesCount={SLIDERS_COUNT}

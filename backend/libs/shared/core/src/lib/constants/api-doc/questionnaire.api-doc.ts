@@ -78,7 +78,7 @@ export class QuestionnaireApiDoc {
 
   @ApiProperty(QuestionnaireApiProperty.FilePaths)
   @Expose()
-  filePaths: IQuestionnaireRdo['filePaths'];
+  filePaths?: IQuestionnaireRdo['filePaths'];
 
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()

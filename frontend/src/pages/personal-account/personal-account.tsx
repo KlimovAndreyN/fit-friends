@@ -38,7 +38,7 @@ function PersonalAccount(): JSX.Element {
     return <MainSpinner />;
   }
 
-  const { questionnaire: { caloriesWaste } } = UserProfile;
+  const { questionnaire: { caloriesWaste, filePaths } } = UserProfile;
   const isSpotsman = isSportsmanRole(userRole);
 
   return (
@@ -57,56 +57,8 @@ function PersonalAccount(): JSX.Element {
               <div className="inner-page__content">
                 {
                   (isSpotsman)
-                    ?
-                    <PersonalAccountRoleSportsman caloriesWaste={caloriesWaste} />
-                    /*
-                    <div className="personal-account-user">
-                      <div className="personal-account-user__schedule">
-                        <form action="#" method="get">
-                          <div className="personal-account-user__form">
-                            <div className="personal-account-user__input">
-                              <label>
-                                <span className="personal-account-user__label">План на день, ккал</span>
-                                {/*
-                                //! или выключить или что по ТЗ можно их менять?, но тип поменять на number, как быть со вторым полем...
-                                //! когда будет тренер, то выделеить на разные под компоненты
-                                */
-                    /*
-                                                   }
-                                                    <input type="text" name="schedule-for-the-day" defaultValue={caloriesWaste} disabled />
-                                                  </label>
-                                                </div>
-                                                <div className="personal-account-user__input">
-                                                  <label>
-                                                    <span className="personal-account-user__label">План на неделю, ккал</span>
-                                                    <input type="text" name="schedule-for-the-week" defaultValue={(caloriesWaste || 0) * 7} disabled />
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            </form>
-                                          </div>
-                                          <div className="personal-account-user__additional-info">
-                                            <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.Friends}>
-                                              <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                                <svg width="30" height="26" aria-hidden="true">
-                                                  <use xlinkHref="#icon-friends"/>
-                                                </svg>
-                                              </div>
-                                              <span className="thumbnail-link__text">Мои друзья</span>
-                                            </Link>
-                                            <Link className="thumbnail-link thumbnail-link--theme-light" to={AppRoute.MyPurchases}>
-                                              <div className="thumbnail-link__icon thumbnail-link__icon--theme-light">
-                                                <svg width="30" height="26" aria-hidden="true">
-                                                  <use xlinkHref="#icon-shopping-cart"/>
-                                                </svg>
-                                              </div>
-                                              <span className="thumbnail-link__text">Мои покупки</span>
-                                            </Link>
-                                          </div>
-                                        </div>
-                                        */
-                    :
-                    <PersonalAccountRoleCoach />
+                    ? <PersonalAccountRoleSportsman caloriesWaste={caloriesWaste} />
+                    : <PersonalAccountRoleCoach certificates={(filePaths) ? filePaths?.map((filePath, index) => ({ id: index.toFixed(), title: 'title', filePath, isEditing: false })) : []} />
                 }
               </div>
             </div>

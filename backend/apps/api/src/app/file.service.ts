@@ -40,6 +40,26 @@ export class FileService {
     return this.makePath(file);
   }
 
+  public async getFilePaths(fileIds: string[] | undefined, requestId: string): Promise<string[] | undefined> {
+    if (!fileIds) {
+      return undefined;
+    }
+
+    if (!fileIds.length) {
+      return [];
+    }
+
+    const filePaths = [];
+
+    for (const fileId of fileIds) {
+      const filePath = await this.getFilePath(fileId, requestId);
+
+      filePaths.push(filePath);
+    }
+
+    return filePaths;
+  }
+
   public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {
     if (!file) {
       return null;

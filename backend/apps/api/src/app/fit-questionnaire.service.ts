@@ -3,8 +3,8 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
 import {
-  CreateBasicQuestionnaireDto, QuestionnaireMiniRdo, QuestionnaireRdo,
-  ServiceRoute, UpdateQuestionnaireDto, UserProfileRoute
+  BasicQuestionnaireRdo, CreateBasicQuestionnaireDto, QuestionnaireMiniRdo,
+  QuestionnaireRdo, ServiceRoute, UpdateQuestionnaireDto, UserProfileRoute
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -19,17 +19,24 @@ export class FitQuestionnaireService {
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
 
-  public getUrl(...routes: string[]): string {
+  private getUrl(...routes: string[]): string {
     return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
+  }
+
+  private async convertToQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
+    const { fileIds, ...fields } = rdo;
+    const filePaths = await this.fileService.getFilePaths(fileIds, requestId);
+
+    return { ...fields, filePaths };
   }
 
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    //! отдает BasicQuestionnaireRdo
-    const { data } = await this.httpService.axiosRef.get<QuestionnaireRdo>(url, headers);
+    const { data: basicQuestionnaire } = await this.httpService.axiosRef.get<BasicQuestionnaireRdo>(url, headers);
+    const questionnaire = await this.convertToQuestionnaireRdo(basicQuestionnaire, requestId);
 
-    return data;
+    return questionnaire;
   }
 
   public async createQuestionnaire(
@@ -54,9 +61,23 @@ export class FitQuestionnaireService {
 
     const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.post<QuestionnaireRdo>(url, createDto, headers);
+    const { data } = await this.httpService.axiosRef.post<BasicQuestionnaireRdo>(url, createDto, headers);
+    const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
 
-    return data;
+    return questionnaire;
+  }
+
+  public async updateQuestionnaire(
+    dto: UpdateQuestionnaireDto,
+    userId: string,
+    requestId: string
+  ): Promise<QuestionnaireRdo> {
+    const url = this.getUrl(ServiceRoute.Questionnaires);
+    const headers = makeHeaders(requestId, null, userId);
+    const { data } = await this.httpService.axiosRef.patch<BasicQuestionnaireRdo>(url, dto, headers);
+    const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
+
+    return questionnaire;
   }
 
   public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {
