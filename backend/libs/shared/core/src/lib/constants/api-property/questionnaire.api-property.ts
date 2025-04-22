@@ -89,14 +89,17 @@ export const QuestionnaireValidation = {
   Description: {
     MinLength: 10,
     MaxLength: 140
+  },
+  Files: {
+    Types: ['image/jpg', 'image/jpeg', 'image/png', 'application/pdf'],
+    MaxSize: 10 * 1024 * 1024
   }
 } as const;
 
-//! доопределить
 export const parseQuestionnaireFilesPipeBuilder =
   new ParseFilePipeBuilder()
-    .addFileTypeValidator({ fileType: '.jpg|.jpeg'/*UserValidation.AvatarFile.Types.join('|') */ })
-    .addMaxSizeValidator({ maxSize: 10000000/*UserValidation.AvatarFile.MaxSize*/ })
+    .addFileTypeValidator({ fileType: QuestionnaireValidation.Files.Types.join('|') })
+    .addMaxSizeValidator({ maxSize: QuestionnaireValidation.Files.MaxSize })
     .build({
       fileIsRequired: QuestionnaireApiProperty.Files.required,
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
