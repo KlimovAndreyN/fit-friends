@@ -18,6 +18,12 @@ import { clearReviews, seedReviews } from './libs/reviews';
 
 async function bootstrap() {
   //! возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
+  //! очистка файлов из базы и из папки
+  //! очистка refreh токенов
+  //! очистка подписчиков
+  //! регистрация подписок и рассылка при наполении пользователей?
+  //! предварительная загрузка аватаров пользователей и видео-файлов
+
   const app = await NestFactory.create(AppModule);
   const resetBeforeSeed = process.env[ConfigAlias.ResetBeforeSeedEnv] === 'true';
   const databaseUrlEnv = ConfigAlias.PostgresDatabaseUrlEnv;

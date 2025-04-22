@@ -48,3 +48,10 @@ export function cutExtention(filename: string): string {
   return words.join('.');
 }
 
+export function fixEncoding(filename: string): string {
+  // проблемма с кодировкой в имени файла, даже из swagger приходят кривые имена
+  // можно в 'ascii', а потом ''
+  // еще есть encodeURIComponent и decodeURIComponent
+  // возможно стоит проверить версии бибилотек multer, nest.js ...
+  return Buffer.from(filename, 'latin1').toString('utf8');
+}

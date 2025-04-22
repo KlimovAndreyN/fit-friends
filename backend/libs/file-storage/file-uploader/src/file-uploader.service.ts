@@ -9,6 +9,7 @@ import { randomUUID } from 'node:crypto';
 
 import { fileStorageConfig } from '@backend/file-storage/config';
 import { StoredFile } from '@backend/shared/core';
+import { fixEncoding } from '@backend/shared/helpers';
 
 import { FileUploaderRepository } from './file-uploader.repository';
 import { FileUploaderEntity } from './file-uploader.entity';
@@ -72,10 +73,8 @@ export class FileUploaderService {
     const storedFile = await this.writeFile(file);
     const fileEntity = new FileUploaderFactory().create({
       // проблемма с кодировкой в имени файла, даже из swagger приходят кривые имена
-      // можно в 'ascii', а потом ''
-      // еще есть encodeURIComponent и decodeURIComponent
       // возможно стоит проверить версии бибилотек multer, nest.js ...
-      originalName: Buffer.from(file.originalname, 'latin1').toString('utf8'),
+      originalName: fixEncoding(file.originalname),
       hashName: storedFile.fileName,
       subDirectory: storedFile.subDirectory,
       path: storedFile.path,
