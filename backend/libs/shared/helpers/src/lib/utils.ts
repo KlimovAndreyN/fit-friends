@@ -37,7 +37,13 @@ export function convertDtoToFormData<T extends object>(dto: T): FormData {
     if (Array.isArray(value)) {
       if (value.length) {
         value.forEach((item) => {
-          formData.append(key, item);
+          if (item instanceof File) {
+            //! отладка кодировки имени файла
+            //formData.append(key, item, encodeURIComponent(item.name));
+            formData.append(key, item, Buffer.from(item.name, 'ascii').toString());
+          } else {
+            formData.append(key, item);
+          }
         });
       } else {
         formData.append(key, ''); // для отработки валидации
