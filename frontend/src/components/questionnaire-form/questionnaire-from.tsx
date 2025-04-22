@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useRef, useState } from 'react';
+import { FormEvent, Fragment, useRef } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../popup-form/popup-form';
@@ -8,6 +8,7 @@ import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
 import QuestionnaireUserCalorie from '../questionnaire-user-calorie/questionnaire-user-calorie';
 import CustomInput from '../custom-input/custom-input';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
+import QuestionnaireFormFiles from '../questionnaire-form-files/questionnaire-from-files';
 
 import {
   Duration, isSportsmanRole, Role, Specialization, TrainingLevel,
@@ -55,7 +56,6 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
   //! временно, отладка, еще нужно выветси название или количество выбранных файловЮ может в хинте илии снизу, задать максимум
   const filesInputRef = useRef<HTMLInputElement | null>(null);
   const isSportsman = isSportsmanRole(userRole);
-  const [filesCaption, setFilesCaption] = useState<string | JSX.Element>('Загрузите сюда файлы формата PDF, JPG или PNG');
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); //! проверить! опять не было...
@@ -93,22 +93,6 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
       };
 
       onSubmit(dto);
-    }
-  };
-
-  const handleFilesInputChange = (event: FormEvent<HTMLInputElement>) => {
-    const { files } = event.currentTarget;
-
-    if (files) {
-      setFilesCaption(
-        <Fragment>
-          Количество выбранныйх файлов: {files.length}
-          <br />
-          {Array.from(files).map(({ name }) =>
-            (<Fragment key={name}>{name}<br /></Fragment>)
-          )}
-        </Fragment>
-      );
     }
   };
 
@@ -163,25 +147,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
           {
             !isSportsman &&
             <Block legend='Ваши дипломы и сертификаты' className={divClassName} >
-              <div className="drag-and-drop questionnaire-coach__drag-and-drop">
-                <label>
-                  <span className="drag-and-drop__label" tabIndex={0}>
-                    {filesCaption}
-                    <svg width="20" height="20" aria-hidden="true">
-                      <use xlinkHref="#icon-import" />
-                    </svg>
-                  </span>
-                  <input
-                    type="file"
-                    name={FormFieldName.Files}
-                    tabIndex={-1}
-                    accept=".pdf, .jpg, .jpeg, .png"
-                    multiple
-                    ref={filesInputRef}
-                    onChange={handleFilesInputChange}
-                  />
-                </label>
-              </div>
+              <QuestionnaireFormFiles name={FormFieldName.Files} inputRef={filesInputRef} />
             </Block>
           }
           {
