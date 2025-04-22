@@ -28,7 +28,6 @@ export class FileService {
     return src;
   }
 
-
   public async getFile(fileId: string, requestId: string): Promise<UploadedFileRdo> {
     if (!fileId) {
       return null;
@@ -47,22 +46,14 @@ export class FileService {
     return this.makePath(file);
   }
 
-  public async uploadFile(file: File, requestId: string): Promise<UploadedFileRdo | null> {
+  public async uploadFile(file: Express.Multer.File, requestId: string): Promise<UploadedFileRdo | null> {
     if (!file) {
       return null;
     }
 
     const url = joinUrl(this.apiOptions.fileStorageServiceUrl, ServiceRoute.FileStorage, FileStorageRoute.Upload);
     const headers = makeHeaders(requestId);
-    //! переделать
-    const fileFormData = new FormData();
-
-    // если бы был File, то можно без дополнительной конвертации отправить указав заголовок 'Content-Type': 'multipart/form-data'
-    //! отладка кодировки имени файла
-    console.log(file);
-
-    //multerFileToFormData(file, fileFormData, FILE_KEY);
-
+    const fileFormData = multerFileToFormData(file, FILE_KEY)
     const { data: fileRdo } = await this.httpService.axiosRef.post<UploadedFileRdo>(url, fileFormData, headers);
 
     return fileRdo;

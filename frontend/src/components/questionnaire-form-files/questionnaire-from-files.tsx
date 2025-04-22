@@ -14,7 +14,7 @@ function QuestionnaireFormFiles({ name, inputRef }: QuestionnaireFormFilesProps)
     if (files) {
       setFilesCaption(
         <Fragment>
-          Количество выбранныйх файлов: {files.length}
+          Количество выбранных файлов: {files.length}
           <br />
           {Array.from(files).map(({ name: filename }) =>
             (<Fragment key={filename}>{filename}<br /></Fragment>)

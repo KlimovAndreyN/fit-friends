@@ -1,11 +1,12 @@
 import 'multer'; // Express.Multer.File
+import { fixEncoding } from './common';
 
-export function multerFileToFormData(file: Express.Multer.File, formData: FormData, name: string): void {
+export function multerFileToFormData(file: Express.Multer.File, name: string): FormData {
   const { buffer, mimetype, originalname } = file;
   const fileBlob = new Blob([buffer], { type: mimetype });
-  //const originalFilename = Buffer.from(originalname, 'ascii').toString(); // коректное сохраниние исходного имени
+  const formData = new FormData();
 
-  //! отладка кодировки имени файла
-  //formData.append(name, fileBlob, originalFilename);
-  formData.append(name, fileBlob, originalname);
+  formData.append(name, fileBlob, fixEncoding(originalname));
+
+  return formData;
 }
