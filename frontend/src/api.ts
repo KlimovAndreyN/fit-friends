@@ -29,23 +29,19 @@ export function createAPI(): AxiosInstance {
 
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-      const { headers, useMultipartFormData } = config;
+      const { headers, useMultipartFormData, retry, url = '' } = config;
       const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
-        const { url = '' } = config;
-        const token = (url && [REFRESH, LOGOUT].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
+        const token = ([REFRESH, LOGOUT].includes(url)) ? RefreshTokenStore.getToken() : AccessTokenStore.getToken();
 
         if (token) {
           headers[AUTH_NAME] = getBearerAuthorization(token);
         }
       }
 
-      //! отладка! перепроверить нужно ли конвертировать ДТО при повторной отправе запроса!
-      // if (useMultipartFormData && !config.retry) {
-      // if (useMultipartFormData && !retry) {
       if (useMultipartFormData) {
-        config.transformRequest = convertDtoToFormData;
+        config.transformRequest = (retry) ? undefined : convertDtoToFormData;
       }
 
       return config;
