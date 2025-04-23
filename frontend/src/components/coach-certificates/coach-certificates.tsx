@@ -5,11 +5,10 @@ import CertificateCard from '../certificate-card/certificate-card';
 import Slider from '../slider/slider';
 import SliderButton from '../slider-button/slider-button';
 import ImageUploadInput from '../image-upload-input/image-upload-input';
-import MainSpinner from '../main-spinner/main-spinner';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createCoachCertificate } from '../../store/actions/user-profile-action';
-import { getCoachCertificates, getIsFetchUserProfileExecuting } from '../../store/user-profile-process/selectors';
+import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/user-profile-process/selectors';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 const SLIDERS_COUNT = 3;
@@ -25,16 +24,9 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   //! при забросе добавления, редактирования и удаления блокировать кнопки! isUpdateCoachCertificatesExecuting
 
   const dispatch = useAppDispatch();
-  const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting); //! можно не использовать т.к. ранее загружен
+  const isUpdateCoachCertificatesExecuting = useAppSelector(getIsUpdateCoachCertificatesExecuting);
   const certificates = useAppSelector(getCoachCertificates);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
-
-  //! можно не использовать т.к. ранее загружен
-  //! UserProfile и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
-  if (isFetchUserProfileExecuting) {
-    //! нужен свой спиннер
-    return <MainSpinner />;
-  }
 
   const handleLoadCertificateButtonClick = () => {
     inputFileRef.current?.click();
@@ -49,6 +41,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   const loadCertificateButtonOption = {
     secondTitle: 'Загрузить',
     className: classNames('btn-flat', 'btn-flat--underlined', `${classNamePrefix}__button`),
+    disabled: isUpdateCoachCertificatesExecuting,
     onClick: handleLoadCertificateButtonClick,
     xlinkHref: '#icon-import',
     width: 14,
@@ -56,7 +49,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   };
 
   const childrens: JSX.Element[] = certificates.map(
-    ({ fileId, filePath, title }) => (<CertificateCard {...{ filePath, title, isEditing: false }} key={fileId} />)
+    ({ fileId, filePath, title }) => (<CertificateCard {...{ filePath, title, isEditing: false, disabled: isUpdateCoachCertificatesExecuting }} key={fileId} />)
   );
 
   return (
