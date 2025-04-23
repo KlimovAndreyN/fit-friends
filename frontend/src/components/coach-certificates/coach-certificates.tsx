@@ -8,6 +8,8 @@ import Slider from '../slider/slider';
 import SliderButton from '../slider-button/slider-button';
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
+import { useAppDispatch } from '../../hooks';
+import { createCoachCertificate } from '../../store/actions/user-profile-action';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 const SLIDERS_COUNT = 3;
@@ -20,6 +22,7 @@ type CoachCertificatesProps = {
 function CoachCertificates({ certificates = [], classNamePrefix }: CoachCertificatesProps): JSX.Element {
   //! реализовать логику
 
+  const dispatch = useAppDispatch();
   const inputFileRef = useRef<HTMLInputElement | null>(null);
 
   const handleLoadCertificateButtonClick = () => {
@@ -27,9 +30,9 @@ function CoachCertificates({ certificates = [], classNamePrefix }: CoachCertific
   };
 
   const handleImageUploadInputChange = (_filePath: string, file: File | undefined) => {
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('file', file);
+    if (file) {
+      dispatch(createCoachCertificate(file));
+    }
   };
 
   const loadCertificateButtonOption = {

@@ -3,8 +3,8 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, ApiServiceRoute,
-  IDetailUserProfileRdo, UserProfileRoute, Role, isSportsmanRole
+  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, Role, FILE_KEY
+  IDetailUserProfileRdo, UserProfileRoute, ApiServiceRoute, isSportsmanRole, ICertificateRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -20,6 +20,9 @@ export const Action = {
   CREATE_QUESTIONNARE: 'user-profile/create-questionnaire',
   FETCH_USER_PROFILE: 'user-profile/fetch',
   UPDATE_USER_PROFILE: 'user-profile/update',
+  CREATE_COACH_CERTIFICATE: 'user-profile/create-certificate',
+  UPDATE_COACH_CERTIFICATE: 'user-profile/update-certificate',
+  DELETE_COACH_CERTIFICATE: 'user-profile/delete-certificate',
   CHANGE_READY: 'user-profile/change-ready',
   FETCH_LOOK_FOR_COMPANY_USER_PROFILES: 'look-for-company-user-profile/fetch',
   FETCH_USER_PROFILES: 'user-profiles/fetch'
@@ -78,6 +81,18 @@ export const updateUserProfile = createAsyncThunk<IDetailUserProfileRdo, IUpdate
     const { api } = extra;
     const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles, dto, { useMultipartFormData: true });
 
+    return data;
+  }
+);
+
+export const createCoachCertificate = createAsyncThunk<ICertificateRdo, File, { extra: Extra }>(
+  Action.CREATE_COACH_CERTIFICATE,
+  async (file, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates);
+    const { data } = await api.post<ICertificateRdo>(url, { [FILE_KEY]: file }, { useMultipartFormData: true });
+
+    //! добавить добавление в массив сертификатов
     return data;
   }
 );

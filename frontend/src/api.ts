@@ -29,7 +29,7 @@ export function createAPI(): AxiosInstance {
 
   api.interceptors.request.use(
     (config: AxiosRequestConfig) => {
-      const { headers, useMultipartFormData, retry } = config;
+      const { headers, useMultipartFormData } = config;
       const { REFRESH, LOGOUT } = ApiRoute;
 
       if (headers) {
@@ -41,7 +41,10 @@ export function createAPI(): AxiosInstance {
         }
       }
 
-      if (useMultipartFormData && !retry) {
+      //! отладка! перепроверить нужно ли конвертировать ДТО при повторной отправе запроса!
+      // if (useMultipartFormData && !config.retry) {
+      // if (useMultipartFormData && !retry) {
+      if (useMultipartFormData) {
         config.transformRequest = convertDtoToFormData;
       }
 

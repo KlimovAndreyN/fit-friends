@@ -2,12 +2,12 @@ export { Entity } from './lib/base/entity';
 
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
-export { FileApiProperty, FILE_KEY, FileUploaderFileApiBody } from './lib/constants/api-property/file.api-property';
+export * from './lib/constants/api-property/file.api-property';
 export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property'; //! нужно ли ?
-export { QuestionnaireApiProperty, QuestionnaireValidation, parseQuestionnaireFilesPipeBuilder } from './lib/constants/api-property/questionnaire.api-property';
+export * from './lib/constants/api-property/questionnaire.api-property';
 export { ReviewApiProperty } from './lib/constants/api-property/review.api-property';
 export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
-export { UserApiProperty, UserValidation, AuthenticationMessage, parseUserAvatarFilePipeBuilder } from './lib/constants/api-property/user.api-property';
+export * from './lib/constants/api-property/user.api-property';
 
 export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
 export { AuthenticationApiResponse } from './lib/constants/api-response/authentication.api-response';
@@ -89,7 +89,7 @@ export { RequestWithRequestId } from './lib/types/request/request-with-request-i
 export { RequestWithTokenPayload } from './lib/types/request/request-with-token-payload.type';
 export { RequestWithUserId } from './lib/types/request/request-with-user-id.type';
 
-export { Environment, ENVIRONMENTS } from './lib/types/environment.type';
+export * from './lib/types/environment.type';
 export { Duration } from './lib/types/duration.enum';
 export { Gender } from './lib/types/gender.enum';
 export { Location } from './lib/types/location.enum';

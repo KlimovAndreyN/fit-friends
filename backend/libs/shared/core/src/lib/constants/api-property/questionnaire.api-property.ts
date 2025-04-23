@@ -102,3 +102,12 @@ export const parseQuestionnaireFilesPipeBuilder =
       fileIsRequired: QuestionnaireApiProperty.Files.required,
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
     });
+
+export const parseCertificateFilePipeBuilder =
+  new ParseFilePipeBuilder()
+    .addFileTypeValidator({ fileType: QuestionnaireValidation.Files.Types.join('|') })
+    .addMaxSizeValidator({ maxSize: QuestionnaireValidation.Files.MaxSize })
+    .build({
+      fileIsRequired: true,
+      errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
+    });

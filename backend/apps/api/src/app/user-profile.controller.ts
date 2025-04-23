@@ -2,7 +2,7 @@ import {
   Body, Controller, Delete, Get, Patch, Post, UseInterceptors,
   Req, UploadedFile, UploadedFiles, UseFilters, UseGuards
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
@@ -12,7 +12,7 @@ import {
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder, FILE_KEY,
-  CertificateRdo
+  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -66,18 +66,19 @@ export class UserProfileController {
   }
 
   @ApiConsumes('multipart/form-data')
+  @ApiBody(FileUploaderFileApiBody) // взял описание от загрузки файла, как и FILE_KEY
   @UseGuards(CheckCoachGuard)
   @UseInterceptors(FileInterceptor(FILE_KEY))
   @Post(UserProfileRoute.Certificates)
   public async addCoachCertificate(
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
-    @UploadedFiles(parseQuestionnaireFilesPipeBuilder) file: Express.Multer.File
+    @UploadedFile(parseCertificateFilePipeBuilder) file: Express.Multer.File
   ): Promise<CertificateRdo> {
     //! отладка
     console.log('addCoachCertificate');
     console.log('file', file);
-    console.log('file', requestId);
-    console.log('file', userId);
+    console.log('requestId', requestId);
+    console.log('userId', userId);
 
     //! временно
     const certificate: CertificateRdo = { fileId: '111112222', filePath: '3333334444', title: '4555554545' };
