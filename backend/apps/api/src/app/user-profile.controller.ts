@@ -18,8 +18,8 @@ import { fillDto } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
-import { CheckSportsmanGuard } from './guards/check-sportsman.guard';
-import { CheckCoachGuard } from './guards/check-coach.guard';
+import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
+import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
@@ -40,7 +40,7 @@ export class UserProfileController {
     await this.fitQuestionnaireService.findByUserId(userId, requestId)
   }
 
-  @UseGuards(CheckSportsmanGuard)
+  @UseGuards(CheckRoleSportsmanGuard)
   @Post(UserProfileRoute.QuestionnairesSportsman)
   public async createQuestionnaireSportsman(
     @Body() dto: CreateQuestionnaireSportsmanDto,
@@ -52,7 +52,7 @@ export class UserProfileController {
   }
 
   @ApiConsumes('multipart/form-data')
-  @UseGuards(CheckCoachGuard)
+  @UseGuards(CheckRoleCoachGuard)
   @UseInterceptors(FilesInterceptor(FILES_PROPERTY))
   @Post(UserProfileRoute.QuestionnairesCoach)
   public async createQuestionnaireCoach(
@@ -67,7 +67,7 @@ export class UserProfileController {
 
   @ApiConsumes('multipart/form-data')
   @ApiBody(FileUploaderFileApiBody) // взял описание от загрузки файла, как и FILE_KEY
-  @UseGuards(CheckCoachGuard)
+  @UseGuards(CheckRoleCoachGuard)
   @UseInterceptors(FileInterceptor(FILE_KEY))
   @Post(UserProfileRoute.Certificates)
   public async addCoachCertificate(
@@ -124,7 +124,7 @@ export class UserProfileController {
   }
 
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
-  @UseGuards(CheckSportsmanGuard)
+  @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserProfileRdo[]> {
     //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика

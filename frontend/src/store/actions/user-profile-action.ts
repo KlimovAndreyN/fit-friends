@@ -3,8 +3,9 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, Role, FILE_KEY
-  IDetailUserProfileRdo, UserProfileRoute, ApiServiceRoute, isSportsmanRole, ICertificateRdo
+  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, Role,
+  FILE_KEY, IDetailUserProfileRdo, UserProfileRoute, ApiServiceRoute,
+  isSportsmanRole, ICertificateRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
