@@ -2,14 +2,15 @@ import { ICertificateRdo, IDetailUserProfileRdo, IUserProfileRdo } from '@backen
 
 export type UserProfileProcess = {
   isExistQuestionnaireExecuting: boolean;
+  existQuestionnaire: boolean;
   isCreateQuestionnaireExecuting: boolean;
   isFetchUserProfileExecuting: boolean;
-  isUpdateUserProfileExecuting: boolean;
-  isUpdateUserProfileError: boolean;
-  isReadyForTrainingChangeExecuting: boolean;
-  existQuestionnaire: boolean;
   userProfile: IDetailUserProfileRdo | null;
   coachCertificates: ICertificateRdo[];
+  isUpdateUserProfileExecuting: boolean;
+  isUpdateUserProfileError: boolean;
+  isUpdateCoachCertificatesExecuting: boolean;
+  isReadyForTrainingChangeExecuting: boolean;
   readyForTraining: boolean;
   isFetchLookForCompanyUserProfilesExecuting: boolean;
   lookForCompanyUserProfiles: IUserProfileRdo[];

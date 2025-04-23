@@ -10,14 +10,15 @@ import { StoreSlice } from '../../const';
 
 const initialState: UserProfileProcess = {
   isExistQuestionnaireExecuting: false,
+  existQuestionnaire: false,
   isCreateQuestionnaireExecuting: false,
   isFetchUserProfileExecuting: false,
-  isUpdateUserProfileExecuting: false,
-  isUpdateUserProfileError: false,
-  isReadyForTrainingChangeExecuting: false,
-  existQuestionnaire: false,
   userProfile: null,
   coachCertificates: [],
+  isUpdateUserProfileExecuting: false,
+  isUpdateUserProfileError: false,
+  isUpdateCoachCertificatesExecuting: false,
+  isReadyForTrainingChangeExecuting: false,
   readyForTraining: false,
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
@@ -117,27 +118,23 @@ export const userProfileProcess = createSlice(
             state.isUpdateUserProfileExecuting = false;
           }
         )
-
         .addCase(
           createCoachCertificate.pending,
           (state) => {
-            state.isUpdateUserProfileError = false;
-            state.isUpdateUserProfileExecuting = true;
+            state.isUpdateCoachCertificatesExecuting = true;
           }
         )
         .addCase(
           createCoachCertificate.rejected,
           (state) => {
-            state.isUpdateUserProfileError = true;
-            state.isUpdateUserProfileExecuting = false;
+            state.isUpdateCoachCertificatesExecuting = false;
           }
         )
         .addCase(
           createCoachCertificate.fulfilled,
           (state, action) => {
             state.coachCertificates.unshift(action.payload);
-            state.isUpdateUserProfileError = false;
-            state.isUpdateUserProfileExecuting = false;
+            state.isUpdateCoachCertificatesExecuting = false;
           }
         )
 

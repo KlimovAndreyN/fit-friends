@@ -22,7 +22,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   //! реализовать логику
   //! при выполении добавления, обновления и удаления блокировать остальное
   //! на редактирвоание можно только одну сделать, если не сложно то можно запретить несколько начинать редактировать, а если не будет ошибок то можно и несколько
-  //! при редактировании блокировать и анализировать ошибку! isUpdateUserProfileExecuting isUpdateUserProfileError
+  //! при забросе добавления, редактирования и удаления блокировать кнопки! isUpdateCoachCertificatesExecuting
 
   const dispatch = useAppDispatch();
   const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting); //! можно не использовать т.к. ранее загружен
