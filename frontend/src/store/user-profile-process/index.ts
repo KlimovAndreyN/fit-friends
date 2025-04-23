@@ -2,8 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import {
-  changeReadyForTraining, fetchLookForCompanyUserProfiles, createQuestionnaire,
-  existQuestionnaire, fetchUserProfile, fetchUserProfiles, updateUserProfile
+  changeReadyForTraining, fetchLookForCompanyUserProfiles,
+  createQuestionnaire, existQuestionnaire, fetchUserProfile,
+  fetchUserProfiles, updateUserProfile, createCoachCertificate
 } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
@@ -16,6 +17,7 @@ const initialState: UserProfileProcess = {
   isReadyForTrainingChangeExecuting: false,
   existQuestionnaire: false,
   userProfile: null,
+  coachCertificates: [],
   readyForTraining: false,
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
@@ -84,9 +86,10 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           fetchUserProfile.fulfilled,
-          (state, action) => {
-            state.userProfile = action.payload;
-            state.readyForTraining = action.payload.questionnaire.readyForTraining;
+          (state, { payload }) => {
+            state.userProfile = payload;
+            state.coachCertificates = payload.questionnaire.certificates || [];
+            state.readyForTraining = payload.questionnaire.readyForTraining;
             state.isFetchUserProfileExecuting = false;
           }
         )
@@ -106,12 +109,38 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           updateUserProfile.fulfilled,
-          (state, action) => {
-            state.userProfile = action.payload;
+          (state, { payload }) => {
+            state.userProfile = payload;
+            state.coachCertificates = payload.questionnaire.certificates || [];
+            state.readyForTraining = payload.questionnaire.readyForTraining;
             state.isUpdateUserProfileError = false;
             state.isUpdateUserProfileExecuting = false;
           }
         )
+
+        .addCase(
+          createCoachCertificate.pending,
+          (state) => {
+            state.isUpdateUserProfileError = false;
+            state.isUpdateUserProfileExecuting = true;
+          }
+        )
+        .addCase(
+          createCoachCertificate.rejected,
+          (state) => {
+            state.isUpdateUserProfileError = true;
+            state.isUpdateUserProfileExecuting = false;
+          }
+        )
+        .addCase(
+          createCoachCertificate.fulfilled,
+          (state, action) => {
+            state.coachCertificates.unshift(action.payload);
+            state.isUpdateUserProfileError = false;
+            state.isUpdateUserProfileExecuting = false;
+          }
+        )
+
         .addCase(
           changeReadyForTraining.pending,
           (state) => {

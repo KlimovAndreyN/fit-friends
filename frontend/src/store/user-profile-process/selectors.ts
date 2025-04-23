@@ -10,6 +10,7 @@ export const getIsUpdateUserProfileError = ({ [StoreSlice.UserProfileProcess]: U
 export const getIsReadyForTrainingChangeExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isReadyForTrainingChangeExecuting'] => USER_PROFILE_PROCESS.isReadyForTrainingChangeExecuting;
 export const getExistQuestionnaire = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['existQuestionnaire'] => USER_PROFILE_PROCESS.existQuestionnaire;
 export const getUserProfile = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['userProfile'] => USER_PROFILE_PROCESS.userProfile;
+export const getCoachCertificates = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['coachCertificates'] => USER_PROFILE_PROCESS.coachCertificates;
 export const getReadyForTraining = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['readyForTraining'] => USER_PROFILE_PROCESS.readyForTraining;
 export const getIsFetchLookForCompanyUserProfilesExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchLookForCompanyUserProfilesExecuting'] => USER_PROFILE_PROCESS.isFetchLookForCompanyUserProfilesExecuting;
 export const getLookForCompanyUserProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['lookForCompanyUserProfiles'] => USER_PROFILE_PROCESS.lookForCompanyUserProfiles;

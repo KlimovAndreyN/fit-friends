@@ -1,16 +1,10 @@
-import { ICertificateRdo } from '@backend/shared/core';
-
 import ThumbnailLink from '../thumbnail-link/thumbnail-link';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 import CoachCertificates from '../coach-certificates/coach-certificates';
 
 import { AppRoute } from '../../const';
 
-type PersonalAccountRoleCoachProps = {
-  certificates?: ICertificateRdo[];
-}
-
-function PersonalAccountRoleCoach({ certificates = [] }: PersonalAccountRoleCoachProps): JSX.Element {
+function PersonalAccountRoleCoach(): JSX.Element {
   const classNamePrefix = 'personal-account-coach';
 
   return (
@@ -25,7 +19,7 @@ function PersonalAccountRoleCoach({ certificates = [] }: PersonalAccountRoleCoac
             <ThumbnailSpecGym text='Скоро тут будет интересно' />
           </div>
         </div>
-        <CoachCertificates classNamePrefix={classNamePrefix} certificates={certificates} />
+        <CoachCertificates classNamePrefix={classNamePrefix} />
       </div>
     </div>
   );

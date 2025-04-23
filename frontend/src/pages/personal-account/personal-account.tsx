@@ -32,13 +32,12 @@ function PersonalAccount(): JSX.Element {
     dispatch(fetchUserProfile());
   }, [dispatch]);
 
-  //! UserProfile и userRole можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
+  //! UserProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
   if (isFetchUserProfileExecuting || !UserProfile) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
 
-  const { questionnaire: { caloriesWaste, certificates } } = UserProfile;
   const isSpotsman = isSportsmanRole(userRole);
 
   return (
@@ -57,8 +56,8 @@ function PersonalAccount(): JSX.Element {
               <div className="inner-page__content">
                 {
                   (isSpotsman)
-                    ? <PersonalAccountRoleSportsman caloriesWaste={caloriesWaste} />
-                    : <PersonalAccountRoleCoach certificates={certificates} />
+                    ? <PersonalAccountRoleSportsman caloriesWaste={UserProfile.questionnaire.caloriesWaste} />
+                    : <PersonalAccountRoleCoach />
                 }
               </div>
             </div>
