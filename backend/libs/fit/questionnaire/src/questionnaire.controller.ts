@@ -50,6 +50,18 @@ export class QuestionnaireController {
     return fillDto(BasicQuestionnaireRdo, entity.toPOJO());
   }
 
+  @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
+  @Patch(QuestionnaireRoute.Files)
+  public async insertFileId(
+    //! нужен тип
+    @Body() dto: { fileId: string },
+    @Req() { userId }: RequestWithUserId
+  ): Promise<string[]> {
+    const fileIds = await this.questionnaireService.insertFileId(dto.fileId, userId);
+
+    return fileIds;
+  }
+
   @ApiResponse({ type: QuestionnaireMiniRdo, isArray: true }) //! вынести в описание
   @Get(QuestionnaireRoute.LookForCompany)
   public async getReadyForTraining(): Promise<QuestionnaireMiniRdo[]> {

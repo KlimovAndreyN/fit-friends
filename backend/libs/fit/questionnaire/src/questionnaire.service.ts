@@ -27,22 +27,42 @@ export class QuestionnaireService {
   }
 
   public async update(dto: UpdateQuestionnaireDto, userId: string): Promise<QuestionnaireEntity> {
-    const existsPost = await this.findByUserId(userId);
+    const existsQuestionnaire = await this.findByUserId(userId);
     let hasChanges = false;
 
     for (const [key, value] of Object.entries(dto)) {
-      if (value !== undefined && existsPost[key] !== value) {
-        //! для dto.specializations нужно ли Arrai.isArray() и проверить по элементам и existsPost[key] = [...value];
-        existsPost[key] = value;
+      if (value !== undefined && existsQuestionnaire[key] !== value) {
+        //! для dto.specializations нужно ли Arrai.isArray() и проверить по элементам и existsQuestionnaire[key] = [...value];
+        existsQuestionnaire[key] = value;
         hasChanges = true;
       }
     }
 
     if (hasChanges) {
-      await this.questionnaireRepository.update(existsPost);
+      await this.questionnaireRepository.update(existsQuestionnaire);
     }
 
-    return existsPost;
+    return existsQuestionnaire;
+  }
+
+  //! нужен тип?
+  public async insertFileId(fileId: string, userId: string): Promise<string[]> {
+    const questionnaire = await this.findByUserId(userId);
+    const { fileIds } = questionnaire;
+
+    //! отладка
+    console.log('insertFileId');
+    console.log('existsQuestionnaire', questionnaire);
+
+    //! проверить при отсутвии данных! нужно ли инициализировать [], если не было массива
+    fileIds.unshift(fileId);
+
+    await this.questionnaireRepository.update(questionnaire);
+
+    //! отладка
+    console.log('existsQuestionnaire', questionnaire);
+
+    return fileIds;
   }
 
   public async getReadyForTraining(): Promise<QuestionnaireEntity[]> {
