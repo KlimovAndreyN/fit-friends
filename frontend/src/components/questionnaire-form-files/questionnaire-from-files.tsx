@@ -1,5 +1,7 @@
 import { FormEvent, Fragment, MutableRefObject, useState } from 'react';
 
+import { CERTIFICATES_FILE_TYPES } from '../../const';
+
 type QuestionnaireFormFilesProps = {
   name: string;
   inputRef: MutableRefObject<HTMLInputElement | null>;
@@ -37,7 +39,7 @@ function QuestionnaireFormFiles({ name, inputRef }: QuestionnaireFormFilesProps)
           type="file"
           name={name}
           tabIndex={-1}
-          accept=".pdf, .jpg, .jpeg, .png"
+          accept={CERTIFICATES_FILE_TYPES}
           multiple
           ref={inputRef}
           onChange={handleFilesInputChange}

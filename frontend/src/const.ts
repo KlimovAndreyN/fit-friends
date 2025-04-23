@@ -136,3 +136,5 @@ const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
 export const TRAINING_LEVELS: Option[] = enumToArray(TrainingLevel).map(
   (trainingLevel) => ({ value: trainingLevel, title: TrainingLevelTitle[trainingLevel] })
 );
+
+export const CERTIFICATES_FILE_TYPES = '.pdf, .jpg, .jpeg, .png';
