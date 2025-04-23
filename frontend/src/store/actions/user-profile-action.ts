@@ -29,7 +29,7 @@ export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Ext
   Action.EXIST_QUESTIONNARE,
   async (_, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Questionnaire);
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Questionnaires);
     await api.get<boolean>(url, { notFoundToReject: true });
   }
 );
@@ -39,7 +39,7 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
   async ({ dto, userRole }, { extra }) => {
     const { api } = extra;
     const isSportsman = isSportsmanRole(userRole);
-    const subUrl = isSportsman ? UserProfileRoute.QuestionnaireSportsman : UserProfileRoute.QuestionnaireCoach;
+    const subUrl = isSportsman ? UserProfileRoute.QuestionnairesSportsman : UserProfileRoute.QuestionnairesCoach;
     const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
 
     await api.post<IQuestionnaireRdo>(url, dto, { useMultipartFormData: !isSportsman });

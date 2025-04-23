@@ -36,9 +36,10 @@ export enum TrainingRoute {
 }
 
 export enum UserProfileRoute {
-  Questionnaire = 'questionnaire',
-  QuestionnaireSportsman = `${Questionnaire}/${Role.Sportsman}`,
-  QuestionnaireCoach = `${Questionnaire}/${Role.Coach}`,
+  Questionnaires = 'questionnaires',
+  QuestionnairesSportsman = `${Questionnaires}/${Role.Sportsman}`,
+  QuestionnairesCoach = `${Questionnaires}/${Role.Coach}`,
+  Certificates = 'certificates',
   ReadyForTraining = 'ready-for-training',
   LookForCompany = 'look-for-company'
 }

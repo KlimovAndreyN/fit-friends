@@ -11,7 +11,8 @@ import {
   QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, UserProfileRdo,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder
+  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder, FILE_KEY,
+  CertificateRdo
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -34,13 +35,13 @@ export class UserProfileController {
   ) { }
 
   //! в описание: 200 - есть, 404 - нету
-  @Get(UserProfileRoute.Questionnaire)
+  @Get(UserProfileRoute.Questionnaires)
   public async exist(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<void> {
     await this.fitQuestionnaireService.findByUserId(userId, requestId)
   }
 
   @UseGuards(CheckSportsmanGuard)
-  @Post(UserProfileRoute.QuestionnaireSportsman)
+  @Post(UserProfileRoute.QuestionnairesSportsman)
   public async createQuestionnaireSportsman(
     @Body() dto: CreateQuestionnaireSportsmanDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
@@ -53,7 +54,7 @@ export class UserProfileController {
   @ApiConsumes('multipart/form-data')
   @UseGuards(CheckCoachGuard)
   @UseInterceptors(FilesInterceptor(FILES_PROPERTY))
-  @Post(UserProfileRoute.QuestionnaireCoach)
+  @Post(UserProfileRoute.QuestionnairesCoach)
   public async createQuestionnaireCoach(
     @Body() dto: CreateQuestionnaireCoachDto,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
@@ -62,6 +63,26 @@ export class UserProfileController {
     const questionnaire = await this.fitQuestionnaireService.createQuestionnaire(dto, userId, requestId, files);
 
     return questionnaire;
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @UseGuards(CheckCoachGuard)
+  @UseInterceptors(FileInterceptor(FILE_KEY))
+  @Post(UserProfileRoute.Certificates)
+  public async addCoachCertificate(
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
+    @UploadedFiles(parseQuestionnaireFilesPipeBuilder) file: Express.Multer.File
+  ): Promise<CertificateRdo> {
+    //! отладка
+    console.log('addCoachCertificate');
+    console.log('file', file);
+    console.log('file', requestId);
+    console.log('file', userId);
+
+    //! временно
+    const certificate: CertificateRdo = { fileId: '111112222', filePath: '3333334444', title: '4555554545' };
+
+    return certificate;
   }
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
@@ -102,6 +123,7 @@ export class UserProfileController {
   }
 
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
+  @UseGuards(CheckSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserProfileRdo[]> {
     //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика
