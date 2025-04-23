@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import CertificateCard from '../certificate-card/certificate-card';
@@ -27,6 +27,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   const isUpdateCoachCertificatesExecuting = useAppSelector(getIsUpdateCoachCertificatesExecuting);
   const certificates = useAppSelector(getCoachCertificates);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const [editingCertificateFileId, setEditingCertificateFileId] = useState('');
 
   const handleLoadCertificateButtonClick = () => {
     inputFileRef.current?.click();
@@ -36,6 +37,25 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
     if (file) {
       dispatch(createCoachCertificate(file));
     }
+  };
+
+  const handleSaveButtonClick = () => {
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleSaveButtonClick', editingCertificateFileId);
+    setEditingCertificateFileId(''); //! врменно, потом через обновление данных
+  };
+
+  const handleChangeButtonClick = () => {
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleChangeButtonClick', editingCertificateFileId);
+  };
+
+  const handleDeleteButtonClick = () => {
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleDeleteButtonClick', editingCertificateFileId);
   };
 
   const loadCertificateButtonOption = {
@@ -49,7 +69,28 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   };
 
   const childrens: JSX.Element[] = certificates.map(
-    ({ fileId, filePath, title }) => (<CertificateCard {...{ filePath, title, isEditing: false, disabled: isUpdateCoachCertificatesExecuting }} key={fileId} />)
+    ({ fileId, filePath, title }) => {
+      const isEditing = fileId === editingCertificateFileId;
+      const disabled = isUpdateCoachCertificatesExecuting;
+
+      const handleEditButtonClick = () => {
+        setEditingCertificateFileId(fileId);
+      };
+
+      return (
+        <CertificateCard
+          key={fileId}
+          filePath={filePath}
+          title={title}
+          isEditing={isEditing}
+          disabled={disabled}
+          onEditClick={handleEditButtonClick}
+          onSaveClick={handleSaveButtonClick}
+          onChangeClick={handleChangeButtonClick}
+          onDeleteClick={handleDeleteButtonClick}
+        />
+      );
+    }
   );
 
   return (
