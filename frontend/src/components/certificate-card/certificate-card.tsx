@@ -1,65 +1,115 @@
-import { FormEvent } from 'react';
+import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { OnClick } from '../../types/types';
+import ImageUploadInput from '../image-upload-input/image-upload-input';
+
+import { OnClick, OnFileInputChange } from '../../types/types';
+import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 type CertificateCards = {
   title: string;
-  filePath: string;
+  certificateFilePath: string;
   isEditing: boolean;
   disabled?: boolean;
   onEditClick: OnClick;
-  onSaveClick: OnClick;
-  onChangeClick: OnClick;
-  onDeleteClick: OnClick;
+  onSaveClick: OnFileInputChange;
 }
 
 function CertificateCard(props: CertificateCards): JSX.Element {
+  //! обработка кнопок похожа на обработку аватарки пользовалеля, может объединить?
+  //! embed не может через base64, нужно отдать URL.createObjectURL(blob); - "html embed src base64 pdf"
   // скорректировать отображение ПДФ, или при сохранении конвертровать и изображение - сделал embed
   // при клике показать крупнее - сделал ссылку вокруг элемента
 
-  const { title, filePath, isEditing, disabled, onEditClick, onSaveClick, onChangeClick, onDeleteClick } = props;
-  const className = classNames('certificate-card', { 'certificate-card--edit': isEditing });
-  const isPdf = filePath.endsWith('.pdf');
-  const linkStyle = (isPdf) ? { display: 'inline-block' } : {};
+  const { title, certificateFilePath, isEditing, disabled, onEditClick, onSaveClick } = props;
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const [currentFilePath, setCurrentFilePath] = useState<string>(certificateFilePath);
+  const [currentFile, setCurrentFile] = useState<File>();
+  const filename = (currentFile) ? currentFile.name : currentFilePath;
+  const isPdf = filename.endsWith('.pdf');
+
+  useEffect(() => {
+    setCurrentFilePath(certificateFilePath);
+    setCurrentFile(undefined);
+
+    if (inputFileRef.current) {
+      inputFileRef.current.value = '';
+    }
+  }, [certificateFilePath, isEditing]);
+
+  const handleImageUploadInputChange = (filePath: string, file: File | undefined) => {
+    setCurrentFilePath(filePath);
+    setCurrentFile(file);
+  };
 
   const handleEditButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
     onEditClick();
   };
 
   const handleSaveButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    onSaveClick();
+
+    onSaveClick(currentFilePath, currentFile);
+  };
+
+  const handleDivContentClick = (event: FormEvent<HTMLDivElement>) => {
+    event.preventDefault();
+
+    inputFileRef.current?.click();
   };
 
   const handleChangeButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    onChangeClick();
+
+    inputFileRef.current?.click();
   };
 
   const handleDeleteButtonClick = (event: FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    onDeleteClick();
+
+    setCurrentFilePath('');
+    setCurrentFile(undefined);
   };
 
+  const className = classNames('certificate-card', { 'certificate-card--edit': isEditing });
+  const linkStyle = (isPdf) ? { display: 'inline-block' } : {};
   const buttonClassName = 'btn-flat btn-flat--underlined certificate-card__button certificate-card__button--';
+  const image = (currentFilePath)
+    ? (<picture><img src={currentFilePath} width="294" height="360" alt={title} /></picture>)
+    : <svg width="40" height="40" aria-hidden="true"><use xlinkHref="#icon-change" /></svg>;
+  const content = (isPdf)
+    ? (<embed src={currentFilePath} width="294" height="360" type="application/pdf" style={{ pointerEvents: 'none' }} />)
+    : image;
 
   return (
     <div className={className}>
       <div className="certificate-card__image">
-        <Link to={filePath} target='_blank' style={linkStyle}>
-          {
-            (isPdf)
-              ?
-              <embed src={filePath} width="294" height="360" type="application/pdf" style={{ pointerEvents: 'none' }} />
-              :
-              <picture>
-                <img src={filePath} width="294" height="360" alt={title} />
-              </picture>
-          }
-        </Link>
+        {
+          (isEditing)
+            ?
+            <Fragment>
+              <ImageUploadInput
+                className='visually-hidden'
+                acceptTypes={CERTIFICATES_FILE_TYPES}
+                inputRef={inputFileRef}
+                onChange={handleImageUploadInputChange}
+              />
+              <div
+                onClick={handleDivContentClick}
+                className="certificate-card__image"
+                style={(currentFilePath) ? {} : { textAlign: 'center', alignContent: 'center' }}
+              >
+                {content}
+              </div>
+            </Fragment>
+            :
+            <Link to={certificateFilePath} target='_blank' style={linkStyle}>
+              {content}
+            </Link>
+        }
       </div>
       <div className="certificate-card__buttons">
         <button

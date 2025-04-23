@@ -18,10 +18,7 @@ type CoachCertificatesProps = {
 }
 
 function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Element {
-  //! реализовать логику
-  //! при выполении добавления, обновления и удаления блокировать остальное
-  //! на редактирвоание можно только одну сделать, если не сложно то можно запретить несколько начинать редактировать, а если не будет ошибок то можно и несколько
-  //! при забросе добавления, редактирования и удаления блокировать кнопки! isUpdateCoachCertificatesExecuting
+  //! при запросе добавления, редактирования и удаления блокировать кнопки! isUpdateCoachCertificatesExecuting
 
   const dispatch = useAppDispatch();
   const isUpdateCoachCertificatesExecuting = useAppSelector(getIsUpdateCoachCertificatesExecuting);
@@ -39,23 +36,17 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
     }
   };
 
-  const handleSaveButtonClick = () => {
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleSaveButtonClick', editingCertificateFileId);
-    setEditingCertificateFileId(''); //! врменно, потом через обновление данных
-  };
+  const handleSaveClick = (_filePath: string, file: File | undefined) => {
+    if (file) {
+      // eslint-disable-next-line no-console
+      console.log('Обновить файл', editingCertificateFileId, file);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Удалить файл', editingCertificateFileId);
+    }
 
-  const handleChangeButtonClick = () => {
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleChangeButtonClick', editingCertificateFileId);
-  };
-
-  const handleDeleteButtonClick = () => {
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleDeleteButtonClick', editingCertificateFileId);
+    //! врменно, потом через обновление данных
+    setEditingCertificateFileId('');
   };
 
   const loadCertificateButtonOption = {
@@ -71,23 +62,20 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   const childrens: JSX.Element[] = certificates.map(
     ({ fileId, filePath, title }) => {
       const isEditing = fileId === editingCertificateFileId;
-      const disabled = isUpdateCoachCertificatesExecuting;
 
-      const handleEditButtonClick = () => {
+      const handleEditClick = () => {
         setEditingCertificateFileId(fileId);
       };
 
       return (
         <CertificateCard
           key={fileId}
-          filePath={filePath}
+          certificateFilePath={filePath}
           title={title}
           isEditing={isEditing}
-          disabled={disabled}
-          onEditClick={handleEditButtonClick}
-          onSaveClick={handleSaveButtonClick}
-          onChangeClick={handleChangeButtonClick}
-          onDeleteClick={handleDeleteButtonClick}
+          disabled={isUpdateCoachCertificatesExecuting}
+          onEditClick={handleEditClick}
+          onSaveClick={handleSaveClick}
         />
       );
     }
