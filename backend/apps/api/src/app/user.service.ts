@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+import 'multer'; // Express.Multer.File
 
 import {
   AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute, DetailUserRdo,

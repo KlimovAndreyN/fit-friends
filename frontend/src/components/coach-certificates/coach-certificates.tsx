@@ -21,6 +21,8 @@ type CoachCertificatesProps = {
 
 function CoachCertificates({ certificates = [], classNamePrefix }: CoachCertificatesProps): JSX.Element {
   //! реализовать логику
+  //! при выполении добавления, обновления и удаления блокировать остальное
+  //! на редактирвоание можно только одну сделать, если не сложно то можно запретить несколько начинать редактировать, а если не будет ошибок то можно и несколько
 
   const dispatch = useAppDispatch();
   const inputFileRef = useRef<HTMLInputElement | null>(null);

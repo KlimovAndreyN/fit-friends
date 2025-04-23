@@ -3,7 +3,7 @@ import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, CreateBasicQuestionnaireDto, BasicQuestionnaireRdo, RequestWithUserId,
-  XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireMiniRdo, UserProfileRoute
+  XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireMiniRdo, QuestionnaireRoute
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
@@ -51,7 +51,7 @@ export class QuestionnaireController {
   }
 
   @ApiResponse({ type: QuestionnaireMiniRdo, isArray: true }) //! вынести в описание
-  @Get(UserProfileRoute.LookForCompany)
+  @Get(QuestionnaireRoute.LookForCompany)
   public async getReadyForTraining(): Promise<QuestionnaireMiniRdo[]> {
     const entities = await this.questionnaireService.getReadyForTraining();
 

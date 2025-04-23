@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
+import 'multer'; // Express.Multer.File
 
 import {
-  BasicQuestionnaireRdo, CertificateRdo, CreateBasicQuestionnaireDto, QuestionnaireMiniRdo,
-  QuestionnaireRdo, ServiceRoute, UpdateQuestionnaireDto, UserProfileRoute
+  BasicQuestionnaireRdo, CertificateRdo, CreateBasicQuestionnaireDto, ServiceRoute,
+  QuestionnaireRdo, QuestionnaireRoute, QuestionnaireMiniRdo, UpdateQuestionnaireDto,
+  UploadedFileRdo, UserProfileRoute
 } from '@backend/shared/core';
 import { cutExtention, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -20,10 +22,19 @@ export class FitQuestionnaireService {
   ) { }
 
   private getUrl(...routes: string[]): string {
-    return joinUrl(this.apiOptions.fitServiceUrl, ...routes);
+    return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Questionnaires, ...routes);
   }
 
-  public async getCertificates(fileIds: string[] | undefined, requestId: string): Promise<CertificateRdo[] | undefined> {
+  private makeCertificate(fileRdo: UploadedFileRdo): CertificateRdo {
+    const { id: fileId, originalName } = fileRdo;
+    const filePath = this.fileService.makePath(fileRdo);
+    const title = cutExtention(originalName)
+    const certificate: CertificateRdo = { fileId, filePath, title };
+
+    return certificate;
+  }
+
+  private async getCertificates(fileIds: string[] | undefined, requestId: string): Promise<CertificateRdo[] | undefined> {
     if (!fileIds) {
       return undefined;
     }
@@ -36,9 +47,7 @@ export class FitQuestionnaireService {
 
     for (const fileId of fileIds) {
       const file = await this.fileService.getFile(fileId, requestId);
-      const filePath = this.fileService.makePath(file);
-      const title = cutExtention(file.originalName)
-      const certificate: CertificateRdo = { fileId, filePath, title };
+      const certificate = this.makeCertificate(file);
 
       certificates.push(certificate);
     }
@@ -54,9 +63,8 @@ export class FitQuestionnaireService {
   }
 
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
-    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    const { data: basicQuestionnaire } = await this.httpService.axiosRef.get<BasicQuestionnaireRdo>(url, headers);
+    const { data: basicQuestionnaire } = await this.httpService.axiosRef.get<BasicQuestionnaireRdo>(this.getUrl(), headers);
     const questionnaire = await this.convertToQuestionnaireRdo(basicQuestionnaire, requestId);
 
     return questionnaire;
@@ -82,9 +90,8 @@ export class FitQuestionnaireService {
       }
     }
 
-    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.post<BasicQuestionnaireRdo>(url, createDto, headers);
+    const { data } = await this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers);
     const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
 
     return questionnaire;
@@ -95,24 +102,57 @@ export class FitQuestionnaireService {
     userId: string,
     requestId: string
   ): Promise<QuestionnaireRdo> {
-    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
-    const { data } = await this.httpService.axiosRef.patch<BasicQuestionnaireRdo>(url, dto, headers);
+    const { data } = await this.httpService.axiosRef.patch<BasicQuestionnaireRdo>(this.getUrl(), dto, headers);
     const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
 
     return questionnaire;
   }
 
+  public async addCoachCertificate(file: Express.Multer.File, userId: string, requestId: string): Promise<CertificateRdo> {
+    const fileRdo = await this.fileService.uploadFile(file, requestId);
+
+    const url = this.getUrl(QuestionnaireRoute.Files);
+    const headers = makeHeaders(requestId, null, userId);
+    //! нужен тип
+    await this.httpService.axiosRef.patch(url, { fileId: fileRdo.id }, headers);
+
+    return this.makeCertificate(fileRdo);
+  }
+
+  public async updateCoachCertificate(fileId: string, file: Express.Multer.File, userId: string, requestId: string): Promise<CertificateRdo> {
+    //! отладка
+    console.log('updateCoachCertificate');
+    console.log('fileId', fileId);
+    console.log('file', file);
+    console.log('requestId', requestId);
+    console.log('userId', userId);
+
+    //! временно
+    const certificate: CertificateRdo = { fileId: '111112222', filePath: '3333334444', title: '4555554545' };
+
+    return certificate;
+  }
+
+  public async deleteCoachCertificate(fileId: string, userId: string, requestId: string): Promise<void> {
+    //! отладка
+    console.log('updateCoachCertificate');
+    console.log('fileId', fileId);
+    console.log('requestId', requestId);
+    console.log('userId', userId);
+
+    //! временно
+  }
+
   public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {
-    const url = this.getUrl(ServiceRoute.Questionnaires);
     const headers = makeHeaders(requestId, null, userId);
     const dto: UpdateQuestionnaireDto = { readyForTraining };
 
-    await this.httpService.axiosRef.patch<QuestionnaireRdo>(url, dto, headers);
+    await this.httpService.axiosRef.patch<QuestionnaireRdo>(this.getUrl(), dto, headers);
   }
 
   public async getReadyForTraining(userId: string, requestId: string): Promise<QuestionnaireMiniRdo[]> {
-    const url = this.getUrl(ServiceRoute.Questionnaires, UserProfileRoute.LookForCompany);
+    const url = this.getUrl(UserProfileRoute.LookForCompany);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<QuestionnaireMiniRdo[]>(url, headers);
 

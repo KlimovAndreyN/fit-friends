@@ -1,6 +1,6 @@
 import {
   Body, Controller, Delete, Get, Patch, Post, UseInterceptors,
-  Req, UploadedFile, UploadedFiles, UseFilters, UseGuards
+  Req, UploadedFile, UploadedFiles, UseFilters, UseGuards, Param
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
@@ -12,9 +12,10 @@ import {
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder, FILE_KEY,
-  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder
+  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder, IdParam,
+  ApiParamOption
 } from '@backend/shared/core';
-import { fillDto } from '@backend/shared/helpers';
+import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -74,16 +75,33 @@ export class UserProfileController {
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
     @UploadedFile(parseCertificateFilePipeBuilder) file: Express.Multer.File
   ): Promise<CertificateRdo> {
-    //! отладка
-    console.log('addCoachCertificate');
-    console.log('file', file);
-    console.log('requestId', requestId);
-    console.log('userId', userId);
-
-    //! временно
-    const certificate: CertificateRdo = { fileId: '111112222', filePath: '3333334444', title: '4555554545' };
+    const certificate = await this.fitQuestionnaireService.addCoachCertificate(file, userId, requestId);
 
     return certificate;
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @ApiBody(FileUploaderFileApiBody) // взял описание от загрузки файла, как и FILE_KEY
+  @UseGuards(CheckRoleCoachGuard)
+  @UseInterceptors(FileInterceptor(FILE_KEY))
+  @Patch(joinUrl(UserProfileRoute.Certificates, IdParam.FILE))
+  public async updateCoachCertificate(
+    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
+    @UploadedFile(parseCertificateFilePipeBuilder) file: Express.Multer.File
+  ): Promise<CertificateRdo> {
+    const certificate = await this.fitQuestionnaireService.updateCoachCertificate(fileId, file, userId, requestId);
+
+    return certificate;
+  }
+
+  @UseGuards(CheckRoleCoachGuard)
+  @Delete(joinUrl(UserProfileRoute.Certificates, IdParam.FILE))
+  public async deleteCoachCertificate(
+    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+  ): Promise<void> {
+    await this.fitQuestionnaireService.deleteCoachCertificate(fileId, userId, requestId);
   }
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание

@@ -1,4 +1,4 @@
-import { Role } from "../types/role.enum";
+import { Role } from '../types/role.enum';
 
 export enum GlobalRoute {
   Api = 'api',
@@ -29,6 +29,11 @@ export enum AccountRoute {
   Register = 'register'
 }
 
+export enum QuestionnaireRoute {
+  LookForCompany = 'look-for-company',
+  Files = 'files'
+}
+
 export enum TrainingRoute {
   ForSportsman = 'for-sportsman',
   Special = 'special',
@@ -36,12 +41,12 @@ export enum TrainingRoute {
 }
 
 export enum UserProfileRoute {
-  Questionnaires = 'questionnaires',
+  Questionnaires = ServiceRoute.Questionnaires,
   QuestionnairesSportsman = `${Questionnaires}/${Role.Sportsman}`,
   QuestionnairesCoach = `${Questionnaires}/${Role.Coach}`,
   Certificates = 'certificates',
   ReadyForTraining = 'ready-for-training',
-  LookForCompany = 'look-for-company'
+  LookForCompany = QuestionnaireRoute.LookForCompany
 }
 
 export enum FileStorageRoute {

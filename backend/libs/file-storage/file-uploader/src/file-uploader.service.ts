@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'path/posix';
 import { randomUUID } from 'node:crypto';
+import 'multer'; // Express.Multer.File
 
 import { fileStorageConfig } from '@backend/file-storage/config';
 import { StoredFile } from '@backend/shared/core';
