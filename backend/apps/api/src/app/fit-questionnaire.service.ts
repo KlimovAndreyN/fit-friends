@@ -115,33 +115,28 @@ export class FitQuestionnaireService {
     const url = this.getUrl(QuestionnaireRoute.Files);
     const headers = makeHeaders(requestId, null, userId);
     //! нужен тип
-    await this.httpService.axiosRef.patch(url, { fileId: fileRdo.id }, headers);
+    await this.httpService.axiosRef.post(url, { fileId: fileRdo.id }, headers);
 
     return this.makeCertificate(fileRdo);
   }
 
   public async updateCoachCertificate(fileId: string, file: Express.Multer.File, userId: string, requestId: string): Promise<CertificateRdo> {
-    //! отладка
-    console.log('updateCoachCertificate');
-    console.log('fileId', fileId);
-    console.log('file', file);
-    console.log('requestId', requestId);
-    console.log('userId', userId);
+    const fileRdo = await this.fileService.uploadFile(file, requestId);
 
-    //! временно
-    const certificate: CertificateRdo = { fileId: '111112222', filePath: '3333334444', title: '4555554545' };
+    const url = this.getUrl(QuestionnaireRoute.Files, fileId);
+    const headers = makeHeaders(requestId, null, userId);
 
-    return certificate;
+    //! нужен тип
+    await this.httpService.axiosRef.patch(url, { fileId: fileRdo.id }, headers);
+
+    return this.makeCertificate(fileRdo);
   }
 
   public async deleteCoachCertificate(fileId: string, userId: string, requestId: string): Promise<void> {
-    //! отладка
-    console.log('deleteCoachCertificate');
-    console.log('fileId', fileId);
-    console.log('requestId', requestId);
-    console.log('userId', userId);
+    const url = this.getUrl(QuestionnaireRoute.Files, fileId);
+    const headers = makeHeaders(requestId, null, userId);
 
-    //! временно
+    await this.httpService.axiosRef.delete(url, headers);
   }
 
   public async updateReadyForTraining(readyForTraining: boolean, userId: string, requestId: string): Promise<void> {

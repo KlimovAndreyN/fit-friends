@@ -45,24 +45,41 @@ export class QuestionnaireService {
     return existsQuestionnaire;
   }
 
-  //! нужен тип?
+  //! нужен тип? для string[]
   public async insertFileId(fileId: string, userId: string): Promise<string[]> {
     const questionnaire = await this.findByUserId(userId);
     const { fileIds } = questionnaire;
 
-    //! отладка
-    console.log('insertFileId');
-    console.log('existsQuestionnaire', questionnaire);
-
-    //! проверить при отсутвии данных! нужно ли инициализировать [], если не было массива
     fileIds.unshift(fileId);
+    await this.questionnaireRepository.update(questionnaire);
+
+    return fileIds;
+  }
+
+  //! нужен тип? для string[]
+  public async updateFileId(fileId: string, newFileId, userId: string): Promise<string[]> {
+    const questionnaire = await this.findByUserId(userId);
+    const { fileIds } = questionnaire;
+
+    fileIds.unshift(fileId);
+    //! заменить по значению
+    //fileIds.unshift(fileId);
+    console.log('deleteFileId - fileId', fileId, newFileId);
 
     await this.questionnaireRepository.update(questionnaire);
 
-    //! отладка
-    console.log('existsQuestionnaire', questionnaire);
-
     return fileIds;
+  }
+
+  public async deleteFileId(fileId: string, userId: string): Promise<void> {
+    const questionnaire = await this.findByUserId(userId);
+    const { fileIds } = questionnaire;
+
+    //! delete! удалить по значению
+    //fileIds.unshift(fileId);
+    console.log('deleteFileId - fileId', fileId);
+
+    await this.questionnaireRepository.update(questionnaire);
   }
 
   public async getReadyForTraining(): Promise<QuestionnaireEntity[]> {

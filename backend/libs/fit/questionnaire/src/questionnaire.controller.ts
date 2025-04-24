@@ -1,11 +1,12 @@
-import { Body, Controller, Get, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
 import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, CreateBasicQuestionnaireDto, BasicQuestionnaireRdo, RequestWithUserId,
-  XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireMiniRdo, QuestionnaireRoute
+  XApiHeaderOptions, UpdateQuestionnaireDto, QuestionnaireMiniRdo, QuestionnaireRoute,
+  ApiParamOption, IdParam
 } from '@backend/shared/core';
-import { fillDto } from '@backend/shared/helpers';
+import { fillDto, joinUrl } from '@backend/shared/helpers';
 
 import { QuestionnaireService } from './questionnaire.service';
 
@@ -51,7 +52,7 @@ export class QuestionnaireController {
   }
 
   @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
-  @Patch(QuestionnaireRoute.Files)
+  @Post(QuestionnaireRoute.Files)
   public async insertFileId(
     //! нужен тип
     @Body() dto: { fileId: string },
@@ -60,6 +61,28 @@ export class QuestionnaireController {
     const fileIds = await this.questionnaireService.insertFileId(dto.fileId, userId);
 
     return fileIds;
+  }
+
+  @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
+  @Patch(joinUrl(QuestionnaireRoute.Files, IdParam.FILE))
+  public async updateFileId(
+    @Param(ApiParamOption.FileId.name) fileId: string,
+    //! нужен тип
+    @Body() dto: { fileId: string },
+    @Req() { userId }: RequestWithUserId
+  ): Promise<string[]> {
+    const fileIds = await this.questionnaireService.updateFileId(fileId, dto.fileId, userId);
+
+    return fileIds;
+  }
+
+  @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
+  @Delete(joinUrl(QuestionnaireRoute.Files, IdParam.FILE))
+  public async deleteFileId(
+    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Req() { userId }: RequestWithUserId
+  ): Promise<void> {
+    await this.questionnaireService.deleteFileId(fileId, userId);
   }
 
   @ApiResponse({ type: QuestionnaireMiniRdo, isArray: true }) //! вынести в описание
