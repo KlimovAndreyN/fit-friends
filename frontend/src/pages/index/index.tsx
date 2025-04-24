@@ -28,6 +28,7 @@ function Index(): JSX.Element {
   const isFetchLookForCompanyUserProfilesExecuting = useAppSelector(getIsFetchLookForCompanyUserProfilesExecuting);
   const lookForCompanyUserProfiles = useAppSelector(getLookForCompanyUserProfiles);
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       // попытка решить проблему при обновления токенов, т.к. вызовы били асинхронные, а получение токенов происходит при ошибке выполениня запроса,
@@ -39,6 +40,14 @@ function Index(): JSX.Element {
     };
 
     fetchData();
+  }, [dispatch]);
+  */
+
+  useEffect(() => {
+    dispatch(fetchForSportsmanTrainings());
+    dispatch(fetchSpecialTrainings());
+    dispatch(fetchPopularTrainings());
+    dispatch(fetchLookForCompanyUserProfiles());
   }, [dispatch]);
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {

@@ -29,7 +29,7 @@ function TrainingsCatalogForm(): JSX.Element {
   //! временно
   // eslint-disable-next-line no-console
   console.log('page', page, 'setPage', setPage);
-  const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ выщитывать максимальную цену?
+  const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ нужно считать максимальную цену?
   const [caloriesWaste, setCaloriesWaste] = useState<MinMaxRange>({ min: undefined, max: undefined });
   const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
