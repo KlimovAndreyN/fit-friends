@@ -20,6 +20,10 @@ export class QuestionnaireService {
   }
 
   public async create(dto: CreateBasicQuestionnaireDto, userId: string): Promise<QuestionnaireEntity> {
+    //! добавить разбор ошибки по уникльности
+    // Invalid `prisma.questionnaire.create()` invocation:
+    // Unique constraint failed on the fields: (`user_id`)
+
     const entity: QuestionnaireEntity = QuestionnaireFactory.createFromDto(dto, userId);
 
     await this.questionnaireRepository.save(entity);

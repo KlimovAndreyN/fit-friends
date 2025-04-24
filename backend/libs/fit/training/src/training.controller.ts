@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, Req } from '@nestjs/common';
 import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ServiceRoute, RequestWithUserId, XApiHeaderOptions, TrainingRoute,
+  ServiceRoute, RequestWithUserId, XAllApiHeaderOptions, TrainingRoute,
   TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam, TrainingQuery
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
@@ -12,7 +12,7 @@ import { TrainingEntity } from './training.entity';
 
 //! добавить описание для всех маршрутов
 @ApiTags(ServiceRoute.Trainings)
-@ApiHeaders(XApiHeaderOptions)
+@ApiHeaders(XAllApiHeaderOptions)
 @Controller(ServiceRoute.Trainings)
 export class TrainingController {
   constructor(
@@ -23,6 +23,7 @@ export class TrainingController {
     return entities.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
   }
 
+  //! обработать роль и id пользователя
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get()
   public async index(@Query() query: TrainingQuery): Promise<TrainingRdo[]> {
@@ -55,6 +56,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  //! обработать роль и id пользователя
   @ApiResponse({ type: TrainingRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)

@@ -16,6 +16,7 @@ export class FitReviewController {
   constructor(
     private fitReviewService: FitReviewService
   ) { }
+
   @ApiResponse({ type: ReviewRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
@@ -27,4 +28,6 @@ export class FitReviewController {
 
     return reviews;
   }
+
+  //! добавление коментария прикрыть CheckRoleSportsmanGuard
 }

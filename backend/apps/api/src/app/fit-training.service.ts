@@ -4,7 +4,7 @@ import { HttpService } from '@nestjs/axios';
 
 import {
   BasicDetailTrainingRdo, DetailTrainingRdo, TrainingRdo,
-  RequestWithRequestIdAndUserId, ServiceRoute, UserRdo
+  RequestWithRequestIdAndUser, ServiceRoute, UserRdo
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -26,17 +26,23 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
-  public async getTrainings(route: string, { userId, requestId }: RequestWithRequestIdAndUserId): Promise<TrainingRdo[]> {
+  public async getTrainings(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
+    //! временно
+    console.log('FitTrainingService.getTrainings - userRole', userRole);
+
     const url = this.getUrl(route);
-    const headers = makeHeaders(requestId, null, userId);
+    const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
 
     return data;
   }
 
-  public async findById(trainingId: string, { userId, requestId }: RequestWithRequestIdAndUserId): Promise<DetailTrainingRdo> {
+  public async findById(trainingId: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<DetailTrainingRdo> {
+    //! тут бы разрешить на свои тернировки в саном сервисе, а наверное разбить на разные контроллеры, что доступно тренеру а что спортсмену и обоим...
+    console.log('FitTrainingService.findById - userRole', userRole);
+
     const url = this.getUrl(trainingId);
-    const headers = makeHeaders(requestId, null, userId);
+    const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const { userId: coachId, videoFileId, ...training } = data;
     const user = await this.userService.getDetailUser(coachId, requestId);
