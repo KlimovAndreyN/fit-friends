@@ -60,19 +60,17 @@ export class QuestionnaireService {
   //! нужен тип? для string[]
   public async updateFileId(fileId: string, newFileId, userId: string): Promise<string[]> {
     const questionnaire = await this.findByUserId(userId);
-    const { fileIds } = questionnaire;
 
-    updateItem(fileIds, fileId, newFileId);
+    questionnaire.fileIds = updateItem(questionnaire.fileIds, fileId, newFileId);
     await this.questionnaireRepository.update(questionnaire);
 
-    return fileIds;
+    return questionnaire.fileIds;
   }
 
   public async deleteFileId(fileId: string, userId: string): Promise<void> {
     const questionnaire = await this.findByUserId(userId);
-    const { fileIds } = questionnaire;
 
-    deleteItem(fileIds, fileId);
+    questionnaire.fileIds = deleteItem(questionnaire.fileIds, fileId);
     await this.questionnaireRepository.update(questionnaire);
   }
 
