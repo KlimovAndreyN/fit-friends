@@ -1,17 +1,17 @@
-import { Specialization } from '@backend/shared/core';
-
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
-import { SPECIALISATIONS } from '../../const';
+import { Option } from '../../types/types';
 
-type FilterEnumCheckboxesProps = {
+type FilterEnumCheckboxesProps<T> = {
   caption: string;
-  specializations: Set<Specialization>;
+  name: string;
+  items: Set<T>;
+  options: Option[];
   className: string;
-  onChange: (specialization: Specialization) => void;
+  onChange: (specialization: T) => void;
 }
 
-function FilterEnumCheckboxes({ caption, specializations, className, onChange }: FilterEnumCheckboxesProps): JSX.Element {
+function FilterEnumCheckboxes<T>({ caption, name, items, options, className, onChange }: FilterEnumCheckboxesProps<T>): JSX.Element {
   //! порядок элементов важен? сейчас отличается с маркапом...
 
   return (
@@ -19,19 +19,19 @@ function FilterEnumCheckboxes({ caption, specializations, className, onChange }:
       <h4 className={`${className}__block-title`}>{caption}</h4>
       <ul className={`${className}__check-list`}>
         {
-          SPECIALISATIONS.map(
+          options.map(
             ({ value, title }) => {
-              const specialization = value as Specialization;
-              const checked = specializations.has(specialization);
+              const item = value as T;
+              const checked = items.has(item);
 
               const handleCustomCheckboxChange = () => {
-                onChange(specialization);
+                onChange(item);
               };
 
               return (
                 <li className={`${className}__check-list-item`} key={value}>
                   <CustomCheckbox
-                    name='type'
+                    name={name}
                     spanText={title.toLocaleLowerCase()}
                     value={checked}
                     onChange={handleCustomCheckboxChange}

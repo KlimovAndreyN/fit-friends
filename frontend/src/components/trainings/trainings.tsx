@@ -13,14 +13,13 @@ type TrainingsProps = {
   listClassName: string;
   startOnZeroRating?: boolean;
   showedFilterSpecializations?: boolean;
+  showedFilterDurations?: boolean;
   showedSorting?: boolean;
   showedAdditionalDiv?: boolean;
 }
 
 function Trainings(props: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
-
-  //! фильтр по продолжительности, скорее всего поход на FilterSpecializations и нужно будте вынести в отдельный компонент
 
   //! задежка при измении числовых значений нужна?
   //! нужен особый текст при пустом результате и скрывть все кнопки
@@ -29,7 +28,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
-  const { headerTitle, title, formClassName, listClassName, startOnZeroRating, showedFilterSpecializations, showedSorting, showedAdditionalDiv } = props;
+  const { headerTitle, title, formClassName, listClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -47,6 +46,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
                 className={formClassName}
                 startOnZeroRating={startOnZeroRating}
                 showedFilterSpecializations={showedFilterSpecializations}
+                showedFilterDurations={showedFilterDurations}
                 showedSorting={showedSorting}
               />
               {

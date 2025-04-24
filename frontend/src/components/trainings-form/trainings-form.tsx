@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Specialization, SortType, ITrainingQuery } from '@backend/shared/core';
+import { Specialization, SortType, ITrainingQuery, Duration } from '@backend/shared/core';
 
 import BackButton from '../back-button/back-button';
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
@@ -10,6 +10,7 @@ import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/actions/training-action';
 import { MinMaxRange } from '../../types/types';
+import { DURATIONS, SPECIALISATIONS } from '../../const';
 
 const Default = {
   PAGE: 1,
@@ -21,6 +22,7 @@ type TrainingsFormProps = {
   className: string;
   startOnZeroRating?: boolean;
   showedFilterSpecializations?: boolean;
+  showedFilterDurations?: boolean;
   showedSorting?: boolean;
 }
 
@@ -33,7 +35,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
 
-  const { className, startOnZeroRating, showedFilterSpecializations, showedSorting } = props;
+  const { className, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
   //! временно
@@ -44,6 +46,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   const minRating = (startOnZeroRating) ? 0 : Default.RATING.min;
   const [rating, setRating] = useState<MinMaxRange>({ min: minRating, max: Default.RATING.max });
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
+  const [durations, setDurations] = useState(new Set<Duration>());
   const [sortType, setSortType] = useState<SortType>();
 
   useEffect(() => {
@@ -82,6 +85,20 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
         newItems.delete(specialization);
       } else {
         newItems.add(specialization);
+      }
+
+      return newItems;
+    });
+  };
+
+  const handleDurationsChange = (duration: Duration) => {
+    setDurations((prevItems) => {
+      const newItems = new Set(prevItems);
+
+      if (newItems.has(duration)) {
+        newItems.delete(duration);
+      } else {
+        newItems.add(duration);
       }
 
       return newItems;
@@ -129,11 +146,24 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
           />
           {
             showedFilterSpecializations &&
-            <FilterEnumCheckboxes
+            <FilterEnumCheckboxes<Specialization>
               caption='Тип'
-              specializations={specializations}
+              name='type'
+              items={specializations}
+              options={SPECIALISATIONS}
               className={className}
               onChange={handleSpecializationsChange}
+            />
+          }
+          {
+            showedFilterDurations &&
+            <FilterEnumCheckboxes<Duration>
+              caption='Длительность'
+              name='duration'
+              items={durations}
+              options={DURATIONS}
+              className={className}
+              onChange={handleDurationsChange}
             />
           }
           {

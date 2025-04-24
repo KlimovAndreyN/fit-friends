@@ -10,6 +10,7 @@ function MyTrainings(): JSX.Element {
       formClassName='my-training-form'
       listClassName='my-trainings'
       startOnZeroRating
+      showedFilterDurations
       showedAdditionalDiv
     />
   );

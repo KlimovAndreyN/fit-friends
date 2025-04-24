@@ -118,14 +118,23 @@ export const SPECIALISATIONS: Option[] = enumToArray(Specialization).map(
   (specialization) => ({ value: specialization, title: SpecializationTitle[specialization] })
 );
 
-//! перенести в компонент/страницу по месту? или отдельный файл
-//! можно преобазовать из UserDurationTitle
 export const TrainingDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_10_30]: '10_30',
   [Duration.Minutes_30_50]: '30_50',
   [Duration.Minutes_50_80]: '50_80',
   [Duration.Minutes_80_100]: '80_100'
 } as const;
+
+const FilterDurationTitle: { [key in Duration]: string } = {
+  [Duration.Minutes_10_30]: '10 мин - 30 мин',
+  [Duration.Minutes_30_50]: '30 мин - 50 мин',
+  [Duration.Minutes_50_80]: '50 мин - 80 мин',
+  [Duration.Minutes_80_100]: '80 мин - 100 мин'
+} as const;
+
+export const DURATIONS: Option[] = enumToArray(Duration).map(
+  (specialization) => ({ value: specialization, title: FilterDurationTitle[specialization] })
+);
 
 const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
   [TrainingLevel.Amateur]: 'Любитель',
