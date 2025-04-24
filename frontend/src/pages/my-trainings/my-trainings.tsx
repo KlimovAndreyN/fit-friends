@@ -1,19 +1,14 @@
-import { Fragment } from 'react';
-
-import Header from '../../components/header/header';
-import ThumbnailSpecGym from '../../components/thumbnail-spec-gym/thumbnail-spec-gym';
+import Trainings from '../../components/trainings/trainings';
 
 import { PageTitle } from '../../const';
 
 function MyTrainings(): JSX.Element {
-  //! временно
-
   return (
-    <Fragment>
-      <Header title={PageTitle.MyTrainings} />
-      <h1>{PageTitle.MyTrainings}</h1>
-      <ThumbnailSpecGym />
-    </Fragment>
+    <Trainings
+      headerTitle={PageTitle.MyTrainings}
+      title='Мои тренировки'
+      mainClassName='aaaaaa'
+    />
   );
 }
 
