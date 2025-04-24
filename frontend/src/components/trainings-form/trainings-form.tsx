@@ -19,10 +19,12 @@ const Default = {
 
 type TrainingsFormProps = {
   className: string;
+  startOnZeroRating?: boolean;
+  showedFilterSpecializations?: boolean;
   showedSorting?: boolean;
 }
 
-function TrainingsForm({ className, showedSorting }: TrainingsFormProps): JSX.Element {
+function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   //! может на изменения добавить задержку по времени?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
@@ -31,6 +33,7 @@ function TrainingsForm({ className, showedSorting }: TrainingsFormProps): JSX.El
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
 
+  const { className, startOnZeroRating, showedFilterSpecializations, showedSorting } = props;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
   //! временно
@@ -38,7 +41,8 @@ function TrainingsForm({ className, showedSorting }: TrainingsFormProps): JSX.El
   console.log('page', page, 'setPage', setPage);
   const [price, setPrice] = useState<MinMaxRange>({ min: Default.PRICE_MIN, max: 100000 }); //! 100000 временно, что по ТЗ нужно считать максимальную цену?
   const [caloriesWaste, setCaloriesWaste] = useState<MinMaxRange>({ min: undefined, max: undefined });
-  const [rating, setRating] = useState<MinMaxRange>(Default.RATING);
+  const minRating = (startOnZeroRating) ? 0 : Default.RATING.min;
+  const [rating, setRating] = useState<MinMaxRange>({ min: minRating, max: Default.RATING.max });
   const [specializations, setSpecializations] = useState(new Set<Specialization>());
   const [sortType, setSortType] = useState<SortType>();
 
@@ -123,11 +127,14 @@ function TrainingsForm({ className, showedSorting }: TrainingsFormProps): JSX.El
             value={rating}
             onChange={handleRatingFilterMinMaxRangeChange}
           />
-          <FilterSpecializations
-            specializations={specializations}
-            className={className}
-            onChange={handleSpecializationsChange}
-          />
+          {
+            showedFilterSpecializations &&
+            <FilterSpecializations
+              specializations={specializations}
+              className={className}
+              onChange={handleSpecializationsChange}
+            />
+          }
           {
             showedSorting &&
             <TrainingsFormSort

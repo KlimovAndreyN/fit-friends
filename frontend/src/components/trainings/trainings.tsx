@@ -10,11 +10,14 @@ type TrainingsProps = {
   headerTitle: string;
   title: string;
   formClassName: string;
+  listClassName: string;
+  startOnZeroRating?: boolean;
+  showedFilterSpecializations?: boolean;
   showedSorting?: boolean;
   showedAdditionalDiv?: boolean;
 }
 
-function Trainings({ headerTitle, title, formClassName, showedSorting, showedAdditionalDiv }: TrainingsProps): JSX.Element {
+function Trainings(props: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
 
   //! фильтр по продолжительности, скорее всего поход на FilterSpecializations и нужно будте вынести в отдельный компонент
@@ -26,7 +29,11 @@ function Trainings({ headerTitle, title, formClassName, showedSorting, showedAdd
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
+  const { headerTitle, title, formClassName, listClassName, startOnZeroRating, showedFilterSpecializations, showedSorting, showedAdditionalDiv } = props;
+
   useScrollToTop(); //! а если в useEffect?
+
+  const trainingsList = (<TrainingsList className={listClassName} />);
 
   return (
     <Fragment>
@@ -36,15 +43,20 @@ function Trainings({ headerTitle, title, formClassName, showedSorting, showedAdd
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">{title}</h1>
-              <TrainingsForm className={formClassName} showedSorting={showedSorting} />
+              <TrainingsForm
+                className={formClassName}
+                startOnZeroRating={startOnZeroRating}
+                showedFilterSpecializations={showedFilterSpecializations}
+                showedSorting={showedSorting}
+              />
               {
                 showedAdditionalDiv
                   ?
                   <div className="inner-page__content">
-                    <TrainingsList />
+                    {trainingsList}
                   </div>
                   :
-                  <TrainingsList />
+                  trainingsList
               }
             </div>
           </div>

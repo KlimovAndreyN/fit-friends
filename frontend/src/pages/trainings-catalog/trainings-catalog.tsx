@@ -8,6 +8,8 @@ function TrainingsCatalog(): JSX.Element {
       headerTitle={PageTitle.TrainingsCatalog}
       title='Каталог тренировок'
       formClassName='gym-catalog-form'
+      listClassName='training-catalog'
+      showedFilterSpecializations
       showedSorting
     />
   );
