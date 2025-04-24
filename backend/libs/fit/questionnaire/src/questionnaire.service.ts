@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { CreateBasicQuestionnaireDto, UpdateQuestionnaireDto } from '@backend/shared/core';
+import { deleteItem, updateItem } from '@backend/shared/helpers';
 
 import { QuestionnaireRepository } from './questionnaire.repository';
 import { QuestionnaireEntity } from './questionnaire.entity';
@@ -61,11 +62,7 @@ export class QuestionnaireService {
     const questionnaire = await this.findByUserId(userId);
     const { fileIds } = questionnaire;
 
-    fileIds.unshift(fileId);
-    //! заменить по значению
-    //fileIds.unshift(fileId);
-    console.log('deleteFileId - fileId', fileId, newFileId);
-
+    updateItem(fileIds, fileId, newFileId);
     await this.questionnaireRepository.update(questionnaire);
 
     return fileIds;
@@ -75,10 +72,7 @@ export class QuestionnaireService {
     const questionnaire = await this.findByUserId(userId);
     const { fileIds } = questionnaire;
 
-    //! delete! удалить по значению
-    //fileIds.unshift(fileId);
-    console.log('deleteFileId - fileId', fileId);
-
+    deleteItem(fileIds, fileId);
     await this.questionnaireRepository.update(questionnaire);
   }
 

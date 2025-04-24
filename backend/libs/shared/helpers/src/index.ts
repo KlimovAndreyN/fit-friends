@@ -1,3 +1,4 @@
+export * from './lib/array';
 export { getRabbitMQOptions } from './lib/brokers';
 export * from './lib/common';
 export * from './lib/config';

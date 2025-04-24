@@ -152,12 +152,9 @@ export const userProfileProcess = createSlice(
         .addCase(
           updateCoachCertificate.fulfilled,
           (state, action) => {
-            //! отладка
-            // eslint-disable-next-line no-console
-            console.log('updateCoachCertificate - action', action);
-
-            //! нужно заменить из массива по fileId
-            //updateById(state.coachCertificates, fileId, action.payload);
+            state.coachCertificates = state.coachCertificates.map(
+              (item) => (item.fileId === action.meta.arg.fileId ? action.payload : item)
+            );
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
@@ -176,12 +173,7 @@ export const userProfileProcess = createSlice(
         .addCase(
           deleteCoachCertificate.fulfilled,
           (state, action) => {
-            //! отладка
-            // eslint-disable-next-line no-console
-            console.log('deleteCoachCertificate - action', action);
-
-            //! нужно удалить из массива по fileId
-            //deleteById(state.coachCertificates, fileId);
+            state.coachCertificates = state.coachCertificates.filter((item) => (item.fileId !== action.meta.arg));
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
