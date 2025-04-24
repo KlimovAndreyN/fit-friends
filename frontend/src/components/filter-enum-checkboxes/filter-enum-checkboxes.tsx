@@ -4,18 +4,19 @@ import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { SPECIALISATIONS } from '../../const';
 
-type FilterSpecializationsProps = {
+type FilterEnumCheckboxesProps = {
+  caption: string;
   specializations: Set<Specialization>;
   className: string;
   onChange: (specialization: Specialization) => void;
 }
 
-function FilterSpecializations({ specializations, className, onChange }: FilterSpecializationsProps): JSX.Element {
+function FilterEnumCheckboxes({ caption, specializations, className, onChange }: FilterEnumCheckboxesProps): JSX.Element {
   //! порядок элементов важен? сейчас отличается с маркапом...
 
   return (
     <div className={`${className}__block ${className}__block--type`}>
-      <h4 className={`${className}__block-title`}>Тип</h4>
+      <h4 className={`${className}__block-title`}>{caption}</h4>
       <ul className={`${className}__check-list`}>
         {
           SPECIALISATIONS.map(
@@ -45,4 +46,4 @@ function FilterSpecializations({ specializations, className, onChange }: FilterS
   );
 }
 
-export default FilterSpecializations;
+export default FilterEnumCheckboxes;

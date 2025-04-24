@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Specialization, SortType, ITrainingQuery } from '@backend/shared/core';
 
 import BackButton from '../back-button/back-button';
-import FilterSpecializations from '../filter-specializations/filter-specializations';
+import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
 import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 
@@ -129,7 +129,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
           />
           {
             showedFilterSpecializations &&
-            <FilterSpecializations
+            <FilterEnumCheckboxes
+              caption='Тип'
               specializations={specializations}
               className={className}
               onChange={handleSpecializationsChange}
