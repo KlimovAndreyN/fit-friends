@@ -8,6 +8,7 @@ type FilterMinMaxRangeProps = {
   title: string;
   nameMin?: string;
   nameMax?: string;
+  className: string;
   prefixClassName: string;
   prefixLabelClassName?: string;
   value: MinMaxRange;
@@ -19,7 +20,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   //! добавить range - двигать мышкой
   //! проверить что min <= max или в самом запросе или в при обработке
 
-  const { title, nameMin, nameMax, prefixClassName, prefixLabelClassName, value, showInputs, onChange } = props;
+  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, value, showInputs, onChange } = props;
   const { min, max } = value;
 
   const handleMinInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -37,8 +38,8 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   const divLabelClassName = `filter-${(prefixLabelClassName) ? prefixLabelClassName : 'range'}`;
 
   return (
-    <div className={`gym-catalog-form__block gym-catalog-form__block--${prefixClassName} `}>
-      <h4 className="gym-catalog-form__block-title">{title}</h4>
+    <div className={`${className}__block ${className}__block--${prefixClassName}`}>
+      <h4 className={`${className}__block-title`}>{title}</h4>
       {
         (!showInputs)
           ?

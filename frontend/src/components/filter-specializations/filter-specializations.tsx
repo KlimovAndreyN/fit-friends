@@ -6,16 +6,17 @@ import { SPECIALISATIONS } from '../../const';
 
 type FilterSpecializationsProps = {
   specializations: Set<Specialization>;
+  className: string;
   onChange: (specialization: Specialization) => void;
 }
 
-function FilterSpecializations({ specializations, onChange }: FilterSpecializationsProps): JSX.Element {
+function FilterSpecializations({ specializations, className, onChange }: FilterSpecializationsProps): JSX.Element {
   //! порядок элементов важен? сейчас отличается с маркапом...
 
   return (
-    <div className="gym-catalog-form__block gym-catalog-form__block--type">
-      <h4 className="gym-catalog-form__block-title">Тип</h4>
-      <ul className="gym-catalog-form__check-list">
+    <div className={`${className}__block ${className}__block--type`}>
+      <h4 className={`${className}__block-title`}>Тип</h4>
+      <ul className={`${className}__check-list`}>
         {
           SPECIALISATIONS.map(
             ({ value, title }) => {
@@ -27,7 +28,7 @@ function FilterSpecializations({ specializations, onChange }: FilterSpecializati
               };
 
               return (
-                <li className="gym-catalog-form__check-list-item" key={value}>
+                <li className={`${className}__check-list-item`} key={value}>
                   <CustomCheckbox
                     name='type'
                     spanText={title.toLocaleLowerCase()}

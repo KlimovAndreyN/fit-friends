@@ -8,6 +8,7 @@ function MyTrainings(): JSX.Element {
       headerTitle={PageTitle.MyTrainings}
       title='Мои тренировки'
       formClassName='my-training-form'
+      showedAdditionalDiv
     />
   );
 }

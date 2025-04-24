@@ -11,14 +11,15 @@ const SortTypeTitle: { [key in SortType]: string } = {
 
 type TrainingsFormSortProps = {
   sortType?: SortType;
+  className: string;
   onChange: (sort: SortType) => void;
 }
 
-function TrainingsFormSort({ sortType, onChange }: TrainingsFormSortProps): JSX.Element {
+function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortProps): JSX.Element {
   return (
-    <div className="gym-catalog-form__block gym-catalog-form__block--sort">
-      <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
-      <div className="btn-radio-sort gym-catalog-form__radio">
+    <div className={`${className}__block ${className}__block--sort`}>
+      <h4 className={`${className}__title ${className}__title--sort`}>Сортировка</h4>
+      <div className={`btn-radio-sort ${className}__radio`}>
         {
           enumToArray(SortType).map(
             (sort) => {

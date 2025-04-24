@@ -19,9 +19,10 @@ const Default = {
 
 type TrainingsFormProps = {
   className: string;
+  showedSorting?: boolean;
 }
 
-function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
+function TrainingsForm({ className, showedSorting }: TrainingsFormProps): JSX.Element {
   //! может на изменения добавить задержку по времени?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
@@ -87,21 +88,18 @@ function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
     setSortType(sort);
   };
 
-  //!
-  // eslint-disable-next-line no-console
-  console.log('className', className);
-
   return (
     <div className={className}>
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
-      <div className="gym-catalog-form__wrapper">
-        <BackButton className='gym-catalog-form' classPrefix />
-        <h3 className="gym-catalog-form__title">Фильтры</h3>
-        <form className="gym-catalog-form__form" >
+      <div className={`${className}__wrapper`}>
+        <BackButton className={className} classPrefix />
+        <h3 className={`${className}__title`}>Фильтры</h3>
+        <form className={`${className}__form`}>
           <FilterMinMaxRange
             title='Цена, ₽'
             nameMin='text-min'
             nameMax='text-max'
+            className={className}
             prefixClassName='price'
             value={price}
             showInputs
@@ -109,6 +107,7 @@ function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
           />
           <FilterMinMaxRange
             title='Калории'
+            className={className}
             nameMin='text-min-cal'
             nameMax='text-max-cal'
             prefixClassName='calories'
@@ -118,6 +117,7 @@ function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
           />
           <FilterMinMaxRange
             title='Рейтинг'
+            className={className}
             prefixClassName='rating'
             prefixLabelClassName='raiting' // опечатка в css
             value={rating}
@@ -125,12 +125,17 @@ function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
           />
           <FilterSpecializations
             specializations={specializations}
+            className={className}
             onChange={handleSpecializationsChange}
           />
-          <TrainingsFormSort
-            sortType={sortType}
-            onChange={handleTrainingCatalogFormSortChange}
-          />
+          {
+            showedSorting &&
+            <TrainingsFormSort
+              sortType={sortType}
+              className={className}
+              onChange={handleTrainingCatalogFormSortChange}
+            />
+          }
         </form>
       </div >
     </div >
