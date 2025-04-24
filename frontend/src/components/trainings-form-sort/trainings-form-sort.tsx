@@ -9,12 +9,12 @@ const SortTypeTitle: { [key in SortType]: string } = {
   [SortType.ForFree]: 'Бесплатные'
 } as const;
 
-type TrainingsCatalogFormSortProps = {
+type TrainingsFormSortProps = {
   sortType?: SortType;
   onChange: (sort: SortType) => void;
 }
 
-function TrainingsCatalogFormSort({ sortType, onChange }: TrainingsCatalogFormSortProps): JSX.Element {
+function TrainingsFormSort({ sortType, onChange }: TrainingsFormSortProps): JSX.Element {
   return (
     <div className="gym-catalog-form__block gym-catalog-form__block--sort">
       <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
@@ -42,4 +42,4 @@ function TrainingsCatalogFormSort({ sortType, onChange }: TrainingsCatalogFormSo
   );
 }
 
-export default TrainingsCatalogFormSort;
+export default TrainingsFormSort;

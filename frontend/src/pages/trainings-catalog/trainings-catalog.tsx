@@ -7,7 +7,7 @@ function TrainingsCatalog(): JSX.Element {
     <Trainings
       headerTitle={PageTitle.TrainingsCatalog}
       title='Каталог тренировок'
-      mainClassName='aaaaaa'
+      formClassName='gym-catalog-form'
     />
   );
 }

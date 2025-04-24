@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 import Header from '../header/header';
-import TrainingsCatalogForm from '../trainings-catalog-form/trainings-catalog-form';
+import TrainingsForm from '../trainings-form/trainings-form';
 import TrainingsList from '../trainings-list/trainings-list';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
@@ -9,15 +9,15 @@ import useScrollToTop from '../../hooks/use-scroll-to-top';
 type TrainingsProps = {
   headerTitle: string;
   title: string;
-  mainClassName: string;
+  formClassName: string;
 }
 
-function Trainings({ headerTitle, title, mainClassName }: TrainingsProps): JSX.Element {
+function Trainings({ headerTitle, title, formClassName }: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
 
   //! отладка
   // eslint-disable-next-line no-console
-  console.log('mainClassName', mainClassName);
+  console.log('formClassName', formClassName);
 
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
@@ -36,7 +36,7 @@ function Trainings({ headerTitle, title, mainClassName }: TrainingsProps): JSX.E
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">{title}</h1>
-              <TrainingsCatalogForm />
+              <TrainingsForm className={formClassName} />
               <div className="training-catalog">
                 <TrainingsList />
                 <div className="show-more training-catalog__show-more">

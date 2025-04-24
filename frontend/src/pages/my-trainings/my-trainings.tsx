@@ -7,7 +7,7 @@ function MyTrainings(): JSX.Element {
     <Trainings
       headerTitle={PageTitle.MyTrainings}
       title='Мои тренировки'
-      mainClassName='aaaaaa'
+      formClassName='my-training-form'
     />
   );
 }

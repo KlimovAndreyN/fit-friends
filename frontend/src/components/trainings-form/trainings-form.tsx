@@ -5,7 +5,7 @@ import { Specialization, SortType, ITrainingQuery } from '@backend/shared/core';
 import BackButton from '../back-button/back-button';
 import FilterSpecializations from '../filter-specializations/filter-specializations';
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
-import TrainingsCatalogFormSort from '../trainings-catalog-form-sort/trainings-catalog-form-sort';
+import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 
 import { useAppDispatch } from '../../hooks';
 import { fetchTrainings } from '../../store/actions/training-action';
@@ -17,7 +17,11 @@ const Default = {
   RATING: { min: 1, max: 5 }
 } as const;
 
-function TrainingsCatalogForm(): JSX.Element {
+type TrainingsFormProps = {
+  className: string;
+}
+
+function TrainingsForm({ className }: TrainingsFormProps): JSX.Element {
   //! может на изменения добавить задержку по времени?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
@@ -81,8 +85,12 @@ function TrainingsCatalogForm(): JSX.Element {
     setSortType(sort);
   };
 
+  //!
+  // eslint-disable-next-line no-console
+  console.log('className', className);
+
   return (
-    <div className="gym-catalog-form">
+    <div className={className}>
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
         <BackButton className='gym-catalog-form' classPrefix />
@@ -117,7 +125,7 @@ function TrainingsCatalogForm(): JSX.Element {
             specializations={specializations}
             onChange={handleSpecializationsChange}
           />
-          <TrainingsCatalogFormSort
+          <TrainingsFormSort
             sortType={sortType}
             onChange={handleTrainingCatalogFormSortChange}
           />
@@ -127,4 +135,4 @@ function TrainingsCatalogForm(): JSX.Element {
   );
 }
 
-export default TrainingsCatalogForm;
+export default TrainingsForm;
