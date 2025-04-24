@@ -5,15 +5,16 @@ import classNames from 'classnames';
 type MainNavigateItemProps = {
   title: string;
   linkTo?: string;
+  isActive?: boolean;
   onLinkClick?: () => void;
   svg: JSX.Element;
   children?: JSX.Element;
 }
 
-function MainNavigateItem({ title, linkTo, onLinkClick, svg, children }: MainNavigateItemProps): JSX.Element {
+function MainNavigateItem({ title, linkTo, onLinkClick, svg, children, isActive }: MainNavigateItemProps): JSX.Element {
   const { pathname } = useLocation();
-  const isActive = pathname === linkTo;
-  const linkClassName = classNames('main-nav__link', { 'is-active': isActive });
+  const currentIsActive = isActive || (pathname === linkTo);
+  const linkClassName = classNames('main-nav__link', { 'is-active': currentIsActive });
   const listItemClassName = classNames('main-nav__item', { 'main-nav__item--notifications': !!children });
 
   const handleLinkClick = (event: MouseEvent) => {

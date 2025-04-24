@@ -43,7 +43,7 @@ export enum AppRoute {
   MyPurchases = '/my-purchases',
   MyOrders = '/my-orders',
   MyTrainings = '/my-trainings',
-  NotFound = '/404',
+  NotFound = '/404'
 }
 
 export const ApiRoute = {

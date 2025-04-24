@@ -1,2 +1,2 @@
 export * from './lib/random';
-export { joinUrl, enumToArray, getQueryString, convertDtoToFormData } from './lib/utils';
+export { joinUrl, enumToArray, enumToObject, getQueryString, convertDtoToFormData } from './lib/utils';
