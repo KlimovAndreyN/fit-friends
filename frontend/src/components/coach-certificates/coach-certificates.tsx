@@ -7,7 +7,7 @@ import SliderButton from '../slider-button/slider-button';
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { createCoachCertificate } from '../../store/actions/user-profile-action';
+import { createCoachCertificate, deleteCoachCertificate, updateCoachCertificate } from '../../store/actions/user-profile-action';
 import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/user-profile-process/selectors';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
@@ -38,11 +38,10 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
 
   const handleSaveClick = (_filePath: string, file: File | undefined) => {
     if (file) {
-      // eslint-disable-next-line no-console
-      console.log('Обновить файл', editingCertificateFileId, file);
+      //! нужен тип
+      dispatch(updateCoachCertificate({ fileId: editingCertificateFileId, file }));
     } else {
-      // eslint-disable-next-line no-console
-      console.log('Удалить файл', editingCertificateFileId);
+      dispatch(deleteCoachCertificate(editingCertificateFileId));
     }
 
     //! врменно, потом через обновление данных

@@ -93,8 +93,29 @@ export const createCoachCertificate = createAsyncThunk<ICertificateRdo, File, { 
     const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates);
     const { data } = await api.post<ICertificateRdo>(url, { [FILE_KEY]: file }, { useMultipartFormData: true });
 
-    //! добавить добавление в массив сертификатов
     return data;
+  }
+);
+
+//! нужет тип?
+export const updateCoachCertificate = createAsyncThunk<ICertificateRdo, { fileId: string; file: File }, { extra: Extra }>(
+  Action.UPDATE_COACH_CERTIFICATE,
+  async ({ fileId, file }, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates, fileId);
+    const { data } = await api.patch<ICertificateRdo>(url, { [FILE_KEY]: file }, { useMultipartFormData: true });
+
+    return data;
+  }
+);
+
+export const deleteCoachCertificate = createAsyncThunk<void, string, { extra: Extra }>(
+  Action.DELETE_COACH_CERTIFICATE,
+  async (fileId, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates, fileId);
+
+    await api.delete<ICertificateRdo>(url);
   }
 );
 

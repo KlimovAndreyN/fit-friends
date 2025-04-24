@@ -2,9 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import {
-  changeReadyForTraining, fetchLookForCompanyUserProfiles,
-  createQuestionnaire, existQuestionnaire, fetchUserProfile,
-  fetchUserProfiles, updateUserProfile, createCoachCertificate
+  changeReadyForTraining, fetchLookForCompanyUserProfiles, createQuestionnaire,
+  existQuestionnaire, fetchUserProfile, fetchUserProfiles, updateUserProfile,
+  createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
 } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
@@ -137,7 +137,54 @@ export const userProfileProcess = createSlice(
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
+        .addCase(
+          updateCoachCertificate.pending,
+          (state) => {
+            state.isUpdateCoachCertificatesExecuting = true;
+          }
+        )
+        .addCase(
+          updateCoachCertificate.rejected,
+          (state) => {
+            state.isUpdateCoachCertificatesExecuting = false;
+          }
+        )
+        .addCase(
+          updateCoachCertificate.fulfilled,
+          (state, action) => {
+            //! отладка
+            // eslint-disable-next-line no-console
+            console.log('updateCoachCertificate - action', action);
 
+            //! нужно заменить из массива по fileId
+            //updateById(state.coachCertificates, fileId, action.payload);
+            state.isUpdateCoachCertificatesExecuting = false;
+          }
+        )
+        .addCase(
+          deleteCoachCertificate.pending,
+          (state) => {
+            state.isUpdateCoachCertificatesExecuting = true;
+          }
+        )
+        .addCase(
+          deleteCoachCertificate.rejected,
+          (state) => {
+            state.isUpdateCoachCertificatesExecuting = false;
+          }
+        )
+        .addCase(
+          deleteCoachCertificate.fulfilled,
+          (state, action) => {
+            //! отладка
+            // eslint-disable-next-line no-console
+            console.log('deleteCoachCertificate - action', action);
+
+            //! нужно удалить из массива по fileId
+            //deleteById(state.coachCertificates, fileId);
+            state.isUpdateCoachCertificatesExecuting = false;
+          }
+        )
         .addCase(
           changeReadyForTraining.pending,
           (state) => {

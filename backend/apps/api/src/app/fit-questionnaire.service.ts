@@ -136,7 +136,7 @@ export class FitQuestionnaireService {
 
   public async deleteCoachCertificate(fileId: string, userId: string, requestId: string): Promise<void> {
     //! отладка
-    console.log('updateCoachCertificate');
+    console.log('deleteCoachCertificate');
     console.log('fileId', fileId);
     console.log('requestId', requestId);
     console.log('userId', userId);
