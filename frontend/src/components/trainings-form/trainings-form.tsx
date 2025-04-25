@@ -59,11 +59,12 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
       ratingMin: rating.min,
       ratingMax: rating.max,
       specializations: Array.from(specializations),
+      durations: Array.from(durations),
       sortType
     };
 
     dispatch(fetchTrainings(query));
-  }, [dispatch, page, price, caloriesWaste, rating, specializations, sortType]);
+  }, [dispatch, page, price, caloriesWaste, rating, specializations, durations, sortType]);
 
   const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
     setPrice(value);

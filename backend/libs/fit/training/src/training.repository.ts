@@ -53,6 +53,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       ratingMin,
       ratingMax,
       specializations,
+      durations,
       sortType = Default.SORT_TYPE,
       isSortCreatedDate,
       isSpecial,
@@ -72,6 +73,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     where.rating = { gte: ratingMin, lte: ratingMax };
     where.isSpecial = isSpecial;
     where.specialization = { in: specializations };
+    where.duration = { in: durations };
 
     if (isPopular) {
       orderBy.push({ rating: SortDirection.Desc });

@@ -1,5 +1,6 @@
 import { SortType } from '../../types/sort-type.enum';
 import { Specialization } from '../../types/specialization.enum';
+import { Duration } from '../../types/duration.enum';
 import { IPageQuery } from './i-page.query';
 
 export interface ITrainingQuery extends IPageQuery {
@@ -10,5 +11,6 @@ export interface ITrainingQuery extends IPageQuery {
   ratingMin?: number;
   ratingMax?: number;
   specializations?: Specialization[]; //! может string?
+  durations?: Duration[];
   sortType?: SortType;
 }

@@ -6,6 +6,7 @@ import { ITrainingQuery } from '../interfaces/query/i-training.query';
 import { PageQuery } from './page.query';
 import { SortType } from '../types/sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
+import { Duration } from '../types/duration.enum';
 import { transformToArray, transformNumber } from '../utils/transform';
 
 export class TrainingQuery
@@ -70,6 +71,18 @@ export class TrainingQuery
   @IsOptional()
   @Transform(transformToArray)
   public specializations?: ITrainingQuery['specializations'];
+
+  @ApiProperty({
+    isArray: true,
+    type: 'string',
+    enum: Duration,
+    example: [Duration.Minutes_10_30, Duration.Minutes_80_100],
+    required: false
+  })
+  @IsEnum(Duration, { each: true })
+  @IsOptional()
+  @Transform(transformToArray)
+  public durations?: ITrainingQuery['durations'];
 
   @ApiProperty({
     type: 'string',
