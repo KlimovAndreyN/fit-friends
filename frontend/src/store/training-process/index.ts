@@ -100,7 +100,11 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchTrainings.fulfilled,
           (state, action) => {
-            state.trainings = action.payload;
+            //! отладка остальное добавить в стор
+            // eslint-disable-next-line no-console
+            console.log('fetchTrainings.fulfilled - action.payload', action.payload);
+
+            state.trainings = action.payload.entities;
             state.isFetchTrainingsExecuting = false;
           }
         )
