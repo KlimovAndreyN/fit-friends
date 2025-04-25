@@ -2,10 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { Duration, Gender, ITrainingRepository, SortDirection, SortType, Specialization, Training, TrainingLevel } from '@backend/shared/core';
+import {
+  Duration, ITrainingRepository, SortDirection, Gender,
+  SortType, Specialization, Training, TrainingLevel
+} from '@backend/shared/core';
 import { Prisma, Training as PrismaTraining } from '@prisma/client';
 
-import { TrainingEntity } from './training.entity';
+import { TrainingEntity, TrainingEntityWithPagination } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
 const Default = {
@@ -43,7 +46,38 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return trainings;
   }
 
-  public async find(query: ITrainingRepository, take: number): Promise<TrainingEntity[]> {
+  private calculateTrainingsPage(totalCount: number, limit: number): number {
+    return Math.ceil(totalCount / limit);
+  }
+
+
+  private getTrainingsCount(where: Prisma.TrainingWhereInput): Promise<number> {
+    return this.client.training.count({ where });
+  }
+
+  private async getTrainingMaxPrice(where: Prisma.TrainingWhereInput): Promise<number> {
+    const result = await this.client.training.aggregate({ where, _max: { price: true } });
+
+    return result._max.price;
+  }
+
+  public async findTrainings(
+    where: Prisma.TrainingWhereInput,
+    orderBy: Prisma.TrainingOrderByWithRelationInput[],
+    skip: number,
+    take: number
+  ): Promise<TrainingEntity[]> {
+    const records = await this.client.training.findMany({
+      where,
+      orderBy,
+      skip,
+      take
+    });
+
+    return this.convertPrismaTrainings(records);
+  }
+
+  public async find(query: ITrainingRepository, take: number): Promise<TrainingEntityWithPagination> {
     const {
       page: currentPage = Default.PAGE,
       priceMin,
@@ -92,14 +126,22 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
         break;
     }
 
-    const records = await this.client.training.findMany({
-      where,
-      orderBy,
-      skip,
-      take
-    });
+    const [entities, trainingsCount, trainingMaxPrice] = await Promise.all(
+      [
+        this.findTrainings(where, orderBy, skip, take),
+        this.getTrainingsCount(where),
+        this.getTrainingMaxPrice({ ...where, price: undefined })
+      ]
+    );
 
-    return this.convertPrismaTrainings(records);
+    return {
+      entities,
+      currentPage,
+      totalPages: this.calculateTrainingsPage(trainingsCount, take),
+      itemsPerPage: take,
+      totalItems: trainingsCount,
+      trainingMaxPrice
+    }
   }
 
   public async findById(id: string): Promise<TrainingEntity> {

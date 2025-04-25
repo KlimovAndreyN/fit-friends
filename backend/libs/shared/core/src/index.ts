@@ -78,6 +78,7 @@ export { ReviewRdo } from './lib/rdo/review.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
 export { TrainingRdo } from './lib/rdo/training.rdo';
+export { TrainingsWithPaginationRdo } from './lib/rdo/trainings-with-pagination.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';
 export { UserProfileRdo } from './lib/rdo/user-profile.rdo';
 export { UserRdo } from './lib/rdo/user.rdo';

@@ -1,4 +1,4 @@
-import { Entity, StorableEntity, Training } from '@backend/shared/core';
+import { Entity, PaginationResult, StorableEntity, Training } from '@backend/shared/core';
 
 export class TrainingEntity extends Entity implements StorableEntity<Training> {
   public title: Training['title'];
@@ -63,4 +63,9 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
       createdAt: this.createdAt
     }
   }
+}
+
+export interface TrainingEntityWithPagination
+  extends PaginationResult<TrainingEntity> {
+  trainingMaxPrice: number;
 }

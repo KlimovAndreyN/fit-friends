@@ -3,7 +3,8 @@ import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, RequestWithUserId, XAllApiHeaderOptions, TrainingRoute,
-  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam, TrainingQuery
+  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam,
+  TrainingQuery, TrainingsWithPaginationRdo
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 
@@ -24,12 +25,17 @@ export class TrainingController {
   }
 
   //! обработать роль и id пользователя
-  @ApiResponse({ type: TrainingRdo, isArray: true })
+  @ApiResponse({ type: TrainingsWithPaginationRdo })
   @Get()
-  public async index(@Query() query: TrainingQuery): Promise<TrainingRdo[]> {
-    const data = await this.trainingService.find(query);
+  public async index(@Query() query: TrainingQuery): Promise<TrainingsWithPaginationRdo> {
+    const trainingsWithPagination = await this.trainingService.find(query);
+    const { entities, ...others } = trainingsWithPagination;
+    const result = {
+      ...others,
+      entities: this.convertTrainingEntities(entities)
+    };
 
-    return this.convertTrainingEntities(data); //! тут нужна пагинация!
+    return result;
   }
 
   @ApiResponse({ type: TrainingRdo, isArray: true })

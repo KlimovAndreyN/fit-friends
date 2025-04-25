@@ -1,26 +1,32 @@
-import { IntersectionType, PickType } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
-import { ITrainingsWithPaginationRdo } from '../../fronted-index';
+import { ITrainingsWithPaginationRdo } from '../interfaces/rdo/i-trainings-with-pagination.rdo';
 import { PaginationRdo } from './pagination.rdo';
-import { TrainingApiDoc } from '../constants/api-doc/training.api-doc';
+import { TrainingRdo } from './training.rdo';
 
 export class TrainingsWithPaginationRdo
-  extends IntersectionType(
-    PickType(
-      PaginationRdo,
-      [
-        'currentPage',
-        'itemsPerPage',
-        'totalItems',
-        'totalPages'
-      ]
-    ),
-    PickType(
-      TrainingApiDoc,
-      [
-        'entities',
-        'maxPrice'
-      ]
-    )
+  extends PickType(
+    PaginationRdo,
+    [
+      'currentPage',
+      'itemsPerPage',
+      'totalItems',
+      'totalPages'
+    ]
+
   )
-  implements ITrainingsWithPaginationRdo { }
+  implements ITrainingsWithPaginationRdo {
+  @ApiProperty({
+    //...TrainingApiDoc.Entities,
+    type: TrainingRdo,
+    isArray: true
+  })
+  //@Type(() => TrainingRdo) //! обязательно?
+  @Expose()
+  public entities: TrainingRdo[];
+
+  @ApiProperty()
+  @Expose()
+  public trainingMaxPrice: ITrainingsWithPaginationRdo['trainingMaxPrice'];
+}
