@@ -9,7 +9,7 @@ import { TrainingFactory } from './training.factory';
 
 const Default = {
   //! отладка MAX: 50,
-  MAX_COUNT: 20, //!
+  MAX_COUNT: 10, //!
   FOR_SPOTRSMAN_COUNT: 9,
   POPULAR_RATING: { ratingMin: 4, ratingMax: 5, isPopular: true, isSortCreatedDate: true }
 } as const;

@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 
 import TrainingCard from '../training-card/training-card';
+import TrainingsListButtons from '../trainings-list-buttons/trainings-list-buttons';
 
 import { useAppSelector } from '../../hooks';
-import { getTrainings } from '../../store/training-process/selectors';
+import { getIsHaveMoreTrainings, getTrainings } from '../../store/training-process/selectors';
 
 type TrainingsListProps = {
   className: string;
@@ -11,6 +12,13 @@ type TrainingsListProps = {
 
 function TrainingsList({ className }: TrainingsListProps): JSX.Element {
   const trainings = useAppSelector(getTrainings);
+  const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
+
+  const handleShowMoreClick = () => {
+    //! временно
+    // eslint-disable-next-line no-console
+    console.log('handleShowMoreClick');
+  };
 
   return (
     <div className={className}>
@@ -29,10 +37,11 @@ function TrainingsList({ className }: TrainingsListProps): JSX.Element {
                 )
               }
             </ul>
-            <div className={`show-more ${className}__show-more`}>
-              <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
-              <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
-            </div>
+            <TrainingsListButtons
+              className={className}
+              isHaveMoreTrainings={isHaveMoreTrainings}
+              onShowMoreClick={handleShowMoreClick}
+            />
           </Fragment>
           :
           <Fragment>

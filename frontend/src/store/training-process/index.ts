@@ -11,6 +11,7 @@ const initialState: TrainingProcess = {
   specialTrainings: [],
   isFetchPopularTrainingsExecuting: false,
   popularTrainings: [],
+  isHaveMoreTrainings: false,
   isFetchTrainingsExecuting: false,
   trainings: [],
   isFetchDetailTrainingExecuting: false,
@@ -100,11 +101,10 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchTrainings.fulfilled,
           (state, action) => {
-            //! отладка остальное добавить в стор
-            // eslint-disable-next-line no-console
-            console.log('fetchTrainings.fulfilled - action.payload', action.payload);
+            const { entities, currentPage, totalPages } = action.payload;
 
-            state.trainings = action.payload.entities;
+            state.trainings.push(...entities);
+            state.isHaveMoreTrainings = currentPage < totalPages;
             state.isFetchTrainingsExecuting = false;
           }
         )

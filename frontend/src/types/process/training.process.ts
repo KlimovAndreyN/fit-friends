@@ -9,6 +9,7 @@ export type TrainingProcess = {
   popularTrainings: ITrainingRdo[];
   isFetchTrainingsExecuting: boolean;
   trainings: ITrainingRdo[];
+  isHaveMoreTrainings: boolean;
   isFetchDetailTrainingExecuting: boolean;
   detailTraining: IDetailTrainingRdo | null;
 }
