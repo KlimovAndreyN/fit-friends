@@ -28,14 +28,6 @@ type TrainingsFormProps = {
 }
 
 function TrainingsForm(props: TrainingsFormProps): JSX.Element {
-  //! может на изменения добавить задержку по времени?
-  //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
-  //! если последняя страница, то показать еще прячем и показываем кнопку наверх
-  //! добавить range - двигать мышкой в FilterMinMaxRange
-  //! нет черты на фильтре калории - масшаб в мозилле...
-  //! проверить еще логику по ТЗ и разметку
-  //! проверить консоль браузера на ошибки
-
   const { className, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
