@@ -8,6 +8,8 @@ import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { Gender } from '../../types/gender.enum';
 import { UserRdo } from '../../rdo/user.rdo';
+import { TrainingRdo } from '../../rdo/training.rdo';
+import { ITrainingsWithPaginationRdo } from '../../interfaces/rdo/i-trainings-with-pagination.rdo';
 
 //! описание и ограничения для всего, часть можно взять с опросника только пользователя заменить на тренировку
 export class TrainingApiDoc {
@@ -94,4 +96,16 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose({ name: 'createdAt' })
   public createdDate: string; //! IBasicDetailTrainingRdo['createdDate'];
+
+  @ApiProperty({
+    //...TrainingApiDoc.Entities,
+    type: TrainingRdo
+  })
+  //@Type(() => TrainingRdo) //! обязательно?
+  @Expose()
+  public entities: TrainingRdo[];
+
+  @ApiProperty()
+  @Expose()
+  public maxPrice: ITrainingsWithPaginationRdo['maxPrice'];
 }

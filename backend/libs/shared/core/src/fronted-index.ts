@@ -23,6 +23,7 @@ export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo
 export { type IReviewRdo } from './lib/interfaces/rdo/i-review.rdo';
 export { type ISpecialTrainingRdo } from './lib/interfaces/rdo/i-special-training.rdo';
 export { type ITrainingRdo } from './lib/interfaces/rdo/i-training.rdo';
+export { type ITrainingsWithPaginationRdo } from './lib/interfaces/rdo/i-trainings-with-pagination.rdo';
 export { type IUserProfileRdo } from './lib/interfaces/rdo/i-user-profile.rdo';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 

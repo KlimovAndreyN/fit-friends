@@ -16,7 +16,7 @@ export class TrainingRdo
       'description',
       'rating',
       'isSpecial',
-      'createdDate',
+      'createdDate'
     ]
   )
   implements ITrainingRdo { }
