@@ -11,6 +11,7 @@ type TrainingsProps = {
   title: string;
   formClassName: string;
   listClassName: string;
+  ratingPrefixClassName: string;
   startOnZeroRating?: boolean;
   showedFilterSpecializations?: boolean;
   showedFilterDurations?: boolean;
@@ -28,7 +29,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
-  const { headerTitle, title, formClassName, listClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
+  const { headerTitle, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -44,6 +45,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <h1 className="visually-hidden">{title}</h1>
               <TrainingsForm
                 className={formClassName}
+                ratingPrefixClassName={ratingPrefixClassName}
                 startOnZeroRating={startOnZeroRating}
                 showedFilterSpecializations={showedFilterSpecializations}
                 showedFilterDurations={showedFilterDurations}

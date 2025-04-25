@@ -9,6 +9,7 @@ function MyTrainings(): JSX.Element {
       title='Мои тренировки'
       formClassName='my-training-form'
       listClassName='my-trainings'
+      ratingPrefixClassName='raiting'
       startOnZeroRating
       showedFilterDurations
       showedAdditionalDiv

@@ -9,6 +9,7 @@ function TrainingsCatalog(): JSX.Element {
       title='Каталог тренировок'
       formClassName='gym-catalog-form'
       listClassName='training-catalog'
+      ratingPrefixClassName='rating'
       showedFilterSpecializations
       showedSorting
     />

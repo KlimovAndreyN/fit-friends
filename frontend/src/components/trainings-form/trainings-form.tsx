@@ -20,6 +20,7 @@ const Default = {
 
 type TrainingsFormProps = {
   className: string;
+  ratingPrefixClassName: string;
   startOnZeroRating?: boolean;
   showedFilterSpecializations?: boolean;
   showedFilterDurations?: boolean;
@@ -35,7 +36,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
 
-  const { className, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
+  const { className, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(Default.PAGE); //! задействовать setPage
   //! временно
@@ -140,8 +141,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
           <FilterMinMaxRange
             title='Рейтинг'
             className={className}
-            prefixClassName='rating'
-            prefixLabelClassName='raiting' // опечатка в css
+            prefixClassName={ratingPrefixClassName} // Немного разные классы в css у каталога и моих
+            prefixLabelClassName='raiting'
             value={rating}
             onChange={handleRatingFilterMinMaxRangeChange}
           />

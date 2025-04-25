@@ -19,6 +19,8 @@ type CoachCertificatesProps = {
 
 function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Element {
   //! при запросе добавления, редактирования и удаления блокировать кнопки! isUpdateCoachCertificatesExecuting
+  //! при изменении и удалении на короткое врямя рисуется старый элемент - нужно попртавить
+  //! иногда на пдф не работает прамая ссылка на файл, при начеле редактирования других сертификатов или добавления нового или комбинация действий
 
   const dispatch = useAppDispatch();
   const isUpdateCoachCertificatesExecuting = useAppSelector(getIsUpdateCoachCertificatesExecuting);
