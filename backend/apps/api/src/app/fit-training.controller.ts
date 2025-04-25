@@ -2,9 +2,9 @@ import { Controller, Get, Param, Query, Req, UseFilters, UseGuards } from '@nest
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, TrainingRoute, TrainingRdo,
-  ApiParamOption, DetailTrainingRdo, TrainingQuery,
-  BearerAuth, IdParam, RequestWithRequestIdAndUser
+  ApiServiceRoute, TrainingRoute, TrainingRdo, ApiParamOption,
+  DetailTrainingRdo, TrainingQuery, BearerAuth, IdParam,
+  RequestWithRequestIdAndUser, TrainingsWithPaginationRdo
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -28,8 +28,8 @@ export class FitTrainingController {
   public async index(
     @Query() query: TrainingQuery,
     @Req() request: RequestWithRequestIdAndUser
-  ): Promise<TrainingRdo[]> {
-    const data = await this.fitTrainingService.getTrainings(getQueryString(query), request);
+  ): Promise<TrainingsWithPaginationRdo> {
+    const data = await this.fitTrainingService.getTrainings<TrainingsWithPaginationRdo>(getQueryString(query), request);
 
     return data;
   }
@@ -38,7 +38,7 @@ export class FitTrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() request: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
-    const data = await this.fitTrainingService.getTrainings(TrainingRoute.ForSportsman, request);
+    const data = await this.fitTrainingService.getTrainings<TrainingRdo[]>(TrainingRoute.ForSportsman, request);
 
     return data;
   }
@@ -47,7 +47,7 @@ export class FitTrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Special)
   public async getSpecial(@Req() request: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
-    const data = await this.fitTrainingService.getTrainings(TrainingRoute.Special, request);
+    const data = await this.fitTrainingService.getTrainings<TrainingRdo[]>(TrainingRoute.Special, request);
 
     return data;
   }
@@ -56,7 +56,7 @@ export class FitTrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.Popular)
   public async getPopular(@Req() request: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
-    const data = await this.fitTrainingService.getTrainings(TrainingRoute.Popular, request);
+    const data = await this.fitTrainingService.getTrainings<TrainingRdo[]>(TrainingRoute.Popular, request);
 
     return data;
   }

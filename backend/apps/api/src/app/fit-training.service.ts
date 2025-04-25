@@ -2,10 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import {
-  BasicDetailTrainingRdo, DetailTrainingRdo, TrainingRdo,
-  RequestWithRequestIdAndUser, ServiceRoute, UserRdo
-} from '@backend/shared/core';
+import { BasicDetailTrainingRdo, DetailTrainingRdo, RequestWithRequestIdAndUser, ServiceRoute, UserRdo } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -26,13 +23,13 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
-  public async getTrainings(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
+  public async getTrainings<T>(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<T> {
     //! временно
     console.log('FitTrainingService.getTrainings - userRole', userRole);
 
     const url = this.getUrl(route);
     const headers = makeHeaders(requestId, null, userId, userRole);
-    const { data } = await this.httpService.axiosRef.get<TrainingRdo[]>(url, headers);
+    const { data } = await this.httpService.axiosRef.get<T>(url, headers);
 
     return data;
   }
