@@ -55,7 +55,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return this.client.training.count({ where });
   }
 
-  private async getTrainingMaxPrice(where: Prisma.TrainingWhereInput): Promise<number> {
+  private async getTrainingsMaxPrice(where: Prisma.TrainingWhereInput): Promise<number> {
     const result = await this.client.training.aggregate({ where, _max: { price: true } });
 
     return result._max.price;
@@ -126,11 +126,11 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
         break;
     }
 
-    const [entities, trainingsCount, trainingMaxPrice] = await Promise.all(
+    const [entities, trainingsCount, trainingsMaxPrice] = await Promise.all(
       [
         this.findTrainings(where, orderBy, skip, take),
         this.getTrainingsCount(where),
-        this.getTrainingMaxPrice({ ...where, price: undefined })
+        this.getTrainingsMaxPrice({ ...where, price: undefined })
       ]
     );
 
@@ -140,7 +140,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       totalPages: this.calculateTrainingsPage(trainingsCount, take),
       itemsPerPage: take,
       totalItems: trainingsCount,
-      trainingMaxPrice
+      trainingsMaxPrice: trainingsMaxPrice
     }
   }
 

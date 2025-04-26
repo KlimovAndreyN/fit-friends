@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { ITrainingQuery } from '@backend/shared/core';
 
 import { TrainingProcess } from '../../types/process/training.process';
 import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../actions/training-action';
@@ -7,13 +9,25 @@ import { StoreSlice } from '../../const';
 const initialState: TrainingProcess = {
   isFetchForSportsmanTrainingsExecuting: false,
   forSportsmanTrainings: [],
+
   isFetchSpecialTrainingsExecuting: false,
   specialTrainings: [],
+
   isFetchPopularTrainingsExecuting: false,
   popularTrainings: [],
-  isHaveMoreTrainings: false,
+
+  trainingsFilter: {
+    page: 1,
+    priceMin: 0,
+    ratingMin: 1,
+    ratingMax: 5
+  },
+  isTrainingsFilterActivate: false,
   isFetchTrainingsExecuting: false,
   trainings: [],
+  isHaveMoreTrainings: false,
+  trainingsMaxPrice: 0,
+
   isFetchDetailTrainingExecuting: false,
   detailTraining: null
 };
@@ -22,7 +36,14 @@ export const trainingProcess = createSlice(
   {
     name: StoreSlice.TrainingProcess,
     initialState,
-    reducers: {},
+    reducers: {
+      setTrainingFilter: (state, action: PayloadAction<ITrainingQuery>) => {
+        state.trainingsFilter = action.payload;
+      },
+      setIsTrainingFilterActivate: (state, action: PayloadAction<boolean>) => {
+        state.isTrainingsFilterActivate = action.payload;
+      }
+    },
     extraReducers(builder) {
       builder
         .addCase(
@@ -101,10 +122,11 @@ export const trainingProcess = createSlice(
         .addCase(
           fetchTrainings.fulfilled,
           (state, action) => {
-            const { entities, currentPage, totalPages } = action.payload;
+            const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
 
             state.trainings.push(...entities);
             state.isHaveMoreTrainings = currentPage < totalPages;
+            state.trainingsMaxPrice = trainingsMaxPrice;
             state.isFetchTrainingsExecuting = false;
           }
         )
@@ -131,3 +153,5 @@ export const trainingProcess = createSlice(
     }
   }
 );
+
+export const { setTrainingFilter, setIsTrainingFilterActivate } = trainingProcess.actions;
