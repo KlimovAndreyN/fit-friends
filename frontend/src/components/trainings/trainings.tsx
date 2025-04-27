@@ -64,13 +64,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
     }
   }
 
-  console.log('Trainings - useEffect - hasPriceMaxFilter', hasPriceMaxFilter);
-  console.log('Trainings - useEffect - trainingsFilter', trainingsFilter);
-  console.log('Trainings - useEffect - isTrainingsFilterActivate', isTrainingsFilterActivate);
-  console.log('Trainings - useEffect - trainingsMaxPrice', trainingsMaxPrice);
-
   limitPriceMax = (hasPriceMaxFilter) ? limitPriceMax : trainingsMaxPrice;
-  console.log('Trainings - limitPriceMax', limitPriceMax);
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -84,7 +78,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
   }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
-    //newFilter.priceMax = limitPriceMax;
     dispatch(setTrainingsFilter(newFilter));
   };
 
@@ -121,7 +114,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
                 ratingPrefixClassName={ratingPrefixClassName}
                 trainingsFilter={{ ...trainingsFilter, priceMax: limitPriceMax }}
                 trainingsMaxPrice={trainingsMaxPrice}
-                setPriceMax={!hasPriceMaxFilter}
                 startOnZeroRating={startOnZeroRating}
                 onTrainingsFilterChange={handleFilterOnChange}
                 showedFilterSpecializations={showedFilterSpecializations}

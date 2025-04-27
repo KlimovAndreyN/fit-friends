@@ -22,7 +22,6 @@ type TrainingsFormProps = {
   ratingPrefixClassName: string;
   trainingsFilter: ITrainingQuery;
   trainingsMaxPrice?: number;
-  setPriceMax: boolean;
   startOnZeroRating?: boolean;
   onTrainingsFilterChange: (newFilter: ITrainingQuery) => void;
   showedFilterSpecializations?: boolean;
@@ -31,7 +30,7 @@ type TrainingsFormProps = {
 }
 
 function TrainingsForm(props: TrainingsFormProps): JSX.Element {
-  const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, setPriceMax, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
+  const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
   const ratingLimitValue: MinMaxRange = {
     min: (startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN,
@@ -47,37 +46,37 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   };
 
   const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ priceMin: value.min, priceMax: value.max });
+    onTrainingsFilterChange({ ...trainingsFilter, priceMin: value.min, priceMax: value.max });
   };
 
   const handleCaloriesWasteFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ caloriesWasteMin: value.min, caloriesWasteMax: value.max });
+    onTrainingsFilterChange({ ...trainingsFilter, caloriesWasteMin: value.min, caloriesWasteMax: value.max });
   };
 
   const handleRatingFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ ratingMin: value.min, ratingMax: value.max });
+    onTrainingsFilterChange({ ...trainingsFilter, ratingMin: value.min, ratingMax: value.max });
   };
 
   const handleSpecializationsChange = (specialization: Specialization) => {
     if (specializations?.includes(specialization)) {
-      onTrainingsFilterChange({ specializations: deleteItem(specializations, specialization) });
+      onTrainingsFilterChange({ ...trainingsFilter, specializations: deleteItem(specializations, specialization) });
     } else {
       specializations?.push(specialization);
-      onTrainingsFilterChange({ specializations });
+      onTrainingsFilterChange({ ...trainingsFilter, specializations });
     }
   };
 
   const handleDurationsChange = (duration: Duration) => {
     if (durations?.includes(duration)) {
-      onTrainingsFilterChange({ durations: deleteItem(durations, duration) });
+      onTrainingsFilterChange({ ...trainingsFilter, durations: deleteItem(durations, duration) });
     } else {
       durations?.push(duration);
-      onTrainingsFilterChange({ durations });
+      onTrainingsFilterChange({ ...trainingsFilter, durations });
     }
   };
 
   const handleTrainingCatalogFormSortChange = (newSortType: SortType) => {
-    onTrainingsFilterChange({ sortType: newSortType });
+    onTrainingsFilterChange({ ...trainingsFilter, sortType: newSortType });
   };
 
   return (

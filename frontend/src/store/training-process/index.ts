@@ -133,22 +133,6 @@ export const trainingProcess = createSlice(
             state.trainings = entities;
             state.isHaveMoreTrainings = currentPage < totalPages;
             state.trainingsMaxPrice = trainingsMaxPrice;
-
-            /*
-            const { priceMax } = state.trainingsFilter;
-            let newPriceMax = undefined;
-
-            if (trainingsMaxPrice !== undefined) {
-              if (priceMax !== undefined) {
-                newPriceMax = Math.min(priceMax, trainingsMaxPrice);
-              } else {
-                newPriceMax = priceMax;
-              }
-            }
-
-
-            state.trainingsFilter.priceMax = (Object.hasOwn(state.trainingsFilter, 'priceMax')) ? newPriceMax : trainingsMaxPrice;
-            */
             state.isFetchTrainingsExecuting = false;
           }
         )
