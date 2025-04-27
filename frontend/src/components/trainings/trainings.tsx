@@ -13,7 +13,7 @@ import {
   getTrainings, getIsTrainingsFilterActivate, getTrainingsMaxPrice
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
+import { getNextPage, setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
 import { hasPriceMaxPropertyKey } from '../../utils/common';
 
 type TrainingsProps = {
@@ -54,7 +54,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
 
-  const { priceMax } = trainingsFilter;
+  const { priceMax, page } = trainingsFilter;
   let limitPriceMax: number | undefined = undefined;
 
   if (trainingsMaxPrice !== undefined) {
@@ -86,13 +86,13 @@ function Trainings(props: TrainingsProps): JSX.Element {
   };
 
   const handleNextPageClick = () => {
-    //! отладка!
-    // eslint-disable-next-line no-console
-    console.log('handleNextPageClick');
+    dispatch(getNextPage());
   };
 
-  // доделать оформление лоадера
-  const trainingsList = (isFetchTrainingsExecuting)
+  //! возможно вместо лоадера нужно блокировать форму по isFetchTrainingsExecuting и список тернировок не очищать...
+  //! а снизу дописывать "загрузка", т.к. прокручивает наверх, если по обычному лоадер поставить
+  //! пока добавил (page === 1)
+  const trainingsList = (isFetchTrainingsExecuting && (page === 1))
     ?
     (<h3>Загрузка...</h3>)
     :

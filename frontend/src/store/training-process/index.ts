@@ -24,6 +24,7 @@ const initialState: TrainingProcess = {
     priceMin: 0,
     ratingMax: 5
   },
+  isFristPage: true,
   isTrainingsFilterActivate: false,
   isFetchTrainingsExecuting: false,
   trainings: [],
@@ -40,7 +41,16 @@ export const trainingProcess = createSlice(
     initialState,
     reducers: {
       setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
-        state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
+        state.isFristPage = true;
+        state.trainingsFilter = { ...state.trainingsFilter, ...action.payload, page: 1 };
+      },
+      getNextPage: (state) => {
+        const { trainingsFilter: { page }, isHaveMoreTrainings } = state;
+
+        if (page && isHaveMoreTrainings) {
+          state.isFristPage = false;
+          state.trainingsFilter = { ...state.trainingsFilter, page: page + 1 };
+        }
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
         state.isTrainingsFilterActivate = action.payload;
@@ -126,9 +136,12 @@ export const trainingProcess = createSlice(
           (state, action) => {
             const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
 
-            //! отладка временно отключил!
-            //!state.trainings.push(...entities);
-            state.trainings = entities;
+            if (state.isFristPage) {
+              state.trainings = entities;
+            } else {
+              state.trainings.push(...entities);
+            }
+
             state.isHaveMoreTrainings = currentPage < totalPages;
             state.trainingsMaxPrice = trainingsMaxPrice;
             state.isFetchTrainingsExecuting = false;
@@ -158,4 +171,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, setIsTrainingsFilterActivate } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate } = trainingProcess.actions;

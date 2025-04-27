@@ -11,6 +11,7 @@ export type TrainingProcess = {
   popularTrainings: ITrainingRdo[];
 
   trainingsFilter: ITrainingQuery;
+  isFristPage: boolean;
   isTrainingsFilterActivate: boolean;
   isFetchTrainingsExecuting: boolean;
   trainings: ITrainingRdo[];
