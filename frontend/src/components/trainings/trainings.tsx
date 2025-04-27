@@ -13,7 +13,7 @@ import {
   getTrainings, getIsTrainingsFilterActivate, getTrainingsMaxPrice
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { setTrainingsFilter } from '../../store/training-process';
+import { setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
 
 type TrainingsProps = {
   headerTitle: string;
@@ -52,13 +52,39 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
 
+  const { priceMax } = trainingsFilter;
+  const hasPriceMaxFilter = (Object.hasOwn(trainingsFilter, 'priceMax'));
+  let limitPriceMax: number | undefined = undefined;
+
+  if (trainingsMaxPrice !== undefined) {
+    if (priceMax !== undefined) {
+      limitPriceMax = Math.min(priceMax, trainingsMaxPrice);
+    } else {
+      limitPriceMax = priceMax;
+    }
+  }
+
+  console.log('Trainings - useEffect - hasPriceMaxFilter', hasPriceMaxFilter);
+  console.log('Trainings - useEffect - trainingsFilter', trainingsFilter);
+  console.log('Trainings - useEffect - isTrainingsFilterActivate', isTrainingsFilterActivate);
+  console.log('Trainings - useEffect - trainingsMaxPrice', trainingsMaxPrice);
+
+  limitPriceMax = (hasPriceMaxFilter) ? limitPriceMax : trainingsMaxPrice;
+  console.log('Trainings - limitPriceMax', limitPriceMax);
+
   useScrollToTop(); //! а если в useEffect?
 
   useEffect(() => {
-    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
-  }, [dispatch, trainingsFilter]);
+    if (!isTrainingsFilterActivate) {
+      dispatch(setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }));
+      dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
+    } else {
+      dispatch(fetchTrainings(trainingsFilter));
+    }
+  }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
+    //newFilter.priceMax = limitPriceMax;
     dispatch(setTrainingsFilter(newFilter));
   };
 
@@ -68,13 +94,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
     console.log('handleNextPageClick');
   };
 
-  if (!isTrainingsFilterActivate) {
-    //setIsTrainingsFilterActivate! удалить?
-    //dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
-    setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }); //! выполяет первое получение данных через useEffect
-  }
-
-  // оформление загрущика
+  // доделать оформление лоадера
   const trainingsList = (isFetchTrainingsExecuting)
     ?
     (<h3>Загрузка...</h3>)
@@ -99,8 +119,9 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <TrainingsForm
                 className={formClassName}
                 ratingPrefixClassName={ratingPrefixClassName}
-                trainingsFilter={trainingsFilter}
+                trainingsFilter={{ ...trainingsFilter, priceMax: limitPriceMax }}
                 trainingsMaxPrice={trainingsMaxPrice}
+                setPriceMax={!hasPriceMaxFilter}
                 startOnZeroRating={startOnZeroRating}
                 onTrainingsFilterChange={handleFilterOnChange}
                 showedFilterSpecializations={showedFilterSpecializations}

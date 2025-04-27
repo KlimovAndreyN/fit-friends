@@ -3,9 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITrainingQuery } from '@backend/shared/core';
 
 import { TrainingProcess } from '../../types/process/training.process';
-import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../actions/training-action';
+import {
+  fetchDetailTraining, fetchTrainings, fetchPopularTrainings,
+  fetchForSportsmanTrainings, fetchSpecialTrainings
+} from '../actions/training-action';
 import { StoreSlice } from '../../const';
-import { getMin } from '../../utils/min-max';
 
 const initialState: TrainingProcess = {
   isFetchForSportsmanTrainingsExecuting: false,
@@ -38,7 +40,8 @@ export const trainingProcess = createSlice(
     initialState,
     reducers: {
       setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
-        //state.trainingsFilter.priceMax = getMin(state.trainingsMaxPrice, state.trainingsFilter.priceMax);
+        console.log('setTrainingsFilter - action.payload', action.payload);
+
         state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
@@ -130,6 +133,22 @@ export const trainingProcess = createSlice(
             state.trainings = entities;
             state.isHaveMoreTrainings = currentPage < totalPages;
             state.trainingsMaxPrice = trainingsMaxPrice;
+
+            /*
+            const { priceMax } = state.trainingsFilter;
+            let newPriceMax = undefined;
+
+            if (trainingsMaxPrice !== undefined) {
+              if (priceMax !== undefined) {
+                newPriceMax = Math.min(priceMax, trainingsMaxPrice);
+              } else {
+                newPriceMax = priceMax;
+              }
+            }
+
+
+            state.trainingsFilter.priceMax = (Object.hasOwn(state.trainingsFilter, 'priceMax')) ? newPriceMax : trainingsMaxPrice;
+            */
             state.isFetchTrainingsExecuting = false;
           }
         )

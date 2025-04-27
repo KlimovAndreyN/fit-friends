@@ -1,3 +1,5 @@
+import { FormEvent } from 'react';
+
 import { Specialization, SortType, Duration, ITrainingQuery } from '@backend/shared/core';
 import { deleteItem } from '@backend/shared/helpers';
 
@@ -8,8 +10,6 @@ import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 
 import { MinMaxRange } from '../../types/types';
 import { DURATIONS, SPECIALISATIONS } from '../../const';
-import { FormEvent } from 'react';
-import { getMin } from '../../utils/min-max';
 
 const Limit = {
   RATING_ZERO: 0,
@@ -22,6 +22,7 @@ type TrainingsFormProps = {
   ratingPrefixClassName: string;
   trainingsFilter: ITrainingQuery;
   trainingsMaxPrice?: number;
+  setPriceMax: boolean;
   startOnZeroRating?: boolean;
   onTrainingsFilterChange: (newFilter: ITrainingQuery) => void;
   showedFilterSpecializations?: boolean;
@@ -30,9 +31,8 @@ type TrainingsFormProps = {
 }
 
 function TrainingsForm(props: TrainingsFormProps): JSX.Element {
-  const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
+  const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, setPriceMax, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
-  const newPriceMax = getMin(priceMax, trainingsMaxPrice);
   const ratingLimitValue: MinMaxRange = {
     min: (startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN,
     max: Limit.RATING_MAX
@@ -41,10 +41,6 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     min: ratingMin,
     max: ratingMax
   };
-
-  console.log('TrainingsForm - priceMin', priceMin);
-  console.log('TrainingsForm - priceMax', priceMax);
-  console.log('TrainingsForm - trainingsMaxPrice', trainingsMaxPrice);
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -99,7 +95,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             prefixClassName='price'
             value={{
               min: priceMin,
-              max: newPriceMax
+              max: priceMax
             }}
             limitValue={{
               min: 0,

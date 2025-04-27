@@ -19,7 +19,7 @@ export function getQueryString(query: object): string {
   const queryParams: string[] = [];
 
   for (const [key, value] of Object.entries(query)) {
-    if (value) {
+    if (value !== undefined) {
       if (Array.isArray(value)) {
         value.map((item) => {
           queryParams.push(`${key}=${item}`);
