@@ -15,7 +15,7 @@ export type TrainingProcess = {
   isFetchTrainingsExecuting: boolean;
   trainings: ITrainingRdo[];
   isHaveMoreTrainings: boolean;
-  trainingsMaxPrice: number;
+  trainingsMaxPrice?: number;
 
   isFetchDetailTrainingExecuting: boolean;
   detailTraining: IDetailTrainingRdo | null;

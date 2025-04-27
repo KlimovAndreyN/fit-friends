@@ -26,7 +26,7 @@ const initialState: TrainingProcess = {
   isFetchTrainingsExecuting: false,
   trainings: [],
   isHaveMoreTrainings: false,
-  trainingsMaxPrice: 0,
+  trainingsMaxPrice: undefined,
 
   isFetchDetailTrainingExecuting: false,
   detailTraining: null
@@ -38,7 +38,7 @@ export const trainingProcess = createSlice(
     initialState,
     reducers: {
       setTrainingFilter: (state, action: PayloadAction<ITrainingQuery>) => {
-        state.trainingsFilter = action.payload;
+        state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
       },
       setIsTrainingFilterActivate: (state, action: PayloadAction<boolean>) => {
         state.isTrainingsFilterActivate = action.payload;
@@ -124,7 +124,9 @@ export const trainingProcess = createSlice(
           (state, action) => {
             const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
 
-            state.trainings.push(...entities);
+            //! отладка временно отключил!
+            //!state.trainings.push(...entities);
+            state.trainings = entities;
             state.isHaveMoreTrainings = currentPage < totalPages;
             state.trainingsMaxPrice = trainingsMaxPrice;
             state.isFetchTrainingsExecuting = false;

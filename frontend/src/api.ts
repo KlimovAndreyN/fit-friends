@@ -6,7 +6,8 @@ import { convertDtoToFormData } from '@backend/shared/helpers';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
 import { DataAxiosError, getAxiosErrorMessage, isErrorNetwork } from './utils/parse-axios-error';
-import { getBearerAuthorization, getViteEnvVariable, getViteEnvBooleanVariable } from './utils/common';
+import { getViteEnvVariable, getViteEnvBooleanVariable } from './utils/vite';
+import { getBearerAuthorization } from './utils/common';
 import { ApiRoute } from './const';
 
 enum HttpCode {
