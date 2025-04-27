@@ -28,5 +28,5 @@ export class TrainingsWithPaginationRdo
 
   @ApiProperty()
   @Expose()
-  public trainingsMaxPrice: ITrainingsWithPaginationRdo['trainingsMaxPrice'];
+  public trainingsMaxPrice?: ITrainingsWithPaginationRdo['trainingsMaxPrice'];
 }

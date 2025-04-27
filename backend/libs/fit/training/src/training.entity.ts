@@ -67,5 +67,5 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
 
 export interface TrainingEntityWithPagination
   extends PaginationResult<TrainingEntity> {
-  trainingsMaxPrice: number;
+  trainingsMaxPrice?: number;
 }

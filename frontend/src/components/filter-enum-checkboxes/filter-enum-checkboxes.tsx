@@ -5,7 +5,7 @@ import { Option } from '../../types/types';
 type FilterEnumCheckboxesProps<T> = {
   caption: string;
   name: string;
-  items: Set<T>;
+  items?: T[];
   options: Option[];
   className: string;
   onChange: (specialization: T) => void;
@@ -22,7 +22,7 @@ function FilterEnumCheckboxes<T>({ caption, name, items, options, className, onC
           options.map(
             ({ value, title }) => {
               const item = value as T;
-              const checked = items.has(item);
+              const checked = items?.includes(item);
 
               const handleCustomCheckboxChange = () => {
                 onChange(item);

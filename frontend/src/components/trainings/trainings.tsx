@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import { ITrainingQuery } from '@backend/shared/core';
 
@@ -8,9 +8,12 @@ import TrainingsList from '../trainings-list/trainings-list';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsTrainingsFilterActivate, getTrainingsFilter, getTrainingsMaxPrice } from '../../store/training-process/selectors';
+import {
+  getIsFetchTrainingsExecuting, getIsHaveMoreTrainings, getTrainingsFilter,
+  getTrainings, getIsTrainingsFilterActivate, getTrainingsMaxPrice
+} from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
+import { setTrainingsFilter } from '../../store/training-process';
 
 type TrainingsProps = {
   headerTitle: string;
@@ -44,22 +47,46 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const dispatch = useAppDispatch();
   const trainingsFilter = useAppSelector(getTrainingsFilter);
   const isTrainingsFilterActivate = useAppSelector(getIsTrainingsFilterActivate);
+  const isFetchTrainingsExecuting = useAppSelector(getIsFetchTrainingsExecuting);
+  const trainings = useAppSelector(getTrainings);
+  const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
 
   useScrollToTop(); //! а если в useEffect?
 
+  useEffect(() => {
+    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
+  }, [dispatch, trainingsFilter]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
-    dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
-    dispatch(setTrainingsFilter(newFilter)); //! может все в одно или useEffect
-    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
+    dispatch(setTrainingsFilter(newFilter));
+  };
+
+  const handleNextPageClick = () => {
+    //! отладка!
+    // eslint-disable-next-line no-console
+    console.log('handleNextPageClick');
   };
 
   if (!isTrainingsFilterActivate) {
-    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
+    //setIsTrainingsFilterActivate! удалить?
+    //dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
+    setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }); //! выполяет первое получение данных через useEffect
   }
 
-  const trainingsList = (<TrainingsList className={listClassName} />);
+  // оформление загрущика
+  const trainingsList = (isFetchTrainingsExecuting)
+    ?
+    (<h3>Загрузка...</h3>)
+    :
+    (
+      <TrainingsList
+        className={listClassName}
+        trainings={trainings}
+        isHaveMoreTrainings={isHaveMoreTrainings}
+        onNextPageClick={handleNextPageClick}
+      />
+    );
 
   return (
     <Fragment>

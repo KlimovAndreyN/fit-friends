@@ -3,5 +3,5 @@ import { ITrainingRdo } from './i-training.rdo';
 
 export interface ITrainingsWithPaginationRdo
   extends PaginationResult<ITrainingRdo> {
-  trainingsMaxPrice: number;
+  trainingsMaxPrice?: number;
 }

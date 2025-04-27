@@ -5,6 +5,7 @@ import { ITrainingQuery } from '@backend/shared/core';
 import { TrainingProcess } from '../../types/process/training.process';
 import { fetchDetailTraining, fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings, fetchTrainings } from '../actions/training-action';
 import { StoreSlice } from '../../const';
+import { getMin } from '../../utils/min-max';
 
 const initialState: TrainingProcess = {
   isFetchForSportsmanTrainingsExecuting: false,
@@ -19,7 +20,6 @@ const initialState: TrainingProcess = {
   trainingsFilter: {
     page: 1,
     priceMin: 0,
-    ratingMin: 1,
     ratingMax: 5
   },
   isTrainingsFilterActivate: false,
@@ -38,6 +38,7 @@ export const trainingProcess = createSlice(
     initialState,
     reducers: {
       setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
+        //state.trainingsFilter.priceMax = getMin(state.trainingsMaxPrice, state.trainingsFilter.priceMax);
         state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {

@@ -1,23 +1,23 @@
 import { Fragment } from 'react';
 
+import { ITrainingRdo } from '@backend/shared/core';
+
 import TrainingCard from '../training-card/training-card';
 import TrainingsListButtons from '../trainings-list-buttons/trainings-list-buttons';
 
-import { useAppSelector } from '../../hooks';
-import { getIsHaveMoreTrainings, getTrainings } from '../../store/training-process/selectors';
+import { OnClick } from '../../types/types';
 
 type TrainingsListProps = {
   className: string;
+  trainings: ITrainingRdo[];
+  isHaveMoreTrainings: boolean;
+  onNextPageClick: OnClick;
 }
 
-function TrainingsList({ className }: TrainingsListProps): JSX.Element {
-  const trainings = useAppSelector(getTrainings);
-  const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
+function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageClick }: TrainingsListProps): JSX.Element {
 
   const handleShowMoreClick = () => {
-    //! временно
-    // eslint-disable-next-line no-console
-    console.log('handleShowMoreClick');
+    onNextPageClick();
   };
 
   return (

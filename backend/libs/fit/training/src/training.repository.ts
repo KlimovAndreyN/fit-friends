@@ -55,10 +55,11 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return this.client.training.count({ where });
   }
 
-  private async getTrainingsMaxPrice(where: Prisma.TrainingWhereInput): Promise<number> {
+  private async getTrainingsMaxPrice(where: Prisma.TrainingWhereInput): Promise<number | undefined> {
     const result = await this.client.training.aggregate({ where, _max: { price: true } });
+    const { price } = result._max;
 
-    return result._max.price;
+    return price ?? undefined;
   }
 
   public async findTrainings(
