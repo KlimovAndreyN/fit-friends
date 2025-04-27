@@ -14,7 +14,8 @@ import { DURATIONS, SPECIALISATIONS } from '../../const';
 const Limit = {
   RATING_ZERO: 0,
   RATING_MIN: 1,
-  RATING_MAX: 5
+  RATING_MAX: 5,
+  CALORIES_WASTE_MIN: 1
 } as const;
 
 type TrainingsFormProps = {
@@ -32,6 +33,10 @@ type TrainingsFormProps = {
 function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
+  const caloriesWasteLimitValue: MinMaxRange = {
+    min: Limit.CALORIES_WASTE_MIN,
+    max: undefined
+  };
   const ratingLimitValue: MinMaxRange = {
     min: (startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN,
     max: Limit.RATING_MAX
@@ -111,6 +116,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               min: caloriesWasteMin,
               max: caloriesWasteMax
             }}
+            limitValue={caloriesWasteLimitValue}
             showInputs
             onChange={handleCaloriesWasteFilterMinMaxRangeChange}
           />

@@ -7,6 +7,7 @@ import SliderSection from '../slider-section/slider-section';
 import { getTrainingRoute } from '../../utils/common';
 
 const SLIDES_COUNT = 3;
+const FOR_SPOTRSMAN_COUNT = 9;
 
 type SpecialForYouSectionProps = {
   trainings: ITrainingRdo[];
@@ -17,7 +18,7 @@ function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Ele
   //! что делать когда мало карточек? что по ТЗ?
   //! проверить консоль браузера на ошибки
 
-  const childrens = trainings.map(
+  const childrens = trainings.slice(0, FOR_SPOTRSMAN_COUNT).map(
     ({ id, backgroundPath, specialization }) => (
       <div className="thumbnail-preview" key={id}>
         <div className="thumbnail-preview__image">

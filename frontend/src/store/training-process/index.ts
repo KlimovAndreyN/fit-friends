@@ -9,6 +9,13 @@ import {
 } from '../actions/training-action';
 import { StoreSlice } from '../../const';
 
+const Default = {
+  PAGE: 1,
+  LIMIT: 6,
+  PRICE_MIN: 0,
+  RATING_MAX: 5
+} as const;
+
 const initialState: TrainingProcess = {
   isFetchForSportsmanTrainingsExecuting: false,
   forSportsmanTrainings: [],
@@ -20,9 +27,10 @@ const initialState: TrainingProcess = {
   popularTrainings: [],
 
   trainingsFilter: {
-    page: 1,
-    priceMin: 0,
-    ratingMax: 5
+    page: Default.PAGE,
+    limit: Default.LIMIT,
+    priceMin: Default.PRICE_MIN,
+    ratingMax: Default.RATING_MAX
   },
   isFristPage: true,
   isTrainingsFilterActivate: false,

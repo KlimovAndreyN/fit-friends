@@ -18,6 +18,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
+  //! два раза выборка, перенсти на одну страницу
 
   const dispatch = useAppDispatch();
   const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);
@@ -55,7 +56,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
                       <span className="review__user-name">{userName}</span>
                       <div className="review__rating">
                         <svg width="16" height="16" aria-hidden="true">
-                          <use xlinkHref="#icon-star"/>
+                          <use xlinkHref="#icon-star" />
                         </svg>
                         <span>{rating}</span>
                       </div>

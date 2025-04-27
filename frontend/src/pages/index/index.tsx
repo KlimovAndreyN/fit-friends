@@ -17,6 +17,7 @@ import { PageTitle } from '../../const';
 function Index(): JSX.Element {
   //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проерить на маркапах
   //! прокрутка на вверх при переходе с каталога и других страниц
+  //! может не всегда обновлять данные для главной?
 
   const dispatch = useAppDispatch();
   const isFetchForSportsmanTrainingsExecuting = useAppSelector(getIsFetchForSportsmanTrainingsExecuting);
@@ -31,7 +32,7 @@ function Index(): JSX.Element {
   /*
   useEffect(() => {
     const fetchData = async () => {
-      // попытка решить проблему при обновления токенов, т.к. вызовы били асинхронные, а получение токенов происходит при ошибке выполениня запроса,
+      // попытка решить проблему при обновления токенов, т.к. вызовы были асинхронные, а получение токенов происходит при ошибке выполениня запроса,
       // то были сдучаю удаления токенов при втором запросе, т.к. первый уже получил токены, а второй обновлял старые, а их уже нет...
       await dispatch(fetchForSportsmanTrainings());
       await dispatch(fetchSpecialTrainings());

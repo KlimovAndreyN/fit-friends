@@ -13,6 +13,7 @@ import { TrainingFactory } from './training.factory';
 
 const Default = {
   PAGE: 1,
+  LIMIT_MAX: 50,
   SORT_TYPE: SortType.LowPrice
 } as const;
 
@@ -78,9 +79,10 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return this.convertPrismaTrainings(records);
   }
 
-  public async find(query: ITrainingRepository, take: number): Promise<TrainingEntityWithPagination> {
+  public async find(query: ITrainingRepository): Promise<TrainingEntityWithPagination> {
     const {
       page: currentPage = Default.PAGE,
+      limit: take = Default.LIMIT_MAX,
       priceMin,
       priceMax,
       caloriesWasteMin,

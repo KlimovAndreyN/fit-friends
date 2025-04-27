@@ -7,12 +7,7 @@ import { TrainingRepository } from './training.repository';
 import { TrainingEntity, TrainingEntityWithPagination } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
-const Default = {
-  //! отладка MAX: 50,
-  MAX_COUNT: 10, //!
-  FOR_SPOTRSMAN_COUNT: 9,
-  POPULAR_RATING: { ratingMin: 4, ratingMax: 5, isPopular: true, isSortCreatedDate: true }
-} as const;
+const DEFAULT_POPULAR_RATING = { ratingMin: 4, ratingMax: 5, isPopular: true, isSortCreatedDate: true } as const;
 
 @Injectable()
 export class TrainingService {
@@ -24,7 +19,7 @@ export class TrainingService {
   public async find(query: TrainingQuery): Promise<TrainingEntityWithPagination> {
     const { sortType } = query;
     const isSortCreatedDate = (!sortType) || (sortType === SortType.ForFree)
-    const result = await this.trainingRepository.find({ ...query, isSortCreatedDate }, Default.MAX_COUNT);
+    const result = await this.trainingRepository.find({ ...query, isSortCreatedDate });
 
     return result;
   }
@@ -32,15 +27,16 @@ export class TrainingService {
   public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
     //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
     //! пока только специализации
+    //! добавить сортировку
 
     const { specializations } = await this.questionnaireRepository.findByUserId(userId);
-    const { entities } = await this.trainingRepository.find({ specializations, isSortCreatedDate: true }, Default.FOR_SPOTRSMAN_COUNT);
+    const { entities } = await this.trainingRepository.find({ specializations, isSortCreatedDate: true });
 
     return entities;
   }
 
   public async getSpecial(): Promise<TrainingEntity[]> {
-    const { entities } = await this.trainingRepository.find({ isSpecial: true, isSortCreatedDate: true }, Default.MAX_COUNT); //! 0 и 5 временно
+    const { entities } = await this.trainingRepository.find({ isSpecial: true, isSortCreatedDate: true });
 
     return entities;
   }
@@ -49,7 +45,7 @@ export class TrainingService {
     //! по ТЗ не ясно, только с 5 или наивысший из имеющихся?
     //! а если рейтирнг тренировки будет до первого знака?
     //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга
-    const { entities } = await this.trainingRepository.find(Default.POPULAR_RATING, Default.MAX_COUNT);
+    const { entities } = await this.trainingRepository.find(DEFAULT_POPULAR_RATING);
 
     return entities;
   }
