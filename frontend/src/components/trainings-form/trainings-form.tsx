@@ -61,8 +61,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     if (specializations?.includes(specialization)) {
       onTrainingsFilterChange({ specializations: deleteItem(specializations, specialization) });
     } else {
-      specializations?.push(specialization);
-      onTrainingsFilterChange({ specializations });
+      onTrainingsFilterChange({ specializations: [...((specializations) ? specializations : []), specialization] });
     }
   };
 
@@ -70,8 +69,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     if (durations?.includes(duration)) {
       onTrainingsFilterChange({ durations: deleteItem(durations, duration) });
     } else {
-      durations?.push(duration);
-      onTrainingsFilterChange({ durations });
+      onTrainingsFilterChange({ durations: [...((durations) ? durations : []), duration] });
     }
   };
 
