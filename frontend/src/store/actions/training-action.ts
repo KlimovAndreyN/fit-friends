@@ -54,7 +54,7 @@ export const fetchTrainings = createAsyncThunk<ITrainingsWithPaginationRdo, ITra
   Action.FETCH_TRAININGS,
   async (query, { extra }) => {
     const { api } = extra;
-    const queryString = getQueryString(query);
+    const queryString = getQueryString(query); //! проверить что убирает undefined
     const { data } = await api.get<ITrainingsWithPaginationRdo>(joinUrl(ApiServiceRoute.Trainings, queryString));
 
     return data;

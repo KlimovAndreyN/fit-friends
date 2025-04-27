@@ -1,10 +1,16 @@
 import { Fragment } from 'react';
 
+import { ITrainingQuery } from '@backend/shared/core';
+
 import Header from '../header/header';
 import TrainingsForm from '../trainings-form/trainings-form';
 import TrainingsList from '../trainings-list/trainings-list';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsTrainingsFilterActivate, getTrainingsFilter, getTrainingsMaxPrice } from '../../store/training-process/selectors';
+import { fetchTrainings } from '../../store/actions/training-action';
+import { setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
 
 type TrainingsProps = {
   headerTitle: string;
@@ -32,10 +38,26 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
+  //! Warning по F5 - Warning: Cannot update a component (`QuestionnaireRoute`) while rendering a different component (`Trainings`). To locate the bad setState() call inside `Trainings`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render Error Component Stack
 
   const { headerTitle, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
+  const dispatch = useAppDispatch();
+  const trainingsFilter = useAppSelector(getTrainingsFilter);
+  const isTrainingsFilterActivate = useAppSelector(getIsTrainingsFilterActivate);
+  const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
 
   useScrollToTop(); //! а если в useEffect?
+
+
+  const handleFilterOnChange = (newFilter: ITrainingQuery) => {
+    dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
+    dispatch(setTrainingsFilter(newFilter)); //! может все в одно или useEffect
+    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
+  };
+
+  if (!isTrainingsFilterActivate) {
+    dispatch(fetchTrainings(trainingsFilter)); //! может взять из store по месту
+  }
 
   const trainingsList = (<TrainingsList className={listClassName} />);
 
@@ -50,7 +72,10 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <TrainingsForm
                 className={formClassName}
                 ratingPrefixClassName={ratingPrefixClassName}
+                trainingsFilter={trainingsFilter}
+                trainingsMaxPrice={trainingsMaxPrice}
                 startOnZeroRating={startOnZeroRating}
+                onTrainingsFilterChange={handleFilterOnChange}
                 showedFilterSpecializations={showedFilterSpecializations}
                 showedFilterDurations={showedFilterDurations}
                 showedSorting={showedSorting}

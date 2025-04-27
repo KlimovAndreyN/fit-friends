@@ -37,10 +37,10 @@ export const trainingProcess = createSlice(
     name: StoreSlice.TrainingProcess,
     initialState,
     reducers: {
-      setTrainingFilter: (state, action: PayloadAction<ITrainingQuery>) => {
+      setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
         state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
       },
-      setIsTrainingFilterActivate: (state, action: PayloadAction<boolean>) => {
+      setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
         state.isTrainingsFilterActivate = action.payload;
       }
     },
@@ -156,4 +156,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingFilter, setIsTrainingFilterActivate } = trainingProcess.actions;
+export const { setTrainingsFilter, setIsTrainingsFilterActivate } = trainingProcess.actions;
