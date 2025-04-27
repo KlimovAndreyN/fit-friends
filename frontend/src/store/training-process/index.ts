@@ -40,8 +40,6 @@ export const trainingProcess = createSlice(
     initialState,
     reducers: {
       setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
-        console.log('setTrainingsFilter - action.payload', action.payload);
-
         state.trainingsFilter = { ...state.trainingsFilter, ...action.payload };
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {

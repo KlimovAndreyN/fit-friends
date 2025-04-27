@@ -14,6 +14,7 @@ import {
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
 import { setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
+import { hasPriceMaxPropertyKey } from '../../utils/common';
 
 type TrainingsProps = {
   headerTitle: string;
@@ -32,6 +33,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
   // при старте отображается только первая страница 6 карточек
 
+  //! фильтр по калориям, есть максимум и минимум по ТЗ?
   //! может добавить задержку на изменения числовых по времени?
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
@@ -53,7 +55,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
 
   const { priceMax } = trainingsFilter;
-  const hasPriceMaxFilter = (Object.hasOwn(trainingsFilter, 'priceMax'));
   let limitPriceMax: number | undefined = undefined;
 
   if (trainingsMaxPrice !== undefined) {
@@ -64,7 +65,10 @@ function Trainings(props: TrainingsProps): JSX.Element {
     }
   }
 
-  limitPriceMax = (hasPriceMaxFilter) ? limitPriceMax : trainingsMaxPrice;
+  const newTrainingsFilter = {
+    ...trainingsFilter,
+    priceMax: hasPriceMaxPropertyKey(trainingsFilter) ? limitPriceMax : trainingsMaxPrice
+  };
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -78,7 +82,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
-    dispatch(setTrainingsFilter(newFilter));
+    dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
@@ -112,7 +116,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <TrainingsForm
                 className={formClassName}
                 ratingPrefixClassName={ratingPrefixClassName}
-                trainingsFilter={{ ...trainingsFilter, priceMax: limitPriceMax }}
+                trainingsFilter={newTrainingsFilter}
                 trainingsMaxPrice={trainingsMaxPrice}
                 startOnZeroRating={startOnZeroRating}
                 onTrainingsFilterChange={handleFilterOnChange}

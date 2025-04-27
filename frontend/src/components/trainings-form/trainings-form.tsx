@@ -46,37 +46,37 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   };
 
   const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ ...trainingsFilter, priceMin: value.min, priceMax: value.max });
+    onTrainingsFilterChange({ priceMin: value.min, priceMax: value.max });
   };
 
   const handleCaloriesWasteFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ ...trainingsFilter, caloriesWasteMin: value.min, caloriesWasteMax: value.max });
+    onTrainingsFilterChange({ caloriesWasteMin: value.min, caloriesWasteMax: value.max });
   };
 
   const handleRatingFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ ...trainingsFilter, ratingMin: value.min, ratingMax: value.max });
+    onTrainingsFilterChange({ ratingMin: value.min, ratingMax: value.max });
   };
 
   const handleSpecializationsChange = (specialization: Specialization) => {
     if (specializations?.includes(specialization)) {
-      onTrainingsFilterChange({ ...trainingsFilter, specializations: deleteItem(specializations, specialization) });
+      onTrainingsFilterChange({ specializations: deleteItem(specializations, specialization) });
     } else {
       specializations?.push(specialization);
-      onTrainingsFilterChange({ ...trainingsFilter, specializations });
+      onTrainingsFilterChange({ specializations });
     }
   };
 
   const handleDurationsChange = (duration: Duration) => {
     if (durations?.includes(duration)) {
-      onTrainingsFilterChange({ ...trainingsFilter, durations: deleteItem(durations, duration) });
+      onTrainingsFilterChange({ durations: deleteItem(durations, duration) });
     } else {
       durations?.push(duration);
-      onTrainingsFilterChange({ ...trainingsFilter, durations });
+      onTrainingsFilterChange({ durations });
     }
   };
 
   const handleTrainingCatalogFormSortChange = (newSortType: SortType) => {
-    onTrainingsFilterChange({ ...trainingsFilter, sortType: newSortType });
+    onTrainingsFilterChange({ sortType: newSortType });
   };
 
   return (

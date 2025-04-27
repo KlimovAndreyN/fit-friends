@@ -19,3 +19,7 @@ export function getUserRoute(userId: string): string {
 export function isEventEscKey(event: KeyboardEvent): boolean {
   return event.key === 'Escape';
 }
+
+export function hasPriceMaxPropertyKey(object: object): boolean {
+  return Object.hasOwn(object, 'priceMax');
+}
