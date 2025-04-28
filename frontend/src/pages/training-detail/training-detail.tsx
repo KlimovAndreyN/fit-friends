@@ -47,7 +47,8 @@ function TrainingDetail(): JSX.Element {
     return <NotFound />;
   }
 
-  //! если испорльовать ! то ошибку не отработать
+  //! если использовать ! то ошибку не отработать
+  //! поробовать вместо clearDetailTraining и !training использовать const prevLocation = useAppSelector(getPrevLocation);
   if (isFetchDetailTrainingExecuting || (!training)) {
     return <Spinner />;
   }

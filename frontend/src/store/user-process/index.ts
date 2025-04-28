@@ -11,7 +11,9 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   userRole: DefaultUser.ROLE,
 
-  prevLocation: ''
+  prevLocation: '',
+
+  isIndexPageActivate: false
 };
 
 export const userProcess = createSlice(
@@ -21,6 +23,9 @@ export const userProcess = createSlice(
     reducers: {
       setPrevLocation: (state, action: PayloadAction<string>) => {
         state.prevLocation = action.payload;
+      },
+      setIsIndexPageActivate: (state, action: PayloadAction<boolean>) => {
+        state.isIndexPageActivate = action.payload;
       }
     },
     extraReducers(builder) {
@@ -88,4 +93,4 @@ export const userProcess = createSlice(
   }
 );
 
-export const { setPrevLocation } = userProcess.actions;
+export const { setPrevLocation, setIsIndexPageActivate } = userProcess.actions;

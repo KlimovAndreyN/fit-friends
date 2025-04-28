@@ -8,3 +8,5 @@ export const getIsSingUpExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }:
 export const getUserRole = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userRole'] => USER_PROCESS.userRole;
 
 export const getPrevLocation = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['prevLocation'] => USER_PROCESS.prevLocation;
+
+export const getIsIndexPageActivate = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isIndexPageActivate'] => USER_PROCESS.isIndexPageActivate;

@@ -13,7 +13,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { clearDetailTraining, setShowDetailTraining } from '../../store/training-process';
-import { setPrevLocation } from '../../store/user-process';
+import { setIsIndexPageActivate, setPrevLocation } from '../../store/user-process';
+import { getIsIndexPageActivate, getPrevLocation } from '../../store/user-process/selectors';
 import { AppRoute, PageTitle } from '../../const';
 
 function Index(): JSX.Element {
@@ -30,9 +31,15 @@ function Index(): JSX.Element {
   const showDetailTraining = useAppSelector(getShowDetailTraining);
   const isFetchLookForCompanyUserProfilesExecuting = useAppSelector(getIsFetchLookForCompanyUserProfilesExecuting);
   const lookForCompanyUserProfiles = useAppSelector(getLookForCompanyUserProfiles);
+  const prevLocation = useAppSelector(getPrevLocation);
+  const isIndexPageActivate = useAppSelector(getIsIndexPageActivate);
+  console.log('prevLocation', prevLocation);
 
   useEffect(() => {
-    if (!showDetailTraining) {
+    if (!isIndexPageActivate) {
+      dispatch(setPrevLocation(AppRoute.Index));
+      dispatch(setIsIndexPageActivate(true));
+    } else if (prevLocation !== AppRoute.TrainingDetail) {
       dispatch(fetchForSportsmanTrainings());
       dispatch(fetchSpecialTrainings());
       dispatch(fetchPopularTrainings());
@@ -40,8 +47,7 @@ function Index(): JSX.Element {
     }
 
     dispatch(clearDetailTraining());
-    dispatch(setPrevLocation(AppRoute.Index));
-  }, [dispatch, showDetailTraining]);
+  }, [dispatch, isIndexPageActivate, showDetailTraining, prevLocation]);
 
   const handleShowDetailTraining = () => {
     dispatch(setShowDetailTraining(true));

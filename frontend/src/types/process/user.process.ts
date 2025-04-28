@@ -9,4 +9,6 @@ export type UserProcess = {
   userRole: Role;
 
   prevLocation: string;
+
+  isIndexPageActivate: boolean;
 }
