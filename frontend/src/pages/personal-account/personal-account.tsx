@@ -24,13 +24,13 @@ function PersonalAccount(): JSX.Element {
   const userRole = useAppSelector(getUserRole);
   const UserProfile = useAppSelector(getUserProfile);
 
-  const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
-    dispatch(updateUserProfile(updatedUserProfile));
-  };
-
   useEffect(() => {
     dispatch(fetchUserProfile());
   }, [dispatch]);
+
+  const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
+    dispatch(updateUserProfile(updatedUserProfile));
+  };
 
   //! UserProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
   if (isFetchUserProfileExecuting || !UserProfile) {
