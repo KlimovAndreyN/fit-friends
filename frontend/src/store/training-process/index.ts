@@ -39,8 +39,6 @@ const initialState: TrainingProcess = {
   isHaveMoreTrainings: false,
   trainingsMaxPrice: undefined,
 
-  showDetailTraining: false,
-
   isFetchDetailTrainingExecuting: false,
   isFetchDetailTrainingError: false,
   detailTraining: null
@@ -69,9 +67,6 @@ export const trainingProcess = createSlice(
         if (!action.payload) {
           state.trainingsFilter = { ...initialState.trainingsFilter };
         }
-      },
-      setShowDetailTraining: (state, action: PayloadAction<boolean>) => {
-        state.showDetailTraining = action.payload;
       },
       clearDetailTraining: (state) => {
         state.detailTraining = null;
@@ -193,4 +188,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, clearDetailTraining } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailTraining } = trainingProcess.actions;

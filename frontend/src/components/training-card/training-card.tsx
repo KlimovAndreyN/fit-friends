@@ -4,15 +4,13 @@ import { Link } from 'react-router-dom';
 import { ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
-import { OnClick } from '../../types/types';
 import { REVIEWS_ANCHOR, SpecializationTitle } from '../../const';
 
 type TrainingCardProps = {
   training: ITrainingRdo;
-  onShowDetailTraining?: OnClick;
 }
 
-function TrainingCard({ training, onShowDetailTraining }: TrainingCardProps): JSX.Element {
+function TrainingCard({ training }: TrainingCardProps): JSX.Element {
   //! specialization в русские названия переделать при отображении
   //! заголовок в нижнем регистре? или или там стили?
   //! а как выглядят со скидкой? как по ТЗ? как окрулять?
@@ -60,7 +58,7 @@ function TrainingCard({ training, onShowDetailTraining }: TrainingCardProps): JS
           <p className="thumbnail-training__text">{description}</p>
         </div>
         <div className="thumbnail-training__button-wrapper">
-          <Link className="btn btn--small thumbnail-training__button-catalog" to={link} onClick={onShowDetailTraining}>Подробнее</Link>
+          <Link className="btn btn--small thumbnail-training__button-catalog" to={link}>Подробнее</Link>
           <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog" to={{ pathname: link, hash: REVIEWS_ANCHOR }} >Отзывы</Link>
         </div>
       </div>

@@ -18,8 +18,6 @@ export type TrainingProcess = {
   isHaveMoreTrainings: boolean;
   trainingsMaxPrice?: number;
 
-  showDetailTraining: boolean;
-
   isFetchDetailTrainingExecuting: boolean;
   isFetchDetailTrainingError: boolean;
   detailTraining: IDetailTrainingRdo | null;

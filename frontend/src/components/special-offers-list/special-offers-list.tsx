@@ -5,16 +5,14 @@ import classNames from 'classnames';
 import { ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
-import { OnClick } from '../../types/types';
 
 const CHANGE_SLIDER_TIMEOUT = 7000;
 
 type SpecialOffersListProps = {
   offers: ITrainingRdo[];
-  onShowDetailTraining?: OnClick;
 }
 
-function SpecialOffersList({ offers, onShowDetailTraining }: SpecialOffersListProps): JSX.Element | null {
+function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | null {
   //! Как переходить на подробнее? пока сделал ссылку на заголовке
   //! Как правильно округлить цену со скидкой? как ТЗ?
   //! в маркапах были "серые" картинки, а когда взял цветные,
@@ -65,7 +63,7 @@ function SpecialOffersList({ offers, onShowDetailTraining }: SpecialOffersListPr
                     <img src={backgroundPath} width="1040" height="469" alt="promo-photo" />
                   </div>
                   <div className="promo-slider__header">
-                    <Link to={getTrainingRoute(id)} onClick={onShowDetailTraining}>
+                    <Link to={getTrainingRoute(id)}>
                       <h3 className="promo-slider__title">{title}</h3>
                     </Link>
                     <div className="promo-slider__logo">
