@@ -31,7 +31,6 @@ function TrainingDetail(): JSX.Element {
   const { id: trainingId = '' } = useParams();
   const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
   const isFetchDetailTrainingError = useAppSelector(getIsFetchDetailTrainingError);
-
   const training = useAppSelector(getDetailTraining);
 
   useScrollToTop(); //! а если в useEffect?
@@ -48,7 +47,6 @@ function TrainingDetail(): JSX.Element {
   }
 
   //! если использовать ! то ошибку не отработать
-  //! поробовать вместо clearDetailTraining и !training использовать const prevLocation = useAppSelector(getPrevLocation);
   if (isFetchDetailTrainingExecuting || (!training)) {
     return <Spinner />;
   }

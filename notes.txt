@@ -98,6 +98,7 @@ swagger@local.ru
     !можно поискать аналог criticalSection для JavaScript
     !может сделать одно действие fetchIndexPageData, а там синхронно вызвать нужные действия, и таже для других страниц
     пока снова await
+    !может сделать получение на API сразу всего?
   /*
   useEffect(() => {
     const fetchData = async () => {
