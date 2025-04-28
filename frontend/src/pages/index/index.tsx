@@ -37,14 +37,20 @@ function Index(): JSX.Element {
   const isIndexPageActivate = useAppSelector(getIsIndexPageActivate);
 
   useEffect(() => {
+    const fetchData = async () => {
+      // попытка решить проблему при обновления токенов, т.к. вызовы были асинхронные, а получение токенов происходит при ошибке выполениня запроса,
+      // то были сдучаю удаления токенов при втором запросе, т.к. первый уже получил токены, а второй обновлял старые, а их уже нет...
+      await dispatch(fetchForSportsmanTrainings());
+      await dispatch(fetchSpecialTrainings());
+      await dispatch(fetchPopularTrainings());
+      await dispatch(fetchLookForCompanyUserProfiles());
+    };
+
     if (!isIndexPageActivate) {
       dispatch(setPrevLocation(AppRoute.Index));
       dispatch(setIsIndexPageActivate(true));
     } else if (prevLocation !== AppRoute.TrainingDetail) {
-      dispatch(fetchForSportsmanTrainings());
-      dispatch(fetchSpecialTrainings());
-      dispatch(fetchPopularTrainings());
-      dispatch(fetchLookForCompanyUserProfiles());
+      fetchData();
     }
 
     dispatch(clearDetailTraining());

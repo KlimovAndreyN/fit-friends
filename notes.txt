@@ -97,7 +97,7 @@ swagger@local.ru
       еще проверить где dispatch вызван больше одного раза
     !можно поискать аналог criticalSection для JavaScript
     !может сделать одно действие fetchIndexPageData, а там синхронно вызвать нужные действия, и таже для других страниц
-    ! венрул обратно
+    пока снова await
   /*
   useEffect(() => {
     const fetchData = async () => {
