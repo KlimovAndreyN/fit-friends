@@ -10,11 +10,11 @@ import Spinner from '../spinner/spinner';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  getTrainingsMaxPrice, getIsHaveMoreTrainings, getTrainingsFilter, getTrainings,
-  getIsFetchTrainingsExecuting, getIsTrainingsFilterActivate, getShowDetailTraining
+  getIsFetchTrainingsExecuting, getTrainings, getIsTrainingsFilterActivate,
+  getTrainingsMaxPrice, getIsHaveMoreTrainings, getTrainingsFilter,
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { clearDetailTraining, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, setTrainingsFilter } from '../../store/training-process';
+import { clearDetailTraining, getNextPage, setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
 import { setPrevLocation } from '../../store/user-process';
 import { getPrevLocation } from '../../store/user-process/selectors';
 import { hasPriceMaxPropertyKey } from '../../utils/common';
@@ -57,7 +57,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const isFetchTrainingsExecuting = useAppSelector(getIsFetchTrainingsExecuting);
   const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
-  const showDetailTraining = useAppSelector(getShowDetailTraining);
   const prevLocation = useAppSelector(getPrevLocation);
 
   const { priceMax, page } = trainingsFilter;
@@ -80,50 +79,28 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   useEffect(() => {
     if (!isTrainingsFilterActivate) {
-      console.log('isTrainingsFilterActivate === false');
-
-      //dispatch(setPrevLocation(location)); //!
       dispatch(setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }));
-      dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
+      dispatch(setIsTrainingsFilterActivate(true));
     } else {
-      console.log('isTrainingsFilterActivate === true');
-      console.log('prevLocation', prevLocation);
-
       if (prevLocation && (prevLocation !== location) && (prevLocation !== AppRoute.TrainingDetail)) {
-        console.log('prevLocation !== AppRoute.TrainingDetail');
-
-        dispatch(setPrevLocation(location)); //!
-        dispatch(setTrainingsFilter({}));//! setInit
-        dispatch(setIsTrainingsFilterActivate(false)); //! при переходе с других страниц можно false
-      } else
-
-        //!if (!showDetailTraining && (!prevLocation || (prevLocation !== AppRoute.TrainingDetail))) {
-        if (!prevLocation || (prevLocation === location)) {
-          console.log('fetchTrainings');
-
-          dispatch(fetchTrainings(trainingsFilter));
-        }
+        dispatch(setPrevLocation(location));
+        dispatch(setIsTrainingsFilterActivate(false)); // происходит сброс фильтров, можно и не сбрасывать
+      } else if (!prevLocation || (prevLocation === location)) {
+        dispatch(fetchTrainings(trainingsFilter));
+      }
     }
 
     dispatch(clearDetailTraining());
-  }, [dispatch, location, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, showDetailTraining, prevLocation]);
+  }, [dispatch, location, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, prevLocation]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
-    console.log('handleFilterOnChange');
-
-    //dispatch(setShowDetailTraining(false));
     dispatch(setPrevLocation(location));
     dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
-    //dispatch(setShowDetailTraining(false));
     dispatch(setPrevLocation(location));
     dispatch(getNextPage());
-  };
-
-  const handleShowDetailTraining = () => {
-    //dispatch(setShowDetailTraining(true));
   };
 
   return (
@@ -156,7 +133,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
                       trainings={trainings}
                       isHaveMoreTrainings={isHaveMoreTrainings}
                       onNextPageClick={handleNextPageClick}
-                      onShowDetailTraining={handleShowDetailTraining}
                       showedAdditionalDiv={showedAdditionalDiv}
                     />
                   )

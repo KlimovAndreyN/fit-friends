@@ -65,6 +65,10 @@ export const trainingProcess = createSlice(
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
         state.isTrainingsFilterActivate = action.payload;
+
+        if (!action.payload) {
+          state.trainingsFilter = { ...initialState.trainingsFilter };
+        }
       },
       setShowDetailTraining: (state, action: PayloadAction<boolean>) => {
         state.showDetailTraining = action.payload;

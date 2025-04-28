@@ -12,12 +12,11 @@ type TrainingsListProps = {
   trainings: ITrainingRdo[];
   isHaveMoreTrainings: boolean;
   onNextPageClick: OnClick;
-  onShowDetailTraining?: OnClick;
   showedAdditionalDiv?: boolean;
 }
 
 function TrainingsList(props: TrainingsListProps): JSX.Element {
-  const { className, trainings, isHaveMoreTrainings, onNextPageClick, onShowDetailTraining, showedAdditionalDiv } = props;
+  const { className, trainings, isHaveMoreTrainings, onNextPageClick, showedAdditionalDiv } = props;
 
   const handleShowMoreClick = () => {
     onNextPageClick();
@@ -34,7 +33,7 @@ function TrainingsList(props: TrainingsListProps): JSX.Element {
                 trainings.map(
                   (training) => (
                     <li className={`${className}__item`} key={training.id}>
-                      <TrainingCard training={training} onShowDetailTraining={onShowDetailTraining} />
+                      <TrainingCard training={training} />
                     </li>
                   )
                 )
