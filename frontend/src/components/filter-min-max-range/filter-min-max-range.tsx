@@ -1,4 +1,7 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import './rc-slider.styles.css';
 
 import { parseStringNumber } from '@backend/shared/core';
 
@@ -20,11 +23,28 @@ type FilterMinMaxRangeProps = {
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   //! добавить range - двигать мышкой
-  //! проверить что min <= max или в самом запросе или в при обработке
   //! добавить задержку, чтобы позволило ввести число больше, а потом уменьшить/увеличить
 
   const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, value, limitValue, showInputs, onChange } = props;
-  const { min, max } = value;
+  //const { min, max } = value;
+
+  const [savedValue, setSavedValue] = useState(value); // Начальные значения для минимума и максимума
+  const [tempValue, setTempValue] = useState([value.min || limitValue?.min || 0, value.max || limitValue?.max || 0]);
+
+
+  useEffect(() => {
+    setTempValue([savedValue.min || limitValue?.min || 0, savedValue.max || limitValue?.max || 0]);
+
+  }, [savedValue, limitValue]);
+
+
+  const handleChange = (newValue) => {
+    setTempValue(newValue)
+  };
+
+  const handleAfterChange = (newValue) => {
+    setValue1(newValue); // Обновляем основное значение только после отпускания ползунка
+  };
 
   const handleMinInputChange = (event: FormEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -36,14 +56,14 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         newMin = limitValue.min;
       }
 
-      const limitMax = getMin(limitValue?.max, max);
+      const limitMax = getMin(limitValue?.max, value.max);
 
       if (limitMax && (newMin > limitMax)) {
         newMin = limitMax;
       }
     }
 
-    onChange({ min: newMin, max });
+    onChange({ min: newMin, max: value.max });
   };
 
   const handleMaxInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -56,15 +76,16 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         newMax = limitValue.max;
       }
 
-      const limitMin = getMax(limitValue?.min, min);
+      const limitMin = getMax(limitValue?.min, value.min);
 
       if (limitMin && (newMax < limitMin)) {
         newMax = limitMin;
       }
     }
 
-    onChange({ min, max: newMax });
+    onChange({ min: value.min, max: newMax });
   };
+
   const divClassName = `filter-${prefixClassName}`;
   const divLabelClassName = `filter-${(prefixLabelClassName) ? prefixLabelClassName : 'range'}`;
 
@@ -75,11 +96,11 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         showInputs &&
         <div className={divClassName}>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--min`}>
-            <input type="number" id={nameMin} name={nameMin} value={min ?? ''} onChange={handleMinInputChange} />
+            <input type="number" id={nameMin} name={nameMin} value={value.min ?? ''} onChange={handleMinInputChange} />
             <label htmlFor={nameMin}>от</label>
           </div>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--max`}>
-            <input type="number" id={nameMax} name={nameMax} value={max ?? ''} onChange={handleMaxInputChange} />
+            <input type="number" id={nameMax} name={nameMax} value={value.max ?? ''} onChange={handleMaxInputChange} />
             <label htmlFor={nameMax}>до</label>
           </div>
         </div>
@@ -93,6 +114,24 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
           {prefixLabelClassName && <span>{limitValue?.min ?? ''}</span>}
           <button className={`${divLabelClassName}__max-toggle`}><span className="visually-hidden">Максимальное значение</span></button>
           {prefixLabelClassName && <span>{limitValue?.max ?? ''}</span>}
+        </div>
+      </div>
+      <br />
+      <div>
+        <Slider
+          min={limitValue?.min}
+          max={limitValue?.max}
+          value={tempValue}
+          range
+          onChange={handleChange}
+          onChangeComplete={handleAfterChange}
+          allowCross={false} // Запретить пересечение ползунков
+        />
+        <div>
+          <strong>Минимум:</strong> {tempValue[0]} <br />
+          <strong>Максимум:</strong> {tempValue[1]}<br />
+          <strong>Минимум1:</strong> {savedValue.min} <br />
+          <strong>Максимум1:</strong> {savedValue.min}
         </div>
       </div>
     </div>

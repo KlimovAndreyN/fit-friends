@@ -15,7 +15,8 @@ const Limit = {
   RATING_ZERO: 0,
   RATING_MIN: 1,
   RATING_MAX: 5,
-  CALORIES_WASTE_MIN: 1
+  CALORIES_WASTE_MIN: 1,
+  CALORIES_WASTE_MAX: 5000 // то ТЗ в фильтре нет ограничения, но в ДТО есть, а для слайдера нужно
 } as const;
 
 type TrainingsFormProps = {
@@ -35,7 +36,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
   const caloriesWasteLimitValue: MinMaxRange = {
     min: Limit.CALORIES_WASTE_MIN,
-    max: undefined
+    max: Limit.CALORIES_WASTE_MAX
   };
   const ratingLimitValue: MinMaxRange = {
     min: (startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN,
