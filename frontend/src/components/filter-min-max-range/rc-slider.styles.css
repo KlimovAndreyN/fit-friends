@@ -18,6 +18,7 @@
 /* Ползунки */
 .rc-slider-handle {
   border: 8px solid #333;
+  background-color: #333;
   opacity: 1;
   width: 16px;
   height: 16px;
@@ -32,10 +33,12 @@
 .rc-slider-handle-dragging {
 */
   border-color: #333;
+  background-color: #333;
   box-shadow: 0 0 0 2px #adadad;
 }
 
 /* Наведенный ползунок */
 .rc-slider-handle:hover {
   border-color: #adadad;
+  background-color: #adadad;
 }

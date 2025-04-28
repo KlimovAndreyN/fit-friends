@@ -23,6 +23,8 @@ type FilterMinMaxRangeProps = {
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   //! добавить задержку, чтобы позволило ввести число больше, а потом уменьшить/увеличить
+  // Оформление слайдеров сделал через rc-slider.styles.css, наверное есть способ передать классы из маркапа
+  // __scale  __bar  __min-toggle   __max-toggle
 
   const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, value, limitValue, showInputs, onChange } = props;
   const { min: valueMin, max: valueMax } = value;
@@ -111,18 +113,6 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         </div>
       }
       <div className={divLabelClassName}>
-        <div className={`${divLabelClassName}__scale`}>
-          <div className={`${divLabelClassName}__bar`}><span className="visually-hidden">Полоса прокрутки</span></div>
-        </div>
-        <div className={`${divLabelClassName}__control`}>
-          <button className={`${divLabelClassName}__min-toggle`}><span className="visually-hidden">Минимальное значение</span></button>
-          {prefixLabelClassName && <span>{limitValueMin ?? ''}</span>}
-          <button className={`${divLabelClassName}__max-toggle`}><span className="visually-hidden">Максимальное значение</span></button>
-          {prefixLabelClassName && <span>{limitValueMax ?? ''}</span>}
-        </div>
-      </div>
-      <br />
-      <div>
         <Slider
           min={limitValueMin}
           max={limitValueMax}
@@ -132,6 +122,12 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
           onChangeComplete={handleSliderChangeComplete}
           allowCross={false}
         />
+        <div className={`${divLabelClassName}__control`}>
+          {prefixLabelClassName && <span>{limitValueMin ?? ''}</span>}
+          {prefixLabelClassName && <span>{limitValueMax ?? ''}</span>}
+        </div>
+      </div>
+      <div>
       </div>
     </div>
   );
