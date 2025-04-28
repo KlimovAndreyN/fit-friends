@@ -6,3 +6,5 @@ export const getAuthorizationStatus = ({ [StoreSlice.UserProcess]: USER_PROCESS 
 export const getIsSingInExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isSingInExecuting'] => USER_PROCESS.isSingInExecuting;
 export const getIsSingUpExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isSingUpExecuting'] => USER_PROCESS.isSingUpExecuting;
 export const getUserRole = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userRole'] => USER_PROCESS.userRole;
+
+export const getPrevLocation = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['prevLocation'] => USER_PROCESS.prevLocation;

@@ -1,11 +1,12 @@
 import Trainings from '../../components/trainings/trainings';
 
-import { PageTitle } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
 
 function TrainingsCatalog(): JSX.Element {
   return (
     <Trainings
       headerTitle={PageTitle.TrainingsCatalog}
+      location={AppRoute.TrainingsCatalog}
       title='Каталог тренировок'
       formClassName='gym-catalog-form'
       listClassName='training-catalog'

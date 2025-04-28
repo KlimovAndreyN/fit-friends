@@ -14,9 +14,10 @@ import { getRandomItem } from '@backend/shared/helpers';
 
 import { registerUser } from '../../store/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setPrevLocation } from '../../store/user-process';
 import { getIsSingUpExecuting } from '../../store/user-process/selectors';
 import { Option } from '../../types/types';
-import { DefaultUser, LOCATIONS, PageTitle } from '../../const';
+import { AppRoute, DefaultUser, LOCATIONS, PageTitle } from '../../const';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -76,6 +77,7 @@ function SignUp(): JSX.Element {
     };
 
     dispatch(registerUser(dto));
+    dispatch(setPrevLocation(AppRoute.SignUp));
   };
 
   const popupFormProps = {

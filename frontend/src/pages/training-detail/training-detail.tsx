@@ -11,7 +11,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { fetchDetailTraining } from '../../store/actions/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
-import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
+import { setPrevLocation } from '../../store/user-process';
+import { AppRoute, PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
 function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
@@ -37,6 +38,7 @@ function TrainingDetail(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchDetailTraining(trainingId));
+    dispatch(setPrevLocation(AppRoute.TrainingDetail));
   }, [dispatch, trainingId]);
 
   if (!trainingId || isFetchDetailTrainingError) {
@@ -57,6 +59,7 @@ function TrainingDetail(): JSX.Element {
   const durationText = TrainingDurationTitle[duration];
   const ratingText = rating.toFixed(0);
 
+  //! отладка
   // eslint-disable-next-line no-console
   console.log('Training - coachId', coachId);
   // eslint-disable-next-line no-console

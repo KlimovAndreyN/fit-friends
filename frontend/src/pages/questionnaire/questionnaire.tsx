@@ -4,7 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { getIsCreateQuestionnaireExecuting } from '../../store/user-profile-process/selectors';
 import { createQuestionnaire } from '../../store/actions/user-profile-action';
+import { setPrevLocation } from '../../store/user-process';
 import { CreateQuestionnaireDto } from '../../types/types';
+import { AppRoute } from '../../const';
 
 function Questionnaire(): JSX.Element | null {
   //! сделать файлы-сертификаты для тренера
@@ -15,6 +17,7 @@ function Questionnaire(): JSX.Element | null {
 
   const handleOnSubmit = (dto: CreateQuestionnaireDto) => {
     dispatch(createQuestionnaire({ dto, userRole }));
+    dispatch(setPrevLocation(AppRoute.Questionnaire));
   };
 
   return (

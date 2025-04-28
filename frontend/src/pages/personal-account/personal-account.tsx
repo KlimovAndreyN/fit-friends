@@ -10,9 +10,10 @@ import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
+import { setPrevLocation } from '../../store/user-process';
 import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
 import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-profile-action';
-import { PageTitle } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
   //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
@@ -26,6 +27,7 @@ function PersonalAccount(): JSX.Element {
 
   useEffect(() => {
     dispatch(fetchUserProfile());
+    dispatch(setPrevLocation(AppRoute.PersonalAccount));
   }, [dispatch]);
 
   const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {

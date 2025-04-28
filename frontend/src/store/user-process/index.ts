@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { UserProcess } from '../../types/process/user.process';
 import { AuthorizationStatus } from '../../types/types';
@@ -9,14 +9,20 @@ const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isSingInExecuting: false,
   isSingUpExecuting: false,
-  userRole: DefaultUser.ROLE
+  userRole: DefaultUser.ROLE,
+
+  prevLocation: ''
 };
 
 export const userProcess = createSlice(
   {
     name: StoreSlice.UserProcess,
     initialState,
-    reducers: {},
+    reducers: {
+      setPrevLocation: (state, action: PayloadAction<string>) => {
+        state.prevLocation = action.payload;
+      }
+    },
     extraReducers(builder) {
       builder
         .addCase(
@@ -81,3 +87,5 @@ export const userProcess = createSlice(
     }
   }
 );
+
+export const { setPrevLocation } = userProcess.actions;

@@ -7,4 +7,6 @@ export type UserProcess = {
   isSingInExecuting: boolean;
   isSingUpExecuting: boolean;
   userRole: Role;
+
+  prevLocation: string;
 }

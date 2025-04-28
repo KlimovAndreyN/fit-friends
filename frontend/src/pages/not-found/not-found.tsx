@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import PopupForm from '../../components/popup-form/popup-form';
+
 import { AppRoute, PageTitle } from '../../const';
 
 function NotFound(): JSX.Element {

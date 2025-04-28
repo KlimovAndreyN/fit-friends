@@ -13,7 +13,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { clearDetailTraining, setShowDetailTraining } from '../../store/training-process';
-import { PageTitle } from '../../const';
+import { setPrevLocation } from '../../store/user-process';
+import { AppRoute, PageTitle } from '../../const';
 
 function Index(): JSX.Element {
   //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проерить на маркапах
@@ -39,6 +40,7 @@ function Index(): JSX.Element {
     }
 
     dispatch(clearDetailTraining());
+    dispatch(setPrevLocation(AppRoute.Index));
   }, [dispatch, showDetailTraining]);
 
   const handleShowDetailTraining = () => {

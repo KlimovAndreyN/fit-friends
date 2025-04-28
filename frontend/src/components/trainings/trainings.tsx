@@ -15,10 +15,14 @@ import {
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
 import { clearDetailTraining, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, setTrainingsFilter } from '../../store/training-process';
+import { setPrevLocation } from '../../store/user-process';
+import { getPrevLocation } from '../../store/user-process/selectors';
 import { hasPriceMaxPropertyKey } from '../../utils/common';
+import { AppRoute } from '../../const';
 
 type TrainingsProps = {
   headerTitle: string;
+  location: string;
   title: string;
   formClassName: string;
   listClassName: string;
@@ -45,7 +49,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
-  const { headerTitle, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
+  const { headerTitle, location, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
   const dispatch = useAppDispatch();
   const trainingsFilter = useAppSelector(getTrainingsFilter);
   const trainings = useAppSelector(getTrainings);
@@ -54,6 +58,9 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
   const showDetailTraining = useAppSelector(getShowDetailTraining);
+  const prevLocation = useAppSelector(getPrevLocation);
+  console.log('prevLocation', prevLocation);
+  console.log('isTrainingsFilterActivate', isTrainingsFilterActivate);
 
   const { priceMax, page } = trainingsFilter;
   let limitPriceMax: number | undefined = undefined;
@@ -75,29 +82,46 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   useEffect(() => {
     if (!isTrainingsFilterActivate) {
+      console.log('!isTrainingsFilterActivate');
+
+      dispatch(setPrevLocation(location)); //!
       dispatch(setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }));
       dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
     } else {
-      if (!showDetailTraining) {
+      console.log('isTrainingsFilterActivate');
+
+      if (!showDetailTraining && (!prevLocation || (prevLocation !== AppRoute.TrainingDetail))) {
+        console.log('fetchTrainings');
+
         dispatch(fetchTrainings(trainingsFilter));
+      } else if (prevLocation !== location) {
+        dispatch(setPrevLocation(location)); //!
+        dispatch(setTrainingsFilter({
+          page: 1
+        }));
+        dispatch(setIsTrainingsFilterActivate(false)); //! при переходе с других страниц можно false
       }
     }
 
     dispatch(clearDetailTraining());
-  }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, showDetailTraining]);
+  }, [dispatch, location, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, showDetailTraining, prevLocation]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
-    dispatch(setShowDetailTraining(false));
+    console.log('handleFilterOnChange');
+
+    //dispatch(setShowDetailTraining(false));
+    dispatch(setPrevLocation(location));
     dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
-    dispatch(setShowDetailTraining(false));
+    //dispatch(setShowDetailTraining(false));
+    dispatch(setPrevLocation(location));
     dispatch(getNextPage());
   };
 
   const handleShowDetailTraining = () => {
-    dispatch(setShowDetailTraining(true));
+    //dispatch(setShowDetailTraining(true));
   };
 
   return (

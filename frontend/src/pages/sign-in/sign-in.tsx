@@ -1,15 +1,16 @@
 import { FormEvent } from 'react';
 import classNames from 'classnames';
 
-import PopupForm from '../../components/popup-form/popup-form';
-
 import { ILoginUserDto } from '@backend/shared/core';
+
+import PopupForm from '../../components/popup-form/popup-form';
+import CustomInput from '../../components/custom-input/custom-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsSingInExecuting } from '../../store/user-process/selectors';
+import { setPrevLocation } from '../../store/user-process';
 import { loginUser } from '../../store/actions/user-action';
-import { PageTitle } from '../../const';
-import CustomInput from '../../components/custom-input/custom-input';
+import { AppRoute, PageTitle } from '../../const';
 
 enum FormFieldName {
   Email = 'email',
@@ -33,6 +34,7 @@ function SignIn(): JSX.Element {
     const dto: ILoginUserDto = { email, password };
 
     dispatch(loginUser(dto));
+    dispatch(setPrevLocation(AppRoute.SignIn));
   };
 
   const popupFormProps = {
