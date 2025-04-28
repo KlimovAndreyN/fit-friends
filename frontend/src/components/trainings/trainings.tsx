@@ -9,11 +9,11 @@ import TrainingsList from '../trainings-list/trainings-list';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
-  getIsFetchTrainingsExecuting, getIsHaveMoreTrainings, getTrainingsFilter,
-  getTrainings, getIsTrainingsFilterActivate, getTrainingsMaxPrice
+  getTrainingsMaxPrice, getIsHaveMoreTrainings, getTrainingsFilter, getTrainings,
+  getIsFetchTrainingsExecuting, getIsTrainingsFilterActivate, getShowDetailTraining
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { getNextPage, setIsTrainingsFilterActivate, setTrainingsFilter } from '../../store/training-process';
+import { getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, setTrainingsFilter } from '../../store/training-process';
 import { hasPriceMaxPropertyKey } from '../../utils/common';
 
 type TrainingsProps = {
@@ -31,8 +31,6 @@ type TrainingsProps = {
 
 function Trainings(props: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
-  // при старте отображается только первая страница 6 карточек
-  //! при проходе подробно и возхврате обратно, еще раз выполнятся feath... когда 2 страница как и на главной
 
   //! фильтр по калориям, есть максимум и минимум по ТЗ? от 1
   //! может добавить задержку на изменения числовых по времени?
@@ -44,16 +42,16 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
-  //! Warning по F5 - Warning: Cannot update a component (`QuestionnaireRoute`) while rendering a different component (`Trainings`). To locate the bad setState() call inside `Trainings`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render Error Component Stack
 
   const { headerTitle, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
   const dispatch = useAppDispatch();
   const trainingsFilter = useAppSelector(getTrainingsFilter);
+  const trainings = useAppSelector(getTrainings);
   const isTrainingsFilterActivate = useAppSelector(getIsTrainingsFilterActivate);
   const isFetchTrainingsExecuting = useAppSelector(getIsFetchTrainingsExecuting);
-  const trainings = useAppSelector(getTrainings);
   const isHaveMoreTrainings = useAppSelector(getIsHaveMoreTrainings);
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
+  const showDetailTraining = useAppSelector(getShowDetailTraining);
 
   const { priceMax, page } = trainingsFilter;
   let limitPriceMax: number | undefined = undefined;
@@ -78,16 +76,24 @@ function Trainings(props: TrainingsProps): JSX.Element {
       dispatch(setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }));
       dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
     } else {
-      dispatch(fetchTrainings(trainingsFilter));
+      if (!showDetailTraining) {
+        dispatch(fetchTrainings(trainingsFilter));
+      }
     }
-  }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating]);
+  }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, showDetailTraining]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
+    dispatch(setShowDetailTraining(false));
     dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
+    dispatch(setShowDetailTraining(false));
     dispatch(getNextPage());
+  };
+
+  const handleShowDetailTraining = () => {
+    dispatch(setShowDetailTraining(true));
   };
 
   //! возможно вместо лоадера нужно блокировать форму по isFetchTrainingsExecuting и список тернировок не очищать...
@@ -103,6 +109,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
         trainings={trainings}
         isHaveMoreTrainings={isHaveMoreTrainings}
         onNextPageClick={handleNextPageClick}
+        onShowDetailTraining={handleShowDetailTraining}
       />
     );
 

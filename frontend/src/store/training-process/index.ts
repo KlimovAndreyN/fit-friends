@@ -38,6 +38,7 @@ const initialState: TrainingProcess = {
   trainings: [],
   isHaveMoreTrainings: false,
   trainingsMaxPrice: undefined,
+  showDetailTraining: false,
 
   isFetchDetailTrainingExecuting: false,
   detailTraining: null
@@ -62,6 +63,9 @@ export const trainingProcess = createSlice(
       },
       setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
         state.isTrainingsFilterActivate = action.payload;
+      },
+      setShowDetailTraining: (state, action: PayloadAction<boolean>) => {
+        state.showDetailTraining = action.payload;
       }
     },
     extraReducers(builder) {
@@ -144,6 +148,8 @@ export const trainingProcess = createSlice(
           (state, action) => {
             const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
 
+            console.log('state.isFristPage', state.isFristPage);
+
             if (state.isFristPage) {
               state.trainings = entities;
             } else {
@@ -179,4 +185,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining } = trainingProcess.actions;

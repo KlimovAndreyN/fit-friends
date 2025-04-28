@@ -12,9 +12,10 @@ type TrainingsListProps = {
   trainings: ITrainingRdo[];
   isHaveMoreTrainings: boolean;
   onNextPageClick: OnClick;
+  onShowDetailTraining?: OnClick;
 }
 
-function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageClick }: TrainingsListProps): JSX.Element {
+function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageClick, onShowDetailTraining }: TrainingsListProps): JSX.Element {
 
   const handleShowMoreClick = () => {
     onNextPageClick();
@@ -31,7 +32,7 @@ function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageCl
                 trainings.map(
                   (training) => (
                     <li className={`${className}__item`} key={training.id}>
-                      <TrainingCard training={training} />
+                      <TrainingCard training={training} onShowDetailTraining={onShowDetailTraining} />
                     </li>
                   )
                 )
