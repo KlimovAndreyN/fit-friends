@@ -16,34 +16,39 @@ type FilterMinMaxRangeProps = {
   prefixClassName: string;
   prefixLabelClassName?: string;
   value: MinMaxRange;
-  limitValue?: MinMaxRange;
+  limitValue: MinMaxRange;
   showInputs?: boolean;
   onChange: (newValue: MinMaxRange) => void;
 }
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
-  //! добавить range - двигать мышкой
   //! добавить задержку, чтобы позволило ввести число больше, а потом уменьшить/увеличить
 
   const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, value, limitValue, showInputs, onChange } = props;
-  //const { min, max } = value;
-
-  const [savedValue, setSavedValue] = useState(value); // Начальные значения для минимума и максимума
-  const [tempValue, setTempValue] = useState([value.min || limitValue?.min || 0, value.max || limitValue?.max || 0]);
-
+  const { min: valueMin, max: valueMax } = value;
+  const { min: limitValueMin, max: limitValueMax } = limitValue;
+  const [tempValue, setTempValue] = useState([0, 0]);
+  const [isMaxChange, setIsMaxChange] = useState(false);
+  const [tempMin, tempMax] = tempValue;
 
   useEffect(() => {
-    setTempValue([savedValue.min || limitValue?.min || 0, savedValue.max || limitValue?.max || 0]);
+    setTempValue([valueMin || limitValueMin || 0, valueMax || limitValueMax || 0]);
 
-  }, [savedValue, limitValue]);
+  }, [value, valueMin, valueMax, limitValueMin, limitValueMax]);
 
-
-  const handleChange = (newValue) => {
-    setTempValue(newValue)
+  const handleSliderChange = (newValue: number | number[]) => {
+    if (Array.isArray(newValue)) {
+      setIsMaxChange(true);
+      setTempValue(newValue);
+    }
   };
 
-  const handleAfterChange = (newValue) => {
-    setValue1(newValue); // Обновляем основное значение только после отпускания ползунка
+  const handleSliderChangeComplete = (newValue: number | number[]) => {
+    if (Array.isArray(newValue)) {
+      const [min, max] = newValue;
+
+      onChange({ min, max });
+    }
   };
 
   const handleMinInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -52,18 +57,18 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     let newMin = parseStringNumber(event.currentTarget.value);
 
     if (newMin !== undefined) {
-      if (limitValue && limitValue.min && (newMin < limitValue.min)) {
-        newMin = limitValue.min;
+      if (limitValueMin && (newMin < limitValueMin)) {
+        newMin = limitValueMin;
       }
 
-      const limitMax = getMin(limitValue?.max, value.max);
+      const limitMax = getMin(limitValueMax, valueMax);
 
       if (limitMax && (newMin > limitMax)) {
         newMin = limitMax;
       }
     }
 
-    onChange({ min: newMin, max: value.max });
+    onChange({ min: newMin, max: valueMax });
   };
 
   const handleMaxInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -72,18 +77,18 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     let newMax = parseStringNumber(event.currentTarget.value);
 
     if (newMax !== undefined) {
-      if (limitValue && limitValue.max && (newMax > limitValue.max)) {
-        newMax = limitValue.max;
+      if (limitValueMax && (newMax > limitValueMax)) {
+        newMax = limitValueMax;
       }
 
-      const limitMin = getMax(limitValue?.min, value.min);
+      const limitMin = getMax(limitValueMin, valueMin);
 
       if (limitMin && (newMax < limitMin)) {
         newMax = limitMin;
       }
     }
 
-    onChange({ min: value.min, max: newMax });
+    onChange({ min: valueMin, max: newMax });
   };
 
   const divClassName = `filter-${prefixClassName}`;
@@ -96,11 +101,11 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         showInputs &&
         <div className={divClassName}>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--min`}>
-            <input type="number" id={nameMin} name={nameMin} value={value.min ?? ''} onChange={handleMinInputChange} />
+            <input type="number" id={nameMin} name={nameMin} value={tempMin ?? ''} onChange={handleMinInputChange} />
             <label htmlFor={nameMin}>от</label>
           </div>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--max`}>
-            <input type="number" id={nameMax} name={nameMax} value={value.max ?? ''} onChange={handleMaxInputChange} />
+            <input type="number" id={nameMax} name={nameMax} value={((valueMax === undefined) && (!isMaxChange)) ? '' : tempMax ?? ''} onChange={handleMaxInputChange} />
             <label htmlFor={nameMax}>до</label>
           </div>
         </div>
@@ -111,28 +116,22 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         </div>
         <div className={`${divLabelClassName}__control`}>
           <button className={`${divLabelClassName}__min-toggle`}><span className="visually-hidden">Минимальное значение</span></button>
-          {prefixLabelClassName && <span>{limitValue?.min ?? ''}</span>}
+          {prefixLabelClassName && <span>{limitValueMin ?? ''}</span>}
           <button className={`${divLabelClassName}__max-toggle`}><span className="visually-hidden">Максимальное значение</span></button>
-          {prefixLabelClassName && <span>{limitValue?.max ?? ''}</span>}
+          {prefixLabelClassName && <span>{limitValueMax ?? ''}</span>}
         </div>
       </div>
       <br />
       <div>
         <Slider
-          min={limitValue?.min}
-          max={limitValue?.max}
+          min={limitValueMin}
+          max={limitValueMax}
           value={tempValue}
           range
-          onChange={handleChange}
-          onChangeComplete={handleAfterChange}
-          allowCross={false} // Запретить пересечение ползунков
+          onChange={handleSliderChange}
+          onChangeComplete={handleSliderChangeComplete}
+          allowCross={false}
         />
-        <div>
-          <strong>Минимум:</strong> {tempValue[0]} <br />
-          <strong>Максимум:</strong> {tempValue[1]}<br />
-          <strong>Минимум1:</strong> {savedValue.min} <br />
-          <strong>Максимум1:</strong> {savedValue.min}
-        </div>
       </div>
     </div>
   );

@@ -25,7 +25,17 @@
   cursor: pointer;
 }
 
-/* Активный ползунок */
+/* Ползунок в режиме перетаскивания*/
+.rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+  /*
+так не срабатывет, остатся исходные стили
+.rc-slider-handle-dragging {
+*/
+  border-color: #333;
+  box-shadow: 0 0 0 2px #adadad;
+}
+
+/* Наведенный ползунок */
 .rc-slider-handle:hover {
   border-color: #adadad;
 }
