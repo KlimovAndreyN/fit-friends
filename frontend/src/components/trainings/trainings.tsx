@@ -59,8 +59,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
   const trainingsMaxPrice = useAppSelector(getTrainingsMaxPrice);
   const showDetailTraining = useAppSelector(getShowDetailTraining);
   const prevLocation = useAppSelector(getPrevLocation);
-  console.log('prevLocation', prevLocation);
-  console.log('isTrainingsFilterActivate', isTrainingsFilterActivate);
 
   const { priceMax, page } = trainingsFilter;
   let limitPriceMax: number | undefined = undefined;
@@ -82,25 +80,29 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   useEffect(() => {
     if (!isTrainingsFilterActivate) {
-      console.log('!isTrainingsFilterActivate');
+      console.log('isTrainingsFilterActivate === false');
 
-      dispatch(setPrevLocation(location)); //!
+      //dispatch(setPrevLocation(location)); //!
       dispatch(setTrainingsFilter({ ratingMin: (startOnZeroRating) ? 0 : 1 }));
       dispatch(setIsTrainingsFilterActivate(true)); //! при переходе с других страниц можно false
     } else {
-      console.log('isTrainingsFilterActivate');
+      console.log('isTrainingsFilterActivate === true');
+      console.log('prevLocation', prevLocation);
 
-      if (!showDetailTraining && (!prevLocation || (prevLocation !== AppRoute.TrainingDetail))) {
-        console.log('fetchTrainings');
+      if (prevLocation && (prevLocation !== location) && (prevLocation !== AppRoute.TrainingDetail)) {
+        console.log('prevLocation !== AppRoute.TrainingDetail');
 
-        dispatch(fetchTrainings(trainingsFilter));
-      } else if (prevLocation !== location) {
         dispatch(setPrevLocation(location)); //!
-        dispatch(setTrainingsFilter({
-          page: 1
-        }));
+        dispatch(setTrainingsFilter({}));//! setInit
         dispatch(setIsTrainingsFilterActivate(false)); //! при переходе с других страниц можно false
-      }
+      } else
+
+        //!if (!showDetailTraining && (!prevLocation || (prevLocation !== AppRoute.TrainingDetail))) {
+        if (!prevLocation || (prevLocation === location)) {
+          console.log('fetchTrainings');
+
+          dispatch(fetchTrainings(trainingsFilter));
+        }
     }
 
     dispatch(clearDetailTraining());
