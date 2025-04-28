@@ -31,26 +31,17 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
 
     let newMin = parseStringNumber(event.currentTarget.value);
 
-    //! мининум учесть!
-    //! отладить
-    console.log('newMin', newMin);
-
-    if (newMin) {
+    if (newMin !== undefined) {
       if (limitValue && limitValue.min && (newMin < limitValue.min)) {
         newMin = limitValue.min;
-        console.log('newMin', newMin);
       }
 
       const limitMax = getMin(limitValue?.max, max);
-      console.log('limitMax', limitMax);
 
       if (limitMax && (newMin > limitMax)) {
         newMin = limitMax;
-        console.log('newMin', newMin);
       }
     }
-
-    console.log('newMin', newMin);
 
     onChange({ min: newMin, max });
   };
@@ -58,10 +49,9 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   const handleMaxInputChange = (event: FormEvent<HTMLInputElement>) => {
     event.preventDefault();
 
-    //! отладить
     let newMax = parseStringNumber(event.currentTarget.value);
 
-    if (newMax) {
+    if (newMax !== undefined) {
       if (limitValue && limitValue.max && (newMax > limitValue.max)) {
         newMax = limitValue.max;
       }
