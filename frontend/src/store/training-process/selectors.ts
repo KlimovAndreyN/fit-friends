@@ -21,4 +21,5 @@ export const getTrainingsMaxPrice = ({ [StoreSlice.TrainingProcess]: TRAINING_PR
 export const getShowDetailTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['showDetailTraining'] => TRAINING_PROCESS.showDetailTraining;
 
 export const getIsFetchDetailTrainingExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isFetchDetailTrainingExecuting'] => TRAINING_PROCESS.isFetchDetailTrainingExecuting;
+export const getIsFetchDetailTrainingError = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isFetchDetailTrainingError'] => TRAINING_PROCESS.isFetchDetailTrainingError;
 export const getDetailTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['detailTraining'] => TRAINING_PROCESS.detailTraining;

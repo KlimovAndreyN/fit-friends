@@ -42,6 +42,7 @@ const initialState: TrainingProcess = {
   showDetailTraining: false,
 
   isFetchDetailTrainingExecuting: false,
+  isFetchDetailTrainingError: false,
   detailTraining: null
 };
 
@@ -67,6 +68,9 @@ export const trainingProcess = createSlice(
       },
       setShowDetailTraining: (state, action: PayloadAction<boolean>) => {
         state.showDetailTraining = action.payload;
+      },
+      clearDetailTraining: (state) => {
+        state.detailTraining = null;
       }
     },
     extraReducers(builder) {
@@ -164,12 +168,13 @@ export const trainingProcess = createSlice(
           fetchDetailTraining.pending,
           (state) => {
             state.isFetchDetailTrainingExecuting = true;
+            state.isFetchDetailTrainingError = false;
           }
         )
         .addCase(
           fetchDetailTraining.rejected,
           (state) => {
-            state.detailTraining = initialState.detailTraining;
+            state.isFetchDetailTrainingError = true;
             state.isFetchDetailTrainingExecuting = false;
           }
         )
@@ -184,4 +189,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, clearDetailTraining } = trainingProcess.actions;

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import BackButton from '../back-button/back-button';
-import MainSpinner from '../main-spinner/main-spinner';
 import UserPhoto from '../user-photo/user-photo';
+import Spinner from '../spinner/spinner';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFetchReviewsExecuting, getReviews } from '../../store/review-process/selectors';
@@ -24,18 +24,12 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
   const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);
   const reviews = useAppSelector(getReviews);
 
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('isFetchReviewsExecuting', isFetchReviewsExecuting);
-  //
-
   useEffect(() => {
     dispatch(fetchReviews(trainingId));
   }, [dispatch, trainingId]);
 
   if (isFetchReviewsExecuting) {
-    //! свой спинер бы
-    return <MainSpinner />;
+    return <Spinner />;
   }
 
   return (

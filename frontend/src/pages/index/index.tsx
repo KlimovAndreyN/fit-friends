@@ -12,8 +12,8 @@ import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserPro
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
+import { clearDetailTraining, setShowDetailTraining } from '../../store/training-process';
 import { PageTitle } from '../../const';
-import { setShowDetailTraining } from '../../store/training-process';
 
 function Index(): JSX.Element {
   //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проерить на маркапах
@@ -37,6 +37,8 @@ function Index(): JSX.Element {
       dispatch(fetchPopularTrainings());
       dispatch(fetchLookForCompanyUserProfiles());
     }
+
+    dispatch(clearDetailTraining());
   }, [dispatch, showDetailTraining]);
 
   const handleShowDetailTraining = () => {

@@ -1,52 +1,53 @@
 import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import UserPhoto from '../../components/user-photo/user-photo';
 import NotFound from '../not-found/not-found';
+import Spinner from '../../components/spinner/spinner';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { fetchDetailTraining } from '../../store/actions/training-action';
-import { getDetailTraining, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
+import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
 function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
-  //! есть компоты для разных елементов, нужны при редактировании
+  //! есть компоненты для разных элементов, нужны при редактировании - перепроверить
   //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
   //! а как выглядят со скидкой? как по ТЗ? как окрулять?
   //! как округлять рейтинг? как по ТЗ? пока округлил до целых
   //! сделал для video__thumbnail - backgroundPath из rdo? как по ТЗ
-  //! обработать пустой avatarFilePath... а может у тренера фото обязательное...  как по ТЗ?
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
   //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы?
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
-  const { id: trainingId } = useParams();
+  const { id: trainingId = '' } = useParams();
   const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
+  const isFetchDetailTrainingError = useAppSelector(getIsFetchDetailTrainingError);
+
   const training = useAppSelector(getDetailTraining);
 
   useScrollToTop(); //! а если в useEffect?
 
   useEffect(() => {
-    dispatch(fetchDetailTraining(trainingId || '')); //! а как без ''?
+    dispatch(fetchDetailTraining(trainingId));
   }, [dispatch, trainingId]);
 
-  if (isFetchDetailTrainingExecuting) {
-    //! свой спинер бы
-    return <MainSpinner />;
-  }
-
-  if (!trainingId || !training) {
+  if (!trainingId || isFetchDetailTrainingError) {
     //! проверить как будет выглядеть
     //! еще бы дополнительный текст добавить
     return <NotFound />;
+  }
+
+  //! если испорльовать ! то ошибку не отработать
+  if (isFetchDetailTrainingExecuting || (!training)) {
+    return <Spinner />;
   }
 
   const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;

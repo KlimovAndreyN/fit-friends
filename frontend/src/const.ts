@@ -7,9 +7,11 @@ export const MAIN_TITLE = 'FitFriends';
 export const ID_PARAM = ':id';
 export const REVIEWS_ANCHOR = 'reviews';
 
+export const LOADING_TEXT = 'Загрузка...';
+
 export enum PageTitle {
   Index = MAIN_TITLE,
-  Loading = 'Загрузка...',
+  Loading = LOADING_TEXT,
   Intro = 'Разводящая',
   SignIn = 'Войти',
   SignUp = 'Регистрация',

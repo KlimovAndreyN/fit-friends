@@ -11,17 +11,24 @@ import { StoreSlice } from '../../const';
 const initialState: UserProfileProcess = {
   isExistQuestionnaireExecuting: false,
   existQuestionnaire: false,
+
   isCreateQuestionnaireExecuting: false,
+
   isFetchUserProfileExecuting: false,
   userProfile: null,
   coachCertificates: [],
+
   isUpdateUserProfileExecuting: false,
   isUpdateUserProfileError: false,
+
   isUpdateCoachCertificatesExecuting: false,
+
   isReadyForTrainingChangeExecuting: false,
   readyForTraining: false,
+
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
+
   isFetchUserProfilesExecuting: false,
   userProfiles: []
 };

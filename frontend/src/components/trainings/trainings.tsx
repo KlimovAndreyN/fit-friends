@@ -5,6 +5,7 @@ import { ITrainingQuery } from '@backend/shared/core';
 import Header from '../header/header';
 import TrainingsForm from '../trainings-form/trainings-form';
 import TrainingsList from '../trainings-list/trainings-list';
+import Spinner from '../spinner/spinner';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -13,7 +14,7 @@ import {
   getIsFetchTrainingsExecuting, getIsTrainingsFilterActivate, getShowDetailTraining
 } from '../../store/training-process/selectors';
 import { fetchTrainings } from '../../store/actions/training-action';
-import { getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, setTrainingsFilter } from '../../store/training-process';
+import { clearDetailTraining, getNextPage, setIsTrainingsFilterActivate, setShowDetailTraining, setTrainingsFilter } from '../../store/training-process';
 import { hasPriceMaxPropertyKey } from '../../utils/common';
 
 type TrainingsProps = {
@@ -80,6 +81,8 @@ function Trainings(props: TrainingsProps): JSX.Element {
         dispatch(fetchTrainings(trainingsFilter));
       }
     }
+
+    dispatch(clearDetailTraining());
   }, [dispatch, trainingsFilter, isTrainingsFilterActivate, startOnZeroRating, showDetailTraining]);
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
@@ -101,7 +104,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! пока добавил (page === 1)
   const trainingsList = (isFetchTrainingsExecuting && (page === 1))
     ?
-    (<h3>Загрузка...</h3>)
+    (<Spinner />)
     :
     (
       <TrainingsList
