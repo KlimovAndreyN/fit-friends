@@ -5,7 +5,7 @@ import './rc-slider.styles.css';
 
 import { parseStringNumber } from '@backend/shared/core';
 
-import { MinMaxRange } from '../../types/types';
+import { MinMaxRange, OnValueMinMaxChange } from '../../types/types';
 import { getMax, getMin } from '../../utils/min-max';
 
 type FilterMinMaxRangeProps = {
@@ -15,26 +15,28 @@ type FilterMinMaxRangeProps = {
   className: string;
   prefixClassName: string;
   prefixLabelClassName?: string;
+
   value: MinMaxRange;
-  limitValue: MinMaxRange;
+
+  limitValueMin: number;
+  limitValueMax: number;
   showInputs?: boolean;
-  onChange: (newValue: MinMaxRange) => void;
+  onChange: OnValueMinMaxChange;
 }
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   //! добавить задержку, чтобы позволило ввести число больше, а потом уменьшить/увеличить
   // Оформление слайдеров сделал через rc-slider.styles.css, наверное есть способ передать классы из маркапа
-  // __scale  __bar  __min-toggle   __max-toggle
+  // __scale  __bar  __min-toggle  __max-toggle
 
-  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, value, limitValue, showInputs, onChange } = props;
+  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, limitValueMin, limitValueMax, value, showInputs, onChange } = props;
   const { min: valueMin, max: valueMax } = value;
-  const { min: limitValueMin, max: limitValueMax } = limitValue;
   const [tempValue, setTempValue] = useState([0, 0]);
   const [isMaxChange, setIsMaxChange] = useState(false);
   const [tempMin, tempMax] = tempValue;
 
   useEffect(() => {
-    setTempValue([valueMin || limitValueMin || 0, valueMax || limitValueMax || 0]);
+    setTempValue([valueMin || limitValueMin, valueMax || limitValueMax]);
 
   }, [value, valueMin, valueMax, limitValueMin, limitValueMax]);
 
@@ -49,7 +51,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     if (Array.isArray(newValue)) {
       const [min, max] = newValue;
 
-      onChange({ min, max });
+      onChange(min, max);
     }
   };
 
@@ -70,7 +72,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
       }
     }
 
-    onChange({ min: newMin, max: valueMax });
+    onChange(newMin, valueMax);
   };
 
   const handleMaxInputChange = (event: FormEvent<HTMLInputElement>) => {
@@ -90,7 +92,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
       }
     }
 
-    onChange({ min: valueMin, max: newMax });
+    onChange(valueMin, newMax);
   };
 
   const divClassName = `filter-${prefixClassName}`;

@@ -8,10 +8,10 @@ import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkbox
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
 import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 
-import { MinMaxRange } from '../../types/types';
 import { DURATIONS, SPECIALISATIONS } from '../../const';
 
 const Limit = {
+  PRICE_MIN: 1,
   RATING_ZERO: 0,
   RATING_MIN: 1,
   RATING_MAX: 5,
@@ -34,33 +34,21 @@ type TrainingsFormProps = {
 function TrainingsForm(props: TrainingsFormProps): JSX.Element {
   const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
-  const caloriesWasteLimitValue: MinMaxRange = {
-    min: Limit.CALORIES_WASTE_MIN,
-    max: Limit.CALORIES_WASTE_MAX
-  };
-  const ratingLimitValue: MinMaxRange = {
-    min: (startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN,
-    max: Limit.RATING_MAX
-  };
-  const ratingValue: MinMaxRange = {
-    min: ratingMin,
-    max: ratingMax
-  };
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
-  const handlePriceFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ priceMin: value.min, priceMax: value.max });
+  const handlePriceFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
+    onTrainingsFilterChange({ priceMin: newValueMin, priceMax: newValueMax });
   };
 
-  const handleCaloriesWasteFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ caloriesWasteMin: value.min, caloriesWasteMax: value.max });
+  const handleCaloriesWasteFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
+    onTrainingsFilterChange({ caloriesWasteMin: newValueMin, caloriesWasteMax: newValueMax });
   };
 
-  const handleRatingFilterMinMaxRangeChange = (value: MinMaxRange) => {
-    onTrainingsFilterChange({ ratingMin: value.min, ratingMax: value.max });
+  const handleRatingFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
+    onTrainingsFilterChange({ ratingMin: newValueMin, ratingMax: newValueMax });
   };
 
   const handleSpecializationsChange = (specialization: Specialization) => {
@@ -100,10 +88,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               min: priceMin,
               max: priceMax
             }}
-            limitValue={{
-              min: 0,
-              max: trainingsMaxPrice
-            }}
+            limitValueMin={Limit.PRICE_MIN}
+            limitValueMax={trainingsMaxPrice || Limit.PRICE_MIN}
             showInputs
             onChange={handlePriceFilterMinMaxRangeChange}
           />
@@ -117,7 +103,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               min: caloriesWasteMin,
               max: caloriesWasteMax
             }}
-            limitValue={caloriesWasteLimitValue}
+            limitValueMin={Limit.CALORIES_WASTE_MIN}
+            limitValueMax={Limit.CALORIES_WASTE_MAX}
             showInputs
             onChange={handleCaloriesWasteFilterMinMaxRangeChange}
           />
@@ -126,8 +113,12 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             className={className}
             prefixClassName={ratingPrefixClassName} // Немного разные классы в css у каталога и моих
             prefixLabelClassName='raiting'
-            value={ratingValue}
-            limitValue={ratingLimitValue}
+            value={{
+              min: ratingMin,
+              max: ratingMax
+            }}
+            limitValueMin={(startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN}
+            limitValueMax={Limit.RATING_MAX}
             onChange={handleRatingFilterMinMaxRangeChange}
           />
           {
