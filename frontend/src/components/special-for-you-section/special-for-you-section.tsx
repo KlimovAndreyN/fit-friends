@@ -5,15 +5,17 @@ import { ITrainingRdo } from '@backend/shared/core';
 import SliderSection from '../slider-section/slider-section';
 
 import { getTrainingRoute } from '../../utils/common';
+import { OnClick } from '../../types/types';
 
 const SLIDES_COUNT = 3;
 const FOR_SPOTRSMAN_COUNT = 9;
 
 type SpecialForYouSectionProps = {
   trainings: ITrainingRdo[];
+  onShowDetailTraining?: OnClick;
 }
 
-function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Element {
+function SpecialForYouSection({ trainings, onShowDetailTraining }: SpecialForYouSectionProps): JSX.Element {
   //! перепроверить разметку, шрифты, рус и eng
   //! что делать когда мало карточек? что по ТЗ?
   //! проверить консоль браузера на ошибки
@@ -29,7 +31,7 @@ function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Ele
         <div className="thumbnail-preview__inner">
           <h3 className="thumbnail-preview__title">{specialization}</h3>
           <div className="thumbnail-preview__button-wrapper">
-            <Link className="btn btn--small thumbnail-preview__button" to={getTrainingRoute(id)}>Подробнее</Link>
+            <Link className="btn btn--small thumbnail-preview__button" to={getTrainingRoute(id)} onClick={onShowDetailTraining}>Подробнее</Link>
           </div>
         </div>
       </div>

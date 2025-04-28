@@ -3,15 +3,17 @@ import SliderSection from '../slider-section/slider-section';
 
 import { ITrainingRdo } from '@backend/shared/core';
 
+import { OnClick } from '../../types/types';
 import { AppRoute } from '../../const';
 
 const SLIDES_COUNT = 4;
 
 type PopularTrainingSectionProps = {
   trainings: ITrainingRdo[];
+  onShowDetailTraining?: OnClick;
 }
 
-function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX.Element {
+function PopularTrainingSection({ trainings, onShowDetailTraining }: PopularTrainingSectionProps): JSX.Element {
   //! 'Смотреть все' - фильтры выставлять? райтинг например? что по ТЗ?
   //! что делать когда мало карточек? что по ТЗ?
   //! перепроверить разметку, шрифты, рус и eng
@@ -19,7 +21,7 @@ function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX
 
   const childrens = trainings.map(
     (training) => (
-      <TrainingCard key={training.id} training={training} />
+      <TrainingCard key={training.id} training={training} onShowDetailTraining={onShowDetailTraining} />
     )
   );
 

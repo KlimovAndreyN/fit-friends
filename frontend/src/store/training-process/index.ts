@@ -38,6 +38,7 @@ const initialState: TrainingProcess = {
   trainings: [],
   isHaveMoreTrainings: false,
   trainingsMaxPrice: undefined,
+
   showDetailTraining: false,
 
   isFetchDetailTrainingExecuting: false,
@@ -147,8 +148,6 @@ export const trainingProcess = createSlice(
           fetchTrainings.fulfilled,
           (state, action) => {
             const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
-
-            console.log('state.isFristPage', state.isFristPage);
 
             if (state.isFristPage) {
               state.trainings = entities;

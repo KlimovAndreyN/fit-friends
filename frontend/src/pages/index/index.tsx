@@ -7,17 +7,17 @@ import SpecialOffersSection from '../../components/special-offers-section/specia
 import PopularTrainingSection from '../../components/popular-trainings-section/popular-trainings-section';
 import LookForCompanySection from '../../components/look-for-company-section/look-for-company-section';
 
-import { getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings, getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting } from '../../store/training-process/selectors';
+import { getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings, getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting, getShowDetailTraining } from '../../store/training-process/selectors';
 import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { PageTitle } from '../../const';
+import { setShowDetailTraining } from '../../store/training-process';
 
 function Index(): JSX.Element {
   //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проерить на маркапах
   //! прокрутка на вверх при переходе с каталога и других страниц
-  //! может не всегда обновлять данные для главной?
 
   const dispatch = useAppDispatch();
   const isFetchForSportsmanTrainingsExecuting = useAppSelector(getIsFetchForSportsmanTrainingsExecuting);
@@ -26,15 +26,22 @@ function Index(): JSX.Element {
   const specialTrainings = useAppSelector(getSpecialTrainings);
   const isFetchPopularTrainingsExecuting = useAppSelector(getIsFetchPopularTrainingsExecuting);
   const popularTrainings = useAppSelector(getPopularTrainings);
+  const showDetailTraining = useAppSelector(getShowDetailTraining);
   const isFetchLookForCompanyUserProfilesExecuting = useAppSelector(getIsFetchLookForCompanyUserProfilesExecuting);
   const lookForCompanyUserProfiles = useAppSelector(getLookForCompanyUserProfiles);
 
   useEffect(() => {
-    dispatch(fetchForSportsmanTrainings());
-    dispatch(fetchSpecialTrainings());
-    dispatch(fetchPopularTrainings());
-    dispatch(fetchLookForCompanyUserProfiles());
-  }, [dispatch]);
+    if (!showDetailTraining) {
+      dispatch(fetchForSportsmanTrainings());
+      dispatch(fetchSpecialTrainings());
+      dispatch(fetchPopularTrainings());
+      dispatch(fetchLookForCompanyUserProfiles());
+    }
+  }, [dispatch, showDetailTraining]);
+
+  const handleShowDetailTraining = () => {
+    dispatch(setShowDetailTraining(true));
+  };
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {
     return <MainSpinner />;
@@ -45,9 +52,9 @@ function Index(): JSX.Element {
       <Header title={PageTitle.Index} />
       <main>
         <h1 className="visually-hidden">FitFriends — Время находить тренировки, спортзалы и друзей спортсменов</h1>
-        <SpecialForYouSection trainings={forSportsmanTrainings} />
-        <SpecialOffersSection trainings={specialTrainings} />
-        <PopularTrainingSection trainings={popularTrainings} />
+        <SpecialForYouSection trainings={forSportsmanTrainings} onShowDetailTraining={handleShowDetailTraining} />
+        <SpecialOffersSection trainings={specialTrainings} onShowDetailTraining={handleShowDetailTraining} />
+        <PopularTrainingSection trainings={popularTrainings} onShowDetailTraining={handleShowDetailTraining} />
         <LookForCompanySection userProfiles={lookForCompanyUserProfiles} />
       </main>
     </Fragment>
