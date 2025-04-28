@@ -33,12 +33,13 @@ type TrainingsProps = {
 function Trainings(props: TrainingsProps): JSX.Element {
   //! будет использватся в двух режимах: Каталог тренировок и мои тренировки
 
-  //! фильтр по калориям, есть максимум и минимум по ТЗ? от 1
+  //! возможно вместо лоадера нужно блокировать форму по isFetchTrainingsExecuting и список тернировок не очищать...
+  //! а снизу дописывать "загрузка", т.к. прокручивает наверх, если по обычному лоадер поставить
+  //! пока добавил (page === 1)
   //! может добавить задержку на изменения числовых по времени?
   //! прокрутить на вверх при переходе с главной... может всегда?
   //! показать еще - проанализировать сколько страниц еще есть, навернео добавить селектор
   //! если последняя страница, то показать еще прячем и показываем кнопку наверх
-  //! добавить range - двигать мышкой в FilterMinMaxRange
   //! нет черты на фильтре калории - масшаб в мозилле...
   //! проверить еще логику по ТЗ и разметку
   //! проверить консоль браузера на ошибки
@@ -99,23 +100,6 @@ function Trainings(props: TrainingsProps): JSX.Element {
     dispatch(setShowDetailTraining(true));
   };
 
-  //! возможно вместо лоадера нужно блокировать форму по isFetchTrainingsExecuting и список тернировок не очищать...
-  //! а снизу дописывать "загрузка", т.к. прокручивает наверх, если по обычному лоадер поставить
-  //! пока добавил (page === 1)
-  const trainingsList = (isFetchTrainingsExecuting && (page === 1))
-    ?
-    (<Spinner />)
-    :
-    (
-      <TrainingsList
-        className={listClassName}
-        trainings={trainings}
-        isHaveMoreTrainings={isHaveMoreTrainings}
-        onNextPageClick={handleNextPageClick}
-        onShowDetailTraining={handleShowDetailTraining}
-      />
-    );
-
   return (
     <Fragment>
       <Header title={headerTitle} />
@@ -136,13 +120,20 @@ function Trainings(props: TrainingsProps): JSX.Element {
                 showedSorting={showedSorting}
               />
               {
-                showedAdditionalDiv
+                (isFetchTrainingsExecuting && (page === 1))
                   ?
-                  <div className="inner-page__content">
-                    {trainingsList}
-                  </div>
+                  (<Spinner />)
                   :
-                  trainingsList
+                  (
+                    <TrainingsList
+                      className={listClassName}
+                      trainings={trainings}
+                      isHaveMoreTrainings={isHaveMoreTrainings}
+                      onNextPageClick={handleNextPageClick}
+                      onShowDetailTraining={handleShowDetailTraining}
+                      showedAdditionalDiv={showedAdditionalDiv}
+                    />
+                  )
               }
             </div>
           </div>

@@ -13,15 +13,17 @@ type TrainingsListProps = {
   isHaveMoreTrainings: boolean;
   onNextPageClick: OnClick;
   onShowDetailTraining?: OnClick;
+  showedAdditionalDiv?: boolean;
 }
 
-function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageClick, onShowDetailTraining }: TrainingsListProps): JSX.Element {
+function TrainingsList(props: TrainingsListProps): JSX.Element {
+  const { className, trainings, isHaveMoreTrainings, onNextPageClick, onShowDetailTraining, showedAdditionalDiv } = props;
 
   const handleShowMoreClick = () => {
     onNextPageClick();
   };
 
-  return (
+  const trainingsList = (
     <div className={className}>
       {
         (trainings.length)
@@ -53,6 +55,14 @@ function TrainingsList({ className, trainings, isHaveMoreTrainings, onNextPageCl
       }
     </div>
   );
+
+  return showedAdditionalDiv
+    ?
+    <div className="inner-page__content">
+      {trainingsList}
+    </div>
+    :
+    trainingsList;
 }
 
 export default TrainingsList;
