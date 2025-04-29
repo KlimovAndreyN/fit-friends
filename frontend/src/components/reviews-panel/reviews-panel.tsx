@@ -34,7 +34,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
 
   return (
     <aside className="reviews-side-bar">
-      <BackButton className='reviews-side-bar' />
+      <BackButton className='reviews-side-bar' underlined />
       <h2 className="reviews-side-bar__title" id={REVIEWS_ANCHOR}>Отзывы</h2>
       <ul className="reviews-side-bar__list">
         {
