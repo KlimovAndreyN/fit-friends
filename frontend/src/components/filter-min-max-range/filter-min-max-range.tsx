@@ -21,6 +21,7 @@ type FilterMinMaxRangeProps = {
   limitValueMax: number;
   showInputs?: boolean;
   onChange: OnValueMinMaxChange;
+  disabled?: boolean;
 }
 
 function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
@@ -28,7 +29,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   // Оформление слайдеров сделал через rc-slider.styles.css, наверное есть способ передать классы из маркапа
   // __scale  __bar  __min-toggle  __max-toggle
 
-  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, valueMin, valueMax, limitValueMin, limitValueMax, showInputs, onChange } = props;
+  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, valueMin, valueMax, limitValueMin, limitValueMax, showInputs, onChange, disabled } = props;
   const [tempValue, setTempValue] = useState([0, 0]);
   const [isSliderChange, setSliderChange] = useState(false);
   const [tempMin, tempMax] = tempValue;
@@ -104,11 +105,25 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         showInputs &&
         <div className={divClassName}>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--min`}>
-            <input type="number" id={nameMin} name={nameMin} value={(isSliderChange) ? tempMin : valueMin ?? ''} onChange={handleMinInputChange} />
+            <input
+              type="number"
+              id={nameMin}
+              name={nameMin}
+              value={(isSliderChange) ? tempMin : valueMin ?? ''}
+              onChange={handleMinInputChange}
+              disabled={disabled}
+            />
             <label htmlFor={nameMin}>от</label>
           </div>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--max`}>
-            <input type="number" id={nameMax} name={nameMax} value={(isSliderChange) ? tempMax : valueMax ?? ''} onChange={handleMaxInputChange} />
+            <input
+              type="number"
+              id={nameMax}
+              name={nameMax}
+              value={(isSliderChange) ? tempMax : valueMax ?? ''}
+              onChange={handleMaxInputChange}
+              disabled={disabled}
+            />
             <label htmlFor={nameMax}>до</label>
           </div>
         </div>
@@ -122,6 +137,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
           onChange={handleSliderChange}
           onChangeComplete={handleSliderChangeComplete}
           allowCross={false}
+          disabled={disabled}
         />
         <div className={`${divLabelClassName}__control`}>
           {prefixLabelClassName && <span>{limitValueMin ?? ''}</span>}

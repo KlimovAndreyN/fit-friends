@@ -90,6 +90,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             limitValueMax={trainingsMaxPrice || Limit.PRICE_MIN}
             showInputs
             onChange={handlePriceFilterMinMaxRangeChange}
+            disabled={sortType === SortType.ForFree}
           />
           <FilterMinMaxRange
             title='Калории'

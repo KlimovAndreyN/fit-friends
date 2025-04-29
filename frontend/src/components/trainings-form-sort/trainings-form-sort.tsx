@@ -26,7 +26,9 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
               const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
                 event.preventDefault();
 
-                onChange(sort);
+                if (sort !== sortType) {
+                  onChange(sort);
+                }
               };
 
               return (
