@@ -84,10 +84,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             nameMax='text-max'
             className={className}
             prefixClassName='price'
-            value={{
-              min: priceMin,
-              max: priceMax
-            }}
+            valueMin={priceMin}
+            valueMax={priceMax}
             limitValueMin={Limit.PRICE_MIN}
             limitValueMax={trainingsMaxPrice || Limit.PRICE_MIN}
             showInputs
@@ -99,10 +97,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             nameMin='text-min-cal'
             nameMax='text-max-cal'
             prefixClassName='calories'
-            value={{
-              min: caloriesWasteMin,
-              max: caloriesWasteMax
-            }}
+            valueMin={caloriesWasteMin}
+            valueMax={caloriesWasteMax}
             limitValueMin={Limit.CALORIES_WASTE_MIN}
             limitValueMax={Limit.CALORIES_WASTE_MAX}
             showInputs
@@ -113,10 +109,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             className={className}
             prefixClassName={ratingPrefixClassName} // Немного разные классы в css у каталога и моих
             prefixLabelClassName='raiting'
-            value={{
-              min: ratingMin,
-              max: ratingMax
-            }}
+            valueMin={ratingMin}
+            valueMax={ratingMax}
             limitValueMin={(startOnZeroRating) ? Limit.RATING_ZERO : Limit.RATING_MIN}
             limitValueMax={Limit.RATING_MAX}
             onChange={handleRatingFilterMinMaxRangeChange}

@@ -5,7 +5,7 @@ import './rc-slider.styles.css';
 
 import { parseStringNumber } from '@backend/shared/core';
 
-import { MinMaxRange, OnValueMinMaxChange } from '../../types/types';
+import { OnValueMinMaxChange } from '../../types/types';
 import { getMax, getMin } from '../../utils/min-max';
 
 type FilterMinMaxRangeProps = {
@@ -15,9 +15,8 @@ type FilterMinMaxRangeProps = {
   className: string;
   prefixClassName: string;
   prefixLabelClassName?: string;
-
-  value: MinMaxRange;
-
+  valueMin?: number;
+  valueMax?: number;
   limitValueMin: number;
   limitValueMax: number;
   showInputs?: boolean;
@@ -29,8 +28,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   // Оформление слайдеров сделал через rc-slider.styles.css, наверное есть способ передать классы из маркапа
   // __scale  __bar  __min-toggle  __max-toggle
 
-  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, limitValueMin, limitValueMax, value, showInputs, onChange } = props;
-  const { min: valueMin, max: valueMax } = value;
+  const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, valueMin, valueMax, limitValueMin, limitValueMax, showInputs, onChange } = props;
   const [tempValue, setTempValue] = useState([0, 0]);
   const [isSliderChange, setSliderChange] = useState(false);
   const [tempMin, tempMax] = tempValue;
@@ -38,7 +36,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   useEffect(() => {
     setTempValue([valueMin ?? limitValueMin, valueMax ?? limitValueMax]);
 
-  }, [value, valueMin, valueMax, limitValueMin, limitValueMax]);
+  }, [valueMin, valueMax, limitValueMin, limitValueMax]);
 
   const handleSliderChange = (newValue: number | number[]) => {
     if (Array.isArray(newValue)) {
