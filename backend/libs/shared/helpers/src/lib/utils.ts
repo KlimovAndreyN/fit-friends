@@ -2,13 +2,13 @@ export function joinUrl(...items: string[]): string {
   return [...items].join('/');
 }
 
-export function enumToArray<T extends object>(enumObj: T): T[keyof T][] {
+export function convertEnumToArray<T extends object>(enumObj: T): T[keyof T][] {
   const items = Object.values(enumObj) as T[keyof T][];
 
   return items;
 }
 
-export function enumToObject<T extends object>(enumObj: T): { [k: string]: unknown } {
+export function convertEnumToObject<T extends object>(enumObj: T): { [k: string]: unknown } {
   const entries = Object.entries(enumObj);
   const object = Object.fromEntries(entries.map(([key, value]) => ([key, value])));
 

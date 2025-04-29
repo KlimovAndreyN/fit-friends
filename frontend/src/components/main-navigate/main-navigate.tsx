@@ -6,7 +6,7 @@ import MainNavigateNotifications from '../main-navigate-notifications/main-navig
 import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/actions/user-action';
 import { AppRoute } from '../../const';
-import { enumToObject } from '@backend/shared/helpers';
+import { convertEnumToObject } from '@backend/shared/helpers';
 
 const SvgOption = {
   HOME: <svg width="18" height="18" aria-hidden="true"><use xlinkHref="#icon-home" /></svg>,
@@ -19,7 +19,7 @@ const SvgOption = {
 function MainNavigate(): JSX.Element {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { PersonalAccount, Friends } = enumToObject(AppRoute);
+  const { PersonalAccount, Friends } = convertEnumToObject(AppRoute);
   const homeIsActive = ![PersonalAccount, Friends].includes(pathname); // в маркапах активно, у всех страниц, коме Друзья и Профиль
 
   const handleSignOutClick = () => {

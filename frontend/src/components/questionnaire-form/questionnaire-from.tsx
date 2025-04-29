@@ -14,7 +14,7 @@ import {
   Duration, isSportsmanRole, Role, Specialization, TrainingLevel,
   ICreateQuestionnaireCoachDto, ICreateQuestionnaireSportsmanDto
 } from '@backend/shared/core';
-import { enumToArray } from '@backend/shared/helpers';
+import { convertEnumToArray } from '@backend/shared/helpers';
 
 import { CreateQuestionnaireDto, Option } from '../../types/types';
 import { DefaultUser, PageTitle, TRAINING_LEVELS } from '../../const';
@@ -28,7 +28,7 @@ const UserDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_80_100]: '80-100'
 } as const;
 
-const USER_DURATIONS: Option[] = enumToArray(Duration).map(
+const USER_DURATIONS: Option[] = convertEnumToArray(Duration).map(
   (duration) => ({ value: duration, title: `${UserDurationTitle[duration]} мин` })
 );
 

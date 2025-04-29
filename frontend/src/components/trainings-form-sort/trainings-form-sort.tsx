@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 
 import { SortType } from '@backend/shared/core';
-import { enumToArray } from '@backend/shared/helpers';
+import { convertEnumToArray } from '@backend/shared/helpers';
 
 const SortTypeTitle: { [key in SortType]: string } = {
   [SortType.LowPrice]: 'Дешевле',
@@ -21,7 +21,7 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
       <h4 className={`${className}__title ${className}__title--sort`}>Сортировка</h4>
       <div className={`btn-radio-sort ${className}__radio`}>
         {
-          enumToArray(SortType).map(
+          convertEnumToArray(SortType).map(
             (sort) => {
               const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
                 event.preventDefault();

@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 
 import { Duration, isSportsmanRole, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
-import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems, enumToArray } from '@backend/shared/helpers';
+import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems, convertEnumToArray } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
 
@@ -21,7 +21,7 @@ export async function seedQuestionnaires(questionnaireRepository: QuestionnaireR
 
     const questionnaire: Questionnaire = {
       userId,
-      specializations: getRandomUniqueItems(enumToArray(Specialization), getRandomNumber(MIN_COUNT, MAX_COUNT)),
+      specializations: getRandomUniqueItems(convertEnumToArray(Specialization), getRandomNumber(MIN_COUNT, MAX_COUNT)),
       trainingLevel: getRandomEnumItem(TrainingLevel),
       readyForTraining: getRandomBoolean() || getRandomBoolean() // удвоим
     }

@@ -14,7 +14,7 @@ export class FitTrainingService {
   constructor(
     private readonly httpService: HttpService,
     private userService: UserService,
-    private readonly fileService: FileService,
+    private readonly fileService: FileService, //! задействовать на для файла с видео
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
@@ -46,7 +46,7 @@ export class FitTrainingService {
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
 
-    //! временно
+    //! временно - отладка
     const videoFilePath = 'video/sample-video-mp4.mp4';
     console.log('FitTrainingService.findById - videoFileId', videoFileId);
     //!const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);

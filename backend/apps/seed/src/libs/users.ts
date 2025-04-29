@@ -1,10 +1,10 @@
 import { Logger } from '@nestjs/common';
 
 import { AuthUser, BackgroundPaths, isSportsmanRole, Location, Role, UserApiProperty } from '@backend/shared/core';
-import { getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
+import { getRandomDate, getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 
-import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser } from './mock-data';
+import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, TrainingOption } from './mock-data';
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
   const ids = await fitUserRepository.getAllIds();
@@ -17,6 +17,7 @@ export async function clearUsers(fitUserRepository: FitUserRepository): Promise<
 export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
+  const { MIN_DATE, MAX_DATE } = TrainingOption;
 
   for (const { name, gender } of mockUsers) {
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
@@ -29,7 +30,7 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
       location: getRandomEnumItem(Location),
       role,
       avatarFileId: '', //! позднее попробовать подкинуть аватарки
-      birthday: new Date('2000-01-01'), //! сделать разное
+      birthday: getRandomDate(MIN_DATE, MAX_DATE),
       passwordHash: ''
     };
     const userEntity = new FitUserEntity(user);

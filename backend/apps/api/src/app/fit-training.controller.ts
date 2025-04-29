@@ -23,7 +23,7 @@ export class FitTrainingController {
     private fitTrainingService: FitTrainingService
   ) { }
 
-  @ApiResponse({ type: TrainingRdo, isArray: true })
+  @ApiResponse({ type: TrainingsWithPaginationRdo })
   @Get()
   public async index(
     @Query() query: TrainingQuery,

@@ -1,5 +1,5 @@
 import { Duration, Location, Specialization, Gender, TrainingLevel, Role, ApiServiceRoute, AccountRoute } from '@backend/shared/core';
-import { enumToArray, joinUrl } from '@backend/shared/helpers';
+import { convertEnumToArray, joinUrl } from '@backend/shared/helpers';
 
 import { Option } from './types/types';
 
@@ -82,7 +82,7 @@ const UserGenderTitle: { [key in Gender]: string } = {
   [Gender.NotMatter]: 'Неважно',
 } as const;
 
-export const USER_GENDERS: Option[] = enumToArray(Gender).map(
+export const USER_GENDERS: Option[] = convertEnumToArray(Gender).map(
   (gender) => ({ value: gender, title: UserGenderTitle[gender] })
 );
 
@@ -101,7 +101,7 @@ export const LocationTitle: { [key in Location]: string } = {
   [Location.Zvezdnaya]: 'Звёздная'
 } as const;
 
-export const LOCATIONS: Option[] = enumToArray(Location).map(
+export const LOCATIONS: Option[] = convertEnumToArray(Location).map(
   (location) => ({ value: location, title: LocationTitle[location] })
 );
 
@@ -116,7 +116,7 @@ export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Yoga]: 'Йога'
 } as const;
 
-export const SPECIALISATIONS: Option[] = enumToArray(Specialization).map(
+export const SPECIALISATIONS: Option[] = convertEnumToArray(Specialization).map(
   (specialization) => ({ value: specialization, title: SpecializationTitle[specialization] })
 );
 
@@ -134,7 +134,7 @@ const FilterDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_80_100]: '80 мин - 100 мин'
 } as const;
 
-export const DURATIONS: Option[] = enumToArray(Duration).map(
+export const DURATIONS: Option[] = convertEnumToArray(Duration).map(
   (specialization) => ({ value: specialization, title: FilterDurationTitle[specialization] })
 );
 
@@ -144,7 +144,7 @@ const TrainingLevelTitle: { [key in TrainingLevel]: string } = {
   [TrainingLevel.Professional]: 'Профессионал'
 } as const;
 
-export const TRAINING_LEVELS: Option[] = enumToArray(TrainingLevel).map(
+export const TRAINING_LEVELS: Option[] = convertEnumToArray(TrainingLevel).map(
   (trainingLevel) => ({ value: trainingLevel, title: TrainingLevelTitle[trainingLevel] })
 );
 
