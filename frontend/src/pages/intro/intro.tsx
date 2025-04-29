@@ -5,7 +5,6 @@ import BaseBackground from '../../components/base-intro/base-background';
 import { AppRoute, PageTitle } from '../../const';
 
 function Intro(): JSX.Element {
-  //! history не работает
   const navigate = useNavigate();
 
   const handleRegisterButtonClick = () => {

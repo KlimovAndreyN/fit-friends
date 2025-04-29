@@ -1,4 +1,3 @@
-import { History } from 'history';
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -11,7 +10,6 @@ import { ApiRoute } from '../../const';
 
 type Extra = {
   api: AxiosInstance;
-  history: History; //! пригодилось?
 };
 
 export const Action = {

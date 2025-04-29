@@ -3,10 +3,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createAPI } from '../api';
 import { rootReducer } from './root-reducer';
 import { fetchUserStatus } from './actions/user-action';
-import { history } from '../history';
 
 const api = createAPI();
-const thunk = { extraArgument: { api, history } };
+const thunk = { extraArgument: { api } };
 const store = configureStore(
   {
     reducer: rootReducer,

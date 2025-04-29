@@ -1,4 +1,3 @@
-import { History } from 'history';
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -13,7 +12,6 @@ import { CreateQuestionnaireDto } from '../../types/types';
 
 type Extra = {
   api: AxiosInstance;
-  history: History; //! пригодилось?
 };
 
 export const Action = {
