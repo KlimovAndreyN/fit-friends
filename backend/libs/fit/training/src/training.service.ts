@@ -16,7 +16,15 @@ export class TrainingService {
     private readonly trainingRepository: TrainingRepository
   ) { }
 
-  public async find(query: TrainingQuery): Promise<TrainingEntityWithPagination> {
+  public async find(query: TrainingQuery, userId: string, userRole: Role): Promise<TrainingEntityWithPagination> {
+    if (isCoachRole(userRole)) {
+      if (query.coachId) {
+        throw new ForbiddenException('User with role \'coach\' is not allowed to use \'coachId\'!');
+      }
+
+      query.coachId = userId;
+    }
+
     const { sortType } = query;
     const isSortCreatedDate = (!sortType) || (sortType === SortType.ForFree)
     const result = await this.trainingRepository.find({ ...query, isSortCreatedDate });

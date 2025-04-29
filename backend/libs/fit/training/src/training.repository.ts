@@ -92,6 +92,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       specializations,
       durations,
       sortType = Default.SORT_TYPE,
+      coachId,
       isSortCreatedDate,
       isSpecial,
       isPopular
@@ -111,6 +112,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     where.isSpecial = isSpecial;
     where.specialization = { in: specializations };
     where.duration = { in: durations };
+    where.userId = coachId;
 
     if (isPopular) {
       orderBy.push({ rating: SortDirection.Desc });

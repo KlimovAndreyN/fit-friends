@@ -26,11 +26,13 @@ export class TrainingController {
     return entities.map((item) => (fillDto(TrainingRdo, item.toPOJO())));
   }
 
-  //! обработать роль и id пользователя
   @ApiResponse({ type: TrainingsWithPaginationRdo })
   @Get()
-  public async index(@Query() query: TrainingQuery): Promise<TrainingsWithPaginationRdo> {
-    const trainingsWithPagination = await this.trainingService.find(query);
+  public async index(
+    @Query() query: TrainingQuery,
+    @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
+  ): Promise<TrainingsWithPaginationRdo> {
+    const trainingsWithPagination = await this.trainingService.find(query, userId, userRole);
     const { entities, ...others } = trainingsWithPagination;
     const result = {
       ...others,
@@ -64,7 +66,6 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
-  //! обработать роль и id пользователя
   @ApiResponse({ type: TrainingRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
