@@ -1,9 +1,11 @@
 import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { isSportsmanRole } from '@backend/shared/core';
+
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
-import UserPhoto from '../../components/user-photo/user-photo';
+import TrainingDetailHeader from '../../components/training-detail-header/training-detail-header';
 import NotFound from '../not-found/not-found';
 import Spinner from '../../components/spinner/spinner';
 
@@ -12,6 +14,7 @@ import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { fetchDetailTraining } from '../../store/actions/training-action';
 import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
+import { getUserRole } from '../../store/user-process/selectors';
 import { AppRoute, PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
 function TrainingDetail(): JSX.Element {
@@ -24,7 +27,7 @@ function TrainingDetail(): JSX.Element {
   //! сделал для video__thumbnail - backgroundPath из rdo? как по ТЗ
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
-  //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы?
+  //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы? сделал для роли пользователь
   //! проверить консоль браузера на ошибки
 
   const dispatch = useAppDispatch();
@@ -32,6 +35,7 @@ function TrainingDetail(): JSX.Element {
   const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
   const isFetchDetailTrainingError = useAppSelector(getIsFetchDetailTrainingError);
   const training = useAppSelector(getDetailTraining);
+  const userRole = useAppSelector(getUserRole);
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -77,14 +81,7 @@ function TrainingDetail(): JSX.Element {
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>
-                  <div className="training-info__header">
-                    <div className="training-info__coach">
-                      <UserPhoto path={avatarFilePath} className='training-info__photo' />
-                      <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
-                        <span className="training-info__name">{name}</span>
-                      </div>
-                    </div>
-                  </div>
+                  <TrainingDetailHeader coachId={isSportsmanRole(userRole) ? coachId : ''} coachName={name} coachAvatarFilePath={avatarFilePath} />
                   <div className="training-info__main-content">
                     <form action="#" method="get">
                       <div className="training-info__form-wrapper">
