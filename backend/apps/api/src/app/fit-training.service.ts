@@ -35,9 +35,6 @@ export class FitTrainingService {
   }
 
   public async findById(trainingId: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<DetailTrainingRdo> {
-    //! тут бы разрешить на свои тернировки в саном сервисе, а наверное разбить на разные контроллеры, что доступно тренеру а что спортсмену и обоим...
-    console.log('FitTrainingService.findById - userRole', userRole);
-
     const url = this.getUrl(trainingId);
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);

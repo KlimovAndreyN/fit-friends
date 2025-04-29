@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { SortType, Training, TrainingQuery } from '@backend/shared/core';
+import { isCoachRole, Role, SortType, Training, TrainingQuery } from '@backend/shared/core';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
@@ -50,8 +50,12 @@ export class TrainingService {
     return entities;
   }
 
-  public async findById(id: string): Promise<TrainingEntity> {
+  public async findById(id: string, userId: string, userRole: Role): Promise<TrainingEntity> {
     const foundTraining = await this.trainingRepository.findById(id);
+
+    if (isCoachRole(userRole) && (userId !== foundTraining.userId)) {
+      throw new ForbiddenException('Training not your!');
+    }
 
     return foundTraining;
   }

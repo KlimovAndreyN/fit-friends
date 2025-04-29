@@ -1,11 +1,12 @@
-import { Controller, Get, Param, Query, Req } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, RequestWithUserId, XAllApiHeaderOptions, TrainingRoute,
-  TrainingRdo, BasicDetailTrainingRdo, ApiParamOption, IdParam,
-  TrainingQuery, TrainingsWithPaginationRdo
+  TrainingRdo, BasicDetailTrainingRdo, IdParam, TrainingsWithPaginationRdo,
+  TrainingQuery, ApiParamOption, RequestWithRequestIdAndUserIdAndUserRole
 } from '@backend/shared/core';
+import { InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 import { fillDto } from '@backend/shared/helpers';
 
 import { TrainingService } from './training.service';
@@ -14,6 +15,7 @@ import { TrainingEntity } from './training.entity';
 //! добавить описание для всех маршрутов
 @ApiTags(ServiceRoute.Trainings)
 @ApiHeaders(XAllApiHeaderOptions)
+@UseInterceptors(InjectUserRoleInterceptor)
 @Controller(ServiceRoute.Trainings)
 export class TrainingController {
   constructor(
@@ -66,8 +68,11 @@ export class TrainingController {
   @ApiResponse({ type: TrainingRdo })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
-  public async show(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicDetailTrainingRdo> {
-    const entity = await this.trainingService.findById(trainingId);
+  public async show(
+    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
+  ): Promise<BasicDetailTrainingRdo> {
+    const entity = await this.trainingService.findById(trainingId, userId, userRole);
     //! возможно тут проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
