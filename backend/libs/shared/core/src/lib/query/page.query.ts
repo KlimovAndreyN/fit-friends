@@ -10,6 +10,7 @@ export class PageQuery
   implements IPageQuery {
   @ApiProperty({
     description: 'The page',
+    type: 'integer',
     required: false
   })
   @IsInt()
@@ -20,6 +21,7 @@ export class PageQuery
 
   @ApiProperty({
     description: 'The limit',
+    type: 'integer',
     required: false
   })
   @IsInt()
