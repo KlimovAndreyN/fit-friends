@@ -21,11 +21,11 @@ export const userProcess = createSlice(
     name: StoreSlice.UserProcess,
     initialState,
     reducers: {
-      setPrevLocation: (state, action: PayloadAction<string>) => {
-        state.prevLocation = action.payload;
+      setPrevLocation: (state, { payload }: PayloadAction<string>) => {
+        state.prevLocation = payload;
       },
-      setIsIndexPageActivate: (state, action: PayloadAction<boolean>) => {
-        state.isIndexPageActivate = action.payload;
+      setIsIndexPageActivate: (state, { payload }: PayloadAction<boolean>) => {
+        state.isIndexPageActivate = payload;
       }
     },
     extraReducers(builder) {
@@ -38,8 +38,8 @@ export const userProcess = createSlice(
         )
         .addCase(
           fetchUserStatus.fulfilled,
-          (state, action) => {
-            state.userRole = action.payload.role;
+          (state, { payload: { role } }) => {
+            state.userRole = role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -57,16 +57,16 @@ export const userProcess = createSlice(
         )
         .addCase(
           loginUser.fulfilled,
-          (state, action) => {
+          (state, { payload: { role } }) => {
             state.isSingInExecuting = false;
-            state.userRole = action.payload.role;
+            state.userRole = role;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
         .addCase(
           logoutUser.fulfilled,
-          (state, action) => {
-            if (action.payload) {
+          (state, { payload }) => {
+            if (payload) {
               state.authorizationStatus = AuthorizationStatus.NoAuth;
             }
           }

@@ -31,8 +31,8 @@ export const reviewProcess = createSlice(
         )
         .addCase(
           fetchReviews.fulfilled,
-          (state, action) => {
-            state.reviews = action.payload;
+          (state, { payload }) => {
+            state.reviews = payload;
             state.isFetchReviewsExecuting = false;
           }
         );

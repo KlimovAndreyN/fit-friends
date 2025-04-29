@@ -139,8 +139,8 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           createCoachCertificate.fulfilled,
-          (state, action) => {
-            state.coachCertificates.unshift(action.payload);
+          (state, { payload }) => {
+            state.coachCertificates.unshift(payload);
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
@@ -158,9 +158,9 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           updateCoachCertificate.fulfilled,
-          (state, action) => {
+          (state, { payload, meta: { arg: { fileId } } }) => {
             state.coachCertificates = state.coachCertificates.map(
-              (item) => (item.fileId === action.meta.arg.fileId ? action.payload : item)
+              (item) => (item.fileId === fileId ? payload : item)
             );
             state.isUpdateCoachCertificatesExecuting = false;
           }
@@ -198,8 +198,8 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           changeReadyForTraining.fulfilled,
-          (state, action) => {
-            state.readyForTraining = action.payload;
+          (state, { payload }) => {
+            state.readyForTraining = payload;
             state.isReadyForTrainingChangeExecuting = false;
           }
         )
@@ -218,8 +218,8 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           fetchLookForCompanyUserProfiles.fulfilled,
-          (state, action) => {
-            state.lookForCompanyUserProfiles = action.payload;
+          (state, { payload }) => {
+            state.lookForCompanyUserProfiles = payload;
             state.isFetchLookForCompanyUserProfilesExecuting = false;
           }
         )
@@ -238,8 +238,8 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           fetchUserProfiles.fulfilled,
-          (state, action) => {
-            state.userProfiles = action.payload;
+          (state, { payload }) => {
+            state.userProfiles = payload;
             state.isFetchUserProfilesExecuting = false;
           }
         );

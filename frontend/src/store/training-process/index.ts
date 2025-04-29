@@ -61,10 +61,10 @@ export const trainingProcess = createSlice(
           state.trainingsFilter = { ...state.trainingsFilter, page: page + 1 };
         }
       },
-      setIsTrainingsFilterActivate: (state, action: PayloadAction<boolean>) => {
-        state.isTrainingsFilterActivate = action.payload;
+      setIsTrainingsFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
+        state.isTrainingsFilterActivate = payload;
 
-        if (!action.payload) {
+        if (!payload) {
           state.trainingsFilter = { ...initialState.trainingsFilter };
         }
       },
@@ -89,8 +89,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           fetchForSportsmanTrainings.fulfilled,
-          (state, action) => {
-            state.forSportsmanTrainings = action.payload;
+          (state, { payload }) => {
+            state.forSportsmanTrainings = payload;
             state.isFetchForSportsmanTrainingsExecuting = false;
           }
         )
@@ -109,8 +109,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           fetchSpecialTrainings.fulfilled,
-          (state, action) => {
-            state.specialTrainings = action.payload;
+          (state, { payload }) => {
+            state.specialTrainings = payload;
             state.isFetchSpecialTrainingsExecuting = false;
           }
         )
@@ -129,8 +129,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           fetchPopularTrainings.fulfilled,
-          (state, action) => {
-            state.popularTrainings = action.payload;
+          (state, { payload }) => {
+            state.popularTrainings = payload;
             state.isFetchPopularTrainingsExecuting = false;
           }
         )
@@ -149,8 +149,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           fetchTrainings.fulfilled,
-          (state, action) => {
-            const { entities, currentPage, totalPages, trainingsMaxPrice } = action.payload;
+          (state, { payload }) => {
+            const { entities, currentPage, totalPages, trainingsMaxPrice } = payload;
 
             if (state.isFristPage) {
               state.trainings = entities;
@@ -179,8 +179,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           fetchDetailTraining.fulfilled,
-          (state, action) => {
-            state.detailTraining = action.payload;
+          (state, { payload }) => {
+            state.detailTraining = payload;
             state.isFetchDetailTrainingExecuting = false;
           }
         );
