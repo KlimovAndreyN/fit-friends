@@ -36,9 +36,8 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
 
     await userEntity.setPassword(DEFAULT_USER_PASSWORD);
 
-    //! может и для тренера MOCK_SWAGGER_COACH боже добавить постоянный id....
-    if (name === SWAGGER_USER) {
-      // для удобства тестирования запросов из свагера
+    //! может и для тренера MOCK_SWAGGER_COACH боже добавить постоянный id.... и в TrainingQuery - public coachId? - @ApiProperty({... example: UserApiProperty.CoachId.example
+    if (name === SWAGGER_USER) { // для удобства тестирования запросов из свагера
       userEntity.id = UserApiProperty.Id.example;
 
       await fitUserRepository.insertOrUpdate(userEntity);

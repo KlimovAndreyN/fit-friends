@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsOptional } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 import { ITrainingQuery } from '../interfaces/query/i-training.query';
@@ -8,6 +8,7 @@ import { SortType } from '../types/sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
 import { Duration } from '../types/duration.enum';
 import { transformToArray, transformNumber } from '../utils/transform';
+import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 export class TrainingQuery
   extends PageQuery
@@ -93,4 +94,13 @@ export class TrainingQuery
   @IsEnum(SortType)
   @IsOptional()
   public sortType?: ITrainingQuery['sortType'];
+
+  @ApiProperty({
+    type: 'string',
+    example: UserApiProperty.Id.example, //! добавить бы SwaggerCoachId.... но еще нету
+    required: false
+  })
+  @IsString()
+  @IsOptional()
+  public coachId?: ITrainingQuery['coachId'];
 }

@@ -13,4 +13,5 @@ export interface ITrainingQuery extends IPageQuery {
   specializations?: Specialization[]; //! может string?
   durations?: Duration[];
   sortType?: SortType;
+  coachId?: string;
 }
