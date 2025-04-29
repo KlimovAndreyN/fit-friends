@@ -1,47 +1,73 @@
 import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
+
+import { isCoachRole, Role } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
+import BackButton from '../../components/back-button/back-button';
 
 import { PageTitle } from '../../const';
-import BackButton from '../../components/back-button/back-button';
+
+const MOCK_USER = {
+  userRole: Role.Coach,
+  name: 'Валерия',
+  location: 'Адмиралтейская',
+  readyForTraining: true
+} as const;
 
 function UserDetail(): JSX.Element {
   const { id: userId = '' } = useParams();
+  const { userRole, name, location, readyForTraining } = MOCK_USER;
+  const isCoach = isCoachRole(userRole);
+  const className = 'user-card-coach'; //! раскидить по все где повторяется
+
+  // eslint-disable-next-line no-console
+  console.log('userId', userId);
 
   return (
     <Fragment>
       <Header title={PageTitle.UserDetail} />
-      <h1>{PageTitle.UserDetail} - {userId}</h1>
       <main>
         <div className="inner-page inner-page--no-sidebar">
           <div className="container">
             <div className="inner-page__wrapper">
               <BackButton className='inner-page' />
               <div className="inner-page__content">
-                <section className="user-card-coach">
-                  <h1 className="visually-hidden">Карточка пользователя роль тренер</h1>
+                <section className={className}>
+                  <h1 className="visually-hidden">{`Карточка пользователя${(isCoach) ? ' роль тренер' : ''}`}</h1>
                   <div className="user-card-coach__wrapper">
                     <div className="user-card-coach__card">
                       <div className="user-card-coach__content">
                         <div className="user-card-coach__head">
-                          <h2 className="user-card-coach__title">Валерия</h2>
+                          <h2 className="user-card-coach__title">{name}</h2>
                         </div>
                         <div className="user-card-coach__label">
                           <a href="popup-user-map.html">
                             <svg className="user-card-coach__icon-location" width="12" height="14" aria-hidden="true">
                               <use xlinkHref="#icon-location"></use>
                             </svg>
-                            <span>Адмиралтейская</span>
+                            <span>{location}</span>
                           </a>
                         </div>
                         <div className="user-card-coach__status-container">
-                          <div className="user-card-coach__status user-card-coach__status--tag">
-                            <svg className="user-card-coach__icon-cup" width="12" height="13" aria-hidden="true">
-                              <use xlinkHref="#icon-cup"></use>
-                            </svg><span>Тренер</span>
-                          </div>
+                          {
+                            isCoachRole(userRole)
+                              ?
+                              <div className="user-card-coach__status user-card-coach__status--tag">
+                                <svg className="user-card-coach__icon-cup" width="12" height="13" aria-hidden="true">
+                                  <use xlinkHref="#icon-cup"></use>
+                                </svg>
+                                <span>Тренер</span>
+                              </div>
+                              :
+                              null
+                          }
+                          {/*напутано с разметкой.... 'user-card-coach-2__status user-card-coach-2__status--check' серое,  user-card-coach__status user-card-coach__status--check зелоное*/}
                           <div className="user-card-coach__status user-card-coach__status--check"><span>Готов тренировать</span></div>
+                          <div className={classNames('user-card-coach-2__status', { 'user-card-coach-2__status--check': readyForTraining })}>
+                            <span>Готов тренировать</span>
+                          </div>
                         </div>
                         <div className="user-card-coach__text">
                           <p>Привет! Меня зовут Иванова Валерия, мне 34 года. Я&nbsp;профессиональный тренер по&nbsp;боксу. Не&nbsp;боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и&nbsp;силовыми тренировками.</p>
