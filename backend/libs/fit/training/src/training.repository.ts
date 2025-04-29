@@ -3,8 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import {
-  Duration, ITrainingRepository, SortDirection, Gender,
-  SortType, Specialization, Training, TrainingLevel
+  Duration, ITrainingRepository, SortDirection, Gender, SortType,
+  Specialization, Training, TrainingLevel, isForFreeSortType
 } from '@backend/shared/core';
 import { Prisma, Training as PrismaTraining } from '@prisma/client';
 
@@ -101,7 +101,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     const where: Prisma.TrainingWhereInput = {};
     const orderBy: Prisma.TrainingOrderByWithRelationInput[] = [];
 
-    if (sortType === SortType.ForFree) {
+    if (isForFreeSortType(sortType)) {
       where.price = 0;
     } else {
       where.price = { gte: priceMin, lte: priceMax };

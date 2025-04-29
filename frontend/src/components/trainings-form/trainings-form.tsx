@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 
-import { Specialization, SortType, Duration, ITrainingQuery } from '@backend/shared/core';
+import { Specialization, SortType, Duration, ITrainingQuery, isForFreeSortType } from '@backend/shared/core';
 import { deleteItem } from '@backend/shared/helpers';
 
 import BackButton from '../back-button/back-button';
@@ -90,7 +90,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             limitValueMax={trainingsMaxPrice || Limit.PRICE_MIN}
             showInputs
             onChange={handlePriceFilterMinMaxRangeChange}
-            disabled={sortType === SortType.ForFree}
+            disabled={isForFreeSortType(sortType)}
           />
           <FilterMinMaxRange
             title='Калории'

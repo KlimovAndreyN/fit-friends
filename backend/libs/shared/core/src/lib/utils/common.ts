@@ -1,4 +1,5 @@
 import { Role } from '../types/role.enum';
+import { SortType } from '../types/sort-type.enum';
 
 export function isCoachRole(role: Role): boolean {
   return role === Role.Coach;
@@ -6,6 +7,10 @@ export function isCoachRole(role: Role): boolean {
 
 export function isSportsmanRole(role: Role): boolean {
   return role === Role.Sportsman;
+}
+
+export function isForFreeSortType(sortType: SortType | undefined): boolean {
+  return sortType === SortType.ForFree;
 }
 
 export function parseStringNumber(value: string): number | undefined {

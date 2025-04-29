@@ -49,7 +49,8 @@ function TrainingsList(props: TrainingsListProps): JSX.Element {
           <Fragment>
             <br />
             <br />
-            <h3 className='my-training-form__title'>Тренировки не найдены</h3>
+            {/* //! добавил "style={{ textAlign: 'center' }}" т.к. в однов варианте есть дополнительный див в одном нет, можно переделать/доделать вывод*/}
+            <h3 className={`${className}__title`} style={{ textAlign: 'center' }}>Тренировки не найдены</h3>
           </Fragment>
       }
     </div>

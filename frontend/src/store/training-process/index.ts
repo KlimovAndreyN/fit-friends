@@ -49,9 +49,9 @@ export const trainingProcess = createSlice(
     name: StoreSlice.TrainingProcess,
     initialState,
     reducers: {
-      setTrainingsFilter: (state, action: PayloadAction<ITrainingQuery>) => {
+      setTrainingsFilter: (state, { payload }: PayloadAction<ITrainingQuery>) => {
         state.isFristPage = true;
-        state.trainingsFilter = { ...state.trainingsFilter, ...action.payload, page: 1 };
+        state.trainingsFilter = { ...state.trainingsFilter, ...payload, page: 1 };
       },
       getNextPage: (state) => {
         const { trainingsFilter: { page }, isHaveMoreTrainings } = state;
