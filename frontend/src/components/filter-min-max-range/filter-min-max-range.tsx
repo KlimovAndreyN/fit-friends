@@ -32,17 +32,17 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
   const { title, nameMin, nameMax, className, prefixClassName, prefixLabelClassName, limitValueMin, limitValueMax, value, showInputs, onChange } = props;
   const { min: valueMin, max: valueMax } = value;
   const [tempValue, setTempValue] = useState([0, 0]);
-  const [isMaxChange, setIsMaxChange] = useState(false);
+  const [isSliderChange, setSliderChange] = useState(false);
   const [tempMin, tempMax] = tempValue;
 
   useEffect(() => {
-    setTempValue([valueMin || limitValueMin, valueMax || limitValueMax]);
+    setTempValue([valueMin ?? limitValueMin, valueMax ?? limitValueMax]);
 
   }, [value, valueMin, valueMax, limitValueMin, limitValueMax]);
 
   const handleSliderChange = (newValue: number | number[]) => {
     if (Array.isArray(newValue)) {
-      setIsMaxChange(true);
+      setSliderChange(true);
       setTempValue(newValue);
     }
   };
@@ -51,6 +51,7 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     if (Array.isArray(newValue)) {
       const [min, max] = newValue;
 
+      setSliderChange(false);
       onChange(min, max);
     }
   };
@@ -61,13 +62,13 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     let newMin = parseStringNumber(event.currentTarget.value);
 
     if (newMin !== undefined) {
-      if (limitValueMin && (newMin < limitValueMin)) {
+      if (newMin < limitValueMin) {
         newMin = limitValueMin;
       }
 
       const limitMax = getMin(limitValueMax, valueMax);
 
-      if (limitMax && (newMin > limitMax)) {
+      if ((limitMax !== undefined) && (newMin > limitMax)) {
         newMin = limitMax;
       }
     }
@@ -81,13 +82,13 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
     let newMax = parseStringNumber(event.currentTarget.value);
 
     if (newMax !== undefined) {
-      if (limitValueMax && (newMax > limitValueMax)) {
+      if (newMax > limitValueMax) {
         newMax = limitValueMax;
       }
 
       const limitMin = getMax(limitValueMin, valueMin);
 
-      if (limitMin && (newMax < limitMin)) {
+      if ((limitMin !== undefined) && (newMax < limitMin)) {
         newMax = limitMin;
       }
     }
@@ -105,11 +106,11 @@ function FilterMinMaxRange(props: FilterMinMaxRangeProps): JSX.Element {
         showInputs &&
         <div className={divClassName}>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--min`}>
-            <input type="number" id={nameMin} name={nameMin} value={tempMin ?? ''} onChange={handleMinInputChange} />
+            <input type="number" id={nameMin} name={nameMin} value={(isSliderChange) ? tempMin : valueMin ?? ''} onChange={handleMinInputChange} />
             <label htmlFor={nameMin}>от</label>
           </div>
           <div className={`${divClassName}__input-text ${divClassName}__input-text--max`}>
-            <input type="number" id={nameMax} name={nameMax} value={((valueMax === undefined) && (!isMaxChange)) ? '' : tempMax ?? ''} onChange={handleMaxInputChange} />
+            <input type="number" id={nameMax} name={nameMax} value={(isSliderChange) ? tempMax : valueMax ?? ''} onChange={handleMaxInputChange} />
             <label htmlFor={nameMax}>до</label>
           </div>
         </div>

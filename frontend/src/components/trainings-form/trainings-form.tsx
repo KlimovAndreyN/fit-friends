@@ -11,7 +11,7 @@ import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 import { DURATIONS, SPECIALISATIONS } from '../../const';
 
 const Limit = {
-  PRICE_MIN: 1,
+  PRICE_MIN: 0,
   RATING_ZERO: 0,
   RATING_MIN: 1,
   RATING_MAX: 5,
