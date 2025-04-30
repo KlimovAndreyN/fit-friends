@@ -56,12 +56,21 @@ const MOCK_TRAINIGS: ITrainingRdo[] = [
 
 const SLIDES_COUNT = 4;
 
-type UserDetailCoachTrainingsProps = {
+type UserDetailCoachTrainingBlockProps = {
   classNamePrefix: string;
 }
 
-function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsProps): JSX.Element {
+function UserDetailCoachTrainingBlock({ classNamePrefix }: UserDetailCoachTrainingBlockProps): JSX.Element {
+  //! получить тренировки можно сделать, а можно в предке, если здесь, то сделать как в тренировке, с очиской состояния
+  //    убрать моки
   //! добавить текс если нет тренировок
+  //! проработать логику 'персональной тренировки', что по ТЗ?
+  //    нажал > пропала? или поменяла текст отказала
+  //! задействовать CustomCheckbox
+  //! проработать логику подписки
+  //    нажал > меняется галочка и происходит подписка и отписка?
+
+  const mainClassNamePrefix = `${classNamePrefix}__training`;
 
   const childrens = MOCK_TRAINIGS.map(
     (training) => (
@@ -69,9 +78,9 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
     )
   );
   const form = (
-    <form className="user-card-coach__training-form">
-      <button className="btn user-card-coach__btn-training" type="button">Хочу персональную тренировку</button>
-      <div className="user-card-coach__training-check">
+    <form className={`${mainClassNamePrefix}-form`}>
+      <button className={`btn ${classNamePrefix}__btn-training`} type="button">Хочу персональную тренировку</button>
+      <div className={`${mainClassNamePrefix}-check`}>
         <div className="custom-toggle custom-toggle--checkbox">
           <label>
             <input type="checkbox" value="user-agreement-1" name="user-agreement" checked />
@@ -90,7 +99,7 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
   return (
     <Slider
       title='Тренировки'
-      classNamePrefix={`${classNamePrefix}__training`}
+      classNamePrefix={mainClassNamePrefix}
       titleDivClassNamePostfix='head'
       titleClassNamePostfix='title'
       controlsClassNamePostfix='bts'
@@ -106,4 +115,4 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
   );
 }
 
-export default UserDetailCoachTrainings;
+export default UserDetailCoachTrainingBlock;

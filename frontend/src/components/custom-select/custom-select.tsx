@@ -90,7 +90,12 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
             };
 
             return (
-              <li key={option.value} className={`${mainClassName}__item`} onClick={handleClick}>
+              <li
+                key={option.value}
+                className={`${mainClassName}__item`}
+                aria-selected={option.value === selectedValue}
+                onClick={handleClick}
+              >
                 {titlePrefix + option.title}
               </li>
             );

@@ -21,7 +21,7 @@ import { AppRoute, PageTitle, SpecializationTitle, TrainingDurationTitle, Traini
 function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
   //! есть компоненты для разных элементов, нужны при редактировании - перепроверить
-  //! сделать меньше... можно вынести hashtags - <ul className="training-info__list">, <div className="training-info__header">, <form ... что то еще?
+  //! сделать меньше... <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
   //! а как выглядят со скидкой? как по ТЗ? как окрулять?
   //! как округлять рейтинг? как по ТЗ? пока округлил до целых

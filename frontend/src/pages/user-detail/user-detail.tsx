@@ -8,7 +8,7 @@ import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
 import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
-import UserDetailCoachTrainings from '../../components/user-detail-coach-trainings/user-detail-coach-trainings';
+import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
 
 import { PageTitle, SpecializationTitle } from '../../const';
 
@@ -24,6 +24,8 @@ const MOCK_USER = {
 } as const;
 
 function UserDetail(): JSX.Element {
+  //! получение данных, очистка сотояния
+  //! возможно выделить отдельно user-card-coach__content
   //! прокрутка?
   //! ограничения для тренера на просмотр тренеров в бэке
   //! кнопка - показать сертификаты
@@ -103,7 +105,7 @@ function UserDetail(): JSX.Element {
                       </div>
                       <UserDetailGallary classNamePrefix={className} filesPaths={[filePath, filePath]} />
                     </div>
-                    {isCoachRole(userRole) && <UserDetailCoachTrainings classNamePrefix={className} />}
+                    {isCoachRole(userRole) && <UserDetailCoachTrainingBlock classNamePrefix={className} />}
                   </div>
                 </section>
               </div>

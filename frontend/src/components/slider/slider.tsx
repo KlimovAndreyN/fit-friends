@@ -109,7 +109,7 @@ function Slider(props: SliderProps): JSX.Element {
                   <li
                     className={`${classNamePrefix}${separator}item`}
                     //style={{ height: '100%'/* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}
-                    style={{ marginRight: `${marginRight}px`, height: '100%'/* пробую подобрать отступы */ }}
+                    style={{ marginRight: `${marginRight}px`, height: '100%'/* //! пробую подобрать отступы, можно определить индекс последнего видимого слайда*/ }}
                   >
                     {children}
                   </li>
