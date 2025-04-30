@@ -63,9 +63,10 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
   return (
     <SliderSection
       title='Ищут компанию для тренировки'
+      sectionClassName='look-for-company'
+
       showAllLink={AppRoute.UsersCatalog}
       isShowAllLight
-      sectionClassName='look-for-company'
       slidesCount={SLIDES_COUNT}
       childrens={childrens}
     />

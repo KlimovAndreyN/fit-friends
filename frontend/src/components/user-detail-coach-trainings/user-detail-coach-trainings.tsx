@@ -125,9 +125,10 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
     <Fragment>
       <Slider
         title='Тренировки'
-        childrens={childrens}
-        classNamePrefix={`${classNamePrefix}__training`}
         mainDivClassName={`${classNamePrefix}__training`} //! выделить в переменную, если останется одинаково
+        classNamePrefix={`${classNamePrefix}__training`}
+
+        childrens={childrens}
         slidesCount={SLIDES_COUNT}
         additionalFooterElement={form}
       />

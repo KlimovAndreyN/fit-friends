@@ -9,8 +9,8 @@ import classNames from 'classnames';
 export type SliderProps = {
   title: string;
   mainDivClassName: string;
-
   classNamePrefix: string;
+
   childrens: JSX.Element[];
   slidesCount: number;
 
@@ -25,7 +25,18 @@ function Slider(props: SliderProps): JSX.Element {
   //    при слайдере нужно у последнего видимого сделать 0, не у последнего в списке
   //    вообще убрать ul и li, т.к. все на div, но как автотесты?
 
-  const { title, isLabel, additionalTitleElement, isShowAllLight, classNamePrefix, mainDivClassName, childrens, slidesCount, additionalFooterElement } = props;
+  const {
+    title,
+    mainDivClassName,
+    classNamePrefix,
+
+    isLabel,
+    additionalTitleElement,
+    isShowAllLight,
+    childrens,
+    slidesCount,
+    additionalFooterElement
+  } = props;
   const [slideActiveIndex, setSlideActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperRef>(null);
   const childrensCount = childrens.length;
@@ -61,12 +72,13 @@ function Slider(props: SliderProps): JSX.Element {
     width: 16,
     height: 14
   };
-  const titlePrefix = (isLabel) ? 'label' : 'title';
+
+  const titleClassName = `${classNamePrefix}__${(isLabel) ? 'label' : 'title'}`;
 
   return (
     <div className={mainDivClassName}>
-      <div className={`${classNamePrefix}__${titlePrefix}-wrapper`}>
-        <h2 className={`${classNamePrefix}__${titlePrefix}`}>{title}</h2>
+      <div className={`${titleClassName}-wrapper`}>
+        <h2 className={titleClassName}>{title}</h2>
         {
           additionalTitleElement
         }

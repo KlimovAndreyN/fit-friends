@@ -25,8 +25,8 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
 
   const sliderProps: SliderProps = {
     ...otherPorps,
-    classNamePrefix: sectionClassName,
-    mainDivClassName: `${sectionClassName}__wrapper`
+    mainDivClassName: `${sectionClassName}__wrapper`,
+    classNamePrefix: sectionClassName
   };
   const showAllSliderButtonOption = {
     firstTitle: 'Смотреть все',

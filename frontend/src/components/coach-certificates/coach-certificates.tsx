@@ -85,6 +85,9 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   return (
     <Slider
       title='Дипломы и сертификаты'
+      mainDivClassName={`${classNamePrefix}__additional-info`}
+      classNamePrefix={classNamePrefix}
+
       isLabel
       additionalTitleElement={
         <Fragment>
@@ -98,8 +101,6 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
         </Fragment>
       }
       childrens={childrens}
-      classNamePrefix={classNamePrefix}
-      mainDivClassName={`${classNamePrefix}__additional-info`}
       slidesCount={SLIDES_COUNT}
     />
   );
