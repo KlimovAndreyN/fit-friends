@@ -13,6 +13,7 @@ import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-tra
 
 import { useAppDispatch } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
+import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle, SpecializationTitle } from '../../const';
 
 const MOCK_USER = {
@@ -24,7 +25,8 @@ const MOCK_USER = {
   specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
   about: 'Привет! Меня зовут Иванова Валерия, мне 34 года. Япрофессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и&nbsp;силовыми тренировками.',
   description: 'Провожу как индивидуальные тренировки, так и групповые занятия. Помогу вам достигнуть своей цели и сделать это с удовольствием!',
-  filePath: 'img/content/user-coach-photo1.jpg'
+  filePath: 'img/content/user-coach-photo1.jpg',
+  personal: true
 } as const;
 
 function UserDetail(): JSX.Element {
@@ -41,19 +43,19 @@ function UserDetail(): JSX.Element {
   // добавил UserPhoto
 
   const { id: userId = '' } = useParams();
-  const { userRole, avatarPath, name, location, readyForTraining, specializations, about, description, filePath } = MOCK_USER;
+  const { userRole, avatarPath, name, location, readyForTraining, specializations, about, description, filePath, personal } = MOCK_USER;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    //!dispatch(fetchUserProfile());
+    dispatch(fetchDetailUserProfile(userId));
     dispatch(setPrevLocation(AppRoute.UserDetail));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   const isCoach = isCoachRole(userRole);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
-  const className = 'user-card-coach'; //! раскидить по все где повторяется
+  const className = (isCoach) ? `user-card-coach${(personal) ? '-2' : ''}` : 'user-card';
 
   //! отладка
   // eslint-disable-next-line no-console

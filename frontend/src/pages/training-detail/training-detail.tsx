@@ -12,10 +12,11 @@ import Spinner from '../../components/spinner/spinner';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
-import { fetchDetailTraining } from '../../store/actions/training-action';
-import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
-import { setPrevLocation } from '../../store/user-process';
 import { getUserRole } from '../../store/user-process/selectors';
+import { setPrevLocation } from '../../store/user-process';
+import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrainingExecuting } from '../../store/training-process/selectors';
+import { fetchDetailTraining } from '../../store/actions/training-action';
+import { clearDetailUserProfile } from '../../store/user-profile-process';
 import { AppRoute, PageTitle, SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
 
 function TrainingDetail(): JSX.Element {
@@ -43,6 +44,7 @@ function TrainingDetail(): JSX.Element {
   useEffect(() => {
     dispatch(fetchDetailTraining(trainingId));
     dispatch(setPrevLocation(AppRoute.TrainingDetail));
+    dispatch(clearDetailUserProfile());
   }, [dispatch, trainingId]);
 
   if (!trainingId || isFetchDetailTrainingError) {

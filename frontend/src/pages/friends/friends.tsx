@@ -5,7 +5,10 @@ import Header from '../../components/header/header';
 import { PageTitle } from '../../const';
 
 function Friends(): JSX.Element {
+  //! Временно
+
   //! проверить консоль браузера на ошибки
+  //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
   return (
     <Fragment>

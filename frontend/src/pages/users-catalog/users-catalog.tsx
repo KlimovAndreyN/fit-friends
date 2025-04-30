@@ -8,6 +8,8 @@ import { PageTitle } from '../../const';
 function UsersCatalog(): JSX.Element {
   //! временно
 
+  //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
+
   return (
     <Fragment>
       <Header title={PageTitle.UsersCatalog} />
