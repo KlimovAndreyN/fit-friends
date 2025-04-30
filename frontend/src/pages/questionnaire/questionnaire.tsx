@@ -2,8 +2,8 @@ import QuestionnaireForm from '../../components/questionnaire-form/questionnaire
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { getIsCreateQuestionnaireExecuting } from '../../store/user-profile-process/selectors';
-import { createQuestionnaire } from '../../store/actions/user-profile-action';
+import { getIsCreateQuestionnaireExecuting } from '../../store/account-process/selectors';
+import { createQuestionnaire } from '../../store/actions/account-action';
 import { setPrevLocation } from '../../store/user-process';
 import { CreateQuestionnaireDto } from '../../types/types';
 import { AppRoute } from '../../const';

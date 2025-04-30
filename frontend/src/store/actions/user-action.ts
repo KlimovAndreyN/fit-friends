@@ -5,7 +5,7 @@ import { ILoginUserDto, IDetailUserRdo, ITokenPayloadRdo, ILoggedUserRdo, ICreat
 
 import { isErrorNetwork } from '../../utils/parse-axios-error';
 import { AccessTokenStore, RefreshTokenStore } from '../../utils/token-store';
-import { existQuestionnaire } from './user-profile-action';
+import { existQuestionnaire } from './account-action';
 import { ApiRoute } from '../../const';
 
 type Extra = {

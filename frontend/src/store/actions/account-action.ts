@@ -15,16 +15,16 @@ type Extra = {
 };
 
 export const Action = {
-  EXIST_QUESTIONNARE: 'user-profile/exist-questionnaire',
-  CREATE_QUESTIONNARE: 'user-profile/create-questionnaire',
-  FETCH_USER_PROFILE: 'user-profile/fetch',
-  UPDATE_USER_PROFILE: 'user-profile/update',
-  CREATE_COACH_CERTIFICATE: 'user-profile/create-certificate',
-  UPDATE_COACH_CERTIFICATE: 'user-profile/update-certificate',
-  DELETE_COACH_CERTIFICATE: 'user-profile/delete-certificate',
-  CHANGE_READY: 'user-profile/change-ready',
-  FETCH_LOOK_FOR_COMPANY_USER_PROFILES: 'look-for-company-user-profile/fetch',
-  FETCH_USER_PROFILES: 'user-profiles/fetch'
+  EXIST_QUESTIONNARE: 'account/exist-questionnaire',
+  CREATE_QUESTIONNARE: 'account/create-questionnaire',
+  FETCH_USER_PROFILE: 'account/fetch',
+  UPDATE_USER_PROFILE: 'account/update',
+  CREATE_COACH_CERTIFICATE: 'account/create-certificate',
+  UPDATE_COACH_CERTIFICATE: 'account/update-certificate',
+  DELETE_COACH_CERTIFICATE: 'account/delete-certificate',
+  CHANGE_READY: 'account/change-ready',
+  FETCH_LOOK_FOR_COMPANY_USER_PROFILES: 'look-for-company-account/fetch',
+  FETCH_USER_PROFILES: 'accounts/fetch'
 };
 
 export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Extra }>(

@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { UserProfileProcess } from '../../types/process/user-profile.process';
+import { AccountProcess } from '../../types/process/account.process';
 import {
   changeReadyForTraining, fetchLookForCompanyUserProfiles, createQuestionnaire,
   existQuestionnaire, fetchUserProfile, fetchUserProfiles, updateUserProfile,
   createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
-} from '../actions/user-profile-action';
+} from '../actions/account-action';
 import { StoreSlice } from '../../const';
 
-const initialState: UserProfileProcess = {
+const initialState: AccountProcess = {
   isExistQuestionnaireExecuting: false,
   existQuestionnaire: false,
 
@@ -33,7 +33,7 @@ const initialState: UserProfileProcess = {
   userProfiles: []
 };
 
-export const userProfileProcess = createSlice(
+export const accountProcess = createSlice(
   {
     name: StoreSlice.UserProfileProcess,
     initialState,

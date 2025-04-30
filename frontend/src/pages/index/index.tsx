@@ -11,10 +11,10 @@ import {
   getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings,
   getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting
 } from '../../store/training-process/selectors';
-import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
+import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/account-process/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
-import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
+import { fetchLookForCompanyUserProfiles } from '../../store/actions/account-action';
 import { clearDetailTraining } from '../../store/training-process';
 import { setIsIndexPageActivate, setPrevLocation } from '../../store/user-process';
 import { getIsIndexPageActivate, getPrevLocation } from '../../store/user-process/selectors';

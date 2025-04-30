@@ -7,8 +7,8 @@ import SliderButton from '../slider-button/slider-button';
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { createCoachCertificate, deleteCoachCertificate, updateCoachCertificate } from '../../store/actions/user-profile-action';
-import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/user-profile-process/selectors';
+import { createCoachCertificate, deleteCoachCertificate, updateCoachCertificate } from '../../store/actions/account-action';
+import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/account-process/selectors';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 const SLIDES_COUNT = 3;

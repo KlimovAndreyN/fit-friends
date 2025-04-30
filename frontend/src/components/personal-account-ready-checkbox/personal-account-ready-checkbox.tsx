@@ -1,8 +1,8 @@
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/user-profile-process/selectors';
-import { changeReadyForTraining } from '../../store/actions/user-profile-action';
+import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/account-process/selectors';
+import { changeReadyForTraining } from '../../store/actions/account-action';
 
 type PersonalAccountReadyCheckboxProps = {
   name: string;

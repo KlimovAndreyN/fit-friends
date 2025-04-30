@@ -11,8 +11,8 @@ import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/user-profile-process/selectors';
-import { fetchUserProfile, updateUserProfile } from '../../store/actions/user-profile-action';
+import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/account-process/selectors';
+import { fetchUserProfile, updateUserProfile } from '../../store/actions/account-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {

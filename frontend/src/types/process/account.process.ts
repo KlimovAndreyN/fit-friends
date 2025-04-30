@@ -1,6 +1,6 @@
 import { ICertificateRdo, IDetailUserProfileRdo, IUserProfileRdo } from '@backend/shared/core';
 
-export type UserProfileProcess = {
+export type AccountProcess = {
   isExistQuestionnaireExecuting: boolean;
   existQuestionnaire: boolean;
 
