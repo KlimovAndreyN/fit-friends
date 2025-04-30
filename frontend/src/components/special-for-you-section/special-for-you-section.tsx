@@ -40,9 +40,8 @@ function SpecialForYouSection({ trainings }: SpecialForYouSectionProps): JSX.Ele
     <SliderSection
       title='Специально подобрано для вас'
       sectionClassName='special-for-you'
-
-      slidesCount={SLIDES_COUNT}
       childrens={childrens}
+      slidesCount={SLIDES_COUNT}
     />
   );
 }

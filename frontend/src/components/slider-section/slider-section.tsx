@@ -14,7 +14,7 @@ type SliderSectionProps =
 
 function SliderSection(props: SliderSectionProps): JSX.Element {
   const { sectionClassName, showAllLink, ...otherPorps } = props;
-  const { isShowAllLight } = otherPorps;
+  const { isLightControl } = otherPorps;
   const navigate = useNavigate();
 
   const handleShowAllButtonClick = () => {
@@ -33,7 +33,7 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
   };
   const showAllSliderButtonOption = {
     firstTitle: 'Смотреть все',
-    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${sectionClassName}__button`),
+    className: classNames('btn-flat', { 'btn-flat--light': isLightControl }, `${sectionClassName}__button`),
     onClick: handleShowAllButtonClick,
     xlinkHref: '#arrow-right',
     width: 14,

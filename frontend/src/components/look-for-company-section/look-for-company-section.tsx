@@ -64,11 +64,10 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
     <SliderSection
       title='Ищут компанию для тренировки'
       sectionClassName='look-for-company'
-
+      isLightControl
       showAllLink={AppRoute.UsersCatalog}
-      isShowAllLight
-      slidesCount={SLIDES_COUNT}
       childrens={childrens}
+      slidesCount={SLIDES_COUNT}
     />
   );
 }

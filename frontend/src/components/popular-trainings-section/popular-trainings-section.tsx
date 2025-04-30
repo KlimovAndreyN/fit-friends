@@ -27,10 +27,9 @@ function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX
     <SliderSection
       title='Популярные тренировки'
       sectionClassName='popular-trainings'
-
       showAllLink={AppRoute.TrainingsCatalog}
-      slidesCount={SLIDES_COUNT}
       childrens={childrens}
+      slidesCount={SLIDES_COUNT}
     />
   );
 }

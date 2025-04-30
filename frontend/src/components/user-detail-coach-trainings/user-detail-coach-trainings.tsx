@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 import { ITrainingRdo, Specialization } from '@backend/shared/core';
 
 import TrainingCard from '../training-card/training-card';
@@ -63,45 +61,11 @@ type UserDetailCoachTrainingsProps = {
 }
 
 function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsProps): JSX.Element {
-  const mainClassName = `${classNamePrefix}__training`;
   const childrens = MOCK_TRAINIGS.map(
     (training) => (
       <TrainingCard key={training.id} training={training} />
     )
   );
-
-  /*
-  const { sectionClassName, showAllLink, ...otherPorps } = props;
-  const { isShowAllLight } = otherPorps;
-  const navigate = useNavigate();
-
-  const handleShowAllButtonClick = () => {
-    if (showAllLink) {
-      navigate(showAllLink);
-    }
-  };
-
-  const sliderProps: SliderProps = {
-    ...otherPorps,
-    classNamePrefix: sectionClassName,
-    divClassName: `${sectionClassName}__wrapper`
-  };
-
-  const showAllSliderButtonOption = {
-    firstTitle: 'Смотреть все',
-    className: classNames('btn-flat', { 'btn-flat--light': isShowAllLight }, `${sectionClassName}__button`),
-    onClick: handleShowAllButtonClick,
-    xlinkHref: '#arrow-right',
-    width: 14,
-    height: 10
-  };
-
-  sliderProps.additionalTitleElement = (showAllLink)
-    ? <SliderButton {...showAllSliderButtonOption} />
-    : undefined;
-  );
-  */
-
   const form = (
     <form className="user-card-coach__training-form">
       <button className="btn user-card-coach__btn-training" type="button">Хочу персональную тренировку</button>
@@ -122,52 +86,20 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
   );
 
   return (
-    <Fragment>
-      <Slider
-        title='Тренировки'
-        classNamePrefix={`${classNamePrefix}__training`}
-        titleDivClassNamePostfix='head'
-        titleClassNamePostfix='title'
-        controlsClassNamePostfix='bts'
-        controlClassNamePostfix='btn'
-        previousAriaLabel='back'
-        sliderButtonWidth={14}
-        sliderButtonHeight={10}
-
-        childrens={childrens}
-        slidesCount={SLIDES_COUNT}
-        additionalFooterElement={form}
-      />
-      <div className={mainClassName}>
-        <div className={`${mainClassName}-head`}>
-          <h2 className={`${mainClassName}-title`}>Тренировки</h2>
-          <div className="user-card-coach__training-bts">
-            <button className="btn-icon user-card-coach__training-btn" type="button" aria-label="back">
-              <svg width="14" height="10" aria-hidden="true">
-                <use xlinkHref="#arrow-left"></use>
-              </svg>
-            </button>
-            <button className="btn-icon user-card-coach__training-btn" type="button" aria-label="next">
-              <svg width="14" height="10" aria-hidden="true">
-                <use xlinkHref="#arrow-right"></use>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <ul className="user-card-coach__training-list">
-          {
-            MOCK_TRAINIGS.map(({ id, title, price, backgroundPath, caloriesWaste, description, rating, specialization, isSpecial }) => (
-              <li className="user-card-coach__training-item" key={id}>
-                <TrainingCard
-                  training={{ id, title, price, backgroundPath, caloriesWaste, description, rating, specialization, isSpecial, createdDate: '' }}
-                />
-              </li>
-            ))
-          }
-        </ul>
-        {form}
-      </div>
-    </Fragment>
+    <Slider
+      title='Тренировки'
+      classNamePrefix={`${classNamePrefix}__training`}
+      titleDivClassNamePostfix='head'
+      titleClassNamePostfix='title'
+      controlsClassNamePostfix='bts'
+      controlClassNamePostfix='btn'
+      previousAriaLabel='back'
+      sliderButtonWidth={14}
+      sliderButtonHeight={10}
+      childrens={childrens}
+      slidesCount={SLIDES_COUNT}
+      additionalFooterElement={form}
+    />
   );
 }
 

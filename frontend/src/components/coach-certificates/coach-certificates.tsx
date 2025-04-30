@@ -90,7 +90,6 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
       mainDivClassNamePostfix='additional-info'
       titleDivClassNamePostfix='label-wrapper'
       titleClassNamePostfix='label'
-
       additionalTitleElement={
         <Fragment>
           <ImageUploadInput

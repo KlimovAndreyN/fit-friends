@@ -13,17 +13,15 @@ export type SliderProps = {
   mainDivClassNamePostfix?: string;
   titleDivClassNamePostfix: string;
   titleClassNamePostfix: string;
+  additionalTitleElement?: JSX.Element;
   controlsClassNamePostfix?: string;
   controlClassNamePostfix?: string;
+  isLightControl?: boolean;
   previousAriaLabel?: string;
   sliderButtonWidth?: number;
   sliderButtonHeight?: number;
-
   childrens: JSX.Element[];
   slidesCount: number;
-
-  additionalTitleElement?: JSX.Element;
-  isShowAllLight?: boolean;
   additionalFooterElement?: JSX.Element;
 }
 
@@ -39,14 +37,13 @@ function Slider(props: SliderProps): JSX.Element {
     mainDivClassNamePostfix = '',
     titleDivClassNamePostfix,
     titleClassNamePostfix,
+    additionalTitleElement,
     controlsClassNamePostfix = 'controls',
     controlClassNamePostfix = 'control',
+    isLightControl,
     previousAriaLabel = 'previous',
     sliderButtonWidth = 16,
     sliderButtonHeight = 14,
-
-    additionalTitleElement,
-    isShowAllLight,
     childrens,
     slidesCount,
     additionalFooterElement
@@ -69,7 +66,7 @@ function Slider(props: SliderProps): JSX.Element {
   };
 
   const previousSliderButtonOption = {
-    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, classNamePrefix + separator + controlClassNamePostfix),
+    className: classNames('btn-icon', { 'btn-icon--outlined': isLightControl }, classNamePrefix + separator + controlClassNamePostfix),
     onClick: handlePreviousButtonClick,
     disabled: slideActiveIndex === 0,
     xlinkHref: '#arrow-left',
