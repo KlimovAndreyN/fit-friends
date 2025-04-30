@@ -6,6 +6,7 @@ import { isCoachRole, Role, Specialization } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
+import UserPhoto from '../../components/user-photo/user-photo';
 import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
 import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
@@ -16,6 +17,7 @@ import { AppRoute, PageTitle, SpecializationTitle } from '../../const';
 
 const MOCK_USER = {
   userRole: Role.Coach,
+  avatarPath: 'img/content/avatars/coaches/photo-1@2x.png',
   name: 'Валерия',
   location: 'Адмиралтейская',
   readyForTraining: true,
@@ -26,16 +28,19 @@ const MOCK_USER = {
 } as const;
 
 function UserDetail(): JSX.Element {
-  //! получение данных, очистка сотояния
-  //! возможно выделить отдельно user-card-coach__content
+  //! получение данных и очистка сотояния
+  //! возможно выделить отдельно блок {`${className}__content`}
   //! прокрутка?
   //! ограничения для тренера на просмотр тренеров в бэке
   //! кнопка - показать сертификаты
+  //! ссылка показать карту - popup-user-map.html
+  //    возможно отдельный компонет Location, где иконка #icon-location
   //! проверить разметку
   //! проверить консоль браузера на ошибки
+  // добавил UserPhoto
 
   const { id: userId = '' } = useParams();
-  const { userRole, name, location, readyForTraining, specializations, about, description, filePath } = MOCK_USER;
+  const { userRole, avatarPath, name, location, readyForTraining, specializations, about, description, filePath } = MOCK_USER;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -49,6 +54,7 @@ function UserDetail(): JSX.Element {
   );
   const className = 'user-card-coach'; //! раскидить по все где повторяется
 
+  //! отладка
   // eslint-disable-next-line no-console
   console.log('userId', userId);
 
@@ -63,32 +69,30 @@ function UserDetail(): JSX.Element {
               <div className="inner-page__content">
                 <section className={className}>
                   <h1 className="visually-hidden">{`Карточка пользователя${(isCoach) ? ' роль тренер' : ''}`}</h1>
-                  <div className="user-card-coach__wrapper">
-                    <div className="user-card-coach__card">
-                      <div className="user-card-coach__content">
-                        <div className="user-card-coach__head">
-                          <h2 className="user-card-coach__title">{name}</h2>
+                  <div className={`${className}__wrapper`}>
+                    <div className={`${className}__card`}>
+                      <div className={`${className}__content`}>
+                        <UserPhoto className='' size={100} path={avatarPath} />
+                        <div className={`${className}__head`}>
+                          <h2 className={`${className}__title`}>{name}</h2>
                         </div>
-                        <div className="user-card-coach__label">
+                        <div className={`${className}__label`}>
                           <a href="popup-user-map.html">
-                            <svg className="user-card-coach__icon-location" width="12" height="14" aria-hidden="true">
+                            <svg className={`${className}__icon-location`} width="12" height="14" aria-hidden="true">
                               <use xlinkHref="#icon-location"></use>
                             </svg>
                             <span>{location}</span>
                           </a>
                         </div>
-                        <div className="user-card-coach__status-container">
+                        <div className={`${className}__status-container`}>
                           {
-                            isCoachRole(userRole)
-                              ?
-                              <div className="user-card-coach__status user-card-coach__status--tag">
-                                <svg className="user-card-coach__icon-cup" width="12" height="13" aria-hidden="true">
-                                  <use xlinkHref="#icon-cup"></use>
-                                </svg>
-                                <span>Тренер</span>
-                              </div>
-                              :
-                              null
+                            isCoachRole(userRole) &&
+                            <div className={`${className}__status ${className}__status--tag`}>
+                              <svg className={`${className}__icon-cup`} width="12" height="13" aria-hidden="true">
+                                <use xlinkHref="#icon-cup"></use>
+                              </svg>
+                              <span>Тренер</span>
+                            </div>
                           }
                           {/*напутано с разметкой.... 'user-card-coach-2__status user-card-coach-2__status--check' серое,  user-card-coach__status user-card-coach__status--check зелоное*/}
                           <div className="user-card-coach__status user-card-coach__status--check"><span>Готов тренировать</span></div>
@@ -96,23 +100,26 @@ function UserDetail(): JSX.Element {
                             <span>Готов тренировать</span>
                           </div>
                         </div>
-                        <div className="user-card-coach__text">
+                        <div className={`${className}__text`}>
                           <p>{about}</p>
                           <p>{description}</p>
                         </div>
-                        <button className="btn-flat user-card-coach__sertificate" type="button">
-                          <svg width="12" height="13" aria-hidden="true">
-                            <use xlinkHref="#icon-teacher"></use>
-                          </svg><span>Посмотреть сертификаты</span>
-                        </button>
+                        {
+                          isCoachRole(userRole) &&
+                          <button className={`btn-flat ${className}__sertificate`} type="button">
+                            <svg width="12" height="13" aria-hidden="true">
+                              <use xlinkHref="#icon-teacher"></use>
+                            </svg><span>Посмотреть сертификаты</span>
+                          </button>
+                        }
                         <Hashtags
                           classNamePrefix={`${className}__hashtag`}
                           items={specializationsTitles}
                           isNotNeedSpecialClassName
                         />
-                        <button className="btn user-card-coach__btn" type="button">Добавить в друзья</button>
+                        <button className={`btn ${className}__btn`} type="button">Добавить в друзья</button>
                       </div>
-                      <UserDetailGallary classNamePrefix={className} filesPaths={[filePath, filePath]} />
+                      <UserDetailGallary classNamePrefix={className} filesPaths={[filePath]} />
                     </div>
                     {isCoachRole(userRole) && <UserDetailCoachTrainingBlock classNamePrefix={className} />}
                   </div>
