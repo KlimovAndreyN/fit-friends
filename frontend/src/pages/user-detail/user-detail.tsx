@@ -2,29 +2,37 @@ import { Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { isCoachRole, Role } from '@backend/shared/core';
+import { isCoachRole, Role, Specialization } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
 
-import { PageTitle } from '../../const';
+import { PageTitle, SpecializationTitle } from '../../const';
+import Hashtags from '../../components/hashtags/hashtags';
 
 const MOCK_USER = {
   userRole: Role.Coach,
   name: 'Валерия',
   location: 'Адмиралтейская',
-  readyForTraining: true
+  readyForTraining: true,
+  specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
+  about: 'Привет! Меня зовут Иванова Валерия, мне 34 года. Япрофессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и&nbsp;силовыми тренировками.',
+  description: 'Провожу как индивидуальные тренировки, так и групповые занятия. Помогу вам достигнуть своей цели и сделать это с удовольствием!'
 } as const;
 
 function UserDetail(): JSX.Element {
   //! прокрутка?
   //! ограничения для тренера на просмотр тренеров в бэке
+  //! кнопка - показать сертификаты
   //! проверить разметку
   //! проверить консоль браузера на ошибки
 
   const { id: userId = '' } = useParams();
-  const { userRole, name, location, readyForTraining } = MOCK_USER;
+  const { userRole, name, location, readyForTraining, specializations, about, description } = MOCK_USER;
   const isCoach = isCoachRole(userRole);
+  const specializationsTitles = specializations.map(
+    (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
+  );
   const className = 'user-card-coach'; //! раскидить по все где повторяется
 
   // eslint-disable-next-line no-console
@@ -75,28 +83,19 @@ function UserDetail(): JSX.Element {
                           </div>
                         </div>
                         <div className="user-card-coach__text">
-                          <p>Привет! Меня зовут Иванова Валерия, мне 34 года. Я&nbsp;профессиональный тренер по&nbsp;боксу. Не&nbsp;боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и&nbsp;силовыми тренировками.</p>
-                          <p>Провожу как индивидуальные тренировки, так и&nbsp;групповые занятия. Помогу вам достигнуть своей цели и&nbsp;сделать это с&nbsp;удовольствием!</p>
+                          <p>{about}</p>
+                          <p>{description}</p>
                         </div>
                         <button className="btn-flat user-card-coach__sertificate" type="button">
                           <svg width="12" height="13" aria-hidden="true">
                             <use xlinkHref="#icon-teacher"></use>
                           </svg><span>Посмотреть сертификаты</span>
                         </button>
-                        <ul className="user-card-coach__hashtag-list">
-                          <li className="user-card-coach__hashtag-item">
-                            <div className="hashtag"><span>#бокс</span></div>
-                          </li>
-                          <li className="user-card-coach__hashtag-item">
-                            <div className="hashtag"><span>#кроссфит</span></div>
-                          </li>
-                          <li className="user-card-coach__hashtag-item">
-                            <div className="hashtag"><span>#силовые</span></div>
-                          </li>
-                          <li className="user-card-coach__hashtag-item">
-                            <div className="hashtag"><span>#йога</span></div>
-                          </li>
-                        </ul>
+                        <Hashtags
+                          classNamePrefix={`${className}__hashtag`}
+                          items={specializationsTitles}
+                          isNotNeedSpecialClassName
+                        />
                         <button className="btn user-card-coach__btn" type="button">Добавить в друзья</button>
                       </div>
                       <div className="user-card-coach__gallary">
