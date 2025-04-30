@@ -1,8 +1,8 @@
-import { Specialization } from '@backend/shared/core';
+import { ITrainingRdo, Specialization } from '@backend/shared/core';
 
 import TrainingCard from '../training-card/training-card';
 
-const MOCK_TRAINIGS = [
+const MOCK_TRAINIGS: ITrainingRdo[] = [
   {
     id: 'id-1',
     title: 'Power',
@@ -12,7 +12,8 @@ const MOCK_TRAINIGS = [
     caloriesWaste: 600,
     rating: 4,
     description: 'Тренировка на отработку правильной техники работы с тяжелыми весами, укрепления мышц кора и спины.',
-    isSpecial: false
+    isSpecial: false,
+    createdDate: ''
   },
   {
     id: 'id-2',
@@ -23,7 +24,8 @@ const MOCK_TRAINIGS = [
     caloriesWaste: 950,
     rating: 5,
     description: 'Знаменитый кроссфит комплекс. Синди – универсальная тренировка для развития функциональной силы.',
-    isSpecial: false
+    isSpecial: false,
+    createdDate: ''
   },
   {
     id: 'id-3',
@@ -34,7 +36,8 @@ const MOCK_TRAINIGS = [
     caloriesWaste: 600,
     rating: 4,
     description: 'Тренировка на отработку правильной техники работы с тяжелыми весами, укрепления мышц кора и спины.',
-    isSpecial: true
+    isSpecial: true,
+    createdDate: ''
   },
   {
     id: 'id-4',
@@ -45,7 +48,8 @@ const MOCK_TRAINIGS = [
     caloriesWaste: 600,
     rating: 4,
     description: 'Тренировка на отработку правильной техники работы с тяжелыми весами, укрепления мышц кора и спины.',
-    isSpecial: false
+    isSpecial: false,
+    createdDate: ''
   }
 ];
 
@@ -55,6 +59,23 @@ type UserDetailCoachTrainingsProps = {
 
 function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsProps): JSX.Element {
   const mainClassName = `${classNamePrefix}__training`;
+  /*
+  const childrens = MOCK_TRAINIGS.map(
+    (training) => (
+      <TrainingCard key={training.id} training={training} />
+    )
+  );
+
+    return (
+      <SliderSection
+        title='Популярные тренировки'
+        showAllLink={AppRoute.TrainingsCatalog}
+        sectionClassName='popular-trainings'
+        slidesCount={SLIDES_COUNT}
+        childrens={childrens}
+      />
+    );
+  */
 
   return (
     <div className={mainClassName}>

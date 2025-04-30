@@ -8,7 +8,7 @@ import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
 import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
-import UserDetailCoachTrainings from '../../components/user-detail-coach-training/user-detail-coach-training';
+import UserDetailCoachTrainings from '../../components/user-detail-coach-trainings/user-detail-coach-trainings';
 
 import { PageTitle, SpecializationTitle } from '../../const';
 
