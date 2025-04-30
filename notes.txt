@@ -47,6 +47,7 @@ swagger@local.ru
     переделать вывод в span (<span>#{specializationText}</span>)
       поискать еще где есть
     возможно нужет компонет для местоположения - где иконка #icon-location
+    сделать функцию для добавления "ккал" и остальных хештеров "для_" ...
     Friends
     UsersCatalog
     UsersDetail
