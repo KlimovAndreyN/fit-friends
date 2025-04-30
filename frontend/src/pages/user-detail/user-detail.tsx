@@ -12,26 +12,15 @@ import UserDetailGallary from '../../components/user-detail-gallary/user-detail-
 import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { setPrevLocation } from '../../store/user-process';
-import { getDetailUserProfile } from '../../store/user-profile-process/selectors';
+import { getDetailUserProfile, getIsFetchDetailUserProfileError, getIsFetchDetailUserProfileExecuting } from '../../store/user-profile-process/selectors';
 import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
-import { AppRoute, PageTitle, SpecializationTitle } from '../../const';
-
-const MOCK_USER = {
-  userRole: Role.Coach,
-  avatarPath: 'img/content/avatars/coaches/photo-1@2x.png',
-  name: 'Валерия',
-  location: 'Адмиралтейская',
-  readyForTraining: true,
-  specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
-  about: 'Привет! Меня зовут Иванова Валерия, мне 34 года. Япрофессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и&nbsp;силовыми тренировками.',
-  description: 'Провожу как индивидуальные тренировки, так и групповые занятия. Помогу вам достигнуть своей цели и сделать это с удовольствием!',
-  filePath: 'img/content/user-coach-photo1.jpg',
-  personal: true
-} as const;
+import { AppRoute, LocationTitle, PageTitle, SpecializationTitle } from '../../const';
+import NotFound from '../not-found/not-found';
+import Spinner from '../../components/spinner/spinner';
 
 function UserDetail(): JSX.Element {
-  //! получение данных и очистка сотояния
   //! сделать меньше количество строк
   //    возможно выделить отдельно блок {`${className}__content`}
   //! прокрутка?
@@ -44,24 +33,41 @@ function UserDetail(): JSX.Element {
   // добавил UserPhoto
 
   const { id: userId = '' } = useParams();
-  const { userRole, avatarPath, name, location, readyForTraining, specializations, about, description, filePath, personal } = MOCK_USER;
   const dispatch = useAppDispatch();
+  const isFetchDetailUserProfileExecuting = useAppSelector(getIsFetchDetailUserProfileExecuting);
+  const isFetchDetailUserProfileError = useAppSelector(getIsFetchDetailUserProfileError);
   const detailUserProfile = useAppSelector(getDetailUserProfile);
 
   //! Отладка
   // eslint-disable-next-line no-console
   console.log(detailUserProfile);
 
+  useScrollToTop(); //! а если в useEffect?
+
   useEffect(() => {
     dispatch(fetchDetailUserProfile(userId));
     dispatch(setPrevLocation(AppRoute.UserDetail));
   }, [dispatch, userId]);
 
-  const isCoach = isCoachRole(userRole);
+
+  if (!userId || isFetchDetailUserProfileError) {
+    //! проверить как будет выглядеть
+    //! еще бы дополнительный текст добавить
+    return <NotFound />;
+  }
+
+  //! если использовать ! то ошибку не отработать
+  if (isFetchDetailUserProfileExecuting || (!detailUserProfile)) {
+    return <Spinner />;
+  }
+
+  const { user: { role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description, individualTraining } } = detailUserProfile;
+
+  const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
-  const className = (isCoach) ? `user-card-coach${(personal) ? '-2' : ''}` : 'user-card';
+  const className = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
 
   //! отладка
   // eslint-disable-next-line no-console
@@ -81,7 +87,7 @@ function UserDetail(): JSX.Element {
                   <div className={`${className}__wrapper`}>
                     <div className={`${className}__card`}>
                       <div className={`${className}__content`}>
-                        <UserPhoto className='' size={100} path={avatarPath} />
+                        <UserPhoto className='' size={100} path={avatarFilePath} />
                         <div className={`${className}__head`}>
                           <h2 className={`${className}__title`}>{name}</h2>
                         </div>
@@ -90,12 +96,12 @@ function UserDetail(): JSX.Element {
                             <svg className={`${className}__icon-location`} width="12" height="14" aria-hidden="true">
                               <use xlinkHref="#icon-location"></use>
                             </svg>
-                            <span>{location}</span>
+                            <span>{LocationTitle[location]}</span>
                           </a>
                         </div>
                         <div className={`${className}__status-container`}>
                           {
-                            isCoachRole(userRole) &&
+                            isCoach &&
                             <div className={`${className}__status ${className}__status--tag`}>
                               <svg className={`${className}__icon-cup`} width="12" height="13" aria-hidden="true">
                                 <use xlinkHref="#icon-cup"></use>
@@ -114,7 +120,7 @@ function UserDetail(): JSX.Element {
                           <p>{description}</p>
                         </div>
                         {
-                          isCoachRole(userRole) &&
+                          isCoach &&
                           <button className={`btn-flat ${className}__sertificate`} type="button">
                             <svg width="12" height="13" aria-hidden="true">
                               <use xlinkHref="#icon-teacher"></use>
@@ -128,9 +134,9 @@ function UserDetail(): JSX.Element {
                         />
                         <button className={`btn ${className}__btn`} type="button">Добавить в друзья</button>
                       </div>
-                      <UserDetailGallary classNamePrefix={className} filesPaths={[filePath]} />
+                      <UserDetailGallary classNamePrefix={className} filesPaths={[backgroundPath]} />
                     </div>
-                    {isCoachRole(userRole) && <UserDetailCoachTrainingBlock classNamePrefix={className} />}
+                    {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={className} />}
                   </div>
                 </section>
               </div>

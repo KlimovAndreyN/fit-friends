@@ -16,7 +16,7 @@ export async function seedQuestionnaires(questionnaireRepository: QuestionnaireR
   const { MIN_COUNT, MAX_COUNT } = SpecializationsOption;
   const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = CalorieOption;
 
-  for (const { id: userId, role } of users) {
+  for (const { id: userId, role, name } of users) {
     //! попробовать добавлять через сервис QuestionnaireService
 
     const questionnaire: Questionnaire = {
@@ -31,9 +31,10 @@ export async function seedQuestionnaires(questionnaireRepository: QuestionnaireR
       questionnaire.caloriesLose = getRandomNumber(LOSE_MIN, LOSE_MAX);
       questionnaire.caloriesWaste = getRandomNumber(WASTE_MIN, WASTE_MAX);
     } else {
-      //! нужно дополнить остальные значения для тренера
-
       questionnaire.individualTraining = getRandomBoolean();
+      questionnaire.description = `Description: my name is ${name}`;
+      questionnaire.individualTraining = getRandomBoolean() || getRandomBoolean(); // удвоим
+      //! сертификаты бы, но как попробую файлы
     }
 
     const questionnaireEntity = new QuestionnaireEntity(questionnaire);
