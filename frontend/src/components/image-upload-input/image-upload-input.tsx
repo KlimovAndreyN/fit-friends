@@ -7,12 +7,12 @@ type ImageUploadInputProps = {
   className?: string;
   acceptTypes?: string;
   onChange: OnFileInputChange;
-  readonly?: boolean;
+  readOnly?: boolean;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }
 
 function ImageUploadInput(props: ImageUploadInputProps): JSX.Element {
-  const { name, className, acceptTypes = 'image/*', onChange, readonly, inputRef } = props;
+  const { name, className, acceptTypes = 'image/*', onChange, readOnly, inputRef } = props;
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -39,7 +39,7 @@ function ImageUploadInput(props: ImageUploadInputProps): JSX.Element {
       name={name}
       accept={acceptTypes}
       onChange={handleImageChange}
-      disabled={readonly}
+      disabled={readOnly}
       ref={inputRef}
     />
   );

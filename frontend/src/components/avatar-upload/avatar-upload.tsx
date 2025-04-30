@@ -10,11 +10,11 @@ type AvatarUploadProps = {
   onChange?: OnFileInputChange;
   forPersonalAccount?: boolean;
   isShowButtons?: boolean;
-  readonly?: boolean;
+  readOnly?: boolean;
 }
 
 function AvatarUpload(props: AvatarUploadProps): JSX.Element {
-  const { name, path = '', onChange, forPersonalAccount, isShowButtons, readonly } = props;
+  const { name, path = '', onChange, forPersonalAccount, isShowButtons, readOnly } = props;
   const [avatarFilePath, setAvatarFilePath] = useState<string>(path);
   const imageUploadInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -34,7 +34,7 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
     if (imageUploadInputRef.current) {
       imageUploadInputRef.current.value = '';
     }
-  }, [path, readonly]);
+  }, [path, readOnly]);
 
   const handleImageUploadInputChange = (filePath: string, file: File | undefined) => {
     if (onChange) {
@@ -74,7 +74,7 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
             acceptTypes='image/png, image/jpeg'
             onChange={handleImageUploadInputChange}
             inputRef={imageUploadInputRef}
-            readonly={readonly}
+            readOnly={readOnly}
           />
           <span className={spanClassName}>
             {image}

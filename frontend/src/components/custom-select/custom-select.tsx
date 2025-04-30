@@ -24,7 +24,7 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
     if (value !== undefined) {
       setSelectedValue(value);
     }
-  }, [value]);
+  }, [value, readOnly]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);

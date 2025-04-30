@@ -108,7 +108,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           onChange={handleAvatarUploadChange}
           forPersonalAccount
           isShowButtons={isEditing}
-          readonly={!isEditing}
+          readOnly={!isEditing}
         />
       </div>
       <form className={`${mainClassName}__form`} method="post" onSubmit={(isEditing) ? handleFormSubmit : undefined}>
@@ -156,7 +156,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
             name={FormFieldName.Spec}
             values={specializations}
             divExtraClassName={mainClassName}
-            readonly={!isEditing}
+            readOnly={!isEditing}
             fromPersonalAccount
           />
         </PersonalAccountBlock>

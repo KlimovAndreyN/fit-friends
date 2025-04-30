@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -10,7 +10,9 @@ import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
 import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
 
-import { PageTitle, SpecializationTitle } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { setPrevLocation } from '../../store/user-process';
+import { AppRoute, PageTitle, SpecializationTitle } from '../../const';
 
 const MOCK_USER = {
   userRole: Role.Coach,
@@ -34,6 +36,13 @@ function UserDetail(): JSX.Element {
 
   const { id: userId = '' } = useParams();
   const { userRole, name, location, readyForTraining, specializations, about, description, filePath } = MOCK_USER;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    //!dispatch(fetchUserProfile());
+    dispatch(setPrevLocation(AppRoute.UserDetail));
+  }, [dispatch]);
+
   const isCoach = isCoachRole(userRole);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
