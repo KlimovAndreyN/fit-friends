@@ -5,6 +5,7 @@ import { ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
 import { REVIEWS_ANCHOR, SpecializationTitle } from '../../const';
+import Hashtags from '../hashtags/hashtags';
 
 type TrainingCardProps = {
   training: ITrainingRdo;
@@ -39,14 +40,7 @@ function TrainingCard({ training }: TrainingCardProps): JSX.Element {
         </p>
         <h3 className="thumbnail-training__title">{title}</h3>
         <div className="thumbnail-training__info">
-          <ul className="thumbnail-training__hashtags-list">
-            <li className="thumbnail-training__hashtags-item">
-              <div className="hashtag thumbnail-training__hashtag"><span>#{specializationText}</span></div>
-            </li>
-            <li className="thumbnail-training__hashtags-item">
-              <div className="hashtag thumbnail-training__hashtag"><span>#{caloriesWaste}ккал</span></div>
-            </li>
-          </ul>
+          <Hashtags classNamePrefix='thumbnail-training' divItemClassNamePrefix='thumbnail-training' items={[specializationText, `${caloriesWaste}ккал`]} />
           <div className="thumbnail-training__rate">
             <svg width="16" height="16" aria-hidden="true">
               <use xlinkHref="#icon-star" />

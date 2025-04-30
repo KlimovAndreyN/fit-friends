@@ -17,6 +17,11 @@ const MOCK_USER = {
 } as const;
 
 function UserDetail(): JSX.Element {
+  //! прокрутка?
+  //! ограничения для тренера на просмотр тренеров в бэке
+  //! проверить разметку
+  //! проверить консоль браузера на ошибки
+
   const { id: userId = '' } = useParams();
   const { userRole, name, location, readyForTraining } = MOCK_USER;
   const isCoach = isCoachRole(userRole);
