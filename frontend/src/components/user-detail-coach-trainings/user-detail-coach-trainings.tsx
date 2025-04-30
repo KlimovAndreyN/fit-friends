@@ -126,6 +126,8 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
       <Slider
         title='Тренировки'
         classNamePrefix={`${classNamePrefix}__training`}
+        titleDivClassNamePostfix='head'
+        titleClassNamePostfix='title'
 
         childrens={childrens}
         slidesCount={SLIDES_COUNT}

@@ -86,9 +86,11 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
     <Slider
       title='Дипломы и сертификаты'
       classNamePrefix={classNamePrefix}
-      mainDivClassNamePostfix='__additional-info'
+      separator='__'
+      mainDivClassNamePostfix='additional-info'
+      titleDivClassNamePostfix='label-wrapper'
+      titleClassNamePostfix='label'
 
-      isLabel
       additionalTitleElement={
         <Fragment>
           <ImageUploadInput

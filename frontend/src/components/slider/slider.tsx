@@ -9,12 +9,14 @@ import classNames from 'classnames';
 export type SliderProps = {
   title: string;
   classNamePrefix: string;
+  separator?: string;
   mainDivClassNamePostfix?: string;
+  titleDivClassNamePostfix: string;
+  titleClassNamePostfix: string;
 
   childrens: JSX.Element[];
   slidesCount: number;
 
-  isLabel?: boolean;
   additionalTitleElement?: JSX.Element;
   isShowAllLight?: boolean;
   additionalFooterElement?: JSX.Element;
@@ -28,9 +30,11 @@ function Slider(props: SliderProps): JSX.Element {
   const {
     title,
     classNamePrefix,
+    separator = '-',
     mainDivClassNamePostfix = '',
+    titleDivClassNamePostfix,
+    titleClassNamePostfix,
 
-    isLabel,
     additionalTitleElement,
     isShowAllLight,
     childrens,
@@ -73,12 +77,13 @@ function Slider(props: SliderProps): JSX.Element {
     height: 14
   };
 
-  const mainDivClassName = classNamePrefix + mainDivClassNamePostfix;
-  const titleClassName = `${classNamePrefix}__${(isLabel) ? 'label' : 'title'}`;
+  const mainDivClassName = classNamePrefix + ((mainDivClassNamePostfix) ? separator + mainDivClassNamePostfix : '');
+  const titleDivClassName = classNamePrefix + separator + titleDivClassNamePostfix;
+  const titleClassName = classNamePrefix + separator + titleClassNamePostfix;
 
   return (
     <div className={mainDivClassName}>
-      <div className={`${titleClassName}-wrapper`}>
+      <div className={titleDivClassName}>
         <h2 className={titleClassName}>{title}</h2>
         {
           additionalTitleElement
