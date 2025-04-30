@@ -8,8 +8,8 @@ import classNames from 'classnames';
 
 export type SliderProps = {
   title: string;
-  mainDivClassName: string;
   classNamePrefix: string;
+  mainDivClassNamePostfix?: string;
 
   childrens: JSX.Element[];
   slidesCount: number;
@@ -27,8 +27,8 @@ function Slider(props: SliderProps): JSX.Element {
 
   const {
     title,
-    mainDivClassName,
     classNamePrefix,
+    mainDivClassNamePostfix = '',
 
     isLabel,
     additionalTitleElement,
@@ -73,6 +73,7 @@ function Slider(props: SliderProps): JSX.Element {
     height: 14
   };
 
+  const mainDivClassName = classNamePrefix + mainDivClassNamePostfix;
   const titleClassName = `${classNamePrefix}__${(isLabel) ? 'label' : 'title'}`;
 
   return (

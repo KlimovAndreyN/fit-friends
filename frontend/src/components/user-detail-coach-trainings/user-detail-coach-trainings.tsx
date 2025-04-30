@@ -125,7 +125,6 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
     <Fragment>
       <Slider
         title='Тренировки'
-        mainDivClassName={`${classNamePrefix}__training`} //! выделить в переменную, если останется одинаково
         classNamePrefix={`${classNamePrefix}__training`}
 
         childrens={childrens}
