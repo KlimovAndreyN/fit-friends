@@ -6,7 +6,7 @@ import 'swiper/css';
 import SliderButton from '../slider-button/slider-button';
 import classNames from 'classnames';
 
-export type SliderDivProps = {
+export type SliderProps = {
   title: string;
   isLabel?: boolean;
   additionalTitleElement?: JSX.Element;
@@ -17,7 +17,7 @@ export type SliderDivProps = {
   slidesCount: number;
 }
 
-function SliderDiv(props: SliderDivProps): JSX.Element {
+function Slider(props: SliderProps): JSX.Element {
   //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
   //    вообще убрать ul и li, т.к. все на div
 
@@ -90,4 +90,4 @@ function SliderDiv(props: SliderDivProps): JSX.Element {
   );
 }
 
-export default SliderDiv;
+export default Slider;

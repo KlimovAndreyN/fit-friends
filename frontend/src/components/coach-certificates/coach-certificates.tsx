@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import CertificateCard from '../certificate-card/certificate-card';
-import SliderDiv from '../slider-div/slider-div';
+import Slider from '../slider/slider';
 import SliderButton from '../slider-button/slider-button';
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
@@ -83,7 +83,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   );
 
   return (
-    <SliderDiv
+    <Slider
       title='Дипломы и сертификаты'
       isLabel
       additionalTitleElement={

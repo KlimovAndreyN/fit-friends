@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 import SliderButton from '../slider-button/slider-button';
-import SliderDiv, { SliderDivProps } from '../slider-div/slider-div';
+import Slider, { SliderProps } from '../slider/slider';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 
 type SliderSectionProps =
-  Omit<SliderDivProps, 'classNamePrefix' | 'divClassName'>
+  Omit<SliderProps, 'classNamePrefix' | 'divClassName'>
   & {
     sectionClassName: string;
     showAllLink?: string;
@@ -23,7 +23,7 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
     }
   };
 
-  const sliderProps: SliderDivProps = {
+  const sliderProps: SliderProps = {
     ...otherPorps,
     classNamePrefix: sectionClassName,
     divClassName: `${sectionClassName}__wrapper`
@@ -47,7 +47,7 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
         {
           (!props.childrens.length)
             ? <ThumbnailSpecGym />
-            : <SliderDiv {...sliderProps} />
+            : <Slider {...sliderProps} />
         }
       </div>
     </section>
