@@ -8,20 +8,24 @@ import classNames from 'classnames';
 
 export type SliderProps = {
   title: string;
+  mainDivClassName: string;
+
+  classNamePrefix: string;
+  childrens: JSX.Element[];
+  slidesCount: number;
+
   isLabel?: boolean;
   additionalTitleElement?: JSX.Element;
   isShowAllLight?: boolean;
-  classNamePrefix: string;
-  divClassName: string;
-  childrens: JSX.Element[];
-  slidesCount: number;
+  additionalFooterElement?: JSX.Element;
 }
 
 function Slider(props: SliderProps): JSX.Element {
-  //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; } при слайдере нужно у последнего вилдимого сделать 0
-  //    вообще убрать ul и li, т.к. все на div
+  //! есть небольшое расхождение с макетом, из-за ...__item:last-child { margin-right: 0; }
+  //    при слайдере нужно у последнего видимого сделать 0, не у последнего в списке
+  //    вообще убрать ul и li, т.к. все на div, но как автотесты?
 
-  const { title, isLabel, additionalTitleElement, isShowAllLight, classNamePrefix, divClassName, childrens, slidesCount } = props;
+  const { title, isLabel, additionalTitleElement, isShowAllLight, classNamePrefix, mainDivClassName, childrens, slidesCount, additionalFooterElement } = props;
   const [slideActiveIndex, setSlideActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperRef>(null);
   const childrensCount = childrens.length;
@@ -60,7 +64,7 @@ function Slider(props: SliderProps): JSX.Element {
   const titlePrefix = (isLabel) ? 'label' : 'title';
 
   return (
-    <div className={divClassName}>
+    <div className={mainDivClassName}>
       <div className={`${classNamePrefix}__${titlePrefix}-wrapper`}>
         <h2 className={`${classNamePrefix}__${titlePrefix}`}>{title}</h2>
         {
@@ -86,6 +90,7 @@ function Slider(props: SliderProps): JSX.Element {
           }
         </Swiper>
       </ul>
+      {additionalFooterElement}
     </div>
   );
 }

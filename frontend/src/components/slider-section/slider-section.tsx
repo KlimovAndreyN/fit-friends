@@ -6,7 +6,7 @@ import Slider, { SliderProps } from '../slider/slider';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 
 type SliderSectionProps =
-  Omit<SliderProps, 'classNamePrefix' | 'divClassName'>
+  Omit<SliderProps, 'classNamePrefix' | 'mainDivClassName'>
   & {
     sectionClassName: string;
     showAllLink?: string;
@@ -26,7 +26,7 @@ function SliderSection(props: SliderSectionProps): JSX.Element {
   const sliderProps: SliderProps = {
     ...otherPorps,
     classNamePrefix: sectionClassName,
-    divClassName: `${sectionClassName}__wrapper`
+    mainDivClassName: `${sectionClassName}__wrapper`
   };
   const showAllSliderButtonOption = {
     firstTitle: 'Смотреть все',

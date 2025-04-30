@@ -11,7 +11,7 @@ import { createCoachCertificate, deleteCoachCertificate, updateCoachCertificate 
 import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/user-profile-process/selectors';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
-const SLIDERS_COUNT = 3;
+const SLIDES_COUNT = 3;
 
 type CoachCertificatesProps = {
   classNamePrefix: string;
@@ -99,8 +99,8 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
       }
       childrens={childrens}
       classNamePrefix={classNamePrefix}
-      divClassName={`${classNamePrefix}__additional-info`}
-      slidesCount={SLIDERS_COUNT}
+      mainDivClassName={`${classNamePrefix}__additional-info`}
+      slidesCount={SLIDES_COUNT}
     />
   );
 }
