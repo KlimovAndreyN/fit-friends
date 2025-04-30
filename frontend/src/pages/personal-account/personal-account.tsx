@@ -11,8 +11,8 @@ import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { getIsFetchUserProfileExecuting, getUserProfile } from '../../store/account-process/selectors';
-import { fetchUserProfile, updateUserProfile } from '../../store/actions/account-action';
+import { getIsFetchAccountExecuting, getAccount } from '../../store/account-process/selectors';
+import { fetchAccount, updateAccount } from '../../store/actions/account-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
@@ -21,21 +21,21 @@ function PersonalAccount(): JSX.Element {
   //! одинаковое большие кнопки thumbnail-link thumbnail-link--theme-light, а как у тренера?
 
   const dispatch = useAppDispatch();
-  const isFetchUserProfileExecuting = useAppSelector(getIsFetchUserProfileExecuting);
+  const isFetchAccountExecuting = useAppSelector(getIsFetchAccountExecuting);
   const userRole = useAppSelector(getUserRole);
-  const UserProfile = useAppSelector(getUserProfile);
+  const UserProfile = useAppSelector(getAccount);
 
   useEffect(() => {
-    dispatch(fetchUserProfile());
+    dispatch(fetchAccount());
     dispatch(setPrevLocation(AppRoute.PersonalAccount));
   }, [dispatch]);
 
   const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
-    dispatch(updateUserProfile(updatedUserProfile));
+    dispatch(updateAccount(updatedUserProfile));
   };
 
   //! UserProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
-  if (isFetchUserProfileExecuting || !UserProfile) {
+  if (isFetchAccountExecuting || !UserProfile) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
@@ -51,7 +51,7 @@ function PersonalAccount(): JSX.Element {
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
               <PersonalAccountLeftPanel
-                UserProfile={UserProfile}
+                account={UserProfile}
                 isSpotsmanRole={isSpotsman}
                 onSubmit={handleLeftPanelSubmit}
               />

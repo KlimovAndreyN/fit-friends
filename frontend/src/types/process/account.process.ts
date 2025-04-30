@@ -6,12 +6,12 @@ export type AccountProcess = {
 
   isCreateQuestionnaireExecuting: boolean;
 
-  isFetchUserProfileExecuting: boolean;
-  userProfile: IDetailUserProfileRdo | null;
+  isFetchAccountExecuting: boolean;
+  account: IDetailUserProfileRdo | null;
   coachCertificates: ICertificateRdo[];
 
-  isUpdateUserProfileExecuting: boolean;
-  isUpdateUserProfileError: boolean;
+  isUpdateAccountExecuting: boolean;
+  isUpdateAccountError: boolean;
 
   isUpdateCoachCertificatesExecuting: boolean;
 

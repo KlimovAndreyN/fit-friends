@@ -11,7 +11,7 @@ import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization,
 
 import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
-import { getIsUpdateUserProfileError, getIsUpdateUserProfileExecuting } from '../../store/account-process/selectors';
+import { getIsUpdateAccountError, getIsUpdateAccountExecuting } from '../../store/account-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
 
 enum FormFieldName {
@@ -26,16 +26,16 @@ enum FormFieldName {
 }
 
 type PersonalAccountLeftPanelProps = {
-  UserProfile: IDetailUserProfileRdo;
+  account: IDetailUserProfileRdo;
   isSpotsmanRole: boolean;
   onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
 }
 
-function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
+function PersonalAccountLeftPanel({ account: UserProfile, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
   //! много кода! поделить как нибуть!
 
-  const isUpdateUserProfileExecuting = useAppSelector(getIsUpdateUserProfileExecuting);
-  const isUpdateUserProfileError = useAppSelector(getIsUpdateUserProfileError);
+  const isUpdateAccountExecuting = useAppSelector(getIsUpdateAccountExecuting);
+  const isUpdateAccountError = useAppSelector(getIsUpdateAccountError);
 
   const { user, questionnaire } = UserProfile;
   const { name, avatarFilePath, about, location, gender } = user;
@@ -54,7 +54,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
   }, [avatarFilePath]);
 
   useEffect(() => {
-    if (!isUpdateUserProfileExecuting && !isUpdateUserProfileError) {
+    if (!isUpdateAccountExecuting && !isUpdateAccountError) {
       setIsEditing(false);
     }
 
@@ -63,7 +63,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
     return () => {
       window.removeEventListener('keydown', handleWindowKeyDown);
     };
-  }, [isUpdateUserProfileExecuting, isUpdateUserProfileError, handleWindowKeyDown, avatarFilePath]);
+  }, [isUpdateAccountExecuting, isUpdateAccountError, handleWindowKeyDown, avatarFilePath]);
 
   const handleAvatarUploadChange = (filePath: string, file: File | undefined) => {
     setCurrentAvatarFilePath(filePath);
@@ -117,7 +117,7 @@ function PersonalAccountLeftPanel({ UserProfile, isSpotsmanRole, onSubmit }: Per
           type={(isEditing) ? 'submit' : 'button'}
           aria-label={buttonCaption}
           onClick={(isEditing) ? undefined : handleButtonClick}
-          disabled={isUpdateUserProfileExecuting}
+          disabled={isUpdateAccountExecuting}
         >
           <svg width="12" height="12" aria-hidden="true">
             <use xlinkHref="#icon-edit" />

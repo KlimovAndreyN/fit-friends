@@ -16,8 +16,8 @@ type Extra = {
 export const Action = {
   EXIST_QUESTIONNARE: 'account/exist-questionnaire',
   CREATE_QUESTIONNARE: 'account/create-questionnaire',
-  FETCH_USER_PROFILE: 'account/fetch-user-profile',
-  UPDATE_USER_PROFILE: 'account/update-user-profile',
+  FETCH_ACCOUNT: 'account/fetch-account',
+  UPDATE_ACCOUNT: 'account/update-account',
   CREATE_COACH_CERTIFICATE: 'account/create-coach-certificate',
   UPDATE_COACH_CERTIFICATE: 'account/update-coach-certificate',
   DELETE_COACH_CERTIFICATE: 'account/delete-coach-certificate',
@@ -45,8 +45,8 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
   }
 );
 
-export const fetchUserProfile = createAsyncThunk<IDetailUserProfileRdo, undefined, { extra: Extra }>(
-  Action.FETCH_USER_PROFILE,
+export const fetchAccount = createAsyncThunk<IDetailUserProfileRdo, undefined, { extra: Extra }>(
+  Action.FETCH_ACCOUNT,
   async (_, { extra }) => {
     const { api } = extra;
     const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.Accounts);
@@ -71,8 +71,8 @@ export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra
   }
 );
 
-export const updateUserProfile = createAsyncThunk<IDetailUserProfileRdo, IUpdateUserProfileDto, { extra: Extra }>(
-  Action.UPDATE_USER_PROFILE,
+export const updateAccount = createAsyncThunk<IDetailUserProfileRdo, IUpdateUserProfileDto, { extra: Extra }>(
+  Action.UPDATE_ACCOUNT,
   async (dto, { extra }) => {
     const { api } = extra;
     const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.Accounts, dto, { useMultipartFormData: true });
