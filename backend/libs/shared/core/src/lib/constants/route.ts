@@ -7,7 +7,8 @@ export enum GlobalRoute {
 
 export enum ApiServiceRoute {
   Users = 'users',
-  UserProfiles = 'user-profiles',
+  Accounts = 'accounts',
+  UsersProfiles = 'users-profiles',
   Trainings = 'trainings',
   Reviews = 'reviews'
 }

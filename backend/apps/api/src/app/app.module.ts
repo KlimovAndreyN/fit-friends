@@ -9,6 +9,7 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { FitTrainingService } from './fit-training.service';
 import { FitReviewService } from './fit-review.service';
 import { UserController } from './user.controller';
+import { AccountController } from './account.controller';
 import { UserProfileController } from './user-profile.controller';
 import { FitTrainingController } from './fit-training.controller';
 import { FitReviewController } from './fit-review.controller';
@@ -28,6 +29,7 @@ const HttpClient = {
   ],
   controllers: [
     UserController,
+    AccountController,
     UserProfileController,
     FitTrainingController,
     FitReviewController

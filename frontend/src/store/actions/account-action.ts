@@ -28,7 +28,7 @@ export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Ext
   Action.EXIST_QUESTIONNARE,
   async (_, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Questionnaires);
+    const url = joinUrl(ApiServiceRoute.Accounts, UserProfileRoute.Questionnaires);
     await api.get<boolean>(url, { notFoundToReject: true });
   }
 );
@@ -39,7 +39,7 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
     const { api } = extra;
     const isSportsman = isSportsmanRole(userRole);
     const subUrl = isSportsman ? UserProfileRoute.QuestionnairesSportsman : UserProfileRoute.QuestionnairesCoach;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, subUrl);
+    const url = joinUrl(ApiServiceRoute.Accounts, subUrl);
 
     await api.post<IQuestionnaireRdo>(url, dto, { useMultipartFormData: !isSportsman });
   }
@@ -49,7 +49,7 @@ export const fetchUserProfile = createAsyncThunk<IDetailUserProfileRdo, undefine
   Action.FETCH_USER_PROFILE,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles);
+    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.Accounts);
 
     return data;
   }
@@ -59,7 +59,7 @@ export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra
   Action.CHANGE_READY_FOR_TRAINING,
   async (ready, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.ReadyForTraining);
+    const url = joinUrl(ApiServiceRoute.Accounts, UserProfileRoute.ReadyForTraining);
 
     if (ready) {
       await api.post(url);
@@ -75,7 +75,7 @@ export const updateUserProfile = createAsyncThunk<IDetailUserProfileRdo, IUpdate
   Action.UPDATE_USER_PROFILE,
   async (dto, { extra }) => {
     const { api } = extra;
-    const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.UserProfiles, dto, { useMultipartFormData: true });
+    const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.Accounts, dto, { useMultipartFormData: true });
 
     return data;
   }
@@ -85,7 +85,7 @@ export const createCoachCertificate = createAsyncThunk<ICertificateRdo, File, { 
   Action.CREATE_COACH_CERTIFICATE,
   async (file, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates);
+    const url = joinUrl(ApiServiceRoute.Accounts, UserProfileRoute.Certificates);
     const { data } = await api.post<ICertificateRdo>(url, { [FILE_KEY]: file }, { useMultipartFormData: true });
 
     return data;
@@ -97,7 +97,7 @@ export const updateCoachCertificate = createAsyncThunk<ICertificateRdo, { fileId
   Action.UPDATE_COACH_CERTIFICATE,
   async ({ fileId, file }, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates, fileId);
+    const url = joinUrl(ApiServiceRoute.Accounts, UserProfileRoute.Certificates, fileId);
     const { data } = await api.patch<ICertificateRdo>(url, { [FILE_KEY]: file }, { useMultipartFormData: true });
 
     return data;
@@ -108,7 +108,7 @@ export const deleteCoachCertificate = createAsyncThunk<void, string, { extra: Ex
   Action.DELETE_COACH_CERTIFICATE,
   async (fileId, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates, fileId);
+    const url = joinUrl(ApiServiceRoute.Accounts, UserProfileRoute.Certificates, fileId);
 
     await api.delete<ICertificateRdo>(url);
   }
