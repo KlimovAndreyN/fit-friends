@@ -57,7 +57,7 @@ export class UserProfileController {
     console.log('currentUserId', currentUserId);
     console.log('userId', userId);
 
-    const user = await this.userService.getDetailUser(userId, requestId);
+    const user = await this.userService.getDetailUser(userId, requestId); //! тут еще передать currentUserId
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };

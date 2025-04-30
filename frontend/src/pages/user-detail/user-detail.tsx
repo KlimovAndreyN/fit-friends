@@ -2,7 +2,7 @@ import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { isCoachRole, Role, Specialization } from '@backend/shared/core';
+import { isCoachRole } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
@@ -10,6 +10,8 @@ import UserPhoto from '../../components/user-photo/user-photo';
 import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
 import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
+import NotFound from '../not-found/not-found';
+import Spinner from '../../components/spinner/spinner';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
@@ -17,8 +19,6 @@ import { setPrevLocation } from '../../store/user-process';
 import { getDetailUserProfile, getIsFetchDetailUserProfileError, getIsFetchDetailUserProfileExecuting } from '../../store/user-profile-process/selectors';
 import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
 import { AppRoute, LocationTitle, PageTitle, SpecializationTitle } from '../../const';
-import NotFound from '../not-found/not-found';
-import Spinner from '../../components/spinner/spinner';
 
 function UserDetail(): JSX.Element {
   //! сделать меньше количество строк
@@ -37,10 +37,6 @@ function UserDetail(): JSX.Element {
   const isFetchDetailUserProfileExecuting = useAppSelector(getIsFetchDetailUserProfileExecuting);
   const isFetchDetailUserProfileError = useAppSelector(getIsFetchDetailUserProfileError);
   const detailUserProfile = useAppSelector(getDetailUserProfile);
-
-  //! Отладка
-  // eslint-disable-next-line no-console
-  console.log(detailUserProfile);
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -68,10 +64,6 @@ function UserDetail(): JSX.Element {
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
   const className = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
-
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('userId', userId);
 
   return (
     <Fragment>
@@ -136,7 +128,7 @@ function UserDetail(): JSX.Element {
                       </div>
                       <UserDetailGallary classNamePrefix={className} filesPaths={[backgroundPath]} />
                     </div>
-                    {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={className} />}
+                    {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={className} userId={userId} />}
                   </div>
                 </section>
               </div>

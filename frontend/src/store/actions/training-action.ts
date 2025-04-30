@@ -12,11 +12,12 @@ type Extra = {
 };
 
 export const Action = {
-  FETCH_FOR_SPORTSMAN_TRAININGS: 'for-sportsman-trainings/fetch',
-  FETCH_SPECIAL_TRAININGS: 'special-trainings/fetch',
-  FETCH_POPULAR_TRAININGS: 'popular-trainings/fetch',
-  FETCH_TRAININGS: 'trainings/fetch',
-  FETCH_DETAIL_TRAINING: 'detail-training/fetch'
+  FETCH_FOR_SPORTSMAN_TRAININGS: 'training/fetch-for-sportsman-trainings',
+  FETCH_SPECIAL_TRAININGS: 'training/fetch-special-trainings',
+  FETCH_POPULAR_TRAININGS: 'training/fetch-popular-trainings',
+  FETCH_TRAININGS: 'training/fetch-trainings',
+  FETCH_DETAIL_TRAINING: 'training/fetch-detail-training',
+  FETCH_COACH_TRAININGS: 'training/fetch-coach-trainings'
 };
 
 //! почти одинаковые запросы, может как то объеденить получение ITrainingRdo[]
@@ -77,5 +78,17 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, 
     const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, trainingId));
 
     return data;
+  }
+);
+
+export const fetchCoachTrainings = createAsyncThunk<ITrainingRdo[], string, { extra: Extra }>(
+  Action.FETCH_COACH_TRAININGS,
+  async (coachId, { extra }) => {
+    const { api } = extra;
+    const query: ITrainingQuery = { coachId };
+    const queryString = getQueryString(query);
+    const { data: { entities } } = await api.get<ITrainingsWithPaginationRdo>(joinUrl(ApiServiceRoute.Trainings, queryString));
+
+    return entities;
   }
 );
