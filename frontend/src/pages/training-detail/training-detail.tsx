@@ -64,8 +64,6 @@ function TrainingDetail(): JSX.Element {
 
   //! отладка
   // eslint-disable-next-line no-console
-  console.log('Training - coachId', coachId);
-  // eslint-disable-next-line no-console
   console.log('Training - videoFilePath', videoFilePath);
   //
 
