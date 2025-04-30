@@ -61,6 +61,8 @@ type UserDetailCoachTrainingsProps = {
 }
 
 function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsProps): JSX.Element {
+  //! добавить текс если нет тренировок
+
   const childrens = MOCK_TRAINIGS.map(
     (training) => (
       <TrainingCard key={training.id} training={training} />
@@ -98,6 +100,7 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
       sliderButtonHeight={10}
       childrens={childrens}
       slidesCount={SLIDES_COUNT}
+      marginRight={20}
       additionalFooterElement={form}
     />
   );

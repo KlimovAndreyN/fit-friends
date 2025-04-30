@@ -22,6 +22,7 @@ export type SliderProps = {
   sliderButtonHeight?: number;
   childrens: JSX.Element[];
   slidesCount: number;
+  marginRight?: number;
   additionalFooterElement?: JSX.Element;
 }
 
@@ -46,6 +47,7 @@ function Slider(props: SliderProps): JSX.Element {
     sliderButtonHeight = 14,
     childrens,
     slidesCount,
+    marginRight = 20,
     additionalFooterElement
   } = props;
   const [slideActiveIndex, setSlideActiveIndex] = useState(0);
@@ -104,7 +106,11 @@ function Slider(props: SliderProps): JSX.Element {
             childrens.map(
               (children) => (
                 <SwiperSlide key={children.key}>
-                  <li className={`${classNamePrefix}${separator}item`} style={{ height: '100%' /* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}>
+                  <li
+                    className={`${classNamePrefix}${separator}item`}
+                    //style={{ height: '100%'/* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}
+                    style={{ marginRight: `${marginRight}px`, height: '100%'/* пробую подобрать отступы */ }}
+                  >
                     {children}
                   </li>
                 </SwiperSlide>
