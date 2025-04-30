@@ -11,8 +11,9 @@ import Hashtags from '../../components/hashtags/hashtags';
 import UserDetailGallary from '../../components/user-detail-gallary/user-detail-gallary';
 import UserDetailCoachTrainingBlock from '../../components/user-detail-coach-training-block/user-detail-coach-training-block';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
+import { getDetailUserProfile } from '../../store/user-profile-process/selectors';
 import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle, SpecializationTitle } from '../../const';
 
@@ -45,6 +46,11 @@ function UserDetail(): JSX.Element {
   const { id: userId = '' } = useParams();
   const { userRole, avatarPath, name, location, readyForTraining, specializations, about, description, filePath, personal } = MOCK_USER;
   const dispatch = useAppDispatch();
+  const detailUserProfile = useAppSelector(getDetailUserProfile);
+
+  //! Отладка
+  // eslint-disable-next-line no-console
+  console.log(detailUserProfile);
 
   useEffect(() => {
     dispatch(fetchDetailUserProfile(userId));

@@ -1,9 +1,9 @@
-import { Controller, Get, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, BearerAuth,
-  DetailUserProfileRdo, IdParam, UserProfileRdo, UserProfileRoute
+  ApiServiceRoute, RequestWithRequestIdAndUserId, BearerAuth, IdParam,
+  DetailUserProfileRdo, UserProfileRdo, UserProfileRoute, ApiParamOption
 } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -48,10 +48,14 @@ export class UserProfileController {
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get(IdParam.USER)
   public async show(
-    //! @Param()...
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId
+    @Param(ApiParamOption.UserId.name) userId: string,
+    @Req() { requestId, userId: currentUserId }: RequestWithRequestIdAndUserId
   ): Promise<DetailUserProfileRdo> {
     //! тренеру нельзя смотреть тренеров?
+    //! Отладка
+    console.log('UserProfileController.show');
+    console.log('currentUserId', currentUserId);
+    console.log('userId', userId);
 
     const user = await this.userService.getDetailUser(userId, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);

@@ -43,11 +43,7 @@ export const fetchDetailUserProfile = createAsyncThunk<IDetailUserProfileRdo, st
   Action.FETCH_USER_PROFILE,
   async (userId, { extra }) => {
     const { api } = extra;
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('fetchDetailUserProfile - userId', userId);
-
-    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.UsersProfiles); //! нужен по id
+    const { data } = await api.get<IDetailUserProfileRdo>(joinUrl(ApiServiceRoute.UsersProfiles, userId));
 
     return data;
   }
