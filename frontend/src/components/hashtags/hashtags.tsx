@@ -2,13 +2,18 @@ import classNames from 'classnames';
 
 type HashtagsProps = {
   classNamePrefix: string;
-  divItemClassNamePrefix: string;
+  divItemClassNamePrefix?: string;
   items: string[];
   separator?: string;
+  isNotNeedSpecialClassName?: boolean;
 }
 
-function Hashtags({ classNamePrefix, divItemClassNamePrefix, items, separator = '-' }: HashtagsProps): JSX.Element {
-  const classNamePrefixWithSeparator = `${classNamePrefix}__hashtags${separator}`;
+function Hashtags({ classNamePrefix, divItemClassNamePrefix = '', items, separator = '-', isNotNeedSpecialClassName }: HashtagsProps): JSX.Element {
+  const specialClassName = (isNotNeedSpecialClassName) ? '' : '__hashtags';
+  const classNamePrefixWithSeparator = classNamePrefix + specialClassName + separator;
+  const divItemClassName = classNames(
+    'hashtag',
+    { [`${divItemClassNamePrefix}${(isNotNeedSpecialClassName) ? '' : '__hashtag'}`]: divItemClassNamePrefix });
 
   return (
     <ul className={`${classNamePrefixWithSeparator}list`}>
@@ -16,7 +21,7 @@ function Hashtags({ classNamePrefix, divItemClassNamePrefix, items, separator = 
         items.map(
           (item) => (
             <li className={`${classNamePrefixWithSeparator}item`} key={item}>
-              <div className={classNames('hashtag', `${divItemClassNamePrefix}__hashtag`)}>
+              <div className={divItemClassName}>
                 <span>{`#${item}`}</span>
               </div>
             </li>

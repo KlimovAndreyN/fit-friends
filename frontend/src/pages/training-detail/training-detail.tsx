@@ -6,6 +6,7 @@ import { isSportsmanRole } from '@backend/shared/core';
 import Header from '../../components/header/header';
 import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import TrainingDetailHeader from '../../components/training-detail-header/training-detail-header';
+import Hashtags from '../../components/hashtags/hashtags';
 import NotFound from '../not-found/not-found';
 import Spinner from '../../components/spinner/spinner';
 
@@ -113,20 +114,13 @@ function TrainingDetail(): JSX.Element {
                               <input type="number" name="rating" defaultValue={ratingText} disabled />
                             </label>
                           </div>
-                          <ul className="training-info__list">
-                            <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{specializationText}</span></div>
-                            </li>
-                            <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#для_{genderText}</span></div>
-                            </li>
-                            <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{caloriesWaste}ккал</span></div>
-                            </li>
-                            <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#{durationText}мин</span></div>
-                            </li>
-                          </ul>
+                          <Hashtags
+                            classNamePrefix='training-info'
+                            divItemClassNamePrefix='hashtag--white'
+                            separator='__'
+                            isNotNeedSpecialClassName
+                            items={[specializationText, `для_${genderText}`, `${caloriesWaste}ккал`, `${durationText}мин`]}
+                          />
                         </div>
                         <div className="training-info__price-wrapper">
                           <div className="training-info__input training-info__input--price">
