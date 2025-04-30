@@ -2,9 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { AccountProcess } from '../../types/process/account.process';
 import {
-  changeReadyForTraining, fetchLookForCompanyUserProfiles, createQuestionnaire,
-  existQuestionnaire, fetchUserProfile, fetchUserProfiles, updateUserProfile,
-  createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
+  changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchUserProfile,
+  updateUserProfile, createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
 } from '../actions/account-action';
 import { StoreSlice } from '../../const';
 
@@ -25,12 +24,6 @@ const initialState: AccountProcess = {
 
   isReadyForTrainingChangeExecuting: false,
   readyForTraining: false,
-
-  isFetchLookForCompanyUserProfilesExecuting: false,
-  lookForCompanyUserProfiles: [],
-
-  isFetchUserProfilesExecuting: false,
-  userProfiles: []
 };
 
 export const accountProcess = createSlice(
@@ -201,46 +194,6 @@ export const accountProcess = createSlice(
           (state, { payload }) => {
             state.readyForTraining = payload;
             state.isReadyForTrainingChangeExecuting = false;
-          }
-        )
-        .addCase(
-          fetchLookForCompanyUserProfiles.pending,
-          (state) => {
-            state.isFetchLookForCompanyUserProfilesExecuting = true;
-          }
-        )
-        .addCase(
-          fetchLookForCompanyUserProfiles.rejected,
-          (state) => {
-            state.lookForCompanyUserProfiles = initialState.lookForCompanyUserProfiles;
-            state.isFetchLookForCompanyUserProfilesExecuting = false;
-          }
-        )
-        .addCase(
-          fetchLookForCompanyUserProfiles.fulfilled,
-          (state, { payload }) => {
-            state.lookForCompanyUserProfiles = payload;
-            state.isFetchLookForCompanyUserProfilesExecuting = false;
-          }
-        )
-        .addCase(
-          fetchUserProfiles.pending,
-          (state) => {
-            state.isFetchUserProfilesExecuting = true;
-          }
-        )
-        .addCase(
-          fetchUserProfiles.rejected,
-          (state) => {
-            state.userProfiles = initialState.userProfiles;
-            state.isFetchUserProfilesExecuting = false;
-          }
-        )
-        .addCase(
-          fetchUserProfiles.fulfilled,
-          (state, { payload }) => {
-            state.userProfiles = payload;
-            state.isFetchUserProfilesExecuting = false;
           }
         );
     }

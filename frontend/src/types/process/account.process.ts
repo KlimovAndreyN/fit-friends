@@ -1,4 +1,4 @@
-import { ICertificateRdo, IDetailUserProfileRdo, IUserProfileRdo } from '@backend/shared/core';
+import { ICertificateRdo, IDetailUserProfileRdo } from '@backend/shared/core';
 
 export type AccountProcess = {
   isExistQuestionnaireExecuting: boolean;
@@ -17,10 +17,4 @@ export type AccountProcess = {
 
   isReadyForTrainingChangeExecuting: boolean;
   readyForTraining: boolean;
-
-  isFetchLookForCompanyUserProfilesExecuting: boolean;
-  lookForCompanyUserProfiles: IUserProfileRdo[];
-
-  isFetchUserProfilesExecuting: boolean;
-  userProfiles: IUserProfileRdo[];
 }

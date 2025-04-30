@@ -2,9 +2,8 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, IQuestionnaireRdo, IUserProfileRdo, Role,
-  FILE_KEY, IDetailUserProfileRdo, UserProfileRoute, ApiServiceRoute,
-  isSportsmanRole, ICertificateRdo
+  IUpdateUserProfileDto, IQuestionnaireRdo, FILE_KEY, IDetailUserProfileRdo,
+  Role, UserProfileRoute, ApiServiceRoute, isSportsmanRole, ICertificateRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -17,14 +16,12 @@ type Extra = {
 export const Action = {
   EXIST_QUESTIONNARE: 'account/exist-questionnaire',
   CREATE_QUESTIONNARE: 'account/create-questionnaire',
-  FETCH_USER_PROFILE: 'account/fetch',
-  UPDATE_USER_PROFILE: 'account/update',
-  CREATE_COACH_CERTIFICATE: 'account/create-certificate',
-  UPDATE_COACH_CERTIFICATE: 'account/update-certificate',
-  DELETE_COACH_CERTIFICATE: 'account/delete-certificate',
-  CHANGE_READY: 'account/change-ready',
-  FETCH_LOOK_FOR_COMPANY_USER_PROFILES: 'look-for-company-account/fetch',
-  FETCH_USER_PROFILES: 'accounts/fetch'
+  FETCH_USER_PROFILE: 'account/fetch-user-profile',
+  UPDATE_USER_PROFILE: 'account/update-user-profile',
+  CREATE_COACH_CERTIFICATE: 'account/create-coach-certificate',
+  UPDATE_COACH_CERTIFICATE: 'account/update-coach-certificate',
+  DELETE_COACH_CERTIFICATE: 'account/delete-coach-certificate',
+  CHANGE_READY_FOR_TRAINING: 'account/change-ready-for-training'
 };
 
 export const existQuestionnaire = createAsyncThunk<void, undefined, { extra: Extra }>(
@@ -59,7 +56,7 @@ export const fetchUserProfile = createAsyncThunk<IDetailUserProfileRdo, undefine
 );
 
 export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra: Extra }>(
-  Action.CHANGE_READY,
+  Action.CHANGE_READY_FOR_TRAINING,
   async (ready, { extra }) => {
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.ReadyForTraining);
@@ -114,30 +111,5 @@ export const deleteCoachCertificate = createAsyncThunk<void, string, { extra: Ex
     const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.Certificates, fileId);
 
     await api.delete<ICertificateRdo>(url);
-  }
-);
-
-export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
-  Action.FETCH_LOOK_FOR_COMPANY_USER_PROFILES,
-  async (_, { extra }) => {
-    const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.LookForCompany);
-    const { data } = await api.get<IUserProfileRdo[]>(url);
-
-    return data;
-  }
-);
-
-export const fetchUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
-  Action.FETCH_USER_PROFILES,
-  async (_, { extra }) => {
-    const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UserProfiles, UserProfileRoute.LookForCompany);
-    //! временно, заготовка!
-    const { data } = await api.get<IUserProfileRdo[]>(url);
-    // eslint-disable-next-line no-console
-    console.log('fetchUserProfiles', data);
-
-    return [];//! временно, заготовка!
   }
 );

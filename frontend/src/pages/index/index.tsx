@@ -7,17 +7,17 @@ import SpecialOffersSection from '../../components/special-offers-section/specia
 import PopularTrainingSection from '../../components/popular-trainings-section/popular-trainings-section';
 import LookForCompanySection from '../../components/look-for-company-section/look-for-company-section';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setIsIndexPageActivate, setPrevLocation } from '../../store/user-process';
+import { getIsIndexPageActivate, getPrevLocation } from '../../store/user-process/selectors';
 import {
   getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings,
   getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting
 } from '../../store/training-process/selectors';
-import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/account-process/selectors';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
-import { fetchLookForCompanyUserProfiles } from '../../store/actions/account-action';
 import { clearDetailTraining } from '../../store/training-process';
-import { setIsIndexPageActivate, setPrevLocation } from '../../store/user-process';
-import { getIsIndexPageActivate, getPrevLocation } from '../../store/user-process/selectors';
+import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
+import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
+import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function Index(): JSX.Element {

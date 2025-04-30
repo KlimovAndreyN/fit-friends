@@ -59,6 +59,7 @@ export const ApiRoute = {
 
 export enum StoreSlice {
   UserProcess = 'USER_PROCESS',
+  AccountProcess = 'ACCOUNT_PROCESS',
   UserProfileProcess = 'USER_PROFILE_PROCESS',
   TrainingProcess = 'TRAINING_PROCESS',
   ReviewProcess = 'REVIEW_PROCESS'
