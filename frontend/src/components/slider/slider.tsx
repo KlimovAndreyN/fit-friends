@@ -13,6 +13,11 @@ export type SliderProps = {
   mainDivClassNamePostfix?: string;
   titleDivClassNamePostfix: string;
   titleClassNamePostfix: string;
+  controlsClassNamePostfix?: string;
+  controlClassNamePostfix?: string;
+  previousAriaLabel?: string;
+  sliderButtonWidth?: number;
+  sliderButtonHeight?: number;
 
   childrens: JSX.Element[];
   slidesCount: number;
@@ -34,6 +39,11 @@ function Slider(props: SliderProps): JSX.Element {
     mainDivClassNamePostfix = '',
     titleDivClassNamePostfix,
     titleClassNamePostfix,
+    controlsClassNamePostfix = 'controls',
+    controlClassNamePostfix = 'control',
+    previousAriaLabel = 'previous',
+    sliderButtonWidth = 16,
+    sliderButtonHeight = 14,
 
     additionalTitleElement,
     isShowAllLight,
@@ -59,22 +69,20 @@ function Slider(props: SliderProps): JSX.Element {
   };
 
   const previousSliderButtonOption = {
-    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, `${classNamePrefix}__control`),
+    className: classNames('btn-icon', { 'btn-icon--outlined': isShowAllLight }, classNamePrefix + separator + controlClassNamePostfix),
     onClick: handlePreviousButtonClick,
     disabled: slideActiveIndex === 0,
     xlinkHref: '#arrow-left',
-    ariaLabel: 'previous',
-    width: 16,
-    height: 14
+    ariaLabel: previousAriaLabel,
+    width: sliderButtonWidth,
+    height: sliderButtonHeight
   };
   const nextSliderButtonOption = {
     ...previousSliderButtonOption,
     onClick: handleNextButtonClick,
     disabled: (childrensCount === realySlidesCount) || (slideActiveIndex === childrensCount - realySlidesCount),
     xlinkHref: '#arrow-right',
-    ariaLabel: 'next',
-    width: 16,
-    height: 14
+    ariaLabel: 'next'
   };
 
   const mainDivClassName = classNamePrefix + ((mainDivClassNamePostfix) ? separator + mainDivClassNamePostfix : '');
@@ -88,18 +96,18 @@ function Slider(props: SliderProps): JSX.Element {
         {
           additionalTitleElement
         }
-        <div className={`${classNamePrefix}__controls`}>
+        <div className={classNamePrefix + separator + controlsClassNamePostfix}>
           <SliderButton {...previousSliderButtonOption} />
           <SliderButton {...nextSliderButtonOption} />
         </div>
       </div>
-      <ul className={`${classNamePrefix}__list`}>
+      <ul className={`${classNamePrefix}${separator}list`}>
         <Swiper slidesPerView={realySlidesCount} ref={swiperRef} onSlideChange={handleSwiperOnSlideChange}>
           {
             childrens.map(
               (children) => (
                 <SwiperSlide key={children.key}>
-                  <li className={`${classNamePrefix}__item`} style={{ height: '100%' /* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}>
+                  <li className={`${classNamePrefix}${separator}item`} style={{ height: '100%' /* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}>
                     {children}
                   </li>
                 </SwiperSlide>

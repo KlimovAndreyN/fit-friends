@@ -128,6 +128,11 @@ function UserDetailCoachTrainings({ classNamePrefix }: UserDetailCoachTrainingsP
         classNamePrefix={`${classNamePrefix}__training`}
         titleDivClassNamePostfix='head'
         titleClassNamePostfix='title'
+        controlsClassNamePostfix='bts'
+        controlClassNamePostfix='btn'
+        previousAriaLabel='back'
+        sliderButtonWidth={14}
+        sliderButtonHeight={10}
 
         childrens={childrens}
         slidesCount={SLIDES_COUNT}
