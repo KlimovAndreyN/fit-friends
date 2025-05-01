@@ -20,6 +20,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   //! готовность к тренировкам
   //! кнопка - показать сертификаты
   //! возможно отдельный компонет Location, где иконка #icon-location
+  //    нет css для user-card__icon-location / user-card-coach__icon-location / user-card-coach-2__icon-location, но в svg выставлено
   //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
   //! проверить консоль браузера на ошибки
   //! проверить разметку
@@ -34,7 +35,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   const content = (
     <Fragment>
       <div className={`${classNamePrefix}__content`}>
-        <UserPhoto className='' size={100} path={avatarFilePath} />
+        <UserPhoto className={`${classNamePrefix}__head`} size={80} path={avatarFilePath} />
         <div className={`${classNamePrefix}__head`}>
           <h2 className={`${classNamePrefix}__title`}>{name}</h2>
         </div>
@@ -46,10 +47,10 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             <span>{LocationTitle[location]}</span>
           </a>
         </div>
-        <UserDetailStatus classNamePrefix={classNamePrefix} isSportsman={!isCoach} readyForTraining={readyForTraining} />
+        <UserDetailStatus isSportsman={!isCoach} readyForTraining={readyForTraining} />
         <div className={`${classNamePrefix}__text`}>
           <p>{about}</p>
-          <p>{description}</p>
+          {(description) && <p>{description}</p>}
         </div>
         {
           isCoach &&
