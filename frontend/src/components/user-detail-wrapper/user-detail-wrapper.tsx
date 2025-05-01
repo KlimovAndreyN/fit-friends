@@ -27,7 +27,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   // добавил UserPhoto
 
   const { pathname } = useLocation();
-  const { user: { role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
+  const { user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
   const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
@@ -78,7 +78,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           ? <div className={`${classNamePrefix}__card`}>{content}</div>
           : content
       }
-      {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={classNamePrefix} userId={classNamePrefix} />}
+      {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={classNamePrefix} userId={userId} />}
     </div>
   );
 }

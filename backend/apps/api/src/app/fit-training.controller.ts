@@ -2,9 +2,9 @@ import { Controller, Get, Param, Query, Req, UseFilters, UseGuards } from '@nest
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, TrainingRoute, TrainingRdo, ApiParamOption,
-  DetailTrainingRdo, TrainingQuery, BearerAuth, IdParam,
-  RequestWithRequestIdAndUser, TrainingsWithPaginationRdo
+  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption, IdParam,
+  TrainingQuery, BearerAuth, TrainingRdo, RequestWithRequestIdAndUser,
+  TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -66,7 +66,7 @@ export class FitTrainingController {
   @Get(IdParam.TRAINING)
   public async show(
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
-    @Req() request: RequestWithRequestIdAndUser
+    @Req() request: RequestWithRequestIdAndBearerAuthAndUser
   ): Promise<DetailTrainingRdo> {
     const training = await this.fitTrainingService.findById(trainingId, request);
 

@@ -85,6 +85,7 @@ export { UserRdo } from './lib/rdo/user.rdo';
 
 export { RequestWithBearerAuth } from './lib/types/request/request-with-bearer-auth.type';
 export { RequestWithRequestIdAndBearerAuthAndUserId } from './lib/types/request/request-with-request-id-and-bearer-auth-and-user-id.type';
+export { RequestWithRequestIdAndBearerAuthAndUser } from './lib/types/request/request-with-request-id-and-bearer-auth-and-user.type';
 export { RequestWithRequestIdAndBearerAuth } from './lib/types/request/request-with-request-id-and-bearer-auth.type';
 export { RequestWithRequestIdAndUserId } from './lib/types/request/request-with-request-id-and-user-id.type';
 export { RequestWithRequestIdAndUserIdAndUserRole } from './lib/types/request/request-with-request-id-and-user-id-and-user-role.type';

@@ -2,7 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { BasicDetailTrainingRdo, DetailTrainingRdo, RequestWithRequestIdAndUser, ServiceRoute, UserRdo } from '@backend/shared/core';
+import {
+  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
+  RequestWithRequestIdAndBearerAuthAndUser, RequestWithRequestIdAndUser
+} from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -31,12 +34,15 @@ export class FitTrainingService {
     return data;
   }
 
-  public async findById(trainingId: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<DetailTrainingRdo> {
+  public async findById(
+    trainingId: string,
+    { requestId, bearerAuth, user: { sub: userId, role: userRole } }: RequestWithRequestIdAndBearerAuthAndUser
+  ): Promise<DetailTrainingRdo> {
     const url = this.getUrl(trainingId);
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const { userId: coachId, videoFileId, ...training } = data;
-    const user = await this.userService.getDetailUser(coachId, requestId, userId);
+    const user = await this.userService.getDetailUser(coachId, bearerAuth, requestId);
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
 
