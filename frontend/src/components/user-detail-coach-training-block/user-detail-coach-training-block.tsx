@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 
 import TrainingCard from '../training-card/training-card';
+import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 import Slider from '../slider/slider';
 import Spinner from '../spinner/spinner';
 
@@ -16,10 +17,8 @@ type UserDetailCoachTrainingBlockProps = {
 }
 
 function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoachTrainingBlockProps): JSX.Element {
-  //! добавить текст, если нет тренировок
   //! проработать логику 'персональной тренировки', что по ТЗ?
   //    нажал > пропала? или поменяла текст отказала
-  //! задействовать CustomCheckbox
   //! проработать логику подписки
   //    нажал > меняется галочка и происходит подписка и отписка?
 
@@ -41,21 +40,30 @@ function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoa
       <TrainingCard key={training.id} training={training} />
     )
   );
+
+  const handlePersonalTrainingButtonClick = (event: MouseEvent) => {
+    event.preventDefault();
+
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handlePersonalTrainingButtonClick');
+  };
+
+  const handleSubscribeCheckboxChange = (newValue: boolean) => {
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleSubscribeCheckboxChange - newValue', newValue);
+  };
+
   const form = (
     <form className={`${mainClassNamePrefix}-form`}>
-      <button className={`btn ${classNamePrefix}__btn-training`} type="button">Хочу персональную тренировку</button>
+      <button className={`btn ${classNamePrefix}__btn-training`} type="button" onClick={handlePersonalTrainingButtonClick}>Хочу персональную тренировку</button>
       <div className={`${mainClassNamePrefix}-check`}>
-        <div className="custom-toggle custom-toggle--checkbox">
-          <label>
-            <input type="checkbox" value="user-agreement-1" name="user-agreement" checked />
-            <span className="custom-toggle__icon" >
-              <svg width="9" height="6" aria-hidden="true">
-                <use xlinkHref="#arrow-check"></use>
-              </svg>
-            </span>
-            <span className="custom-toggle__label">Получать уведомление на почту о новой тренировке</span>
-          </label>
-        </div>
+        <CustomCheckbox
+          name='user-agreement'
+          spanText='Получать уведомление на почту о новой тренировке'
+          onChange={handleSubscribeCheckboxChange}
+        />
       </div>
     </form>
   );

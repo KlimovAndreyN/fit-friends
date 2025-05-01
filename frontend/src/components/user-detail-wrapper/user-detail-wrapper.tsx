@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, MouseEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
@@ -17,8 +17,8 @@ type UserDetailWrapperProps = {
 }
 
 function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
-  //! готовность к тренировкам
   //! кнопка - показать сертификаты
+  //! кнопка - добавить в друзья
   //! возможно отдельный компонет Location, где иконка #icon-location
   //    нет css для user-card__icon-location / user-card-coach__icon-location / user-card-coach-2__icon-location, но в svg выставлено
   //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
@@ -32,6 +32,31 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
+
+  const handleLocationLinkClick = (event: MouseEvent) => {
+    event.preventDefault();
+
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleLocationLinkClick');
+  };
+
+  const handleShowCertificatesButtonClick = (event: MouseEvent) => {
+    event.preventDefault();
+
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleShowCertificatesButtonClick');
+  };
+
+  const handleAddFriendButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('handleAddFriendButtonClick');
+  };
+
   const content = (
     <Fragment>
       <div className={`${classNamePrefix}__content`}>
@@ -40,7 +65,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           <h2 className={`${classNamePrefix}__title`}>{name}</h2>
         </div>
         <div className={`${classNamePrefix}__label`}>
-          <a href={`${pathname}#popup-user-map.html`}>
+          <a href={`${pathname}#popup-user-map.html`} onClick={handleLocationLinkClick}>
             <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
               <use xlinkHref="#icon-location"></use>
             </svg>
@@ -54,10 +79,11 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
         </div>
         {
           isCoach &&
-          <button className={`btn-flat ${classNamePrefix}__sertificate`} type="button">
+          <button className={`btn-flat ${classNamePrefix}__sertificate`} type="button" onClick={handleShowCertificatesButtonClick}>
             <svg width="12" height="13" aria-hidden="true">
               <use xlinkHref="#icon-teacher"></use>
-            </svg><span>Посмотреть сертификаты</span>
+            </svg>
+            <span>Посмотреть сертификаты</span>
           </button>
         }
         <Hashtags
@@ -65,7 +91,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           items={specializationsTitles}
           isNotNeedSpecialClassName
         />
-        <button className={`btn ${classNamePrefix}__btn`} type="button">Добавить в друзья</button>
+        <button className={`btn ${classNamePrefix}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
       </div>
       <UserDetailGallary classNamePrefix={classNamePrefix} filesPaths={[backgroundPath]} />
     </Fragment>
