@@ -103,6 +103,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
       }
       childrens={childrens}
       slidesCount={SLIDES_COUNT}
+      textForEmpty='Загрузите свои диполмы и сертификаты'
     />
   );
 }

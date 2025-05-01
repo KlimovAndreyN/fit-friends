@@ -76,6 +76,7 @@ function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoa
       slidesCount={SLIDES_COUNT}
       marginRight={20}
       additionalFooterElement={form}
+      textForEmpty='У тренера еще нет тренировок'
     />
   );
 }

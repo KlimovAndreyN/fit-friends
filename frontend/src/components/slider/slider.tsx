@@ -24,6 +24,7 @@ export type SliderProps = {
   slidesCount: number;
   marginRight?: number;
   additionalFooterElement?: JSX.Element;
+  textForEmpty?: string;
 }
 
 function Slider(props: SliderProps): JSX.Element {
@@ -48,7 +49,8 @@ function Slider(props: SliderProps): JSX.Element {
     childrens,
     slidesCount,
     marginRight = 20,
-    additionalFooterElement
+    additionalFooterElement,
+    textForEmpty
   } = props;
   const [slideActiveIndex, setSlideActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperRef>(null);
@@ -100,6 +102,7 @@ function Slider(props: SliderProps): JSX.Element {
           <SliderButton {...nextSliderButtonOption} />
         </div>
       </div>
+      {textForEmpty && !childrens.length && <div className={titleDivClassName} style={{ justifyContent: 'center' }}><span>{textForEmpty}</span></div>}
       <ul className={`${classNamePrefix}${separator}list`}>
         <Swiper slidesPerView={realySlidesCount} ref={swiperRef} onSlideChange={handleSwiperOnSlideChange}>
           {
