@@ -16,7 +16,7 @@ type UserDetailCoachTrainingBlockProps = {
 }
 
 function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoachTrainingBlockProps): JSX.Element {
-  //! добавить текс, если нет тренировок
+  //! добавить текст, если нет тренировок
   //! проработать логику 'персональной тренировки', что по ТЗ?
   //    нажал > пропала? или поменяла текст отказала
   //! задействовать CustomCheckbox
