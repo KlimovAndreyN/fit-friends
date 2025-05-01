@@ -1,14 +1,14 @@
 import {
-  ConflictException, UnauthorizedException, HttpException, HttpStatus, Inject,
-  Injectable, Logger, NotFoundException
+  ConflictException, UnauthorizedException, HttpException, HttpStatus,
+  Inject, Injectable, Logger, NotFoundException, ForbiddenException
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'node:crypto';
 
 import {
-  AuthenticationMessage, AuthUser, CreateBasicUserDto,
-  LoginUserDto, Tokens, UpdateBasicUserDto, User
+  AuthenticationMessage, AuthUser, CreateBasicUserDto, User,
+  isCoachRole, LoginUserDto, Role, Tokens, UpdateBasicUserDto
 } from '@backend/shared/core';
 import { createJwtPayload } from '@backend/shared/helpers';
 import { FitUserRepository, FitUserEntity } from '@backend/account/fit-user';
@@ -110,14 +110,24 @@ export class AuthenticationService {
     }
   }
 
-  public async getUser(id: string): Promise<FitUserEntity> {
-    const user = await this.fitUserRepository.findById(id);
+  public async getUser(id: string, currentUserId: string, role: Role): Promise<FitUserEntity> {
+    console.log('currentUserId', currentUserId);
+    console.log('role', role);
 
-    if (!user) {
+    const foundUser = await this.fitUserRepository.findById(id);
+
+    if (!foundUser) {
       throw new NotFoundException(AuthenticationMessage.NotFound);
     }
 
-    return user;
+    const { id: foundUserId, role: foundUserRole } = foundUser;
+
+    //! ограничение: тренеру нельзя просматривать других тренеров, кроме себя, будет такое по ТЗ?
+    if (isCoachRole(role) && (currentUserId !== foundUserId) && isCoachRole(foundUserRole)) {
+      throw new ForbiddenException('Not allow to view other coach!'); //! в описание AuthenticationMessage
+    }
+
+    return foundUser;
   }
 
   public async getUserByEmail(email: string) {

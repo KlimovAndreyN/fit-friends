@@ -115,11 +115,9 @@ export class AuthenticationController {
   @Get(IdParam.USER)
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id'],
-    @Req() { user: { sub } }: RequestWithTokenPayload
+    @Req() { user: { sub, role } }: RequestWithTokenPayload
   ): Promise<BasicDetailUserRdo> {
-    console.log('sub', sub);
-
-    const existUser = await this.authService.getUser(userId);
+    const existUser = await this.authService.getUser(userId, sub, role);
 
     return fillDto(BasicDetailUserRdo, existUser.toPOJO());
   }
