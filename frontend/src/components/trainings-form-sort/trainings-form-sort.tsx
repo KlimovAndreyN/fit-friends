@@ -23,7 +23,7 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
         {
           convertEnumToArray(SortType).map(
             (sort) => {
-              const handleLabelClick = (event: FormEvent<HTMLLabelElement>) => {
+              const handleLabelClick = (event: FormEvent) => {
                 event.preventDefault();
 
                 if (sort !== sortType) {

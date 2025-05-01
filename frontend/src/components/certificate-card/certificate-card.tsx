@@ -43,31 +43,31 @@ function CertificateCard(props: CertificateCards): JSX.Element {
     setCurrentFile(file);
   };
 
-  const handleEditButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleEditButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     onEditClick();
   };
 
-  const handleSaveButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleSaveButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     onSaveClick(currentFilePath, currentFile);
   };
 
-  const handleDivContentClick = (event: FormEvent<HTMLDivElement>) => {
+  const handleDivContentClick = (event: FormEvent) => {
     event.preventDefault();
 
     inputFileRef.current?.click();
   };
 
-  const handleChangeButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleChangeButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     inputFileRef.current?.click();
   };
 
-  const handleDeleteButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleDeleteButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     setCurrentFilePath('');

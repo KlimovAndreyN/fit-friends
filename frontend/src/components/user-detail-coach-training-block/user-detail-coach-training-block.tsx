@@ -36,7 +36,6 @@ function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoa
   }
 
   const mainClassNamePrefix = `${classNamePrefix}__training`;
-
   const childrens = trainings.map(
     (training) => (
       <TrainingCard key={training.id} training={training} />

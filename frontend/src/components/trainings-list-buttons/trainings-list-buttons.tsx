@@ -19,13 +19,13 @@ function TrainingsListButtons({ className, isHaveMoreTrainings, onShowMoreClick 
   const toTopButtonClassName = classNames(buttonsClassName, { 'show-more__button--to-top': isHaveMoreTrainings });
   const scrollToTop = useScrollToTop();
 
-  const handleShowMoreButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleShowMoreButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     onShowMoreClick();
   };
 
-  const handleToTopButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleToTopButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     scrollToTop();

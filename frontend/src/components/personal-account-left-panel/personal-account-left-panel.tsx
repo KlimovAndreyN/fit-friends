@@ -70,7 +70,7 @@ function PersonalAccountLeftPanel({ account: UserProfile, isSpotsmanRole, onSubm
     setAvatarFile(file);
   };
 
-  const handleButtonClick = (event: FormEvent<HTMLButtonElement>) => {
+  const handleButtonClick = (event: FormEvent) => {
     event.preventDefault();
 
     setIsEditing(true);

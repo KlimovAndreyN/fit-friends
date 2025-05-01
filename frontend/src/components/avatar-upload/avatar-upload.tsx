@@ -44,13 +44,13 @@ function AvatarUpload(props: AvatarUploadProps): JSX.Element {
     }
   };
 
-  const handleEditButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleEditButtonClick = (event: MouseEvent) => {
     event.preventDefault();
 
     imageUploadInputRef.current?.click();
   };
 
-  const handleDeleteButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleDeleteButtonClick = (event: MouseEvent) => {
     event.preventDefault();
 
     if (onChange) {
