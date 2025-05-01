@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
-import classNames from 'classnames';
 
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
 
 import UserPhoto from '../user-photo/user-photo';
 import Hashtags from '../hashtags/hashtags';
 import UserDetailGallary from '../user-detail-gallary/user-detail-gallary';
+import UserDetailStatus from '../user-detail-status/user-detail-status';
 import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/user-detail-coach-training-block';
 
 import { LocationTitle, SpecializationTitle } from '../../const';
@@ -17,6 +17,7 @@ type UserDetailWrapperProps = {
 }
 
 function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
+  //! готовность к тренировкам
   //! кнопка - показать сертификаты
   //! возможно отдельный компонет Location, где иконка #icon-location
   //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
@@ -45,22 +46,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             <span>{LocationTitle[location]}</span>
           </a>
         </div>
-        <div className={`${classNamePrefix}__status-container`}>
-          {
-            isCoach &&
-            <div className={`${classNamePrefix}__status ${classNamePrefix}__status--tag`}>
-              <svg className={`${classNamePrefix}__icon-cup`} width="12" height="13" aria-hidden="true">
-                <use xlinkHref="#icon-cup"></use>
-              </svg>
-              <span>Тренер</span>
-            </div>
-          }
-          {/*напутано с разметкой.... 'user-card-coach-2__status user-card-coach-2__status--check' серое,  user-card-coach__status user-card-coach__status--check зелоное*/}
-          <div className="user-card-coach__status user-card-coach__status--check"><span>Готов тренировать</span></div>
-          <div className={classNames('user-card-coach-2__status', { 'user-card-coach-2__status--check': readyForTraining })}>
-            <span>Готов тренировать</span>
-          </div>
-        </div>
+        <UserDetailStatus classNamePrefix={classNamePrefix} isSportsman={!isCoach} readyForTraining={readyForTraining} />
         <div className={`${classNamePrefix}__text`}>
           <p>{about}</p>
           <p>{description}</p>
