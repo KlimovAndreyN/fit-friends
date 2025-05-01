@@ -13,6 +13,7 @@ import {
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
   UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder, FILE_KEY,
   CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder, IdParam,
+  RequestWithRequestIdAndBearerAuthAndUserId
 } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -105,8 +106,10 @@ export class AccountController {
 
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
-  public async getUserProfile(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, requestId, userId);
+  public async getUserProfile(
+    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
+  ): Promise<DetailUserProfileRdo> {
+    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };

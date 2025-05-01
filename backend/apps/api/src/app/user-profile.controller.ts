@@ -2,8 +2,9 @@ import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/comm
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, BearerAuth, IdParam,
-  DetailUserProfileRdo, UserProfileRdo, UserProfileRoute, ApiParamOption
+  ApiServiceRoute, BearerAuth, UserProfileRdo, UserProfileRoute,
+  DetailUserProfileRdo, RequestWithRequestIdAndBearerAuth, IdParam,
+  RequestWithRequestIdAndBearerAuthAndUserId, ApiParamOption
 } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -26,7 +27,9 @@ export class UserProfileController {
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
   @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
-  public async getLookForCompany(@Req() { requestId, userId }: RequestWithRequestIdAndUserId): Promise<UserProfileRdo[]> {
+  public async getLookForCompany(
+    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
+  ): Promise<UserProfileRdo[]> {
     //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика
     //! все в обну базу: пользователи, общие опросники, опросники спортцменов и опросники тренеров
     //! может авторизацию оставить в монго, а все роли, опросники и остальное в постгресс
@@ -35,7 +38,7 @@ export class UserProfileController {
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);
 
     for (const { userId, specializations } of questionnaires) {
-      const user = await this.userService.getDetailUser(userId, requestId, userId);
+      const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
       const { id, name, location, avatarFilePath } = user;
       const userProfile: UserProfileRdo = { id, name, location, avatarFilePath, specializations };
 
@@ -49,15 +52,9 @@ export class UserProfileController {
   @Get(IdParam.USER)
   public async show(
     @Param(ApiParamOption.UserId.name) userId: string,
-    @Req() { requestId, userId: currentUserId }: RequestWithRequestIdAndUserId
+    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth
   ): Promise<DetailUserProfileRdo> {
-    //! тренеру нельзя смотреть тренеров?
-    //! Отладка
-    console.log('UserProfileController.show');
-    console.log('currentUserId', currentUserId);
-    console.log('userId', userId);
-
-    const user = await this.userService.getDetailUser(userId, requestId, currentUserId);
+    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };

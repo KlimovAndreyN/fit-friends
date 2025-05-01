@@ -111,8 +111,14 @@ export class AuthenticationController {
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
+  @UseGuards(JwtAuthGuard)
   @Get(IdParam.USER)
-  public async show(@Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id']): Promise<BasicDetailUserRdo> {
+  public async show(
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id'],
+    @Req() { user: { sub } }: RequestWithTokenPayload
+  ): Promise<BasicDetailUserRdo> {
+    console.log('sub', sub);
+
     const existUser = await this.authService.getUser(userId);
 
     return fillDto(BasicDetailUserRdo, existUser.toPOJO());
