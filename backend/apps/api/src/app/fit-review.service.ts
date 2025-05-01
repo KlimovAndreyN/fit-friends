@@ -21,15 +21,15 @@ export class FitReviewService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Reviews, route);
   }
 
-  public async getTrainings(trainingId: string, { userId, requestId }: RequestWithRequestIdAndUserId): Promise<ReviewRdo[]> {
+  public async getReviews(trainingId: string, { userId: currentUserId, requestId }: RequestWithRequestIdAndUserId): Promise<ReviewRdo[]> {
     const url = this.getUrl(trainingId);
-    const headers = makeHeaders(requestId, null, userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
     const { data } = await this.httpService.axiosRef.get<BasicReviewRdo[]>(url, headers);
     const reviews = [];
 
     for (const item of data) {
       const { userId, ...fields } = item;
-      const user = await this.userService.getUser(userId, requestId);
+      const user = await this.userService.getUser(userId, requestId, currentUserId);
       const review: ReviewRdo = { ...fields, user };
 
       reviews.push(review);

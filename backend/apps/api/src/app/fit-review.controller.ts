@@ -24,7 +24,7 @@ export class FitReviewController {
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
     @Req() request: RequestWithRequestIdAndUserId
   ): Promise<ReviewRdo[]> {
-    const reviews = await this.fitReviewService.getTrainings(trainingId, request);
+    const reviews = await this.fitReviewService.getReviews(trainingId, request);
 
     return reviews;
   }

@@ -35,7 +35,7 @@ export class UserProfileController {
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);
 
     for (const { userId, specializations } of questionnaires) {
-      const user = await this.userService.getDetailUser(userId, requestId);
+      const user = await this.userService.getDetailUser(userId, requestId, userId);
       const { id, name, location, avatarFilePath } = user;
       const userProfile: UserProfileRdo = { id, name, location, avatarFilePath, specializations };
 
@@ -57,7 +57,7 @@ export class UserProfileController {
     console.log('currentUserId', currentUserId);
     console.log('userId', userId);
 
-    const user = await this.userService.getDetailUser(userId, requestId); //! тут еще передать currentUserId
+    const user = await this.userService.getDetailUser(userId, requestId, currentUserId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
