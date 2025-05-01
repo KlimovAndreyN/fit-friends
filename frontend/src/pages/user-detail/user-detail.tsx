@@ -19,12 +19,6 @@ import { AppRoute, PageTitle } from '../../const';
 function UserDetail(): JSX.Element {
   //! прокрутка?
   //! ограничения для тренера на просмотр тренеров в бэке
-  //! кнопка - показать сертификаты
-  //! ссылка показать карту - popup-user-map.html
-  //    возможно отдельный компонет Location, где иконка #icon-location
-  //! проверить разметку
-  //! проверить консоль браузера на ошибки
-  // добавил UserPhoto
 
   const { id: userId = '' } = useParams();
   const dispatch = useAppDispatch();

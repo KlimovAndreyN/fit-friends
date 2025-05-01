@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
@@ -16,6 +17,14 @@ type UserDetailWrapperProps = {
 }
 
 function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
+  //! кнопка - показать сертификаты
+  //! возможно отдельный компонет Location, где иконка #icon-location
+  //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
+  //! проверить консоль браузера на ошибки
+  //! проверить разметку
+  // добавил UserPhoto
+
+  const { pathname } = useLocation();
   const { user: { role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
   const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
@@ -29,7 +38,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           <h2 className={`${classNamePrefix}__title`}>{name}</h2>
         </div>
         <div className={`${classNamePrefix}__label`}>
-          <a href="popup-user-map.html">
+          <a href={`${pathname}#popup-user-map.html`}>
             <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
               <use xlinkHref="#icon-location"></use>
             </svg>
