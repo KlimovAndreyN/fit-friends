@@ -1,0 +1,4 @@
+.outline-none-on-focus:focus {
+  /* Убирает рамку при фокусе */
+  outline: none;
+}

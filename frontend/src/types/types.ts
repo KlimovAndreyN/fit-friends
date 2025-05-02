@@ -8,6 +8,7 @@ export enum AuthorizationStatus {
 
 export type OnFileInputChange = (filePath: string, file: File | undefined) => void;
 
+//! нахвание поменять ...
 export type OnClick = () => void;
 
 export type OnValueMinMaxChange = (newValueMin: number | undefined, newValueMax: number | undefined) => void;

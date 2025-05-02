@@ -1,6 +1,8 @@
 import { Fragment, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import './user-detail-wrapper.css';
+
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
 
 import UserPhoto from '../user-photo/user-photo';
@@ -26,6 +28,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   //! проверить консоль браузера на ошибки
   //! проверить разметку
   // добавил UserPhoto
+  // кнопке Показать сертификаты добавил outline-none-on-focus, т.к. была рамка на кнопке при закрытии окна
 
   const { pathname } = useLocation();
   const { user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
@@ -45,11 +48,11 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
 
   const handleShowCertificatesButtonClick = (event: MouseEvent) => {
     event.preventDefault();
-
     setShowCertificates(true);
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleShowCertificatesButtonClick');
+  };
+
+  const handleCertificatesPopupModalClose = () => {
+    setShowCertificates(false);
   };
 
   const handleAddFriendButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -60,45 +63,6 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
     console.log('handleAddFriendButtonClick');
   };
 
-  const content = (
-    <Fragment>
-      <div className={`${classNamePrefix}__content`}>
-        <UserPhoto className={`${classNamePrefix}__head`} size={80} path={avatarFilePath} />
-        <div className={`${classNamePrefix}__head`}>
-          <h2 className={`${classNamePrefix}__title`}>{name}</h2>
-        </div>
-        <div className={`${classNamePrefix}__label`}>
-          <a href={`${pathname}#popup-user-map.html`} onClick={handleLocationLinkClick}>
-            <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
-              <use xlinkHref="#icon-location"></use>
-            </svg>
-            <span>{LocationTitle[location]}</span>
-          </a>
-        </div>
-        <UserDetailStatus isSportsman={!isCoach} readyForTraining={readyForTraining} />
-        <div className={`${classNamePrefix}__text`}>
-          <p>{about}</p>
-          {(description) && <p>{description}</p>}
-        </div>
-        {
-          isCoach &&
-          <button className={`btn-flat ${classNamePrefix}__sertificate`} type="button" onClick={handleShowCertificatesButtonClick}>
-            <svg width="12" height="13" aria-hidden="true">
-              <use xlinkHref="#icon-teacher"></use>
-            </svg>
-            <span>Посмотреть сертификаты</span>
-          </button>
-        }
-        <Hashtags
-          classNamePrefix={`${classNamePrefix}__hashtag`}
-          items={specializationsTitles}
-          isNotNeedSpecialClassName
-        />
-        <button className={`btn ${classNamePrefix}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
-      </div>
-      <UserDetailGallary classNamePrefix={classNamePrefix} filesPaths={[backgroundPath]} />
-    </Fragment>
-  );
   const popupCertificatesContent = (
     <Fragment>
       <div className="popup__slider-buttons">
@@ -125,17 +89,60 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
     </Fragment>
   );
 
+  const content = (
+    <Fragment>
+      <div className={`${classNamePrefix}__content`}>
+        <UserPhoto className={`${classNamePrefix}__head`} size={80} path={avatarFilePath} />
+        <div className={`${classNamePrefix}__head`}>
+          <h2 className={`${classNamePrefix}__title`}>{name}</h2>
+        </div>
+        <div className={`${classNamePrefix}__label`}>
+          <a href={`${pathname}#popup-user-map.html`} onClick={handleLocationLinkClick}>
+            <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
+              <use xlinkHref="#icon-location"></use>
+            </svg>
+            <span>{LocationTitle[location]}</span>
+          </a>
+        </div>
+        <UserDetailStatus isSportsman={!isCoach} readyForTraining={readyForTraining} />
+        <div className={`${classNamePrefix}__text`}>
+          <p>{about}</p>
+          {(description) && <p>{description}</p>}
+        </div>
+        {
+          isCoach &&
+          <Fragment>
+            <button className={`btn-flat ${classNamePrefix}__sertificate outline-none-on-focus`} type="button" onClick={handleShowCertificatesButtonClick}>
+              <svg width="12" height="13" aria-hidden="true">
+                <use xlinkHref="#icon-teacher"></use>
+              </svg>
+              <span>Посмотреть сертификаты</span>
+            </button>
+            {
+              showCertificates &&
+              <PopupModal
+                title='Сертификаты'
+                hiddenTitle='Слайдер с сертификатами.'
+                classNamePostfix='certificates'
+                content={popupCertificatesContent}
+                onClose={handleCertificatesPopupModalClose}
+              />
+            }
+          </Fragment>
+        }
+        <Hashtags
+          classNamePrefix={`${classNamePrefix}__hashtag`}
+          items={specializationsTitles}
+          isNotNeedSpecialClassName
+        />
+        <button className={`btn ${classNamePrefix}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
+      </div>
+      <UserDetailGallary classNamePrefix={classNamePrefix} filesPaths={[backgroundPath]} />
+    </Fragment>
+  );
+
   return (
     <div className={`${classNamePrefix}__wrapper`}>
-      {
-        showCertificates &&
-        <PopupModal title='Сертификаты' hiddenTitle='Слайдер с сертификатами.' content={popupCertificatesContent} onClose={() => {
-          //! отладка
-          // eslint-disable-next-line no-console
-          console.log('');
-        }}
-        />
-      }
       {
         isCoach
           ? <div className={`${classNamePrefix}__card`}>{content}</div>
