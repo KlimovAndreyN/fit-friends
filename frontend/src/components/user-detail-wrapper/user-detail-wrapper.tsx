@@ -11,6 +11,7 @@ import UserDetailGallary from '../user-detail-gallary/user-detail-gallary';
 import UserDetailStatus from '../user-detail-status/user-detail-status';
 import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/user-detail-coach-training-block';
 import UserDetailCoachCertificates from '../user-detail-coach-certificates/user-detail-coach-certificates';
+import PopupModalMap from '../popup-modal-map/popup-modal-map';
 
 import { LocationTitle, SpecializationTitle } from '../../const';
 
@@ -34,7 +35,9 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
     user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath },
     questionnaire: { readyForTraining, specializations, description, certificates = [] }
   } = detailUserProfile;
+  const locationText = LocationTitle[location];
   const [showCertificates, setShowCertificates] = useState(false);
+  const [showLocationMap, setShowLocationMap] = useState(false);
   const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
@@ -42,10 +45,11 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
 
   const handleLocationLinkClick = (event: MouseEvent) => {
     event.preventDefault();
+    setShowLocationMap(true);
+  };
 
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleLocationLinkClick');
+  const handleLocationPopupModalMapClose = () => {
+    setShowLocationMap(false);
   };
 
   const handleShowCertificatesButtonClick = (event: MouseEvent) => {
@@ -77,9 +81,17 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
               <use xlinkHref="#icon-location"></use>
             </svg>
-            <span>{LocationTitle[location]}</span>
+            <span>{locationText}</span>
           </a>
         </div>
+        {
+          showLocationMap &&
+          <PopupModalMap
+            title={name}
+            address={locationText}
+            onClose={handleLocationPopupModalMapClose}
+          />
+        }
         <UserDetailStatus isSportsman={!isCoach} readyForTraining={readyForTraining} />
         <div className={`${classNamePrefix}__text`}>
           <p>{about}</p>
@@ -88,7 +100,11 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
         {
           isCoach &&
           <Fragment>
-            <button className={`btn-flat ${classNamePrefix}__sertificate outline-none-on-focus`} type="button" onClick={handleShowCertificatesButtonClick}>
+            <button
+              className={`btn-flat ${classNamePrefix}__sertificate outline-none-on-focus`}
+              type="button"
+              onClick={handleShowCertificatesButtonClick}
+            >
               <svg width="12" height="13" aria-hidden="true">
                 <use xlinkHref="#icon-teacher"></use>
               </svg>

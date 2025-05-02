@@ -7,15 +7,27 @@ import classNames from 'classnames';
 
 type PopupModalProps = {
   title: string;
-  hiddenTitle: string;
-  classNamePostfix?: string;
+  hiddenTitle?: string;
+  additionalHeadElement?: JSX.Element;
+  wrapperClassNamePostfix?: string;
+  headClassNamePostfix?: string;
+  contentClassNamePostfix?: string;
   content: JSX.Element;
   isIndividualContent?: boolean;
   onClose: OnClick;
 }
 
 function PopupModal(props: PopupModalProps): JSX.Element {
-  const { title, hiddenTitle, classNamePostfix = '', content, isIndividualContent, onClose
+  const {
+    title,
+    hiddenTitle = '',
+    additionalHeadElement,
+    wrapperClassNamePostfix = '',
+    headClassNamePostfix = '',
+    contentClassNamePostfix = '',
+    content,
+    isIndividualContent,
+    onClose
   } = props;
 
   useEscapeKey(onClose);
@@ -33,8 +45,10 @@ function PopupModal(props: PopupModalProps): JSX.Element {
     onClose();
   };
 
+  const wrapperClassName = classNames('popup__wrapper', { [`popup__wrapper--${wrapperClassNamePostfix}`]: wrapperClassNamePostfix });
+  const headClassName = classNames('popup-head', { [`popup-head--${headClassNamePostfix}`]: headClassNamePostfix });
   const currentContent = (isIndividualContent) ? content : (
-    <div className={classNames('popup__content', { [`popup__content--${classNamePostfix}`]: classNamePostfix })}>
+    <div className={classNames({ 'popup__content': !contentClassNamePostfix, [`popup__content-${contentClassNamePostfix}`]: contentClassNamePostfix })}>
       {content}
     </div>
   );
@@ -42,10 +56,11 @@ function PopupModal(props: PopupModalProps): JSX.Element {
   return (
     <div className="popup-container" style={{ position: 'fixed', inset: 0, zIndex: 10 }}>
       <section className="popup">
-        <h2 className="visually-hidden">{hiddenTitle}</h2>
-        <div className="popup__wrapper">
-          <div className="popup-head">
+        {hiddenTitle && <h2 className="visually-hidden">{hiddenTitle}</h2>}
+        <div className={wrapperClassName}>
+          <div className={headClassName}>
             <h2 className="popup-head__header">{title}</h2>
+            {additionalHeadElement}
             <button
               className="btn-icon btn-icon--outlined btn-icon--big"
               type="button"
