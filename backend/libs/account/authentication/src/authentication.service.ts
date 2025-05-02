@@ -111,9 +111,6 @@ export class AuthenticationService {
   }
 
   public async getUser(id: string, currentUserId: string, role: Role): Promise<FitUserEntity> {
-    console.log('currentUserId', currentUserId);
-    console.log('role', role);
-
     const foundUser = await this.fitUserRepository.findById(id);
 
     if (!foundUser) {

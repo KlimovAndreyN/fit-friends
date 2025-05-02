@@ -6,20 +6,27 @@ import 'swiper/css';
 import SliderButton from '../slider-button/slider-button';
 import classNames from 'classnames';
 
+function getIndividualControlClassName(extraClassName: string, { className, ariaLabel }: { className: string; ariaLabel: string }): string {
+  return [className, `${extraClassName}--${ariaLabel}`].join(' ');
+}
+
 export type SliderProps = {
-  title: string;
+  title?: string;
   classNamePrefix: string;
   separator?: string;
+  mainDivClassName?: string;
   mainDivClassNamePostfix?: string;
   titleDivClassNamePostfix: string;
-  titleClassNamePostfix: string;
+  titleClassNamePostfix?: string;
   additionalTitleElement?: JSX.Element;
   controlsClassNamePostfix?: string;
   controlClassNamePostfix?: string;
+  isIndividualControlClassName?: boolean;
   isLightControl?: boolean;
   previousAriaLabel?: string;
   sliderButtonWidth?: number;
   sliderButtonHeight?: number;
+  swiperSlideItemClassName?: string;
   childrens: JSX.Element[];
   slidesCount: number;
   marginRight?: number;
@@ -36,16 +43,19 @@ function Slider(props: SliderProps): JSX.Element {
     title,
     classNamePrefix,
     separator = '-',
+    mainDivClassName = '',
     mainDivClassNamePostfix = '',
     titleDivClassNamePostfix,
-    titleClassNamePostfix,
+    titleClassNamePostfix = '',
     additionalTitleElement,
     controlsClassNamePostfix = 'controls',
     controlClassNamePostfix = 'control',
+    isIndividualControlClassName,
     isLightControl,
     previousAriaLabel = 'previous',
     sliderButtonWidth = 16,
     sliderButtonHeight = 14,
+    swiperSlideItemClassName = '',
     childrens,
     slidesCount,
     marginRight = 20,
@@ -69,8 +79,9 @@ function Slider(props: SliderProps): JSX.Element {
     setSlideActiveIndex(swiper.activeIndex);
   };
 
+  const extraButtonClassName = classNamePrefix + separator + controlClassNamePostfix;
   const previousSliderButtonOption = {
-    className: classNames('btn-icon', { 'btn-icon--outlined': isLightControl }, classNamePrefix + separator + controlClassNamePostfix),
+    className: classNames('btn-icon', { 'btn-icon--outlined': isLightControl }, extraButtonClassName),
     onClick: handlePreviousButtonClick,
     disabled: slideActiveIndex === 0,
     xlinkHref: '#arrow-left',
@@ -86,23 +97,34 @@ function Slider(props: SliderProps): JSX.Element {
     ariaLabel: 'next'
   };
 
-  const mainDivClassName = classNamePrefix + ((mainDivClassNamePostfix) ? separator + mainDivClassNamePostfix : '');
+  if (isIndividualControlClassName) {
+    previousSliderButtonOption.className = getIndividualControlClassName(extraButtonClassName, previousSliderButtonOption);
+    nextSliderButtonOption.className = getIndividualControlClassName(extraButtonClassName, nextSliderButtonOption);
+  }
+
+  const currentMainDivClassNamePostfix = (mainDivClassNamePostfix) ? separator + mainDivClassNamePostfix : '';
+  const currentMainDivClassName = (mainDivClassName) ? mainDivClassName : classNamePrefix + currentMainDivClassNamePostfix;
   const titleDivClassName = classNamePrefix + separator + titleDivClassNamePostfix;
   const titleClassName = classNamePrefix + separator + titleClassNamePostfix;
+  const currentSwiperSlideItemClassName = (swiperSlideItemClassName) ? swiperSlideItemClassName : `${classNamePrefix}${separator}item`;
+  const buttons = (
+    <div className={classNamePrefix + separator + controlsClassNamePostfix}>
+      <SliderButton {...previousSliderButtonOption} />
+      <SliderButton {...nextSliderButtonOption} />
+    </div>
+  );
+  const head = (!title) ? buttons : (
+    <div className={titleDivClassName}>
+      <h2 className={titleClassName}>{title}</h2>
+      {additionalTitleElement}
+      {buttons}
+    </div>
+  );
 
   return (
-    <div className={mainDivClassName}>
-      <div className={titleDivClassName}>
-        <h2 className={titleClassName}>{title}</h2>
-        {
-          additionalTitleElement
-        }
-        <div className={classNamePrefix + separator + controlsClassNamePostfix}>
-          <SliderButton {...previousSliderButtonOption} />
-          <SliderButton {...nextSliderButtonOption} />
-        </div>
-      </div>
-      {textForEmpty && !childrens.length && <div className={titleDivClassName} style={{ justifyContent: 'center' }}><span>{textForEmpty}</span></div>}
+    <div className={currentMainDivClassName}>
+      {head}
+      {!childrensCount && textForEmpty && <div className={titleDivClassName} style={{ justifyContent: 'center' }}><span>{textForEmpty}</span></div>}
       <ul className={`${classNamePrefix}${separator}list`}>
         <Swiper slidesPerView={realySlidesCount} ref={swiperRef} onSlideChange={handleSwiperOnSlideChange}>
           {
@@ -110,7 +132,7 @@ function Slider(props: SliderProps): JSX.Element {
               (children) => (
                 <SwiperSlide key={children.key}>
                   <li
-                    className={`${classNamePrefix}${separator}item`}
+                    className={currentSwiperSlideItemClassName}
                     //style={{ height: '100%'/* карточки были разноый высоты, а если поменять li и SwiperSlide, то li нет в разметке*/ }}
                     style={{ marginRight: `${marginRight}px`, height: '100%'/* //! пробую подобрать отступы, можно определить индекс последнего видимого слайда*/ }}
                   >

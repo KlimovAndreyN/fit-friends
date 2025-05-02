@@ -1,6 +1,7 @@
 import { FormEvent, useEffect } from 'react';
 
 import useEscapeKey from '../../hooks/use-escape-key';
+import Slider from '../slider/slider';
 
 import { OnClick } from '../../types/types';
 
@@ -29,28 +30,6 @@ function PopupModalSlider({ title, hiddenTitle, classNamePostfix, onClose }: Pop
     onClose();
   };
 
-  /*      <Slider
-          title='Сертификаты'
-          classNamePrefix={'popup__content'}
-          titleDivClassNamePostfix='head'
-          titleClassNamePostfix='title'
-          //controlsClassNamePostfix='bts'
-          //controlClassNamePostfix='btn'
-          childrens={[
-            (//! временно
-              <li className="popup__slide popup__slide--current" key={1}>
-                <div className="popup__slide-img">
-                  <picture>
-                    <img src="img/content/popup/popup-slide01.jpg" width="294" height="360" alt="Сертификат Ивановой Валерии, присвоена квалификация тренер по фитнесу." />
-                  </picture>
-                </div>
-              </li>
-            )
-          ]}
-          slidesCount={1}//!
-          textForEmpty='У тренера нет сертификатов'
-        /> */
-
   return (
     <div className="popup-container" style={{ position: 'fixed', inset: 0, zIndex: 10 }}>
       <section className="popup">
@@ -69,29 +48,36 @@ function PopupModalSlider({ title, hiddenTitle, classNamePostfix, onClose }: Pop
               </svg>
             </button>
           </div>
-          <div className={`popup__content popup__content--${classNamePostfix}`} >
-            <div className="popup__slider-buttons">
-              <button className="btn-icon popup__slider-btn popup__slider-btn--prev" type="button" aria-label="prev">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-left" />
-                </svg>
-              </button>
-              <button className="btn-icon popup__slider-btn popup__slider-btn--next" type="button" aria-label="next">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#arrow-right" />
-                </svg>
-              </button>
-            </div>
-            <ul className="popup__slider-list">
-              <li className="popup__slide popup__slide--current">
-                <div className="popup__slide-img">
+          <Slider
+            classNamePrefix='popup__slider'
+            mainDivClassName={`popup__content popup__content--${classNamePostfix}`}
+            titleDivClassNamePostfix='head'
+            titleClassNamePostfix='title'
+            controlsClassNamePostfix='buttons'
+            controlClassNamePostfix='btn'
+            previousAriaLabel='prev'
+            isIndividualControlClassName
+            swiperSlideItemClassName='popup__slide popup__slide--current'
+            childrens={[
+              (//! временно
+                <div className="popup__slide-img" key={1}>
                   <picture>
                     <img src="img/content/popup/popup-slide01.jpg" width="294" height="360" alt="Сертификат Ивановой Валерии, присвоена квалификация тренер по фитнесу." />
                   </picture>
                 </div>
-              </li>
-            </ul>
-          </div>
+              ),
+              (//! временно
+                <div className="popup__slide-img" key={2}>
+                  <picture>
+                    <img src="img/content/popup/popup-slide01.jpg" width="294" height="360" alt="Сертификат Ивановой Валерии, присвоена квалификация тренер по фитнесу." />
+                  </picture>
+                </div>
+              )
+            ]}
+            slidesCount={1}//!
+            marginRight={0}
+            textForEmpty='У тренера нет сертификатов'
+          />
         </div>
       </section>
     </div>
