@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useCallback, useEffect, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useState } from 'react';
 
 import AvatarUpload from '../../components/avatar-upload/avatar-upload';
 import PersonalAccountBlock from '../../components/personal-account-block/personal-account-block';
@@ -9,10 +9,10 @@ import SpecializationsCheckbox from '../../components/specializations-checkbox/s
 
 import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
 
-import { isEventEscKey } from '../../utils/common';
 import { useAppSelector } from '../../hooks';
 import { getIsUpdateAccountError, getIsUpdateAccountExecuting } from '../../store/account-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
+import useEscapeKey from '../../hooks/use-escape-key';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -45,25 +45,19 @@ function PersonalAccountLeftPanel({ account: UserProfile, isSpotsmanRole, onSubm
   const [avatarFile, setAvatarFile] = useState<File | undefined>();
   const [currentAvatarFilePath, setCurrentAvatarFilePath] = useState(avatarFilePath);
 
-  const handleWindowKeyDown = useCallback((event: KeyboardEvent) => {
-    if (isEventEscKey(event)) {
-      setCurrentAvatarFilePath(avatarFilePath);
-      setAvatarFile(undefined);
-      setIsEditing(false);
-    }
-  }, [avatarFilePath]);
+  const handleWindowKeyDown = () => {
+    setCurrentAvatarFilePath(avatarFilePath);
+    setAvatarFile(undefined);
+    setIsEditing(false);
+  };
+
+  useEscapeKey(handleWindowKeyDown);
 
   useEffect(() => {
     if (!isUpdateAccountExecuting && !isUpdateAccountError) {
       setIsEditing(false);
     }
-
-    window.addEventListener('keydown', handleWindowKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleWindowKeyDown);
-    };
-  }, [isUpdateAccountExecuting, isUpdateAccountError, handleWindowKeyDown, avatarFilePath]);
+  }, [isUpdateAccountExecuting, isUpdateAccountError, avatarFilePath]);
 
   const handleAvatarUploadChange = (filePath: string, file: File | undefined) => {
     setCurrentAvatarFilePath(filePath);
