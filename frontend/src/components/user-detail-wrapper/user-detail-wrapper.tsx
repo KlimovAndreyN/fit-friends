@@ -10,7 +10,7 @@ import Hashtags from '../hashtags/hashtags';
 import UserDetailGallary from '../user-detail-gallary/user-detail-gallary';
 import UserDetailStatus from '../user-detail-status/user-detail-status';
 import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/user-detail-coach-training-block';
-import PopupModal from '../popup-modal/popup-modal';
+import PopupModalSlider from '../popup-modal-slider/popup-modal-slider';
 
 import { LocationTitle, SpecializationTitle } from '../../const';
 
@@ -20,7 +20,6 @@ type UserDetailWrapperProps = {
 }
 
 function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
-  //! кнопка - показать сертификаты
   //! кнопка - добавить в друзья
   //! возможно отдельный компонет Location, где иконка #icon-location
   //    нет css для user-card__icon-location / user-card-coach__icon-location / user-card-coach-2__icon-location, но в svg выставлено
@@ -63,32 +62,6 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
     console.log('handleAddFriendButtonClick');
   };
 
-  const popupCertificatesContent = (
-    <Fragment>
-      <div className="popup__slider-buttons">
-        <button className="btn-icon popup__slider-btn popup__slider-btn--prev" type="button" aria-label="prev">
-          <svg width="16" height="14" aria-hidden="true">
-            <use xlinkHref="#arrow-left" />
-          </svg>
-        </button>
-        <button className="btn-icon popup__slider-btn popup__slider-btn--next" type="button" aria-label="next">
-          <svg width="16" height="14" aria-hidden="true">
-            <use xlinkHref="#arrow-right" />
-          </svg>
-        </button>
-      </div>
-      <ul className="popup__slider-list">
-        <li className="popup__slide popup__slide--current">
-          <div className="popup__slide-img">
-            <picture>
-              <img src="img/content/popup/popup-slide01.jpg" width="294" height="360" alt="Сертификат Ивановой Валерии, присвоена квалификация тренер по фитнесу." />
-            </picture>
-          </div>
-        </li>
-      </ul>
-    </Fragment>
-  );
-
   const content = (
     <Fragment>
       <div className={`${classNamePrefix}__content`}>
@@ -120,11 +93,10 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             </button>
             {
               showCertificates &&
-              <PopupModal
+              <PopupModalSlider
                 title='Сертификаты'
                 hiddenTitle='Слайдер с сертификатами.'
                 classNamePostfix='certificates'
-                content={popupCertificatesContent}
                 onClose={handleCertificatesPopupModalClose}
               />
             }
