@@ -3,16 +3,21 @@ import { FormEvent, useEffect } from 'react';
 import useEscapeKey from '../../hooks/use-escape-key';
 
 import { OnClick } from '../../types/types';
+import classNames from 'classnames';
 
-type PopupFormProps = {
+type PopupModalProps = {
   title: string;
   hiddenTitle: string;
-  classNamePostfix: string;
+  classNamePostfix?: string;
   content: JSX.Element;
+  isIndividualContent?: boolean;
   onClose: OnClick;
 }
 
-function PopupModal({ title, hiddenTitle, classNamePostfix, content, onClose }: PopupFormProps): JSX.Element {
+function PopupModal(props: PopupModalProps): JSX.Element {
+  const { title, hiddenTitle, classNamePostfix = '', content, isIndividualContent, onClose
+  } = props;
+
   useEscapeKey(onClose);
 
   useEffect(() => {
@@ -27,6 +32,12 @@ function PopupModal({ title, hiddenTitle, classNamePostfix, content, onClose }: 
     event.preventDefault();
     onClose();
   };
+
+  const currentContent = (isIndividualContent) ? content : (
+    <div className={classNames('popup__content', { [`popup__content--${classNamePostfix}`]: classNamePostfix })}>
+      {content}
+    </div>
+  );
 
   return (
     <div className="popup-container" style={{ position: 'fixed', inset: 0, zIndex: 10 }}>
@@ -46,9 +57,7 @@ function PopupModal({ title, hiddenTitle, classNamePostfix, content, onClose }: 
               </svg>
             </button>
           </div>
-          <div className={`popup__content popup__content--${classNamePostfix}`}>
-            {content}
-          </div>
+          {currentContent}
         </div>
       </section>
     </div>

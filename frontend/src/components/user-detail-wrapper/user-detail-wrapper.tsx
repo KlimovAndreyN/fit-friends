@@ -10,7 +10,7 @@ import Hashtags from '../hashtags/hashtags';
 import UserDetailGallary from '../user-detail-gallary/user-detail-gallary';
 import UserDetailStatus from '../user-detail-status/user-detail-status';
 import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/user-detail-coach-training-block';
-import PopupModalSlider from '../popup-modal-slider/popup-modal-slider';
+import UserDetailCoachCertificates from '../user-detail-coach-certificates/user-detail-coach-certificates';
 
 import { LocationTitle, SpecializationTitle } from '../../const';
 
@@ -30,7 +30,10 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   // кнопке Показать сертификаты добавил outline-none-on-focus, т.к. была рамка на кнопке при закрытии окна
 
   const { pathname } = useLocation();
-  const { user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
+  const {
+    user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath },
+    questionnaire: { readyForTraining, specializations, description, certificates = [] }
+  } = detailUserProfile;
   const [showCertificates, setShowCertificates] = useState(false);
   const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
@@ -93,10 +96,8 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             </button>
             {
               showCertificates &&
-              <PopupModalSlider
-                title='Сертификаты'
-                hiddenTitle='Слайдер с сертификатами.'
-                classNamePostfix='certificates'
+              <UserDetailCoachCertificates
+                certificates={certificates}
                 onClose={handleCertificatesPopupModalClose}
               />
             }
