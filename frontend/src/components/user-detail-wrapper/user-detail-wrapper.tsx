@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent } from 'react';
+import { Fragment, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
@@ -8,6 +8,7 @@ import Hashtags from '../hashtags/hashtags';
 import UserDetailGallary from '../user-detail-gallary/user-detail-gallary';
 import UserDetailStatus from '../user-detail-status/user-detail-status';
 import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/user-detail-coach-training-block';
+import PopupModal from '../popup-modal/popup-modal';
 
 import { LocationTitle, SpecializationTitle } from '../../const';
 
@@ -28,6 +29,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
 
   const { pathname } = useLocation();
   const { user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath }, questionnaire: { readyForTraining, specializations, description } } = detailUserProfile;
+  const [showCertificates, setShowCertificates] = useState(false);
   const isCoach = isCoachRole(role);
   const specializationsTitles = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
@@ -44,6 +46,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   const handleShowCertificatesButtonClick = (event: MouseEvent) => {
     event.preventDefault();
 
+    setShowCertificates(true);
     //! отладка
     // eslint-disable-next-line no-console
     console.log('handleShowCertificatesButtonClick');
@@ -96,9 +99,43 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
       <UserDetailGallary classNamePrefix={classNamePrefix} filesPaths={[backgroundPath]} />
     </Fragment>
   );
+  const popupCertificatesContent = (
+    <Fragment>
+      <div className="popup__slider-buttons">
+        <button className="btn-icon popup__slider-btn popup__slider-btn--prev" type="button" aria-label="prev">
+          <svg width="16" height="14" aria-hidden="true">
+            <use xlinkHref="#arrow-left" />
+          </svg>
+        </button>
+        <button className="btn-icon popup__slider-btn popup__slider-btn--next" type="button" aria-label="next">
+          <svg width="16" height="14" aria-hidden="true">
+            <use xlinkHref="#arrow-right" />
+          </svg>
+        </button>
+      </div>
+      <ul className="popup__slider-list">
+        <li className="popup__slide popup__slide--current">
+          <div className="popup__slide-img">
+            <picture>
+              <img src="img/content/popup/popup-slide01.jpg" width="294" height="360" alt="Сертификат Ивановой Валерии, присвоена квалификация тренер по фитнесу." />
+            </picture>
+          </div>
+        </li>
+      </ul>
+    </Fragment>
+  );
 
   return (
     <div className={`${classNamePrefix}__wrapper`}>
+      {
+        showCertificates &&
+        <PopupModal title='Сертификаты' hiddenTitle='Слайдер с сертификатами.' content={popupCertificatesContent} onClose={() => {
+          //! отладка
+          // eslint-disable-next-line no-console
+          console.log('');
+        }}
+        />
+      }
       {
         isCoach
           ? <div className={`${classNamePrefix}__card`}>{content}</div>
