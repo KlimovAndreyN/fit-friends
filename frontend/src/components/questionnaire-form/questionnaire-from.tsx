@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useRef } from 'react';
+import { FormEvent, Fragment, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../popup-form/popup-form';
@@ -55,6 +55,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
 
   //! временно, отладка, еще нужно выветси название или количество выбранных файловЮ может в хинте илии снизу, задать максимум
   const filesInputRef = useRef<HTMLInputElement | null>(null);
+  const [currentSpecializations, setCurrentSpecializations] = useState([...DefaultUser.SPECIALISATIONS]);
   const isSportsman = isSportsmanRole(userRole);
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -65,6 +66,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
 
     const trainingLevel = (formData.get(FormFieldName.UserTrainingLevel)?.toString() || '') as TrainingLevel; //! одинаковый код - в хелпер
     const specializations = formData.getAll(FormFieldName.Spec).map((specialization) => (specialization as Specialization)); //! одинаковый код - в хелпер
+    setCurrentSpecializations(specializations);
     const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration; //! одинаковый код - в хелпер
     const caloriesLose = parseInt(formData.get(FormFieldName.CaloriesLose)?.toString() || '', 10);
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
@@ -112,8 +114,9 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
           <Block legend='Ваша специализация (тип) тренировок' className={divClassName} >
             <SpecializationsCheckbox
               name={FormFieldName.Spec}
-              values={[...DefaultUser.SPECIALISATIONS]}
+              values={currentSpecializations}
               divExtraClassName={divClassName}
+              readOnly={isDisabled}
             />
           </Block>
           {

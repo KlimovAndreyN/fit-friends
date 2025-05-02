@@ -61,7 +61,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
     setShowCertificates(false);
   };
 
-  const handleAddFriendButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleAddFriendButtonClick = (event: MouseEvent) => {
     event.preventDefault();
 
     //! отладка

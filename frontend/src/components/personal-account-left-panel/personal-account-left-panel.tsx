@@ -31,13 +31,13 @@ type PersonalAccountLeftPanelProps = {
   onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
 }
 
-function PersonalAccountLeftPanel({ account: UserProfile, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
+function PersonalAccountLeftPanel({ account, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
   //! много кода! поделить как нибуть!
 
   const isUpdateAccountExecuting = useAppSelector(getIsUpdateAccountExecuting);
   const isUpdateAccountError = useAppSelector(getIsUpdateAccountError);
 
-  const { user, questionnaire } = UserProfile;
+  const { user, questionnaire } = account;
   const { name, avatarFilePath, about, location, gender } = user;
   const { specializations, trainingLevel } = questionnaire;
 
@@ -66,7 +66,6 @@ function PersonalAccountLeftPanel({ account: UserProfile, isSpotsmanRole, onSubm
 
   const handleButtonClick = (event: FormEvent) => {
     event.preventDefault();
-
     setIsEditing(true);
   };
 

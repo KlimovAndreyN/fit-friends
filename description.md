@@ -28,6 +28,7 @@ docker compose --file ./apps/file-storage/docker-compose.dev.yml --env-file ./ap
 docker compose --file ./apps/notify/docker-compose.dev.yml --env-file ./apps/notify/docker-compose.dev.env up -d
 docker compose --file ./apps/account/docker-compose.dev.yml --env-file ./apps/account/docker-compose.dev.env up -d
 docker compose --file ./apps/fit/docker-compose.dev.yml --env-file ./apps/fit/docker-compose.dev.env up -d
+cd ..
 
 # установка зависимостей для backend
 cd backend

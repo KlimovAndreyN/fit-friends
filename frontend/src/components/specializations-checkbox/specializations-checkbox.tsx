@@ -28,7 +28,7 @@ function SpecializationsCheckbox({ name, values, divExtraClassName, readOnly, fr
           ({ value, title }) => {
             const checked = currentValues.includes(value);
 
-            const handleDivOnClick = (event: MouseEvent<HTMLDivElement>) => {
+            const handleDivOnClick = (event: MouseEvent) => {
               event.preventDefault();
 
               if (checked) {
@@ -41,7 +41,7 @@ function SpecializationsCheckbox({ name, values, divExtraClassName, readOnly, fr
             return (
               <div className="btn-checkbox" key={value} onClick={handleDivOnClick}>
                 <label>
-                  <input className="visually-hidden" type="checkbox" name={name} value={value} checked={checked} disabled={readOnly} />
+                  <input className="visually-hidden" type="checkbox" name={name} value={value} checked={checked} disabled={readOnly} readOnly />
                   <span className="btn-checkbox__btn">{title}</span>
                 </label>
               </div>
