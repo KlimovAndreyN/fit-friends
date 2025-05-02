@@ -1,5 +1,5 @@
-import { Certificate } from '../certificate.interface';
 import { IBasicQuestionnaireRdo } from './i-basic-questionnaire.rdo';
+import { ICertificateRdo } from './i-certificate.rdo';
 
 export interface IQuestionnaireRdo
   extends Omit<
@@ -7,5 +7,5 @@ export interface IQuestionnaireRdo
     'userId'
     | 'fileIds'
   > {
-  certificates?: Certificate[];
+  certificates?: ICertificateRdo[];
 }

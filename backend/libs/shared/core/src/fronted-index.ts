@@ -14,6 +14,7 @@ export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
 export { type IPageQuery } from './lib/interfaces/query/i-page.query';
 export { type ITrainingQuery } from './lib/interfaces/query/i-training.query';
 
+export { type ICertificateRdo } from './lib/interfaces/rdo/i-certificate.rdo';
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type IDetailUserProfileRdo } from './lib/interfaces/rdo/i-detail-user-profile.rdo';
 export { type IDetailUserRdo } from './lib/interfaces/rdo/i-detail-user.rdo';
@@ -27,7 +28,6 @@ export { type ITrainingsWithPaginationRdo } from './lib/interfaces/rdo/i-trainin
 export { type IUserProfileRdo } from './lib/interfaces/rdo/i-user-profile.rdo';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 
-export { type Certificate as ICertificateRdo } from './lib/interfaces/certificate.interface';
 export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';
 export { type Tokens as ITokensRdo } from './lib/interfaces/tokens.interface';
 
