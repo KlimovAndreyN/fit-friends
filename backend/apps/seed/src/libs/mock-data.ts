@@ -49,7 +49,6 @@ export const SpecializationsOption = {
 
 export const TrainingOption = {
   MIN_COUNT: 0,
-  //MAX_COUNT: 5, //!
   MAX_COUNT: 50,
   NOT_ZERO_PRICE_FACTOR: 4,
   MIN_PRICE: 1,
