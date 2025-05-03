@@ -23,7 +23,12 @@ export async function clearUsers(fitUserRepository: FitUserRepository): Promise<
   }
 }
 
-export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
+export async function seedUsers(
+  fitUserRepository: FitUserRepository,
+  mockUsers: MockUser[],
+  role: Role,
+  avatarFileId: string[]
+): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
   const { MIN_DATE, MAX_DATE } = TrainingOption;

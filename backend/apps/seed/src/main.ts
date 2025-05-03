@@ -1,5 +1,6 @@
 import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { join } from 'path/posix';
 import { resolve } from 'node:path';
 
 import { ConfigAlias, Role } from '@backend/shared/core';
@@ -39,6 +40,7 @@ async function bootstrap() {
   const { ASSETS, AVATARS, CERTIFICATES, VIDEOS, SEED_STATIC } = FilesPath;
   const filesDirectory = resolve(__dirname, '../../..', filesUploadDirectory, SEED_STATIC);
   const filesDistDirectory = resolve(__dirname, '../..', filesUploadDirectory, SEED_STATIC);
+  const dbPath = join(filesUploadDirectory, SEED_STATIC)
 
   Logger.log('Seed runing...');
   Logger.log(`Reset before seed (${resetBeforeSeedEnv}): ${resetBeforeSeed}`);
@@ -67,16 +69,16 @@ async function bootstrap() {
     }
 
     // файлы
-    const avatarsFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS), filesDirectory, filesDistDirectory);
-    const certificatesFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, CERTIFICATES), filesDirectory, filesDistDirectory);
-    const videosFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, VIDEOS), filesDirectory, filesDistDirectory);
+    const avatarsFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS), filesDirectory, filesDistDirectory, dbPath);
+    const certificatesFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, CERTIFICATES), filesDirectory, filesDistDirectory, dbPath);
+    const videosFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, VIDEOS), filesDirectory, filesDistDirectory, dbPath);
 
     // пользователи
-    const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman);
+    const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman, avatarsFileIds);
 
     Logger.log(`Sportsmans count: ${sportsmans.length}`);
 
-    const coaches = await seedUsers(fitUserRepository, COACHES, Role.Coach);
+    const coaches = await seedUsers(fitUserRepository, COACHES, Role.Coach, avatarsFileIds);
 
     Logger.log(`Coaches count: ${coaches.length}`);
 
