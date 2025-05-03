@@ -21,6 +21,7 @@ import { AppRoute, PageTitle, SpecializationTitle, TrainingDurationTitle, Traini
 
 function TrainingDetail(): JSX.Element {
   //! прокрутка на вверх
+  //! у тренера доступность кнопок другая, пристпупить и т.д. и совсем другие кнопки
   //! есть компоненты для разных элементов, нужны при редактировании - перепроверить
   //! сделать меньше... <div className="training-info__header">, <form ... что то еще?
   //! как отборазить если бесплатно? есть что то в маркапах
@@ -64,6 +65,7 @@ function TrainingDetail(): JSX.Element {
   const genderText = TrainingGenderTitle[gender];
   const durationText = TrainingDurationTitle[duration];
   const ratingText = rating.toFixed(0);
+  const isSportsman = isSportsmanRole(userRole);
 
   //! отладка
   // eslint-disable-next-line no-console
@@ -78,11 +80,11 @@ function TrainingDetail(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Карточка тренировки</h1>
-              <ReviewsPanel trainingId={trainingId} />
+              <ReviewsPanel trainingId={trainingId} isAddReviewButtonEnabled={isSportsman} />
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>
-                  <TrainingDetailHeader coachId={isSportsmanRole(userRole) ? coachId : ''} coachName={name} coachAvatarFilePath={avatarFilePath} />
+                  <TrainingDetailHeader coachId={(isSportsman) ? coachId : ''} coachName={name} coachAvatarFilePath={avatarFilePath} />
                   <div className="training-info__main-content">
                     <form action="#" method="get">
                       <div className="training-info__form-wrapper">

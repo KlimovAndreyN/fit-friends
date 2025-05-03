@@ -11,11 +11,13 @@ import { REVIEWS_ANCHOR } from '../../const';
 
 type ReviewsPanelProps = {
   trainingId: string;
+  isAddReviewButtonEnabled?: boolean;
 }
 
-function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
+function ReviewsPanel({ trainingId, isAddReviewButtonEnabled }: ReviewsPanelProps): JSX.Element {
   //! если нет отзывов, то вывести текст "отзывов еще нет...", как по ТЗ
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
+  //! если спортсмен уже оставлял отзыв, то кнопку можно заблокировать
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
   //! два раза выборка, перенсти на одну страницу
@@ -63,7 +65,7 @@ function ReviewsPanel({ trainingId }: ReviewsPanelProps): JSX.Element {
           )
         }
       </ul>
-      <button className="btn btn--medium reviews-side-bar__button" type="button">Оставить отзыв</button>
+      <button className="btn btn--medium reviews-side-bar__button" type="button" disabled={!isAddReviewButtonEnabled}>Оставить отзыв</button>
     </aside>
   );
 }
