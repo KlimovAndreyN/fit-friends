@@ -7,16 +7,21 @@ import { RefreshTokenRepository } from './refresh-token.repository';
 import { RefreshTokenFactory } from './refresh-token.factory';
 
 @Module({
-  imports: [MongooseModule.forFeature([
-    { name: RefreshTokenModel.name, schema: RefreshTokenSchema }
-  ])],
+  imports: [
+    MongooseModule.forFeature(
+      [
+        {
+          name: RefreshTokenModel.name,
+          schema: RefreshTokenSchema
+        }
+      ]
+    )
+  ],
   providers: [
     RefreshTokenService,
     RefreshTokenRepository,
-    RefreshTokenFactory,
+    RefreshTokenFactory
   ],
-  exports: [
-    RefreshTokenService
-  ]
+  exports: [RefreshTokenService]
 })
 export class RefreshTokenModule { }
