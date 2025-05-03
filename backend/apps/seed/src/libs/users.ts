@@ -27,11 +27,13 @@ export async function seedUsers(
   fitUserRepository: FitUserRepository,
   mockUsers: MockUser[],
   role: Role,
-  avatarFileId: string[]
+  avatarsFileIds: string[]
 ): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
   const { MIN_DATE, MAX_DATE } = TrainingOption;
+
+  avatarsFileIds.push(''); // добавим пустой id для дополнительных проверок в разметке
 
   for (const { name, gender } of mockUsers) {
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
@@ -43,7 +45,7 @@ export async function seedUsers(
       gender,
       location: getRandomEnumItem(Location),
       role,
-      avatarFileId: '', //! позднее попробовать подкинуть аватарки
+      avatarFileId: getRandomItem(avatarsFileIds),
       birthday: getRandomDate(MIN_DATE, MAX_DATE),
       passwordHash: ''
     };
