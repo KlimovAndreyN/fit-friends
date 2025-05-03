@@ -6,7 +6,7 @@ import { ConnectionNameOption } from '@backend/shared/core';
 import { getRabbitMQOptions } from '@backend/shared/helpers';
 import { MailModule } from '@backend/notify/mail';
 
-import { EmailSubscriberModel, EmailSubscriberSchema } from './email-subscriber.model';
+import { EmailSubscriberModels } from './email-subscriber.model';
 import { EmailSubscriberService } from './email-subscriber.service';
 import { EmailSubscriberRepository } from './email-subscriber.repository';
 import { EmailSubscriberFactory } from './email-subscriber.factory';
@@ -15,7 +15,7 @@ import { EmailSubscriberController } from './email-subscriber.controller';
 @Module({
   imports: [
     MongooseModule.forFeature(
-      [{ name: EmailSubscriberModel.name, schema: EmailSubscriberSchema }],
+      EmailSubscriberModels,
       ConnectionNameOption.Notify
     ),
     RabbitMQModule.forRootAsync(

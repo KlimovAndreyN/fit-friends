@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { Subscriber } from '@backend/shared/core';
 
@@ -17,4 +17,7 @@ export class EmailSubscriberModel extends Document implements Subscriber {
   public name: string;
 }
 
-export const EmailSubscriberSchema = SchemaFactory.createForClass(EmailSubscriberModel);
+export const EmailSubscriberModels: ModelDefinition[] = [{
+  name: EmailSubscriberModel.name,
+  schema: SchemaFactory.createForClass(EmailSubscriberModel)
+}];
