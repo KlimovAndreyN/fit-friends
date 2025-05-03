@@ -3,8 +3,17 @@ import { Logger } from '@nestjs/common';
 import { AuthUser, BackgroundPaths, isSportsmanRole, Location, Role, UserApiProperty } from '@backend/shared/core';
 import { getRandomDate, getRandomEnumItem, getRandomItem } from '@backend/shared/helpers';
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
+import { RefreshTokenRepository } from '@backend/account/refresh-token';
 
 import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, TrainingOption } from './mock-data';
+
+export async function clearRefreshTokens(refreshTokenRepository: RefreshTokenRepository): Promise<void> {
+  const ids = await refreshTokenRepository.getAllIds();
+
+  for (const id of ids) {
+    await refreshTokenRepository.deleteById(id);
+  }
+}
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
   const ids = await fitUserRepository.getAllIds();

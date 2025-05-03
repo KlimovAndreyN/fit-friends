@@ -2,6 +2,7 @@ import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { ConfigAlias, Role } from '@backend/shared/core';
+import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 import { TrainingRepository } from '@backend/fit/training';
@@ -9,7 +10,7 @@ import { OrderRepository } from '@backend/fit/order';
 import { ReviewRepository } from '@backend/fit/review';
 
 import { AppModule } from './app/app.module';
-import { clearUsers, seedUsers } from './libs/users';
+import { clearRefreshTokens, clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
 import { COACHES, SPORTSMANS } from './libs/mock-data';
@@ -32,6 +33,8 @@ async function bootstrap() {
   Logger.log(`Reset before seed is ${resetBeforeSeed}`);
   Logger.log(`Fit postgres url (${databaseUrlEnv}): ${process.env[databaseUrlEnv]}`);
 
+  //const fileUploaderService = app.get(FileUploaderService);
+  const refreshTokenRepository = app.get(RefreshTokenRepository);
   const fitUserRepository = app.get(FitUserRepository);
   const questionnaireRepository = app.get(QuestionnaireRepository);
   const trainingRepository = app.get(TrainingRepository);
@@ -40,6 +43,7 @@ async function bootstrap() {
 
   try {
     if (resetBeforeSeed) {
+      await clearRefreshTokens(refreshTokenRepository)
       await clearReviews(reviewRepository)
       await clearOrders(orderRepository);
       await clearTrainings(trainingRepository);
