@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { ConnectionNameOption } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitUserEntity } from './fit-user.entity';
@@ -12,7 +13,7 @@ import { FitUserModel } from './fit-user.model';
 export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUserModel> {
   constructor(
     entityFactory: FitUserFactory,
-    @InjectModel(FitUserModel.name)
+    @InjectModel(FitUserModel.name, ConnectionNameOption.Account)
     fitUserModel: Model<FitUserModel>
   ) {
     super(entityFactory, fitUserModel);

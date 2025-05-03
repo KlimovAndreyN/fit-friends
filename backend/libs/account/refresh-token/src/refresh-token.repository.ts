@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { ConnectionNameOption } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { RefreshTokenEntity } from './refresh-token.entity';
@@ -12,7 +13,7 @@ import { RefreshTokenFactory } from './refresh-token.factory';
 export class RefreshTokenRepository extends BaseMongoRepository<RefreshTokenEntity, RefreshTokenModel> {
   constructor(
     entityFactory: RefreshTokenFactory,
-    @InjectModel(RefreshTokenModel.name)
+    @InjectModel(RefreshTokenModel.name, ConnectionNameOption.Account)
     refreshTokenModel: Model<RefreshTokenModel>
   ) {
     super(entityFactory, refreshTokenModel);

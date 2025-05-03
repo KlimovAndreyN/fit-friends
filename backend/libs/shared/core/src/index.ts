@@ -18,6 +18,7 @@ export { ApiParamOption } from './lib/constants/api-param-option';
 export { BackgroundPaths } from './lib/constants/background-paths';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
+export { ConnectionNameOption } from './lib/constants/connection-name-option';
 export { DateFormat } from './lib/constants/date-format';
 export * from './lib/constants/default-port';
 export { IdParam } from './lib/constants/id-param';

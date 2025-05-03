@@ -3,7 +3,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ConfigAlias } from '@backend/shared/core';
+import { ConfigAlias, ConnectionNameOption } from '@backend/shared/core';
 
 import { FileUploaderService } from './file-uploader.service';
 import { FileUploaderController } from './file-uploader.controller';
@@ -31,9 +31,10 @@ import { FileModel, FileSchema } from './file.model';
         }
       }
     ),
-    MongooseModule.forFeature([
-      { name: FileModel.name, schema: FileSchema }
-    ])
+    MongooseModule.forFeature(
+      [{ name: FileModel.name, schema: FileSchema }],
+      ConnectionNameOption.FileStorage
+    )
   ],
   providers: [
     FileUploaderService,

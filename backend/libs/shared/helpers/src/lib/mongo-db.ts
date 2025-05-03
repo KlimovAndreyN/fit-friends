@@ -6,7 +6,7 @@ import { ConfigAlias } from '@backend/shared/core';
 
 import { getMongoConnectionString } from './common';
 
-export function getMongooseOptions(): MongooseModuleAsyncOptions {
+export function getMongooseOptions(connectionName: string): MongooseModuleAsyncOptions {
   return {
     useFactory: async (config: ConfigService) => {
       return {
@@ -20,11 +20,12 @@ export function getMongooseOptions(): MongooseModuleAsyncOptions {
         })
       }
     },
-    inject: [ConfigService]
+    inject: [ConfigService],
+    connectionName
   }
 }
 
-export function getEnvMongooseOptions(): MongooseModuleAsyncOptions {
+export function getEnvMongooseOptions(connectionName: string): MongooseModuleAsyncOptions {
   return {
     useFactory: async () => {
       [
@@ -48,6 +49,7 @@ export function getEnvMongooseOptions(): MongooseModuleAsyncOptions {
           authBase: process.env[ConfigAlias.MongoDbAuthBaseEnv]
         })
       }
-    }
+    },
+    connectionName
   }
 }
