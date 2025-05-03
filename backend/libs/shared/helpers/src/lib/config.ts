@@ -1,9 +1,6 @@
 import Joi, { ObjectSchema } from 'joi';
 
-import {
-  DEFAULT_RABBIT_PORT, DEFAULT_MONGODB_PORT, DEFAULT_PORT,
-  ConfigAlias, DEFAULT_SMTP_PORT, Environment, ENVIRONMENTS
-} from '@backend/shared/core';
+import { DefaultPort, ConfigAlias, Environment, ENVIRONMENTS } from '@backend/shared/core';
 
 import { getPortEnv } from './common';
 
@@ -125,7 +122,7 @@ export const mailSmtpValidationSchema = {
 export function getApplicationConfig(): ApplicationConfig {
   const config: ApplicationConfig = {
     environment: (process.env[ConfigAlias.NodeEnv] as Environment) || 'development', //! значение по умолчанию
-    port: getPortEnv(ConfigAlias.PortEnv, DEFAULT_PORT)
+    port: getPortEnv(ConfigAlias.PortEnv, DefaultPort.APPLICATION)
   };
 
   return config;
@@ -148,7 +145,7 @@ export function getMongoDbConfig(): MongoDbConfig {
   const config: MongoDbConfig = {
     mongoDb: {
       host: process.env[ConfigAlias.MongoDbHostEnv],
-      port: getPortEnv(ConfigAlias.MongoDbPortEnv, DEFAULT_MONGODB_PORT),
+      port: getPortEnv(ConfigAlias.MongoDbPortEnv, DefaultPort.MONGODB),
       user: process.env[ConfigAlias.MongoDbUserEnv],
       password: process.env[ConfigAlias.MongoDbPasswordEnv],
       database: process.env[ConfigAlias.MongoDbDatabaseEnv],
@@ -173,7 +170,7 @@ export function getRabbitConfig(): RabbitConfig {
   const config: RabbitConfig = {
     rabbit: {
       host: process.env[ConfigAlias.RabbitHostEnv],
-      port: getPortEnv(ConfigAlias.RabbitPortEnv, DEFAULT_RABBIT_PORT),
+      port: getPortEnv(ConfigAlias.RabbitPortEnv, DefaultPort.RABBIT),
       user: process.env[ConfigAlias.RabbitUserEnv],
       password: process.env[ConfigAlias.RabbitPasswordEnv],
       exchange: process.env[ConfigAlias.RabbitExchangeEnv]
@@ -198,7 +195,7 @@ export function getMailSmtpConfig(): MailSmtpConfig {
   const config: MailSmtpConfig = {
     mailSmtp: {
       host: process.env[ConfigAlias.MailSmtpHostEnv],
-      port: getPortEnv(ConfigAlias.MailSmtpPortEnv, DEFAULT_SMTP_PORT),
+      port: getPortEnv(ConfigAlias.MailSmtpPortEnv, DefaultPort.SMTP),
       user: process.env[ConfigAlias.MailSmtpUserEnv],
       password: process.env[ConfigAlias.MailSmtpPasswordEnv],
       from: process.env[ConfigAlias.MailSmtpFromEnv]

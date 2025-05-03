@@ -20,7 +20,7 @@ export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { ConnectionNameOption } from './lib/constants/connection-name-option';
 export { DateFormat } from './lib/constants/date-format';
-export * from './lib/constants/default-port';
+export { DefaultPort } from './lib/constants/default-port';
 export { IdParam } from './lib/constants/id-param';
 export { RabbitRouting } from './lib/constants/rabbit-routing';
 export { RequestProperty } from './lib/constants/request-property';
