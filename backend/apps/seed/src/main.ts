@@ -90,7 +90,7 @@ async function bootstrap() {
     Logger.log(`Questionnaires count: ${questionnaires.length}`);
 
     // тренировки
-    const trainings = await seedTrainings(trainingRepository, coaches);
+    const trainings = await seedTrainings(trainingRepository, coaches, videosFileIds);
 
     Logger.log(`Trainings count: ${trainings.length}`);
 

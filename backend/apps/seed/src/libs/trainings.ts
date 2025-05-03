@@ -12,10 +12,14 @@ export async function clearTrainings(trainingRepository: TrainingRepository): Pr
   await trainingRepository.client.training.deleteMany();
 }
 
-export async function seedTrainings(trainingRepository: TrainingRepository, coaches: FitUserEntity[]): Promise<TrainingEntity[]> {
+export async function seedTrainings(
+  trainingRepository: TrainingRepository,
+  coaches: FitUserEntity[],
+  videosFileIds: string[]
+): Promise<TrainingEntity[]> {
   const trainings: TrainingEntity[] = [];
   const { MIN_COUNT, MAX_COUNT, NOT_ZERO_PRICE_FACTOR, MIN_PRICE, MAX_PRICE, PRICE_FACTOR, MIN_CALORIES, MAX_CALORIES, CALORIES_FACTOR, MIN_DATE, MAX_DATE } = TrainingOption;
-  const { MIN_RATING, MAX_RATING } = ReviewOption;
+  const { MIN_RATING } = ReviewOption;
   const backgroundPaths = [...BackgroundPaths.TRAININGS];
   let trainingGlobalIndex = 1;
 
@@ -37,11 +41,9 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
         caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES) * CALORIES_FACTOR,
         description: `Training description ${trainingIndexPrefix}`,
         gender: getRandomEnumItem(Gender),
-        videoFileId: '1111-2222-3333-4444', //! как бы видео загрузить на file-storage....
+        videoFileId: getRandomItem(videosFileIds),
         userId,
-        rating: getRandomNumber(MIN_RATING, MAX_RATING), //! временно, пока нет сервиса для пересчета рейтинга...
-        //! возможно так и отсавить... следующая добавленная оценка расчитает корректный рейтинг
-        //! или сформировать отзывы и актуализировать райтинг
+        rating: MIN_RATING,
         isSpecial: getRandomBoolean(),
         createdAt: getRandomDate(MIN_DATE, MAX_DATE)
       }
@@ -58,6 +60,7 @@ export async function seedTrainings(trainingRepository: TrainingRepository, coac
 
       Logger.log(`Added training: ${trainingEntity.id} for coachId: ${userId}`);
     }
+
     trainingGlobalIndex++;
   }
 
