@@ -33,6 +33,7 @@ type PersonalAccountLeftPanelProps = {
 
 function PersonalAccountLeftPanel({ account, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
   //! много кода! поделить как нибуть!
+  // при режиме - только чтение - не менять курсор мыши у AvatarUpload...
 
   const isUpdateAccountExecuting = useAppSelector(getIsUpdateAccountExecuting);
   const isUpdateAccountError = useAppSelector(getIsUpdateAccountError);

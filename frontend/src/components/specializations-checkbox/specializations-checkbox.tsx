@@ -12,6 +12,8 @@ type SpecializationsCheckboxProps = {
 }
 
 function SpecializationsCheckbox({ name, values, divExtraClassName, readOnly, fromPersonalAccount }: SpecializationsCheckboxProps): JSX.Element {
+  // при режиме - только чтение - не менять курсор мыши у элементов...
+
   const classNamePostfix = (fromPersonalAccount) ? 'specialization' : 'specializations';
   const className = classNames('specialization-checkbox', `${divExtraClassName}__${classNamePostfix}`);
   const [currentValues, setCurrentValues] = useState(values);
@@ -30,6 +32,10 @@ function SpecializationsCheckbox({ name, values, divExtraClassName, readOnly, fr
 
             const handleDivOnClick = (event: MouseEvent) => {
               event.preventDefault();
+
+              if (readOnly) {
+                return;
+              }
 
               if (checked) {
                 setCurrentValues(currentValues.filter((item) => (item !== value)));
