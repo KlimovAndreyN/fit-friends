@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConnectionNameOption } from '@backend/shared/core';
 
-import { RefreshTokenModel, RefreshTokenSchema } from './refresh-token.model';
+import { RefreshTokenModels } from './refresh-token.model';
 import { RefreshTokenService } from './refresh-token.service';
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { RefreshTokenFactory } from './refresh-token.factory';
@@ -11,7 +11,7 @@ import { RefreshTokenFactory } from './refresh-token.factory';
 @Module({
   imports: [
     MongooseModule.forFeature(
-      [{ name: RefreshTokenModel.name, schema: RefreshTokenSchema }],
+      RefreshTokenModels,
       ConnectionNameOption.Account
     )
   ],

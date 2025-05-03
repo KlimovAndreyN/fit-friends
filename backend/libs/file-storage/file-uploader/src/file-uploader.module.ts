@@ -9,7 +9,7 @@ import { FileUploaderService } from './file-uploader.service';
 import { FileUploaderController } from './file-uploader.controller';
 import { FileUploaderRepository } from './file-uploader.repository';
 import { FileUploaderFactory } from './file-uploader.factory';
-import { FileModel, FileSchema } from './file.model';
+import { FileModels } from './file.model';
 
 @Module({
   imports: [
@@ -32,7 +32,7 @@ import { FileModel, FileSchema } from './file.model';
       }
     ),
     MongooseModule.forFeature(
-      [{ name: FileModel.name, schema: FileSchema }],
+      FileModels,
       ConnectionNameOption.FileStorage
     )
   ],

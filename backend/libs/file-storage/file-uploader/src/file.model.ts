@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { File } from '@backend/shared/core';
 
@@ -33,4 +33,7 @@ export class FileModel extends Document implements File {
   public updatedAt: Date;
 }
 
-export const FileSchema = SchemaFactory.createForClass(FileModel);
+export const FileModels: ModelDefinition[] = [{
+  name: FileModel.name,
+  schema: SchemaFactory.createForClass(FileModel)
+}];

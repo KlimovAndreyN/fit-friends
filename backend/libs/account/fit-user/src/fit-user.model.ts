@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 import { AuthUser, Location, Gender, Role } from '@backend/shared/core';
@@ -41,4 +41,7 @@ export class FitUserModel extends Document implements AuthUser {
   public createdAt: Date;
 }
 
-export const FitUserSchema = SchemaFactory.createForClass(FitUserModel);
+export const FitUserModels: ModelDefinition[] = [{
+  name: FitUserModel.name,
+  schema: SchemaFactory.createForClass(FitUserModel)
+}];

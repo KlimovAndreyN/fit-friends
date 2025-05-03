@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 import { JwtToken } from '@backend/shared/core';
@@ -20,4 +20,7 @@ export class RefreshTokenModel extends Document implements JwtToken {
   public createdAt: Date;
 }
 
-export const RefreshTokenSchema = SchemaFactory.createForClass(RefreshTokenModel);
+export const RefreshTokenModels: ModelDefinition[] = [{
+  name: RefreshTokenModel.name,
+  schema: SchemaFactory.createForClass(RefreshTokenModel)
+}];

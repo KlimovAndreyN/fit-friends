@@ -5,12 +5,12 @@ import { ConnectionNameOption } from '@backend/shared/core';
 
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserFactory } from './fit-user.factory';
-import { FitUserModel, FitUserSchema } from './fit-user.model';
+import { FitUserModels } from './fit-user.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature(
-      [{ name: FitUserModel.name, schema: FitUserSchema }],
+      FitUserModels,
       ConnectionNameOption.Account
     )
   ],
