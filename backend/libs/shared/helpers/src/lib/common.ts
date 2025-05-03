@@ -55,3 +55,6 @@ export function fixEncoding(filename: string): string {
   // возможно стоит проверить версии бибилотек multer, nest.js ...
   return Buffer.from(filename, 'latin1').toString('utf8');
 }
+export function addEnvPrefix(envPrefix: string, envName: string): string {
+  return `${envPrefix}_${envName}`;
+}

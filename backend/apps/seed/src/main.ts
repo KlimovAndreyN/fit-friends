@@ -2,6 +2,7 @@ import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { ConfigAlias, Role } from '@backend/shared/core';
+import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
@@ -10,6 +11,7 @@ import { OrderRepository } from '@backend/fit/order';
 import { ReviewRepository } from '@backend/fit/review';
 
 import { AppModule } from './app/app.module';
+import { clearFiles } from './libs/files';
 import { clearRefreshTokens, clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
@@ -18,22 +20,27 @@ import { clearOrders, seedOrders } from './libs/orders';
 import { clearReviews, seedReviews } from './libs/reviews';
 
 async function bootstrap() {
-  //! возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
+  //! предварительная валидация ENV переменных в getEnvMongooseOptions, process.env[databaseUrlEnv] и process.env[filesUploadDirectoryEnv]
+  //    возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
+  //      как в конфиг добавить подключение к двум монго там буду разные имена переменных...
   //! очистка файлов из базы и из папки
-  //! очистка refreh токенов
   //! очистка подписчиков
   //! регистрация подписок и рассылка при наполении пользователей?
   //! предварительная загрузка аватаров пользователей и видео-файлов
 
   const app = await NestFactory.create(AppModule);
-  const resetBeforeSeed = process.env[ConfigAlias.ResetBeforeSeedEnv] === 'true';
+  const resetBeforeSeedEnv = ConfigAlias.ResetBeforeSeedEnv;
+  const resetBeforeSeed = process.env[resetBeforeSeedEnv] === 'true';
   const databaseUrlEnv = ConfigAlias.PostgresDatabaseUrlEnv;
+  const filesUploadDirectoryEnv = ConfigAlias.UploadDirectoryEnv;
+  const filesUploadDirectory = process.env[filesUploadDirectoryEnv];
 
   Logger.log('Seed runing...');
-  Logger.log(`Reset before seed is ${resetBeforeSeed}`);
+  Logger.log(`Reset before seed (${resetBeforeSeedEnv}): ${resetBeforeSeed}`);
   Logger.log(`Fit postgres url (${databaseUrlEnv}): ${process.env[databaseUrlEnv]}`);
+  Logger.log(`Files directory (${filesUploadDirectoryEnv}): ${filesUploadDirectory}`);
 
-  //const fileUploaderService = app.get(FileUploaderService);
+  const fileUploaderRepository = app.get(FileUploaderRepository);
   const refreshTokenRepository = app.get(RefreshTokenRepository);
   const fitUserRepository = app.get(FitUserRepository);
   const questionnaireRepository = app.get(QuestionnaireRepository);
@@ -43,6 +50,7 @@ async function bootstrap() {
 
   try {
     if (resetBeforeSeed) {
+      await clearFiles(fileUploaderRepository);
       await clearRefreshTokens(refreshTokenRepository)
       await clearReviews(reviewRepository)
       await clearOrders(orderRepository);
