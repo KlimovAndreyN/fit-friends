@@ -85,7 +85,7 @@ async function bootstrap() {
     Logger.log('🤘️ Database Account(mongoDb) was filled!');
 
     // опросники
-    const questionnaires = await seedQuestionnaires(questionnaireRepository, [...sportsmans, ...coaches]);
+    const questionnaires = await seedQuestionnaires(questionnaireRepository, [...sportsmans, ...coaches], certificatesFileIds);
 
     Logger.log(`Questionnaires count: ${questionnaires.length}`);
 

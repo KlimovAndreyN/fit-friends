@@ -11,7 +11,11 @@ export async function clearQuestionnaires(questionnaireRepository: Questionnaire
   await questionnaireRepository.client.questionnaire.deleteMany();
 }
 
-export async function seedQuestionnaires(questionnaireRepository: QuestionnaireRepository, users: FitUserEntity[]): Promise<QuestionnaireEntity[]> {
+export async function seedQuestionnaires(
+  questionnaireRepository: QuestionnaireRepository,
+  users: FitUserEntity[],
+  certificatesFileIds: string[]
+): Promise<QuestionnaireEntity[]> {
   const questionnaires: QuestionnaireEntity[] = [];
   const { MIN_COUNT, MAX_COUNT } = SpecializationsOption;
   const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = CalorieOption;
@@ -34,7 +38,7 @@ export async function seedQuestionnaires(questionnaireRepository: QuestionnaireR
       questionnaire.individualTraining = getRandomBoolean();
       questionnaire.description = `Description: my name is ${name}`;
       questionnaire.individualTraining = getRandomBoolean() || getRandomBoolean(); // удвоим
-      //! сертификаты бы, но как попробую файлы
+      questionnaire.fileIds = getRandomUniqueItems(certificatesFileIds, getRandomNumber(0, certificatesFileIds.length - 1));
     }
 
     const questionnaireEntity = new QuestionnaireEntity(questionnaire);
