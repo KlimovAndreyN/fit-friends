@@ -2,6 +2,14 @@ import { Gender } from '@backend/shared/core';
 
 export type MockUser = { name: string; gender: Gender; };
 
+export const FilesPath = {
+  ASSETS: 'assets',
+  AVATARS: 'avatars',
+  CERTIFICATES: 'certificates',
+  VIDEOS: 'videos',
+  SEED_STATIC: 'seed-static'
+} as const;
+
 export const SWAGGER_USER = 'Swagger';
 export const SWAGGER_COACH = 'SwaggerCoach';
 
@@ -41,6 +49,7 @@ export const SpecializationsOption = {
 
 export const TrainingOption = {
   MIN_COUNT: 0,
+  //MAX_COUNT: 5, //!
   MAX_COUNT: 50,
   NOT_ZERO_PRICE_FACTOR: 4,
   MIN_PRICE: 1,

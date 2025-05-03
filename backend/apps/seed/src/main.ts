@@ -1,5 +1,6 @@
 import { Logger, } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { resolve } from 'node:path';
 
 import { ConfigAlias, Role } from '@backend/shared/core';
 import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
@@ -11,11 +12,11 @@ import { OrderRepository } from '@backend/fit/order';
 import { ReviewRepository } from '@backend/fit/review';
 
 import { AppModule } from './app/app.module';
-import { clearFiles } from './libs/files';
+import { clearFiles, seedFiles } from './libs/files';
 import { clearRefreshTokens, clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
-import { COACHES, SPORTSMANS } from './libs/mock-data';
+import { COACHES, FilesPath, SPORTSMANS } from './libs/mock-data';
 import { clearOrders, seedOrders } from './libs/orders';
 import { clearReviews, seedReviews } from './libs/reviews';
 
@@ -35,10 +36,16 @@ async function bootstrap() {
   const filesUploadDirectoryEnv = ConfigAlias.UploadDirectoryEnv;
   const filesUploadDirectory = process.env[filesUploadDirectoryEnv];
 
+  const { ASSETS, AVATARS, CERTIFICATES, VIDEOS, SEED_STATIC } = FilesPath;
+  const filesDirectory = resolve(__dirname, '../../..', filesUploadDirectory, SEED_STATIC);
+  const filesDistDirectory = resolve(__dirname, '../..', filesUploadDirectory, SEED_STATIC);
+
   Logger.log('Seed runing...');
   Logger.log(`Reset before seed (${resetBeforeSeedEnv}): ${resetBeforeSeed}`);
   Logger.log(`Fit postgres url (${databaseUrlEnv}): ${process.env[databaseUrlEnv]}`);
-  Logger.log(`Files directory (${filesUploadDirectoryEnv}): ${filesUploadDirectory}`);
+  Logger.log(`Files upload directory (${filesUploadDirectoryEnv}): ${filesUploadDirectory}`);
+  Logger.log(`Files directory: ${filesDirectory}`);
+  Logger.log(`Files dist directory: ${filesDistDirectory}`);
 
   const fileUploaderRepository = app.get(FileUploaderRepository);
   const refreshTokenRepository = app.get(RefreshTokenRepository);
@@ -50,7 +57,7 @@ async function bootstrap() {
 
   try {
     if (resetBeforeSeed) {
-      await clearFiles(fileUploaderRepository);
+      await clearFiles(fileUploaderRepository, filesDirectory, filesDistDirectory);
       await clearRefreshTokens(refreshTokenRepository)
       await clearReviews(reviewRepository)
       await clearOrders(orderRepository);
@@ -58,6 +65,11 @@ async function bootstrap() {
       await clearQuestionnaires(questionnaireRepository);
       await clearUsers(fitUserRepository);
     }
+
+    // файлы
+    const avatarsFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS), filesDirectory, filesDistDirectory);
+    const certificatesFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, CERTIFICATES), filesDirectory, filesDistDirectory);
+    const videosFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, VIDEOS), filesDirectory, filesDistDirectory);
 
     // пользователи
     const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman);

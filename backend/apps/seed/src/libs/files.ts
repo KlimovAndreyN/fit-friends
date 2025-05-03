@@ -1,9 +1,14 @@
+import { promises as fs } from 'fs';
+import { resolve } from 'node:path';
 import { Logger } from '@nestjs/common';
 
+import { createDirectory, deleteDirectory } from '@backend/shared/helpers';
 import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
 
+export async function clearFiles(fileUploaderRepository: FileUploaderRepository, path: string, distPath: string): Promise<void> {
+  await deleteDirectory(path);
+  await deleteDirectory(distPath);
 
-export async function clearFiles(fileUploaderRepository: FileUploaderRepository): Promise<void> {
   const ids = await fileUploaderRepository.getAllIds();
 
   for (const id of ids) {
@@ -11,8 +16,55 @@ export async function clearFiles(fileUploaderRepository: FileUploaderRepository)
   }
 }
 
-/*
-export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers: MockUser[], role: Role): Promise<FitUserEntity[]> {
+export async function seedFiles(fileUploaderRepository: FileUploaderRepository, fromPath: string, toPath: string, toDistPath: string): Promise<string[]> {
+  await createDirectory(toPath);
+  await createDirectory(toDistPath);
+
+  const fileIds = [];
+
+  try {
+    const files = await fs.readdir(fromPath);
+
+    for (const file of files) {
+      const sourceFile = resolve(fromPath, file);
+      const destinationFile = resolve(toPath, file);
+      const destinationDistFile = resolve(toDistPath, file);
+      const stats = await fs.stat(sourceFile);
+
+      if (stats.isFile()) {
+        try {
+          console.log(sourceFile);
+          console.log(`File: ${file}, stats: ${JSON.stringify(stats)}`);
+
+          await fs.copyFile(sourceFile, destinationFile);
+          await fs.copyFile(sourceFile, destinationDistFile);
+          console.log('Файл успешно скопирован!');
+        } catch (err) {
+          console.error('Ошибка при копировании файла:', err);
+        }
+      }
+    }
+  } catch (err) {
+    console.error(`Ошибка чтения каталога: ${fromPath}`, err);
+  }
+
+  /*
+  import { promises as fs } from 'fs';
+  
+  async function copyFile() {
+    const sourceFile = 'source.txt'; // Путь к исходному файлу
+    const destinationFile = 'destination.txt'; // Путь к файлу назначения
+  
+    try {
+      await fs.copyFile(sourceFile, destinationFile);
+      console.log('Файл успешно скопирован!');
+    } catch (err) {
+      console.error('Ошибка при копировании файла:', err);
+    }
+  }
+  */
+
+  /*
   const users: FitUserEntity[] = [];
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
   const { MIN_DATE, MAX_DATE } = TrainingOption;
@@ -49,7 +101,7 @@ export async function seedUsers(fitUserRepository: FitUserRepository, mockUsers:
 
     Logger.log(`Added user(${role}): ${userEntity.email} / ${DEFAULT_USER_PASSWORD} / ${userEntity.id}`);
   }
+  */
 
-  return users;
+  return fileIds;
 }
-*/

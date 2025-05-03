@@ -2,6 +2,7 @@ export * from './lib/array';
 export { getRabbitMQOptions } from './lib/brokers';
 export * from './lib/common';
 export * from './lib/config';
+export * from './lib/file';
 export * from './lib/form-data';
 export * from './lib/headers';
 export { getJwtOptions, createJwtPayload } from './lib/jwt';
