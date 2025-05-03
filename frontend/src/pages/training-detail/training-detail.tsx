@@ -67,11 +67,6 @@ function TrainingDetail(): JSX.Element {
   const ratingText = rating.toFixed(0);
   const isSportsman = isSportsmanRole(userRole);
 
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('Training - videoFilePath', videoFilePath);
-  //
-
   return (
     <Fragment>
       <Header title={PageTitle.TrainingDetail} />
@@ -143,11 +138,25 @@ function TrainingDetail(): JSX.Element {
                   <h2 className="training-video__title">Видео</h2>
                   <div className="training-video__video">
                     <div className="training-video__thumbnail">
+                      <video
+                        controls
+                        width="100%"
+                        height="auto"
+                        className="training-video__video"
+                      >
+                        <source
+                          src={videoFilePath}
+                          type="video/mp4"
+                        />
+                        Ваш браузер не поддерживает видео
+                      </video>
+                      {/* //! visually-hidden - временно скрыл обложку*/}
                       <picture>
-                        <img src={backgroundPath} width="922" height="566" alt="Обложка видео" />
+                        <img className='visually-hidden' src={backgroundPath} width="922" height="566" alt="Обложка видео" />
                       </picture>
                     </div>
-                    <button className="training-video__play-button btn-reset">
+                    {/* //! visually-hidden - временно скрыл кнопку*/}
+                    <button className="training-video__play-button btn-reset visually-hidden">
                       <svg width="18" height="30" aria-hidden="true">
                         <use xlinkHref="#icon-arrow" />
                       </svg>
