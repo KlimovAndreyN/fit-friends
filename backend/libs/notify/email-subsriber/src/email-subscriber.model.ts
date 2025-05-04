@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { Subscriber } from '@backend/shared/core';
+import { EmailSubscriber } from '@backend/shared/core';
 
 @Schema({
   collection: 'email-subscribers',
@@ -9,7 +9,7 @@ import { Subscriber } from '@backend/shared/core';
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
 })
-export class EmailSubscriberModel extends Document implements Subscriber {
+export class EmailSubscriberModel extends Document implements EmailSubscriber {
   @Prop({ required: true })
   public email: string;
 

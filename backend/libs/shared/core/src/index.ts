@@ -31,7 +31,7 @@ export { CreateBasicQuestionnaireDto } from './lib/dto/create-basic-questionnair
 export { CreateBasicUserDto } from './lib/dto/create-basic-user.dto';
 export { CreateQuestionnaireCoachDto } from './lib/dto/create-questionnaire-coach.dto';
 export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
-export { CreateSubscriberDto } from './lib/dto/create-subscriber.dto';
+export { CreateEmailSubscriberDto } from './lib/dto/create-email-subscriber.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 export { UpdateBasicUserDto } from './lib/dto/update-basic-user.dto';
@@ -55,7 +55,7 @@ export { RefreshTokenPayload } from './lib/interfaces/refresh-token-payload.inte
 export { Review } from './lib/interfaces/review.interface';
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { StoredFile } from './lib/interfaces/stored-file.interface';
-export { Subscriber } from './lib/interfaces/subscriber.interface';
+export { EmailSubscriber } from './lib/interfaces/email-subscriber.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Tokens } from './lib/interfaces/tokens.interface';
 export { Training } from './lib/interfaces/training.interface';

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import { ConfigType } from '@nestjs/config';
 
-import { CreateSubscriberDto, RabbitRouting } from '@backend/shared/core';
+import { CreateEmailSubscriberDto, RabbitRouting } from '@backend/shared/core';
 import { makeHeaders } from '@backend/shared/helpers';
 import { accountConfig } from '@backend/account/config';
 
@@ -15,10 +15,10 @@ export class NotifyService {
     private readonly rabbitClient: AmqpConnection
   ) { }
 
-  public async registerSubscriber(dto: CreateSubscriberDto, requestId: string) {
-    const result = await this.rabbitClient.publish<CreateSubscriberDto>(
+  public async registerEmailSubscriber(dto: CreateEmailSubscriberDto, requestId: string) {
+    const result = await this.rabbitClient.publish<CreateEmailSubscriberDto>(
       this.accountOptions.rabbit.exchange,
-      RabbitRouting.AddSubscriber,
+      RabbitRouting.AddEmailSubscriber,
       dto,
       makeHeaders(requestId)
     );

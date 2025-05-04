@@ -64,7 +64,7 @@ export class AuthenticationService {
     await userEntity.setPassword(password);
     await this.fitUserRepository.save(userEntity);
 
-    await this.notifyService.registerSubscriber({ email, name }, requestId);
+    await this.notifyService.registerEmailSubscriber({ email, name }, requestId);
 
     return userEntity;
   }
