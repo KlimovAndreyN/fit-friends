@@ -5,13 +5,13 @@ import UserPhoto from '../user-photo/user-photo';
 
 import { getUserRoute } from '../../utils/common';
 
-type TrainingDetailHeaderProps = {
+type TrainingInfoHeaderProps = {
   coachId?: string;
   coachName: string;
   coachAvatarFilePath?: string;
 }
 
-function TrainingDetailHeader({ coachId, coachName, coachAvatarFilePath }: TrainingDetailHeaderProps): JSX.Element {
+function TrainingInfoHeader({ coachId, coachName, coachAvatarFilePath }: TrainingInfoHeaderProps): JSX.Element {
   const coachInfo = (
     <Fragment>
       <UserPhoto path={coachAvatarFilePath} className='training-info__photo' />
@@ -38,4 +38,4 @@ function TrainingDetailHeader({ coachId, coachName, coachAvatarFilePath }: Train
   );
 }
 
-export default TrainingDetailHeader;
+export default TrainingInfoHeader;
