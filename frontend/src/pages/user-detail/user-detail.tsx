@@ -16,7 +16,7 @@ import { getDetailUserProfile, getIsFetchDetailUserProfileError, getIsFetchDetai
 import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle } from '../../const';
 
-function UserDetail(): JSX.Element {
+function UserDetail(): JSX.Element | null {
   //! прокрутка?
 
   const { id: userId = '' } = useParams();
@@ -32,20 +32,29 @@ function UserDetail(): JSX.Element {
     dispatch(setPrevLocation(AppRoute.UserDetail));
   }, [dispatch, userId]);
 
-
-  if (!userId || isFetchDetailUserProfileError) {
-    //! проверить как будет выглядеть
-    //! еще бы дополнительный текст добавить
+  if (!userId) {
+    //! может сделать компонент - ErrorMessage?
+    //! нет id пользователя
     return <NotFound />;
   }
 
-  //! если использовать ! то ошибку не отработать
-  if (isFetchDetailUserProfileExecuting || (!detailUserProfile)) {
+  if (isFetchDetailUserProfileExecuting) {
     return <Spinner />;
   }
 
-  const { user: { role }, questionnaire: { individualTraining } } = detailUserProfile;
+  if (isFetchDetailUserProfileError) {
+    //! может сделать компонент - ErrorMessage?
+    //! если тренер смотрит другого тренера, то будет ошибка 403 - Forbidden; ...
+    //! еще бы дополнительный текст добавить, а его заполнить из ошибки
+    return <NotFound />;
+  }
 
+  if (!detailUserProfile) {
+    // на первом проходе нет загрузки, нет ошибки, и нет пользователя
+    return null;
+  }
+
+  const { user: { role }, questionnaire: { individualTraining } } = detailUserProfile;
   const isCoach = isCoachRole(role);
   const className = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
 

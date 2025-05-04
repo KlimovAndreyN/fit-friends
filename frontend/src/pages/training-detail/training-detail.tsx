@@ -4,9 +4,10 @@ import { useParams } from 'react-router-dom';
 import { isSportsmanRole } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
-import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
 import NotFound from '../not-found/not-found';
 import Spinner from '../../components/spinner/spinner';
+import ReviewsPanel from '../../components/reviews-panel/reviews-panel';
+import TrainingInfo from '../../components/training-info/training-info';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
@@ -16,17 +17,17 @@ import { getDetailTraining, getIsFetchDetailTrainingError, getIsFetchDetailTrain
 import { fetchDetailTraining } from '../../store/actions/training-action';
 import { clearDetailUserProfile } from '../../store/user-profile-process';
 import { AppRoute, PageTitle } from '../../const';
-import TrainingInfo from '../../components/training-info/training-info';
 
-function TrainingDetail(): JSX.Element {
+function TrainingDetail(): JSX.Element | null {
   //! прокрутка на вверх
+  //! для добавления коментария нужно добавить дополнительные признаки... купил? прошел? 1 раз или несколько... как по ТЗ? всегда один отзыв?
 
   const dispatch = useAppDispatch();
-  const { id: trainingId = '' } = useParams();
   const isFetchDetailTrainingExecuting = useAppSelector(getIsFetchDetailTrainingExecuting);
   const isFetchDetailTrainingError = useAppSelector(getIsFetchDetailTrainingError);
   const training = useAppSelector(getDetailTraining);
   const isSportsman = isSportsmanRole(useAppSelector(getUserRole));
+  const { id: trainingId = '' } = useParams();
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -36,15 +37,26 @@ function TrainingDetail(): JSX.Element {
     dispatch(clearDetailUserProfile());
   }, [dispatch, trainingId]);
 
-  if (!trainingId || isFetchDetailTrainingError) {
-    //! проверить как будет выглядеть
-    //! еще бы дополнительный текст добавить
+  if (!trainingId) {
+    //! может сделать компонент - ErrorMessage?
+    //! нет id тренировки
     return <NotFound />;
   }
 
-  //! если использовать ! то ошибку не отработать
-  if (isFetchDetailTrainingExecuting || (!training)) {
+  if (isFetchDetailTrainingExecuting) {
     return <Spinner />;
+  }
+
+  if (isFetchDetailTrainingError) {
+    //! может сделать компонент - ErrorMessage?
+    //! если тренировка не тренера, то будет ошибка 403 - Forbidden; Training not your!;
+    //! еще бы дополнительный текст добавить, а его заполнить из ошибки
+    return <NotFound />;
+  }
+
+  if (!training) {
+    // на первом проходе нет загрузки, нет ошибки, и нет тренировки
+    return null;
   }
 
   return (
