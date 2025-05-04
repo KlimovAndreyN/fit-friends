@@ -15,6 +15,7 @@ export const getIsUpdateAccountExecuting = ({ [StoreSlice.AccountProcess]: ACCOU
 export const getIsUpdateAccountError = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateAccountError'] => ACCOUNT_PROCESS.isUpdateAccountError;
 
 export const getIsUpdateCoachCertificatesExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateCoachCertificatesExecuting'] => ACCOUNT_PROCESS.isUpdateCoachCertificatesExecuting;
+export const getIsUpdateCoachCertificatesError = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateCoachCertificatesError'] => ACCOUNT_PROCESS.isUpdateCoachCertificatesError;
 
 export const getIsReadyForTrainingChangeExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isReadyForTrainingChangeExecuting'] => ACCOUNT_PROCESS.isReadyForTrainingChangeExecuting;
 export const getReadyForTraining = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['readyForTraining'] => ACCOUNT_PROCESS.readyForTraining;

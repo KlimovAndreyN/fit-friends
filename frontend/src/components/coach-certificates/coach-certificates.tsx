@@ -8,7 +8,7 @@ import ImageUploadInput from '../image-upload-input/image-upload-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createCoachCertificate, deleteCoachCertificate, updateCoachCertificate } from '../../store/actions/account-action';
-import { getCoachCertificates, getIsUpdateCoachCertificatesExecuting } from '../../store/account-process/selectors';
+import { getCoachCertificates, getIsUpdateCoachCertificatesError, getIsUpdateCoachCertificatesExecuting } from '../../store/account-process/selectors';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 const SLIDES_COUNT = 3;
@@ -18,14 +18,19 @@ type CoachCertificatesProps = {
 }
 
 function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Element {
-  //! при изменении и удалении на короткое врямя рисуется старый элемент - нужно попртавить
+  //! при изменении и удалении на короткое время рисуется старый элемент - нужно попртавить
   //! иногда на пдф не работает прамая ссылка на файл, при начеле редактирования других сертификатов или добавления нового или комбинация действий
 
   const dispatch = useAppDispatch();
   const isUpdateCoachCertificatesExecuting = useAppSelector(getIsUpdateCoachCertificatesExecuting);
+  const isUpdateCoachCertificatesError = useAppSelector(getIsUpdateCoachCertificatesError);
   const certificates = useAppSelector(getCoachCertificates);
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [editingCertificateFileId, setEditingCertificateFileId] = useState('');
+
+  //! Отладка
+  // eslint-disable-next-line no-console
+  console.log('isUpdateCoachCertificatesError', isUpdateCoachCertificatesError);
 
   const handleLoadCertificateButtonClick = () => {
     inputFileRef.current?.click();

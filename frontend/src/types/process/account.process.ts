@@ -14,6 +14,7 @@ export type AccountProcess = {
   isUpdateAccountError: boolean;
 
   isUpdateCoachCertificatesExecuting: boolean;
+  isUpdateCoachCertificatesError: boolean;
 
   isReadyForTrainingChangeExecuting: boolean;
   readyForTraining: boolean;

@@ -28,6 +28,10 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
   const handleLabelClick = (event: FormEvent) => {
     event.preventDefault();
 
+    if (isDisabled) {
+      return;
+    }
+
     if (onChange) {
       onChange(!currentValue);
     } else {

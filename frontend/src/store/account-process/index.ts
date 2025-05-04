@@ -21,6 +21,7 @@ const initialState: AccountProcess = {
   isUpdateAccountError: false,
 
   isUpdateCoachCertificatesExecuting: false,
+  isUpdateCoachCertificatesError: false,
 
   isReadyForTrainingChangeExecuting: false,
   readyForTraining: false,
@@ -120,12 +121,14 @@ export const accountProcess = createSlice(
         .addCase(
           createCoachCertificate.pending,
           (state) => {
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = true;
           }
         )
         .addCase(
           createCoachCertificate.rejected,
           (state) => {
+            state.isUpdateCoachCertificatesError = true;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
@@ -133,18 +136,21 @@ export const accountProcess = createSlice(
           createCoachCertificate.fulfilled,
           (state, { payload }) => {
             state.coachCertificates.unshift(payload);
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
         .addCase(
           updateCoachCertificate.pending,
           (state) => {
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = true;
           }
         )
         .addCase(
           updateCoachCertificate.rejected,
           (state) => {
+            state.isUpdateCoachCertificatesError = true;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
@@ -154,18 +160,21 @@ export const accountProcess = createSlice(
             state.coachCertificates = state.coachCertificates.map(
               (item) => (item.fileId === fileId ? payload : item)
             );
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
         .addCase(
           deleteCoachCertificate.pending,
           (state) => {
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = true;
           }
         )
         .addCase(
           deleteCoachCertificate.rejected,
           (state) => {
+            state.isUpdateCoachCertificatesError = true;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
@@ -173,6 +182,7 @@ export const accountProcess = createSlice(
           deleteCoachCertificate.fulfilled,
           (state, action) => {
             state.coachCertificates = state.coachCertificates.filter((item) => (item.fileId !== action.meta.arg));
+            state.isUpdateCoachCertificatesError = false;
             state.isUpdateCoachCertificatesExecuting = false;
           }
         )
