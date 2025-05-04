@@ -35,9 +35,6 @@ swagger@local.ru
     Bad Request; Require logout. Token:
     и на странице с опросом
   
-CoachCertificates - обработка... isUpdateCoachCertificatesExecuting добавить isUpdateCoachCertificatesError
-  проверить сохранение без изменинй!!!
-  
   Создание тренировки
     Фоновые изображения используются предопределённые из макета (вёрстки). При сохранении тренировки присваивается случайное изображение
     подписка на тренера
