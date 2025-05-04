@@ -73,8 +73,9 @@ export class TrainingController {
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
     @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
   ): Promise<BasicDetailTrainingRdo> {
+    //! возможно тут нужно проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
+
     const entity = await this.trainingService.findById(trainingId, userId, userRole);
-    //! возможно тут проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }

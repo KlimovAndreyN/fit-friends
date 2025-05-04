@@ -18,7 +18,6 @@ export { type ICertificateRdo } from './lib/interfaces/rdo/i-certificate.rdo';
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type IDetailUserProfileRdo } from './lib/interfaces/rdo/i-detail-user-profile.rdo';
 export { type IDetailUserRdo } from './lib/interfaces/rdo/i-detail-user.rdo';
-export { type IForYouTrainingRdo } from './lib/interfaces/rdo/i-for-you-training.rdo';
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';
 export { type IReviewRdo } from './lib/interfaces/rdo/i-review.rdo';

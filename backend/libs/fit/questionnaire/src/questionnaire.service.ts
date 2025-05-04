@@ -20,7 +20,7 @@ export class QuestionnaireService {
   }
 
   public async create(dto: CreateBasicQuestionnaireDto, userId: string): Promise<QuestionnaireEntity> {
-    //! добавить разбор ошибки по уникльности
+    //! добавить разбор ошибки по уникальности
     // Invalid `prisma.questionnaire.create()` invocation:
     // Unique constraint failed on the fields: (`user_id`)
 
@@ -62,7 +62,7 @@ export class QuestionnaireService {
   }
 
   //! нужен тип? для string[]
-  public async updateFileId(fileId: string, newFileId, userId: string): Promise<string[]> {
+  public async updateFileId(fileId: string, newFileId: string, userId: string): Promise<string[]> {
     const questionnaire = await this.findByUserId(userId);
 
     questionnaire.fileIds = updateItem(questionnaire.fileIds, fileId, newFileId);

@@ -51,7 +51,7 @@ export async function seedFiles(
           const file: File = {
             originalName: fileName,
             hashName: fileName,
-            mimetype: 'none', //! можно доделать определение через пакетыы file-type / mime-types
+            mimetype: 'none', //! можно доделать определение через пакеты file-type / mime-types
             path: join(dbPath, fileName),
             size,
             subDirectory: FilesPath.SEED_STATIC

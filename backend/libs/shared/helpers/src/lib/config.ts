@@ -1,6 +1,6 @@
 import Joi, { ObjectSchema } from 'joi';
 
-import { DefaultPort, ConfigAlias, Environment, ENVIRONMENTS } from '@backend/shared/core';
+import { DefaultPort, ConfigAlias, Environment, ENVIRONMENTS, DEFAULT_ENVIRONMENT } from '@backend/shared/core';
 
 import { getPortEnv } from './common';
 
@@ -121,7 +121,7 @@ export const mailSmtpValidationSchema = {
 
 export function getApplicationConfig(): ApplicationConfig {
   const config: ApplicationConfig = {
-    environment: (process.env[ConfigAlias.NodeEnv] as Environment) || 'development', //! значение по умолчанию
+    environment: (process.env[ConfigAlias.NodeEnv] as Environment) || DEFAULT_ENVIRONMENT,
     port: getPortEnv(ConfigAlias.PortEnv, DefaultPort.APPLICATION)
   };
 

@@ -10,7 +10,7 @@ export interface ITrainingQuery extends IPageQuery {
   caloriesWasteMax?: number;
   ratingMin?: number;
   ratingMax?: number;
-  specializations?: Specialization[]; //! может string?
+  specializations?: Specialization[];
   durations?: Duration[];
   sortType?: SortType;
   coachId?: string;

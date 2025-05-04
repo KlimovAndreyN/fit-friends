@@ -8,6 +8,7 @@ import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { Gender } from '../../types/gender.enum';
 import { UserRdo } from '../../rdo/user.rdo';
+import { FILES_PROPERTY } from '../../interfaces/dto/i-create-questionnaire-coach.dto';
 
 //! описание и ограничения для всего, часть можно взять с опросника только пользователя заменить на тренировку
 export class TrainingApiDoc {
@@ -43,12 +44,12 @@ export class TrainingApiDoc {
 
   @ApiProperty()
   @Expose()
-  @IsInt() //! проверить
+  @IsInt()
   price: Training['price'];
 
   @ApiProperty()
   @Expose()
-  @IsInt() //! проверить! нужен ли @IsNumber({ maxDecimalPlaces: 0 })?
+  @IsInt()
   caloriesWaste: Training['caloriesWaste'];
 
   @ApiProperty()
@@ -69,16 +70,16 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose()
   @IsString()
-  public videoFilePath: string //! IDetailTraining['videoFilePath'];
+  public videoFilePath: string;
 
-  //! @ApiProperty()
-  // public [FILES_PROPERTY]: ICreateTrainingDto['files'];
+  @ApiProperty()
+  public [FILES_PROPERTY]: File; //! потом будет из ICreateTrainingDto
 
   @ApiProperty()
   @Expose()
   rating: Training['rating'];
 
-  @ApiProperty() //! тут как пропользоватлея, но это тренер
+  @ApiProperty()
   @Expose()
   public userId: Training['userId'];
 
@@ -93,5 +94,5 @@ export class TrainingApiDoc {
 
   @ApiProperty()
   @Expose({ name: 'createdAt' })
-  public createdDate: string; //! IBasicDetailTrainingRdo['createdDate'];
+  public createdDate: string; //! потом будет из IBasicDetailTrainingRdo
 }

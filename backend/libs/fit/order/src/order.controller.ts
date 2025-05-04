@@ -20,7 +20,6 @@ export class OrderController {
     const entity = await this.orderService.findById(id);
 
     //! временно
-    return entity;
-    //return fillDto(Order, entity.toPOJO());
+    return entity; //! fillDto Order entity.toPOJO
   }
 }

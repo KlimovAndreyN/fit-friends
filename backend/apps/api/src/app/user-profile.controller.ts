@@ -30,9 +30,7 @@ export class UserProfileController {
   public async getLookForCompany(
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
   ): Promise<UserProfileRdo[]> {
-    //! пока отобрал спортсменов готовых к тренировке, но нужно переработать схему... пользователя и опроскика
-    //! все в обну базу: пользователи, общие опросники, опросники спортцменов и опросники тренеров
-    //! может авторизацию оставить в монго, а все роли, опросники и остальное в постгресс
+    //! пока отобрал спортсменов готовых к тренировке...
 
     const userProfiles: UserProfileRdo[] = [];
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);

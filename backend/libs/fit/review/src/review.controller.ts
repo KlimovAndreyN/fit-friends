@@ -19,8 +19,9 @@ export class ReviewController {
   @Get(IdParam.TRAINING)
   public async index(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicReviewRdo[]> {
     const entities = await this.reviewService.findByTrainingId(trainingId);
-    //! возможно тут проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
     return entities.map((entity) => (fillDto(BasicReviewRdo, entity.toPOJO())));
   }
+
+  //! при добавлении отзыва нужно проверить куплена/завершена ли тренировка... а несколько раз куплена как по ТЗ?
 }

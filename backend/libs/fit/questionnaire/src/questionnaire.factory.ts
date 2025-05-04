@@ -13,14 +13,14 @@ export class QuestionnaireFactory implements EntityFactory<QuestionnaireEntity> 
   public static createFromDto(dto: CreateBasicQuestionnaireDto, userId: string): QuestionnaireEntity {
     const questionnaire: Questionnaire = {
       userId,
-      specializations: dto.specializations, //! обязательно ли [...dto.specializations]
+      specializations: dto.specializations,
       trainingLevel: dto.trainingLevel,
-      readyForTraining: false, //! по ТЗ не уточнения как по умолчанию
+      readyForTraining: false, //! по ТЗ нет уточнения как по умолчанию
       duration: dto.duration,
       caloriesLose: dto.caloriesLose,
       caloriesWaste: dto.caloriesWaste,
       description: dto.description,
-      fileIds: dto.fileIds, //! обязательно ли [...dto.fileIds] ? будул ли файлы обязательными?
+      fileIds: dto.fileIds,
       individualTraining: dto.individualTraining
     }
 

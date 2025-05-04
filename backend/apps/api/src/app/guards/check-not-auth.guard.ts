@@ -21,6 +21,6 @@ export class CheckNotAuthGuard implements CanActivate {
     const [, token] = authorization.split(' ');
     const errorMessage = [AuthenticationMessage.RequireLogout, 'Token:', token].join(' ');
 
-    throw new BadRequestException(errorMessage); //! возможно UnauthorizedException, т.к. клиент не обработать BadRequestException
+    throw new BadRequestException(errorMessage); //! возможно UnauthorizedException, т.к. клиент не обработает BadRequestException
   }
 }

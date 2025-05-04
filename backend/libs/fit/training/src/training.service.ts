@@ -52,7 +52,7 @@ export class TrainingService {
   public async getPopular(): Promise<TrainingEntity[]> {
     //! по ТЗ не ясно, только с 5 или наивысший из имеющихся?
     //! а если рейтирнг тренировки будет до первого знака?
-    //! пока сделал только от 5 до 4, и отсортированные убыванию рейтинга
+    //! пока сделал только от 4 до 5, и отсортированные убыванию рейтинга
     const { entities } = await this.trainingRepository.find(DEFAULT_POPULAR_RATING);
 
     return entities;
@@ -70,9 +70,6 @@ export class TrainingService {
 
   //! временно, потом будет CreateTrainingWithFileIdDto
   public async create(dto: Training, userId: string): Promise<TrainingEntity> {
-    //! обработать - Unique constraint failed on the fields: (`user_id`)
-    // или тут поиском по userId или в репозитарии при вставке данных
-
     const entity: TrainingEntity = TrainingFactory.createFromDto(dto, userId);
 
     await this.trainingRepository.save(entity);

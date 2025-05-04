@@ -23,7 +23,7 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.Specializations)
   @Expose()
   @IsArray()
-  @ArrayUnique()//! нужно ли? может сделать трансформацию одинаковых в один все уникальные значение... @Transform ...
+  @ArrayUnique() //! нужно ли? может сделать трансформацию одинаковых в один все уникальные значение... @Transform ...
   @ArrayMinSize(QuestionnaireValidation.Specializations.ArrayMinSize)
   @ArrayMaxSize(QuestionnaireValidation.Specializations.ArrayMaxSize)
   @IsString({ each: true })
@@ -48,14 +48,14 @@ export class QuestionnaireApiDoc {
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesLose)
   @Expose()
-  @IsInt() //! проверить
+  @IsInt()
   @Min(QuestionnaireValidation.CaloriesLose.Min)
   @Max(QuestionnaireValidation.CaloriesLose.Max)
   caloriesLose: Questionnaire['caloriesLose'];
 
   @ApiProperty(QuestionnaireApiProperty.CaloriesWaste)
   @Expose()
-  @IsInt() //! проверить! нужен ли @IsNumber({ maxDecimalPlaces: 0 })?
+  @IsInt()
   @Min(QuestionnaireValidation.CaloriesWaste.Min)
   @Max(QuestionnaireValidation.CaloriesWaste.Max)
   caloriesWaste: Questionnaire['caloriesWaste'];
@@ -64,17 +64,17 @@ export class QuestionnaireApiDoc {
   @Expose()
   @MinLength(QuestionnaireValidation.Description.MinLength)
   @MaxLength(QuestionnaireValidation.Description.MaxLength)
-  description: Questionnaire['description']; //! ограничения есть в ТЗ?
+  description: Questionnaire['description'];
 
   @ApiProperty(QuestionnaireApiProperty.FileIds)
   @Expose()
   @IsOptional()
-  fileIds: Questionnaire['fileIds']; //! ограничения есть в ТЗ?
+  fileIds: Questionnaire['fileIds'];
 
   @ApiProperty(QuestionnaireApiProperty.Files)
   @Expose()
   @IsOptional()
-  [FILES_PROPERTY]?: ICreateQuestionnaireCoachDto['files']; //! ограничения есть в ТЗ?
+  [FILES_PROPERTY]?: ICreateQuestionnaireCoachDto['files'];
 
   @ApiProperty(QuestionnaireApiProperty.Certificates)
   @Expose()
@@ -83,6 +83,6 @@ export class QuestionnaireApiDoc {
   @ApiProperty(QuestionnaireApiProperty.IndividualTraining)
   @Expose()
   @IsBoolean()
-  @Transform(transformStringBooleanOrBoolean) //! проверить когда от тренера будет приходить файл
-  individualTraining: Questionnaire['individualTraining']; //! ограничения есть в ТЗ? //! что по умолчанию?
+  @Transform(transformStringBooleanOrBoolean)
+  individualTraining: Questionnaire['individualTraining']; //! что по умолчанию?
 }

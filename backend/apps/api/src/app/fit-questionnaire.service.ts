@@ -76,8 +76,6 @@ export class FitQuestionnaireService {
     requestId: string,
     files?: Express.Multer.File[]
   ): Promise<QuestionnaireRdo> {
-    //! проверить имена файлов на русском языке
-
     const createDto: CreateBasicQuestionnaireDto = { ...dto };
 
     if (files) {

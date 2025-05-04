@@ -14,15 +14,12 @@ export class TrainingsWithPaginationRdo
       'totalItems',
       'totalPages'
     ]
-
   )
   implements ITrainingsWithPaginationRdo {
   @ApiProperty({
-    //...TrainingApiDoc.Entities,
     type: TrainingRdo,
     isArray: true
   })
-  //@Type(() => TrainingRdo) //! обязательно?
   @Expose()
   public entities: TrainingRdo[];
 

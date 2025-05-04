@@ -25,10 +25,8 @@ async function bootstrap() {
   //! предварительная валидация ENV переменных в getEnvMongooseOptions, process.env[databaseUrlEnv] и process.env[filesUploadDirectoryEnv]
   //    возможно стоит сделать библиотеку с конфигом или проинициализировать ConfigModule указав env-файл
   //      как в конфиг добавить подключение к двум монго там буду разные имена переменных...
-  //! очистка файлов из базы и из папки
   //! очистка подписчиков
   //! регистрация подписок и рассылка при наполении пользователей?
-  //! предварительная загрузка аватаров пользователей и видео-файлов
 
   const app = await NestFactory.create(AppModule);
   const resetBeforeSeedEnv = ConfigAlias.ResetBeforeSeedEnv;

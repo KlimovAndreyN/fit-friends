@@ -20,7 +20,7 @@ export class InjectUserRoleInterceptor implements NestInterceptor {
       throw new BadRequestException(`Header '${XHeader.UserRole}' mast in (${roles.join(',')})`);
     }
 
-    request[RequestProperty.UserRole] = userRole; //! можно доделать валидацию по Role
+    request[RequestProperty.UserRole] = userRole;
     Logger.log(`${request.method}: ${request.url}: ${RequestProperty.UserRole}: ${userRole}`, InjectUserRoleInterceptor.name);
 
     return next.handle();

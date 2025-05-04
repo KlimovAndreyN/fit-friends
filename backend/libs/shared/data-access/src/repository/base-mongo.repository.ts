@@ -16,9 +16,8 @@ export abstract class BaseMongoRepository<
   ) { }
 
   private fillFields(entity: T, document: DocumentType) {
-    //! протестировать, что при вставке, обновлении все без ошибок?
-
     // может отдельная настройка есть?
+    //! может в хелпер copyFields / copyField, document, entity, string[] / string    
     ['createdAt', 'updatedAt'].forEach((key) => {
       if (Object.keys(entity).includes(key)) {
         entity[key] = document[key];
@@ -76,6 +75,7 @@ export abstract class BaseMongoRepository<
     const updateData = {};
 
     //! в хелпер, но нужно типизировать... или lodash
+    //    может copyWithoutFields / copyWithoutField, data, updateData, string[] / string
     Object.keys(data).forEach((key) => {
       if (key !== 'createdAt') {
         updateData[key] = data[key];

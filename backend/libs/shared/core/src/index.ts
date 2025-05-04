@@ -3,7 +3,7 @@ export { Entity } from './lib/base/entity';
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
 export * from './lib/constants/api-property/file.api-property';
-export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property'; //! нужно ли ?
+export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property';
 export * from './lib/constants/api-property/questionnaire.api-property';
 export { ReviewApiProperty } from './lib/constants/api-property/review.api-property';
 export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
