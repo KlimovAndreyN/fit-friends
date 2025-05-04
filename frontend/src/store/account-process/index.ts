@@ -81,7 +81,6 @@ export const accountProcess = createSlice(
         .addCase(
           fetchAccount.rejected,
           (state) => {
-            //state.account = initialState.account; //! нкжно ли? проверить!
             state.isFetchAccountExecuting = false;
           }
         )

@@ -70,6 +70,7 @@ export function createAPI(): AxiosInstance {
           return Promise.reject('RefreshToken is empty!');
         }
 
+        //! возможно тут стоит вставить ожидание обновления токенов, т.к. паралельные запросы могут их очистить, т.к. refreshToken одноразовый
         const { data: { accessToken, refreshToken } } = await api.post<ITokensRdo>(REFRESH);
 
         AccessTokenStore.save(accessToken);

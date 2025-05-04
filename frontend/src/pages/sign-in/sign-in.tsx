@@ -25,7 +25,7 @@ function SignIn(): JSX.Element {
   const divExtraClassName = 'sign-in';
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); //! проверить! опять не было...
+    event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);
