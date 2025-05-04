@@ -65,6 +65,17 @@ CREATE TABLE "reviews" (
     CONSTRAINT "reviews_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "subscriptions" (
+    "id" VARCHAR(50) NOT NULL,
+    "user_id" VARCHAR(50) NOT NULL,
+    "coach_id" VARCHAR(50) NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "canceled_at" TIMESTAMP(3),
+
+    CONSTRAINT "subscriptions_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "questionnaires_user_id_key" ON "questionnaires"("user_id");
 
@@ -136,6 +147,9 @@ CREATE INDEX "reviews_user_id_idx" ON "reviews"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "reviews_user_id_training_id_key" ON "reviews"("user_id", "training_id");
+
+-- CreateIndex
+CREATE INDEX "subscriptions_user_id_coach_id_created_at_canceled_at_idx" ON "subscriptions"("user_id", "coach_id", "created_at", "canceled_at");
 
 -- AddForeignKey
 ALTER TABLE "orders" ADD CONSTRAINT "orders_training_id_fkey" FOREIGN KEY ("training_id") REFERENCES "trainings"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

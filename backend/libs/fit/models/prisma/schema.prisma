@@ -105,3 +105,14 @@ model Review {
   @@index([userId])
   @@map("reviews")
 }
+
+model Subscription {
+  id         String    @id @default(uuid()) @db.VarChar(50)
+  userId     String    @map("user_id") @db.VarChar(50)
+  coachId    String    @map("coach_id") @db.VarChar(50)
+  createdAt  DateTime  @default(now()) @map("created_at")
+  canceledAt DateTime? @map("canceled_at")
+
+  @@index([userId, coachId, createdAt, canceledAt])
+  @@map("subscriptions")
+}
