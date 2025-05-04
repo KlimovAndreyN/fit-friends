@@ -18,7 +18,6 @@ import { AppRoute, PageTitle } from '../../const';
 
 function UserDetail(): JSX.Element {
   //! прокрутка?
-  //! ограничения для тренера на просмотр тренеров в бэке
 
   const { id: userId = '' } = useParams();
   const dispatch = useAppDispatch();

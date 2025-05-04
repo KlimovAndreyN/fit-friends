@@ -2,12 +2,11 @@ import classNames from 'classnames';
 import { FormEvent } from 'react';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
-import { OnClick } from '../../types/types';
 
 type TrainingsListButtonsProps = {
   className: string;
   isHaveMoreTrainings: boolean;
-  onShowMoreClick: OnClick;
+  onShowMoreClick: () => void;
 }
 
 function TrainingsListButtons({ className, isHaveMoreTrainings, onShowMoreClick }: TrainingsListButtonsProps): JSX.Element {

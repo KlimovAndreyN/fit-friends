@@ -9,8 +9,6 @@ import { CreateQuestionnaireDto } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function Questionnaire(): JSX.Element | null {
-  //! сделать файлы-сертификаты для тренера
-
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
   const dispatch = useAppDispatch();

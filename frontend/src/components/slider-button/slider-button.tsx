@@ -1,11 +1,9 @@
-import { OnClick } from '../../types/types';
-
 type SliderButtonProps = {
   firstTitle?: string;
   secondTitle?: string;
   className: string;
   ariaLabel?: string;
-  onClick: OnClick;
+  onClick: () => void;
   xlinkHref: string;
   width: number;
   height: number;

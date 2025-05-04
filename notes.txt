@@ -35,7 +35,7 @@ swagger@local.ru
     Bad Request; Require logout. Token:
     и на странице с опросом
   
-@ApiResponse({ type: OrderRdo })  
+CoachCertificates - обработка... isUpdateCoachCertificatesExecuting добавить isUpdateCoachCertificatesError
   
   Создание тренировки
     Фоновые изображения используются предопределённые из макета (вёрстки). При сохранении тренировки присваивается случайное изображение

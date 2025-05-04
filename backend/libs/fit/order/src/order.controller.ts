@@ -14,12 +14,12 @@ export class OrderController {
   ) { }
 
   //! добавить описание
-  //@ApiResponse({ type: OrderRdo }) //! вынести в описание
+  // ApiResponse type -> OrderRdo
   @Get()
   public async show(@Param() id: string): Promise<Order> {
     const entity = await this.orderService.findById(id);
 
     //! временно
-    return entity; //! fillDto Order entity.toPOJO
+    return entity; //! fillDto: Order -> entity.toPOJO
   }
 }

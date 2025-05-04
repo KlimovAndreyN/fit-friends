@@ -13,7 +13,6 @@ type TrainingCardProps = {
 }
 
 function TrainingCard({ training }: TrainingCardProps): JSX.Element {
-  //! specialization в русские названия переделать при отображении
   //! заголовок в нижнем регистре? или или там стили?
   //! а как выглядят со скидкой? как по ТЗ? как окрулять?
   //! как округлять рейтинг? как по ТЗ? пока округлил до целых

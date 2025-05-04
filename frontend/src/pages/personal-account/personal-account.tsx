@@ -16,10 +16,6 @@ import { fetchAccount, updateAccount } from '../../store/actions/account-action'
 import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
-  //! доделать скрытые блоки Друзья и Покупки, пока отключены заглушкой
-  //! обработать отображение и редактирвоание информации о тренере
-  //! одинаковое большие кнопки thumbnail-link thumbnail-link--theme-light, а как у тренера?
-
   const dispatch = useAppDispatch();
   const isFetchAccountExecuting = useAppSelector(getIsFetchAccountExecuting);
   const userRole = useAppSelector(getUserRole);

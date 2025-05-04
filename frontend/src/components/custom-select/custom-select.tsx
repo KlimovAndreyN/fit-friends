@@ -31,8 +31,6 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
   };
 
   const handleListItemClick = (option: Option) => {
-    //! что то одно Option или sting?
-
     if (onChange) {
       onChange(option);
     } else {
@@ -83,7 +81,6 @@ function CustomSelect(props: CustomSelectProps): JSX.Element {
       </button>
       <ul className={`${mainClassName}__list`} role="listbox">
         {!readOnly && options.map(
-          //! а есть стиль для подсветки выбранного значения?
           (option) => {
             const handleClick = () => {
               handleListItemClick(option);

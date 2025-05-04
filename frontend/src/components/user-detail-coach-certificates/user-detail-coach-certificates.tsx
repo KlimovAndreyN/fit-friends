@@ -4,11 +4,9 @@ import { ICertificateRdo } from '@backend/shared/core';
 
 import PopupModalSlider from '../popup-modal-slider/popup-modal-slider';
 
-import { OnClick } from '../../types/types';
-
 type UserDetailCoachCertificatesProps = {
   certificates: ICertificateRdo[];
-  onClose: OnClick;
+  onClose: () => void;
 }
 
 function UserDetailCoachCertificates({ certificates, onClose }: UserDetailCoachCertificatesProps): JSX.Element {

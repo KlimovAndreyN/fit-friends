@@ -5,13 +5,11 @@ import { ITrainingRdo } from '@backend/shared/core';
 import TrainingCard from '../training-card/training-card';
 import TrainingsListButtons from '../trainings-list-buttons/trainings-list-buttons';
 
-import { OnClick } from '../../types/types';
-
 type TrainingsListProps = {
   className: string;
   trainings: ITrainingRdo[];
   isHaveMoreTrainings: boolean;
-  onNextPageClick: OnClick;
+  onNextPageClick: () => void;
   showedAdditionalDiv?: boolean;
 }
 

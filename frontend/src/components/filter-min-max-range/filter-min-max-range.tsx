@@ -5,7 +5,6 @@ import './rc-slider.styles.css';
 
 import { parseStringNumber } from '@backend/shared/core';
 
-import { OnValueMinMaxChange } from '../../types/types';
 import { getMax, getMin } from '../../utils/min-max';
 
 type FilterMinMaxRangeProps = {
@@ -20,7 +19,7 @@ type FilterMinMaxRangeProps = {
   limitValueMin: number;
   limitValueMax: number;
   showInputs?: boolean;
-  onChange: OnValueMinMaxChange;
+  onChange: (newValueMin: number | undefined, newValueMax: number | undefined) => void;
   disabled?: boolean;
 }
 

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 
-import { OnClick, OnFileInputChange } from '../../types/types';
+import { OnFileInputChange } from '../../types/types';
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 type CertificateCards = {
@@ -12,7 +12,7 @@ type CertificateCards = {
   certificateFilePath: string;
   isEditing: boolean;
   disabled?: boolean;
-  onEditClick: OnClick;
+  onEditClick: () => void;
   onSaveClick: OnFileInputChange;
 }
 

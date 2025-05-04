@@ -15,12 +15,11 @@ type ReviewsPanelProps = {
 }
 
 function ReviewsPanel({ trainingId, isAddReviewButtonEnabled }: ReviewsPanelProps): JSX.Element {
-  //! если нет отзывов, то вывести текст "отзывов еще нет...", как по ТЗ
+  //! если нет отзывов, то вывести текст "отзывов еще нет...", как по ТЗ?
   //! наверное можно нажать на имя или картику пользовтеля и перейти в профиль пользователя
   //! если спортсмен уже оставлял отзыв, то кнопку можно заблокировать
   //! отзывы прокрутка или отображение последних? что по ТЗ, а как все посмотреть, нужно ли
   //! проверить консоль браузера на ошибки
-  //! два раза выборка, перенсти на одну страницу
 
   const dispatch = useAppDispatch();
   const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);

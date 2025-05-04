@@ -50,16 +50,14 @@ type QuestionnaireFormProps = {
 }
 
 function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireFormProps): JSX.Element | null {
-  //! сделать файлы-сертификаты для тренера
   //! может еще можно разбить файл...
 
-  //! временно, отладка, еще нужно выветси название или количество выбранных файловЮ может в хинте илии снизу, задать максимум
   const filesInputRef = useRef<HTMLInputElement | null>(null);
   const [currentSpecializations, setCurrentSpecializations] = useState([...DefaultUser.SPECIALISATIONS]);
   const isSportsman = isSportsmanRole(userRole);
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); //! проверить! опять не было...
+    event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);

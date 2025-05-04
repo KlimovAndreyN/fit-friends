@@ -2,7 +2,6 @@ import { FormEvent, useEffect } from 'react';
 
 import useEscapeKey from '../../hooks/use-escape-key';
 
-import { OnClick } from '../../types/types';
 import classNames from 'classnames';
 
 type PopupModalProps = {
@@ -14,7 +13,7 @@ type PopupModalProps = {
   contentClassNamePostfix?: string;
   content: JSX.Element;
   isIndividualContent?: boolean;
-  onClose: OnClick;
+  onClose: () => void;
 }
 
 function PopupModal(props: PopupModalProps): JSX.Element {

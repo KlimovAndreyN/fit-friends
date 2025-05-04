@@ -3,8 +3,6 @@ import classNames from 'classnames';
 import Slider from '../slider/slider';
 import PopupModal from '../popup-modal/popup-modal';
 
-import { OnClick } from '../../types/types';
-
 const DEFAULT_SLIDES_COUNT = 1;
 
 type PopupModalSliderProps = {
@@ -14,7 +12,7 @@ type PopupModalSliderProps = {
   childrens: JSX.Element[];
   slidesCount?: number;
   textForEmpty?: string;
-  onClose: OnClick;
+  onClose: () => void;
 }
 
 function PopupModalSlider(props: PopupModalSliderProps): JSX.Element {

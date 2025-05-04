@@ -1,15 +1,13 @@
 import PopupModal from '../popup-modal/popup-modal';
 
-import { OnClick } from '../../types/types';
-
 type PopupModalMapProps = {
   title: string;
   address: string;
-  onClose: OnClick;
+  onClose: () => void;
 }
 
 function PopupModalMap(props: PopupModalMapProps): JSX.Element {
-  //! карта пока картинка
+  //! временно картинка
 
   const { title, address, onClose } = props;
   const content = (

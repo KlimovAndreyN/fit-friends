@@ -54,7 +54,6 @@ export const ApiRoute = {
   REFRESH: joinUrl(ApiServiceRoute.Users, AccountRoute.Refresh),
   CHECK: joinUrl(ApiServiceRoute.Users, AccountRoute.Check),
   REGISTER: joinUrl(ApiServiceRoute.Users, AccountRoute.Register)
-  //! эти используются в действиях и в апи, остальные сюда тащить?
 } as const;
 
 export enum StoreSlice {
@@ -87,7 +86,6 @@ export const USER_GENDERS: Option[] = convertEnumToArray(Gender).map(
   (gender) => ({ value: gender, title: UserGenderTitle[gender] })
 );
 
-//! перенести в компонент/страницу по месту? или отдельный файл
 export const TrainingGenderTitle: { [key in Gender]: string } = {
   [Gender.Female]: 'женщин',
   [Gender.Male]: 'мужчин',

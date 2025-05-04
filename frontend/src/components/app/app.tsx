@@ -30,7 +30,7 @@ import { AuthorizationStatus } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function App(): JSX.Element | null {
-  //! возможно ли единожды проверить заполенность опросника и не делать QuestionnaireRoute?
+  //! возможно ли единожды проверить заполненность опросника и не делать QuestionnaireRoute?
 
   const userRole = useAppSelector(getUserRole);
   const authRedirectTo = isCoachRole(userRole) ? AppRoute.PersonalAccount : AppRoute.Index;

@@ -21,7 +21,7 @@ import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profil
 import { AppRoute, PageTitle } from '../../const';
 
 function Index(): JSX.Element {
-  //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проерить на маркапах
+  //! спец предложения при увеличении масшаба занимает все место и выдавлвает блок заглушку - проверить на маркапах
   //! прокрутка на вверх при переходе с каталога и других страниц
 
   const dispatch = useAppDispatch();
