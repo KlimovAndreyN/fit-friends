@@ -18,7 +18,6 @@ type CoachCertificatesProps = {
 }
 
 function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Element {
-  //! при изменении и удалении на короткое время рисуется старый элемент - нужно попртавить
   //! иногда на пдф не работает прамая ссылка на файл, при начеле редактирования других сертификатов или добавления нового или комбинация действий
 
   const dispatch = useAppDispatch();
@@ -28,16 +27,11 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   const inputFileRef = useRef<HTMLInputElement | null>(null);
   const [editingCertificateFileId, setEditingCertificateFileId] = useState('');
 
-  //! Отладка
   useEffect(() => {
     if (!isUpdateCoachCertificatesExecuting && !isUpdateCoachCertificatesError) {
       setEditingCertificateFileId('');
     }
   }, [isUpdateCoachCertificatesExecuting, isUpdateCoachCertificatesError]);
-
-  //! Отладка
-  // eslint-disable-next-line no-console
-  console.log('isUpdateCoachCertificatesError', isUpdateCoachCertificatesError);
 
   const handleLoadCertificateButtonClick = () => {
     inputFileRef.current?.click();
@@ -49,16 +43,15 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
     }
   };
 
-  const handleSaveClick = (_filePath: string, file: File | undefined) => {
+  const handleSaveClick = (filePath: string, file: File | undefined) => {
     if (file) {
       //! нужен тип
       dispatch(updateCoachCertificate({ fileId: editingCertificateFileId, file }));
+    } else if (filePath) {
+      setEditingCertificateFileId('');
     } else {
       dispatch(deleteCoachCertificate(editingCertificateFileId));
     }
-
-    //! врменно, потом через обновление данных
-    //setEditingCertificateFileId('');
   };
 
   const loadCertificateButtonOption = {
