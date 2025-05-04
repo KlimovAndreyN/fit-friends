@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import CertificateCard from '../certificate-card/certificate-card';
@@ -29,6 +29,13 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
   const [editingCertificateFileId, setEditingCertificateFileId] = useState('');
 
   //! Отладка
+  useEffect(() => {
+    if (!isUpdateCoachCertificatesExecuting && !isUpdateCoachCertificatesError) {
+      setEditingCertificateFileId('');
+    }
+  }, [isUpdateCoachCertificatesExecuting, isUpdateCoachCertificatesError]);
+
+  //! Отладка
   // eslint-disable-next-line no-console
   console.log('isUpdateCoachCertificatesError', isUpdateCoachCertificatesError);
 
@@ -51,7 +58,7 @@ function CoachCertificates({ classNamePrefix }: CoachCertificatesProps): JSX.Ele
     }
 
     //! врменно, потом через обновление данных
-    setEditingCertificateFileId('');
+    //setEditingCertificateFileId('');
   };
 
   const loadCertificateButtonOption = {
