@@ -13,6 +13,8 @@ type PopupFormProps = {
 }
 
 function PopupForm(props: PopupFormProps): JSX.Element {
+  //! выделить отдельно форму, и если нужно с содержимым
+
   const { title, caption, extraClass, onSubmit, children } = props;
   const className = classNames('popup-form', extraClass);
 

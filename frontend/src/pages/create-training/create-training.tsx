@@ -10,6 +10,9 @@ import { createTraining } from '../../store/actions/training-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function CreateTraining(): JSX.Element {
+  //! форма похода на PopupForm, только с верхним меню, выделить все отдельно, если еще будет использоватся в похожем виде
+  //    или когда переделаю PopupForm на форму и страницу
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isCreateTrainingExecuting = useAppSelector(getIsCreateTrainingExecuting);
@@ -38,7 +41,7 @@ function CreateTraining(): JSX.Element {
     dispatch(createTraining('test'));
   };
 
-  //!<QuestionnaireForm userRole={userRole} onSubmit={handleOnSubmit} isDisabled={isCreateExistQuestionnaireExecuting} />
+  //const isDisabled = isCreateExistQuestionnaireExecuting;
 
   return (
     <Fragment>

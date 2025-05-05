@@ -9,6 +9,8 @@ import { CreateQuestionnaireDto } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function Questionnaire(): JSX.Element | null {
+  //! вернуть содежимое формы сюда, а форму уменьшить если возможно
+
   const dispatch = useAppDispatch();
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
