@@ -12,5 +12,4 @@ export type ICreateBasicTrainingDto = Pick<
   | 'description'
   | 'gender'
   | 'videoFileId'
-  | 'userId'
 >;

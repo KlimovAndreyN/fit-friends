@@ -28,10 +28,12 @@ export * from './lib/constants/route';
 export { XHeader } from './lib/constants/x-header';
 
 export { CreateBasicQuestionnaireDto } from './lib/dto/create-basic-questionnaire.dto';
+export { CreateBasicTrainingDto } from './lib/dto/create-basic-training.dto';
 export { CreateBasicUserDto } from './lib/dto/create-basic-user.dto';
+export { CreateEmailSubscriberDto } from './lib/dto/create-email-subscriber.dto';
 export { CreateQuestionnaireCoachDto } from './lib/dto/create-questionnaire-coach.dto';
 export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
-export { CreateEmailSubscriberDto } from './lib/dto/create-email-subscriber.dto';
+export { CreateTrainingDto } from './lib/dto/create-training.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 export { UpdateBasicUserDto } from './lib/dto/update-basic-user.dto';
@@ -45,6 +47,7 @@ export { ITrainingRepository } from './lib/interfaces/query/i-training-repositor
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';
 export { Certificate } from './lib/interfaces/certificate.interface';
+export { EmailSubscriber } from './lib/interfaces/email-subscriber.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
@@ -55,7 +58,6 @@ export { RefreshTokenPayload } from './lib/interfaces/refresh-token-payload.inte
 export { Review } from './lib/interfaces/review.interface';
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { StoredFile } from './lib/interfaces/stored-file.interface';
-export { EmailSubscriber } from './lib/interfaces/email-subscriber.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Tokens } from './lib/interfaces/tokens.interface';
 export { Training } from './lib/interfaces/training.interface';
