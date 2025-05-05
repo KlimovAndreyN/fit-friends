@@ -23,6 +23,7 @@ export type TrainingProcess = {
   detailTraining: IDetailTrainingRdo | null;
 
   isCreateTrainingExecuting: boolean;
+  isCreatedTraining: boolean;
 
   isFetchCoachTrainingsExecuting: boolean;
   coachTrainings: ITrainingRdo[];

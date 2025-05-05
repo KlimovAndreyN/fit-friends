@@ -1,21 +1,25 @@
-import { Fragment, useEffect } from 'react';
+import { FormEvent, Fragment, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/header/header';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
-import { getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
+import { getIsCreatedTraining, getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
+import { createTraining } from '../../store/actions/training-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function CreateTraining(): JSX.Element {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isCreateTrainingExecuting = useAppSelector(getIsCreateTrainingExecuting);
+  const isCreatedTraining = useAppSelector(getIsCreatedTraining);
 
   useEffect(() => {
-    //! попробовать добавить в начало новую тренировку или заново обновить список тренирорвок и фильтры
-    dispatch(setPrevLocation(AppRoute.CreateTraining));
-  }, [dispatch]);
-
+    if (isCreatedTraining) {
+      navigate(AppRoute.MyTrainings);
+    }
+  }, [navigate, isCreatedTraining]);
 
   //! отладка
   // eslint-disable-next-line no-console
@@ -23,16 +27,18 @@ function CreateTraining(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
 
-  /*
-    const handleOnSubmit = (dto: CreateQuestionnaireDto) => {
-      dispatch(createQuestionnaire({ dto, userRole }));
-      dispatch(setPrevLocation(AppRoute.Questionnaire));
-    };
+  const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    return (
-      <QuestionnaireForm userRole={userRole} onSubmit={handleOnSubmit} isDisabled={isCreateExistQuestionnaireExecuting} />
-    );
-  */
+    //! попробовать добавить в начало новую тренировку, но фильтры могут быть не те, проще заново обновить список тренирорвок и фильтры скинуть
+    //! должен быть в начале, т.к. начальная сортировка по дате
+    dispatch(setPrevLocation(AppRoute.CreateTraining));
+
+    //! временно
+    dispatch(createTraining('test'));
+  };
+
+  //!<QuestionnaireForm userRole={userRole} onSubmit={handleOnSubmit} isDisabled={isCreateExistQuestionnaireExecuting} />
 
   return (
     <Fragment>
@@ -45,7 +51,7 @@ function CreateTraining(): JSX.Element {
                 <h1 className="popup-form__title">Создание тренировки</h1>
               </div>
               <div className="popup-form__form">
-                <form method="get">
+                <form method="post" onSubmit={handlePopupFormSubmit}>
                   <div className="create-training">
                     <div className="create-training__wrapper">
                       <div className="create-training__block">

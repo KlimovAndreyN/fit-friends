@@ -4,7 +4,7 @@ import { ITrainingQuery } from '@backend/shared/core';
 
 import { TrainingProcess } from '../../types/process/training.process';
 import {
-  fetchDetailTraining, fetchTrainings, fetchPopularTrainings, crateTraining,
+  fetchDetailTraining, fetchTrainings, fetchPopularTrainings, createTraining,
   fetchForSportsmanTrainings, fetchSpecialTrainings, fetchCoachTrainings
 } from '../actions/training-action';
 import { StoreSlice } from '../../const';
@@ -44,6 +44,7 @@ const initialState: TrainingProcess = {
   detailTraining: null,
 
   isCreateTrainingExecuting: false,
+  isCreatedTraining: false,
 
   isFetchCoachTrainingsExecuting: false,
   coachTrainings: []
@@ -75,6 +76,9 @@ export const trainingProcess = createSlice(
       },
       clearDetailTraining: (state) => {
         state.detailTraining = null;
+      },
+      clearCreatedTraining: (state) => {
+        state.isCreatedTraining = false;
       }
     },
     extraReducers(builder) {
@@ -190,21 +194,22 @@ export const trainingProcess = createSlice(
           }
         )
         .addCase(
-          crateTraining.pending,
+          createTraining.pending,
           (state) => {
             state.isCreateTrainingExecuting = true;
           }
         )
         .addCase(
-          crateTraining.rejected,
+          createTraining.rejected,
           (state) => {
             state.isCreateTrainingExecuting = false;
           }
         )
         .addCase(
-          crateTraining.fulfilled,
+          createTraining.fulfilled,
           (state) => {
             //! можно ничего не возвращать а направить на мои тренировки
+            state.isCreatedTraining = true;
             state.isCreateTrainingExecuting = false;
           }
         )
@@ -232,4 +237,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailTraining } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailTraining, clearCreatedTraining } = trainingProcess.actions;

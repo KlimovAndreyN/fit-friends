@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios';
-import { History } from 'history';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
@@ -8,11 +7,8 @@ import {
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
-import { AppRoute } from '../../const';
-
 type Extra = {
   api: AxiosInstance;
-  history: History;
 };
 
 export const Action = {
@@ -87,18 +83,16 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, 
 );
 
 //! временно string - нужен CreateTrainingRdo
-export const crateTraining = createAsyncThunk<IDetailTrainingRdo, IDetailTrainingRdo, { extra: Extra }>(
+export const createTraining = createAsyncThunk<IDetailTrainingRdo, string/* IDetailTrainingRdo*/, { extra: Extra }>(
   Action.CREATE_TRAINING,
   async (dto, { extra }) => {
-    const { api, history } = extra;
+    const { api } = extra;
     //! отладка
     // eslint-disable-next-line no-console
-    console.log('crateTraining - dto', dto);
+    console.log('createTraining - dto', dto);
 
-    const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, 'test!!'));
-
-    //! можно ничего не возвращать, а сразу направить на мои тренировки
-    history.push(AppRoute.MyTrainings);
+    //! временно
+    const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, '126ce078-873d-4aff-961c-d20e0dc24f27'));
 
     return data;
   }
