@@ -5,6 +5,7 @@ export { ApiServiceRoute, AccountRoute, UserProfileRoute, TrainingRoute } from '
 
 export { type ICreateQuestionnaireCoachDto } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';
 export { type ICreateQuestionnaireSportsmanDto } from './lib/interfaces/dto/i-create-questionnaire-sportsman.dto';
+export { type ICreateTrainingDto } from './lib/interfaces/dto/i-create-training.dto';
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
 export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-questionnaire.dto';

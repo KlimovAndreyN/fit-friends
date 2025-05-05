@@ -1,7 +1,8 @@
 import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Duration, Gender, Specialization, TrainingLevel } from '@backend/shared/core';
+import { BackgroundPaths, Duration, Gender, ICreateTrainingDto, Specialization, TrainingLevel } from '@backend/shared/core';
+import { getRandomItem } from '@backend/shared/helpers';
 
 import Header from '../../components/header/header';
 import Block from '../../components/block/block';
@@ -13,18 +14,20 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
 import { getIsCreatedTraining, getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
 import { createTraining } from '../../store/actions/training-action';
+import { Option } from '../../types/types';
 import { AppRoute, DURATIONS, PageTitle, SPECIALISATIONS, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
 
 const DEFAULT_GENDER = Gender.Female;
 
 enum FormFieldName {
-  Name = 'training-name',
+  Title = 'training-name',
   Spec = 'specialization',
   CaloriesWaste = 'calories',
   Time = 'time',
   Price = 'price',
   Level = 'level',
   TrainingGender = 'gender',
+  Background = 'background',
   Description = 'description',
   File = 'import'
 }
@@ -42,6 +45,7 @@ function CreateTraining(): JSX.Element {
   const isCreatedTraining = useAppSelector(getIsCreatedTraining);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [fileCaption, setFileCaption] = useState<string>('Загрузите сюда файлы формата MOV, AVI или MP4');
+  const [isSelectedFile, setIsSelectedFile] = useState(false);
 
   useEffect(() => {
     if (isCreatedTraining) {
@@ -49,66 +53,63 @@ function CreateTraining(): JSX.Element {
     }
   }, [navigate, isCreatedTraining]);
 
-  //! отладка
-  // eslint-disable-next-line no-console
-  console.log('CreateTraining');
-  // eslint-disable-next-line no-console
-  console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
-
   const handleFileInputChange = (event: FormEvent<HTMLInputElement>) => {
     const { files } = event.currentTarget;
 
     if (files && files.length) {
       setFileCaption(files[0].name);
+      setIsSelectedFile(true);
     }
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const files = fileInputRef.current?.files;
+    const videoFile = (files?.length) ? files[0] : null;
+
+    if (!videoFile) {
+      return;
+    }
+
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const title = formData.get(FormFieldName.Name)?.toString() || '';
+    const title = formData.get(FormFieldName.Title)?.toString() || '';
     const specialization = (formData.get(FormFieldName.Spec)?.toString() || '') as Specialization;
     const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration;
     const price = parseInt(formData.get(FormFieldName.Price)?.toString() || '', 10);
     const trainingLevel = (formData.get(FormFieldName.Level)?.toString() || '') as TrainingLevel;
     const gender = (formData.get(FormFieldName.TrainingGender)?.toString() || '') as Gender;
+    const backgroundPath = formData.get(FormFieldName.Background)?.toString() || '';
     const description = formData.get(FormFieldName.Description)?.toString() || '';
-    const files = fileInputRef.current?.files;
-    const file = (files?.length) ? files[0] : undefined;
 
+    const dto: ICreateTrainingDto = {
+      title,
+      specialization,
+      caloriesWaste,
+      duration,
+      price,
+      trainingLevel,
+      gender,
+      backgroundPath,
+      description,
+      videoFile
+    };
     // eslint-disable-next-line no-console
-    console.log('handlePopupFormSubmit');
-    // eslint-disable-next-line no-console
-    console.log('title', title);
-    // eslint-disable-next-line no-console
-    console.log('specialization', specialization);
-    // eslint-disable-next-line no-console
-    console.log('caloriesWaste', caloriesWaste);
-    // eslint-disable-next-line no-console
-    console.log('duration', duration);
-    // eslint-disable-next-line no-console
-    console.log('price', price);
-    // eslint-disable-next-line no-console
-    console.log('trainingLevel', trainingLevel);
-    // eslint-disable-next-line no-console
-    console.log('gender', gender);
-    // eslint-disable-next-line no-console
-    console.log('description', description);
-    // eslint-disable-next-line no-console
-    console.log('file', file);
+    console.log('dto', dto);
 
     //! попробовать добавить в начало новую тренировку, но фильтры могут быть не те, проще заново обновить список тренирорвок и фильтры скинуть
     //! должен быть в начале, т.к. начальная сортировка по дате
     dispatch(setPrevLocation(AppRoute.CreateTraining));
 
     //! временно
-    //dispatch(createTraining('test'));
+    //dispatch(createTraining(dto));
   };
 
+  const optionBackgroundPaths: Option[] = BackgroundPaths.TRAININGS.map((item) => ({ value: item, title: item }));
+  const backgroundPath = getRandomItem(optionBackgroundPaths).value;
   const mainClassNamePrefix = 'create-training';
   const isDisabled = isCreateTrainingExecuting;
 
@@ -128,7 +129,7 @@ function CreateTraining(): JSX.Element {
                     <div className={`${mainClassNamePrefix}__wrapper`}>
                       <Block legend='Название тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <CustomInput
-                          name={FormFieldName.Name}
+                          name={FormFieldName.Title}
                           type='text'
                           divExtraClassName={mainClassNamePrefix}
                           readOnly={isDisabled}
@@ -149,6 +150,7 @@ function CreateTraining(): JSX.Element {
                             divClassNamePostfix='with-text-right'
                             label='Сколько калорий потратим'
                             spanText='ккал'
+                            readOnly={isDisabled}
                           />
                           <CustomSelect
                             name={FormFieldName.Time}
@@ -163,6 +165,7 @@ function CreateTraining(): JSX.Element {
                             divClassNamePostfix='with-text-right'
                             label='Стоимость тренировки'
                             spanText='₽'
+                            readOnly={isDisabled}
                           />
                           <CustomSelect
                             name={FormFieldName.Level}
@@ -188,7 +191,7 @@ function CreateTraining(): JSX.Element {
                       <Block legend='Описание тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className={`custom-textarea ${mainClassNamePrefix}__textarea`} /* //! можно использовать CustomInput но там нужно убрать span */>
                           <label>
-                            <textarea name={FormFieldName.Description} placeholder=" "></textarea>
+                            <textarea name={FormFieldName.Description} placeholder=" " readOnly={isDisabled}></textarea>
                           </label>
                         </div>
                       </Block>
@@ -208,12 +211,25 @@ function CreateTraining(): JSX.Element {
                               accept=".mov, .avi, .mp4"
                               ref={fileInputRef}
                               onChange={handleFileInputChange}
+                              readOnly={isDisabled}
                             />
                           </label>
                         </div>
                       </Block>
+                      {/*//! добавил в разметку фоновую картинку */}
+                      <Block legend='Фоновая картика' className={mainClassNamePrefix} isHeaderLegend>
+                        <div className={`custom-textarea ${mainClassNamePrefix}__textarea`}>
+                          <CustomSelect
+                            name={FormFieldName.Background}
+                            value={backgroundPath}
+                            caption=' '
+                            options={optionBackgroundPaths}
+                            readOnly={isDisabled}
+                          />
+                        </div>
+                      </Block>
                     </div>
-                    <button className={`btn ${mainClassNamePrefix}__button`} type="submit">Опубликовать</button>
+                    <button className={`btn ${mainClassNamePrefix}__button`} type="submit" disabled={!isSelectedFile || isDisabled}>Опубликовать</button>
                   </div>
                 </form>
               </div>
