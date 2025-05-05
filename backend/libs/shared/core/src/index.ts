@@ -3,10 +3,10 @@ export { Entity } from './lib/base/entity';
 export { AuthenticationApiOperation } from './lib/constants/api-operation/authentication.api-operation';
 
 export * from './lib/constants/api-property/file.api-property';
-export { PaginationApiProperty } from './lib/constants/api-property/pagination-api-property';
+export * from './lib/constants/api-property/pagination-api-property';
 export * from './lib/constants/api-property/questionnaire.api-property';
-export { ReviewApiProperty } from './lib/constants/api-property/review.api-property';
-export { TrainingApiProperty } from './lib/constants/api-property/training.api-property';
+export * from './lib/constants/api-property/review.api-property';
+export * from './lib/constants/api-property/training.api-property';
 export * from './lib/constants/api-property/user.api-property';
 
 export { ApiApiResponse } from './lib/constants/api-response/api.api-response';
@@ -41,8 +41,10 @@ export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
 export { UpdateUserProfileDto } from './lib/dto/update-user-profile.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
-export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
 export { FILES_PROPERTY } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';
+export { AVATAR_FILE_PROPERTY } from './lib/interfaces/dto/i-create-user.dto';
+export { VIDEO_FILE_PROPERTY } from './lib/interfaces/dto/i-create-training.dto';
+
 export { ITrainingRepository } from './lib/interfaces/query/i-training-repository.query';
 
 export { AuthUser } from './lib/interfaces/auth-user.interface';

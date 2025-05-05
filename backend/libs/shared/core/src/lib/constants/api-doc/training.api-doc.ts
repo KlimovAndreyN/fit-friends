@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsEnum, IsInt, IsString } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 import { Training } from '../../interfaces/training.interface';
 import { ICreateTrainingDto, VIDEO_FILE_PROPERTY } from '../../interfaces/dto/i-create-training.dto';
+import { UserRdo } from '../../rdo/user.rdo';
 import { TrainingLevel } from '../../types/training-level.enum';
 import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { Gender } from '../../types/gender.enum';
-import { UserRdo } from '../../rdo/user.rdo';
+import { transformNumber } from '../../utils/transform';
 
 //! описание и ограничения для всего, часть можно взять с опросника только пользователя заменить на тренировку
 export class TrainingApiDoc {
@@ -45,11 +46,13 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose()
   @IsInt()
+  @Transform(transformNumber)
   price: Training['price'];
 
   @ApiProperty()
   @Expose()
   @IsInt()
+  @Transform(transformNumber)
   caloriesWaste: Training['caloriesWaste'];
 
   @ApiProperty()

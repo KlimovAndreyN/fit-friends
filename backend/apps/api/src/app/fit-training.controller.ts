@@ -1,16 +1,20 @@
-import { Controller, Get, Param, Query, Req, UseFilters, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption, IdParam,
+  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption,
   TrainingQuery, BearerAuth, TrainingRdo, RequestWithRequestIdAndUser,
-  TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser
+  TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser,
+  VIDEO_FILE_PROPERTY, CreateTrainingDto, RequestWithRequestIdAndUserId,
+  IdParam, parseTrainingVideoFilePipeBuilder
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
+import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
 import { FitTrainingService } from './fit-training.service';
 
 @ApiTags(ApiServiceRoute.Trainings)
@@ -71,5 +75,26 @@ export class FitTrainingController {
     const training = await this.fitTrainingService.findById(trainingId, request);
 
     return training;
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({ type: DetailTrainingRdo })
+  @UseInterceptors(FileInterceptor(VIDEO_FILE_PROPERTY))
+  @UseGuards(CheckRoleCoachGuard)
+  @Post()
+  public async create(
+    @Body() dto: CreateTrainingDto,
+    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
+    @UploadedFile(parseTrainingVideoFilePipeBuilder) file?: Express.Multer.File[]
+  ): Promise<DetailTrainingRdo> {
+    console.log('create');
+    console.log('dto', dto);
+    console.log('requestId', requestId);
+    console.log('userId', userId);
+    console.log('file', file);
+
+    //! const training = await this.fitTrainingService.findById(trainingId, request);
+
+    return null; //! training;
   }
 }

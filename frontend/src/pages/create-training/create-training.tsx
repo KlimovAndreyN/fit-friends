@@ -108,7 +108,6 @@ function CreateTraining(): JSX.Element {
   const optionBackgroundPaths: Option[] = BackgroundPaths.TRAININGS.map((item) => ({ value: item, title: item }));
   const backgroundPath = getRandomItem(optionBackgroundPaths).value;
   const mainClassNamePrefix = 'create-training';
-  const isDisabled = isCreateTrainingExecuting;
 
   return (
     <Fragment>
@@ -129,7 +128,6 @@ function CreateTraining(): JSX.Element {
                           name={FormFieldName.Title}
                           type='text'
                           divExtraClassName={mainClassNamePrefix}
-                          readOnly={isDisabled}
                         />
                       </Block>
                       <Block legend='Характеристики тренировки' className={mainClassNamePrefix} isHeaderLegend>
@@ -139,7 +137,6 @@ function CreateTraining(): JSX.Element {
                             caption='Выберите тип тренировки'
                             options={SPECIALISATIONS}
                             extraClassName={mainClassNamePrefix}
-                            readOnly={isDisabled}
                           />
                           <CustomInput
                             name={FormFieldName.CaloriesWaste}
@@ -147,14 +144,12 @@ function CreateTraining(): JSX.Element {
                             divClassNamePostfix='with-text-right'
                             label='Сколько калорий потратим'
                             spanText='ккал'
-                            readOnly={isDisabled}
                           />
                           <CustomSelect
                             name={FormFieldName.Time}
                             caption='Сколько времени потратим'
                             options={DURATIONS}
                             extraClassName={mainClassNamePrefix}
-                            readOnly={isDisabled}
                           />
                           <CustomInput
                             name={FormFieldName.Price}
@@ -162,14 +157,12 @@ function CreateTraining(): JSX.Element {
                             divClassNamePostfix='with-text-right'
                             label='Стоимость тренировки'
                             spanText='₽'
-                            readOnly={isDisabled}
                           />
                           <CustomSelect
                             name={FormFieldName.Level}
                             caption='Выберите уровень тренировки'
                             options={TRAINING_LEVELS}
                             extraClassName={mainClassNamePrefix}
-                            readOnly={isDisabled}
                           />
                           <div className={`${mainClassNamePrefix}__radio-wrapper`}>
                             <span className={`${mainClassNamePrefix}__label`}>Кому подойдет тренировка</span>
@@ -179,7 +172,6 @@ function CreateTraining(): JSX.Element {
                               name={FormFieldName.TrainingGender}
                               value={DEFAULT_GENDER}
                               options={TRAINING_GENDERS}
-                              readOnly={isDisabled}
                               isSmall
                             />
                           </div>
@@ -188,7 +180,7 @@ function CreateTraining(): JSX.Element {
                       <Block legend='Описание тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className={`custom-textarea ${mainClassNamePrefix}__textarea`} /* //! можно использовать CustomInput но там нужно убрать span */>
                           <label>
-                            <textarea name={FormFieldName.Description} placeholder=" " readOnly={isDisabled}></textarea>
+                            <textarea name={FormFieldName.Description} placeholder=" "></textarea>
                           </label>
                         </div>
                       </Block>
@@ -208,7 +200,6 @@ function CreateTraining(): JSX.Element {
                               accept=".mov, .avi, .mp4"
                               ref={fileInputRef}
                               onChange={handleFileInputChange}
-                              readOnly={isDisabled}
                             />
                           </label>
                         </div>
@@ -221,12 +212,11 @@ function CreateTraining(): JSX.Element {
                             value={backgroundPath}
                             caption=' '
                             options={optionBackgroundPaths}
-                            readOnly={isDisabled}
                           />
                         </div>
                       </Block>
                     </div>
-                    <button className={`btn ${mainClassNamePrefix}__button`} type="submit" disabled={!isSelectedFile || isDisabled}>Опубликовать</button>
+                    <button className={`btn ${mainClassNamePrefix}__button`} type="submit" disabled={!isSelectedFile || isCreateTrainingExecuting}>Опубликовать</button>
                   </div>
                 </form>
               </div>
