@@ -73,7 +73,7 @@ function TrainingDetail(): JSX.Element | null {
           </div>
         </section>
       </main>
-    </Fragment >
+    </Fragment>
   );
 }
 
