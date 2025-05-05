@@ -2,6 +2,7 @@ import { FormEvent, Fragment, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/header/header';
+import Block from '../../components/block/block';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
@@ -41,7 +42,9 @@ function CreateTraining(): JSX.Element {
     dispatch(createTraining('test'));
   };
 
+  const mainClassNamePrefix = 'create-training'; //! заменить везде
   //const isDisabled = isCreateExistQuestionnaireExecuting;
+
 
   return (
     <Fragment>
@@ -57,8 +60,7 @@ function CreateTraining(): JSX.Element {
                 <form method="post" onSubmit={handlePopupFormSubmit}>
                   <div className="create-training">
                     <div className="create-training__wrapper">
-                      <div className="create-training__block">
-                        <h2 className="create-training__legend">Название тренировки</h2>
+                      <Block legend='Название тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className="custom-input create-training__input">
                           <label>
                             <span className="custom-input__wrapper">
@@ -66,9 +68,8 @@ function CreateTraining(): JSX.Element {
                             </span>
                           </label>
                         </div>
-                      </div>
-                      <div className="create-training__block">
-                        <h2 className="create-training__legend">Характеристики тренировки</h2>
+                      </Block>
+                      <Block legend='Характеристики тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className="create-training__info">
                           <div className="custom-select custom-select--not-selected">
                             <span className="custom-select__label">Выберите тип тренировки</span>
@@ -161,18 +162,15 @@ function CreateTraining(): JSX.Element {
                             </div>
                           </div>
                         </div>
-
-                      </div>
-                      <div className="create-training__block">
-                        <h2 className="create-training__legend">Описание тренировки</h2>
+                      </Block>
+                      <Block legend='Описание тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className="custom-textarea create-training__textarea">
                           <label>
                             <textarea name="description" placeholder=" "></textarea>
                           </label>
                         </div>
-                      </div>
-                      <div className="create-training__block">
-                        <h2 className="create-training__legend">Загрузите видео-тренировку</h2>
+                      </Block>
+                      <Block legend='Загрузите видео-тренировку' className={mainClassNamePrefix} isHeaderLegend>
                         <div className="drag-and-drop create-training__drag-and-drop">
                           <label>
                             <span className="drag-and-drop__label" tabIndex={0}>Загрузите сюда файлы формата MOV, AVI или MP4
@@ -183,7 +181,7 @@ function CreateTraining(): JSX.Element {
                             <input type="file" name="import" tabIndex={-1} accept=".mov, .avi, .mp4" />
                           </label>
                         </div>
-                      </div>
+                      </Block>
                     </div>
                     <button className="btn create-training__button" type="submit">Опубликовать</button>
                   </div>
