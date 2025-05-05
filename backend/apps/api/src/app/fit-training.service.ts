@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
 
 import {
-  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute,
-  RequestWithRequestIdAndBearerAuthAndUser, UserRdo,
-  CreateTrainingDto, RequestWithRequestIdAndUser
+  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
+  RequestWithRequestIdAndBearerAuthAndUser, CreateTrainingDto,
+  RequestWithRequestIdAndUser, CreateBasicTrainingDto
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -28,6 +28,17 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
+
+  private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
+    const { userId, videoFileId, ...fields } = rdo;
+    const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
+    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла...
+    const { id, name, avatarFilePath } = user;
+    const coach: UserRdo = { id, name, avatarFilePath };
+
+    return { ...fields, videoFilePath, coach };
+  }
+
   public async getTrainings<T>(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<T> {
     const url = this.getUrl(route);
     const headers = makeHeaders(requestId, null, userId, userRole);
@@ -43,17 +54,7 @@ export class FitTrainingService {
     const url = this.getUrl(trainingId);
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
-    const { userId: coachId, videoFileId, ...training } = data;
-    const user = await this.userService.getDetailUser(coachId, bearerAuth, requestId);
-    const { id, name, avatarFilePath } = user;
-    const coach: UserRdo = { id, name, avatarFilePath };
-    const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
-
-    const detailTraining: DetailTrainingRdo = {
-      ...training,
-      videoFilePath,
-      coach
-    };
+    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
 
     return detailTraining;
   }
@@ -63,30 +64,15 @@ export class FitTrainingService {
     file: Express.Multer.File,
     request: RequestWithRequestIdAndBearerAuthAndUser
   ): Promise<DetailTrainingRdo> {
-    console.log('create');
-    console.log('dto', dto);
-    console.log('request', request);
-    console.log('file', file);
-
-    /*
-    const url = this.getUrl(trainingId);
+    const { requestId, bearerAuth, user: { sub: userId, role: userRole } } = request;
+    const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
+    const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
-    const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
-    const { userId: coachId, videoFileId, ...training } = data;
-    const user = await this.userService.getDetailUser(coachId, bearerAuth, requestId);
-    const { id, name, avatarFilePath } = user;
-    const coach: UserRdo = { id, name, avatarFilePath };
-    const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
-    */
-    const detailTraining: DetailTrainingRdo = null;
+    const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
+    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    console.log('detailTraining', detailTraining);
 
-    /*
-    const detailTraining: DetailTrainingRdo = {
-      ...training,
-      videoFilePath,
-      coach
-    };
-    */
+    throw new NotFoundException('тест тест');
 
     return detailTraining;
   }
