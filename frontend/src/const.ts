@@ -129,29 +129,20 @@ export const SPECIALISATIONS: Option[] = convertEnumToArray(Specialization).map(
   (specialization) => ({ value: specialization, title: SpecializationTitle[specialization] })
 );
 
-export const UserDurationTitle: { [key in Duration]: string } = {
-  [Duration.Minutes_10_30]: '10-30',
-  [Duration.Minutes_30_50]: '30-50',
-  [Duration.Minutes_50_80]: '50-80',
-  [Duration.Minutes_80_100]: '80-100'
+export const DurationMinMax: { [key in Duration]: { min: number; max: number } } = {
+  [Duration.Minutes_10_30]: { min: 10, max: 30 },
+  [Duration.Minutes_30_50]: { min: 30, max: 50 },
+  [Duration.Minutes_50_80]: { min: 50, max: 80 },
+  [Duration.Minutes_80_100]: { min: 80, max: 100 }
 } as const;
 
-export const TrainingDurationTitle: { [key in Duration]: string } = {
-  [Duration.Minutes_10_30]: '10_30',
-  [Duration.Minutes_30_50]: '30_50',
-  [Duration.Minutes_50_80]: '50_80',
-  [Duration.Minutes_80_100]: '80_100'
-} as const;
-
-const FilterDurationTitle: { [key in Duration]: string } = {
-  [Duration.Minutes_10_30]: '10 мин - 30 мин',
-  [Duration.Minutes_30_50]: '30 мин - 50 мин',
-  [Duration.Minutes_50_80]: '50 мин - 80 мин',
-  [Duration.Minutes_80_100]: '80 мин - 100 мин'
-} as const;
 
 export const DURATIONS: Option[] = convertEnumToArray(Duration).map(
-  (specialization) => ({ value: specialization, title: FilterDurationTitle[specialization] })
+  (duration) => ({ value: duration, title: `${DurationMinMax[duration].min}-${DurationMinMax[duration].max} мин` })
+);
+
+export const TRAINIG_FILTER_DURATIONS: Option[] = convertEnumToArray(Duration).map(
+  (duration) => ({ value: duration, title: `${DurationMinMax[duration].min} мин - ${DurationMinMax[duration].max} мин` })
 );
 
 const TrainingLevelTitle: { [key in TrainingLevel]: string } = {

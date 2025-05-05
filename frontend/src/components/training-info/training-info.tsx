@@ -6,7 +6,7 @@ import { IDetailTrainingRdo } from '@backend/shared/core';
 import TrainingInfoHeader from '../training-info-header/training-info-header';
 import Hashtags from '../hashtags/hashtags';
 
-import { SpecializationTitle, TrainingDurationTitle, TrainingGenderTitle } from '../../const';
+import { DurationMinMax, SpecializationTitle, TrainingGenderTitle } from '../../const';
 
 type TrainingInfoProps = {
   training: IDetailTrainingRdo;
@@ -38,7 +38,8 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   const { id: coachId, avatarFilePath, name } = coach;
   const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
   const genderText = TrainingGenderTitle[gender];
-  const durationText = TrainingDurationTitle[duration];
+  const { min, max } = DurationMinMax[duration];
+  const durationText = `${min}_${max}`;
   const ratingText = rating.toFixed(0);
   const divClassName = classNames('training-card', { 'training-card--edit': !isSportsman });
 

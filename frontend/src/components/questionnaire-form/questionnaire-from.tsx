@@ -14,16 +14,11 @@ import {
   Duration, isSportsmanRole, Role, Specialization, TrainingLevel,
   ICreateQuestionnaireCoachDto, ICreateQuestionnaireSportsmanDto
 } from '@backend/shared/core';
-import { convertEnumToArray } from '@backend/shared/helpers';
 
-import { CreateQuestionnaireDto, Option } from '../../types/types';
-import { DefaultUser, PageTitle, TRAINING_LEVELS, UserDurationTitle } from '../../const';
+import { CreateQuestionnaireDto } from '../../types/types';
+import { DefaultUser, DURATIONS, PageTitle, TRAINING_LEVELS } from '../../const';
 
 const DEFAULT_INDIVIDUAL_TRAINING = true;
-
-const USER_DURATIONS: Option[] = convertEnumToArray(Duration).map(
-  (duration) => ({ value: duration, title: `${UserDurationTitle[duration]} мин` })
-);
 
 enum FormFieldName {
   Spec = 'specialization',
@@ -116,7 +111,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
               <CustomToggleRadio
                 name={FormFieldName.Time}
                 divExtraClassName={divClassName}
-                options={USER_DURATIONS}
+                options={DURATIONS}
                 value={DefaultUser.DURATION}
               />
             </Block>

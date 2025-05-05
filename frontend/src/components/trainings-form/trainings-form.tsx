@@ -8,7 +8,7 @@ import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkbox
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
 import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
 
-import { DURATIONS, SPECIALISATIONS } from '../../const';
+import { TRAINIG_FILTER_DURATIONS, SPECIALISATIONS } from '../../const';
 
 const Limit = {
   PRICE_MIN: 0,
@@ -133,7 +133,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               caption='Длительность'
               name='duration'
               items={durations}
-              options={DURATIONS}
+              options={TRAINIG_FILTER_DURATIONS}
               className={className}
               onChange={handleDurationsChange}
             />
