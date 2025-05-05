@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { EntityFactory, Training } from '@backend/shared/core';
+import { CreateBasicTrainingDto, EntityFactory, Training } from '@backend/shared/core';
 
 import { TrainingEntity } from './training.entity';
 
@@ -10,8 +10,7 @@ export class TrainingFactory implements EntityFactory<TrainingEntity> {
     return new TrainingEntity(entityPlainData);
   }
 
-  //! временно? потом будет CreateTrainingWithFileIdDto и преобразование
-  public static createFromDto(dto: Training, userId: string): TrainingEntity {
+  public static createFromDto(dto: CreateBasicTrainingDto, userId: string): TrainingEntity {
     const training: Training = {
       title: dto.title,
       backgroundPath: dto.backgroundPath,
@@ -23,9 +22,8 @@ export class TrainingFactory implements EntityFactory<TrainingEntity> {
       description: dto.description,
       gender: dto.gender,
       videoFileId: dto.videoFileId,
-      rating: 0,
       userId,
-      isSpecial: dto.isSpecial
+      isSpecial: false //! на форме при создании нет, значит false
     }
 
     return new TrainingEntity(training);

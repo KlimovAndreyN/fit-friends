@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
@@ -71,8 +71,6 @@ export class FitTrainingService {
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
     const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
     console.log('detailTraining', detailTraining);
-
-    throw new NotFoundException('тест тест');
 
     return detailTraining;
   }

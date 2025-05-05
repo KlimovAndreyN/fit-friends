@@ -1,10 +1,11 @@
-import { Controller, Get, Param, Query, Req, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, RequestWithUserId, XAllApiHeaderOptions, TrainingRoute,
   TrainingRdo, BasicDetailTrainingRdo, IdParam, TrainingsWithPaginationRdo,
-  TrainingQuery, ApiParamOption, RequestWithRequestIdAndUserIdAndUserRole
+  TrainingQuery, ApiParamOption, RequestWithRequestIdAndUserIdAndUserRole,
+  CreateBasicTrainingDto
 } from '@backend/shared/core';
 import { InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 import { fillDto } from '@backend/shared/helpers';
@@ -76,6 +77,17 @@ export class TrainingController {
     //! возможно тут нужно проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?
 
     const entity = await this.trainingService.findById(trainingId, userId, userRole);
+
+    return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
+  }
+
+  @ApiResponse({ type: TrainingRdo })
+  @Post()
+  public async create(
+    @Body() dto: CreateBasicTrainingDto,
+    @Req() { userId }: RequestWithUserId
+  ): Promise<BasicDetailTrainingRdo> {
+    const entity = await this.trainingService.create(dto, userId);
 
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }

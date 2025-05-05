@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { isCoachRole, isForFreeSortType, Role, Training, TrainingQuery } from '@backend/shared/core';
+import { CreateBasicTrainingDto, isCoachRole, isForFreeSortType, Role, TrainingQuery } from '@backend/shared/core';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
@@ -68,8 +68,7 @@ export class TrainingService {
     return foundTraining;
   }
 
-  //! временно, потом будет CreateTrainingWithFileIdDto
-  public async create(dto: Training, userId: string): Promise<TrainingEntity> {
+  public async create(dto: CreateBasicTrainingDto, userId: string): Promise<TrainingEntity> {
     const entity: TrainingEntity = TrainingFactory.createFromDto(dto, userId);
 
     await this.trainingRepository.save(entity);
