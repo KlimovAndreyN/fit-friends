@@ -1,3 +1,5 @@
+import classNames from 'classnames';
+
 import { Option } from '../../types/types';
 
 type CustomToggleRadioProps = {
@@ -5,13 +7,18 @@ type CustomToggleRadioProps = {
   name: string;
   options: Option[];
   value?: Option['value'];
+  readOnly?: boolean;
+  isSmall?: boolean;
 }
 
 function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
-  const { divExtraClassName, name, options, value } = props;
+  //! если бкудет участвовать в управляемой форме, то нужно будет доделать
+
+  const { divExtraClassName, name, options, value, readOnly, isSmall } = props;
+  const className = classNames('custom-toggle-radio', { 'custom-toggle-radio--big': !isSmall }, `${divExtraClassName}__radio`);
 
   return (
-    <div className={`custom-toggle-radio custom-toggle-radio--big ${divExtraClassName}__radio`}>
+    <div className={className}>
       {
         options.map(
           ({ value: curretnValue, title }) => {
@@ -20,7 +27,7 @@ function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
             return (
               <div className="custom-toggle-radio__block" key={curretnValue}>
                 <label>
-                  <input type="radio" name={name} value={curretnValue} defaultChecked={checked} />
+                  <input type="radio" name={name} value={curretnValue} defaultChecked={checked} readOnly={readOnly} />
                   <span className="custom-toggle-radio__icon"></span>
                   <span className="custom-toggle-radio__label">{title}</span>
                 </label>

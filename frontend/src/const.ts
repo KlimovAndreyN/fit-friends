@@ -92,6 +92,16 @@ export const TrainingGenderTitle: { [key in Gender]: string } = {
   [Gender.NotMatter]: 'всех',
 } as const;
 
+const CreateTrainingGenderTitle: { [key in Gender]: string } = {
+  [Gender.Female]: 'Женщинам',
+  [Gender.Male]: 'Мужчинам',
+  [Gender.NotMatter]: 'Всем',
+} as const;
+
+export const TRAINING_GENDERS: Option[] = convertEnumToArray(Gender).map(
+  (gender) => ({ value: gender, title: CreateTrainingGenderTitle[gender] })
+);
+
 export const LocationTitle: { [key in Location]: string } = {
   [Location.Petrogradskaya]: 'Петроградская',
   [Location.Pionerskaya]: 'Пионерская',

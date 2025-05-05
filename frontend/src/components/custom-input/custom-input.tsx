@@ -68,7 +68,7 @@ function CustomInput(props: CustomInputProps): JSX.Element {
             {
               (isTextarea) ? <textarea {...textareaProps} placeholder=' ' /> : <input {...inputProps} />
             }
-            {!spanText && <span className={`${mainClassName}__text`}>{spanText}</span>}
+            {spanText && <span className={`${mainClassName}__text`}>{spanText}</span>}
           </span>
         }
       </label>

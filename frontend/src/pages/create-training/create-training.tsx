@@ -1,14 +1,36 @@
 import { FormEvent, Fragment, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Gender, TrainingLevel } from '@backend/shared/core';
+
 import Header from '../../components/header/header';
 import Block from '../../components/block/block';
+import CustomInput from '../../components/custom-input/custom-input';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
 import { getIsCreatedTraining, getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
 import { createTraining } from '../../store/actions/training-action';
-import { AppRoute, PageTitle } from '../../const';
+import { AppRoute, PageTitle, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
+import CustomSelect from '../../components/custom-select/custom-select';
+import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
+
+const DEFAULT_GENDER = Gender.Female;
+
+enum FormFieldName {
+  Name = 'training-name',
+
+  Level = 'level',
+  TrainingGender = 'gender',
+
+  //!----
+  Spec = 'specialization',
+  Time = 'time',
+  CaloriesLose = 'calories-lose',
+  CaloriesWaste = 'calories-waste',
+  Files = 'import',
+  Description = 'description'
+}
 
 function CreateTraining(): JSX.Element {
   //! форма похода на PopupForm, только с верхним меню, выделить все отдельно, если еще будет использоватся в похожем виде
@@ -31,8 +53,24 @@ function CreateTraining(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
 
-  const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const title = formData.get(FormFieldName.Name)?.toString() || '';
+    const trainingLevel = (formData.get(FormFieldName.Level)?.toString() || '') as TrainingLevel;
+    const gender = (formData.get(FormFieldName.TrainingGender)?.toString() || '') as Gender;
+
+    // eslint-disable-next-line no-console
+    console.log('handlePopupFormSubmit');
+    // eslint-disable-next-line no-console
+    console.log('title', title);
+    // eslint-disable-next-line no-console
+    console.log('trainingLevel', trainingLevel);
+    // eslint-disable-next-line no-console
+    console.log('gender', gender);
 
     //! попробовать добавить в начало новую тренировку, но фильтры могут быть не те, проще заново обновить список тренирорвок и фильтры скинуть
     //! должен быть в начале, т.к. начальная сортировка по дате
@@ -43,8 +81,7 @@ function CreateTraining(): JSX.Element {
   };
 
   const mainClassNamePrefix = 'create-training'; //! заменить везде
-  //const isDisabled = isCreateExistQuestionnaireExecuting;
-
+  const isDisabled = isCreateTrainingExecuting;
 
   return (
     <Fragment>
@@ -57,20 +94,19 @@ function CreateTraining(): JSX.Element {
                 <h1 className="popup-form__title">Создание тренировки</h1>
               </div>
               <div className="popup-form__form">
-                <form method="post" onSubmit={handlePopupFormSubmit}>
-                  <div className="create-training">
-                    <div className="create-training__wrapper">
+                <form method="post" onSubmit={handleFormSubmit}>
+                  <div className={mainClassNamePrefix}>
+                    <div className={`${mainClassNamePrefix}__wrapper`}>
                       <Block legend='Название тренировки' className={mainClassNamePrefix} isHeaderLegend>
-                        <div className="custom-input create-training__input">
-                          <label>
-                            <span className="custom-input__wrapper">
-                              <input type="text" name="training-name" />
-                            </span>
-                          </label>
-                        </div>
+                        <CustomInput
+                          name={FormFieldName.Name}
+                          type='text'
+                          divExtraClassName={mainClassNamePrefix}
+                          readOnly={isDisabled}
+                        />
                       </Block>
                       <Block legend='Характеристики тренировки' className={mainClassNamePrefix} isHeaderLegend>
-                        <div className="create-training__info">
+                        <div className={`${mainClassNamePrefix}__info`}>
                           <div className="custom-select custom-select--not-selected">
                             <span className="custom-select__label">Выберите тип тренировки</span>
                             <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
@@ -117,49 +153,24 @@ function CreateTraining(): JSX.Element {
                               </span>
                             </label>
                           </div>
-                          <div className="custom-select custom-select--not-selected">
-                            <span className="custom-select__label">Выберите уровень тренировки</span>
-                            <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
-                              <span className="custom-select__text">
-                              </span>
-                              <span className="custom-select__icon">
-                                <svg width="15" height="6" aria-hidden="true">
-                                  <use xlinkHref="#arrow-down"></use>
-                                </svg>
-                              </span>
-                            </button>
-                            <ul className="custom-select__list" role="listbox">
-                            </ul>
-                          </div>
+                          <CustomSelect
+                            name={FormFieldName.Level}
+                            caption='Выберите уровень тренировки'
+                            options={TRAINING_LEVELS}
+                            extraClassName={mainClassNamePrefix}
+                            readOnly={isDisabled}
+                          />
                           <div className="create-training__radio-wrapper">
                             <span className="create-training__label">Кому подойдет тренировка</span>
                             <br />
-                            <div className="custom-toggle-radio create-training__radio">
-                              <div className="custom-toggle-radio__block">
-                                <label>
-                                  <input type="radio" name="gender" />
-                                  <span className="custom-toggle-radio__icon">
-                                  </span>
-                                  <span className="custom-toggle-radio__label">Мужчинам</span>
-                                </label>
-                              </div>
-                              <div className="custom-toggle-radio__block">
-                                <label>
-                                  <input type="radio" name="gender" defaultChecked />
-                                  <span className="custom-toggle-radio__icon">
-                                  </span>
-                                  <span className="custom-toggle-radio__label">Женщинам</span>
-                                </label>
-                              </div>
-                              <div className="custom-toggle-radio__block">
-                                <label>
-                                  <input type="radio" name="gender" />
-                                  <span className="custom-toggle-radio__icon">
-                                  </span>
-                                  <span className="custom-toggle-radio__label">Всем</span>
-                                </label>
-                              </div>
-                            </div>
+                            <CustomToggleRadio
+                              divExtraClassName={mainClassNamePrefix}
+                              name={FormFieldName.TrainingGender}
+                              value={DEFAULT_GENDER}
+                              options={TRAINING_GENDERS}
+                              readOnly={isDisabled}
+                              isSmall
+                            />
                           </div>
                         </div>
                       </Block>
