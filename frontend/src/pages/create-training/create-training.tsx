@@ -1,41 +1,41 @@
 import { FormEvent, Fragment, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Duration, Gender, TrainingLevel } from '@backend/shared/core';
+import { Duration, Gender, Specialization, TrainingLevel } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import Block from '../../components/block/block';
 import CustomInput from '../../components/custom-input/custom-input';
+import CustomSelect from '../../components/custom-select/custom-select';
+import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
 import { getIsCreatedTraining, getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
 import { createTraining } from '../../store/actions/training-action';
-import { AppRoute, DURATIONS, PageTitle, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
-import CustomSelect from '../../components/custom-select/custom-select';
-import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
+import { AppRoute, DURATIONS, PageTitle, SPECIALISATIONS, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
 
 const DEFAULT_GENDER = Gender.Female;
 
 enum FormFieldName {
   Name = 'training-name',
-
+  Spec = 'specialization',
+  CaloriesWaste = 'calories',
   Time = 'time',
   Price = 'price',
   Level = 'level',
   TrainingGender = 'gender',
 
   //!----
-  Spec = 'specialization',
-  CaloriesLose = 'calories-lose',
-  CaloriesWaste = 'calories-waste',
   Files = 'import',
   Description = 'description'
 }
 
 function CreateTraining(): JSX.Element {
-  //! форма похода на PopupForm, только с верхним меню, выделить все отдельно, если еще будет использоватся в похожем виде
+  //! форма похожа на PopupForm, только с верхним меню, выделить все отдельно, если еще будет использоватся в похожем виде
   //    или когда переделаю PopupForm на форму и страницу
+  // специализации все оставил, можно сделать только те что есть в опроснике у тренера
+  //   если из личного кабинета, то он есть, а если по ссылке сразу на добавление, то нужно получить опросник и для личного кабинета тоже бы обновить
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -61,7 +61,8 @@ function CreateTraining(): JSX.Element {
     const formData = new FormData(form);
 
     const title = formData.get(FormFieldName.Name)?.toString() || '';
-
+    const specialization = (formData.get(FormFieldName.Spec)?.toString() || '') as Specialization;
+    const caloriesWaste = parseInt(formData.get(FormFieldName.CaloriesWaste)?.toString() || '', 10);
     const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration;
     const price = parseInt(formData.get(FormFieldName.Price)?.toString() || '', 10);
     const trainingLevel = (formData.get(FormFieldName.Level)?.toString() || '') as TrainingLevel;
@@ -71,7 +72,10 @@ function CreateTraining(): JSX.Element {
     console.log('handlePopupFormSubmit');
     // eslint-disable-next-line no-console
     console.log('title', title);
-
+    // eslint-disable-next-line no-console
+    console.log('specialization', specialization);
+    // eslint-disable-next-line no-console
+    console.log('caloriesWaste', caloriesWaste);
     // eslint-disable-next-line no-console
     console.log('duration', duration);
     // eslint-disable-next-line no-console
@@ -116,29 +120,20 @@ function CreateTraining(): JSX.Element {
                       </Block>
                       <Block legend='Характеристики тренировки' className={mainClassNamePrefix} isHeaderLegend>
                         <div className={`${mainClassNamePrefix}__info`}>
-                          <div className="custom-select custom-select--not-selected">
-                            <span className="custom-select__label">Выберите тип тренировки</span>
-                            <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
-                              <span className="custom-select__text">
-                              </span>
-                              <span className="custom-select__icon">
-                                <svg width="15" height="6" aria-hidden="true">
-                                  <use xlinkHref="#arrow-down"></use>
-                                </svg>
-                              </span>
-                            </button>
-                            <ul className="custom-select__list" role="listbox">
-                            </ul>
-                          </div>
-                          <div className="custom-input custom-input--with-text-right">
-                            <label>
-                              <span className="custom-input__label">Сколько калорий потратим</span>
-                              <span className="custom-input__wrapper">
-                                <input type="number" name="calories" />
-                                <span className="custom-input__text">ккал</span>
-                              </span>
-                            </label>
-                          </div>
+                          <CustomSelect
+                            name={FormFieldName.Spec}
+                            caption='Выберите тип тренировки'
+                            options={SPECIALISATIONS}
+                            extraClassName={mainClassNamePrefix}
+                            readOnly={isDisabled}
+                          />
+                          <CustomInput
+                            name={FormFieldName.CaloriesWaste}
+                            type='number'
+                            divClassNamePostfix='with-text-right'
+                            label='Сколько калорий потратим'
+                            spanText='ккал'
+                          />
                           <CustomSelect
                             name={FormFieldName.Time}
                             caption='Сколько времени потратим'
