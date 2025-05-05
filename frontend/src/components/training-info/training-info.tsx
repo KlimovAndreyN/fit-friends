@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import classNames from 'classnames';
+
 import { IDetailTrainingRdo } from '@backend/shared/core';
 
 import TrainingInfoHeader from '../training-info-header/training-info-header';
@@ -32,17 +35,37 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   //! проверить консоль браузера на ошибки
 
   const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
+  const [isEditing, setIsEditing] = useState(false);
   const { id: coachId, avatarFilePath, name } = coach;
   const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
   const genderText = TrainingGenderTitle[gender];
   const durationText = TrainingDurationTitle[duration];
   const ratingText = rating.toFixed(0);
+  const divClassName = classNames('training-card', { 'training-card--edit': !isSportsman });
+
+  const handleEditClick = (isSportsman) ? undefined : () => {
+    //! временно
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = (isSportsman) ? undefined : () => {
+    //! временно
+    setIsEditing(false);
+  };
 
   return (
-    <div className="training-card">
+    <div className={divClassName}>
       <div className="training-info">
         <h2 className="visually-hidden">Информация о тренировке</h2>
-        <TrainingInfoHeader coachId={(isSportsman) ? coachId : ''} coachName={name} coachAvatarFilePath={avatarFilePath} />
+        <TrainingInfoHeader
+          isSportsman={isSportsman}
+          isEditing={isEditing}
+          coachId={coachId}
+          coachName={name}
+          coachAvatarFilePath={avatarFilePath}
+          onEditClick={handleEditClick}
+          onSaveClick={handleSaveClick}
+        />
         <div className="training-info__main-content">
           <form action="#" method="get">
             <div className="training-info__form-wrapper">
@@ -101,16 +124,8 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
         <h2 className="training-video__title">Видео</h2>
         <div className="training-video__video">
           <div className="training-video__thumbnail">
-            <video
-              controls
-              width="100%"
-              height="auto"
-              className="training-video__video"
-            >
-              <source
-                src={videoFilePath}
-                type="video/mp4"
-              />
+            <video controls width="100%" height="auto" className="training-video__video">
+              <source src={videoFilePath} type="video/mp4" />
               Ваш браузер не поддерживает видео
             </video>
             {/* //! visually-hidden - временно скрыл обложку*/}
