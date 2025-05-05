@@ -3,11 +3,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption,
+  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption, IdParam,
   TrainingQuery, BearerAuth, TrainingRdo, RequestWithRequestIdAndUser,
   TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser,
-  VIDEO_FILE_PROPERTY, CreateTrainingDto, RequestWithRequestIdAndUserId,
-  IdParam, parseTrainingVideoFilePipeBuilder
+  VIDEO_FILE_PROPERTY, CreateTrainingDto, parseTrainingVideoFilePipeBuilder
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -84,17 +83,11 @@ export class FitTrainingController {
   @Post()
   public async create(
     @Body() dto: CreateTrainingDto,
-    @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
-    @UploadedFile(parseTrainingVideoFilePipeBuilder) file?: Express.Multer.File[]
+    @Req() request: RequestWithRequestIdAndBearerAuthAndUser,
+    @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<DetailTrainingRdo> {
-    console.log('create');
-    console.log('dto', dto);
-    console.log('requestId', requestId);
-    console.log('userId', userId);
-    console.log('file', file);
+    const training = await this.fitTrainingService.create(dto, file, request);
 
-    //! const training = await this.fitTrainingService.findById(trainingId, request);
-
-    return null; //! training;
+    return training;
   }
 }

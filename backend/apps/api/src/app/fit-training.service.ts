@@ -1,10 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+import 'multer'; // Express.Multer.File
 
 import {
-  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
-  RequestWithRequestIdAndBearerAuthAndUser, RequestWithRequestIdAndUser
+  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute,
+  RequestWithRequestIdAndBearerAuthAndUser, UserRdo,
+  CreateTrainingDto, RequestWithRequestIdAndUser
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -52,6 +54,39 @@ export class FitTrainingService {
       videoFilePath,
       coach
     };
+
+    return detailTraining;
+  }
+
+  public async create(
+    dto: CreateTrainingDto,
+    file: Express.Multer.File,
+    request: RequestWithRequestIdAndBearerAuthAndUser
+  ): Promise<DetailTrainingRdo> {
+    console.log('create');
+    console.log('dto', dto);
+    console.log('request', request);
+    console.log('file', file);
+
+    /*
+    const url = this.getUrl(trainingId);
+    const headers = makeHeaders(requestId, null, userId, userRole);
+    const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
+    const { userId: coachId, videoFileId, ...training } = data;
+    const user = await this.userService.getDetailUser(coachId, bearerAuth, requestId);
+    const { id, name, avatarFilePath } = user;
+    const coach: UserRdo = { id, name, avatarFilePath };
+    const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
+    */
+    const detailTraining: DetailTrainingRdo = null;
+
+    /*
+    const detailTraining: DetailTrainingRdo = {
+      ...training,
+      videoFilePath,
+      coach
+    };
+    */
 
     return detailTraining;
   }
