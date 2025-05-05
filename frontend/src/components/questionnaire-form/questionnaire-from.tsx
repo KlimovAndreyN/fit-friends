@@ -17,16 +17,9 @@ import {
 import { convertEnumToArray } from '@backend/shared/helpers';
 
 import { CreateQuestionnaireDto, Option } from '../../types/types';
-import { DefaultUser, PageTitle, TRAINING_LEVELS } from '../../const';
+import { DefaultUser, PageTitle, TRAINING_LEVELS, UserDurationTitle } from '../../const';
 
 const DEFAULT_INDIVIDUAL_TRAINING = true;
-
-const UserDurationTitle: { [key in Duration]: string } = {
-  [Duration.Minutes_10_30]: '10-30',
-  [Duration.Minutes_30_50]: '30-50',
-  [Duration.Minutes_50_80]: '50-80',
-  [Duration.Minutes_80_100]: '80-100'
-} as const;
 
 const USER_DURATIONS: Option[] = convertEnumToArray(Duration).map(
   (duration) => ({ value: duration, title: `${UserDurationTitle[duration]} мин` })

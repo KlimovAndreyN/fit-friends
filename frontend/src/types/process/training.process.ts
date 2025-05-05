@@ -22,6 +22,8 @@ export type TrainingProcess = {
   isFetchDetailTrainingError: boolean;
   detailTraining: IDetailTrainingRdo | null;
 
+  isCreateTrainingExecuting: boolean;
+
   isFetchCoachTrainingsExecuting: boolean;
   coachTrainings: ITrainingRdo[];
 }

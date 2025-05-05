@@ -2,9 +2,33 @@ import { Fragment } from 'react';
 
 import Header from '../../components/header/header';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
 import { PageTitle } from '../../const';
 
 function CreateTraining(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isCreateTrainingExecuting = useAppSelector(getIsCreateTrainingExecuting);
+
+  //! отладка
+  // eslint-disable-next-line no-console
+  console.log('CreateTraining');
+  // eslint-disable-next-line no-console
+  console.log('dispatch', dispatch);
+  // eslint-disable-next-line no-console
+  console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
+
+  /*
+    const handleOnSubmit = (dto: CreateQuestionnaireDto) => {
+      dispatch(createQuestionnaire({ dto, userRole }));
+      dispatch(setPrevLocation(AppRoute.Questionnaire));
+    };
+
+    return (
+      <QuestionnaireForm userRole={userRole} onSubmit={handleOnSubmit} isDisabled={isCreateExistQuestionnaireExecuting} />
+    );
+  */
+
   return (
     <Fragment>
       <Header title={PageTitle.CreateTraining} />

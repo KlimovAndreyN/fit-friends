@@ -22,5 +22,7 @@ export const getIsFetchDetailTrainingExecuting = ({ [StoreSlice.TrainingProcess]
 export const getIsFetchDetailTrainingError = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isFetchDetailTrainingError'] => TRAINING_PROCESS.isFetchDetailTrainingError;
 export const getDetailTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['detailTraining'] => TRAINING_PROCESS.detailTraining;
 
+export const getIsCreateTrainingExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isCreateTrainingExecuting'] => TRAINING_PROCESS.isCreateTrainingExecuting;
+
 export const getIsFetchCoachTrainingsExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isFetchCoachTrainingsExecuting'] => TRAINING_PROCESS.isFetchCoachTrainingsExecuting;
 export const getCoachTrainings = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['coachTrainings'] => TRAINING_PROCESS.coachTrainings;

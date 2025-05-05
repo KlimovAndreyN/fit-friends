@@ -9,9 +9,9 @@ import { CreateQuestionnaireDto } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function Questionnaire(): JSX.Element | null {
+  const dispatch = useAppDispatch();
   const isCreateExistQuestionnaireExecuting = useAppSelector(getIsCreateQuestionnaireExecuting);
   const userRole = useAppSelector(getUserRole);
-  const dispatch = useAppDispatch();
 
   const handleOnSubmit = (dto: CreateQuestionnaireDto) => {
     dispatch(createQuestionnaire({ dto, userRole }));

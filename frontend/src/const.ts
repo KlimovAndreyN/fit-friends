@@ -119,6 +119,13 @@ export const SPECIALISATIONS: Option[] = convertEnumToArray(Specialization).map(
   (specialization) => ({ value: specialization, title: SpecializationTitle[specialization] })
 );
 
+export const UserDurationTitle: { [key in Duration]: string } = {
+  [Duration.Minutes_10_30]: '10-30',
+  [Duration.Minutes_30_50]: '30-50',
+  [Duration.Minutes_50_80]: '50-80',
+  [Duration.Minutes_80_100]: '80-100'
+} as const;
+
 export const TrainingDurationTitle: { [key in Duration]: string } = {
   [Duration.Minutes_10_30]: '10_30',
   [Duration.Minutes_30_50]: '30_50',

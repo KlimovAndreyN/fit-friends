@@ -4,7 +4,7 @@ import { ITrainingQuery } from '@backend/shared/core';
 
 import { TrainingProcess } from '../../types/process/training.process';
 import {
-  fetchDetailTraining, fetchTrainings, fetchPopularTrainings,
+  fetchDetailTraining, fetchTrainings, fetchPopularTrainings, crateTraining,
   fetchForSportsmanTrainings, fetchSpecialTrainings, fetchCoachTrainings
 } from '../actions/training-action';
 import { StoreSlice } from '../../const';
@@ -42,6 +42,8 @@ const initialState: TrainingProcess = {
   isFetchDetailTrainingExecuting: false,
   isFetchDetailTrainingError: false,
   detailTraining: null,
+
+  isCreateTrainingExecuting: false,
 
   isFetchCoachTrainingsExecuting: false,
   coachTrainings: []
@@ -185,6 +187,25 @@ export const trainingProcess = createSlice(
           (state, { payload }) => {
             state.detailTraining = payload;
             state.isFetchDetailTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          crateTraining.pending,
+          (state) => {
+            state.isCreateTrainingExecuting = true;
+          }
+        )
+        .addCase(
+          crateTraining.rejected,
+          (state) => {
+            state.isCreateTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          crateTraining.fulfilled,
+          (state, { payload }) => {
+            state.detailTraining = payload;
+            state.isCreateTrainingExecuting = false;
           }
         )
         .addCase(

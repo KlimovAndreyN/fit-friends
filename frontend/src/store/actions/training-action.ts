@@ -17,6 +17,7 @@ export const Action = {
   FETCH_POPULAR_TRAININGS: 'training/fetch-popular-trainings',
   FETCH_TRAININGS: 'training/fetch-trainings',
   FETCH_DETAIL_TRAINING: 'training/fetch-detail-training',
+  CREATE_TRAINING: 'training/create-training',
   FETCH_COACH_TRAININGS: 'training/fetch-coach-trainings'
 };
 
@@ -76,6 +77,21 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, 
   async (trainingId, { extra }) => {
     const { api } = extra;
     const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, trainingId));
+
+    return data;
+  }
+);
+
+//! временно string - нужен CreateTrainingRdo
+export const crateTraining = createAsyncThunk<IDetailTrainingRdo, IDetailTrainingRdo, { extra: Extra }>(
+  Action.CREATE_TRAINING,
+  async (dto, { extra }) => {
+    const { api } = extra;
+    //! отладка
+    // eslint-disable-next-line no-console
+    console.log('crateTraining - dto', dto);
+
+    const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, 'test!!'));
 
     return data;
   }
