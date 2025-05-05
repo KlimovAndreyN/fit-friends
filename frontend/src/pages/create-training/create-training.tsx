@@ -97,15 +97,12 @@ function CreateTraining(): JSX.Element {
       description,
       videoFile
     };
-    // eslint-disable-next-line no-console
-    console.log('dto', dto);
 
     //! попробовать добавить в начало новую тренировку, но фильтры могут быть не те, проще заново обновить список тренирорвок и фильтры скинуть
     //! должен быть в начале, т.к. начальная сортировка по дате
     dispatch(setPrevLocation(AppRoute.CreateTraining));
 
-    //! временно
-    //dispatch(createTraining(dto));
+    dispatch(createTraining(dto));
   };
 
   const optionBackgroundPaths: Option[] = BackgroundPaths.TRAININGS.map((item) => ({ value: item, title: item }));

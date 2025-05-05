@@ -208,7 +208,6 @@ export const trainingProcess = createSlice(
         .addCase(
           createTraining.fulfilled,
           (state) => {
-            //! можно ничего не возвращать а направить на мои тренировки
             state.isCreatedTraining = true;
             state.isCreateTrainingExecuting = false;
           }

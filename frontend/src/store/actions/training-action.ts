@@ -2,8 +2,8 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  ApiServiceRoute, IDetailTrainingRdo, isForFreeSortType, ITrainingQuery,
-  ITrainingRdo, ITrainingsWithPaginationRdo, TrainingRoute
+  ApiServiceRoute, ICreateTrainingDto, IDetailTrainingRdo, isForFreeSortType,
+  ITrainingQuery, ITrainingRdo, ITrainingsWithPaginationRdo, TrainingRoute
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
@@ -82,19 +82,11 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, 
   }
 );
 
-//! временно string - нужен CreateTrainingRdo
-export const createTraining = createAsyncThunk<IDetailTrainingRdo, string/* IDetailTrainingRdo*/, { extra: Extra }>(
+export const createTraining = createAsyncThunk<void, ICreateTrainingDto, { extra: Extra }>(
   Action.CREATE_TRAINING,
   async (dto, { extra }) => {
     const { api } = extra;
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('createTraining - dto', dto);
-
-    //! временно
-    const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, '126ce078-873d-4aff-961c-d20e0dc24f27'));
-
-    return data;
+    await api.post<IDetailTrainingRdo>(ApiServiceRoute.Trainings, dto, { useMultipartFormData: true });
   }
 );
 
