@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useEffect } from 'react';
+import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Duration, Gender, Specialization, TrainingLevel } from '@backend/shared/core';
@@ -25,13 +25,12 @@ enum FormFieldName {
   Price = 'price',
   Level = 'level',
   TrainingGender = 'gender',
-
-  //!----
-  Files = 'import',
-  Description = 'description'
+  Description = 'description',
+  File = 'import'
 }
 
 function CreateTraining(): JSX.Element {
+  //! файл с тренирорвкой вынести отдельно, попробовать объеденить с QuestionnaireFormFiles
   //! форма похожа на PopupForm, только с верхним меню, выделить все отдельно, если еще будет использоватся в похожем виде
   //    или когда переделаю PopupForm на форму и страницу
   // специализации все оставил, можно сделать только те что есть в опроснике у тренера
@@ -41,6 +40,8 @@ function CreateTraining(): JSX.Element {
   const dispatch = useAppDispatch();
   const isCreateTrainingExecuting = useAppSelector(getIsCreateTrainingExecuting);
   const isCreatedTraining = useAppSelector(getIsCreatedTraining);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [fileCaption, setFileCaption] = useState<string>('Загрузите сюда файлы формата MOV, AVI или MP4');
 
   useEffect(() => {
     if (isCreatedTraining) {
@@ -53,6 +54,14 @@ function CreateTraining(): JSX.Element {
   console.log('CreateTraining');
   // eslint-disable-next-line no-console
   console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
+
+  const handleFileInputChange = (event: FormEvent<HTMLInputElement>) => {
+    const { files } = event.currentTarget;
+
+    if (files && files.length) {
+      setFileCaption(files[0].name);
+    }
+  };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,6 +76,9 @@ function CreateTraining(): JSX.Element {
     const price = parseInt(formData.get(FormFieldName.Price)?.toString() || '', 10);
     const trainingLevel = (formData.get(FormFieldName.Level)?.toString() || '') as TrainingLevel;
     const gender = (formData.get(FormFieldName.TrainingGender)?.toString() || '') as Gender;
+    const description = formData.get(FormFieldName.Description)?.toString() || '';
+    const files = fileInputRef.current?.files;
+    const file = (files?.length) ? files[0] : undefined;
 
     // eslint-disable-next-line no-console
     console.log('handlePopupFormSubmit');
@@ -84,6 +96,10 @@ function CreateTraining(): JSX.Element {
     console.log('trainingLevel', trainingLevel);
     // eslint-disable-next-line no-console
     console.log('gender', gender);
+    // eslint-disable-next-line no-console
+    console.log('description', description);
+    // eslint-disable-next-line no-console
+    console.log('file', file);
 
     //! попробовать добавить в начало новую тренировку, но фильтры могут быть не те, проще заново обновить список тренирорвок и фильтры скинуть
     //! должен быть в начале, т.к. начальная сортировка по дате
@@ -93,14 +109,14 @@ function CreateTraining(): JSX.Element {
     //dispatch(createTraining('test'));
   };
 
-  const mainClassNamePrefix = 'create-training'; //! заменить везде
+  const mainClassNamePrefix = 'create-training';
   const isDisabled = isCreateTrainingExecuting;
 
   return (
     <Fragment>
       <Header title={PageTitle.CreateTraining} />
       <main>
-        <div className="popup-form popup-form--create-training">
+        <div className={`popup-form popup-form--${mainClassNamePrefix}`}>
           <div className="popup-form__wrapper">
             <div className="popup-form__content">
               <div className="popup-form__title-wrapper">
@@ -155,10 +171,10 @@ function CreateTraining(): JSX.Element {
                             extraClassName={mainClassNamePrefix}
                             readOnly={isDisabled}
                           />
-                          <div className="create-training__radio-wrapper">
-                            <span className="create-training__label">Кому подойдет тренировка</span>
+                          <div className={`${mainClassNamePrefix}__radio-wrapper`}>
+                            <span className={`${mainClassNamePrefix}__label`}>Кому подойдет тренировка</span>
                             <br />
-                            <CustomToggleRadio
+                            <CustomToggleRadio //! добавить во внутрь заголовок-div и текст-span и br
                               divExtraClassName={mainClassNamePrefix}
                               name={FormFieldName.TrainingGender}
                               value={DEFAULT_GENDER}
@@ -170,26 +186,34 @@ function CreateTraining(): JSX.Element {
                         </div>
                       </Block>
                       <Block legend='Описание тренировки' className={mainClassNamePrefix} isHeaderLegend>
-                        <div className="custom-textarea create-training__textarea">
+                        <div className={`custom-textarea ${mainClassNamePrefix}__textarea`} /* //! можно использовать CustomInput но там нужно убрать span */>
                           <label>
-                            <textarea name="description" placeholder=" "></textarea>
+                            <textarea name={FormFieldName.Description} placeholder=" "></textarea>
                           </label>
                         </div>
                       </Block>
                       <Block legend='Загрузите видео-тренировку' className={mainClassNamePrefix} isHeaderLegend>
-                        <div className="drag-and-drop create-training__drag-and-drop">
+                        <div className={`drag-and-drop ${mainClassNamePrefix}__drag-and-drop`}>
                           <label>
-                            <span className="drag-and-drop__label" tabIndex={0}>Загрузите сюда файлы формата MOV, AVI или MP4
+                            <span className="drag-and-drop__label" tabIndex={0}>
+                              {fileCaption}
                               <svg width="20" height="20" aria-hidden="true">
                                 <use xlinkHref="#icon-import-video"></use>
                               </svg>
                             </span>
-                            <input type="file" name="import" tabIndex={-1} accept=".mov, .avi, .mp4" />
+                            <input
+                              type="file"
+                              name={FormFieldName.File}
+                              tabIndex={-1}
+                              accept=".mov, .avi, .mp4"
+                              ref={fileInputRef}
+                              onChange={handleFileInputChange}
+                            />
                           </label>
                         </div>
                       </Block>
                     </div>
-                    <button className="btn create-training__button" type="submit">Опубликовать</button>
+                    <button className={`btn ${mainClassNamePrefix}__button`} type="submit">Опубликовать</button>
                   </div>
                 </form>
               </div>
