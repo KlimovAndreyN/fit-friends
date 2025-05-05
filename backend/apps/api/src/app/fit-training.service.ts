@@ -32,7 +32,7 @@ export class FitTrainingService {
   private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
     const { userId, videoFileId, ...fields } = rdo;
     const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
-    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла...
+    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла... и для моих тоже... добавить параметр и сключить лишние запросы
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
 
