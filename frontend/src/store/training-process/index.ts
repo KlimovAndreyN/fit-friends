@@ -203,8 +203,8 @@ export const trainingProcess = createSlice(
         )
         .addCase(
           crateTraining.fulfilled,
-          (state, { payload }) => {
-            state.detailTraining = payload;
+          (state) => {
+            //! можно ничего не возвращать а направить на мои тренировки
             state.isCreateTrainingExecuting = false;
           }
         )

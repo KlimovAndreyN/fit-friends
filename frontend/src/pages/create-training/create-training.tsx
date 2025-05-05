@@ -1,20 +1,25 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import Header from '../../components/header/header';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setPrevLocation } from '../../store/user-process';
 import { getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
-import { PageTitle } from '../../const';
+import { AppRoute, PageTitle } from '../../const';
 
 function CreateTraining(): JSX.Element {
   const dispatch = useAppDispatch();
   const isCreateTrainingExecuting = useAppSelector(getIsCreateTrainingExecuting);
 
+  useEffect(() => {
+    //! попробовать добавить в начало новую тренировку или заново обновить список тренирорвок и фильтры
+    dispatch(setPrevLocation(AppRoute.CreateTraining));
+  }, [dispatch]);
+
+
   //! отладка
   // eslint-disable-next-line no-console
   console.log('CreateTraining');
-  // eslint-disable-next-line no-console
-  console.log('dispatch', dispatch);
   // eslint-disable-next-line no-console
   console.log('isCreateTrainingExecuting', isCreateTrainingExecuting);
 
