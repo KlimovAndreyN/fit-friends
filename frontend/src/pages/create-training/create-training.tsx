@@ -1,7 +1,7 @@
 import { FormEvent, Fragment, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Gender, TrainingLevel } from '@backend/shared/core';
+import { Duration, Gender, TrainingLevel } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import Block from '../../components/block/block';
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
 import { getIsCreatedTraining, getIsCreateTrainingExecuting } from '../../store/training-process/selectors';
 import { createTraining } from '../../store/actions/training-action';
-import { AppRoute, PageTitle, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
+import { AppRoute, DURATIONS, PageTitle, TRAINING_GENDERS, TRAINING_LEVELS } from '../../const';
 import CustomSelect from '../../components/custom-select/custom-select';
 import CustomToggleRadio from '../../components/custom-toggle-radio/custom-toggle-radio';
 
@@ -20,12 +20,13 @@ const DEFAULT_GENDER = Gender.Female;
 enum FormFieldName {
   Name = 'training-name',
 
+  Time = 'time',
+  Price = 'price',
   Level = 'level',
   TrainingGender = 'gender',
 
   //!----
   Spec = 'specialization',
-  Time = 'time',
   CaloriesLose = 'calories-lose',
   CaloriesWaste = 'calories-waste',
   Files = 'import',
@@ -60,6 +61,9 @@ function CreateTraining(): JSX.Element {
     const formData = new FormData(form);
 
     const title = formData.get(FormFieldName.Name)?.toString() || '';
+
+    const duration = (formData.get(FormFieldName.Time)?.toString() || '') as Duration;
+    const price = parseInt(formData.get(FormFieldName.Price)?.toString() || '', 10);
     const trainingLevel = (formData.get(FormFieldName.Level)?.toString() || '') as TrainingLevel;
     const gender = (formData.get(FormFieldName.TrainingGender)?.toString() || '') as Gender;
 
@@ -67,6 +71,11 @@ function CreateTraining(): JSX.Element {
     console.log('handlePopupFormSubmit');
     // eslint-disable-next-line no-console
     console.log('title', title);
+
+    // eslint-disable-next-line no-console
+    console.log('duration', duration);
+    // eslint-disable-next-line no-console
+    console.log('price', price);
     // eslint-disable-next-line no-console
     console.log('trainingLevel', trainingLevel);
     // eslint-disable-next-line no-console
@@ -77,7 +86,7 @@ function CreateTraining(): JSX.Element {
     dispatch(setPrevLocation(AppRoute.CreateTraining));
 
     //! временно
-    dispatch(createTraining('test'));
+    //dispatch(createTraining('test'));
   };
 
   const mainClassNamePrefix = 'create-training'; //! заменить везде
@@ -130,29 +139,20 @@ function CreateTraining(): JSX.Element {
                               </span>
                             </label>
                           </div>
-                          <div className="custom-select custom-select--not-selected">
-                            <span className="custom-select__label">Сколько времени потратим</span>
-                            <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
-                              <span className="custom-select__text">
-                              </span>
-                              <span className="custom-select__icon">
-                                <svg width="15" height="6" aria-hidden="true">
-                                  <use xlinkHref="#arrow-down"></use>
-                                </svg>
-                              </span>
-                            </button>
-                            <ul className="custom-select__list" role="listbox">
-                            </ul>
-                          </div>
-                          <div className="custom-input custom-input--with-text-right">
-                            <label>
-                              <span className="custom-input__label">Стоимость тренировки</span>
-                              <span className="custom-input__wrapper">
-                                <input type="number" name="price" />
-                                <span className="custom-input__text">₽</span>
-                              </span>
-                            </label>
-                          </div>
+                          <CustomSelect
+                            name={FormFieldName.Time}
+                            caption='Сколько времени потратим'
+                            options={DURATIONS}
+                            extraClassName={mainClassNamePrefix}
+                            readOnly={isDisabled}
+                          />
+                          <CustomInput
+                            name={FormFieldName.Price}
+                            type='number'
+                            divClassNamePostfix='with-text-right'
+                            label='Стоимость тренировки'
+                            spanText='₽'
+                          />
                           <CustomSelect
                             name={FormFieldName.Level}
                             caption='Выберите уровень тренировки'

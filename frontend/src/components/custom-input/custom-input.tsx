@@ -8,6 +8,7 @@ type CustomInputProps = {
   label?: string;
   spanText?: string;
   divExtraClassName?: string;
+  divClassNamePostfix?: string;
   onChange?: (newValue: string) => void;
   required?: boolean;
   max?: string;
@@ -16,7 +17,7 @@ type CustomInputProps = {
 }
 
 function CustomInput(props: CustomInputProps): JSX.Element {
-  const { name, type, value = '', label, spanText, divExtraClassName, onChange, required, max, autoComplete, readOnly } = props;
+  const { name, type, value = '', label, spanText, divExtraClassName, divClassNamePostfix, onChange, required, max, autoComplete, readOnly } = props;
   const [currentValue, setCurrentValue] = useState(value);
 
   useEffect(() => {
@@ -30,7 +31,8 @@ function CustomInput(props: CustomInputProps): JSX.Element {
   const mainPostfixClassName = (isTextarea) ? type : 'input';
   const mainClassName = `custom-${mainPostfixClassName}`;
   const divClassName = divExtraClassName && `${divExtraClassName}__${mainPostfixClassName}`;
-  const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readOnly }, divClassName);
+  const divLastClassName = divClassNamePostfix && `${mainClassName}--${divClassNamePostfix}`;
+  const divClassNames = classNames(mainClassName, { [`${mainClassName}--readonly`]: readOnly }, divClassName, divLastClassName);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
