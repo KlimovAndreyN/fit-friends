@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import PopupModal from '../popup-modal/popup-modal';
 
 type PopupModalMapProps = {

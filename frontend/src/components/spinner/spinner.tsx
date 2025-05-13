@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import { LOADING_TEXT } from '../../const';
 
 function Spinner(): JSX.Element {

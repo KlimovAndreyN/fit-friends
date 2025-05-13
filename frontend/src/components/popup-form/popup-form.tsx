@@ -1,6 +1,6 @@
-import classNames from 'classnames';
-import { FormEvent } from 'react';
+import { JSX, FormEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
+import classNames from 'classnames';
 
 import { getPageTitle } from '../../utils/common';
 

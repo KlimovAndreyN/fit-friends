@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 type SliderButtonProps = {
   firstTitle?: string;
   secondTitle?: string;

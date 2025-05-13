@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { JSX, Fragment, useEffect } from 'react';
 
 import MainSpinner from '../../components/main-spinner/main-spinner';
 import Header from '../../components/header/header';

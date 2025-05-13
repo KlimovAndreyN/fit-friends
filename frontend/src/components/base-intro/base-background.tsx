@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import { getPageTitle } from '../../utils/common';

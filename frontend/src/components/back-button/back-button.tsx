@@ -1,5 +1,6 @@
-import classNames from 'classnames';
+import { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 
 type BackButtonProps = {
   className: string;

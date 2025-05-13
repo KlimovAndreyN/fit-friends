@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent } from 'react';
+import { JSX, Fragment, MouseEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 

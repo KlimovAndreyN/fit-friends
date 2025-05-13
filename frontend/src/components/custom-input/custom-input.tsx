@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { JSX, ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 type CustomInputProps = {

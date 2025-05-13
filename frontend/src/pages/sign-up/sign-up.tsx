@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { JSX, FormEvent, Fragment, useState } from 'react';
 import classNames from 'classnames';
 
 import PopupForm from '../../components/popup-form/popup-form';

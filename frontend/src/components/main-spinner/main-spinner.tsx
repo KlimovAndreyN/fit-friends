@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import BaseBackground from '../base-intro/base-background';
 
 import { LOADING_TEXT, PageTitle } from '../../const';

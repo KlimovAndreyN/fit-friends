@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { JSX, MouseEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { SPECIALISATIONS } from '../../const';

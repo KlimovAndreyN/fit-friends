@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent, useState } from 'react';
+import { JSX, Fragment, MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import './user-detail-wrapper.css';

@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
 import { IUserProfileRdo } from '@backend/shared/core';

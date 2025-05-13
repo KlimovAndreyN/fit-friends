@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react';
+import { JSX, FormEvent, useEffect } from 'react';
 
 import useEscapeKey from '../../hooks/use-escape-key';
 

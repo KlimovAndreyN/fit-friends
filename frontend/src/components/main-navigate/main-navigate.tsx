@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import MainNavigateItem from '../main-navigate-item/main-navigate-item';

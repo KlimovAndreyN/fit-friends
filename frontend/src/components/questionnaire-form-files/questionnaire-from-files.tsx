@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, MutableRefObject, useState } from 'react';
+import { JSX, FormEvent, Fragment, MutableRefObject, useState } from 'react';
 
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 

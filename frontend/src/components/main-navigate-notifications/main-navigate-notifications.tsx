@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 function MainNavigateNotifications(): JSX.Element {
   return (
     <div className="main-nav__dropdown">

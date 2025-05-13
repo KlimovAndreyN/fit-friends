@@ -1,5 +1,5 @@
+import { JSX, FormEvent } from 'react';
 import classNames from 'classnames';
-import { FormEvent } from 'react';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 

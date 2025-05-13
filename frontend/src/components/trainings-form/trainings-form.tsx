@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { JSX, FormEvent } from 'react';
 
 import { Specialization, SortType, Duration, ITrainingQuery, isForFreeSortType } from '@backend/shared/core';
 import { deleteItem } from '@backend/shared/helpers';

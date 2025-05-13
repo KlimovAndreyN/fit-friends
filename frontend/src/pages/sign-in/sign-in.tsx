@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { JSX, FormEvent } from 'react';
 import classNames from 'classnames';
 
 import { ILoginUserDto } from '@backend/shared/core';

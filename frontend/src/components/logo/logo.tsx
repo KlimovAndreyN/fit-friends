@@ -1,8 +1,9 @@
+import { JSX } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { AppRoute } from '../../const';
 
-const LOGO_SVG = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="#logo"/></svg>;
+const LOGO_SVG = <svg width="187" height="70" aria-hidden="true"><use xlinkHref="#logo" /></svg>;
 
 function Logo(): JSX.Element {
   const location = useLocation();

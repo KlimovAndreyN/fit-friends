@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import QuestionnaireForm from '../../components/questionnaire-form/questionnaire-from';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';

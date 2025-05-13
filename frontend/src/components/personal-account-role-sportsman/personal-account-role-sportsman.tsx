@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import ThumbnailLink from '../thumbnail-link/thumbnail-link';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';
 

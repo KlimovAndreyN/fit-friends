@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { JSX, Fragment, useEffect } from 'react';
 
 import { ITrainingQuery } from '@backend/shared/core';
 

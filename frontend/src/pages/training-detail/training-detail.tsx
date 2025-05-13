@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { JSX, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { isSportsmanRole } from '@backend/shared/core';

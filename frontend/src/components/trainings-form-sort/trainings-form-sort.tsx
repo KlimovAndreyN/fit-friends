@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { JSX, FormEvent } from 'react';
 
 import { SortType } from '@backend/shared/core';
 import { convertEnumToArray } from '@backend/shared/helpers';

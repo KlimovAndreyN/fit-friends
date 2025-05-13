@@ -1,4 +1,4 @@
-import { ChangeEvent, MutableRefObject } from 'react';
+import { JSX, ChangeEvent, MutableRefObject } from 'react';
 
 import { OnFileInputChange } from '../../types/types';
 

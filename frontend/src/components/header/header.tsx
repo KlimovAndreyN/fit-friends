@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import Logo from '../logo/logo';
@@ -24,7 +25,7 @@ function Header({ title }: HeaderProps): JSX.Element {
               <span className="search__label">Поиск</span>
               <input type="search" name="search" />
               <svg className="search__icon" width="20" height="20" aria-hidden="true">
-                <use xlinkHref="#icon-search"/>
+                <use xlinkHref="#icon-search" />
               </svg>
             </label>
             <ul className="search__list">

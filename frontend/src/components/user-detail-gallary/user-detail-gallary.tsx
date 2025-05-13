@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 type UserDetailGallaryProps = {
   classNamePrefix: string;
   filesPaths: string[];

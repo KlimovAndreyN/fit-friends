@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect } from 'react';
+import { JSX, MouseEvent, useEffect } from 'react';
 
 import TrainingCard from '../training-card/training-card';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
