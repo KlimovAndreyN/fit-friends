@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { toast } from 'react-toastify';
 
 import { AUTH_NAME, ITokensRdo } from '@backend/shared/core';
@@ -29,7 +29,7 @@ export function createAPI(): AxiosInstance {
   });
 
   api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
+    (config: InternalAxiosRequestConfig) => {
       const { headers, useMultipartFormData, retry, url = '' } = config;
       const { REFRESH, LOGOUT } = ApiRoute;
 
@@ -52,9 +52,10 @@ export function createAPI(): AxiosInstance {
   api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError<DataAxiosError>) => {
-      const { response, config: { url = '', notFoundToReject } } = error;
+      const { response, config } = error;
+      const url = config?.url || '';
+      const notFoundToReject = config?.notFoundToReject;
       const status = response?.status;
-      const originalRequestConfig = error.config;
       const showUrlAxiosError = getViteEnvBooleanVariable(ViteEnvOption.URL_AXIOS_ERROR);
       const { REFRESH, LOGIN, LOGOUT } = ApiRoute;
 
@@ -62,9 +63,10 @@ export function createAPI(): AxiosInstance {
       if (
         ![REFRESH, LOGIN, LOGOUT].includes(url)
         && (status === HttpCode.NoAuth)
-        && !originalRequestConfig.retry
+        && config
+        && !config.retry
       ) {
-        originalRequestConfig.retry = true;
+        config.retry = true;
 
         if (!RefreshTokenStore.getToken()) {
           return Promise.reject('RefreshToken is empty!');
@@ -77,7 +79,7 @@ export function createAPI(): AxiosInstance {
         RefreshTokenStore.save(refreshToken);
 
         //! нужен ли await?
-        return api(originalRequestConfig);
+        return api(config);
       }
 
       if ((status === HttpCode.NotFound) && notFoundToReject) {
