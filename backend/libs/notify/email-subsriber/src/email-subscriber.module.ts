@@ -18,10 +18,7 @@ import { EmailSubscriberController } from './email-subscriber.controller';
       EmailSubscriberModels,
       ConnectionNameOption.Notify
     ),
-    RabbitMQModule.forRootAsync(
-      RabbitMQModule,
-      getRabbitMQOptions()
-    ),
+    RabbitMQModule.forRootAsync(getRabbitMQOptions()),
     MailModule
   ],
   controllers: [

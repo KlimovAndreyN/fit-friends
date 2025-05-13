@@ -15,8 +15,8 @@ export class NotifyService {
     private readonly rabbitClient: AmqpConnection
   ) { }
 
-  public async registerEmailSubscriber(dto: CreateEmailSubscriberDto, requestId: string) {
-    const result = await this.rabbitClient.publish<CreateEmailSubscriberDto>(
+  public async registerEmailSubscriber(dto: CreateEmailSubscriberDto, requestId: string): Promise<boolean> {
+    const result = await this.rabbitClient.publish(
       this.accountOptions.rabbit.exchange,
       RabbitRouting.AddEmailSubscriber,
       dto,
