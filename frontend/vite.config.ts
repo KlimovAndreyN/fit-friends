@@ -18,5 +18,16 @@ export default defineConfig({
       '@backend/shared/core': path.resolve(__dirname, '../backend/libs/shared/core/src/fronted-index.ts'),
       '@backend/shared/helpers': path.resolve(__dirname, '../backend/libs/shared/helpers/src/fronted-index.ts')
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
+    }
   }
 });
