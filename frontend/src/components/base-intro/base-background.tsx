@@ -1,5 +1,4 @@
 import { JSX } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import { getPageTitle } from '../../utils/common';
 
@@ -11,7 +10,7 @@ type BaseBackgroundProps = {
 function BaseBackground({ title, children }: BaseBackgroundProps): JSX.Element {
   return (
     <main>
-      <Helmet title={getPageTitle(title)} />
+      <title>{getPageTitle(title)}</title>
       <div className="intro">
         <div className="intro__background">
           <picture>
@@ -21,7 +20,7 @@ function BaseBackground({ title, children }: BaseBackgroundProps): JSX.Element {
         </div>
         <div className="intro__wrapper">
           <svg className="intro__icon" width="60" height="60" aria-hidden="true">
-            <use xlinkHref="#icon-logotype"/>
+            <use xlinkHref="#icon-logotype" />
           </svg>
           <div className="intro__title-logo">
             <picture>

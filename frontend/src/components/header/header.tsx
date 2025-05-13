@@ -1,5 +1,4 @@
 import { JSX } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import Logo from '../logo/logo';
 import MainNavigate from '../main-navigate/main-navigate';
@@ -15,7 +14,7 @@ function Header({ title }: HeaderProps): JSX.Element {
 
   return (
     <header className="header">
-      <Helmet title={getPageTitle(title)} />
+      <title>{getPageTitle(title)}</title>
       <div className="container">
         <Logo />
         <MainNavigate />

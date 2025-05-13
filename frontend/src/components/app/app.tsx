@@ -1,6 +1,5 @@
 import { JSX } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { isCoachRole, Role } from '@backend/shared/core';
@@ -37,169 +36,167 @@ function App(): JSX.Element | null {
   const authRedirectTo = isCoachRole(userRole) ? AppRoute.PersonalAccount : AppRoute.Index;
 
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path={AppRoute.Index}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
-                    <Index />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Intro}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
-                <Intro />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.SignIn}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
-                <SignIn />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.SignUp}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
-                <SignUp />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Questionnaire}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute isQuestionnaire>
-                  <Questionnaire />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.PersonalAccount}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <PersonalAccount />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.UsersCatalog}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <UsersCatalog />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.UserDetail}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <UserDetail />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Friends}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <Friends />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.TrainingsCatalog}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
-                    <TrainingsCatalog />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.TrainingDetail}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <TrainingDetail />
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.MyPurchases}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
-                    <MyPurchases />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.MyOrders}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
-                    <MyOrders />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.MyTrainings}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
-                    <MyTrainings />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.CreateTraining}
-            element={
-              <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
-                <QuestionnaireRoute>
-                  <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
-                    <CreateTraining />
-                  </RoleRoute>
-                </QuestionnaireRoute>
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </HelmetProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Index}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
+                  <Index />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Intro}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
+              <Intro />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.SignIn}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
+              <SignIn />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.SignUp}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.NoAuth} redirectTo={authRedirectTo}>
+              <SignUp />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Questionnaire}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute isQuestionnaire>
+                <Questionnaire />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.PersonalAccount}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <PersonalAccount />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.UsersCatalog}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <UsersCatalog />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.UserDetail}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <UserDetail />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Friends}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <Friends />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.TrainingsCatalog}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
+                  <TrainingsCatalog />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.TrainingDetail}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <TrainingDetail />
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.MyPurchases}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
+                  <MyPurchases />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.MyOrders}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                  <MyOrders />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.MyTrainings}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                  <MyTrainings />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.CreateTraining}
+          element={
+            <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
+              <QuestionnaireRoute>
+                <RoleRoute allowedFor={Role.Coach} redirectTo={AppRoute.Index}>
+                  <CreateTraining />
+                </RoleRoute>
+              </QuestionnaireRoute>
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
