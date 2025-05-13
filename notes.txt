@@ -146,46 +146,79 @@ console.log('func - value', value);
 
 
 ------------------------------------------
-npm install @reduxjs/toolkit
-npm install axios
-npm install classnames
-npm install history
-npm install http-status-codes
-npm install leaflet
-npm install rc-slider
-npm install react
-npm install react-dom
-??  npm install react-helmet-async ?? npm install react-helmet  / удален HelmetProvider использовать <title> .. проверить заработает.
-npm install react-redux
-npm install react-router-dom
-npm install react-toastify
-npm install swiper
 
-?? npm install --save-dev @jedmao/redux-mock-store ??
-npm install --save-dev @testing-library/jest-dom
-npm install --save-dev @testing-library/react
-npm install --save-dev @testing-library/user-event
-npm install --save-dev @types/faker
-npm install --save-dev @types/leaflet
-npm install --save-dev @types/react
-npm install --save-dev @types/react-dom
-npm install --save-dev @types/react-redux
-npm install --save-dev @types/testing-library__jest-dom
-npm install --save-dev @typescript-eslint/eslint-plugin
-npm install --save-dev @typescript-eslint/parser
-npm install --save-dev @vitejs/plugin-react
-npm install --save-dev axios-mock-adapter
+npm install @golevelup/nestjs-rabbitmq
+npm install @nestjs-modules/mailer # npm audit fix
+npm install @nestjs/axios
+npm uninstall @nestjs/common  # "@nestjs/common": "^11.1.0",
+npm install @nestjs/common@11.0.20 # для @golevelup/nestjs-rabbitmq
+npm install @nestjs/config
+npm uninstall @nestjs/core # "@nestjs/core": "^11.1.0",
+npm install @nestjs/core@11.0.20 # для @golevelup/nestjs-rabbitmq
+
+npm install @nestjs/jwt
+npm install @nestjs/mongoose
+npm install @nestjs/passport
+npm install @nestjs/platform-express
+npm install @nestjs/serve-static
+npm install @nestjs/swagger
+npm install @prisma/client
+npm install axios
+npm install bcrypt
+npm install class-transformer
+npm install class-validator
+npm install dayjs
+npm install fs-extra
+npm install handlebars
+npm install joi
+npm install mime-types
+npm install mongoose
+npm install passport
+npm install passport-jwt
+npm install passport-local
+npm install reflect-metadata
+npm install rxjs
+
+
+npm install --save-dev @eslint/js
+npm install --save-dev @nestjs/schematics
+npm install --save-dev @nestjs/testing
+npm install --save-dev @nx/eslint
+npm install --save-dev @nx/eslint-plugin
+npm install --save-dev @nx/jest
+npm install --save-dev @nx/js
+npm install --save-dev @nx/nest
+npm install --save-dev @nx/node
+npm install --save-dev @nx/web
+npm install --save-dev @nx/webpack
+npm install --save-dev @nx/workspace
+npm install --save-dev @swc-node/register
+npm install --save-dev @swc/core
+npm install --save-dev @swc/helpers
+npm install --save-dev @types/bcrypt
+npm install --save-dev @types/fs-extra
+npm install --save-dev @types/jest
+npm install --save-dev @types/mime-types
+npm install --save-dev @types/multer
+npm install --save-dev @types/node
+npm install --save-dev @types/passport
+npm install --save-dev @types/passport-jwt
+npm install --save-dev @types/passport-local
 npm install --save-dev eslint
-npm install --save-dev eslint-config-htmlacademy
-npm install --save-dev eslint-plugin-react-hooks
-npm install --save-dev eslint-plugin-react-refresh
-npm install --save-dev faker@5.5.3 / на 5.5.3 не ругается
-npm install --save-dev jsdom
+npm install --save-dev eslint-config-prettier
+npm install --save-dev jest
+npm install --save-dev jest-environment-node
+npm install --save-dev nx
+npm install --save-dev prettier
+npm install --save-dev prisma
+npm install --save-dev ts-jest
+npm install --save-dev ts-node
+npm install --save-dev tslib
 npm install --save-dev typescript
-npm install --save-dev vite
-npm install --save-dev vitest
+npm install --save-dev typescript-eslint
+npm install --save-dev webpack-cli
+
 ------------------------------------------
 
-JSX.Element -> import { JSX } from 'react';
 
 
