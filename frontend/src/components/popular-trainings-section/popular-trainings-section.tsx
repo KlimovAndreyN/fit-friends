@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import TrainingCard from '../training-card/training-card';
 import SliderSection from '../slider-section/slider-section';
 

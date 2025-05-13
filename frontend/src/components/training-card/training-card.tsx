@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { JSX, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ITrainingRdo } from '@backend/shared/core';

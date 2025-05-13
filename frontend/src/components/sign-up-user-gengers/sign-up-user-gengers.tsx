@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import { DefaultUser, USER_GENDERS } from '../../const';
 
 type SignUpUserGengersProps = {

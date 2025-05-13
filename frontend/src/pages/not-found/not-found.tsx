@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PopupForm from '../../components/popup-form/popup-form';

@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { Option } from '../../types/types';

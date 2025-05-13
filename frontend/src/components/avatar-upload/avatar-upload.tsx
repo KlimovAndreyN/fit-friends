@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent, useEffect, useRef, useState } from 'react';
+import { Fragment, JSX, MouseEvent, useEffect, useRef, useState } from 'react';
 
 import ImageUploadInput from '../image-upload-input/image-upload-input';
 

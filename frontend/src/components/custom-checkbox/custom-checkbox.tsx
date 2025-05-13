@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { JSX, FormEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 type CustomCheckboxProps = {

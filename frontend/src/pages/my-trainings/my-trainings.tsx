@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { JSX, useEffect } from 'react';
 import Trainings from '../../components/trainings/trainings';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';

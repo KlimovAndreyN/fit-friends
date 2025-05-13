@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { JSX, Fragment, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import CertificateCard from '../certificate-card/certificate-card';

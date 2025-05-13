@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 export function getViteEnvVariable(envName: string, defaultValue = '', showError = true): string {
   // при сборке записывает значения из .env в общий скрипт
   const value = import.meta.env[envName] as string | undefined;

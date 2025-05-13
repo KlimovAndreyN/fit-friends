@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import classNames from 'classnames';
 
 type PersonalAccountBlockProps = {

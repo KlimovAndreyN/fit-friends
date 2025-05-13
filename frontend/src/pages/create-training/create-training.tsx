@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
+import { JSX, FormEvent, Fragment, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { BackgroundPaths, Duration, Gender, ICreateTrainingDto, Specialization, TrainingLevel } from '@backend/shared/core';

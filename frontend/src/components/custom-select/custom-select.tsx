@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { Option } from '../../types/types';

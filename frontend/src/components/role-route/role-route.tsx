@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { Role } from '@backend/shared/core';

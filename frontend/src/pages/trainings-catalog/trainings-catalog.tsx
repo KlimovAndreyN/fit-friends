@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import Trainings from '../../components/trainings/trainings';
 
 import { AppRoute, PageTitle } from '../../const';

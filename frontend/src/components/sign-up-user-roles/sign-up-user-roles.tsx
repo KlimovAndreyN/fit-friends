@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import { isSportsmanRole, Role } from '@backend/shared/core';
 
 type SignUpUserRolesProps = {

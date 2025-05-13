@@ -1,6 +1,7 @@
-import { getRandomUniqueItems } from '@backend/shared/helpers';
+import { JSX } from 'react';
 
 import { ITrainingRdo } from '@backend/shared/core';
+import { getRandomUniqueItems } from '@backend/shared/helpers';
 
 import SpecialOffersList from '../special-offers-list/special-offers-list';
 import ThumbnailSpecGym from '../thumbnail-spec-gym/thumbnail-spec-gym';

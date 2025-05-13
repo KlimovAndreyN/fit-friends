@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 import CustomInput from '../custom-input/custom-input';
 
 type QuestionnaireUserCalorieProps = {

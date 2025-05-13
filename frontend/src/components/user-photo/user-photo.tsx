@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 const DEFAULT_USER_PHOTO_SIZE = 64;
 const DEFAULT_SVG_RATIO = 3 / 5;
 

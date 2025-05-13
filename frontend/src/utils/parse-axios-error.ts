@@ -14,9 +14,10 @@ export function getAxiosErrorMessage(error: AxiosError<DataAxiosError>, showUrl:
   const messages: string[] = [];
 
   if (showUrl) {
-    const { baseURL, url } = config;
+    const baseURL = config?.baseURL || '';
+    const url = config?.url || '';
 
-    messages.push(joinUrl(baseURL || '', url || ''));
+    messages.push(joinUrl(baseURL, url));
   }
 
   if (response && response.data) {
