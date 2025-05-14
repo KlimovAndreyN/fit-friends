@@ -1,4 +1,4 @@
-import { JSX, ChangeEvent, MutableRefObject } from 'react';
+import { JSX, ChangeEvent, RefObject } from 'react';
 
 import { OnFileInputChange } from '../../types/types';
 
@@ -8,7 +8,7 @@ type ImageUploadInputProps = {
   acceptTypes?: string;
   onChange: OnFileInputChange;
   readOnly?: boolean;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
 }
 
 function ImageUploadInput(props: ImageUploadInputProps): JSX.Element {

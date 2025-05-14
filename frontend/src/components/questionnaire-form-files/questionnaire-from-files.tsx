@@ -1,10 +1,10 @@
-import { JSX, FormEvent, Fragment, MutableRefObject, useState } from 'react';
+import { JSX, FormEvent, Fragment, RefObject, useState } from 'react';
 
 import { CERTIFICATES_FILE_TYPES } from '../../const';
 
 type QuestionnaireFormFilesProps = {
   name: string;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
+  inputRef: RefObject<HTMLInputElement | null>;
 }
 
 function QuestionnaireFormFiles({ name, inputRef }: QuestionnaireFormFilesProps): JSX.Element | null {
