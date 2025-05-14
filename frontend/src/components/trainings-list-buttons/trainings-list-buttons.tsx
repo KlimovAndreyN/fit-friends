@@ -11,10 +11,7 @@ type TrainingsListButtonsProps = {
 
 function TrainingsListButtons({ className, isHaveMoreTrainings, onShowMoreClick }: TrainingsListButtonsProps): JSX.Element {
   const buttonsClassName = 'btn show-more__button';
-  // в css ошибка нет класса show-more__button--more
-  // он наверное должен быть похож на show-more__button--to-top {display: none;}
-  // вместо него использую visually-hidden
-  const showMoreButtonClassName = classNames(buttonsClassName, { 'show-more__button--more visually-hidden': !isHaveMoreTrainings });
+  const showMoreButtonClassName = classNames(buttonsClassName, { 'show-more__button--to-top': !isHaveMoreTrainings });
   const toTopButtonClassName = classNames(buttonsClassName, { 'show-more__button--to-top': isHaveMoreTrainings });
   const scrollToTop = useScrollToTop();
 
