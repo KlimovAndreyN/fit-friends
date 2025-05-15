@@ -1,6 +1,6 @@
 import { PickType } from '@nestjs/swagger';
 
-import { ICreateTrainingDto } from '../../fronted-index';
+import { ICreateTrainingDto } from '../interfaces/dto/i-create-training.dto';
 import { TrainingApiDoc } from '../constants/api-doc/training.api-doc';
 
 export class CreateTrainingDto extends PickType(

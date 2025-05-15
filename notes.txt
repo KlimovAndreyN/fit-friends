@@ -22,18 +22,12 @@ swagger@local.ru
 123456
 --------------
 Вопросы:
-  хистори? перепроверить все ли корректно, возможно заменить как было изначально, только с типизацией вопрос решить
-    history = createBrowserHistory()
-    history.push
-    useNavigate
+  
+  Specialization.Boxing as string
 
   тренировка
     сделать расчет скидки на беке и возвращать в RDO
       а как в детальной карточке отразить скидку?
-  
-  а как выйти? может, какая кнопка "dispatch(logoutUser())" или автовыход...
-    Bad Request; Require logout. Token:
-    и на странице с опросом
   
   Создание тренировки
     Фоновые изображения используются предопределённые из макета (вёрстки). При сохранении тренировки присваивается случайное изображение
@@ -59,10 +53,11 @@ swagger@local.ru
     пагинация нужна?
   Реализован сценарий раздела покупка
 
-  видео можно через embed в попап оне например
+  а как выйти? может, какая кнопка "dispatch(logoutUser())" или автовыход...
+    Bad Request; Require logout. Token:
+    и на странице с опросом
 
 ----
-
   ../../backend/
   /fronted-index
   from 'libs/shared/....
@@ -146,81 +141,5 @@ console.log('func - value', value);
 
 
 ------------------------------------------
-
-npm install @golevelup/nestjs-rabbitmq
-npm uninstall @nestjs-modules/mailer # npm audit fix
-npm install @nestjs-modules/mailer@2.0.2
-npm install @nestjs-modules/mailer
-npm install @nestjs/axios
-npm uninstall @nestjs/common  # "@nestjs/common": "^11.1.0",
-npm install @nestjs/common@11.0.20 # для @golevelup/nestjs-rabbitmq
-npm install @nestjs/config
-npm uninstall @nestjs/core # "@nestjs/core": "^11.1.0",
-npm install @nestjs/core@11.0.20 # для @golevelup/nestjs-rabbitmq
-
-npm install @nestjs/jwt
-npm install @nestjs/mongoose
-npm install @nestjs/passport
-npm install @nestjs/platform-express
-npm install @nestjs/serve-static
-npm install @nestjs/swagger
-npm install @prisma/client
-npm install axios
-npm install bcrypt
-npm install class-transformer
-npm install class-validator
-npm install dayjs
-npm install fs-extra
-npm install handlebars
-npm install joi
-npm install mime-types
-npm install mongoose
-npm install passport
-npm install passport-jwt
-npm install passport-local
-npm install reflect-metadata
-npm install rxjs
-
-
-npm install --save-dev @eslint/js
-npm install --save-dev @nestjs/schematics
-npm install --save-dev @nestjs/testing
-npm install --save-dev @nx/eslint
-npm install --save-dev @nx/eslint-plugin
-npm install --save-dev @nx/jest
-npm install --save-dev @nx/js
-npm install --save-dev @nx/nest
-npm install --save-dev @nx/node
-npm install --save-dev @nx/web
-npm install --save-dev @nx/webpack
-npm install --save-dev @nx/workspace
-npm install --save-dev @swc-node/register
-npm install --save-dev @swc/core
-npm install --save-dev @swc/helpers
-npm install --save-dev @types/bcrypt
-npm install --save-dev @types/fs-extra
-npm install --save-dev @types/jest
-npm install --save-dev @types/mime-types
-npm install --save-dev @types/multer
-npm install --save-dev @types/node
-npm install --save-dev @types/passport
-npm install --save-dev @types/passport-jwt
-npm install --save-dev @types/passport-local
-npm install --save-dev eslint
-npm install --save-dev eslint-config-prettier
-npm install --save-dev jest
-npm install --save-dev jest-environment-node
-npm install --save-dev nx
-npm install --save-dev prettier
-npm install --save-dev prisma
-npm install --save-dev ts-jest
-npm install --save-dev ts-node
-npm install --save-dev tslib
-npm install --save-dev typescript
-npm install --save-dev typescript-eslint
-npm install --save-dev webpack-cli
-
 ------------------------------------------
-
-
 
