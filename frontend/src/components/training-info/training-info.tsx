@@ -24,14 +24,14 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   //! выделить отдельно форму training-info-form / TrainingInfoForm
   //! проверить, ранние заметки:
   //! есть компоненты для разных элементов, нужны при редактировании - перепроверить
-  //! как отборазить если бесплатно? есть что то в маркапах
-  //! а как выглядят со скидкой? как по ТЗ?
   //! как округлять рейтинг? как по ТЗ? пока округлил до целых
   //! сделал для video__thumbnail - backgroundPath из rdo? как по ТЗ
   //! не видно цыфру рейтинга при сужении онка - помогает .training-info__input--rating {width: 110px;}
   //! ссылка на видео, навеное если купил тренировку если не куплено то background ? как по ТЗ
   //! ссылка на профиль тренера? сделать по фото и имени! как по ТЗ? маркапы? сделал для роли пользователь
   //! проверить консоль браузера на ошибки
+  // а как выглядят со скидкой? как по ТЗ? - нет примера
+  // как отборазить если бесплатно? есть что то в маркапах - просто 0!
 
   const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
   const [isEditing, setIsEditing] = useState(false);

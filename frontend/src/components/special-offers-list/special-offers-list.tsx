@@ -2,7 +2,7 @@ import { JSX, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { ITrainingRdo } from '@backend/shared/core';
+import { getOldPrice, ITrainingRdo } from '@backend/shared/core';
 
 import { getTrainingRoute } from '../../utils/common';
 
@@ -48,7 +48,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
         offers.map(
           (offer, index) => {
             const { id, title, description, backgroundPath, price } = offer;
-            const newPrice = Math.round(price - price * 10 / 100);
+            const oldPrice = getOldPrice(price);
             const isActive = index === activeSliderIndex;
             const itemClassName = classNames('special-offers__item', { 'is-active': isActive });
 
@@ -95,9 +95,9 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
                       }
                     </div>
                     <div className="promo-slider__price-container">
-                      <p className="promo-slider__price">{newPrice}&nbsp;₽</p>
+                      <p className="promo-slider__price">{price}&nbsp;₽</p>
                       <p className="promo-slider__sup">за занятие</p>
-                      <p className="promo-slider__old-price">{price}&nbsp;₽</p>
+                      <p className="promo-slider__old-price">{oldPrice}&nbsp;₽</p>
                     </div>
                   </div>
                 </aside>
