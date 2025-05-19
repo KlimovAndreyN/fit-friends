@@ -10,6 +10,7 @@ export interface IBasicDetailTrainingRdo
     | 'specialization'
     | 'duration'
     | 'price'
+    | 'oldPrice'
     | 'caloriesWaste'
     | 'description'
     | 'gender'

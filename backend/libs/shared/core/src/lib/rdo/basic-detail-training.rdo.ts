@@ -14,6 +14,7 @@ export class BasicDetailTrainingRdo
       'specialization',
       'duration',
       'price',
+      'oldPrice',
       'caloriesWaste',
       'description',
       'rating',

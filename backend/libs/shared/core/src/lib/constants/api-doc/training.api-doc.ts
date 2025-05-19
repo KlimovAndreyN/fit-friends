@@ -53,6 +53,12 @@ export class TrainingApiDoc {
   @Expose()
   @IsInt()
   @Transform(transformNumber)
+  oldPrice: Training['oldPrice'];
+
+  @ApiProperty()
+  @Expose()
+  @IsInt()
+  @Transform(transformNumber)
   caloriesWaste: Training['caloriesWaste'];
 
   @ApiProperty()

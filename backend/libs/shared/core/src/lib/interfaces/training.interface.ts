@@ -11,6 +11,7 @@ export interface Training {
   specialization: Specialization;
   duration: Duration;
   price: number;
+  oldPrice: number;
   caloriesWaste: number;
   description: string;
   gender: Gender;

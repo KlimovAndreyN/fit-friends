@@ -7,6 +7,7 @@ export type ITrainingRdo = Pick<
   | 'backgroundPath'
   | 'specialization'
   | 'price'
+  | 'oldPrice'
   | 'caloriesWaste'
   | 'description'
   | 'rating'
