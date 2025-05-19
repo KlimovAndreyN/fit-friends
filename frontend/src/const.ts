@@ -68,9 +68,9 @@ export const DefaultUser = {
   ROLE: Role.Coach,
   GENDER: Gender.Female,
   SPECIALISATIONS: [
-    Specialization.Boxing as string,
-    Specialization.Crossfit as string,
-    Specialization.Power as string
+    Specialization.Boxing,
+    Specialization.Crossfit,
+    Specialization.Power
   ],
   DURATION: Duration.Minutes_30_50,
   TRAINING_LEVEL: TrainingLevel.Amateur

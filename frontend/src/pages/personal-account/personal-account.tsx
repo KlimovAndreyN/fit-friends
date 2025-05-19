@@ -19,7 +19,7 @@ function PersonalAccount(): JSX.Element {
   const dispatch = useAppDispatch();
   const isFetchAccountExecuting = useAppSelector(getIsFetchAccountExecuting);
   const userRole = useAppSelector(getUserRole);
-  const UserProfile = useAppSelector(getAccount);
+  const userProfile = useAppSelector(getAccount);
 
   useEffect(() => {
     dispatch(fetchAccount());
@@ -30,8 +30,8 @@ function PersonalAccount(): JSX.Element {
     dispatch(updateAccount(updatedUserProfile));
   };
 
-  //! UserProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
-  if (isFetchAccountExecuting || !UserProfile) {
+  //! userProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную
+  if (isFetchAccountExecuting || !userProfile) {
     //! нужен свой спиннер
     return <MainSpinner />;
   }
@@ -47,14 +47,14 @@ function PersonalAccount(): JSX.Element {
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
               <PersonalAccountLeftPanel
-                account={UserProfile}
+                account={userProfile}
                 isSpotsmanRole={isSpotsman}
                 onSubmit={handleLeftPanelSubmit}
               />
               <div className="inner-page__content">
                 {
                   (isSpotsman)
-                    ? <PersonalAccountRoleSportsman caloriesWaste={UserProfile.questionnaire.caloriesWaste} />
+                    ? <PersonalAccountRoleSportsman caloriesWaste={userProfile.questionnaire.caloriesWaste} />
                     : <PersonalAccountRoleCoach />
                 }
               </div>

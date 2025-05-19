@@ -41,7 +41,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
   //! может еще можно разбить файл...
 
   const filesInputRef = useRef<HTMLInputElement | null>(null);
-  const [currentSpecializations, setCurrentSpecializations] = useState([...DefaultUser.SPECIALISATIONS]);
+  const [currentSpecializations, setCurrentSpecializations] = useState<Specialization[]>([...DefaultUser.SPECIALISATIONS]);
   const isSportsman = isSportsmanRole(userRole);
 
   const handlePopupFormSubmit = (event: FormEvent<HTMLFormElement>) => {
