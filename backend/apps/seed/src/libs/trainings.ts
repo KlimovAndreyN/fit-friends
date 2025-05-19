@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-import { BackgroundPaths, Duration, Gender, Specialization, Training, TrainingApiProperty, TrainingLevel } from '@backend/shared/core';
+import { BackgroundPaths, Duration, Gender, getNewPrice, Specialization, Training, TrainingApiProperty, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomDate, getRandomEnumItem, getRandomItem, getRandomNumber } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
@@ -31,20 +31,22 @@ export async function seedTrainings(
       const isZeroPrice = getRandomItem([true, ...Array(NOT_ZERO_PRICE_FACTOR).fill(false)]); // добавлю немного бесплатных
 
       //! потом можно создавать через DTO и сервис, указав id-пользователя и не указывая не нужные поля - rating
+      const price = (isZeroPrice) ? 0 : getRandomNumber(MIN_PRICE, MAX_PRICE) * PRICE_FACTOR;
+      const isSpecial = (price > 0) && getRandomBoolean();
       const training: Training = {
         title: `Training title ${trainingIndexPrefix}`,
         backgroundPath: getRandomItem(backgroundPaths),
         trainingLevel: getRandomEnumItem(TrainingLevel),
         specialization: getRandomEnumItem(Specialization), //! скорректировать только своих специализаций! coach.specializations! что в ТЗ?
         duration: getRandomEnumItem(Duration),
-        price: (isZeroPrice) ? 0 : getRandomNumber(MIN_PRICE, MAX_PRICE) * PRICE_FACTOR,
+        price: (isSpecial) ? getNewPrice(price) : price,
         caloriesWaste: getRandomNumber(MIN_CALORIES, MAX_CALORIES) * CALORIES_FACTOR,
         description: `Training description ${trainingIndexPrefix}`,
         gender: getRandomEnumItem(Gender),
         videoFileId: getRandomItem(videosFileIds),
         userId,
         rating: MIN_RATING,
-        isSpecial: getRandomBoolean(),
+        isSpecial,
         createdAt: getRandomDate(MIN_DATE, MAX_DATE)
       }
 

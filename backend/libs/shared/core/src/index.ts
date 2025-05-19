@@ -19,6 +19,7 @@ export { BackgroundPaths } from './lib/constants/background-paths';
 export * from './lib/constants/bearer-auth';
 export { ConfigAlias } from './lib/constants/config-alias';
 export { ConnectionNameOption } from './lib/constants/connection-name-option';
+export * from './lib/constants/consts';
 export { DateFormat } from './lib/constants/date-format';
 export { DefaultPort } from './lib/constants/default-port';
 export { IdParam } from './lib/constants/id-param';
