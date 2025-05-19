@@ -7,7 +7,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
   public specialization: Training['specialization'];
   public duration: Training['duration'];
   public price: Training['price'];
-  public oldPrice: Training['oldPrice'];
   public caloriesWaste: Training['caloriesWaste'];
   public description: Training['description'];
   public gender: Training['gender'];
@@ -35,7 +34,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
     this.specialization = training.specialization;
     this.duration = training.duration;
     this.price = training.price;
-    this.oldPrice = training.oldPrice;
     this.caloriesWaste = training.caloriesWaste;
     this.description = training.description;
     this.gender = training.gender;
@@ -55,7 +53,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
       specialization: this.specialization,
       duration: this.duration,
       price: this.price,
-      oldPrice: this.oldPrice,
       caloriesWaste: this.caloriesWaste,
       description: this.description,
       gender: this.gender,

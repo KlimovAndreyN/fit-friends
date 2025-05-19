@@ -18,7 +18,6 @@ export class TrainingFactory implements EntityFactory<TrainingEntity> {
       specialization: dto.specialization,
       duration: dto.duration,
       price: dto.price,
-      oldPrice: dto.price, // старая связана с isSpecial, при создании равна price
       caloriesWaste: dto.caloriesWaste,
       description: dto.description,
       gender: dto.gender,

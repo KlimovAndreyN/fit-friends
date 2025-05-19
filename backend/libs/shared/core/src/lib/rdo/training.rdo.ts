@@ -12,7 +12,6 @@ export class TrainingRdo
       'backgroundPath',
       'specialization',
       'price',
-      'oldPrice',
       'caloriesWaste',
       'description',
       'rating',

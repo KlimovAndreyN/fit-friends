@@ -11,7 +11,6 @@ export interface IDetailTrainingRdo
     | 'specialization'
     | 'duration'
     | 'price'
-    | 'oldPrice'
     | 'caloriesWaste'
     | 'description'
     | 'gender'
