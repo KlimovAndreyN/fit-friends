@@ -20,6 +20,8 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   //      1.1. покупка
   //      1.2. приступить / просмотр видео / закончить
   //    2. Редактирование тренировки от тренера
+  //    сравнить фрагмент с видео при редактировании/промотре от тренера и от спортсмена
+  //      и скидкой
   //
   //! выделить отдельно форму training-info-form / TrainingInfoForm
   //! проверить, ранние заметки:
@@ -36,15 +38,16 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
   const [isEditing, setIsEditing] = useState(false);
   const { id: coachId, avatarFilePath, name } = coach;
-  const specializationText = SpecializationTitle[specialization].toLocaleLowerCase();
-  const genderText = TrainingGenderTitle[gender];
   const { min, max } = DurationMinMax[duration];
-  const durationText = `${min}_${max}`;
-  const ratingText = rating.toFixed(0);
+  const hashtags = [
+    SpecializationTitle[specialization].toLocaleLowerCase(),
+    `для_${TrainingGenderTitle[gender]}`,
+    `${caloriesWaste}ккал`,
+    `${min}_${max}мин`
+  ];
   const divClassName = classNames('training-card', { 'training-card--edit': !isSportsman });
 
   const handleEditClick = (isSportsman) ? undefined : () => {
-    //! временно
     setIsEditing(true);
   };
 
@@ -72,18 +75,14 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
               <div className="training-info__info-wrapper">
                 <div className="training-info__input training-info__input--training">
                   <label><span className="training-info__label">Название тренировки</span>
-                    <input type="text" name="training" defaultValue={title} disabled />
+                    <input type="text" name="training" defaultValue={title} readOnly={!isEditing} />
                   </label>
                   <div className="training-info__error">Обязательное поле</div>
                 </div>
                 <div className="training-info__textarea">
                   <label>
                     <span className="training-info__label">Описание тренировки</span>
-                    <textarea
-                      name="description"
-                      defaultValue={description}
-                      readOnly /*//! disabled  при просмотре поставил readOnly*/
-                    />
+                    <textarea name="description" defaultValue={description} readOnly={!isEditing} />
                   </label>
                 </div>
               </div>
@@ -96,7 +95,7 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
                         <use xlinkHref="#icon-star" />
                       </svg>
                     </span>
-                    <input type="number" name="rating" defaultValue={ratingText} disabled />
+                    <input type="number" name="rating" defaultValue={rating.toFixed(0)} disabled />
                   </label>
                 </div>
                 <Hashtags
@@ -104,16 +103,18 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
                   divItemClassNamePrefix='hashtag--white'
                   separator='__'
                   isNotNeedSpecialClassName
-                  items={[specializationText, `для_${genderText}`, `${caloriesWaste}ккал`, `${durationText}мин`]}
+                  items={hashtags}
                 />
               </div>
               <div className="training-info__price-wrapper">
                 <div className="training-info__input training-info__input--price">
                   <label><span className="training-info__label">Стоимость</span>
-                    <input type="text" name="price" defaultValue={`${price}\u00A0₽`} disabled />
+                    {/*//! для тренера тут числа? */}
+                    <input type="text" name="price" defaultValue={`${price}\u00A0₽`} readOnly={!isEditing} />
                   </label>
                   <div className="training-info__error">Введите число</div>
                 </div>
+                {/*//! только для спортсмена, для тренера тут скидка */}
                 <button className="btn training-info__buy" type="button">Купить</button>
               </div>
             </div>
