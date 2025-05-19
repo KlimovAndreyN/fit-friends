@@ -29,9 +29,11 @@ const initialState: AccountProcess = {
 
 export const accountProcess = createSlice(
   {
-    name: StoreSlice.UserProfileProcess,
+    name: StoreSlice.AccountProcess,
     initialState,
-    reducers: {},
+    reducers: {
+      resetAccountProcess: () => initialState
+    },
     extraReducers(builder) {
       builder
         .addCase(
@@ -208,3 +210,5 @@ export const accountProcess = createSlice(
     }
   }
 );
+
+export const { resetAccountProcess } = accountProcess.actions;

@@ -79,7 +79,8 @@ export const trainingProcess = createSlice(
       },
       clearCreatedTraining: (state) => {
         state.isCreatedTraining = false;
-      }
+      },
+      resetTrainingProcess: () => initialState
     },
     extraReducers(builder) {
       builder
@@ -236,4 +237,4 @@ export const trainingProcess = createSlice(
   }
 );
 
-export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailTraining, clearCreatedTraining } = trainingProcess.actions;
+export const { setTrainingsFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailTraining, clearCreatedTraining, resetTrainingProcess } = trainingProcess.actions;

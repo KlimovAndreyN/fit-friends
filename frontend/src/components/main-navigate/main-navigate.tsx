@@ -6,6 +6,9 @@ import MainNavigateNotifications from '../main-navigate-notifications/main-navig
 
 import { useAppDispatch } from '../../hooks';
 import { logoutUser } from '../../store/actions/user-action';
+import { resetAccountProcess } from '../../store/account-process';
+import { resetTrainingProcess } from '../../store/training-process';
+import { resetUserProfileProcess } from '../../store/user-profile-process';
 import { AppRoute } from '../../const';
 import { convertEnumToObject } from '@backend/shared/helpers';
 
@@ -26,6 +29,9 @@ function MainNavigate(): JSX.Element {
   const handleSignOutClick = () => {
     //! дополнительный функционал
     dispatch(logoutUser());
+    dispatch(resetAccountProcess());
+    dispatch(resetTrainingProcess());
+    dispatch(resetUserProfileProcess());
   };
 
   return (

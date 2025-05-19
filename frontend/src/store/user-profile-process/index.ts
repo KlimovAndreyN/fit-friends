@@ -23,7 +23,8 @@ export const userProfileProcess = createSlice(
     reducers: {
       clearDetailUserProfile: (state) => {
         state.detailUserProfile = null;
-      }
+      },
+      resetUserProfileProcess: () => initialState
     },
     extraReducers(builder) {
       builder
@@ -92,4 +93,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { clearDetailUserProfile } = userProfileProcess.actions;
+export const { clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
