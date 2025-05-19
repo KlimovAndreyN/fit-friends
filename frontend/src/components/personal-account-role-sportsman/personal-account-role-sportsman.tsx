@@ -8,11 +8,14 @@ import { AppRoute } from '../../const';
 const DAYS_OF_WEEK = 7;
 
 type PersonalAccountRoleSportsmanProps = {
-  caloriesWaste: number;
+  caloriesWaste?: number;
 }
 
 function PersonalAccountRoleSportsman({ caloriesWaste }: PersonalAccountRoleSportsmanProps): JSX.Element {
   //! Калории сделал для чтения, что по ТЗ можно их менять?
+
+  const caloriesWasteText = caloriesWaste?.toLocaleString();
+  const caloriesWasteWeekText = (caloriesWaste) ? (caloriesWaste * DAYS_OF_WEEK).toLocaleString() : '';
 
   return (
     <div className="inner-page__content">
@@ -22,14 +25,14 @@ function PersonalAccountRoleSportsman({ caloriesWaste }: PersonalAccountRoleSpor
             <div className="personal-account-user__form">
               {
                 [
-                  { title: 'План на день, ккал', value: caloriesWaste },
-                  { title: 'План на неделю, ккал', value: caloriesWaste * DAYS_OF_WEEK }
+                  { title: 'План на день, ккал', value: caloriesWasteText },
+                  { title: 'План на неделю, ккал', value: caloriesWasteWeekText }
                 ].map(
                   ({ title, value }) => (
                     <div className="personal-account-user__input" key={title}>
                       <label>
                         <span className="personal-account-user__label">{title}</span>
-                        <input type="text" name="schedule-for-the-day" value={value.toLocaleString()} readOnly />
+                        <input type="text" name="schedule-for-the-day" value={value} readOnly />
                       </label>
                     </div>
                   )
@@ -39,16 +42,8 @@ function PersonalAccountRoleSportsman({ caloriesWaste }: PersonalAccountRoleSpor
           </form>
         </div>
         <div className="personal-account-user__additional-info">
-          <ThumbnailLink
-            title='Мои друзья'
-            svg='#icon-friends'
-            to={AppRoute.Friends}
-          />
-          <ThumbnailLink
-            title='Мои покупки'
-            svg='#icon-shopping-cart'
-            to={AppRoute.MyPurchases}
-          />
+          <ThumbnailLink title='Мои друзья' svg='#icon-friends' to={AppRoute.Friends} />
+          <ThumbnailLink title='Мои покупки' svg='#icon-shopping-cart' to={AppRoute.MyPurchases} />
           <ThumbnailSpecGym text='Скоро тут появится что-то полезное' />
         </div>
       </div>

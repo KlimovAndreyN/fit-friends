@@ -1,7 +1,7 @@
 import { Questionnaire } from '../questionnaire.interface';
 
 export type IBasicQuestionnaireRdo = Pick<
-  Required<Questionnaire>,
+  Questionnaire,
   'userId'
   | 'specializations'
   | 'trainingLevel'
