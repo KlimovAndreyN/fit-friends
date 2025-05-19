@@ -14,9 +14,9 @@ type TrainingCardProps = {
 
 function TrainingCard({ training }: TrainingCardProps): JSX.Element {
   //! заголовок в нижнем регистре? или или там стили?
-  //! а как выглядят со скидкой? как по ТЗ? как окрулять?
-  //! как округлять рейтинг? как по ТЗ? пока округлил до целых
   //! куда ведут сслыка отзывы, тоже на тренировку? фокус на отзывы? - пока сдела #reviews, но не прокручивает на вверх... перепроверить!
+  // как округлять рейтинг? как по ТЗ? - пока округлил до целых!
+  // а как выглядят со скидкой? как по ТЗ? как окрулять? - нет в разметке! - хранить две цены
 
   const { id, title, description, specialization, caloriesWaste, backgroundPath, price, rating } = training;
   const link = getTrainingRoute(id);

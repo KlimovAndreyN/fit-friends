@@ -48,7 +48,7 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
         offers.map(
           (offer, index) => {
             const { id, title, description, backgroundPath, price } = offer;
-            const oldPrice = Math.round(price - price * 10 / 100);
+            const newPrice = Math.round(price - price * 10 / 100);
             const isActive = index === activeSliderIndex;
             const itemClassName = classNames('special-offers__item', { 'is-active': isActive });
 
@@ -95,9 +95,9 @@ function SpecialOffersList({ offers }: SpecialOffersListProps): JSX.Element | nu
                       }
                     </div>
                     <div className="promo-slider__price-container">
-                      <p className="promo-slider__price">{price}&nbsp;₽</p>
+                      <p className="promo-slider__price">{newPrice}&nbsp;₽</p>
                       <p className="promo-slider__sup">за занятие</p>
-                      <p className="promo-slider__old-price">{oldPrice}&nbsp;₽</p>
+                      <p className="promo-slider__old-price">{price}&nbsp;₽</p>
                     </div>
                   </div>
                 </aside>
