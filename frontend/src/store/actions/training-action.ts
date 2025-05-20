@@ -17,6 +17,8 @@ export const Action = {
   FETCH_POPULAR_TRAININGS: 'training/fetch-popular-trainings',
   FETCH_TRAININGS: 'training/fetch-trainings',
   FETCH_DETAIL_TRAINING: 'training/fetch-detail-training',
+  CHANGE_IS_SPECIAL_TRAINING: 'training/change-is-special-training',
+  UPDATE_TRAINING: 'training/update-training',
   CREATE_TRAINING: 'training/create-training',
   FETCH_COACH_TRAININGS: 'training/fetch-coach-trainings'
 };
@@ -77,6 +79,37 @@ export const fetchDetailTraining = createAsyncThunk<IDetailTrainingRdo, string, 
   async (trainingId, { extra }) => {
     const { api } = extra;
     const { data } = await api.get<IDetailTrainingRdo>(joinUrl(ApiServiceRoute.Trainings, trainingId));
+
+    return data;
+  }
+);
+
+export const changeIsSpecialTraining = createAsyncThunk<boolean, { trainingId: string; isSpecial: boolean }, { extra: Extra }>(
+  Action.CHANGE_IS_SPECIAL_TRAINING,
+  async ({ trainingId, isSpecial }, { extra }) => {
+    const { api } = extra;
+    //! проверить
+    const url = joinUrl(ApiServiceRoute.Trainings, trainingId, TrainingRoute.IsSpecial);
+
+    if (isSpecial) {
+      await api.post(url);
+    } else {
+      await api.delete(url);
+    }
+
+    return isSpecial;
+  }
+);
+
+//! на вход будет IUpdateTrainingDto вместо IDetailTrainingRdo
+export const updateTraining = createAsyncThunk<IDetailTrainingRdo, IDetailTrainingRdo, { extra: Extra }>(
+  Action.UPDATE_TRAINING,
+  async (dto, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.Trainings, dto.id, '');
+
+    //! перепроверить когда будет файл
+    const { data } = await api.patch<IDetailTrainingRdo>(url, dto, { useMultipartFormData: true });
 
     return data;
   }

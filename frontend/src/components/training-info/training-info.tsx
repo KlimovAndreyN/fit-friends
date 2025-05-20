@@ -6,6 +6,9 @@ import { IDetailTrainingRdo, SPECIAL_OFFER_PERCENT } from '@backend/shared/core'
 import TrainingInfoHeader from '../training-info-header/training-info-header';
 import Hashtags from '../hashtags/hashtags';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsSpecialTraining } from '../../store/training-process/selectors';
+import { changeIsSpecialTraining } from '../../store/actions/training-action';
 import { DurationMinMax, SpecializationTitle, TrainingGenderTitle } from '../../const';
 
 type TrainingInfoProps = {
@@ -35,8 +38,11 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   // а как выглядят со скидкой? как по ТЗ? - нет примера
   // как отборазить если бесплатно? есть что то в маркапах - просто 0!
 
-  const { title, specialization, gender, duration, caloriesWaste, description, price, isSpecial, rating, videoFilePath, coach, backgroundPath } = training;
-  const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useAppDispatch();
+  const isSpecialTraining = (!isSportsman) ? useAppSelector(getIsSpecialTraining) : undefined;
+
+  const { id: trainingId, title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
+  const [isEditing, setIsEditing] = useState(false); //! возможно нужно в useEffect елси будет открыто редактирование и нажата изменить статус
   const { id: coachId, avatarFilePath, name } = coach;
   const { min, max } = DurationMinMax[duration];
   const hashtags = [
@@ -54,6 +60,10 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   const handleSaveClick = (isSportsman) ? undefined : () => {
     //! временно
     setIsEditing(false);
+  };
+
+  const handleDiscountButtonClick = (isSportsman) ? undefined : () => {
+    dispatch(changeIsSpecialTraining({ trainingId, isSpecial: !isSpecialTraining }));
   };
 
   return (
@@ -119,11 +129,11 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
                     ?
                     <button className="btn training-info__buy" type="button">Купить</button>
                     :
-                    <button className="btn-flat btn-flat--light btn-flat--underlined training-info__discount" type="button">
+                    <button className="btn-flat btn-flat--light btn-flat--underlined training-info__discount" type="button" onClick={handleDiscountButtonClick}>
                       <svg width="14" height="14" aria-hidden="true">
                         <use xlinkHref="#icon-discount"></use>
                       </svg>
-                      <span>{(isSpecial) ? 'Отменить скидку' : `Сделать скидку ${SPECIAL_OFFER_PERCENT}%`}</span>
+                      <span>{(isSpecialTraining) ? 'Отменить скидку' : `Сделать скидку ${SPECIAL_OFFER_PERCENT}%`}</span>
                     </button>
                 }
               </div>
