@@ -23,6 +23,11 @@ swaggercoach@local.ru
 123456
 --------------
 Вопросы:
+  А нужно ли RequestWithRequestIdAndBearerAuthAndUser?
+    может аватар в токен пей лоад, а для конвертаци добавить еще несколько функций
+    может получение информации о пользователе сделать открытой в account и закрытой в api?
+      @Get(IdParam.USER) + верхний коментарий
+      перенести проверку в account - "public async getUser(id: string, currentUserId" в api?
   
   тренировка + редактирование
     скидка

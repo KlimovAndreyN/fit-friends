@@ -28,7 +28,6 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
-
   private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
     const { userId, videoFileId, ...fields } = rdo;
     const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
