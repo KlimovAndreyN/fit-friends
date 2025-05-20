@@ -32,7 +32,7 @@ export class FitTrainingService {
   private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
     const { userId, videoFileId, ...fields } = rdo;
     const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
-    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла... и для моих тоже... добавить параметр и сключить лишние запросы
+    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла... и для моих тоже... добавить параметр и исключить лишние запросы
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
 
@@ -55,6 +55,23 @@ export class FitTrainingService {
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+
+    return detailTraining;
+  }
+
+  public async update(
+    dto: CreateTrainingDto, //! будет UpdateTrainingDto
+    file: Express.Multer.File,
+    request: RequestWithRequestIdAndBearerAuthAndUser
+  ): Promise<DetailTrainingRdo> {
+    //! временно! переделать для обновления!
+    const { requestId, bearerAuth, user: { sub: userId, role: userRole } } = request;
+    const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
+    const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
+    const headers = makeHeaders(requestId, null, userId, userRole);
+    const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
+    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    console.log('detailTraining', detailTraining);
 
     return detailTraining;
   }

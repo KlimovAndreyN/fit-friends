@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, Req, UploadedFile, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -72,6 +72,23 @@ export class FitTrainingController {
     @Req() request: RequestWithRequestIdAndBearerAuthAndUser
   ): Promise<DetailTrainingRdo> {
     const training = await this.fitTrainingService.findById(trainingId, request);
+
+    return training;
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({ type: DetailTrainingRdo })
+  @UseInterceptors(FileInterceptor(VIDEO_FILE_PROPERTY))
+  @UseGuards(CheckRoleCoachGuard)
+  @Patch(IdParam.TRAINING)
+  public async update(
+    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Body() dto: CreateTrainingDto, //! потом будет UpdateTraningDto
+    @Req() request: RequestWithRequestIdAndBearerAuthAndUser,
+    @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
+  ): Promise<DetailTrainingRdo> {
+    //! протестировать
+    const training = await this.fitTrainingService.update(dto, file, request);
 
     return training;
   }

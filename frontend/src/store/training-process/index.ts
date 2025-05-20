@@ -241,7 +241,8 @@ export const trainingProcess = createSlice(
         .addCase(
           changeIsSpecialTraining.fulfilled,
           (state, { payload }) => {
-            state.isSpecialTraining = payload;
+            state.detailTraining = payload;
+            state.isSpecialTraining = payload.isSpecial;
             state.isIsSpecialTrainingChangeExecuting = false;
           }
         )

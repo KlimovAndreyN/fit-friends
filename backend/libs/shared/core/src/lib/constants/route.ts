@@ -38,8 +38,7 @@ export enum QuestionnaireRoute {
 export enum TrainingRoute {
   ForSportsman = 'for-sportsman',
   Special = 'special',
-  Popular = 'popular',
-  IsSpecial = 'is-special'
+  Popular = 'popular'
 }
 
 export enum UserProfileRoute {
