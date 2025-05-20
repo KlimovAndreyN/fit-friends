@@ -39,7 +39,7 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   // как отборазить если бесплатно? есть что то в маркапах - просто 0!
 
   const dispatch = useAppDispatch();
-  const isSpecialTraining = (!isSportsman) ? useAppSelector(getIsSpecialTraining) : undefined;
+  const isSpecialTraining = useAppSelector(getIsSpecialTraining);
 
   const { id: trainingId, title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
   const [isEditing, setIsEditing] = useState(false); //! возможно нужно в useEffect елси будет открыто редактирование и нажата изменить статус
