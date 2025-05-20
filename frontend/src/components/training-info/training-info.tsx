@@ -1,7 +1,7 @@
 import { JSX, useState } from 'react';
 import classNames from 'classnames';
 
-import { IDetailTrainingRdo } from '@backend/shared/core';
+import { IDetailTrainingRdo, SPECIAL_OFFER_PERCENT } from '@backend/shared/core';
 
 import TrainingInfoHeader from '../training-info-header/training-info-header';
 import Hashtags from '../hashtags/hashtags';
@@ -35,7 +35,7 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
   // а как выглядят со скидкой? как по ТЗ? - нет примера
   // как отборазить если бесплатно? есть что то в маркапах - просто 0!
 
-  const { title, specialization, gender, duration, caloriesWaste, description, price, rating, videoFilePath, coach, backgroundPath } = training;
+  const { title, specialization, gender, duration, caloriesWaste, description, price, isSpecial, rating, videoFilePath, coach, backgroundPath } = training;
   const [isEditing, setIsEditing] = useState(false);
   const { id: coachId, avatarFilePath, name } = coach;
   const { min, max } = DurationMinMax[duration];
@@ -75,14 +75,14 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
               <div className="training-info__info-wrapper">
                 <div className="training-info__input training-info__input--training">
                   <label><span className="training-info__label">Название тренировки</span>
-                    <input type="text" name="training" defaultValue={title} readOnly={!isEditing} />
+                    <input type="text" name="training" defaultValue={title} readOnly={!isEditing} disabled={!isEditing} />
                   </label>
                   <div className="training-info__error">Обязательное поле</div>
                 </div>
                 <div className="training-info__textarea">
                   <label>
                     <span className="training-info__label">Описание тренировки</span>
-                    <textarea name="description" defaultValue={description} readOnly={!isEditing} />
+                    <textarea name="description" defaultValue={description} readOnly={!isEditing} disabled={!isEditing} />
                   </label>
                 </div>
               </div>
@@ -110,12 +110,22 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
                 <div className="training-info__input training-info__input--price">
                   <label><span className="training-info__label">Стоимость</span>
                     {/*//! для тренера тут числа? */}
-                    <input type="text" name="price" defaultValue={`${price}\u00A0₽`} readOnly={!isEditing} />
+                    <input type="text" name="price" defaultValue={`${price}\u00A0₽`} readOnly={!isEditing} disabled={!isEditing} />
                   </label>
                   <div className="training-info__error">Введите число</div>
                 </div>
-                {/*//! только для спортсмена, для тренера тут скидка */}
-                <button className="btn training-info__buy" type="button">Купить</button>
+                {
+                  (isSportsman)
+                    ?
+                    <button className="btn training-info__buy" type="button">Купить</button>
+                    :
+                    <button className="btn-flat btn-flat--light btn-flat--underlined training-info__discount" type="button">
+                      <svg width="14" height="14" aria-hidden="true">
+                        <use xlinkHref="#icon-discount"></use>
+                      </svg>
+                      <span>{(isSpecial) ? 'Отменить скидку' : `Сделать скидку ${SPECIAL_OFFER_PERCENT}%`}</span>
+                    </button>
+                }
               </div>
             </div>
           </form>
