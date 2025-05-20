@@ -24,7 +24,7 @@ const initialState: AccountProcess = {
   isUpdateCoachCertificatesError: false,
 
   isReadyForTrainingChangeExecuting: false,
-  readyForTraining: false,
+  readyForTraining: false
 };
 
 export const accountProcess = createSlice(

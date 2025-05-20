@@ -5,7 +5,8 @@ import { ITrainingQuery } from '@backend/shared/core';
 import { TrainingProcess } from '../../types/process/training.process';
 import {
   fetchDetailTraining, fetchTrainings, fetchPopularTrainings, createTraining,
-  fetchForSportsmanTrainings, fetchSpecialTrainings, fetchCoachTrainings
+  fetchForSportsmanTrainings, fetchSpecialTrainings, fetchCoachTrainings,
+  updateTraining, changeIsSpecialTraining
 } from '../actions/training-action';
 import { StoreSlice } from '../../const';
 
@@ -43,6 +44,12 @@ const initialState: TrainingProcess = {
   isFetchDetailTrainingError: false,
   detailTraining: null,
 
+  isUpdateTrainingExecuting: false,
+  isUpdateTrainingError: false,
+
+  isIsSpecialTrainingChangeExecuting: false,
+  isSpecialTraining: false,
+
   isCreateTrainingExecuting: false,
   isCreatedTraining: false,
 
@@ -75,7 +82,8 @@ export const trainingProcess = createSlice(
         }
       },
       clearDetailTraining: (state) => {
-        state.detailTraining = null;
+        state.detailTraining = initialState.detailTraining;
+        state.isSpecialTraining = initialState.isSpecialTraining;
       },
       clearCreatedTraining: (state) => {
         state.isCreatedTraining = false;
@@ -191,7 +199,50 @@ export const trainingProcess = createSlice(
           fetchDetailTraining.fulfilled,
           (state, { payload }) => {
             state.detailTraining = payload;
+            state.isSpecialTraining = payload.isSpecial;
             state.isFetchDetailTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          updateTraining.pending,
+          (state) => {
+            state.isUpdateTrainingError = false;
+            state.isUpdateTrainingExecuting = true;
+          }
+        )
+        .addCase(
+          updateTraining.rejected,
+          (state) => {
+            state.isUpdateTrainingError = true;
+            state.isUpdateTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          updateTraining.fulfilled,
+          (state, { payload }) => {
+            state.detailTraining = payload;
+            state.isSpecialTraining = payload.isSpecial;
+            state.isUpdateTrainingError = false;
+            state.isUpdateTrainingExecuting = false;
+          }
+        )
+        .addCase(
+          changeIsSpecialTraining.pending,
+          (state) => {
+            state.isIsSpecialTrainingChangeExecuting = true;
+          }
+        )
+        .addCase(
+          changeIsSpecialTraining.rejected,
+          (state) => {
+            state.isIsSpecialTrainingChangeExecuting = false;
+          }
+        )
+        .addCase(
+          changeIsSpecialTraining.fulfilled,
+          (state, { payload }) => {
+            state.isSpecialTraining = payload;
+            state.isIsSpecialTrainingChangeExecuting = false;
           }
         )
         .addCase(

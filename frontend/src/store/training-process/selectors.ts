@@ -22,6 +22,12 @@ export const getIsFetchDetailTrainingExecuting = ({ [StoreSlice.TrainingProcess]
 export const getIsFetchDetailTrainingError = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isFetchDetailTrainingError'] => TRAINING_PROCESS.isFetchDetailTrainingError;
 export const getDetailTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['detailTraining'] => TRAINING_PROCESS.detailTraining;
 
+export const getIsUpdateTrainingExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isUpdateTrainingExecuting'] => TRAINING_PROCESS.isUpdateTrainingExecuting;
+export const getIsUpdateTrainingError = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isUpdateTrainingError'] => TRAINING_PROCESS.isUpdateTrainingError;
+
+export const getIsIsSpecialTrainingChangeExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isIsSpecialTrainingChangeExecuting'] => TRAINING_PROCESS.isIsSpecialTrainingChangeExecuting;
+export const getIsSpecialTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isSpecialTraining'] => TRAINING_PROCESS.isSpecialTraining;
+
 export const getIsCreateTrainingExecuting = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isCreateTrainingExecuting'] => TRAINING_PROCESS.isCreateTrainingExecuting;
 export const getIsCreatedTraining = ({ [StoreSlice.TrainingProcess]: TRAINING_PROCESS }: State): TrainingProcess['isCreatedTraining'] => TRAINING_PROCESS.isCreatedTraining;
 

@@ -22,6 +22,12 @@ export type TrainingProcess = {
   isFetchDetailTrainingError: boolean;
   detailTraining: IDetailTrainingRdo | null;
 
+  isUpdateTrainingExecuting: boolean;
+  isUpdateTrainingError: boolean;
+
+  isIsSpecialTrainingChangeExecuting: boolean;
+  isSpecialTraining: boolean;
+
   isCreateTrainingExecuting: boolean;
   isCreatedTraining: boolean;
 
