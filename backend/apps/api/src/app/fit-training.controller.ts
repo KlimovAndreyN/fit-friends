@@ -6,7 +6,8 @@ import {
   ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption, IdParam,
   TrainingQuery, BearerAuth, TrainingRdo, RequestWithRequestIdAndUser,
   TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser,
-  VIDEO_FILE_PROPERTY, CreateTrainingDto, parseTrainingVideoFilePipeBuilder
+  VIDEO_FILE_PROPERTY, CreateTrainingDto, parseTrainingVideoFilePipeBuilder,
+  RequestWithRequestIdAndUserIdAndUserRole
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -84,11 +85,11 @@ export class FitTrainingController {
   public async update(
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
     @Body() dto: CreateTrainingDto, //! потом будет UpdateTraningDto
-    @Req() request: RequestWithRequestIdAndBearerAuthAndUser,
+    @Req() { userId, userRole, requestId }: RequestWithRequestIdAndUserIdAndUserRole,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<DetailTrainingRdo> {
     //! протестировать
-    const training = await this.fitTrainingService.update(dto, file, request);
+    const training = await this.fitTrainingService.update(dto, file, userId, userRole, requestId);
 
     return training;
   }
@@ -100,10 +101,10 @@ export class FitTrainingController {
   @Post()
   public async create(
     @Body() dto: CreateTrainingDto,
-    @Req() request: RequestWithRequestIdAndBearerAuthAndUser,
+    @Req() { userId, userRole, requestId }: RequestWithRequestIdAndUserIdAndUserRole,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<TrainingRdo> {
-    const training = await this.fitTrainingService.create(dto, file, request);
+    const training = await this.fitTrainingService.create(dto, file, userId, userRole, requestId);
 
     return training;
   }

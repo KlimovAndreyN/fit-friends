@@ -6,7 +6,8 @@ import 'multer'; // Express.Multer.File
 import {
   BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
   RequestWithRequestIdAndBearerAuthAndUser, CreateTrainingDto,
-  RequestWithRequestIdAndUser, CreateBasicTrainingDto, TrainingRdo
+  RequestWithRequestIdAndUser, CreateBasicTrainingDto, TrainingRdo,
+  Duration, Gender, Specialization, TrainingLevel
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -69,15 +70,19 @@ export class FitTrainingService {
   public async update(
     dto: CreateTrainingDto, //! будет UpdateTrainingDto
     file: Express.Multer.File,
-    request: RequestWithRequestIdAndBearerAuthAndUser
+    userId: string,
+    userRole: string,
+    requestId: string
   ): Promise<DetailTrainingRdo> {
     //! временно! переделать для обновления!
-    const { requestId, bearerAuth, user: { sub: userId, role: userRole } } = request;
+    // старый видео-файл удалить... а как с аватаром? есть удаление?
     const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
     const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
-    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    //const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    //! временно
+    const detailTraining: DetailTrainingRdo = { backgroundPath: (data) ? '' : '', caloriesWaste: 0, coach: { id: '', name: '', avatarFilePath: '' }, createdDate: '', description: '', duration: Duration.Minutes_10_30, gender: Gender.Female, id: '', isSpecial: false, price: 0, rating: 0, specialization: Specialization.Aerobics, title: '', trainingLevel: TrainingLevel.Amateur, videoFilePath: '' };
 
     return detailTraining;
   }
@@ -85,9 +90,10 @@ export class FitTrainingService {
   public async create(
     dto: CreateTrainingDto,
     file: Express.Multer.File,
-    request: RequestWithRequestIdAndUser
+    userId: string,
+    userRole: string,
+    requestId: string
   ): Promise<TrainingRdo> {
-    const { requestId, user: { sub: userId, role: userRole } } = request;
     const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
     const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
