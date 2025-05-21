@@ -94,7 +94,7 @@ export class FitTrainingController {
   }
 
   @ApiConsumes('multipart/form-data')
-  @ApiResponse({ type: DetailTrainingRdo })
+  @ApiResponse({ type: TrainingRdo })
   @UseInterceptors(FileInterceptor(VIDEO_FILE_PROPERTY))
   @UseGuards(CheckRoleCoachGuard)
   @Post()
@@ -102,7 +102,7 @@ export class FitTrainingController {
     @Body() dto: CreateTrainingDto,
     @Req() request: RequestWithRequestIdAndBearerAuthAndUser,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
-  ): Promise<DetailTrainingRdo> {
+  ): Promise<TrainingRdo> {
     const training = await this.fitTrainingService.create(dto, file, request);
 
     return training;

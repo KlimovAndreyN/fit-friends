@@ -3,7 +3,7 @@ import { Transform } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 import { IPageQuery } from '../interfaces/query/i-page.query';
-import { transformNumber } from '../utils/transform';
+import { transformToNumber } from '../utils/transform';
 import { PageQueryValidation } from '../constants/api-property/page-api-property';
 
 export class PageQuery
@@ -16,7 +16,7 @@ export class PageQuery
   @IsInt()
   @Min(PageQueryValidation.Page.Min)
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public page?: IPageQuery['page'];
 
   @ApiProperty({
@@ -28,6 +28,6 @@ export class PageQuery
   @Min(PageQueryValidation.Limit.Min)
   @Max(PageQueryValidation.Limit.Max)
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public limit?: IPageQuery['limit'];
 }

@@ -12,7 +12,7 @@ import { IBasicDetailUserRdo } from '../../interfaces/rdo/i-basic-detail-user.rd
 import { Location } from '../../types/location.enum';
 import { Gender } from '../../types/gender.enum';
 import { Role } from '../../types/role.enum';
-import { transformStringBooleanOrBoolean } from '../../utils/transform';
+import { transformToStringBooleanOrBoolean } from '../../utils/transform';
 import { UserApiProperty, UserValidation } from '../../constants/api-property/user.api-property';
 
 //! типизировать через SchemaObjectMetadata не получается
@@ -73,7 +73,7 @@ export class UserApiDoc {
   @ApiProperty(UserApiProperty.EmptyAvatarFile)
   @Expose()
   @IsOptional()
-  @Transform(transformStringBooleanOrBoolean) // из-за 'multipart/form-data' приходит string, а при вторичной транформации, для валидации, уже boolean
+  @Transform(transformToStringBooleanOrBoolean) // из-за 'multipart/form-data' приходит string, а при вторичной транформации, для валидации, уже boolean
   public emptyAvatarFile?: IUpdateUserDto['emptyAvatarFile'];
 
   @ApiProperty(UserApiProperty.AvatarFilePath)

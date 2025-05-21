@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsEnum, IsInt, IsString } from 'class-validator';
-import { Expose, Transform } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 
 import { Training } from '../../interfaces/training.interface';
 import { ICreateTrainingDto, VIDEO_FILE_PROPERTY } from '../../interfaces/dto/i-create-training.dto';
@@ -9,7 +9,8 @@ import { TrainingLevel } from '../../types/training-level.enum';
 import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { Gender } from '../../types/gender.enum';
-import { transformNumber } from '../../utils/transform';
+import { transformDateToString, transformToNumber } from '../../utils/transform';
+import { IBasicDetailTrainingRdo } from '../../interfaces/rdo/i-basic-detail-training.rdo';
 
 //! описание и ограничения для всего, часть можно взять с опросника только пользователя заменить на тренировку
 export class TrainingApiDoc {
@@ -30,30 +31,30 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingLevel)
-  trainingLevel: Training['trainingLevel'];
+  public trainingLevel: Training['trainingLevel'];
 
   @ApiProperty()
   @Expose()
   @IsString()
   @IsEnum(Specialization)
-  specialization: Training['specialization'];
+  public specialization: Training['specialization'];
 
   @ApiProperty()
   @Expose()
   @IsEnum(Duration)
-  duration: Training['duration'];
+  public duration: Training['duration'];
 
   @ApiProperty()
   @Expose()
   @IsInt()
-  @Transform(transformNumber)
-  price: Training['price'];
+  @Transform(transformToNumber)
+  public price: Training['price'];
 
   @ApiProperty()
   @Expose()
   @IsInt()
-  @Transform(transformNumber)
-  caloriesWaste: Training['caloriesWaste'];
+  @Transform(transformToNumber)
+  public caloriesWaste: Training['caloriesWaste'];
 
   @ApiProperty()
   @Expose()
@@ -63,7 +64,7 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose()
   @IsEnum(Gender)
-  gender: Training['gender'];
+  public gender: Training['gender'];
 
   @ApiProperty()
   @Expose()
@@ -80,7 +81,7 @@ export class TrainingApiDoc {
 
   @ApiProperty()
   @Expose()
-  rating: Training['rating'];
+  public rating: Training['rating'];
 
   @ApiProperty()
   @Expose()
@@ -93,9 +94,10 @@ export class TrainingApiDoc {
   @ApiProperty()
   @Expose()
   @IsBoolean() //! проверить что все ок при multipath/data, придет строка и нужно будет трансофрмировать, но участвовать будет в разных DTO
-  isSpecial: Training['isSpecial'];
+  public isSpecial: Training['isSpecial'];
 
   @ApiProperty()
   @Expose({ name: 'createdAt' })
-  public createdDate: string; //! потом будет из IBasicDetailTrainingRdo
+  @Transform(transformDateToString)
+  public createdDate: IBasicDetailTrainingRdo['createdDate'];
 }

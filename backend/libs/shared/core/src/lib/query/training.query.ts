@@ -7,7 +7,7 @@ import { PageQuery } from './page.query';
 import { SortType } from '../types/sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
 import { Duration } from '../types/duration.enum';
-import { transformToArray, transformNumber } from '../utils/transform';
+import { transformToArray, transformToNumber } from '../utils/transform';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 
 export class TrainingQuery
@@ -18,7 +18,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber) // трансформ срабатывает раньше @IsInt()
+  @Transform(transformToNumber) // трансформ срабатывает раньше @IsInt()
   public priceMin?: ITrainingQuery['priceMin'];
 
   @ApiProperty({
@@ -26,7 +26,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public priceMax?: ITrainingQuery['priceMax'];
 
   @ApiProperty({
@@ -34,7 +34,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public caloriesWasteMin?: ITrainingQuery['caloriesWasteMin'];
 
   @ApiProperty({
@@ -42,7 +42,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public caloriesWasteMax?: ITrainingQuery['caloriesWasteMax'];
 
   @ApiProperty({
@@ -50,7 +50,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public ratingMin?: ITrainingQuery['ratingMin'];
 
   @ApiProperty({
@@ -58,7 +58,7 @@ export class TrainingQuery
     required: false
   })
   @IsOptional()
-  @Transform(transformNumber)
+  @Transform(transformToNumber)
   public ratingMax?: ITrainingQuery['ratingMax'];
 
   @ApiProperty({

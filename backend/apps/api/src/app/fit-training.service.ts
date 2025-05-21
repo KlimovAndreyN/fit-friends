@@ -6,9 +6,9 @@ import 'multer'; // Express.Multer.File
 import {
   BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
   RequestWithRequestIdAndBearerAuthAndUser, CreateTrainingDto,
-  RequestWithRequestIdAndUser, CreateBasicTrainingDto
+  RequestWithRequestIdAndUser, CreateBasicTrainingDto, TrainingRdo
 } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { UserService } from './user.service';
@@ -28,14 +28,22 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
+  private async convertToTrainingRdo(rdo: BasicDetailTrainingRdo): Promise<TrainingRdo> {
+    const { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate } = rdo;
+    const training: TrainingRdo = { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate };
+
+    return training;
+  }
+
   private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
     const { userId, videoFileId, ...fields } = rdo;
     const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
     const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла... и для моих тоже... добавить параметр и исключить лишние запросы
     const { id, name, avatarFilePath } = user;
     const coach: UserRdo = { id, name, avatarFilePath };
+    const detailTrainingRdo: DetailTrainingRdo = { ...fields, videoFilePath, coach };
 
-    return { ...fields, videoFilePath, coach };
+    return detailTrainingRdo;
   }
 
   public async getTrainings<T>(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<T> {
@@ -70,7 +78,6 @@ export class FitTrainingService {
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
     const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
-    console.log('detailTraining', detailTraining);
 
     return detailTraining;
   }
@@ -78,16 +85,21 @@ export class FitTrainingService {
   public async create(
     dto: CreateTrainingDto,
     file: Express.Multer.File,
-    request: RequestWithRequestIdAndBearerAuthAndUser
-  ): Promise<DetailTrainingRdo> {
-    const { requestId, bearerAuth, user: { sub: userId, role: userRole } } = request;
+    request: RequestWithRequestIdAndUser
+  ): Promise<TrainingRdo> {
+    const { requestId, user: { sub: userId, role: userRole } } = request;
     const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
     const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
-    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
-    console.log('detailTraining', detailTraining);
 
-    return detailTraining;
+    console.log('api-f-s');
+    console.log('data', data);
+
+    const training = this.convertToTrainingRdo(data);
+
+    console.log('training', training);
+
+    return training;
   }
 }

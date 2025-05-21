@@ -114,7 +114,7 @@ export const createTraining = createAsyncThunk<void, ICreateTrainingDto, { extra
   Action.CREATE_TRAINING,
   async (dto, { extra }) => {
     const { api } = extra;
-    await api.post<IDetailTrainingRdo>(ApiServiceRoute.Trainings, dto, { useMultipartFormData: true });
+    await api.post<ITrainingRdo>(ApiServiceRoute.Trainings, dto, { useMultipartFormData: true });
   }
 );
 

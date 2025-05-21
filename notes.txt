@@ -29,6 +29,12 @@ swaggercoach@local.ru
       @Get(IdParam.USER) + верхний коментарий
       перенести проверку в account - "public async getUser(id: string, currentUserId" в api?
   
+  console.log('api-f-s');
+  console.log('t-c');
+  @Transform(transformDateToString)
+  public createdDate: IBasicDetailTrainingRdo['createdDate'];
+  
+  
   тренировка + редактирование
     скидка
       при просмотре карточки тренером всегда доступна кнопка или при режиме редактирования
