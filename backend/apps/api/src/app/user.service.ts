@@ -4,8 +4,9 @@ import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
 
 import {
-  AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute, DetailUserRdo,
-  BasicDetailUserRdo, convertToDetailUserRdo, UpdateUserDto, UpdateBasicUserDto, UserRdo,
+  AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute,
+  DetailUserRdo, Role, BasicDetailUserRdo, convertToDetailUserRdo,
+  UpdateUserDto, UpdateBasicUserDto, UserRdo
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -72,8 +73,9 @@ export class UserService {
   }
 
   //! role! currentUserId!
-  public async getUser(userId: string, bearerAuth: string, requestId: string): Promise<UserRdo> {
-    const detailUser = await this.getDetailUser(userId, bearerAuth, requestId);
+  public async getUser(userId: string, currentUserId: string, userRole: Role, requestId: string): Promise<UserRdo> {
+    const detailUser = await this.getDetailUser(userId, '', requestId);
+    //! const detailUser = await this.getDetailUser(userId, currentUserId, userRole, requestId);
     const { name, avatarFilePath } = detailUser;
     const user: UserRdo = { id: userId, name, avatarFilePath };
 

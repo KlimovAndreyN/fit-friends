@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 
-import { ServiceRoute, ReviewRdo, BasicReviewRdo, RequestWithRequestIdAndBearerAuthAndUserId } from '@backend/shared/core';
+import { ServiceRoute, ReviewRdo, BasicReviewRdo, Role } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -23,16 +23,18 @@ export class FitReviewService {
 
   public async getReviews(
     trainingId: string,
-    { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
+    currentUserId: string,
+    userRole: Role,
+    requestId: string
   ): Promise<ReviewRdo[]> {
     const url = this.getUrl(trainingId);
-    const headers = makeHeaders(requestId, null, userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
     const { data } = await this.httpService.axiosRef.get<BasicReviewRdo[]>(url, headers);
     const reviews = [];
 
     for (const item of data) {
       const { userId, ...fields } = item;
-      const user = await this.userService.getUser(userId, bearerAuth, requestId);
+      const user = await this.userService.getUser(userId, currentUserId, userRole, requestId);
       const review: ReviewRdo = { ...fields, user };
 
       reviews.push(review);

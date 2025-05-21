@@ -35,10 +35,16 @@ export class FitTrainingService {
     return training;
   }
 
-  private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, videoFilePath: string, userRole: Role, requestId: string): Promise<DetailTrainingRdo> {
+  private async convertToDetailTrainingRdo(
+    rdo: BasicDetailTrainingRdo,
+    videoFilePath: string,
+    currentUserId: string,
+    userRole: Role,
+    requestId: string
+  ): Promise<DetailTrainingRdo> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userId, videoFileId, ...fields } = rdo;
-    const coach = await this.userService.getUser(userId, '', requestId); //! Убрать авторизацию и добавить userRole перед requestId
+    const coach = await this.userService.getUser(userId, currentUserId, userRole, requestId); //! Убрать авторизацию и добавить userRole перед requestId
     const detailTrainingRdo: DetailTrainingRdo = { ...fields, videoFilePath, coach };
 
     return detailTrainingRdo;
@@ -63,7 +69,7 @@ export class FitTrainingService {
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const videoFilePath = await this.fileService.getFilePath(data.videoFileId, requestId);
 
-    return await this.convertToDetailTrainingRdo(data, videoFilePath, userRole, requestId);
+    return await this.convertToDetailTrainingRdo(data, videoFilePath, userId, userRole, requestId);
   }
 
   public async update(

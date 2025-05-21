@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { BearerAuth, ApiServiceRoute, ApiParamOption, IdParam, ReviewRdo, RequestWithRequestIdAndBearerAuthAndUserId } from '@backend/shared/core';
+import { BearerAuth, ApiServiceRoute, ApiParamOption, IdParam, ReviewRdo, RequestWithRequestIdAndUser } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -22,9 +22,9 @@ export class FitReviewController {
   @Get(IdParam.TRAINING)
   public async index(
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
-    @Req() request: RequestWithRequestIdAndBearerAuthAndUserId
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<ReviewRdo[]> {
-    const reviews = await this.fitReviewService.getReviews(trainingId, request);
+    const reviews = await this.fitReviewService.getReviews(trainingId, sub, role, requestId);
 
     return reviews;
   }
