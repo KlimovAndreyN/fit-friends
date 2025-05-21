@@ -8,7 +8,7 @@ import {
   RequestWithRequestIdAndBearerAuthAndUser, CreateTrainingDto,
   RequestWithRequestIdAndUser, CreateBasicTrainingDto, TrainingRdo
 } from '@backend/shared/core';
-import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
+import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { UserService } from './user.service';

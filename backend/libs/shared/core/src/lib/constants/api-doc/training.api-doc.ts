@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsEnum, IsInt, IsString } from 'class-validator';
-import { Expose, Transform, Type } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 import { Training } from '../../interfaces/training.interface';
 import { ICreateTrainingDto, VIDEO_FILE_PROPERTY } from '../../interfaces/dto/i-create-training.dto';
