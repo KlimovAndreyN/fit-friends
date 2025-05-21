@@ -23,11 +23,6 @@ swaggercoach@local.ru
 123456
 --------------
 Вопросы:
-  А нужно ли RequestWithRequestIdAndBearerAuthAndUser?
-  много для сервиса - request: RequestWithRequestIdAndBearerAuthAndUser
-  RequestWithRequestIdAndUser?
-  RequestWithRequestIdAndUserIdAndUserRole?
-  RequestWithRequestIdAndBearerAuthAndUserId?
   сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
     может передавать централизованно?
   при создании тренировки можно вернуть меньше данных this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers) и не делать дополнительно преобразование
