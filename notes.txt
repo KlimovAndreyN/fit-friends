@@ -24,16 +24,14 @@ swaggercoach@local.ru
 --------------
 Вопросы:
   А нужно ли RequestWithRequestIdAndBearerAuthAndUser?
+  много для сервиса - request: RequestWithRequestIdAndBearerAuthAndUser
+  сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
+    может передавать централизованно?
+  при создании тренировки можно вернуть меньше данных this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers) и не делать дополнительно преобразование
     может аватар в токен пей лоад, а для конвертаци добавить еще несколько функций
     может получение информации о пользователе сделать открытой в account и закрытой в api?
       @Get(IdParam.USER) + верхний коментарий
       перенести проверку в account - "public async getUser(id: string, currentUserId" в api?
-  
-  console.log('api-f-s');
-  console.log('t-c');
-  @Transform(transformDateToString)
-  public createdDate: IBasicDetailTrainingRdo['createdDate'];
-  
   
   тренировка + редактирование
     скидка
@@ -41,19 +39,9 @@ swaggercoach@local.ru
       при 0 обработать, скидку некуда применять, а признак можно поставить?
     цена
       от спортсмена и при просмотре от тренера это строка с $, а от тренера при редактировании это число в input
-
-  Создание тренировки
-    Фоновые изображения используются предопределённые из макета (вёрстки). При сохранении тренировки присваивается случайное изображение
     подписка на тренера
-      Реализованы сценарии раздела «отправки уведомления на почту».
-  Реализовать сценарии раздела «Редактирование карточки тренировки тренером»
-  Мои заказы
-  
-  много для сервиса - request: RequestWithRequestIdAndBearerAuthAndUser
-  сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
-    может передавать централизованно?
-  при создании тренировки можно вернуть меньше данных this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers) и не делать дополнительно преобразование
-  
+      при созданиии тренировки уведомлять, но не сразу... как то странно по ТЗ...
+
   !сделать времянки, а потом моки
     Friends
     UsersCatalog

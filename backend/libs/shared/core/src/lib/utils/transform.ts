@@ -26,6 +26,5 @@ export function transformToArray({ value }): unknown[] {
 }
 
 export function transformDateToString({ value }): string | unknown {
-  //! проверить
   return (value instanceof (Date)) ? value.toISOString() : value;
 }

@@ -93,13 +93,6 @@ export class FitTrainingService {
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
 
-    console.log('api-f-s');
-    console.log('data', data);
-
-    const training = this.convertToTrainingRdo(data);
-
-    console.log('training', training);
-
-    return training;
+    return this.convertToTrainingRdo(data);
   }
 }

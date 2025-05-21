@@ -89,10 +89,6 @@ export class TrainingController {
   ): Promise<BasicDetailTrainingRdo> {
     const entity = await this.trainingService.create(dto, userId);
 
-    console.log('t-c');
-    console.log('entity', entity);
-    console.log('fillDto', fillDto(BasicDetailTrainingRdo, entity.toPOJO()));
-
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }
 }
