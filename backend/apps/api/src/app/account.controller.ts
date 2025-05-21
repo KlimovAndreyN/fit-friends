@@ -11,9 +11,9 @@ import {
   QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, ApiParamOption,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
-  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder, FILE_KEY,
-  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder, IdParam,
-  RequestWithRequestIdAndBearerAuthAndUserId
+  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder,
+  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder,
+  IdParam, FILE_KEY, RequestWithRequestIdAndUser
 } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -107,10 +107,10 @@ export class AccountController {
   @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
   @Get()
   public async getUserProfile(
-    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
-    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+    const user = await this.userService.getDetailUser(sub, sub, role, requestId);
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(sub, requestId);
 
     return { user, questionnaire };
   }

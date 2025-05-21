@@ -61,10 +61,9 @@ export class UserService {
     return convertToDetailUserRdo(updateUser, avatarFilePath);
   }
 
-  //! role! currentUserId!
-  public async getDetailUser(userId: string, bearerAuth: string, requestId: string): Promise<DetailUserRdo> {
+  public async getDetailUser(userId: string, currentUserId: string, userRole: Role, requestId: string): Promise<DetailUserRdo> {
     const url = this.getUrl(userId);
-    const headers = makeHeaders(requestId, bearerAuth, '11112222', 'sportsman'); //! временно
+    const headers = makeHeaders(requestId, null, currentUserId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailUserRdo>(url, headers);
     const filePath = await this.fileService.getFilePath(data.avatarFileId, requestId);
     const user: DetailUserRdo = convertToDetailUserRdo(data, filePath);
@@ -74,8 +73,7 @@ export class UserService {
 
   //! role! currentUserId!
   public async getUser(userId: string, currentUserId: string, userRole: Role, requestId: string): Promise<UserRdo> {
-    const detailUser = await this.getDetailUser(userId, '', requestId);
-    //! const detailUser = await this.getDetailUser(userId, currentUserId, userRole, requestId);
+    const detailUser = await this.getDetailUser(userId, currentUserId, userRole, requestId);
     const { name, avatarFilePath } = detailUser;
     const user: UserRdo = { id: userId, name, avatarFilePath };
 

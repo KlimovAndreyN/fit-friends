@@ -2,9 +2,8 @@ import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/comm
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, BearerAuth, UserProfileRdo, UserProfileRoute,
-  DetailUserProfileRdo, RequestWithRequestIdAndBearerAuth, IdParam,
-  RequestWithRequestIdAndBearerAuthAndUserId, ApiParamOption
+  ApiServiceRoute, UserProfileRdo, UserProfileRoute, DetailUserProfileRdo,
+  BearerAuth, IdParam, ApiParamOption, RequestWithRequestIdAndUser
 } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -28,15 +27,15 @@ export class UserProfileController {
   @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(
-    @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuthAndUserId
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<UserProfileRdo[]> {
     //! пока отобрал спортсменов готовых к тренировке...
 
     const userProfiles: UserProfileRdo[] = [];
-    const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(userId, requestId);
+    const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(sub, requestId);
 
     for (const { userId, specializations } of questionnaires) {
-      const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
+      const user = await this.userService.getDetailUser(userId, sub, role, requestId);
       const { id, name, location, avatarFilePath } = user;
       const userProfile: UserProfileRdo = { id, name, location, avatarFilePath, specializations };
 
@@ -50,9 +49,9 @@ export class UserProfileController {
   @Get(IdParam.USER)
   public async show(
     @Param(ApiParamOption.UserId.name) userId: string,
-    @Req() { requestId, bearerAuth }: RequestWithRequestIdAndBearerAuth
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId);
+    const user = await this.userService.getDetailUser(userId, sub, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
