@@ -3,11 +3,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiConsumes, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption, IdParam,
+  ApiServiceRoute, TrainingRoute, DetailTrainingRdo, ApiParamOption,
   TrainingQuery, BearerAuth, TrainingRdo, RequestWithRequestIdAndUser,
-  TrainingsWithPaginationRdo, RequestWithRequestIdAndBearerAuthAndUser,
-  VIDEO_FILE_PROPERTY, CreateTrainingDto, parseTrainingVideoFilePipeBuilder,
-  RequestWithRequestIdAndUserIdAndUserRole
+  IdParam, TrainingsWithPaginationRdo, VIDEO_FILE_PROPERTY,
+  CreateTrainingDto, parseTrainingVideoFilePipeBuilder
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -70,9 +69,9 @@ export class FitTrainingController {
   @Get(IdParam.TRAINING)
   public async show(
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
-    @Req() request: RequestWithRequestIdAndBearerAuthAndUser
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailTrainingRdo> {
-    const training = await this.fitTrainingService.findById(trainingId, request);
+    const training = await this.fitTrainingService.findById(trainingId, sub, role, requestId);
 
     return training;
   }
@@ -85,11 +84,11 @@ export class FitTrainingController {
   public async update(
     @Param(ApiParamOption.TrainingId.name) trainingId: string,
     @Body() dto: CreateTrainingDto, //! потом будет UpdateTraningDto
-    @Req() { userId, userRole, requestId }: RequestWithRequestIdAndUserIdAndUserRole,
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<DetailTrainingRdo> {
     //! протестировать
-    const training = await this.fitTrainingService.update(dto, file, userId, userRole, requestId);
+    const training = await this.fitTrainingService.update(dto, file, sub, role, requestId);
 
     return training;
   }
@@ -101,10 +100,10 @@ export class FitTrainingController {
   @Post()
   public async create(
     @Body() dto: CreateTrainingDto,
-    @Req() { userId, userRole, requestId }: RequestWithRequestIdAndUserIdAndUserRole,
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<TrainingRdo> {
-    const training = await this.fitTrainingService.create(dto, file, userId, userRole, requestId);
+    const training = await this.fitTrainingService.create(dto, file, sub, role, requestId);
 
     return training;
   }

@@ -31,4 +31,6 @@ const XUserRoleApiHeaderOptions: ApiHeaderOptions = {
 
 export const XApiHeaderOptions: ApiHeaderOptions[] = [XUserIdApiHeaderOptions, XRequestIdApiHeaderOptions] as const;
 
+export const XUserApiHeaderOptions: ApiHeaderOptions[] = [XUserIdApiHeaderOptions, XUserRoleApiHeaderOptions] as const;
+
 export const XAllApiHeaderOptions: ApiHeaderOptions[] = [XUserIdApiHeaderOptions, XRequestIdApiHeaderOptions, XUserRoleApiHeaderOptions] as const;

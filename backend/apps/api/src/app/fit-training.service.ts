@@ -4,10 +4,9 @@ import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
 
 import {
-  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, UserRdo,
-  RequestWithRequestIdAndBearerAuthAndUser, CreateTrainingDto,
+  BasicDetailTrainingRdo, DetailTrainingRdo, ServiceRoute, CreateTrainingDto,
   RequestWithRequestIdAndUser, CreateBasicTrainingDto, TrainingRdo,
-  Duration, Gender, Specialization, TrainingLevel
+  Duration, Gender, Specialization, TrainingLevel, Role
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -29,19 +28,17 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
-  private async convertToTrainingRdo(rdo: BasicDetailTrainingRdo): Promise<TrainingRdo> {
+  private convertToTrainingRdo(rdo: BasicDetailTrainingRdo): TrainingRdo {
     const { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate } = rdo;
     const training: TrainingRdo = { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate };
 
     return training;
   }
 
-  private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, bearerAuth: string, requestId: string): Promise<DetailTrainingRdo> {
+  private async convertToDetailTrainingRdo(rdo: BasicDetailTrainingRdo, videoFilePath: string, userRole: Role, requestId: string): Promise<DetailTrainingRdo> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userId, videoFileId, ...fields } = rdo;
-    const videoFilePath = await this.fileService.getFilePath(videoFileId, requestId);
-    const user = await this.userService.getDetailUser(userId, bearerAuth, requestId); //! при создании нет смысла... и для моих тоже... добавить параметр и исключить лишние запросы
-    const { id, name, avatarFilePath } = user;
-    const coach: UserRdo = { id, name, avatarFilePath };
+    const coach = await this.userService.getUser(userId, '', requestId); //! Убрать авторизацию и добавить userRole перед requestId
     const detailTrainingRdo: DetailTrainingRdo = { ...fields, videoFilePath, coach };
 
     return detailTrainingRdo;
@@ -57,21 +54,23 @@ export class FitTrainingService {
 
   public async findById(
     trainingId: string,
-    { requestId, bearerAuth, user: { sub: userId, role: userRole } }: RequestWithRequestIdAndBearerAuthAndUser
+    userId: string,
+    userRole: Role,
+    requestId: string
   ): Promise<DetailTrainingRdo> {
     const url = this.getUrl(trainingId);
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
-    const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    const videoFilePath = await this.fileService.getFilePath(data.videoFileId, requestId);
 
-    return detailTraining;
+    return await this.convertToDetailTrainingRdo(data, videoFilePath, userRole, requestId);
   }
 
   public async update(
     dto: CreateTrainingDto, //! будет UpdateTrainingDto
     file: Express.Multer.File,
     userId: string,
-    userRole: string,
+    userRole: Role,
     requestId: string
   ): Promise<DetailTrainingRdo> {
     //! временно! переделать для обновления!
@@ -91,7 +90,7 @@ export class FitTrainingService {
     dto: CreateTrainingDto,
     file: Express.Multer.File,
     userId: string,
-    userRole: string,
+    userRole: Role,
     requestId: string
   ): Promise<TrainingRdo> {
     const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);

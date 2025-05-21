@@ -2,17 +2,18 @@ import {
   Body, Controller, Delete, Get, HttpCode, Param,
   Patch, Post, Req, UseGuards, UseInterceptors
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiHeader, ApiHeaders, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ApiParamOption, AuthenticationApiOperation, AuthenticationApiResponse, BearerAuth,
   LoggedUserRdo, RequestWithRequestId, RequestWithTokenPayload, TokenPayloadRdo,
   AccountRoute, LoginUserDto, TokensRdo, ServiceRoute, User, UpdateBasicUserDto,
-  BasicDetailUserRdo, CreateBasicUserDto, IdParam
+  BasicDetailUserRdo, CreateBasicUserDto, IdParam, RequestWithRequestIdAndUserIdAndUserRole,
+  XRequestIdApiHeaderOptions, XUserApiHeaderOptions
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { MongoIdValidationPipe } from '@backend/shared/pipes';
-import { InjectBearerAuthInterceptor } from '@backend/shared/interceptors';
+import { InjectBearerAuthInterceptor, InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 import { RequestWithFitUserEntity } from '@backend/account/fit-user';
 
 import { AuthenticationService } from './authentication.service';
@@ -21,6 +22,7 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('authentication')
+@ApiHeader(XRequestIdApiHeaderOptions)
 @Controller(ServiceRoute.Account)
 export class AuthenticationController {
   constructor(
@@ -105,19 +107,19 @@ export class AuthenticationController {
     return fillDto(BasicDetailUserRdo, user.toPOJO());
   }
 
-  //! испльзуется? нужен? доступ только авторизированным или себе/по себе?
   @ApiOperation(AuthenticationApiOperation.Show)
   @ApiResponse(AuthenticationApiResponse.UserFound)
   @ApiResponse(AuthenticationApiResponse.UserNotFound)
   @ApiResponse(AuthenticationApiResponse.BadRequest)
   @ApiParam(ApiParamOption.UserId)
-  @UseGuards(JwtAuthGuard)
+  @ApiHeaders(XUserApiHeaderOptions)
+  @UseInterceptors(InjectUserIdInterceptor, InjectUserRoleInterceptor)
   @Get(IdParam.USER)
   public async show(
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: User['id'],
-    @Req() { user: { sub, role } }: RequestWithTokenPayload
+    @Req() { userId: currentUserId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
   ): Promise<BasicDetailUserRdo> {
-    const existUser = await this.authService.getUser(userId, sub, role);
+    const existUser = await this.authService.getUser(userId, currentUserId, userRole);
 
     return fillDto(BasicDetailUserRdo, existUser.toPOJO());
   }
