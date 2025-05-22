@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { isCoachRole, Role } from '@backend/shared/core';
+import { Role } from '@backend/shared/core';
 
 import PrivateRoute from '../private-route/private-route';
 import QuestionnaireRoute from '../questionnaire-route/questionnaire-route';
@@ -25,15 +25,14 @@ import CreateTraining from '../../pages/create-training/create-training';
 import NotFound from '../../pages/not-found/not-found';
 
 import { useAppSelector } from '../../hooks';
-import { getUserRole } from '../../store/user-process/selectors';
+import { getUserMainPage } from '../../store/user-process/selectors';
 import { AuthorizationStatus } from '../../types/types';
 import { AppRoute } from '../../const';
 
 function App(): JSX.Element | null {
   //! возможно ли единожды проверить заполненность опросника и не делать QuestionnaireRoute?
 
-  const userRole = useAppSelector(getUserRole);
-  const authRedirectTo = isCoachRole(userRole) ? AppRoute.PersonalAccount : AppRoute.Index;
+  const authRedirectTo = useAppSelector(getUserMainPage);
 
   return (
     <BrowserRouter>
