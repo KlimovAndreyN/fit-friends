@@ -21,9 +21,8 @@ import { hasPriceMaxPropertyKey } from '../../utils/common';
 import { AppRoute } from '../../const';
 
 type TrainingsProps = {
-  headerTitle: string;
-  location: string;
   title: string;
+  location: string;
   formClassName: string;
   listClassName: string;
   ratingPrefixClassName: string;
@@ -47,7 +46,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
-  const { headerTitle, location, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
+  const { title, location, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
   const dispatch = useAppDispatch();
   const trainingsFilter = useAppSelector(getTrainingsFilter);
   const trainings = useAppSelector(getTrainings);
@@ -103,7 +102,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   return (
     <Fragment>
-      <Header title={headerTitle} />
+      <Header title={title} />
       <main>
         <section className="inner-page">
           <div className="container">
