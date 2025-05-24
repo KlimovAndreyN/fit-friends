@@ -147,8 +147,8 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             />
           }
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 

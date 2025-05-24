@@ -47,7 +47,7 @@ function PersonalAccountRoleSportsman({ caloriesWaste }: PersonalAccountRoleSpor
           <ThumbnailSpecGym text='Скоро тут появится что-то полезное' />
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 

@@ -35,7 +35,7 @@ function UserPhoto({ path, className, size }: UserPhotoProps): JSX.Element {
             <svg aria-hidden="true" width={svgSize} height={svgSize}><use xlinkHref="#icon-user" /></svg>
           </div>
       }
-    </div >
+    </div>
   );
 }
 
