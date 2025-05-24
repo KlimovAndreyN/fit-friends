@@ -68,7 +68,10 @@ export class QuestionnaireRepository extends BasePostgresRepository<Questionnair
   }
 
   public async getReadyForTraining(): Promise<QuestionnaireEntity[]> {
-    const records = await this.client.questionnaire.findMany({ where: { readyForTraining: true }, orderBy: { createdAt: SortDirection.Desc } });
+    const records = await this.client.questionnaire.findMany({
+      where: { readyForTraining: true },
+      orderBy: { createdAt: SortDirection.Desc }
+    });
 
     return records.map((record) => (this.convertPrismaQuestionnaire(record)));
   }

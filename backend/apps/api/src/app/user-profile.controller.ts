@@ -29,8 +29,6 @@ export class UserProfileController {
   public async getLookForCompany(
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<UserProfileRdo[]> {
-    //! пока отобрал спортсменов готовых к тренировке...
-
     const userProfiles: UserProfileRdo[] = [];
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(sub, requestId);
 

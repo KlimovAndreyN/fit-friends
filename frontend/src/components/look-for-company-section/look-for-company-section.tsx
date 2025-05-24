@@ -2,6 +2,7 @@ import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
 import { IUserProfileRdo } from '@backend/shared/core';
+import { getRandomUniqueItems } from '@backend/shared/helpers';
 
 import SliderSection from '../slider-section/slider-section';
 import UserPhoto from '../user-photo/user-photo';
@@ -10,6 +11,7 @@ import Hashtags from '../hashtags/hashtags';
 import { getUserRoute } from '../../utils/common';
 import { AppRoute, LocationTitle, SpecializationTitle } from '../../const';
 
+const USER_PRIFILES_MAX_COUNT = 8;
 const SLIDES_COUNT = 4;
 const USER_PHOTO_SIZE = 82;
 
@@ -18,12 +20,8 @@ type LookForCompanySectionProps = {
 }
 
 function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JSX.Element {
-  //! 'Смотреть все' - направил на "Друзья", нужно что то другое? - наверное будет в 3 части
-  //! что показывать если пользователй меньше 4? что по ТЗ?
-  //! перепроверить разметку, шрифты, рус и eng
-  //! проверить консоль браузера на ошибки
 
-  const childrens = userProfiles.map(
+  const childrens = getRandomUniqueItems(userProfiles, USER_PRIFILES_MAX_COUNT).map(
     (user) => {
       const { id, name, avatarFilePath, location, specializations } = user;
       const specializationsTitles = specializations.map(
@@ -50,11 +48,7 @@ function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JS
               <address className="thumbnail-user__location-address">{LocationTitle[location]}</address>
             </div>
           </div>
-          <Hashtags
-            classNamePrefix='thumbnail-user'
-            divItemClassNamePrefix='thumbnail-user'
-            items={specializationsTitles}
-          />
+          <Hashtags classNamePrefix='thumbnail-user' divItemClassNamePrefix='thumbnail-user' items={specializationsTitles} />
           <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to={getUserRoute(id)}>Подробнее</Link>
         </div>
       );
