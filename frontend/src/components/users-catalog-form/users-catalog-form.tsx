@@ -1,9 +1,14 @@
 import { FormEvent, JSX } from 'react';
 
-import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
+import { Specialization, TrainingLevel } from '@backend/shared/core';
 
-import { LOCATIONS, SPECIALISATIONS } from '../../const';
-import { Specialization } from '@backend/shared/core';
+import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
+import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
+import UsersCatalogFormSort from '../users-catalog-form-sort/users-catalog-form-sort';
+
+import { LOCATIONS, SPECIALISATIONS, TRAINING_LEVELS } from '../../const';
+
+const DEFAULT_TRAINING_LEVEL = TrainingLevel.Amateur;
 
 /*
 type UsersCatalogFormProps = {
@@ -21,6 +26,8 @@ showedSorting?: boolean;
 
 //function UsersCatalogForm(props: UsersCatalogFormProps): JSX.Element {
 function UsersCatalogForm(): JSX.Element {
+  //! CustomToggleRadioнужно сделать в управляемый
+
   /*
   const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
   const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
@@ -100,36 +107,22 @@ function UsersCatalogForm(): JSX.Element {
             }}
           />
           <div className="user-catalog-form__block user-catalog-form__block--level">
-            <h4 className="user-catalog-form__block-title">Ваш уровень</h4>
-            <div className="custom-toggle-radio">
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="user-agreement" /><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Новичок</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="user-agreement" checked /><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Любитель</span>
-                </label>
-              </div>
-              <div className="custom-toggle-radio__block">
-                <label>
-                  <input type="radio" name="user-agreement" value="user-agreement-1" /><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Профессионал</span>
-                </label>
-              </div>
-            </div>
+            <h4 className="user-catalog-form__block-title">Уровень</h4> {/* //! в маркапе видимо опечатка "Ваш уровень", но мы ищем пользоватлей с каким то уровнем...*/}
+            <CustomToggleRadio
+              name='level'
+              options={TRAINING_LEVELS}
+              value={DEFAULT_TRAINING_LEVEL}
+              isSmall
+            />
           </div>
-          <div className="user-catalog-form__block">
-            <h3 className="user-catalog-form__title user-catalog-form__title--sort">Сортировка</h3>
-            <div className="btn-radio-sort">
-              <label>
-                <input type="radio" name="sort" checked /><span className="btn-radio-sort__label">Тренеры</span>
-              </label>
-              <label>
-                <input type="radio" name="sort" /><span className="btn-radio-sort__label">Пользователи</span>
-              </label>
-            </div>
-          </div>
+          <UsersCatalogFormSort
+            sortType={undefined} // временно
+            className='user-catalog-form'
+            onChange={() => {
+              // eslint-disable-next-line no-console
+              console.log('onChange - UsersCatalogFormSort');
+            }}
+          />
         </form>
       </div>
     </div>

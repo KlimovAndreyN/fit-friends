@@ -1,3 +1,4 @@
-import { Role } from './role.enum';
-
-export type UserSortType = Role;
+export enum UserSortType {
+  OnlyCoach = 'onlyCoach',
+  OnlySportsman = 'onlySportsman'
+}
