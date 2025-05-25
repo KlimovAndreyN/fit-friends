@@ -77,7 +77,7 @@ function UsersCatalogList(): JSX.Element {
                 {
                   users.map((user) => (
                     <li className="users-catalog__item" key={user.id}>
-                      <ThumbnailUser userProfile={user} />
+                      <ThumbnailUser userProfile={user} isUseCoachClassName />
                     </li>))
                 }
               </ul>
