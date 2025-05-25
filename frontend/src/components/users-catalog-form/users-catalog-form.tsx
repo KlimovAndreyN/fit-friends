@@ -118,6 +118,7 @@ function UsersCatalogForm(): JSX.Element {
           <UsersCatalogFormSort
             sortType={undefined} // временно
             className='user-catalog-form'
+            isUseButtonRatioClassName={false}
             onChange={() => {
               // eslint-disable-next-line no-console
               console.log('onChange - UsersCatalogFormSort');
