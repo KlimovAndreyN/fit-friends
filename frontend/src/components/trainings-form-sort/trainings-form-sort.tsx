@@ -1,18 +1,18 @@
 import { JSX, FormEvent } from 'react';
 
-import { SortType } from '@backend/shared/core';
+import { TrainingSortType } from '@backend/shared/core';
 import { convertEnumToArray } from '@backend/shared/helpers';
 
-const SortTypeTitle: { [key in SortType]: string } = {
-  [SortType.LowPrice]: 'Дешевле',
-  [SortType.HighPrice]: 'Дороже',
-  [SortType.ForFree]: 'Бесплатные'
+const SortTypeTitle: { [key in TrainingSortType]: string } = {
+  [TrainingSortType.LowPrice]: 'Дешевле',
+  [TrainingSortType.HighPrice]: 'Дороже',
+  [TrainingSortType.ForFree]: 'Бесплатные'
 } as const;
 
 type TrainingsFormSortProps = {
-  sortType?: SortType;
+  sortType?: TrainingSortType;
   className: string;
-  onChange: (sort: SortType) => void;
+  onChange: (sort: TrainingSortType) => void;
 }
 
 function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortProps): JSX.Element {
@@ -21,7 +21,7 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
       <h4 className={`${className}__title ${className}__title--sort`}>Сортировка</h4>
       <div className={`btn-radio-sort ${className}__radio`}>
         {
-          convertEnumToArray(SortType).map(
+          convertEnumToArray(TrainingSortType).map(
             (sort) => {
               const handleLabelClick = (event: FormEvent) => {
                 event.preventDefault();

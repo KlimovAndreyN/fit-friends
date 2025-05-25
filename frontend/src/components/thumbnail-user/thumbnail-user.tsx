@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { isCoachRole, IUserProfileRdo, Role } from '@backend/shared/core';
+import { isCoachRole, IUserProfileRdo } from '@backend/shared/core';
 
 import UserPhoto from '../user-photo/user-photo';
 import Hashtags from '../hashtags/hashtags';
@@ -21,8 +21,7 @@ type ThumbnailUserProps = {
 function ThumbnailUser({ userProfile, isUseCoachClassName, extraClassName }: ThumbnailUserProps): JSX.Element {
   //! Адрес вынести в компонент - thumbnail-user__location
 
-  const { id,/* role,*/ name, avatarFilePath, location, specializations } = userProfile;
-  const role = Role.Coach; //! временно
+  const { id, role, name, avatarFilePath, location, specializations } = userProfile;
   const mainClassName = classNames(
     'thumbnail-user',
     `thumbnail-user--role-${isUseCoachClassName && isCoachRole(role) ? 'coach' : 'user'}`,

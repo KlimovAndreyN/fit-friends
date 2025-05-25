@@ -36,8 +36,9 @@ export { Duration } from './lib/types/duration.enum';
 export { Gender } from './lib/types/gender.enum';
 export { Location } from './lib/types/location.enum';
 export { Role } from './lib/types/role.enum';
-export { SortType } from './lib/types/sort-type.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
+export { TrainingSortType } from './lib/types/training-sort-type.enum';
+export { type UserSortType } from './lib/types/user-sort-type.enum';
 
 export * from './lib/utils/common';

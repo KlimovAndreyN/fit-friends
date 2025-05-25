@@ -1,13 +1,13 @@
 import { JSX, Fragment } from 'react';
 
-import { IUserProfileRdo, Location, /*Role,*/ Specialization } from '@backend/shared/core';
+import { IUserProfileRdo, Location, Role, Specialization } from '@backend/shared/core';
 
 import ThumbnailUser from '../thumbnail-user/thumbnail-user';
 
 const MOCK_USERS: IUserProfileRdo[] = [
   {
     id: '1',
-    //role: Role.Sportsman,
+    role: Role.Sportsman,
     avatarFilePath: 'img/content/thumbnails/user-01.jpg',
     name: 'Елизавета',
     location: Location.Petrogradskaya,
@@ -19,7 +19,7 @@ const MOCK_USERS: IUserProfileRdo[] = [
   },
   {
     id: '2',
-    //role: Role.Sportsman,
+    role: Role.Sportsman,
     avatarFilePath: 'img/content/thumbnails/user-02.jpg',
     name: 'Name2',
     location: Location.Sportivnaya,
@@ -30,7 +30,7 @@ const MOCK_USERS: IUserProfileRdo[] = [
   },
   {
     id: '3',
-    //role: Role.Coach,
+    role: Role.Coach,
     avatarFilePath: 'img/content/thumbnails/user-03.jpg',
     name: 'Name3',
     location: Location.Udelnaya,

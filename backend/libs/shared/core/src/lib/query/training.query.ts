@@ -4,7 +4,7 @@ import { Transform } from 'class-transformer';
 
 import { ITrainingQuery } from '../interfaces/query/i-training.query';
 import { PageQuery } from './page.query';
-import { SortType } from '../types/sort-type.enum';
+import { TrainingSortType } from '../types/training-sort-type.enum';
 import { Specialization } from '../types/specialization.enum';
 import { Duration } from '../types/duration.enum';
 import { transformToArray, transformToNumber } from '../utils/transform';
@@ -87,11 +87,11 @@ export class TrainingQuery
 
   @ApiProperty({
     type: 'string',
-    enum: SortType,
-    example: SortType.LowPrice,
+    enum: TrainingSortType,
+    example: TrainingSortType.LowPrice,
     required: false
   })
-  @IsEnum(SortType)
+  @IsEnum(TrainingSortType)
   @IsOptional()
   public sortType?: ITrainingQuery['sortType'];
 

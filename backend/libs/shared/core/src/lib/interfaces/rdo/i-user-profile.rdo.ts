@@ -6,6 +6,7 @@ export interface IUserProfileRdo
     IDetailUserRdo,
     'id'
     | 'name'
+    | 'role'
     | 'location'
     | 'avatarFilePath'
   > {

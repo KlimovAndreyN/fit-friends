@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { CreateBasicTrainingDto, isCoachRole, isForFreeSortType, Role, TrainingQuery } from '@backend/shared/core';
+import { CreateBasicTrainingDto, isCoachRole, isForFreeTrainingSortType, Role, TrainingQuery } from '@backend/shared/core';
 import { QuestionnaireRepository } from '@backend/fit/questionnaire';
 
 import { TrainingRepository } from './training.repository';
@@ -26,7 +26,7 @@ export class TrainingService {
     }
 
     const { sortType } = query;
-    const isSortCreatedDate = !sortType || isForFreeSortType(sortType)
+    const isSortCreatedDate = !sortType || isForFreeTrainingSortType(sortType)
     const result = await this.trainingRepository.find({ ...query, isSortCreatedDate });
 
     return result;

@@ -27,15 +27,15 @@ export class UserProfileController {
   @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(
-    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+    @Req() { user: { sub, role: subRole }, requestId }: RequestWithRequestIdAndUser
   ): Promise<UserProfileRdo[]> {
     const userProfiles: UserProfileRdo[] = [];
     const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(sub, requestId);
 
     for (const { userId, specializations } of questionnaires) {
-      const user = await this.userService.getDetailUser(userId, sub, role, requestId);
-      const { id, name, location, avatarFilePath } = user;
-      const userProfile: UserProfileRdo = { id, name, location, avatarFilePath, specializations };
+      const user = await this.userService.getDetailUser(userId, sub, subRole, requestId);
+      const { id, name, role, location, avatarFilePath } = user;
+      const userProfile: UserProfileRdo = { id, name, role, location, avatarFilePath, specializations };
 
       userProfiles.push(userProfile);
     }

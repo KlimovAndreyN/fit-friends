@@ -3,8 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import {
-  Duration, ITrainingRepository, SortDirection, Gender, SortType,
-  Specialization, Training, TrainingLevel, isForFreeSortType
+  Duration, ITrainingRepository, SortDirection, Gender, TrainingSortType,
+  Specialization, Training, TrainingLevel, isForFreeTrainingSortType
 } from '@backend/shared/core';
 import { Prisma, Training as PrismaTraining } from '@prisma/client';
 
@@ -14,7 +14,7 @@ import { TrainingFactory } from './training.factory';
 const Default = {
   PAGE: 1,
   LIMIT_MAX: 50,
-  SORT_TYPE: SortType.LowPrice
+  SORT_TYPE: TrainingSortType.LowPrice
 } as const;
 
 @Injectable()
@@ -101,7 +101,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     const where: Prisma.TrainingWhereInput = {};
     const orderBy: Prisma.TrainingOrderByWithRelationInput[] = [];
 
-    if (isForFreeSortType(sortType)) {
+    if (isForFreeTrainingSortType(sortType)) {
       where.price = 0;
     } else {
       where.price = { gte: priceMin, lte: priceMax };
@@ -123,10 +123,10 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     }
 
     switch (sortType) {
-      case SortType.LowPrice:
+      case TrainingSortType.LowPrice:
         orderBy.push({ price: SortDirection.Asc });
         break;
-      case SortType.HighPrice:
+      case TrainingSortType.HighPrice:
         orderBy.push({ price: SortDirection.Desc });
         break;
     }
