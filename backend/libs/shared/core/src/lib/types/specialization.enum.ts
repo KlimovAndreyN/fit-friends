@@ -1,10 +1,10 @@
 export enum Specialization {
   Aerobics = 'aerobics',
+  Running = 'running',
   Boxing = 'boxing',
+  Yoga = 'yoga',
   Crossfit = 'crossfit',
   Pilates = 'pilates',
   Power = 'power',
-  Running = 'running',
-  Stretching = 'stretching',
-  Yoga = 'yoga'
+  Stretching = 'stretching'
 };

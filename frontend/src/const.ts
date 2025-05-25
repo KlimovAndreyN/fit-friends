@@ -116,13 +116,13 @@ export const LOCATIONS: Option[] = convertEnumToArray(Location).map(
 
 export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Aerobics]: 'Аэробика',
+  [Specialization.Running]: 'Бег',
   [Specialization.Boxing]: 'Бокс',
+  [Specialization.Yoga]: 'Йога',
   [Specialization.Crossfit]: 'Кроссфит',
   [Specialization.Pilates]: 'Пилатес',
   [Specialization.Power]: 'Силовые',
-  [Specialization.Running]: 'Бег',
-  [Specialization.Stretching]: 'Стрейчинг',
-  [Specialization.Yoga]: 'Йога'
+  [Specialization.Stretching]: 'Стрейчинг'
 } as const;
 
 export const SPECIALISATIONS: Option[] = convertEnumToArray(Specialization).map(
