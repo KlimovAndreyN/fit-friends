@@ -98,7 +98,9 @@ function App(): JSX.Element | null {
           element={
             <PrivateRoute allowedFor={AuthorizationStatus.Auth} redirectTo={AppRoute.Intro}>
               <QuestionnaireRoute>
-                <UsersCatalog />
+                <RoleRoute allowedFor={Role.Sportsman} redirectTo={AppRoute.PersonalAccount}>
+                  <UsersCatalog />
+                </RoleRoute>
               </QuestionnaireRoute>
             </PrivateRoute>
           }
