@@ -1,17 +1,13 @@
 import { JSX, Fragment } from 'react';
-import { Link } from 'react-router-dom';
 
-import { isSportsmanRole, Location, Role, Specialization } from '@backend/shared/core';
+import { IUserProfileRdo, Location, /*Role,*/ Specialization } from '@backend/shared/core';
 
-import Hashtags from '../hashtags/hashtags';
+import ThumbnailUser from '../thumbnail-user/thumbnail-user';
 
-import { getUserRoute } from '../../utils/common';
-import { LocationTitle, SpecializationTitle } from '../../const';
-
-const MOCK_USERS = [
+const MOCK_USERS: IUserProfileRdo[] = [
   {
     id: '1',
-    role: Role.Sportsman,
+    //role: Role.Sportsman,
     avatarFilePath: 'img/content/thumbnails/user-01.jpg',
     name: 'Елизавета',
     location: Location.Petrogradskaya,
@@ -23,7 +19,7 @@ const MOCK_USERS = [
   },
   {
     id: '2',
-    role: Role.Sportsman,
+    //role: Role.Sportsman,
     avatarFilePath: 'img/content/thumbnails/user-02.jpg',
     name: 'Name2',
     location: Location.Sportivnaya,
@@ -34,7 +30,7 @@ const MOCK_USERS = [
   },
   {
     id: '3',
-    role: Role.Coach,
+    //role: Role.Coach,
     avatarFilePath: 'img/content/thumbnails/user-03.jpg',
     name: 'Name3',
     location: Location.Udelnaya,
@@ -71,35 +67,6 @@ function UsersCatalogList(): JSX.Element {
     };
   */
 
-  const usersListItems = users.map(({ id, role, name, avatarFilePath, location, specializations }) => (
-    <li className="users-catalog__item" key={id}>
-      <div className={`thumbnail-user thumbnail-user--role-${isSportsmanRole(role) ? 'user' : 'coach'}`}>
-        <div className="thumbnail-user__image">
-          <picture>
-            <img src={avatarFilePath} width="82" height="82" alt="" />
-          </picture>
-        </div>
-        <div className="thumbnail-user__header">
-          <h3 className="thumbnail-user__name">{name}</h3>
-          <div className="thumbnail-user__location">
-            <svg width="14" height="16" aria-hidden="true">
-              <use xlinkHref="#icon-location"></use>
-            </svg>
-            <address className="thumbnail-user__location-address">{LocationTitle[location]}</address>
-          </div>
-        </div>
-        <Hashtags
-          classNamePrefix='thumbnail-user'
-          divItemClassNamePrefix='thumbnail-user'
-          items={specializations.map(
-            (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
-          )}
-        />
-        <Link className="btn btn--medium thumbnail-user__button" to={getUserRoute(id)}>Подробнее</Link>
-      </div>
-    </li>
-  ));
-
   return (
     <div className="inner-page__content">
       <div className="users-catalog">
@@ -107,7 +74,12 @@ function UsersCatalogList(): JSX.Element {
           (users.length) ?
             <Fragment>
               <ul className="users-catalog__list" >
-                {usersListItems}
+                {
+                  users.map((user) => (
+                    <li className="users-catalog__item" key={user.id}>
+                      <ThumbnailUser userProfile={user} />
+                    </li>))
+                }
               </ul>
               <div className="show-more users-catalog__show-more">
                 <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
