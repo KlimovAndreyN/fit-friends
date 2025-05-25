@@ -61,6 +61,7 @@ function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoa
       <div className={`${mainClassNamePrefix}-check`}>
         <CustomCheckbox
           name='user-agreement'
+          valueText='user-agreement-1'
           spanText='Получать уведомление на почту о новой тренировке'
           onChange={handleSubscribeCheckboxChange}
         />

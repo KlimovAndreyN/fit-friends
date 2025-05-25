@@ -5,6 +5,7 @@ type CustomCheckboxProps = {
   name: string;
   spanText: string | JSX.Element;
   value?: boolean;
+  valueText?: string;
   onChange?: (newValue: boolean) => void;
   isDisabled?: boolean;
   divClassName?: string;
@@ -15,7 +16,7 @@ type CustomCheckboxProps = {
 function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
   //! иконки можно выделить отдельно
 
-  const { name, spanText, value = false, onChange, isDisabled, divExtraClassName, divClassName, isSwitch } = props;
+  const { name, spanText, value = false, valueText, onChange, isDisabled, divExtraClassName, divClassName, isSwitch } = props;
   const [currentValue, setCurrentValue] = useState<boolean>(value);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function CustomCheckbox(props: CustomCheckboxProps): JSX.Element {
   return (
     <div className={mainDivClassName}>
       <label onClick={handleLabelClick}>
-        <input type="checkbox" name={name} checked={currentValue} disabled={isDisabled} readOnly />
+        <input type="checkbox" name={name} value={valueText} checked={currentValue} disabled={isDisabled} readOnly />
         <span className={`${spanIconClassName}icon`}>
           <svg width="9" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-check" />

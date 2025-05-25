@@ -148,6 +148,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
                   name={FormFieldName.IndividualTraining}
                   spanText='Хочу дополнительно индивидуально тренировать'
                   value={DEFAULT_INDIVIDUAL_TRAINING}
+                  valueText='individual-training'
                   divClassName={divClassName}
                 />
               </Fragment>
