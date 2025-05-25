@@ -1,4 +1,50 @@
-import { JSX } from 'react';
+import { JSX, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+
+import { isSportsmanRole, Location, Role, Specialization } from '@backend/shared/core';
+
+import Hashtags from '../hashtags/hashtags';
+
+import { getUserRoute } from '../../utils/common';
+import { LocationTitle, SpecializationTitle } from '../../const';
+
+const MOCK_USERS = [
+  {
+    id: '1',
+    role: Role.Sportsman,
+    avatarFilePath: 'img/content/thumbnails/user-01.jpg',
+    name: 'Елизавета',
+    location: Location.Petrogradskaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing,
+      Specialization.Pilates
+    ]
+  },
+  {
+    id: '2',
+    role: Role.Sportsman,
+    avatarFilePath: 'img/content/thumbnails/user-02.jpg',
+    name: 'Name2',
+    location: Location.Sportivnaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing
+    ]
+  },
+  {
+    id: '3',
+    role: Role.Coach,
+    avatarFilePath: 'img/content/thumbnails/user-03.jpg',
+    name: 'Name3',
+    location: Location.Udelnaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing,
+      Specialization.Stretching
+    ]
+  }
+];
 
 /*
 type UsersCatalogListProps = {
@@ -6,249 +52,75 @@ type UsersCatalogListProps = {
   trainings: ITrainingRdo[];
   isHaveMoreTrainings: boolean;
   onNextPageClick: () => void;
-  showedAdditionalDiv?: boolean;
 }
 */
+
 function UsersCatalogList(): JSX.Element {
   //function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
+
+  //! карточки пользователей похожи на карточки в слайдере на главной - попробовать объеденить
+
+  //! временно
+  const users = MOCK_USERS;
+  //
   /*
-    const { className, trainings, isHaveMoreTrainings, onNextPageClick, showedAdditionalDiv } = props;
+    const { className, trainings, isHaveMoreTrainings, onNextPageClick } = props;
 
     const handleShowMoreClick = () => {
       onNextPageClick();
     };
   */
-  /*
-    const trainingsList = (
-      <div className={className}>
+
+  const usersListItems = users.map(({ id, role, name, avatarFilePath, location, specializations }) => (
+    <li className="users-catalog__item" key={id}>
+      <div className={`thumbnail-user thumbnail-user--role-${isSportsmanRole(role) ? 'user' : 'coach'}`}>
+        <div className="thumbnail-user__image">
+          <picture>
+            <img src={avatarFilePath} width="82" height="82" alt="" />
+          </picture>
+        </div>
+        <div className="thumbnail-user__header">
+          <h3 className="thumbnail-user__name">{name}</h3>
+          <div className="thumbnail-user__location">
+            <svg width="14" height="16" aria-hidden="true">
+              <use xlinkHref="#icon-location"></use>
+            </svg>
+            <address className="thumbnail-user__location-address">{LocationTitle[location]}</address>
+          </div>
+        </div>
+        <Hashtags
+          classNamePrefix='thumbnail-user'
+          divItemClassNamePrefix='thumbnail-user'
+          items={specializations.map(
+            (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
+          )}
+        />
+        <Link className="btn btn--medium thumbnail-user__button" to={getUserRoute(id)}>Подробнее</Link>
+      </div>
+    </li>
+  ));
+
+  return (
+    <div className="inner-page__content">
+      <div className="users-catalog">
         {
-          (trainings.length)
-            ?
+          (users.length) ?
             <Fragment>
-              <ul className={`${className}__list`}>
-                {
-                  trainings.map(
-                    (training) => (
-                      <li className={`${className}__item`} key={training.id}>
-                        <TrainingCard training={training} />
-                      </li>
-                    )
-                  )
-                }
+              <ul className="users-catalog__list" >
+                {usersListItems}
               </ul>
-              <TrainingsListButtons
-                className={className}
-                isHaveMoreTrainings={isHaveMoreTrainings}
-                onShowMoreClick={handleShowMoreClick}
-              />
+              <div className="show-more users-catalog__show-more">
+                <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
+                <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
+              </div>
             </Fragment>
             :
             <Fragment>
               <br />
               <br />
-              <h3 className={`${className}__title`} style={{ textAlign: 'center' }}>Тренировки не найдены</h3>
+              <h3 className='user-catalog-form__title' style={{ textAlign: 'center' }}>Пользователи не найдены</h3>
             </Fragment>
         }
-      </div>
-    );
-  */
-
-  /*
-return showedAdditionalDiv
-  ?
-  <div className="inner-page__content">
-    {trainingsList}
-  </div>
-  :
-  trainingsList;
-  */
-
-  return (
-    <div className="inner-page__content">
-      <div className="users-catalog">
-        <ul className="users-catalog__list">
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-user">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-01.jpg" srcSet="img/content/thumbnails/user-01@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Елизавета</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Петроградская</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#стретчинг</span></div>
-                </li>
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#йога</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-coach">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-02.jpg" srcSet="img/content/thumbnails/user-02@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Дарья</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Адмиралтейская</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#стретчинг</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--dark-bg btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-coach">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-03.jpg" srcSet="img/content/thumbnails/user-03@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Наталья</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Василеостровская</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#пилатес</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--dark-bg btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-coach">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-08.jpg" srcSet="img/content/thumbnails/user-08@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Никита</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Садовая</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#йога</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--dark-bg btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-user">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-09.jpg" srcSet="img/content/thumbnails/user-09@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Татьяна</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Площадь Александра Невского</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#стретчинг</span></div>
-                </li>
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#йога</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-user">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-10.jpg" srcSet="img/content/thumbnails/user-10@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Марк</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Технологический Институт</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#стретчинг</span></div>
-                </li>
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#кроссфит</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-          <li className="users-catalog__item">
-            <div className="thumbnail-user thumbnail-user--role-coach">
-              <div className="thumbnail-user__image">
-                <picture>
-                  <img src="img/content/thumbnails/user-04.jpg" srcSet="img/content/thumbnails/user-04@2x.jpg 2x" width="82" height="82" alt="" />
-                </picture>
-              </div>
-              <div className="thumbnail-user__header">
-                <h3 className="thumbnail-user__name">Диана</h3>
-                <div className="thumbnail-user__location">
-                  <svg width="14" height="16" aria-hidden="true">
-                    <use xlinkHref="#icon-location"></use>
-                  </svg>
-                  <address className="thumbnail-user__location-address">Невский проспект</address>
-                </div>
-              </div>
-              <ul className="thumbnail-user__hashtags-list">
-                <li className="thumbnail-user__hashtags-item">
-                  <div className="hashtag thumbnail-user__hashtag"><span>#пилатес</span></div>
-                </li>
-              </ul>
-              <a className="btn btn--dark-bg btn--medium thumbnail-user__button" href="#">Подробнее</a>
-            </div>
-          </li>
-        </ul>
-        <div className="show-more users-catalog__show-more">
-          <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
-          <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
-        </div>
       </div>
     </div>
   );
