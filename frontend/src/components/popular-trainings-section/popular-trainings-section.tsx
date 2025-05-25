@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 
-import TrainingCard from '../training-card/training-card';
+import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
 import SliderSection from '../slider-section/slider-section';
 
 import { ITrainingRdo } from '@backend/shared/core';
@@ -20,7 +20,7 @@ function PopularTrainingSection({ trainings }: PopularTrainingSectionProps): JSX
   //! проверить консоль браузера на ошибки
 
   const childrens = trainings.map(
-    (training) => (<TrainingCard key={training.id} training={training} />)
+    (training) => (<ThumbnailTraining key={training.id} training={training} />)
   );
 
   return (

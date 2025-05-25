@@ -22,24 +22,25 @@ type ThumbnailUserProps = {
 
 function ThumbnailUser({ userProfile, isUseCoachClassName, extraDivClassName, extraLinkClassName }: ThumbnailUserProps): JSX.Element {
   const { id, role, name, avatarFilePath, location, specializations } = userProfile;
-  const mainClassName = classNames(
-    'thumbnail-user',
-    `thumbnail-user--role-${isUseCoachClassName && isCoachRole(role) ? 'coach' : 'user'}`,
+  const mainClassName = 'thumbnail-user';
+  const mainDivClassName = classNames(
+    mainClassName,
+    `${mainClassName}--role-${isUseCoachClassName && isCoachRole(role) ? 'coach' : 'user'}`,
     extraDivClassName
   );
-  const linkClassName = classNames('btn', extraLinkClassName, 'btn--medium thumbnail-user__button');
+  const linkClassName = classNames('btn', extraLinkClassName, `btn--medium ${mainClassName}__button`);
   const hashtags = specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
 
   return (
-    <div className={mainClassName}>
-      <UserPhoto path={avatarFilePath} className='thumbnail-user__image' size={USER_PHOTO_SIZE} />
-      <div className="thumbnail-user__header">
-        <h3 className="thumbnail-user__name">{name}</h3>
-        <UserLocation location={location} extraClassName='thumbnail-user' />
+    <div className={mainDivClassName}>
+      <UserPhoto path={avatarFilePath} className={`${mainClassName}__image`} size={USER_PHOTO_SIZE} />
+      <div className={`${mainClassName}__header`}>
+        <h3 className={`${mainClassName}__name`}>{name}</h3>
+        <UserLocation location={location} extraClassName={mainClassName} />
       </div>
-      <Hashtags classNamePrefix='thumbnail-user' divItemClassNamePrefix='thumbnail-user' items={hashtags} />
+      <Hashtags classNamePrefix={mainClassName} divItemClassNamePrefix={mainClassName} items={hashtags} />
       <Link className={linkClassName} to={getUserRoute(id)}>Подробнее</Link>
     </div>
   );

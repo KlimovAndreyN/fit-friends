@@ -2,7 +2,7 @@ import { JSX, Fragment } from 'react';
 
 import { ITrainingRdo } from '@backend/shared/core';
 
-import TrainingCard from '../training-card/training-card';
+import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
 import TrainingsListButtons from '../trainings-list-buttons/trainings-list-buttons';
 
 type TrainingsListProps = {
@@ -31,7 +31,7 @@ function TrainingsList(props: TrainingsListProps): JSX.Element {
                 trainings.map(
                   (training) => (
                     <li className={`${className}__item`} key={training.id}>
-                      <TrainingCard training={training} />
+                      <ThumbnailTraining training={training} />
                     </li>
                   )
                 )

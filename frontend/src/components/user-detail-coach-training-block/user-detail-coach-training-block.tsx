@@ -1,6 +1,6 @@
 import { JSX, MouseEvent, useEffect } from 'react';
 
-import TrainingCard from '../training-card/training-card';
+import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 import Slider from '../slider/slider';
 import Spinner from '../spinner/spinner';
@@ -37,7 +37,7 @@ function UserDetailCoachTrainingBlock({ classNamePrefix, userId }: UserDetailCoa
   const mainClassNamePrefix = `${classNamePrefix}__training`;
   const childrens = trainings.map(
     (training) => (
-      <TrainingCard key={training.id} training={training} />
+      <ThumbnailTraining key={training.id} training={training} />
     )
   );
 
