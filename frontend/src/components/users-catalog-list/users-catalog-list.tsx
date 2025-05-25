@@ -45,8 +45,8 @@ const MOCK_USERS: IUserProfileRdo[] = [
 /*
 type UsersCatalogListProps = {
   className: string;
-  trainings: ITrainingRdo[];
-  isHaveMoreTrainings: boolean;
+  users: IUserProfileRdo[];
+  isHaveMoreUsers: boolean;
   onNextPageClick: () => void;
 }
 */
@@ -54,13 +54,16 @@ type UsersCatalogListProps = {
 function UsersCatalogList(): JSX.Element {
   //function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
 
-  //! карточки пользователей похожи на карточки в слайдере на главной - попробовать объеденить
+  //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
+  //    Логика: Фильтр -> Обновление данных -> Список
+  //    Показать еще
+  //    Вернутся в начало
 
   //! временно
   const users = MOCK_USERS;
   //
   /*
-    const { className, trainings, isHaveMoreTrainings, onNextPageClick } = props;
+    const { className, users, isHaveMoreUsers, onNextPageClick } = props;
 
     const handleShowMoreClick = () => {
       onNextPageClick();

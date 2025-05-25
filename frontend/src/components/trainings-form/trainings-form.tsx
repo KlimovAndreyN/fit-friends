@@ -123,6 +123,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               name='type'
               items={specializations}
               options={SPECIALISATIONS}
+              isOptionTitleLowerCase
               className={className}
               onChange={handleSpecializationsChange}
             />
@@ -134,6 +135,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               name='duration'
               items={durations}
               options={TRAINIG_FILTER_DURATIONS}
+              isOptionTitleLowerCase
               className={className}
               onChange={handleDurationsChange}
             />
