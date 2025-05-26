@@ -7,7 +7,7 @@ import { ConfigAlias, Role } from '@backend/shared/core';
 import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { FitUserRepository } from '@backend/account/fit-user';
-import { QuestionnaireRepository } from '@backend/fit/questionnaire';
+import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire';
 import { TrainingRepository } from '@backend/fit/training';
 import { OrderRepository } from '@backend/fit/order';
 import { ReviewRepository } from '@backend/fit/review';
@@ -50,7 +50,7 @@ async function bootstrap() {
   const fileUploaderRepository = app.get(FileUploaderRepository);
   const refreshTokenRepository = app.get(RefreshTokenRepository);
   const fitUserRepository = app.get(FitUserRepository);
-  const questionnaireRepository = app.get(QuestionnaireRepository);
+  const fitQuestionnaireRepository = app.get(FitQuestionnaireRepository);
   const trainingRepository = app.get(TrainingRepository);
   const orderRepository = app.get(OrderRepository);
   const reviewRepository = app.get(ReviewRepository);
@@ -62,7 +62,7 @@ async function bootstrap() {
       await clearReviews(reviewRepository)
       await clearOrders(orderRepository);
       await clearTrainings(trainingRepository);
-      await clearQuestionnaires(questionnaireRepository);
+      await clearQuestionnaires(fitQuestionnaireRepository);
       await clearUsers(fitUserRepository);
     }
 
@@ -83,7 +83,7 @@ async function bootstrap() {
     Logger.log('🤘️ Database Account(mongoDb) was filled!');
 
     // опросники
-    const questionnaires = await seedQuestionnaires(questionnaireRepository, [...sportsmans, ...coaches], certificatesFileIds);
+    const questionnaires = await seedQuestionnaires(fitQuestionnaireRepository, [...sportsmans, ...coaches], certificatesFileIds);
 
     Logger.log(`Questionnaires count: ${questionnaires.length}`);
 

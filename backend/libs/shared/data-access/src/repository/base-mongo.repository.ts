@@ -17,7 +17,7 @@ export abstract class BaseMongoRepository<
 
   private fillFields(entity: T, document: DocumentType) {
     // может отдельная настройка есть?
-    //! может в хелпер copyFields / copyField, document, entity, string[] / string    
+    //! может в хелпер copyFields / copyField, document, entity, string[] / string
     ['createdAt', 'updatedAt'].forEach((key) => {
       if (Object.keys(entity).includes(key)) {
         entity[key] = document[key];
@@ -34,12 +34,6 @@ export abstract class BaseMongoRepository<
     const entity = this.entityFactory.create(plainObject);
 
     return entity;
-  }
-
-  public async getAllIds(): Promise<T['id'][]> {
-    const documents = await this.model.find(null, null, { fields: { id: true } }).exec();
-
-    return documents.map((document) => (document.id));
   }
 
   public async findById(id: T['id']): Promise<T> {
@@ -97,5 +91,9 @@ export abstract class BaseMongoRepository<
     if (!deletedDocument) {
       throw new NotFoundException(`Entity with id ${id} not found.`);
     }
+  }
+
+  public async deleteAll(): Promise<void> {
+    this.model.deleteMany().exec();
   }
 }

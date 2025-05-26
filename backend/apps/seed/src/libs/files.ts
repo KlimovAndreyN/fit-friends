@@ -13,11 +13,7 @@ export async function clearFiles(fileUploaderRepository: FileUploaderRepository,
   await deleteDirectory(path);
   await deleteDirectory(distPath);
 
-  const ids = await fileUploaderRepository.getAllIds();
-
-  for (const id of ids) {
-    await fileUploaderRepository.deleteById(id);
-  }
+  fileUploaderRepository.deleteAll();
 }
 
 export async function seedFiles(

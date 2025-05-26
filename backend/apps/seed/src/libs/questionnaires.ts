@@ -3,20 +3,20 @@ import { Logger } from '@nestjs/common';
 import { Duration, isSportsmanRole, Questionnaire, Specialization, TrainingLevel } from '@backend/shared/core';
 import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueItems, convertEnumToArray } from '@backend/shared/helpers';
 import { FitUserEntity } from '@backend/account/fit-user';
-import { QuestionnaireEntity, QuestionnaireRepository } from '@backend/fit/questionnaire';
+import { FitQuestionnaireEntity, FitQuestionnaireRepository } from '@backend/account/fit-questionnaire';
 
 import { CalorieOption, SpecializationsOption } from './mock-data';
 
-export async function clearQuestionnaires(questionnaireRepository: QuestionnaireRepository): Promise<void> {
-  await questionnaireRepository.client.questionnaire.deleteMany();
+export async function clearQuestionnaires(fitQuestionnaireRepository: FitQuestionnaireRepository): Promise<void> {
+  fitQuestionnaireRepository.deleteAll();
 }
 
 export async function seedQuestionnaires(
-  questionnaireRepository: QuestionnaireRepository,
+  fitQuestionnaireRepository: FitQuestionnaireRepository,
   users: FitUserEntity[],
   certificatesFileIds: string[]
-): Promise<QuestionnaireEntity[]> {
-  const questionnaires: QuestionnaireEntity[] = [];
+): Promise<FitQuestionnaireEntity[]> {
+  const questionnaires: FitQuestionnaireEntity[] = [];
   const { MIN_COUNT, MAX_COUNT } = SpecializationsOption;
   const { LOSE_MIN, LOSE_MAX, WASTE_MIN, WASTE_MAX } = CalorieOption;
 
@@ -41,9 +41,9 @@ export async function seedQuestionnaires(
       questionnaire.fileIds = getRandomUniqueItems(certificatesFileIds, getRandomNumber(0, certificatesFileIds.length - 1));
     }
 
-    const questionnaireEntity = new QuestionnaireEntity(questionnaire);
+    const questionnaireEntity = new FitQuestionnaireEntity(questionnaire);
 
-    await questionnaireRepository.save(questionnaireEntity);
+    await fitQuestionnaireRepository.save(questionnaireEntity);
     questionnaires.push(questionnaireEntity);
 
     Logger.log(`Added ${role} questionnaire for userId : ${userId}`);

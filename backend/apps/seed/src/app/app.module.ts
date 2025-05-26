@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConnectionNameOption } from '@backend/shared/core';
 import { getEnvMongooseOptions } from '@backend/shared/helpers';
 import { FitUserModule } from '@backend/account/fit-user';
+import { FitQuestionnaireModule } from '@backend/account/fit-questionnaire';
 import { PrismaClientModule } from '@backend/fit/models';
 import { QuestionnaireModule } from '@backend/fit/questionnaire';
 import { TrainingModule } from '@backend/fit/training';
@@ -25,6 +26,7 @@ const EnvPrefix = {
     FileUploaderWithoutServiceModule,
     RefreshTokenWithoutServiceModule,
     FitUserModule,
+    FitQuestionnaireModule,
     PrismaClientModule,
     QuestionnaireModule,
     TrainingModule,

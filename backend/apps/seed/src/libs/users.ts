@@ -8,19 +8,11 @@ import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, TrainingOption } from './mock-data';
 
 export async function clearRefreshTokens(refreshTokenRepository: RefreshTokenRepository): Promise<void> {
-  const ids = await refreshTokenRepository.getAllIds();
-
-  for (const id of ids) {
-    await refreshTokenRepository.deleteById(id);
-  }
+  refreshTokenRepository.deleteAll();
 }
 
 export async function clearUsers(fitUserRepository: FitUserRepository): Promise<void> {
-  const ids = await fitUserRepository.getAllIds();
-
-  for (const id of ids) {
-    await fitUserRepository.deleteById(id);
-  }
+  fitUserRepository.deleteAll();
 }
 
 export async function seedUsers(
