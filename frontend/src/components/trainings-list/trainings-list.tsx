@@ -3,7 +3,7 @@ import { JSX, Fragment } from 'react';
 import { ITrainingRdo } from '@backend/shared/core';
 
 import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
-import TrainingsListButtons from '../trainings-list-buttons/trainings-list-buttons';
+import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 
 type TrainingsListProps = {
   className: string;
@@ -37,9 +37,9 @@ function TrainingsList(props: TrainingsListProps): JSX.Element {
                 )
               }
             </ul>
-            <TrainingsListButtons
-              className={className}
-              isHaveMoreTrainings={isHaveMoreTrainings}
+            <ButtonsShowMoreAndToTop
+              divClassNamePrefix={className}
+              isHaveMoreData={isHaveMoreTrainings}
               onShowMoreClick={handleShowMoreClick}
             />
           </Fragment>
