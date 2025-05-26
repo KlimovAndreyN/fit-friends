@@ -3,6 +3,7 @@ import { JSX, Fragment } from 'react';
 import { IUserProfileRdo, Location, Role, Specialization } from '@backend/shared/core';
 
 import ThumbnailUser from '../thumbnail-user/thumbnail-user';
+import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 
 const MOCK_USERS: IUserProfileRdo[] = [
   {
@@ -49,10 +50,8 @@ type UsersCatalogListProps = {
 }
 
 function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
-  //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
-  //    Логика: Фильтр -> Обновление данных -> Список
-  //    Показать еще
-  //    Вернутся в начало
+  //! Функциональность пересекается с каталогом тернировок - подумать как объеденить - отображение списка
+  //! вынести className = 'users-catalog'
 
   //! временно
   const users = MOCK_USERS;
@@ -79,10 +78,7 @@ function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
                     </li>))
                 }
               </ul>
-              <div className="show-more users-catalog__show-more">
-                <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
-                <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
-              </div>
+              <ButtonsShowMoreAndToTop divClassNamePrefix='users-catalog' isHaveMoreData={isHaveMoreUsers} onShowMoreClick={handleShowMoreClick} />
             </Fragment>
             :
             <Fragment>

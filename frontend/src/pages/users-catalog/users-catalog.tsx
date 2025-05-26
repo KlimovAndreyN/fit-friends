@@ -13,6 +13,8 @@ import { setPrevLocation } from '../../store/user-process';
 import { AppRoute, PageTitle } from '../../const';
 
 function UsersCatalog(): JSX.Element {
+  //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
+  //    Логика: Фильтр -> Обновление данных -> Список
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
   const dispatch = useAppDispatch();

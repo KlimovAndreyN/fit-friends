@@ -37,11 +37,7 @@ function TrainingsList(props: TrainingsListProps): JSX.Element {
                 )
               }
             </ul>
-            <ButtonsShowMoreAndToTop
-              divClassNamePrefix={className}
-              isHaveMoreData={isHaveMoreTrainings}
-              onShowMoreClick={handleShowMoreClick}
-            />
+            <ButtonsShowMoreAndToTop divClassNamePrefix={className} isHaveMoreData={isHaveMoreTrainings} onShowMoreClick={handleShowMoreClick} />
           </Fragment>
           :
           <Fragment>
