@@ -1,8 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { IUserProfileRdo, IDetailUserProfileRdo, UserProfileRoute, ApiServiceRoute } from '@backend/shared/core';
-import { joinUrl } from '@backend/shared/helpers';
+import {
+  IUserProfileRdo, IDetailUserProfileRdo, UserProfileRoute,
+  ApiServiceRoute, IUserProfilesWithPaginationRdo, IUserQuery
+} from '@backend/shared/core';
+import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
 type Extra = {
   api: AxiosInstance;
@@ -25,17 +28,19 @@ export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[
   }
 );
 
-export const fetchUsers = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
+export const fetchUsers = createAsyncThunk<IUserProfilesWithPaginationRdo, IUserQuery, { extra: Extra }>(
   Action.FETCH_USERS,
-  async (_, { extra }) => {
+  async (query, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.LookForCompany);
-    //! временно, заготовка!
-    const { data } = await api.get<IUserProfileRdo[]>(url);
+    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.LookForCompany, getQueryString(query));
     // eslint-disable-next-line no-console
-    console.log('fetchUserProfiles', data);
+    console.log('fetchUsers - url', url);
+    //! временно, заготовка!
+    const { data } = await api.get<IUserProfilesWithPaginationRdo>(url);
+    // eslint-disable-next-line no-console
+    console.log('fetchUsers - data', data);
 
-    return [];//! временно, заготовка!
+    return data;
   }
 );
 

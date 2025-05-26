@@ -81,14 +81,12 @@ export const userProfileProcess = createSlice(
         .addCase(
           fetchUsers.pending,
           (state) => {
-            //! проверить как в тренировках
             state.isFetchUsersExecuting = true;
           }
         )
         .addCase(
           fetchUsers.rejected,
           (state) => {
-            //! проверить как в тренировках
             state.users = initialState.users;
             state.isFetchUsersExecuting = false;
           }
@@ -96,8 +94,15 @@ export const userProfileProcess = createSlice(
         .addCase(
           fetchUsers.fulfilled,
           (state, { payload }) => {
-            //! проверить как в тренировках
-            state.users = payload;
+            const { entities, currentPage, totalPages } = payload;
+
+            if (state.isFristPage) {
+              state.users = entities;
+            } else {
+              state.users.push(...entities);
+            }
+
+            state.isHaveMoreUsers = currentPage < totalPages;
             state.isFetchUsersExecuting = false;
           }
         )
