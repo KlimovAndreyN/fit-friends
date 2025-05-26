@@ -9,8 +9,6 @@ import UsersCatalogFormSort from '../users-catalog-form-sort/users-catalog-form-
 
 import { LOCATIONS, SPECIALISATIONS, TRAINING_LEVELS } from '../../const';
 
-const DEFAULT_TRAINING_LEVEL = TrainingLevel.Amateur; //! наверное перенести в store
-
 type UsersCatalogFormProps = {
   usersFilter: IUserQuery;
   onUsersFilterChange: (newFilter: IUserQuery) => void;
@@ -21,17 +19,11 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
 
   const { locations, specializations, level, sortType } = usersFilter;
 
-  // eslint-disable-next-line no-console
-  console.log(level, sortType);
-
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
   const handleLocationsChange = (location: Location) => {
-    // eslint-disable-next-line no-console
-    console.log('handleLocationsChange - Location', location);
-
     if (locations?.includes(location)) {
       onUsersFilterChange({ locations: deleteItem(locations, location) });
     } else {
@@ -40,9 +32,6 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
   };
 
   const handleSpecializationsChange = (specialization: Specialization) => {
-    // eslint-disable-next-line no-console
-    console.log('handleSpecializationsChange - Specialization', specialization);
-
     if (specializations?.includes(specialization)) {
       onUsersFilterChange({ specializations: deleteItem(specializations, specialization) });
     } else {
@@ -50,17 +39,11 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
     }
   };
 
-  /*
-    const handleLevelChange = (newLevel: TrainingLevel) => {
-      // eslint-disable-next-line no-console
-      console.log('handleLevelChange - newLevel', newLevel);
-      onUsersFilterChange({ level: newLevel });
-    };
-  */
+  const handleLevelChange = (newValue: string) => {
+    onUsersFilterChange({ level: newValue as TrainingLevel });
+  };
 
   const handleSortChange = (newSortType: UserSortType) => {
-    // eslint-disable-next-line no-console
-    console.log('handleSortChange - sortType', sortType);
     onUsersFilterChange({ sortType: newSortType });
   };
 
@@ -98,8 +81,9 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
             <CustomToggleRadio
               name='level'
               options={TRAINING_LEVELS}
-              value={DEFAULT_TRAINING_LEVEL}
+              value={level}
               isSmall
+              onChange={handleLevelChange}
             />
           </div>
           <UsersCatalogFormSort

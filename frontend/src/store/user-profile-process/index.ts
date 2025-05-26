@@ -1,15 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { IUserQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
-import { fetchLookForCompanyUserProfiles, fetchUserProfiles, fetchDetailUserProfile } from '../actions/user-profile-action';
+import { fetchLookForCompanyUserProfiles, fetchUsers, fetchDetailUserProfile } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
+
+const Default = {
+  PAGE: 1,
+  LEVEL: TrainingLevel.Amateur
+} as const;
 
 const initialState: UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
 
-  isFetchUserProfilesExecuting: false,
-  userProfiles: [],
+  usersFilter: { page: Default.PAGE, level: Default.LEVEL },
+  isFristPage: true,
+  isUsersFilterActivate: false,
+  isFetchUsersExecuting: false,
+  users: [],
+  isHaveMoreUsers: false,
 
   isFetchDetailUserProfileExecuting: false,
   isFetchDetailUserProfileError: false,
@@ -21,8 +32,27 @@ export const userProfileProcess = createSlice(
     name: StoreSlice.UserProfileProcess,
     initialState,
     reducers: {
+      setUsersFilter: (state, { payload }: PayloadAction<IUserQuery>) => {
+        state.isFristPage = true;
+        state.usersFilter = { ...state.usersFilter, ...payload, page: Default.PAGE };
+      },
+      getNextPage: (state) => {
+        const { usersFilter: { page }, isHaveMoreUsers } = state;
+
+        if (page && isHaveMoreUsers) {
+          state.isFristPage = false;
+          state.usersFilter = { ...state.usersFilter, page: page + 1 };
+        }
+      },
+      setIsTrainingsFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
+        state.isUsersFilterActivate = payload;
+
+        if (!payload) {
+          state.usersFilter = { ...initialState.usersFilter };
+        }
+      },
       clearDetailUserProfile: (state) => {
-        state.detailUserProfile = null;
+        state.detailUserProfile = initialState.detailUserProfile;
       },
       resetUserProfileProcess: () => initialState
     },
@@ -49,23 +79,26 @@ export const userProfileProcess = createSlice(
           }
         )
         .addCase(
-          fetchUserProfiles.pending,
+          fetchUsers.pending,
           (state) => {
-            state.isFetchUserProfilesExecuting = true;
+            //! проверить как в тренировках
+            state.isFetchUsersExecuting = true;
           }
         )
         .addCase(
-          fetchUserProfiles.rejected,
+          fetchUsers.rejected,
           (state) => {
-            state.userProfiles = initialState.userProfiles;
-            state.isFetchUserProfilesExecuting = false;
+            //! проверить как в тренировках
+            state.users = initialState.users;
+            state.isFetchUsersExecuting = false;
           }
         )
         .addCase(
-          fetchUserProfiles.fulfilled,
+          fetchUsers.fulfilled,
           (state, { payload }) => {
-            state.userProfiles = payload;
-            state.isFetchUserProfilesExecuting = false;
+            //! проверить как в тренировках
+            state.users = payload;
+            state.isFetchUsersExecuting = false;
           }
         )
         .addCase(
@@ -93,4 +126,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
+export const { setUsersFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;

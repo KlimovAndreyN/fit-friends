@@ -1,11 +1,15 @@
-import { IDetailUserProfileRdo, IUserProfileRdo } from '@backend/shared/core';
+import { IDetailUserProfileRdo, IUserProfileRdo, IUserQuery } from '@backend/shared/core';
 
 export type UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: boolean;
   lookForCompanyUserProfiles: IUserProfileRdo[];
 
-  isFetchUserProfilesExecuting: boolean;
-  userProfiles: IUserProfileRdo[];
+  usersFilter: IUserQuery;
+  isFristPage: boolean;
+  isUsersFilterActivate: boolean; //! возможно тут лишнее т.к. для тренировок была максимальная цена
+  isFetchUsersExecuting: boolean;
+  users: IUserProfileRdo[];
+  isHaveMoreUsers: boolean;
 
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;

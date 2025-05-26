@@ -9,8 +9,10 @@ import ResultList from '../../components/result-list/result-list';
 import ThumbnailUser from '../../components/thumbnail-user/thumbnail-user';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsFetchUsersExecuting, getIsHaveMoreUsers, getUsersFilter } from '../../store/user-profile-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
+import { getNextPage, setUsersFilter } from '../../store/user-profile-process';
 import { AppRoute, MOCK_USERS, PageTitle } from '../../const';
 
 function UsersCatalog(): JSX.Element {
@@ -19,12 +21,11 @@ function UsersCatalog(): JSX.Element {
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
   const dispatch = useAppDispatch();
-  const usersFilter = { page: 1 }; //useAppSelector(getUsersFilter);
+  const usersFilter = useAppSelector(getUsersFilter);
   const users: IUserProfileRdo[] = MOCK_USERS; //useAppSelector(getUsers);
   //const isUsersFilterActivate = useAppSelector(getIsUsersFilterActivate);
-  const isFetchUsersExecuting = false; //! useAppSelector(getIsFetchUsersExecuting);
-  const isHaveMoreUsers = true; // useAppSelector(getIsHaveMoreUsers);
-  //const usersMaxPrice = useAppSelector(getUsersMaxPrice);
+  const isFetchUsersExecuting = useAppSelector(getIsFetchUsersExecuting);
+  const isHaveMoreUsers = useAppSelector(getIsHaveMoreUsers);
   //const prevLocation = useAppSelector(getPrevLocation);
 
   useScrollToTop(); //! а если в useEffect?
@@ -36,16 +37,13 @@ function UsersCatalog(): JSX.Element {
 
   const handleFilterOnChange = (newFilter: IUserQuery) => {
     dispatch(setPrevLocation(location));
-    // eslint-disable-next-line no-console
-    console.log('handleFilterOnChange - newFilter', newFilter);
-    //dispatch(setUsersFilter({ ...currentTrainingsFilter, ...newFilter }));
+    //dispatch(setUsersFilter({ ...currentUsersFilter, ...newFilter })); //! возможно тут лишнее т.к. для тренировок была максимальная цена
+    dispatch(setUsersFilter({ ...usersFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
     dispatch(setPrevLocation(location));
-    // eslint-disable-next-line no-console
-    console.log('handleNextPageClick');
-    //dispatch(getNextPage());
+    dispatch(getNextPage());
   };
 
   return (

@@ -10,7 +10,7 @@ type Extra = {
 
 export const Action = {
   FETCH_LOOK_FOR_COMPANY_USERS_PROFILES: 'user-profile/fetch-look-for-company-users-profiles',
-  FETCH_USERS_PROFILES: 'user-profile/fetch-users-profiles',
+  FETCH_USERS: 'user-profile/fetch-users',
   FETCH_USER_PROFILE: 'user-profile/fetch-user-profile'
 };
 
@@ -25,8 +25,8 @@ export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[
   }
 );
 
-export const fetchUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
-  Action.FETCH_USERS_PROFILES,
+export const fetchUsers = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
+  Action.FETCH_USERS,
   async (_, { extra }) => {
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.LookForCompany);
