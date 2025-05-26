@@ -5,12 +5,13 @@ import { IUserProfileRdo, IUserQuery } from '@backend/shared/core';
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
 import UsersCatalogForm from '../../components/users-catalog-form/users-catalog-form';
-import UsersCatalogList from '../../components/users-catalog-list/users-catalog-list';
+import ResultList from '../../components/result-list/result-list';
+import ThumbnailUser from '../../components/thumbnail-user/thumbnail-user';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch } from '../../hooks';
 import { setPrevLocation } from '../../store/user-process';
-import { AppRoute, PageTitle } from '../../const';
+import { AppRoute, MOCK_USERS, PageTitle } from '../../const';
 
 function UsersCatalog(): JSX.Element {
   //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
@@ -19,7 +20,7 @@ function UsersCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const usersFilter = { page: 1 }; //useAppSelector(getUsersFilter);
-  const users: IUserProfileRdo[] = []; //useAppSelector(getUsers);
+  const users: IUserProfileRdo[] = MOCK_USERS; //useAppSelector(getUsers);
   //const isUsersFilterActivate = useAppSelector(getIsUsersFilterActivate);
   const isFetchUsersExecuting = false; //! useAppSelector(getIsFetchUsersExecuting);
   const isHaveMoreUsers = true; // useAppSelector(getIsHaveMoreUsers);
@@ -61,8 +62,19 @@ function UsersCatalog(): JSX.Element {
               />
               {
                 (isFetchUsersExecuting && (usersFilter.page === 1))
-                  ? <Spinner />
-                  : <UsersCatalogList users={users} isHaveMoreUsers={isHaveMoreUsers} onNextPageClick={handleNextPageClick} />
+                  ?
+                  <Spinner />
+                  :
+                  <ResultList
+                    mainClassName='users-catalog'
+                    childrens={users.map(
+                      (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
+                    )}
+                    isHaveMoreData={isHaveMoreUsers}
+                    onNextPageClick={handleNextPageClick}
+                    textOnEmpty='Пользователи не найдены'
+                    showedAdditionalDiv
+                  />
               }
             </div>
           </div>

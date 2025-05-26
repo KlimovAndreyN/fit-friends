@@ -4,8 +4,9 @@ import { ITrainingQuery } from '@backend/shared/core';
 
 import Header from '../header/header';
 import TrainingsForm from '../trainings-form/trainings-form';
-import TrainingsList from '../trainings-list/trainings-list';
 import Spinner from '../spinner/spinner';
+import ResultList from '../result-list/result-list';
+import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -124,11 +125,14 @@ function Trainings(props: TrainingsProps): JSX.Element {
                   ?
                   <Spinner />
                   :
-                  <TrainingsList
-                    className={listClassName}
-                    trainings={trainings}
-                    isHaveMoreTrainings={isHaveMoreTrainings}
+                  <ResultList
+                    mainClassName={listClassName}
+                    childrens={trainings.map(
+                      (training) => (<ThumbnailTraining key={training.id} training={training} />)
+                    )}
+                    isHaveMoreData={isHaveMoreTrainings}
                     onNextPageClick={handleNextPageClick}
+                    textOnEmpty='Тренировки не найдены'
                     showedAdditionalDiv={showedAdditionalDiv}
                   />
               }
