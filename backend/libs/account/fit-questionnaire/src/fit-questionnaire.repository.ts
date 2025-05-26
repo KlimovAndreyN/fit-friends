@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ConnectionNameOption } from '@backend/shared/core';
+import { ConnectionNameOption, SortDirection } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitQuestionnaireEntity } from './fit-questionnaire.entity';
@@ -23,5 +23,14 @@ export class FitQuestionnaireRepository extends BaseMongoRepository<FitQuestionn
     const document = await this.model.findOne({ userId }).exec();
 
     return this.createEntityFromDocument(document);
+  }
+
+  public async getReadyForTraining(): Promise<FitQuestionnaireEntity[]> {
+    const documents = await this.model.find()
+      .where({ readyForTraining: true })
+      .sort({ createdAt: SortDirection.Desc })
+      .exec();
+
+    return documents.map((document) => (this.createEntityFromDocument(document)));
   }
 }

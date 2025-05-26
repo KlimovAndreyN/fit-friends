@@ -31,6 +31,9 @@
       "@backend/account/fit-user": [
         "libs/account/fit-user/src/index.ts"
       ],
+      "@backend/account/fit-user-profile": [
+        "libs/account/fit-user-profile/src/index.ts"
+      ],
       "@backend/account/notify": [
         "libs/account/notify/src/index.ts"
       ],

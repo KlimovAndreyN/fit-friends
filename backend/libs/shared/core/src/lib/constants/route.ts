@@ -8,7 +8,7 @@ export enum GlobalRoute {
 export enum ApiServiceRoute {
   Users = 'users',
   Accounts = 'accounts',
-  UsersProfiles = 'users-profiles',
+  UsersProfiles = 'users-profiles', //! убрать
   Trainings = 'trainings',
   Reviews = 'reviews'
 }
@@ -16,6 +16,7 @@ export enum ApiServiceRoute {
 export enum ServiceRoute {
   Account = 'auth',
   Questionnaires = 'questionnaires',
+  UsersProfiles = 'users-profiles',
   Trainings = 'trainings',
   Orders = 'orders',
   Reviews = 'reviews',

@@ -21,6 +21,7 @@ import { FitQuestionnaireModels } from './fit-questionnaire.model';
     FitQuestionnaireRepository,
     FitQuestionnaireFactory
   ],
-  controllers: [FitQuestionnaireController]
+  controllers: [FitQuestionnaireController],
+  exports: [FitQuestionnaireRepository]
 })
 export class FitQuestionnaireModule { }
