@@ -1,6 +1,7 @@
 import { FormEvent, JSX } from 'react';
 
-import { IUserQuery, Specialization, TrainingLevel } from '@backend/shared/core';
+import { IUserQuery, Location, Specialization, TrainingLevel, UserSortType } from '@backend/shared/core';
+import { deleteItem } from '@backend/shared/helpers';
 
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
@@ -8,7 +9,7 @@ import UsersCatalogFormSort from '../users-catalog-form-sort/users-catalog-form-
 
 import { LOCATIONS, SPECIALISATIONS, TRAINING_LEVELS } from '../../const';
 
-const DEFAULT_TRAINING_LEVEL = TrainingLevel.Amateur;
+const DEFAULT_TRAINING_LEVEL = TrainingLevel.Amateur; //! наверное перенести в store
 
 type UsersCatalogFormProps = {
   usersFilter: IUserQuery;
@@ -18,41 +19,50 @@ type UsersCatalogFormProps = {
 function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
   //! CustomToggleRadioнужно сделать в управляемый
 
-  // eslint-disable-next-line no-console
-  console.log('usersFilter', usersFilter);
-  // eslint-disable-next-line no-console
-  console.log('onUsersFilterChange', onUsersFilterChange);
-
   const { locations, specializations, level, sortType } = usersFilter;
 
   // eslint-disable-next-line no-console
-  console.log(locations, specializations, level, sortType);
+  console.log(level, sortType);
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
+  const handleLocationsChange = (location: Location) => {
+    // eslint-disable-next-line no-console
+    console.log('handleLocationsChange - Location', location);
+
+    if (locations?.includes(location)) {
+      onUsersFilterChange({ locations: deleteItem(locations, location) });
+    } else {
+      onUsersFilterChange({ locations: [...((locations) ? locations : []), location] });
+    }
+  };
+
+  const handleSpecializationsChange = (specialization: Specialization) => {
+    // eslint-disable-next-line no-console
+    console.log('handleSpecializationsChange - Specialization', specialization);
+
+    if (specializations?.includes(specialization)) {
+      onUsersFilterChange({ specializations: deleteItem(specializations, specialization) });
+    } else {
+      onUsersFilterChange({ specializations: [...((specializations) ? specializations : []), specialization] });
+    }
+  };
+
   /*
-    const handleSpecializationsChange = (specialization: Specialization) => {
-      if (specializations?.includes(specialization)) {
-        onTrainingsFilterChange({ specializations: deleteItem(specializations, specialization) });
-      } else {
-        onTrainingsFilterChange({ specializations: [...((specializations) ? specializations : []), specialization] });
-      }
-    };
-
-    const handleDurationsChange = (duration: Duration) => {
-      if (durations?.includes(duration)) {
-        onTrainingsFilterChange({ durations: deleteItem(durations, duration) });
-      } else {
-        onTrainingsFilterChange({ durations: [...((durations) ? durations : []), duration] });
-      }
-    };
-
-    const handleTrainingCatalogFormSortChange = (newSortType: SortType) => {
-      onTrainingsFilterChange({ sortType: newSortType });
+    const handleLevelChange = (newLevel: TrainingLevel) => {
+      // eslint-disable-next-line no-console
+      console.log('handleLevelChange - newLevel', newLevel);
+      onUsersFilterChange({ level: newLevel });
     };
   */
+
+  const handleSortChange = (newSortType: UserSortType) => {
+    // eslint-disable-next-line no-console
+    console.log('handleSortChange - sortType', sortType);
+    onUsersFilterChange({ sortType: newSortType });
+  };
 
   return (
     <div className="user-catalog-form">
@@ -68,26 +78,20 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
           <FilterEnumCheckboxes<Location>
             caption='Локация, станция метро'
             name='location'
-            items={[]}
+            items={locations}
             options={LOCATIONS}
             className='user-catalog-form'
             isShowAllButton
-            onChange={() => {
-              // eslint-disable-next-line no-console
-              console.log('onChange - Location');
-            }}
+            onChange={handleLocationsChange}
           />
           <FilterEnumCheckboxes<Specialization>
             caption='Специализация'
             name='spezialization'
-            items={[]}
+            items={specializations}
             options={SPECIALISATIONS}
             className='user-catalog-form'
             isShowAllButton
-            onChange={() => {
-              // eslint-disable-next-line no-console
-              console.log('onChange - Specialization');
-            }}
+            onChange={handleSpecializationsChange}
           />
           <div className="user-catalog-form__block user-catalog-form__block--level">
             <h4 className="user-catalog-form__block-title">Уровень</h4> {/* //! в маркапе видимо опечатка "Ваш уровень", но мы ищем пользоватлей с каким то уровнем...*/}
@@ -99,13 +103,10 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
             />
           </div>
           <UsersCatalogFormSort
-            sortType={undefined} // временно
+            sortType={sortType}
             className='user-catalog-form'
             isUseButtonRatioClassName={false}
-            onChange={() => {
-              // eslint-disable-next-line no-console
-              console.log('onChange - UsersCatalogFormSort');
-            }}
+            onChange={handleSortChange}
           />
         </form>
       </div>

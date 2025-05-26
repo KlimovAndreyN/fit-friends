@@ -67,7 +67,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     }
   };
 
-  const handleTrainingCatalogFormSortChange = (newSortType: TrainingSortType) => {
+  const handleSortChange = (newSortType: TrainingSortType) => {
     onTrainingsFilterChange({ sortType: newSortType });
   };
 
@@ -145,7 +145,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             <TrainingsFormSort
               sortType={sortType}
               className={className}
-              onChange={handleTrainingCatalogFormSortChange}
+              onChange={handleSortChange}
             />
           }
         </form>
