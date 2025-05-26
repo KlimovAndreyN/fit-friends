@@ -1,6 +1,6 @@
 import { FormEvent, JSX } from 'react';
 
-import { Specialization, TrainingLevel } from '@backend/shared/core';
+import { IUserQuery, Specialization, TrainingLevel } from '@backend/shared/core';
 
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
@@ -10,46 +10,29 @@ import { LOCATIONS, SPECIALISATIONS, TRAINING_LEVELS } from '../../const';
 
 const DEFAULT_TRAINING_LEVEL = TrainingLevel.Amateur;
 
-/*
 type UsersCatalogFormProps = {
-className: string;
-ratingPrefixClassName: string;
-trainingsFilter: ITrainingQuery;
-trainingsMaxPrice?: number;
-startOnZeroRating?: boolean;
-onTrainingsFilterChange: (newFilter: ITrainingQuery) => void;
-showedFilterSpecializations?: boolean;
-showedFilterDurations?: boolean;
-showedSorting?: boolean;
+  usersFilter: IUserQuery;
+  onUsersFilterChange: (newFilter: IUserQuery) => void;
 }
-*/
 
-//function UsersCatalogForm(props: UsersCatalogFormProps): JSX.Element {
-function UsersCatalogForm(): JSX.Element {
+function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
   //! CustomToggleRadioнужно сделать в управляемый
 
-  /*
-  const { className, ratingPrefixClassName, trainingsFilter, trainingsMaxPrice, startOnZeroRating, onTrainingsFilterChange, showedFilterSpecializations, showedFilterDurations, showedSorting } = props;
-  const { priceMin, priceMax, ratingMin, ratingMax, caloriesWasteMin, caloriesWasteMax, specializations, durations, sortType } = trainingsFilter;
-  */
+  // eslint-disable-next-line no-console
+  console.log('usersFilter', usersFilter);
+  // eslint-disable-next-line no-console
+  console.log('onUsersFilterChange', onUsersFilterChange);
+
+  const { locations, specializations, level, sortType } = usersFilter;
+
+  // eslint-disable-next-line no-console
+  console.log(locations, specializations, level, sortType);
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
 
   /*
-    const handlePriceFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
-      onTrainingsFilterChange({ priceMin: newValueMin, priceMax: newValueMax });
-    };
-
-    const handleCaloriesWasteFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
-      onTrainingsFilterChange({ caloriesWasteMin: newValueMin, caloriesWasteMax: newValueMax });
-    };
-
-    const handleRatingFilterMinMaxRangeChange = (newValueMin: number | undefined, newValueMax: number | undefined) => {
-      onTrainingsFilterChange({ ratingMin: newValueMin, ratingMax: newValueMax });
-    };
-
     const handleSpecializationsChange = (specialization: Specialization) => {
       if (specializations?.includes(specialization)) {
         onTrainingsFilterChange({ specializations: deleteItem(specializations, specialization) });

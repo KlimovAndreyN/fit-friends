@@ -15,6 +15,7 @@ export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
 
 export { type IPageQuery } from './lib/interfaces/query/i-page.query';
 export { type ITrainingQuery } from './lib/interfaces/query/i-training.query';
+export { type IUserQuery } from './lib/interfaces/query/i-user.query';
 
 export { type ICertificateRdo } from './lib/interfaces/rdo/i-certificate.rdo';
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';

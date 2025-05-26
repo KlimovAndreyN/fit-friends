@@ -26,7 +26,13 @@ function UsersCatalog(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">{title}</h1>
-              <UsersCatalogForm />
+              <UsersCatalogForm
+                usersFilter={{}} //! временно
+                onUsersFilterChange={() => {
+                  // eslint-disable-next-line no-console
+                  console.log('onUsersFilterChange');
+                }}
+              />
               {
                 (isFetchUsersExecuting && (page === 1))
                   ?
