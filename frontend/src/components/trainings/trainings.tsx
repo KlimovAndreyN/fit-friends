@@ -67,7 +67,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
     }
   }
 
-  const newTrainingsFilter = {
+  const currentTrainingsFilter: ITrainingQuery = {
     ...trainingsFilter,
     priceMax: hasPriceMaxPropertyKey(trainingsFilter) ? limitPriceMax : trainingsMaxPrice
   };
@@ -92,7 +92,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
     dispatch(setPrevLocation(location));
-    dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
+    dispatch(setTrainingsFilter({ ...currentTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
@@ -111,7 +111,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <TrainingsForm
                 className={formClassName}
                 ratingPrefixClassName={ratingPrefixClassName}
-                trainingsFilter={newTrainingsFilter}
+                trainingsFilter={currentTrainingsFilter}
                 trainingsMaxPrice={trainingsMaxPrice}
                 startOnZeroRating={startOnZeroRating}
                 onTrainingsFilterChange={handleFilterOnChange}
@@ -122,17 +122,15 @@ function Trainings(props: TrainingsProps): JSX.Element {
               {
                 (isFetchTrainingsExecuting && (page === 1))
                   ?
-                  (<Spinner />)
+                  <Spinner />
                   :
-                  (
-                    <TrainingsList
-                      className={listClassName}
-                      trainings={trainings}
-                      isHaveMoreTrainings={isHaveMoreTrainings}
-                      onNextPageClick={handleNextPageClick}
-                      showedAdditionalDiv={showedAdditionalDiv}
-                    />
-                  )
+                  <TrainingsList
+                    className={listClassName}
+                    trainings={trainings}
+                    isHaveMoreTrainings={isHaveMoreTrainings}
+                    onNextPageClick={handleNextPageClick}
+                    showedAdditionalDiv={showedAdditionalDiv}
+                  />
               }
             </div>
           </div>

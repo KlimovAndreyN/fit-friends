@@ -42,18 +42,13 @@ const MOCK_USERS: IUserProfileRdo[] = [
   }
 ];
 
-/*
 type UsersCatalogListProps = {
-  className: string;
   users: IUserProfileRdo[];
   isHaveMoreUsers: boolean;
   onNextPageClick: () => void;
 }
-*/
 
-function UsersCatalogList(): JSX.Element {
-  //function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
-
+function UsersCatalogList(props: UsersCatalogListProps): JSX.Element {
   //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
   //    Логика: Фильтр -> Обновление данных -> Список
   //    Показать еще
@@ -62,13 +57,13 @@ function UsersCatalogList(): JSX.Element {
   //! временно
   const users = MOCK_USERS;
   //
-  /*
-    const { className, users, isHaveMoreUsers, onNextPageClick } = props;
+  const { users: users0, isHaveMoreUsers, onNextPageClick } = props;
+  // eslint-disable-next-line no-console
+  console.log('users0', users0);
 
-    const handleShowMoreClick = () => {
-      onNextPageClick();
-    };
-  */
+  const handleShowMoreClick = () => {
+    onNextPageClick();
+  };
 
   return (
     <div className="inner-page__content">

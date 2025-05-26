@@ -1,22 +1,49 @@
 import { JSX, Fragment } from 'react';
 
+import { IUserProfileRdo, IUserQuery } from '@backend/shared/core';
+
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
 import UsersCatalogForm from '../../components/users-catalog-form/users-catalog-form';
 import UsersCatalogList from '../../components/users-catalog-list/users-catalog-list';
 
-import { PageTitle } from '../../const';
+import useScrollToTop from '../../hooks/use-scroll-to-top';
+import { useAppDispatch } from '../../hooks';
+import { setPrevLocation } from '../../store/user-process';
+import { AppRoute, PageTitle } from '../../const';
 
 function UsersCatalog(): JSX.Element {
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
-  // взято из - function Trainings(props: TrainingsProps):
-  //! временно
-  const isFetchUsersExecuting = false;
-  const page = 1;
-  //
+  const dispatch = useAppDispatch();
+  const usersFilter = { page: 1 }; //useAppSelector(getUsersFilter);
+  const users: IUserProfileRdo[] = []; //useAppSelector(getUsers);
+  //const isUsersFilterActivate = useAppSelector(getIsUsersFilterActivate);
+  const isFetchUsersExecuting = false; //! useAppSelector(getIsFetchUsersExecuting);
+  const isHaveMoreUsers = true; // useAppSelector(getIsHaveMoreUsers);
+  //const usersMaxPrice = useAppSelector(getUsersMaxPrice);
+  //const prevLocation = useAppSelector(getPrevLocation);
+
+  useScrollToTop(); //! а если в useEffect?
+
+  ///////useEffect(() => {
 
   const title = PageTitle.UsersCatalog;
+  const location = AppRoute.UsersCatalog;
+
+  const handleFilterOnChange = (newFilter: IUserQuery) => {
+    dispatch(setPrevLocation(location));
+    // eslint-disable-next-line no-console
+    console.log('handleFilterOnChange - newFilter', newFilter);
+    //dispatch(setUsersFilter({ ...currentTrainingsFilter, ...newFilter }));
+  };
+
+  const handleNextPageClick = () => {
+    dispatch(setPrevLocation(location));
+    // eslint-disable-next-line no-console
+    console.log('handleNextPageClick');
+    //dispatch(getNextPage());
+  };
 
   return (
     <Fragment>
@@ -27,20 +54,13 @@ function UsersCatalog(): JSX.Element {
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">{title}</h1>
               <UsersCatalogForm
-                usersFilter={{}} //! временно
-                onUsersFilterChange={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('onUsersFilterChange');
-                }}
+                usersFilter={usersFilter}
+                onUsersFilterChange={handleFilterOnChange}
               />
               {
-                (isFetchUsersExecuting && (page === 1))
-                  ?
-                  (<Spinner />)
-                  :
-                  (
-                    <UsersCatalogList />
-                  )
+                (isFetchUsersExecuting && (usersFilter.page === 1))
+                  ? <Spinner />
+                  : <UsersCatalogList users={users} isHaveMoreUsers={isHaveMoreUsers} onNextPageClick={handleNextPageClick} />
               }
             </div>
           </div>
