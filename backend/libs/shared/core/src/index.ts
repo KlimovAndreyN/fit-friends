@@ -68,6 +68,7 @@ export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 export { TrainingQuery } from './lib/query/training.query';
+export { UserQuery } from './lib/query/user.query';
 
 export { BasicDetailTrainingRdo } from './lib/rdo/basic-detail-training.rdo';
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
@@ -107,9 +108,10 @@ export { Location } from './lib/types/location.enum';
 export { PaymentMethod } from './lib/types/payment-method.enum'
 export { Role } from './lib/types/role.enum';
 export { SortDirection } from './lib/types/sort-direction.enum';
-export { SortType } from './lib/types/sort-type.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
+export { TrainingSortType } from './lib/types/training-sort-type.enum';
+export { UserSortType } from './lib/types/user-sort-type.enum';
 
 export * from './lib/utils/common';
 export * from './lib/utils/convert';

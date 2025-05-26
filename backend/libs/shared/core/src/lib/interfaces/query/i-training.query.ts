@@ -1,6 +1,6 @@
-import { SortType } from '../../types/sort-type.enum';
 import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
+import { TrainingSortType } from '../../types/training-sort-type.enum';
 import { IPageQuery } from './i-page.query';
 
 export interface ITrainingQuery extends IPageQuery {
@@ -12,6 +12,6 @@ export interface ITrainingQuery extends IPageQuery {
   ratingMax?: number;
   specializations?: Specialization[];
   durations?: Duration[];
-  sortType?: SortType;
+  sortType?: TrainingSortType;
   coachId?: string;
 }

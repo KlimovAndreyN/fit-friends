@@ -1,27 +1,31 @@
 import { JSX, FormEvent } from 'react';
+import classNames from 'classnames';
 
-import { TrainingSortType } from '@backend/shared/core';
+import { UserSortType } from '@backend/shared/core';
 import { convertEnumToArray } from '@backend/shared/helpers';
 
-const SortTypeTitle: { [key in TrainingSortType]: string } = {
-  [TrainingSortType.LowPrice]: 'Дешевле',
-  [TrainingSortType.HighPrice]: 'Дороже',
-  [TrainingSortType.ForFree]: 'Бесплатные'
+const SortTypeTitle: { [key in UserSortType]: string } = {
+  [UserSortType.OnlyCoach]: 'Тренеры',
+  [UserSortType.OnlySportsman]: 'Пользователи'
 } as const;
 
-type TrainingsFormSortProps = {
-  sortType?: TrainingSortType;
+type UsersCatalogFormSortProps = {
+  sortType?: UserSortType;
   className: string;
-  onChange: (sort: TrainingSortType) => void;
+  isUseButtonRatioClassName: boolean;
+  onChange: (sort: UserSortType) => void;
 }
 
-function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortProps): JSX.Element {
+function UsersCatalogFormSort({ sortType, className, isUseButtonRatioClassName, onChange }: UsersCatalogFormSortProps): JSX.Element {
+  //! попробовать сделать дженериком с TrainingsFormSort
+  //   добавил isUseButtonRatioClassName
+
   return (
     <div className={`${className}__block ${className}__block--sort`}>
       <h4 className={`${className}__title ${className}__title--sort`}>Сортировка</h4>
-      <div className={`btn-radio-sort ${className}__radio`}>
+      <div className={classNames('btn-radio-sort', { [`${className}__radio`]: isUseButtonRatioClassName })}>
         {
-          convertEnumToArray(TrainingSortType).map(
+          convertEnumToArray(UserSortType).map(
             (sort) => {
               const handleLabelClick = (event: FormEvent) => {
                 event.preventDefault();
@@ -45,4 +49,4 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
   );
 }
 
-export default TrainingsFormSort;
+export default UsersCatalogFormSort;

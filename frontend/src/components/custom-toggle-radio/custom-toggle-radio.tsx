@@ -4,31 +4,44 @@ import classNames from 'classnames';
 import { Option } from '../../types/types';
 
 type CustomToggleRadioProps = {
-  divExtraClassName: string;
   name: string;
   options: Option[];
   value?: Option['value'];
   readOnly?: boolean;
+  divExtraClassNamePrefix?: string;
   isSmall?: boolean;
+  onChange?: (newValue: string) => void;
 }
 
 function CustomToggleRadio(props: CustomToggleRadioProps): JSX.Element {
-  //! если бкудет участвовать в управляемой форме, то нужно будет доделать
+  //! если будет участвовать в управляемой форме, то нужно будет доделать
 
-  const { divExtraClassName, name, options, value, readOnly, isSmall } = props;
-  const className = classNames('custom-toggle-radio', { 'custom-toggle-radio--big': !isSmall }, `${divExtraClassName}__radio`);
+  const { divExtraClassNamePrefix, name, options, value, readOnly, isSmall, onChange } = props;
+  const divExtraClassName = (divExtraClassNamePrefix) ? `${divExtraClassNamePrefix}__radio` : undefined;
+  const className = classNames('custom-toggle-radio', { 'custom-toggle-radio--big': !isSmall }, divExtraClassName);
 
   return (
     <div className={className}>
       {
         options.map(
-          ({ value: curretnValue, title }) => {
-            const checked = curretnValue === value;
+          ({ value: currentValue, title }) => {
+            const checked = currentValue === value;
+
+            const handleInputChange = () => {
+              onChange?.(currentValue);
+            };
 
             return (
-              <div className="custom-toggle-radio__block" key={curretnValue}>
+              <div className="custom-toggle-radio__block" key={currentValue}>
                 <label>
-                  <input type="radio" name={name} value={curretnValue} defaultChecked={checked} readOnly={readOnly} />
+                  <input
+                    type="radio"
+                    name={name}
+                    value={currentValue}
+                    defaultChecked={checked}
+                    readOnly={readOnly}
+                    onChange={handleInputChange}
+                  />
                   <span className="custom-toggle-radio__icon"></span>
                   <span className="custom-toggle-radio__label">{title}</span>
                 </label>

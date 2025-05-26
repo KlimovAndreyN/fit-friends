@@ -110,18 +110,18 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
             <Block legend='Сколько времени вы готовы уделять на тренировку в день' className={divClassName} >
               <CustomToggleRadio
                 name={FormFieldName.Time}
-                divExtraClassName={divClassName}
                 options={DURATIONS}
                 value={DefaultUser.DURATION}
+                divExtraClassNamePrefix={divClassName}
               />
             </Block>
           }
           <Block legend='Ваш уровень' className={divClassName} >
             <CustomToggleRadio
               name={FormFieldName.UserTrainingLevel}
-              divExtraClassName={divClassName}
               options={TRAINING_LEVELS}
               value={DefaultUser.TRAINING_LEVEL}
+              divExtraClassNamePrefix={divClassName}
             />
           </Block>
           {
@@ -148,6 +148,7 @@ function QuestionnaireForm({ userRole, onSubmit, isDisabled }: QuestionnaireForm
                   name={FormFieldName.IndividualTraining}
                   spanText='Хочу дополнительно индивидуально тренировать'
                   value={DEFAULT_INDIVIDUAL_TRAINING}
+                  valueText='individual-training'
                   divClassName={divClassName}
                 />
               </Fragment>

@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  ApiServiceRoute, ICreateTrainingDto, IDetailTrainingRdo, isForFreeSortType,
+  ApiServiceRoute, ICreateTrainingDto, IDetailTrainingRdo, isForFreeTrainingSortType,
   ITrainingQuery, ITrainingRdo, ITrainingsWithPaginationRdo, TrainingRoute
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
@@ -62,7 +62,7 @@ export const fetchTrainings = createAsyncThunk<ITrainingsWithPaginationRdo, ITra
     let priceMin = realPriceMin;
     let priceMax = realPriceMax;
 
-    if (isForFreeSortType(sortType)) {
+    if (isForFreeTrainingSortType(sortType)) {
       priceMin = undefined;
       priceMax = undefined;
     }

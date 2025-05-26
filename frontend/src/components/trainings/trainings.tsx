@@ -4,8 +4,9 @@ import { ITrainingQuery } from '@backend/shared/core';
 
 import Header from '../header/header';
 import TrainingsForm from '../trainings-form/trainings-form';
-import TrainingsList from '../trainings-list/trainings-list';
 import Spinner from '../spinner/spinner';
+import ResultList from '../result-list/result-list';
+import ThumbnailTraining from '../thumbnail-training/thumbnail-training';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -21,9 +22,8 @@ import { hasPriceMaxPropertyKey } from '../../utils/common';
 import { AppRoute } from '../../const';
 
 type TrainingsProps = {
-  headerTitle: string;
-  location: string;
   title: string;
+  location: string;
   formClassName: string;
   listClassName: string;
   ratingPrefixClassName: string;
@@ -47,7 +47,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! востановление состояния страницы через параметры в адресной строке? по ТЗ требуется?
 
-  const { headerTitle, location, title, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
+  const { title, location, formClassName, listClassName, ratingPrefixClassName, startOnZeroRating, showedFilterSpecializations, showedFilterDurations, showedSorting, showedAdditionalDiv } = props;
   const dispatch = useAppDispatch();
   const trainingsFilter = useAppSelector(getTrainingsFilter);
   const trainings = useAppSelector(getTrainings);
@@ -68,7 +68,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
     }
   }
 
-  const newTrainingsFilter = {
+  const currentTrainingsFilter: ITrainingQuery = {
     ...trainingsFilter,
     priceMax: hasPriceMaxPropertyKey(trainingsFilter) ? limitPriceMax : trainingsMaxPrice
   };
@@ -93,7 +93,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   const handleFilterOnChange = (newFilter: ITrainingQuery) => {
     dispatch(setPrevLocation(location));
-    dispatch(setTrainingsFilter({ ...newTrainingsFilter, ...newFilter }));
+    dispatch(setTrainingsFilter({ ...currentTrainingsFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
@@ -103,7 +103,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
 
   return (
     <Fragment>
-      <Header title={headerTitle} />
+      <Header title={title} />
       <main>
         <section className="inner-page">
           <div className="container">
@@ -112,7 +112,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
               <TrainingsForm
                 className={formClassName}
                 ratingPrefixClassName={ratingPrefixClassName}
-                trainingsFilter={newTrainingsFilter}
+                trainingsFilter={currentTrainingsFilter}
                 trainingsMaxPrice={trainingsMaxPrice}
                 startOnZeroRating={startOnZeroRating}
                 onTrainingsFilterChange={handleFilterOnChange}
@@ -123,17 +123,18 @@ function Trainings(props: TrainingsProps): JSX.Element {
               {
                 (isFetchTrainingsExecuting && (page === 1))
                   ?
-                  (<Spinner />)
+                  <Spinner />
                   :
-                  (
-                    <TrainingsList
-                      className={listClassName}
-                      trainings={trainings}
-                      isHaveMoreTrainings={isHaveMoreTrainings}
-                      onNextPageClick={handleNextPageClick}
-                      showedAdditionalDiv={showedAdditionalDiv}
-                    />
-                  )
+                  <ResultList
+                    mainClassName={listClassName}
+                    childrens={trainings.map(
+                      (training) => (<ThumbnailTraining key={training.id} training={training} />)
+                    )}
+                    isHaveMoreData={isHaveMoreTrainings}
+                    onNextPageClick={handleNextPageClick}
+                    textOnEmpty='Тренировки не найдены'
+                    showedAdditionalDiv={showedAdditionalDiv}
+                  />
               }
             </div>
           </div>

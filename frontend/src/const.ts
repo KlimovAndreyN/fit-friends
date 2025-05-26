@@ -1,4 +1,7 @@
-import { Duration, Location, Specialization, Gender, TrainingLevel, Role, ApiServiceRoute, AccountRoute } from '@backend/shared/core';
+import {
+  Duration, Location, Specialization, AccountRoute,
+  TrainingLevel, Role, ApiServiceRoute, Gender, IUserProfileRdo
+} from '@backend/shared/core';
 import { convertEnumToArray, joinUrl } from '@backend/shared/helpers';
 
 import { Option } from './types/types';
@@ -116,13 +119,13 @@ export const LOCATIONS: Option[] = convertEnumToArray(Location).map(
 
 export const SpecializationTitle: { [key in Specialization]: string } = {
   [Specialization.Aerobics]: 'Аэробика',
+  [Specialization.Running]: 'Бег',
   [Specialization.Boxing]: 'Бокс',
+  [Specialization.Yoga]: 'Йога',
   [Specialization.Crossfit]: 'Кроссфит',
   [Specialization.Pilates]: 'Пилатес',
   [Specialization.Power]: 'Силовые',
-  [Specialization.Running]: 'Бег',
-  [Specialization.Stretching]: 'Стрейчинг',
-  [Specialization.Yoga]: 'Йога'
+  [Specialization.Stretching]: 'Стрейчинг'
 } as const;
 
 export const SPECIALISATIONS: Option[] = convertEnumToArray(Specialization).map(
@@ -156,3 +159,42 @@ export const TRAINING_LEVELS: Option[] = convertEnumToArray(TrainingLevel).map(
 );
 
 export const CERTIFICATES_FILE_TYPES = '.pdf, .jpg, .jpeg, .png';
+
+//! временно
+export const MOCK_USERS: IUserProfileRdo[] = [
+  {
+    id: '1',
+    role: Role.Sportsman,
+    avatarFilePath: 'img/content/thumbnails/user-01.jpg',
+    name: 'Елизавета',
+    location: Location.Petrogradskaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing,
+      Specialization.Pilates
+    ]
+  },
+  {
+    id: '2',
+    role: Role.Sportsman,
+    avatarFilePath: 'img/content/thumbnails/user-02.jpg',
+    name: 'Name2',
+    location: Location.Sportivnaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing
+    ]
+  },
+  {
+    id: '3',
+    role: Role.Coach,
+    avatarFilePath: 'img/content/thumbnails/user-03.jpg',
+    name: 'Name3',
+    location: Location.Udelnaya,
+    specializations: [
+      Specialization.Aerobics,
+      Specialization.Boxing,
+      Specialization.Stretching
+    ]
+  }
+];

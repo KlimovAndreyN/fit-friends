@@ -168,10 +168,10 @@ function CreateTraining(): JSX.Element {
                             <span className={`${mainClassNamePrefix}__label`}>Кому подойдет тренировка</span>
                             <br />
                             <CustomToggleRadio //! добавить во внутрь заголовок-div и текст-span и br
-                              divExtraClassName={mainClassNamePrefix}
                               name={FormFieldName.TrainingGender}
                               value={DEFAULT_GENDER}
                               options={TRAINING_GENDERS}
+                              divExtraClassNamePrefix={mainClassNamePrefix}
                               isSmall
                             />
                           </div>

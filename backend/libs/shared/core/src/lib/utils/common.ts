@@ -1,6 +1,6 @@
 import { SPECIAL_OFFER_PERCENT } from '../constants/consts';
 import { Role } from '../types/role.enum';
-import { SortType } from '../types/sort-type.enum';
+import { TrainingSortType } from '../types/training-sort-type.enum';
 
 export function isCoachRole(role: Role): boolean {
   return role === Role.Coach;
@@ -10,8 +10,8 @@ export function isSportsmanRole(role: Role): boolean {
   return role === Role.Sportsman;
 }
 
-export function isForFreeSortType(sortType: SortType | undefined): boolean {
-  return sortType === SortType.ForFree;
+export function isForFreeTrainingSortType(sortType: TrainingSortType | undefined): boolean {
+  return sortType === TrainingSortType.ForFree;
 }
 
 export function parseStringNumber(value: string): number | undefined {

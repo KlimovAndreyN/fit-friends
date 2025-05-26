@@ -8,15 +8,12 @@ import Hashtags from '../hashtags/hashtags';
 import { getTrainingRoute } from '../../utils/common';
 import { REVIEWS_ANCHOR, SpecializationTitle } from '../../const';
 
-type TrainingCardProps = {
+type ThumbnailTrainingProps = {
   training: ITrainingRdo;
 }
 
-function TrainingCard({ training }: TrainingCardProps): JSX.Element {
-  //! заголовок в нижнем регистре? или или там стили?
-  //! куда ведут сслыка отзывы, тоже на тренировку? фокус на отзывы? - пока сдела #reviews, но не прокручивает на вверх... перепроверить!
-  // как округлять рейтинг? как по ТЗ? - пока округлил до целых!
-  // а как выглядят со скидкой? как по ТЗ? как окрулять? - нет в разметке! - хранить две цены
+function ThumbnailTraining({ training }: ThumbnailTrainingProps): JSX.Element {
+  //! куда ведут сслыка отзывы - пока сделал #reviews, но не прокручивает на вверх... перепроверить!
 
   const { id, title, description, specialization, caloriesWaste, backgroundPath, price, rating } = training;
   const link = getTrainingRoute(id);
@@ -64,4 +61,4 @@ function TrainingCard({ training }: TrainingCardProps): JSX.Element {
   );
 }
 
-export default TrainingCard;
+export default ThumbnailTraining;

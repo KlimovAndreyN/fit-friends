@@ -11,6 +11,7 @@ export class UserProfileRdo
       [
         'id',
         'name',
+        'role',
         'avatarFilePath',
         'location'
       ]

@@ -1,6 +1,6 @@
 import { JSX, FormEvent } from 'react';
 
-import { Specialization, SortType, Duration, ITrainingQuery, isForFreeSortType } from '@backend/shared/core';
+import { Specialization, TrainingSortType, Duration, ITrainingQuery, isForFreeTrainingSortType } from '@backend/shared/core';
 import { deleteItem } from '@backend/shared/helpers';
 
 import BackButton from '../back-button/back-button';
@@ -67,7 +67,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     }
   };
 
-  const handleTrainingCatalogFormSortChange = (newSortType: SortType) => {
+  const handleSortChange = (newSortType: TrainingSortType) => {
     onTrainingsFilterChange({ sortType: newSortType });
   };
 
@@ -90,7 +90,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             limitValueMax={trainingsMaxPrice || Limit.PRICE_MIN}
             showInputs
             onChange={handlePriceFilterMinMaxRangeChange}
-            disabled={isForFreeSortType(sortType)}
+            disabled={isForFreeTrainingSortType(sortType)}
           />
           <FilterMinMaxRange
             title='Калории'
@@ -123,6 +123,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               name='type'
               items={specializations}
               options={SPECIALISATIONS}
+              isOptionTitleLowerCase
               className={className}
               onChange={handleSpecializationsChange}
             />
@@ -134,6 +135,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
               name='duration'
               items={durations}
               options={TRAINIG_FILTER_DURATIONS}
+              isOptionTitleLowerCase
               className={className}
               onChange={handleDurationsChange}
             />
@@ -143,12 +145,12 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
             <TrainingsFormSort
               sortType={sortType}
               className={className}
-              onChange={handleTrainingCatalogFormSortChange}
+              onChange={handleSortChange}
             />
           }
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 

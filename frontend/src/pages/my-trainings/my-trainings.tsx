@@ -17,9 +17,8 @@ function MyTrainings(): JSX.Element {
 
   return (
     <Trainings
-      headerTitle={PageTitle.MyTrainings}
+      title={PageTitle.MyTrainings}
       location={AppRoute.MyTrainings}
-      title='Мои тренировки'
       formClassName='my-training-form'
       listClassName='my-trainings'
       ratingPrefixClassName='raiting'
