@@ -3,14 +3,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConnectionNameOption } from '@backend/shared/core';
 import { getMongooseOptions } from '@backend/shared/helpers';
-import { AuthenticationModule } from '@backend/account/authentication'
 import { AccountConfigModule } from '@backend/account/config'
+import { AuthenticationModule } from '@backend/account/authentication'
+import { FitQuestionnaireModule } from '@backend/account/fit-questionnaire'
 
 @Module({
   imports: [
-    AuthenticationModule,
     AccountConfigModule,
-    MongooseModule.forRootAsync(getMongooseOptions(ConnectionNameOption.Account))
+    MongooseModule.forRootAsync(getMongooseOptions(ConnectionNameOption.Account)),
+    AuthenticationModule,
+    FitQuestionnaireModule
   ],
   controllers: [],
   providers: []

@@ -1,7 +1,7 @@
 {
-  "name": "fit-questionnaire-old",
+  "name": "fit-questionnaire",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/fit/questionnaire/src",
+  "sourceRoot": "libs/account/fit-questionnaire/src",
   "projectType": "library",
   "tags": [],
   "// targets": "to see all targets run: nx show project fit-questionnaire --web",

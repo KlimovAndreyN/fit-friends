@@ -22,11 +22,14 @@
       "@backend/account/authentication": [
         "libs/account/authentication/src/index.ts"
       ],
-      "@backend/account/fit-user": [
-        "libs/account/fit-user/src/index.ts"
-      ],
       "@backend/account/config": [
         "libs/account/config/src/index.ts"
+      ],
+      "@backend/account/fit-questionnaire": [
+        "libs/account/fit-questionnaire/src/index.ts"
+      ],
+      "@backend/account/fit-user": [
+        "libs/account/fit-user/src/index.ts"
       ],
       "@backend/account/notify": [
         "libs/account/notify/src/index.ts"
