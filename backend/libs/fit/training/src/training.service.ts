@@ -1,7 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { CreateBasicTrainingDto, isCoachRole, isForFreeTrainingSortType, Role, TrainingQuery } from '@backend/shared/core';
-import { QuestionnaireRepository } from '@backend/fit/questionnaire';
+import { CreateBasicTrainingDto, isCoachRole, isForFreeTrainingSortType, Role, Specialization, TrainingQuery } from '@backend/shared/core';
 
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity, TrainingEntityWithPagination } from './training.entity';
@@ -12,7 +11,6 @@ const DEFAULT_POPULAR_RATING = { ratingMin: 4, ratingMax: 5, isPopular: true, is
 @Injectable()
 export class TrainingService {
   constructor(
-    private readonly questionnaireRepository: QuestionnaireRepository,
     private readonly trainingRepository: TrainingRepository
   ) { }
 
@@ -37,7 +35,10 @@ export class TrainingService {
     //! пока только специализации
     //! добавить сортировку
 
-    const { specializations } = await this.questionnaireRepository.findByUserId(userId);
+    //! поменялась логика скорее всего принять запрос TrainingQuery, но без цены и пагинации... сделать другой...
+    console.log('TrainingService - getForSportsman - userId', userId);
+    //const { specializations } = await this.questionnaireRepository.findByUserId(userId);
+    const specializations = [Specialization.Aerobics];
     const { entities } = await this.trainingRepository.find({ specializations, isSortCreatedDate: true });
 
     return entities;

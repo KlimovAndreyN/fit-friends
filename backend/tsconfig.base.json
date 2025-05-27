@@ -58,9 +58,6 @@
       "@backend/fit/order": [
         "libs/fit/order/src/index.ts"
       ],
-      "@backend/fit/questionnaire": [
-        "libs/fit/questionnaire/src/index.ts"
-      ],
       "@backend/fit/review": [
         "libs/fit/review/src/index.ts"
       ],

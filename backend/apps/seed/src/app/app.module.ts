@@ -6,7 +6,6 @@ import { getEnvMongooseOptions } from '@backend/shared/helpers';
 import { FitUserModule } from '@backend/account/fit-user';
 import { FitQuestionnaireModule } from '@backend/account/fit-questionnaire';
 import { PrismaClientModule } from '@backend/fit/models';
-import { QuestionnaireModule } from '@backend/fit/questionnaire';
 import { TrainingModule } from '@backend/fit/training';
 import { OrderModule } from '@backend/fit/order';
 import { ReviewModule } from '@backend/fit/review';
@@ -28,7 +27,6 @@ const EnvPrefix = {
     FitUserModule,
     FitQuestionnaireModule,
     PrismaClientModule,
-    QuestionnaireModule,
     TrainingModule,
     OrderModule,
     ReviewModule
