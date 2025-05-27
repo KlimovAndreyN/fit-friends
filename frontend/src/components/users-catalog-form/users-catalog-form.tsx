@@ -1,13 +1,23 @@
 import { FormEvent, JSX } from 'react';
 
 import { IUserQuery, Location, Specialization, TrainingLevel, UserSortType } from '@backend/shared/core';
-import { deleteItem } from '@backend/shared/helpers';
+import { convertEnumToArray, deleteItem } from '@backend/shared/helpers';
 
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
-import UsersCatalogFormSort from '../users-catalog-form-sort/users-catalog-form-sort';
+import FilterFormSort from '../filter-form-sort/filter-form-sort';
 
+import { Option } from '../../types/types';
 import { LOCATIONS, SPECIALISATIONS, TRAINING_LEVELS } from '../../const';
+
+const SortTypeTitle: { [key in UserSortType]: string } = {
+  [UserSortType.OnlyCoach]: 'Тренеры',
+  [UserSortType.OnlySportsman]: 'Пользователи'
+} as const;
+
+const USER_SORTS: Option[] = convertEnumToArray(UserSortType).map(
+  (sortType) => ({ value: sortType, title: SortTypeTitle[sortType] })
+);
 
 type UsersCatalogFormProps = {
   usersFilter: IUserQuery;
@@ -15,8 +25,6 @@ type UsersCatalogFormProps = {
 }
 
 function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
-  //! CustomToggleRadioнужно сделать в управляемый
-
   const { locations, specializations, level, sortType } = usersFilter;
 
   const handleFormSubmit = (event: FormEvent) => {
@@ -86,8 +94,9 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
               onChange={handleLevelChange}
             />
           </div>
-          <UsersCatalogFormSort
-            sortType={sortType}
+          <FilterFormSort
+            value={sortType}
+            options={USER_SORTS}
             className='user-catalog-form'
             isUseButtonRatioClassName={false}
             onChange={handleSortChange}

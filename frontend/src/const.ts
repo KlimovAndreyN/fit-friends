@@ -1,6 +1,6 @@
 import {
-  Duration, Location, Specialization, AccountRoute,
-  TrainingLevel, Role, ApiServiceRoute, Gender, IUserProfileRdo
+  Duration, Location, Specialization, AccountRoute, Role,
+  TrainingLevel, ApiServiceRoute, Gender, IUserProfileRdo
 } from '@backend/shared/core';
 import { convertEnumToArray, joinUrl } from '@backend/shared/helpers';
 

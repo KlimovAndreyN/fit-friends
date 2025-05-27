@@ -1,14 +1,25 @@
 import { JSX, FormEvent } from 'react';
 
 import { Specialization, TrainingSortType, Duration, ITrainingQuery, isForFreeTrainingSortType } from '@backend/shared/core';
-import { deleteItem } from '@backend/shared/helpers';
+import { convertEnumToArray, deleteItem } from '@backend/shared/helpers';
 
 import BackButton from '../back-button/back-button';
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import FilterMinMaxRange from '../filter-min-max-range/filter-min-max-range';
-import TrainingsFormSort from '../trainings-form-sort/trainings-form-sort';
+import FilterFormSort from '../filter-form-sort/filter-form-sort';
 
+import { Option } from '../../types/types';
 import { TRAINIG_FILTER_DURATIONS, SPECIALISATIONS } from '../../const';
+
+const SortTypeTitle: { [key in TrainingSortType]: string } = {
+  [TrainingSortType.LowPrice]: 'Дешевле',
+  [TrainingSortType.HighPrice]: 'Дороже',
+  [TrainingSortType.ForFree]: 'Бесплатные'
+} as const;
+
+const TRAINING_SORTS: Option[] = convertEnumToArray(TrainingSortType).map(
+  (sortType) => ({ value: sortType, title: SortTypeTitle[sortType] })
+);
 
 const Limit = {
   PRICE_MIN: 0,
@@ -142,9 +153,11 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
           }
           {
             showedSorting &&
-            <TrainingsFormSort
-              sortType={sortType}
+            <FilterFormSort
+              value={sortType}
+              options={TRAINING_SORTS}
               className={className}
+              isUseButtonRatioClassName
               onChange={handleSortChange}
             />
           }
