@@ -6,7 +6,7 @@ import 'multer'; // Express.Multer.File
 import {
   AccountRoute, CreateBasicUserDto, CreateUserDto, ServiceRoute,
   DetailUserRdo, Role, BasicDetailUserRdo, convertToDetailUserRdo,
-  UpdateUserDto, UpdateBasicUserDto, UserRdo
+  UpdateUserDto, UpdateBasicUserDto, UserRdo, RequestWithRequestIdAndUser
 } from '@backend/shared/core';
 import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -69,6 +69,12 @@ export class UserService {
     const user: DetailUserRdo = convertToDetailUserRdo(data, filePath);
 
     return user;
+  }
+
+  public async getDetailUserFromRequest(request: RequestWithRequestIdAndUser): Promise<DetailUserRdo> {
+    const { user: { sub: userId, role }, requestId } = request;
+
+    return this.getDetailUser(userId, userId, role, requestId);
   }
 
   //! role! currentUserId!

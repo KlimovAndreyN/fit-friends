@@ -4,9 +4,10 @@ import { Transform } from 'class-transformer';
 
 import { ITrainingQuery } from '../interfaces/query/i-training.query';
 import { PageQuery } from './page.query';
-import { TrainingSortType } from '../types/training-sort-type.enum';
+import { Gender } from '../types/gender.enum';
 import { Specialization } from '../types/specialization.enum';
 import { Duration } from '../types/duration.enum';
+import { TrainingSortType } from '../types/training-sort-type.enum';
 import { transformToArray, transformToNumber } from '../utils/transform';
 import { UserApiProperty } from '../constants/api-property/user.api-property';
 
@@ -72,6 +73,16 @@ export class TrainingQuery
   @IsOptional()
   @Transform(transformToArray)
   public specializations?: ITrainingQuery['specializations'];
+
+  @ApiProperty({
+    type: 'string',
+    enum: Gender,
+    example: Gender.Male,
+    required: false
+  })
+  @IsEnum(Gender)
+  @IsOptional()
+  public gender?: ITrainingQuery['gender'];
 
   @ApiProperty({
     isArray: true,

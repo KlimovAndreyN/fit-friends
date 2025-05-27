@@ -14,7 +14,8 @@ export class FitUserProfileService {
     const entities = await this.fitQuestionnaireRepository.getReadyForTraining();
 
     //! отладка
-    console.log('FitUserProfileService - getReadyForTraining - entities', entities);
+    //! использовать this.fitUserRepository для определения сортировки!
+    //!console.log('FitUserProfileService - getReadyForTraining - entities', entities);
 
     return entities;
   }

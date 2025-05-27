@@ -89,6 +89,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       caloriesWasteMax,
       ratingMin,
       ratingMax,
+      gender,
       specializations,
       durations,
       sortType = Default.SORT_TYPE,
@@ -110,6 +111,13 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     where.caloriesWaste = { gte: caloriesWasteMin, lte: caloriesWasteMax };
     where.rating = { gte: ratingMin, lte: ratingMax };
     where.isSpecial = isSpecial;
+
+    if (gender) {
+      if (gender !== Gender.NotMatter) {
+        where.gender = { in: [gender, Gender.NotMatter] };
+      }
+    }
+
     where.specialization = { in: specializations };
     where.duration = { in: durations };
     where.userId = coachId;

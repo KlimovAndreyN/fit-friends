@@ -15,6 +15,8 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
 import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
 import { FitTrainingService } from './fit-training.service';
+import { UserService } from './user.service';
+import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @ApiTags(ApiServiceRoute.Trainings)
 @ApiBearerAuth(BearerAuth.AccessToken)
@@ -23,7 +25,9 @@ import { FitTrainingService } from './fit-training.service';
 @UseFilters(AxiosExceptionFilter)
 export class FitTrainingController {
   constructor(
-    private fitTrainingService: FitTrainingService
+    private fitTrainingService: FitTrainingService,
+    private userService: UserService,
+    private fitQuestionnaireService: FitQuestionnaireService
   ) { }
 
   @ApiResponse({ type: TrainingsWithPaginationRdo })
@@ -41,9 +45,17 @@ export class FitTrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() request: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
-    const data = await this.fitTrainingService.getTrainings<TrainingRdo[]>(TrainingRoute.ForSportsman, request);
+    //! много кода - перенести в сервис
+    const detailUser = await this.userService.getDetailUserFromRequest(request);
+    const { gender } = detailUser;
+    //! немного переделать вызов, а запреты как проверяются?
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(request.user.sub, request.requestId);
+    const { specializations } = questionnaire;
+    //! пока только это для подборки под спротсмена
+    const query: TrainingQuery = { gender, specializations };
+    const data = await this.fitTrainingService.getTrainings<TrainingsWithPaginationRdo>(getQueryString(query), request);
 
-    return data;
+    return data.entities;
   }
 
   @UseGuards(CheckRoleSportsmanGuard)

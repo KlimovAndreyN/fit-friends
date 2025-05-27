@@ -1,3 +1,4 @@
+import { Gender } from '../../types/gender.enum';
 import { Specialization } from '../../types/specialization.enum';
 import { Duration } from '../../types/duration.enum';
 import { TrainingSortType } from '../../types/training-sort-type.enum';
@@ -10,6 +11,7 @@ export interface ITrainingQuery extends IPageQuery {
   caloriesWasteMax?: number;
   ratingMin?: number;
   ratingMax?: number;
+  gender?: Gender;
   specializations?: Specialization[];
   durations?: Duration[];
   sortType?: TrainingSortType;
