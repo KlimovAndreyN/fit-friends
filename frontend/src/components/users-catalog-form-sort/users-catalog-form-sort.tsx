@@ -13,7 +13,7 @@ type UsersCatalogFormSortProps = {
   sortType?: UserSortType;
   className: string;
   isUseButtonRatioClassName: boolean;
-  onChange: (sort: UserSortType) => void;
+  onChange: (sort: UserSortType | undefined) => void;
 }
 
 function UsersCatalogFormSort({ sortType, className, isUseButtonRatioClassName, onChange }: UsersCatalogFormSortProps): JSX.Element {
@@ -32,6 +32,8 @@ function UsersCatalogFormSort({ sortType, className, isUseButtonRatioClassName, 
 
                 if (sort !== sortType) {
                   onChange(sort);
+                } else {
+                  onChange(undefined);
                 }
               };
 

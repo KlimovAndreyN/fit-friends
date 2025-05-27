@@ -67,7 +67,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     }
   };
 
-  const handleSortChange = (newSortType: TrainingSortType) => {
+  const handleSortChange = (newSortType: TrainingSortType | undefined) => {
     onTrainingsFilterChange({ sortType: newSortType });
   };
 

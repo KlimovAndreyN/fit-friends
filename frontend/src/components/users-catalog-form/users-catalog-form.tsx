@@ -43,7 +43,7 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
     onUsersFilterChange({ level: newValue as TrainingLevel });
   };
 
-  const handleSortChange = (newSortType: UserSortType) => {
+  const handleSortChange = (newSortType: UserSortType | undefined) => {
     onUsersFilterChange({ sortType: newSortType });
   };
 

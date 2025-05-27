@@ -12,10 +12,12 @@ const SortTypeTitle: { [key in TrainingSortType]: string } = {
 type TrainingsFormSortProps = {
   sortType?: TrainingSortType;
   className: string;
-  onChange: (sort: TrainingSortType) => void;
+  onChange: (sort: TrainingSortType | undefined) => void;
 }
 
 function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortProps): JSX.Element {
+  //! попробовать сделать дженериком с UsersCatalogFormSort
+
   return (
     <div className={`${className}__block ${className}__block--sort`}>
       <h4 className={`${className}__title ${className}__title--sort`}>Сортировка</h4>
@@ -28,6 +30,8 @@ function TrainingsFormSort({ sortType, className, onChange }: TrainingsFormSortP
 
                 if (sort !== sortType) {
                   onChange(sort);
+                } else {
+                  onChange(undefined);
                 }
               };
 
