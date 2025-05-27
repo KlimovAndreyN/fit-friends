@@ -5,7 +5,7 @@ import { AuthUser, Location, Gender, Role } from '@backend/shared/core';
 
 @Schema({
   collection: 'accounts',
-  timestamps: true
+  timestamps: false // т.к. при заполении использую ручную генерацию дат
 })
 export class FitUserModel extends Document implements AuthUser {
   @Prop({ required: true, unique: true })
@@ -38,10 +38,26 @@ export class FitUserModel extends Document implements AuthUser {
   @Prop({ required: true, type: String })
   public role: Role;
 
-  public createdAt: Date;
+  @Prop({ type: Date, default: () => new Date() })
+  createdAt: Date;
+
+  @Prop({ type: Date })
+  updatedAt: Date;
 }
+
+// т.к. при заполении использую ручную генерацию дат
+const FitUserSchema = SchemaFactory.createForClass(FitUserModel);
+
+FitUserSchema.pre('save', function () {
+  this.updatedAt = new Date();
+});
+
+FitUserSchema.pre('findOneAndUpdate', function () {
+  this.set({ updatedAt: new Date() });
+});
+//
 
 export const FitUserModels: ModelDefinition[] = [{
   name: FitUserModel.name,
-  schema: SchemaFactory.createForClass(FitUserModel)
+  schema: FitUserSchema
 }];

@@ -16,6 +16,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
   public about?: AuthUser['about'];
   public passwordHash: AuthUser['passwordHash'];
   public createdAt?: AuthUser['createdAt'];
+  public updatedAt?: AuthUser['updatedAt'];
 
   constructor(user?: AuthUser) {
     super();
@@ -41,6 +42,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
     this.backgroundPath = user.backgroundPath;
     this.passwordHash = user.passwordHash;
     this.createdAt = user.createdAt;
+    this.updatedAt = user.updatedAt;
   }
 
   public toPOJO(): AuthUser {
@@ -56,7 +58,8 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       avatarFileId: this.avatarFileId,
       about: this.about,
       passwordHash: this.passwordHash,
-      createdAt: this.createdAt
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
     }
   }
 

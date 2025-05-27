@@ -14,4 +14,5 @@ export interface User {
   avatarFileId?: string;
   about?: string;
   createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -12,6 +12,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
   public description?: Questionnaire['description'];
   public individualTraining?: Questionnaire['individualTraining'];
   public createdAt?: Questionnaire['createdAt'];
+  public updatedAt?: Questionnaire['updatedAt'];
 
   constructor(questionnaire?: Questionnaire) {
     super();
@@ -35,6 +36,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
     this.description = questionnaire.description;
     this.individualTraining = questionnaire.individualTraining;
     this.createdAt = questionnaire.createdAt;
+    this.updatedAt = questionnaire.updatedAt;
   }
 
   public toPOJO(): Questionnaire {
@@ -49,7 +51,8 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
       fileIds: this.fileIds,
       description: this.description,
       individualTraining: this.individualTraining,
-      createdAt: this.createdAt
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
     }
   }
 }

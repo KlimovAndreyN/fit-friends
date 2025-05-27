@@ -16,6 +16,14 @@ export abstract class BaseMongoRepository<
   ) { }
 
   private fillFields(entity: T, document: DocumentType) {
+    // у некоторых моделей отключено timestamps и нет смысла прогонять заново
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const schemaAny = this.model.schema as any;
+
+    if (!schemaAny.options?.timestamps) {
+      return;
+    }
+
     // может отдельная настройка есть?
     //! может в хелпер copyFields / copyField, document, entity, string[] / string
     ['createdAt', 'updatedAt'].forEach((key) => {
@@ -64,21 +72,11 @@ export abstract class BaseMongoRepository<
     this.fillFields(entity, updatedDocument);
   }
 
+  // использую для генерации с нужным id
   public async insertOrUpdate(entity: T): Promise<void> {
-    const data = entity.toPOJO();
-    const updateData = {};
-
-    //! в хелпер, но нужно типизировать... или lodash
-    //    может copyWithoutFields / copyWithoutField, data, updateData, string[] / string
-    Object.keys(data).forEach((key) => {
-      if (key !== 'createdAt') {
-        updateData[key] = data[key];
-      }
-    });
-
     const updatedDocument = await this.model.findOneAndUpdate(
       { _id: entity.id },
-      updateData,
+      entity.toPOJO(),
       { new: true, upsert: true, runValidators: true }
     ).exec();
 

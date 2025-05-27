@@ -14,4 +14,5 @@ export interface Questionnaire {
   description?: string;
   individualTraining?: boolean;
   createdAt?: Date;
+  updatedAt?: Date;
 }

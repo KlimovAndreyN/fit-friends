@@ -35,6 +35,16 @@ export const COACHES: MockUser[] = [
 
 export const DEFAULT_USER_PASSWORD = '123456';
 
+export const UserCreateDateOption = {
+  MIN: new Date(2025, 0, 1),
+  MAX: new Date(2025, 3, 1),
+} as const;
+
+export const UserBirthdayDateOption = {
+  MIN: new Date(2020, 0, 1),
+  MAX: new Date(2020, 11, 1),
+} as const;
+
 export const CalorieOption = {
   LOSE_MIN: 3000,
   LOSE_MAX: 5000,

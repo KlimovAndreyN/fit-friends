@@ -5,7 +5,7 @@ import { getRandomDate, getRandomEnumItem, getRandomItem } from '@backend/shared
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 
-import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, TrainingOption } from './mock-data';
+import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, UserBirthdayDateOption, UserCreateDateOption, SWAGGER_COACH } from './mock-data';
 
 export async function clearRefreshTokens(refreshTokenRepository: RefreshTokenRepository): Promise<void> {
   refreshTokenRepository.deleteAll();
@@ -23,7 +23,6 @@ export async function seedUsers(
 ): Promise<FitUserEntity[]> {
   const users: FitUserEntity[] = [];
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
-  const { MIN_DATE, MAX_DATE } = TrainingOption;
 
   avatarsFileIds.push(''); // добавим пустой id для дополнительных проверок в разметке
 
@@ -38,17 +37,23 @@ export async function seedUsers(
       location: getRandomEnumItem(Location),
       role,
       avatarFileId: getRandomItem(avatarsFileIds),
-      birthday: getRandomDate(MIN_DATE, MAX_DATE),
+      birthday: getRandomDate(UserBirthdayDateOption.MIN, UserBirthdayDateOption.MAX),
       passwordHash: ''
     };
     const userEntity = new FitUserEntity(user);
 
     await userEntity.setPassword(DEFAULT_USER_PASSWORD);
 
+    // для удобства проверки главной страницы и каталога пользователей, сортировка по дате
+    if (![SWAGGER_USER, SWAGGER_COACH].includes(name)) {
+      userEntity.createdAt = getRandomDate(UserCreateDateOption.MIN, UserCreateDateOption.MAX);
+    }
+
     //! может и для тренера MOCK_SWAGGER_COACH боже добавить постоянный id.... и в TrainingQuery - public coachId? - @ApiProperty({... example: UserApiProperty.CoachId.example
     if (name === SWAGGER_USER) { // для удобства тестирования запросов из свагера
       userEntity.id = UserApiProperty.Id.example;
 
+      // запись создается с указанным id
       await fitUserRepository.insertOrUpdate(userEntity);
     }
     else {
