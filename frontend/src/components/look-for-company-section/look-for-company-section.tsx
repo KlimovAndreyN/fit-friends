@@ -1,7 +1,6 @@
 import { JSX } from 'react';
 
 import { IUserProfileRdo } from '@backend/shared/core';
-import { getRandomUniqueItems } from '@backend/shared/helpers';
 
 import SliderSection from '../slider-section/slider-section';
 
@@ -17,7 +16,7 @@ type LookForCompanySectionProps = {
 
 function LookForCompanySection({ userProfiles }: LookForCompanySectionProps): JSX.Element {
 
-  const childrens = getRandomUniqueItems(userProfiles, USER_PRIFILES_MAX_COUNT)
+  const childrens = userProfiles.slice(0, USER_PRIFILES_MAX_COUNT)
     .map((user) => (
       <ThumbnailUser
         key={user.id}

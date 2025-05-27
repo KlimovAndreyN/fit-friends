@@ -144,8 +144,11 @@ export class FitQuestionnaireService {
     await this.httpService.axiosRef.patch<QuestionnaireRdo>(this.getUrl(), dto, headers);
   }
 
+  //! Вынести в отдельный сервис с профилями пользователей, т.к. основной адрес другой
   public async getReadyForTraining(userId: string, requestId: string): Promise<QuestionnaireMiniRdo[]> {
-    const url = this.getUrl(UserProfileRoute.LookForCompany);
+    const url = joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.UsersProfiles, UserProfileRoute.LookForCompany)
+    //!const url = this.getUrl(UserProfileRoute.LookForCompany);
+
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<QuestionnaireMiniRdo[]>(url, headers);
 

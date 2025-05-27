@@ -5,6 +5,7 @@ import { getRandomBoolean, getRandomEnumItem, getRandomNumber, getRandomUniqueIt
 import { FitUserEntity } from '@backend/account/fit-user';
 import { FitQuestionnaireEntity, FitQuestionnaireRepository } from '@backend/account/fit-questionnaire';
 
+import { isSwaggers } from './common';
 import { CalorieOption, SpecializationsOption } from './mock-data';
 
 export async function clearQuestionnaires(fitQuestionnaireRepository: FitQuestionnaireRepository): Promise<void> {
@@ -23,11 +24,17 @@ export async function seedQuestionnaires(
   for (const { id: userId, role, name } of users) {
     //! попробовать добавлять через сервис QuestionnaireService
 
+    // для удобства проверки главной страницы и каталога пользователей, сортировка по дате
+    const isSwaggerUser = isSwaggers(name);
+    // для удобства проверки главной страницы, сортировка по дате
+    const readyForTraining = isSwaggerUser || getRandomBoolean() || getRandomBoolean(); // удвоим
+    // для удобства проверки каталога пользователей, сортировка по дате
+    const trainingLevel = (isSwaggerUser) ? TrainingLevel.Amateur : getRandomEnumItem(TrainingLevel);
     const questionnaire: Questionnaire = {
       userId,
       specializations: getRandomUniqueItems(convertEnumToArray(Specialization), getRandomNumber(MIN_COUNT, MAX_COUNT)),
-      trainingLevel: getRandomEnumItem(TrainingLevel),
-      readyForTraining: getRandomBoolean() || getRandomBoolean() // удвоим
+      trainingLevel,
+      readyForTraining
     }
 
     if (isSportsmanRole(role)) {

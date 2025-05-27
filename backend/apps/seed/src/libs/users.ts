@@ -5,7 +5,8 @@ import { getRandomDate, getRandomEnumItem, getRandomItem } from '@backend/shared
 import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 
-import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, UserBirthdayDateOption, UserCreateDateOption, SWAGGER_COACH } from './mock-data';
+import { isSwaggers } from './common';
+import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, UserBirthdayDateOption, UserCreateDateOption } from './mock-data';
 
 export async function clearRefreshTokens(refreshTokenRepository: RefreshTokenRepository): Promise<void> {
   refreshTokenRepository.deleteAll();
@@ -45,7 +46,7 @@ export async function seedUsers(
     await userEntity.setPassword(DEFAULT_USER_PASSWORD);
 
     // для удобства проверки главной страницы и каталога пользователей, сортировка по дате
-    if (![SWAGGER_USER, SWAGGER_COACH].includes(name)) {
+    if (!isSwaggers(name)) {
       userEntity.createdAt = getRandomDate(UserCreateDateOption.MIN, UserCreateDateOption.MAX);
     }
 
