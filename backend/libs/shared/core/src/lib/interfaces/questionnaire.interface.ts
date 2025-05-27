@@ -3,6 +3,7 @@ import { Specialization } from '../types/specialization.enum';
 import { TrainingLevel } from '../types/training-level.enum';
 
 export interface Questionnaire {
+  id?: string;
   userId: string;
   specializations: Specialization[];
   trainingLevel: TrainingLevel;

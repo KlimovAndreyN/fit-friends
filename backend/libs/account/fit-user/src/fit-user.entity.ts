@@ -29,7 +29,7 @@ export class FitUserEntity extends Entity implements StorableEntity<AuthUser> {
       return;
     }
 
-    this.id = user.id ?? undefined;
+    this.id = user.id;
     this.email = user.email;
     this.name = user.name;
     this.birthday = user.birthday;

@@ -25,6 +25,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
       return;
     }
 
+    this.id = questionnaire.id;
     this.userId = questionnaire.userId;
     this.specializations = [...questionnaire.specializations];
     this.trainingLevel = questionnaire.trainingLevel;
@@ -41,6 +42,7 @@ export class FitQuestionnaireEntity extends Entity implements StorableEntity<Que
 
   public toPOJO(): Questionnaire {
     return {
+      id: this.id,
       userId: this.userId,
       specializations: this.specializations,
       trainingLevel: this.trainingLevel,
