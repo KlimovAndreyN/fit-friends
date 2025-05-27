@@ -22,7 +22,7 @@ export class FitQuestionnaireService {
   ) { }
 
   private getUrl(...routes: string[]): string {
-    return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Questionnaires, ...routes);
+    return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Questionnaires, ...routes);
   }
 
   private makeCertificate(fileRdo: UploadedFileRdo): CertificateRdo {

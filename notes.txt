@@ -25,6 +25,12 @@ swaggercoach@local.ru
 Вопросы:
   QuestionnaireMiniRdo
 
+  Без опросника может вернуть 404 ????? 
+    [Nest] 22176  - 27.05.2025, 17:42:45   ERROR [ExceptionsHandler] TypeError: Cannot read properties of null (reading 'toPOJO')
+        at FitQuestionnaireController.show (D:\Projects\fit-friends\backend\dist\apps\account\webpack:\libs\account\fit-questionnaire\src\fit-questionnaire.controller.ts:53:50)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    [Nest] 22056  - 27.05.2025, 17:42:45   ERROR [AxiosExceptionFilter] Object(3) {   url: 'http://localhost:3003/api/questionnaires',   method: 'get',  data: {    statusCode: 500,    message: 'Internal server error'
+
   сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
     может передавать централизованно?
   
