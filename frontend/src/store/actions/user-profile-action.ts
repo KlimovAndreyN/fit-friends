@@ -36,7 +36,9 @@ export const fetchUsers = createAsyncThunk<IUserProfilesWithPaginationRdo, IUser
     // eslint-disable-next-line no-console
     console.log('fetchUsers - url', url);
     //! временно, заготовка!
-    const { data } = await api.get<IUserProfilesWithPaginationRdo>(url);
+    //const { data } = await api.get<IUserProfilesWithPaginationRdo>(url);
+    const { data: entities } = await api.get<IUserProfileRdo[]>(url);
+    const data: IUserProfilesWithPaginationRdo = { entities, currentPage: 1, itemsPerPage: 20, totalItems: 100, totalPages: 5 };
     // eslint-disable-next-line no-console
     console.log('fetchUsers - data', data);
 

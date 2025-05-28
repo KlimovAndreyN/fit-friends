@@ -49,7 +49,7 @@ function Index(): JSX.Element {
     if (!isIndexPageActivate) {
       dispatch(setPrevLocation(AppRoute.Index));
       dispatch(setIsIndexPageActivate(true));
-    } else if (prevLocation !== AppRoute.TrainingDetail) {
+    } else if (![AppRoute.TrainingDetail, AppRoute.UserDetail].includes(prevLocation)) {
       fetchData();
     }
 

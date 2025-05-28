@@ -131,4 +131,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { setUsersFilter, getNextPage, setIsUsersFilterActivate: setIsTrainingsFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
+export const { setUsersFilter, getNextPage, setIsUsersFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
