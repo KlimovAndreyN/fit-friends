@@ -1,6 +1,6 @@
 import { JSX, Fragment, useEffect } from 'react';
 
-import { IUserProfileRdo, IUserQuery } from '@backend/shared/core';
+import { IUserProfileRdo, IUserProfileQuery } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
 import Spinner from '../../components/spinner/spinner';
@@ -49,7 +49,7 @@ function UsersCatalog(): JSX.Element {
     dispatch(clearDetailUserProfile());
   }, [dispatch, location, usersProfilesFilter, isUsersProfilesFilterActivate, prevLocation]);
 
-  const handleFilterOnChange = (newFilter: IUserQuery) => {
+  const handleFilterOnChange = (newFilter: IUserProfileQuery) => {
     dispatch(setPrevLocation(location));
     dispatch(setUsersProfilesFilter({ ...usersProfilesFilter, ...newFilter }));
   };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUserQuery, TrainingLevel } from '@backend/shared/core';
+import { IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import { fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchDetailUserProfile } from '../actions/user-profile-action';
@@ -32,7 +32,7 @@ export const userProfileProcess = createSlice(
     name: StoreSlice.UserProfileProcess,
     initialState,
     reducers: {
-      setUsersProfilesFilter: (state, { payload }: PayloadAction<IUserQuery>) => {
+      setUsersProfilesFilter: (state, { payload }: PayloadAction<IUserProfileQuery>) => {
         state.isFristPage = true;
         state.usersProfilesFilter = { ...state.usersProfilesFilter, ...payload, page: Default.PAGE };
       },

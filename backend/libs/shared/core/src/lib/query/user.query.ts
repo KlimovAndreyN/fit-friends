@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 
-import { IUserQuery } from '../interfaces/query/i-user.query';
+import { IUserProfileQuery } from '../interfaces/query/i-user-profile.query';
 import { PageQuery } from './page.query';
 import { Location } from '../types/location.enum';
 import { Specialization } from '../types/specialization.enum';
@@ -10,9 +10,9 @@ import { TrainingLevel } from '../types/training-level.enum';
 import { UserSortType } from '../types/user-sort-type.enum';
 import { transformToArray } from '../utils/transform';
 
-export class UserQuery
+export class UserProfileQuery
   extends PageQuery
-  implements IUserQuery {
+  implements IUserProfileQuery {
   @ApiProperty({
     isArray: true,
     type: 'string',
@@ -23,7 +23,7 @@ export class UserQuery
   @IsEnum(Location, { each: true })
   @IsOptional()
   @Transform(transformToArray)
-  public locations?: IUserQuery['locations'];
+  public locations?: IUserProfileQuery['locations'];
 
   @ApiProperty({
     isArray: true,
@@ -35,7 +35,7 @@ export class UserQuery
   @IsEnum(Specialization, { each: true })
   @IsOptional()
   @Transform(transformToArray)
-  public specializations?: IUserQuery['specializations'];
+  public specializations?: IUserProfileQuery['specializations'];
 
   @ApiProperty({
     type: 'string',
@@ -44,7 +44,7 @@ export class UserQuery
   })
   @IsEnum(TrainingLevel)
   @IsOptional()
-  public level?: IUserQuery['level'];
+  public level?: IUserProfileQuery['level'];
 
   @ApiProperty({
     type: 'string',
@@ -54,5 +54,5 @@ export class UserQuery
   })
   @IsEnum(UserSortType)
   @IsOptional()
-  public sortType?: IUserQuery['sortType'];
+  public sortType?: IUserProfileQuery['sortType'];
 }

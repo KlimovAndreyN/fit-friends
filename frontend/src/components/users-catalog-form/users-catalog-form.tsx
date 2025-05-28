@@ -1,6 +1,6 @@
 import { FormEvent, JSX } from 'react';
 
-import { IUserQuery, Location, Specialization, TrainingLevel, UserSortType } from '@backend/shared/core';
+import { IUserProfileQuery, Location, Specialization, TrainingLevel, UserSortType } from '@backend/shared/core';
 import { convertEnumToArray, deleteItem } from '@backend/shared/helpers';
 
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
@@ -20,8 +20,8 @@ const USER_SORTS: Option[] = convertEnumToArray(UserSortType).map(
 );
 
 type UsersCatalogFormProps = {
-  usersFilter: IUserQuery;
-  onUsersFilterChange: (newFilter: IUserQuery) => void;
+  usersFilter: IUserProfileQuery;
+  onUsersFilterChange: (newFilter: IUserProfileQuery) => void;
 }
 
 function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {

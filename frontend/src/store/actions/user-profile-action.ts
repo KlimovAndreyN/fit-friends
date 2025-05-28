@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUserProfileRdo, IDetailUserProfileRdo, UserProfileRoute,
-  ApiServiceRoute, IUserProfilesWithPaginationRdo, IUserQuery
+  ApiServiceRoute, IUsersProfilesWithPaginationRdo, IUserProfileQuery
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
@@ -28,19 +28,12 @@ export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[
   }
 );
 
-export const fetchUsersProfiles = createAsyncThunk<IUserProfilesWithPaginationRdo, IUserQuery, { extra: Extra }>(
+export const fetchUsersProfiles = createAsyncThunk<IUsersProfilesWithPaginationRdo, IUserProfileQuery, { extra: Extra }>(
   Action.FETCH_USERS_PROFILES,
   async (query, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.LookForCompany, getQueryString(query));
-    // eslint-disable-next-line no-console
-    console.log('fetchUsersProfiles - url', url);
-    //! временно, заготовка!
-    //const { data } = await api.get<IUserProfilesWithPaginationRdo>(url);
-    const { data: entities } = await api.get<IUserProfileRdo[]>(url);
-    const data: IUserProfilesWithPaginationRdo = { entities, currentPage: 1, itemsPerPage: 20, totalItems: 100, totalPages: 5 };
-    // eslint-disable-next-line no-console
-    console.log('fetchUsersProfiles - data', data);
+    const url = joinUrl(ApiServiceRoute.UsersProfiles, getQueryString(query));
+    const { data } = await api.get<IUsersProfilesWithPaginationRdo>(url);
 
     return data;
   }

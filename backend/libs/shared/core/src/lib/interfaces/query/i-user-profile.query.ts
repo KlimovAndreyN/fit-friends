@@ -4,7 +4,7 @@ import { TrainingLevel } from '../../types/training-level.enum';
 import { UserSortType } from '../../types/user-sort-type.enum';
 import { IPageQuery } from './i-page.query';
 
-export interface IUserQuery extends IPageQuery {
+export interface IUserProfileQuery extends IPageQuery {
   locations?: Location[];
   specializations?: Specialization[];
   level?: TrainingLevel;

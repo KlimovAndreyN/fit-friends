@@ -1,10 +1,10 @@
-import { IDetailUserProfileRdo, IUserProfileRdo, IUserQuery } from '@backend/shared/core';
+import { IDetailUserProfileRdo, IUserProfileRdo, IUserProfileQuery } from '@backend/shared/core';
 
 export type UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: boolean;
   lookForCompanyUserProfiles: IUserProfileRdo[];
 
-  usersProfilesFilter: IUserQuery;
+  usersProfilesFilter: IUserProfileQuery;
   isFristPage: boolean;
   isUsersProfilesFilterActivate: boolean;
   isFetchUsersProfilesExecuting: boolean;
