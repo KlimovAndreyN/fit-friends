@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import {
-  BasicUserProfileRdo, isCoachRole, UserProfileQuery,
-  BasicUsersProfilesWithPaginationRdo, Role
+  BasicUserProfileRdo, isCoachRole, UserProfileQuery, Role,
+  BasicUsersProfilesWithPaginationRdo, getRoreByUserSortType
 } from '@backend/shared/core';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
@@ -25,9 +25,21 @@ export class FitUserProfileService {
   public async find(userId: string, query: UserProfileQuery, role: Role): Promise<BasicUsersProfilesWithPaginationRdo> {
     this.checkNotAllowForCoach(role);
 
-    //! временно
-    console.log('query', query);
-    const usersProfiles = await this.getReadyForTraining(userId, role);
+    //! сначала отобрать userIds из анкет по специализациям и уровню, а затем выбрать поользователей!
+
+    const { sortType, locations, trainingLevel, specializations } = query; //! не все поля обработаны
+    const users = await this.fitUserRepository.getAllWithoutIds([userId], getRoreByUserSortType(sortType), locations);
+    const usersProfiles: BasicUserProfileRdo[] = [];
+
+    for (const { id, location, name, role, avatarFileId } of users) {
+      const { trainingLevel: userTrainingLevel, specializations: userSpecializations } = await this.fitQuestionnaireRepository.findByUserId(id);
+      const userProfile: BasicUserProfileRdo = { id, location, name, role, specializations, avatarFileId };
+
+      if (!trainingLevel && !specializations) {
+        usersProfiles.push(userProfile);
+      }
+
+    }
     const data: BasicUsersProfilesWithPaginationRdo = { currentPage: 1, itemsPerPage: 10, totalItems: 100, totalPages: 10, entities: usersProfiles };
     //
 

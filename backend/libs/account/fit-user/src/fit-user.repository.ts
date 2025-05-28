@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ConnectionNameOption, SortDirection } from '@backend/shared/core';
+import { ConnectionNameOption, Location, Role, SortDirection } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitUserEntity } from './fit-user.entity';
@@ -25,10 +25,20 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     return this.createEntityFromDocument(document);
   }
 
-  public async getAllWithoutIds(withoutIds: string[] = []): Promise<FitUserEntity[]> {
+  public async getAllWithoutIds(withoutIds: string[] = [], role?: Role, locations?: Location[]): Promise<FitUserEntity[]> {
+    const where = { _id: { $nin: withoutIds } };
+
+    if (role) {
+      where['role'] = role; // не очень правильно, а как сделать???
+    }
+
+    if (locations) {
+      where['location'] = { $in: locations }; // не очень правильно, а как сделать???
+    }
+
     const documents = await this.model
       .find()
-      .where({ _id: { $nin: withoutIds } })
+      .where(where)
       .sort({ createdAt: SortDirection.Desc })
       .exec();
 
