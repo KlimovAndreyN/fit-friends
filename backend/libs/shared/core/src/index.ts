@@ -75,6 +75,7 @@ export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';
 export { BasicReviewRdo } from './lib/rdo/basic-review.rdo';
 export { BasicUserProfileRdo } from './lib/rdo/basic-user-profile.rdo';
+export { BasicUsersProfilesWithPaginationRdo } from './lib/rdo/basic-users-profiles-with-pagination.rdo';
 export { CertificateRdo } from './lib/rdo/certificate.rdo';
 export { DetailTrainingRdo } from './lib/rdo/detail-training.rdo';
 export { DetailUserProfileRdo } from './lib/rdo/detail-user-profile.rdo';
