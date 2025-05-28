@@ -112,10 +112,8 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     where.rating = { gte: ratingMin, lte: ratingMax };
     where.isSpecial = isSpecial;
 
-    if (gender) {
-      if (gender !== Gender.NotMatter) {
-        where.gender = { in: [gender, Gender.NotMatter] };
-      }
+    if (gender && (gender !== Gender.NotMatter)) {
+      where.gender = { in: [gender, Gender.NotMatter] };
     }
 
     where.specialization = { in: specializations };

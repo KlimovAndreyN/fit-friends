@@ -23,6 +23,9 @@ swaggercoach@local.ru
 123456
 --------------
 Вопросы:
+  QuestionnaireMiniRdo
+  поменять название - query: ITrainingRepository
+
   починить тренировки для тебя
     удалить лишние не вызываемые обработчики и сервисы и репо...
     +
@@ -32,8 +35,6 @@ swaggercoach@local.ru
       или выбрать сначала пользователей по дате, а потом по ним готовность!
     исключить себя
   
-  QuestionnaireMiniRdo
-
   сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
     может передавать централизованно?
   
