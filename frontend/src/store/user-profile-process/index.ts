@@ -44,7 +44,7 @@ export const userProfileProcess = createSlice(
           state.usersFilter = { ...state.usersFilter, page: page + 1 };
         }
       },
-      setIsTrainingsFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
+      setIsUsersFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
         state.isUsersFilterActivate = payload;
 
         if (!payload) {
@@ -131,4 +131,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { setUsersFilter, getNextPage, setIsTrainingsFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
+export const { setUsersFilter, getNextPage, setIsUsersFilterActivate: setIsTrainingsFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;

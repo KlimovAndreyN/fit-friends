@@ -1,6 +1,7 @@
 import { Role } from '@backend/shared/core';
 
 import { AuthorizationStatus } from '../types';
+import { AppRoute } from '../../const';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus;
@@ -8,7 +9,7 @@ export type UserProcess = {
   isSingUpExecuting: boolean;
   userRole: Role;
 
-  prevLocation: string;
+  prevLocation: AppRoute;
 
   isIndexPageActivate: boolean;
 }

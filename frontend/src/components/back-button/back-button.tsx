@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { useAppSelector } from '../../hooks';
-import { getUserMainPage } from '../../store/user-process/selectors';
+import { getPrevLocation, getUserMainPage } from '../../store/user-process/selectors';
 
 type BackButtonProps = {
   className: string;
@@ -12,11 +12,16 @@ type BackButtonProps = {
 }
 
 function BackButton({ className, classPrefix, underlined }: BackButtonProps): JSX.Element {
+  const prevLocation = useAppSelector(getPrevLocation);
   const mainPage = useAppSelector(getUserMainPage);
   const navigate = useNavigate();
 
   const handleBackButtonClick = () => {
-    navigate(mainPage);
+    if (prevLocation) {
+      navigate(-1);
+    } else {
+      navigate(mainPage);
+    }
   };
 
   const buttonClassName = classNames(
