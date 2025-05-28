@@ -7,6 +7,6 @@ import { IPageQuery } from './i-page.query';
 export interface IUserProfileQuery extends IPageQuery {
   locations?: Location[];
   specializations?: Specialization[];
-  level?: TrainingLevel;
+  trainingLevel?: TrainingLevel;
   sortType?: UserSortType;
 }

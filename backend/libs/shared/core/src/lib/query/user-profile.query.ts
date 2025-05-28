@@ -44,7 +44,7 @@ export class UserProfileQuery
   })
   @IsEnum(TrainingLevel)
   @IsOptional()
-  public level?: IUserProfileQuery['level'];
+  public trainingLevel?: IUserProfileQuery['trainingLevel'];
 
   @ApiProperty({
     type: 'string',

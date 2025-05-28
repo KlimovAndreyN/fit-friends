@@ -25,7 +25,7 @@ type UsersCatalogFormProps = {
 }
 
 function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
-  const { locations, specializations, level, sortType } = usersFilter;
+  const { locations, specializations, trainingLevel, sortType } = usersFilter;
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -48,7 +48,7 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
   };
 
   const handleLevelChange = (newValue: string) => {
-    onUsersFilterChange({ level: newValue as TrainingLevel });
+    onUsersFilterChange({ trainingLevel: newValue as TrainingLevel });
   };
 
   const handleSortChange = (newSortType: UserSortType | undefined) => {
@@ -89,7 +89,7 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
             <CustomToggleRadio
               name='level'
               options={TRAINING_LEVELS}
-              value={level}
+              value={trainingLevel}
               isSmall
               onChange={handleLevelChange}
             />
