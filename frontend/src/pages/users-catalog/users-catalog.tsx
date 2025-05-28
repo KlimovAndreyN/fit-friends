@@ -11,10 +11,10 @@ import ThumbnailUser from '../../components/thumbnail-user/thumbnail-user';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPrevLocation } from '../../store/user-process/selectors';
-import { getIsFetchUsersExecuting, getIsHaveMoreUsers, getIsUsersFilterActivate, getUsers, getUsersFilter } from '../../store/user-profile-process/selectors';
+import { getIsFetchUsersProfilesExecuting, getIsHaveMoreUsersProfiles, getIsUsersProfilesFilterActivate, getUsersProfiles, getUsersProfilesFilter } from '../../store/user-profile-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { clearDetailUserProfile, getNextPage, setIsUsersFilterActivate, setUsersFilter } from '../../store/user-profile-process';
-import { fetchUsers } from '../../store/actions/user-profile-action';
+import { clearDetailUserProfile, getNextPage, setIsUsersFilterActivate, setUsersProfilesFilter } from '../../store/user-profile-process';
+import { fetchUsersProfiles } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function UsersCatalog(): JSX.Element {
@@ -22,11 +22,11 @@ function UsersCatalog(): JSX.Element {
   //    Логика: Фильтр -> Обновление данных -> Список
 
   const dispatch = useAppDispatch();
-  const usersFilter = useAppSelector(getUsersFilter);
-  const users: IUserProfileRdo[] = useAppSelector(getUsers);
-  const isUsersFilterActivate = useAppSelector(getIsUsersFilterActivate);
-  const isFetchUsersExecuting = useAppSelector(getIsFetchUsersExecuting);
-  const isHaveMoreUsers = useAppSelector(getIsHaveMoreUsers);
+  const usersProfilesFilter = useAppSelector(getUsersProfilesFilter);
+  const usersProfiles: IUserProfileRdo[] = useAppSelector(getUsersProfiles);
+  const isUsersProfilesFilterActivate = useAppSelector(getIsUsersProfilesFilterActivate);
+  const isFetchUsersProfilesExecuting = useAppSelector(getIsFetchUsersProfilesExecuting);
+  const isHaveMoreUsersProfiles = useAppSelector(getIsHaveMoreUsersProfiles);
   const prevLocation = useAppSelector(getPrevLocation);
   const location = AppRoute.UsersCatalog;
   const title = PageTitle.UsersCatalog;
@@ -34,24 +34,24 @@ function UsersCatalog(): JSX.Element {
   useScrollToTop(); //! а если в useEffect?
 
   useEffect(() => {
-    if (!isUsersFilterActivate) {
-      dispatch(setUsersFilter({}));
+    if (!isUsersProfilesFilterActivate) {
+      dispatch(setUsersProfilesFilter({}));
       dispatch(setIsUsersFilterActivate(true));
     } else {
       if (prevLocation && (prevLocation !== location) && (prevLocation !== AppRoute.UserDetail)) {
         dispatch(setPrevLocation(location));
         dispatch(setIsUsersFilterActivate(false)); // происходит сброс фильтров, можно и не сбрасывать
       } else if (!prevLocation || (prevLocation === location)) {
-        dispatch(fetchUsers(usersFilter));
+        dispatch(fetchUsersProfiles(usersProfilesFilter));
       }
     }
 
     dispatch(clearDetailUserProfile());
-  }, [dispatch, location, usersFilter, isUsersFilterActivate, prevLocation]);
+  }, [dispatch, location, usersProfilesFilter, isUsersProfilesFilterActivate, prevLocation]);
 
   const handleFilterOnChange = (newFilter: IUserQuery) => {
     dispatch(setPrevLocation(location));
-    dispatch(setUsersFilter({ ...usersFilter, ...newFilter }));
+    dispatch(setUsersProfilesFilter({ ...usersProfilesFilter, ...newFilter }));
   };
 
   const handleNextPageClick = () => {
@@ -68,20 +68,20 @@ function UsersCatalog(): JSX.Element {
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">{title}</h1>
               <UsersCatalogForm
-                usersFilter={usersFilter}
+                usersFilter={usersProfilesFilter}
                 onUsersFilterChange={handleFilterOnChange}
               />
               {
-                (isFetchUsersExecuting && (usersFilter.page === 1))
+                (isFetchUsersProfilesExecuting && (usersProfilesFilter.page === 1))
                   ?
                   <Spinner />
                   :
                   <ResultList
                     mainClassName='users-catalog'
-                    childrens={users.map(
+                    childrens={usersProfiles.map(
                       (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
                     )}
-                    isHaveMoreData={isHaveMoreUsers}
+                    isHaveMoreData={isHaveMoreUsersProfiles}
                     onNextPageClick={handleNextPageClick}
                     textOnEmpty='Пользователи не найдены'
                     showedAdditionalDiv

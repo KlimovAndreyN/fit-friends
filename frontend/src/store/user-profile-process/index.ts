@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
-import { fetchLookForCompanyUserProfiles, fetchUsers, fetchDetailUserProfile } from '../actions/user-profile-action';
+import { fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchDetailUserProfile } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
 const Default = {
@@ -15,12 +15,12 @@ const initialState: UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
 
-  usersFilter: { page: Default.PAGE, level: Default.LEVEL },
+  usersProfilesFilter: { page: Default.PAGE, level: Default.LEVEL },
   isFristPage: true,
-  isUsersFilterActivate: false,
-  isFetchUsersExecuting: false,
-  users: [],
-  isHaveMoreUsers: false,
+  isUsersProfilesFilterActivate: false,
+  isFetchUsersProfilesExecuting: false,
+  usersProfiles: [],
+  isHaveMoreUsersProfiles: false,
 
   isFetchDetailUserProfileExecuting: false,
   isFetchDetailUserProfileError: false,
@@ -32,23 +32,23 @@ export const userProfileProcess = createSlice(
     name: StoreSlice.UserProfileProcess,
     initialState,
     reducers: {
-      setUsersFilter: (state, { payload }: PayloadAction<IUserQuery>) => {
+      setUsersProfilesFilter: (state, { payload }: PayloadAction<IUserQuery>) => {
         state.isFristPage = true;
-        state.usersFilter = { ...state.usersFilter, ...payload, page: Default.PAGE };
+        state.usersProfilesFilter = { ...state.usersProfilesFilter, ...payload, page: Default.PAGE };
       },
       getNextPage: (state) => {
-        const { usersFilter: { page }, isHaveMoreUsers } = state;
+        const { usersProfilesFilter: { page }, isHaveMoreUsersProfiles } = state;
 
-        if (page && isHaveMoreUsers) {
+        if (page && isHaveMoreUsersProfiles) {
           state.isFristPage = false;
-          state.usersFilter = { ...state.usersFilter, page: page + 1 };
+          state.usersProfilesFilter = { ...state.usersProfilesFilter, page: page + 1 };
         }
       },
       setIsUsersFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
-        state.isUsersFilterActivate = payload;
+        state.isUsersProfilesFilterActivate = payload;
 
         if (!payload) {
-          state.usersFilter = { ...initialState.usersFilter };
+          state.usersProfilesFilter = { ...initialState.usersProfilesFilter };
         }
       },
       clearDetailUserProfile: (state) => {
@@ -79,31 +79,31 @@ export const userProfileProcess = createSlice(
           }
         )
         .addCase(
-          fetchUsers.pending,
+          fetchUsersProfiles.pending,
           (state) => {
-            state.isFetchUsersExecuting = true;
+            state.isFetchUsersProfilesExecuting = true;
           }
         )
         .addCase(
-          fetchUsers.rejected,
+          fetchUsersProfiles.rejected,
           (state) => {
-            state.users = initialState.users;
-            state.isFetchUsersExecuting = false;
+            state.usersProfiles = initialState.usersProfiles;
+            state.isFetchUsersProfilesExecuting = false;
           }
         )
         .addCase(
-          fetchUsers.fulfilled,
+          fetchUsersProfiles.fulfilled,
           (state, { payload }) => {
             const { entities, currentPage, totalPages } = payload;
 
             if (state.isFristPage) {
-              state.users = entities;
+              state.usersProfiles = entities;
             } else {
-              state.users.push(...entities);
+              state.usersProfiles.push(...entities);
             }
 
-            state.isHaveMoreUsers = currentPage < totalPages;
-            state.isFetchUsersExecuting = false;
+            state.isHaveMoreUsersProfiles = currentPage < totalPages;
+            state.isFetchUsersProfilesExecuting = false;
           }
         )
         .addCase(
@@ -131,4 +131,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { setUsersFilter, getNextPage, setIsUsersFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
+export const { setUsersProfilesFilter, getNextPage, setIsUsersFilterActivate, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;

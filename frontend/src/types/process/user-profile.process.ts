@@ -4,12 +4,12 @@ export type UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: boolean;
   lookForCompanyUserProfiles: IUserProfileRdo[];
 
-  usersFilter: IUserQuery;
+  usersProfilesFilter: IUserQuery;
   isFristPage: boolean;
-  isUsersFilterActivate: boolean; //! возможно тут лишнее т.к. для тренировок была максимальная цена
-  isFetchUsersExecuting: boolean;
-  users: IUserProfileRdo[];
-  isHaveMoreUsers: boolean;
+  isUsersProfilesFilterActivate: boolean;
+  isFetchUsersProfilesExecuting: boolean;
+  usersProfiles: IUserProfileRdo[];
+  isHaveMoreUsersProfiles: boolean;
 
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;

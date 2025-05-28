@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserProcess } from '../../types/process/user.process';
 import { AuthorizationStatus } from '../../types/types';
 import { fetchUserStatus, loginUser, logoutUser, registerUser } from '../actions/user-action';
-import { DefaultUser, StoreSlice } from '../../const';
+import { AppRoute, DefaultUser, StoreSlice } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -11,7 +11,7 @@ const initialState: UserProcess = {
   isSingUpExecuting: false,
   userRole: DefaultUser.ROLE,
 
-  prevLocation: '',
+  prevLocation: AppRoute.Index,
 
   isIndexPageActivate: false
 };
@@ -21,7 +21,7 @@ export const userProcess = createSlice(
     name: StoreSlice.UserProcess,
     initialState,
     reducers: {
-      setPrevLocation: (state, { payload }: PayloadAction<string>) => {
+      setPrevLocation: (state, { payload }: PayloadAction<AppRoute>) => {
         state.prevLocation = payload;
       },
       setIsIndexPageActivate: (state, { payload }: PayloadAction<boolean>) => {

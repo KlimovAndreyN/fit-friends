@@ -23,7 +23,7 @@ import { AppRoute } from '../../const';
 
 type TrainingsProps = {
   title: string;
-  location: string;
+  location: AppRoute;
   formClassName: string;
   listClassName: string;
   ratingPrefixClassName: string;
