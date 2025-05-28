@@ -11,6 +11,7 @@ import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
+import { UserProfileService } from './user-profile.service';
 
 @ApiTags(ApiServiceRoute.UsersProfiles)
 @ApiBearerAuth(BearerAuth.AccessToken)
@@ -20,25 +21,17 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 export class UserProfileController {
   constructor(
     private userService: UserService,
-    private fitQuestionnaireService: FitQuestionnaireService
+    private fitQuestionnaireService: FitQuestionnaireService,
+    private userProfileService: UserProfileService
   ) { }
 
   @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
   @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(
-    @Req() { user: { sub, role: subRole }, requestId }: RequestWithRequestIdAndUser
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<UserProfileRdo[]> {
-    const userProfiles: UserProfileRdo[] = [];
-    const questionnaires = await this.fitQuestionnaireService.getReadyForTraining(sub, requestId);
-
-    for (const { userId, specializations } of questionnaires) {
-      const user = await this.userService.getDetailUser(userId, sub, subRole, requestId);
-      const { id, name, role, location, avatarFilePath } = user;
-      const userProfile: UserProfileRdo = { id, name, role, location, avatarFilePath, specializations };
-
-      userProfiles.push(userProfile);
-    }
+    const userProfiles = await this.userProfileService.getReadyForTraining(sub, role, requestId); //! переделать на request
 
     return userProfiles;
   }
@@ -49,7 +42,7 @@ export class UserProfileController {
     @Param(ApiParamOption.UserId.name) userId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, sub, role, requestId);
+    const user = await this.userService.getDetailUser(userId, sub, role, requestId); //! переделать на request, есть getDetailUserFromRequest
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };

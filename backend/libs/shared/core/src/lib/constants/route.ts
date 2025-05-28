@@ -5,15 +5,6 @@ export enum GlobalRoute {
   Swagger = 'spec'
 }
 
-export enum ApiServiceRoute {
-  Users = 'users',
-  Accounts = 'accounts',
-  UsersProfiles = 'users-profiles', //! убрать ?
-  Trainings = 'trainings',
-  Reviews = 'reviews'
-}
-
-//! соеденить с ApiServiceRoute?
 export enum ServiceRoute {
   Account = 'auth',
   Questionnaires = 'questionnaires',
@@ -22,6 +13,14 @@ export enum ServiceRoute {
   Orders = 'orders',
   Reviews = 'reviews',
   FileStorage = 'files'
+}
+
+export enum ApiServiceRoute {
+  Users = 'users', //! может все будет в UsersProfiles?
+  Accounts = 'accounts',
+  UsersProfiles = ServiceRoute.UsersProfiles,
+  Trainings = ServiceRoute.Trainings,
+  Reviews = ServiceRoute.Reviews
 }
 
 export enum AccountRoute {
