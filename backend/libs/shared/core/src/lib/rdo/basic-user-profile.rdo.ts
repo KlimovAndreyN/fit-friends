@@ -1,10 +1,10 @@
 import { IntersectionType, PickType } from '@nestjs/swagger';
 
-import { IUserProfileRdo } from '../interfaces/rdo/i-user-profile.rdo';
+import { IBasicUserProfileRdo } from '../interfaces/rdo/i-basic-user-profile.rdo';
 import { UserApiDoc } from '../constants/api-doc/user.api-doc';
 import { QuestionnaireApiDoc } from '../constants/api-doc/questionnaire.api-doc';
 
-export class UserProfileRdo
+export class BasicUserProfileRdo
   extends IntersectionType(
     PickType(
       UserApiDoc,
@@ -12,7 +12,7 @@ export class UserProfileRdo
         'id',
         'name',
         'role',
-        'avatarFilePath',
+        'avatarFileId',
         'location'
       ]
     ),
@@ -23,4 +23,5 @@ export class UserProfileRdo
       ]
     )
   )
-  implements IUserProfileRdo { }
+  implements IBasicUserProfileRdo { }
+

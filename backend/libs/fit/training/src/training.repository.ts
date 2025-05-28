@@ -3,7 +3,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import {
-  Duration, ITrainingRepository, SortDirection, Gender, TrainingSortType,
+  Duration, ITrainingRepositoryQuery, SortDirection, Gender, TrainingSortType,
   Specialization, Training, TrainingLevel, isForFreeTrainingSortType
 } from '@backend/shared/core';
 import { Prisma, Training as PrismaTraining } from '@prisma/client';
@@ -79,7 +79,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return this.convertPrismaTrainings(records);
   }
 
-  public async find(query: ITrainingRepository): Promise<TrainingEntityWithPagination> {
+  public async find(query: ITrainingRepositoryQuery): Promise<TrainingEntityWithPagination> {
     const {
       page: currentPage = Default.PAGE,
       limit: take = Default.LIMIT_MAX,

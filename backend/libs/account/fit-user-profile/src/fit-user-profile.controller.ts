@@ -2,7 +2,7 @@ import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ServiceRoute, XAllApiHeaderOptions, UserProfileRdo,
+  ServiceRoute, XAllApiHeaderOptions, BasicUserProfileRdo,
   RequestWithRequestIdAndUserIdAndUserRole, UserProfileRoute
 } from '@backend/shared/core';
 import { InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
@@ -19,10 +19,10 @@ export class FitUserProfileController {
   ) { }
 
   //! добавить описание
-  @ApiResponse({ type: UserProfileRdo, isArray: true })
+  @ApiResponse({ type: BasicUserProfileRdo, isArray: true })
   @UseInterceptors(InjectUserRoleInterceptor)
   @Get(UserProfileRoute.LookForCompany)
-  public async getReadyForTraining(@Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole): Promise<UserProfileRdo[]> {
+  public async getReadyForTraining(@Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole): Promise<BasicUserProfileRdo[]> {
     const usersProfiles = await this.fitUserProfileService.getReadyForTraining(userId, userRole);
 
     return usersProfiles;

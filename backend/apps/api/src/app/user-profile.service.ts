@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
-import { ServiceRoute, UserProfileRoute, UserProfileRdo, RequestWithRequestIdAndUser } from '@backend/shared/core';
+import { ServiceRoute, UserProfileRoute, UserProfileRdo, RequestWithRequestIdAndUser, BasicUserProfileRdo } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -25,12 +25,16 @@ export class UserProfileService {
     const { user: { sub, role }, requestId } = request;
     const url = this.getUrl(UserProfileRoute.LookForCompany);
     const headers = makeHeaders(requestId, null, sub, role);
-    const { data } = await this.httpService.axiosRef.get<UserProfileRdo[]>(url, headers);
+    const { data: basicUsersProfiles } = await this.httpService.axiosRef.get<BasicUserProfileRdo[]>(url, headers);
+    const usersProfiles: UserProfileRdo[] = [];
 
-    //! отладка
-    console.log('data', data);
-    //! добавить avatarFilePath
+    for (const { id, location, name, role, specializations, avatarFileId } of basicUsersProfiles) {
+      const avatarFilePath = await this.fileService.getFilePath(avatarFileId, requestId);
+      const userProfile: UserProfileRdo = { id, location, name, role, specializations, avatarFilePath };
 
-    return data;
+      usersProfiles.push(userProfile);
+    }
+
+    return usersProfiles;
   }
 }

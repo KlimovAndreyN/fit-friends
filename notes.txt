@@ -23,14 +23,6 @@ swaggercoach@local.ru
 123456
 --------------
 Вопросы:
-  Ищют компанию
-    Api + avatarFilePath
-  поменять название - query: ITrainingRepository
-
-  починить тренировки для тебя
-    удалить лишние не вызываемые обработчики и сервисы и репо...
-    +
-
   сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
     может передавать централизованно?
 

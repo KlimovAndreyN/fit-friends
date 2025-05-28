@@ -1,14 +1,14 @@
-import { IQuestionnaireRdo } from './i-questionnaire.rdo';
+import { IBasicUserProfileRdo } from './i-basic-user-profile.rdo';
 import { IDetailUserRdo } from './i-detail-user.rdo';
 
 export interface IUserProfileRdo
   extends Pick<
-    IDetailUserRdo,
+    IBasicUserProfileRdo,
     'id'
     | 'name'
     | 'role'
     | 'location'
-    | 'avatarFilePath'
+    | 'specializations'
   > {
-  specializations: IQuestionnaireRdo['specializations'];
+  avatarFilePath?: IDetailUserRdo['avatarFilePath']
 }
