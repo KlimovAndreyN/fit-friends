@@ -68,7 +68,7 @@ export { User } from './lib/interfaces/user.interface';
 
 export { PageQuery } from './lib/query/page.query';
 export { TrainingQuery } from './lib/query/training.query';
-export { UserProfileQuery } from './lib/query/user.query';
+export { UserProfileQuery } from './lib/query/user-profile.query';
 
 export { BasicDetailTrainingRdo } from './lib/rdo/basic-detail-training.rdo';
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';

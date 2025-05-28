@@ -1,9 +1,11 @@
-import { Controller, Get, Param, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ApiServiceRoute, UserProfileRdo, UserProfileRoute, DetailUserProfileRdo,
-  BearerAuth, IdParam, ApiParamOption, RequestWithRequestIdAndUser
+  BearerAuth, IdParam, ApiParamOption, RequestWithRequestIdAndUser,
+  UsersProfilesWithPaginationRdo,
+  UserProfileQuery
 } from '@backend/shared/core';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
@@ -28,10 +30,20 @@ export class UserProfileController {
 
   @ApiResponse({ type: UserProfileRdo, isArray: true })
   @UseGuards(CheckRoleSportsmanGuard)
-  @Get(UserProfileRoute.LookForCompany)
-  public async getLookForCompany(
+  @Get()
+  public async index(
+    @Query() query: UserProfileQuery,
     @Req() request: RequestWithRequestIdAndUser
-  ): Promise<UserProfileRdo[]> {
+  ): Promise<UsersProfilesWithPaginationRdo> {
+    const data = await this.userProfileService.find(request, query);
+
+    return data;
+  }
+
+  @ApiResponse({ type: UserProfileRdo, isArray: true })
+  @UseGuards(CheckRoleSportsmanGuard)
+  @Get(UserProfileRoute.LookForCompany)
+  public async getLookForCompany(@Req() request: RequestWithRequestIdAndUser): Promise<UserProfileRdo[]> {
     const userProfiles = await this.userProfileService.getReadyForTraining(request);
 
     return userProfiles;
