@@ -79,7 +79,6 @@ export { DetailTrainingRdo } from './lib/rdo/detail-training.rdo';
 export { DetailUserProfileRdo } from './lib/rdo/detail-user-profile.rdo';
 export { DetailUserRdo } from './lib/rdo/detail-user.rdo';
 export { LoggedUserRdo } from './lib/rdo/logged-user.rdo';
-export { QuestionnaireMiniRdo } from './lib/rdo/questionnaire-mini.rdo';
 export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { ReviewRdo } from './lib/rdo/review.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';

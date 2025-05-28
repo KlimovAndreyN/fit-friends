@@ -13,6 +13,7 @@ import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UserProfileService } from './user-profile.service';
 
+//! Добавить описание
 @ApiTags(ApiServiceRoute.UsersProfiles)
 @ApiBearerAuth(BearerAuth.AccessToken)
 @Controller(ApiServiceRoute.UsersProfiles)
@@ -25,24 +26,24 @@ export class UserProfileController {
     private userProfileService: UserProfileService
   ) { }
 
-  @ApiResponse({ type: UserProfileRdo, isArray: true }) //! вынести в описание
+  @ApiResponse({ type: UserProfileRdo, isArray: true })
   @UseGuards(CheckRoleSportsmanGuard)
   @Get(UserProfileRoute.LookForCompany)
   public async getLookForCompany(
-    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+    @Req() request: RequestWithRequestIdAndUser
   ): Promise<UserProfileRdo[]> {
-    const userProfiles = await this.userProfileService.getReadyForTraining(sub, role, requestId); //! переделать на request
+    const userProfiles = await this.userProfileService.getReadyForTraining(request);
 
     return userProfiles;
   }
 
-  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
+  @ApiResponse({ type: DetailUserProfileRdo })
   @Get(IdParam.USER)
   public async show(
     @Param(ApiParamOption.UserId.name) userId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, sub, role, requestId); //! переделать на request, есть getDetailUserFromRequest
+    const user = await this.userService.getDetailUser(userId, sub, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
