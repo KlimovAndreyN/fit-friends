@@ -25,7 +25,7 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     return this.createEntityFromDocument(document);
   }
 
-  public async getAll(withoutIds: string[] = []): Promise<FitUserEntity[]> {
+  public async getAllWithoutIds(withoutIds: string[] = []): Promise<FitUserEntity[]> {
     const documents = await this.model
       .find()
       .where({ _id: { $nin: withoutIds } })

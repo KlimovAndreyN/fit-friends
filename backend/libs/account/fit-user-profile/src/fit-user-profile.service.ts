@@ -37,7 +37,7 @@ export class FitUserProfileService {
   public async getReadyForTraining(userId: string, role: Role): Promise<BasicUserProfileRdo[]> {
     this.checkNotAllowForCoach(role);
 
-    const users = await this.fitUserRepository.getAll([userId]);
+    const users = await this.fitUserRepository.getAllWithoutIds([userId]);
     const questionnaireUserIds = await this.fitQuestionnaireRepository.getReadyForTrainingUserIds();
     const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
     const usersProfiles: BasicUserProfileRdo[] = [];

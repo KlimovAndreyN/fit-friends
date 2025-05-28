@@ -2,8 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
-import { ServiceRoute, UserProfileRoute, UserProfileRdo, RequestWithRequestIdAndUser, BasicUserProfileRdo, UsersProfilesWithPaginationRdo, UserProfileQuery } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import {
+  ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
+  BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
+  BasicUsersProfilesWithPaginationRdo, UserProfileRdo
+} from '@backend/shared/core';
+import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { FileService } from './file.service';
@@ -35,11 +39,14 @@ export class UserProfileService {
   }
 
   public async find(request: RequestWithRequestIdAndUser, query: UserProfileQuery): Promise<UsersProfilesWithPaginationRdo> {
-    //! временно
-    console.log('UserProfileService - find - query', query);
-    const usersProfiles = await this.getReadyForTraining(request);
-    const data: UsersProfilesWithPaginationRdo = { entities: usersProfiles, currentPage: 1, itemsPerPage: 10, totalItems: 100, totalPages: 10 };
-    //
+    const { user: { sub, role }, requestId } = request;
+    const url = this.getUrl(getQueryString(query));
+    const headers = makeHeaders(requestId, null, sub, role);
+    const {
+      data: { currentPage, entities, itemsPerPage, totalItems, totalPages }
+    } = await this.httpService.axiosRef.get<BasicUsersProfilesWithPaginationRdo>(url, headers);
+    const usersProfiles = await this.convertToUsersProfiles(entities, requestId);
+    const data: UsersProfilesWithPaginationRdo = { entities: usersProfiles, currentPage, itemsPerPage, totalItems, totalPages };
 
     return data;
   }
