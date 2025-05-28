@@ -59,6 +59,7 @@ export class TrainingController {
     return this.convertTrainingEntities(data);
   }
 
+  //! тут проверить, что не тренер
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get(TrainingRoute.Popular)
   public async getPopular(): Promise<TrainingRdo[]> {
@@ -81,6 +82,7 @@ export class TrainingController {
     return fillDto(BasicDetailTrainingRdo, entity.toPOJO());
   }
 
+  //! тут проверить, что не спортсмен
   @ApiResponse({ type: TrainingRdo })
   @Post()
   public async create(

@@ -8,11 +8,12 @@ export enum GlobalRoute {
 export enum ApiServiceRoute {
   Users = 'users',
   Accounts = 'accounts',
-  UsersProfiles = 'users-profiles', //! убрать
+  UsersProfiles = 'users-profiles', //! убрать ?
   Trainings = 'trainings',
   Reviews = 'reviews'
 }
 
+//! соеденить с ApiServiceRoute?
 export enum ServiceRoute {
   Account = 'auth',
   Questionnaires = 'questionnaires',
@@ -32,7 +33,6 @@ export enum AccountRoute {
 }
 
 export enum QuestionnaireRoute {
-  LookForCompany = 'look-for-company',
   Files = 'files'
 }
 
@@ -48,7 +48,7 @@ export enum UserProfileRoute {
   QuestionnairesCoach = `${Questionnaires}/${Role.Coach}`,
   Certificates = 'certificates',
   ReadyForTraining = 'ready-for-training',
-  LookForCompany = QuestionnaireRoute.LookForCompany
+  LookForCompany = 'look-for-company'
 }
 
 export enum FileStorageRoute {

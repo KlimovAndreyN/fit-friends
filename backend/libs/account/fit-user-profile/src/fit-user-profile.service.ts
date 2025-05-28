@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 
+import { isCoachRole, Role, UserProfileRdo } from '@backend/shared/core';
 import { FitUserRepository } from '@backend/account/fit-user';
-import { FitQuestionnaireEntity, FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
+import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
 
 @Injectable()
 export class FitUserProfileService {
@@ -10,13 +11,23 @@ export class FitUserProfileService {
     private readonly fitQuestionnaireRepository: FitQuestionnaireRepository
   ) { }
 
-  public async getReadyForTraining(): Promise<FitQuestionnaireEntity[]> {
-    const entities = await this.fitQuestionnaireRepository.getReadyForTraining();
+  public async getReadyForTraining(userId: string, userRole: Role): Promise<UserProfileRdo[]> {
+    if (isCoachRole(userRole)) {
+      throw new ForbiddenException('Not allow for coach!');
+    }
 
-    //! отладка
-    //! использовать this.fitUserRepository для определения сортировки!
-    //!console.log('FitUserProfileService - getReadyForTraining - entities', entities);
+    const users = await this.fitUserRepository.getAll([userId]);
+    const questionnaireUserIds = await this.fitQuestionnaireRepository.getReadyForTrainingUserIds();
+    const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
+    const usersProfiles: UserProfileRdo[] = [];
 
-    return entities;
+    for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, 5)) {   //! обрезать до максимального значения
+      const { specializations } = await this.fitQuestionnaireRepository.findByUserId(id);
+      const userProfile: UserProfileRdo = { id, location, name, role, specializations, avatarFilePath: avatarFileId };
+
+      usersProfiles.push(userProfile);
+    }
+
+    return usersProfiles;
   }
 }

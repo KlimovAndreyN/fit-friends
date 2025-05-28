@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ConnectionNameOption } from '@backend/shared/core';
+import { ConnectionNameOption, SortDirection } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitUserEntity } from './fit-user.entity';
@@ -23,5 +23,15 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     const document = await this.model.findOne({ email }).exec();
 
     return this.createEntityFromDocument(document);
+  }
+
+  public async getAll(withoutIds: string[] = []): Promise<FitUserEntity[]> {
+    const documents = await this.model
+      .find()
+      .where({ _id: { $nin: withoutIds } })
+      .sort({ createdAt: SortDirection.Desc })
+      .exec();
+
+    return documents.map((document) => this.createEntityFromDocument(document));
   }
 }

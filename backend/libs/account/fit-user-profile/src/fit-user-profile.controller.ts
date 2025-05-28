@@ -1,15 +1,17 @@
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, BasicQuestionnaireRdo, XApiHeaderOptions, QuestionnaireRoute, QuestionnaireMiniRdo } from '@backend/shared/core';
-import { fillDto } from '@backend/shared/helpers';
-import { InjectUserIdInterceptor } from '@backend/shared/interceptors';
+import {
+  ServiceRoute, XAllApiHeaderOptions, UserProfileRdo,
+  RequestWithRequestIdAndUserIdAndUserRole, UserProfileRoute
+} from '@backend/shared/core';
+import { InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 
 import { FitUserProfileService } from './fit-user-profile.service';
 
 @ApiTags(ServiceRoute.UsersProfiles)
-@ApiHeaders(XApiHeaderOptions) //! тут роль или определить по userId
-@UseInterceptors(InjectUserIdInterceptor) //! тут роль или определить по userId, что тренер
+@ApiHeaders(XAllApiHeaderOptions)
+@UseInterceptors(InjectUserIdInterceptor)
 @Controller(ServiceRoute.UsersProfiles)
 export class FitUserProfileController {
   constructor(
@@ -17,12 +19,12 @@ export class FitUserProfileController {
   ) { }
 
   //! добавить описание
-  //! тут роль или определить по userId, что тренер
-  @ApiResponse({ type: QuestionnaireMiniRdo, isArray: true }) //! вынести в описание
-  @Get(QuestionnaireRoute.LookForCompany)
-  public async getReadyForTraining(): Promise<QuestionnaireMiniRdo[]> {
-    const entities = await this.fitUserProfileService.getReadyForTraining();
+  @ApiResponse({ type: UserProfileRdo, isArray: true })
+  @UseInterceptors(InjectUserRoleInterceptor)
+  @Get(UserProfileRoute.LookForCompany)
+  public async getReadyForTraining(@Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole): Promise<UserProfileRdo[]> {
+    const usersProfiles = await this.fitUserProfileService.getReadyForTraining(userId, userRole);
 
-    return entities.map((entity) => (fillDto(BasicQuestionnaireRdo, entity.toPOJO())));
+    return usersProfiles;
   }
 }

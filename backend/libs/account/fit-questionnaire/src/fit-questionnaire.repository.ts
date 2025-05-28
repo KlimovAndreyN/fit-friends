@@ -25,12 +25,13 @@ export class FitQuestionnaireRepository extends BaseMongoRepository<FitQuestionn
     return this.createEntityFromDocument(document);
   }
 
-  public async getReadyForTraining(): Promise<FitQuestionnaireEntity[]> {
+  public async getReadyForTrainingUserIds(): Promise<string[]> {
     const documents = await this.model.find()
+      .select({ userId: true })
       .where({ readyForTraining: true })
       .sort({ createdAt: SortDirection.Desc })
       .exec();
 
-    return documents.map((document) => (this.createEntityFromDocument(document)));
+    return documents.map(({ userId }) => (userId));
   }
 }
