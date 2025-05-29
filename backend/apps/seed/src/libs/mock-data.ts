@@ -22,7 +22,14 @@ export const SPORTSMANS: MockUser[] = [
   { name: 'Jack', gender: Gender.Male },
   { name: 'Mike', gender: Gender.Male },
   { name: 'David', gender: Gender.Male },
-  { name: 'Mary', gender: Gender.Female }
+  { name: 'Mary', gender: Gender.Female },
+  { name: 'Андрей', gender: Gender.Male },
+  { name: 'Владимир', gender: Gender.Male },
+  { name: 'Алексей', gender: Gender.Male },
+  { name: 'Евгений', gender: Gender.Male },
+  { name: 'Денис', gender: Gender.Male },
+  { name: 'Ирина', gender: Gender.Female },
+  { name: 'Юлия', gender: Gender.Female }
 ];
 
 export const COACHES: MockUser[] = [
@@ -30,7 +37,10 @@ export const COACHES: MockUser[] = [
   { name: 'Nataly', gender: Gender.Female },
   { name: 'Max', gender: Gender.Male },
   { name: 'Susan', gender: Gender.Female },
-  { name: 'Tim', gender: Gender.Male }
+  { name: 'Tim', gender: Gender.Male },
+  { name: 'Игорь', gender: Gender.Male },
+  { name: 'Михаил', gender: Gender.Male },
+  { name: 'Анастасия', gender: Gender.Female }
 ];
 
 export const DEFAULT_USER_PASSWORD = '123456';

@@ -29,7 +29,7 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     return this.createEntityFromDocument(document);
   }
 
-  public async findManyWithPagination(
+  public async findManyWithPagination( // Попробовать вынести пагинацию в базовый класс BaseMongoRepository
     currentPage: number,
     take: number,
     withoutIds: string[] = [],
@@ -37,6 +37,7 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     role?: Role,
     locations?: Location[]
   ): Promise<PaginationResult<FitUserEntity>> {
+    const skip = (currentPage - 1) * take;
     const where: FilterQuery<FitUserModel> = { _id: { $nin: withoutIds, $in: withIds } };
 
     if (role) {
@@ -49,7 +50,7 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
 
     const [entities, usersCount] = await Promise.all(
       [
-        this.model.find().where(where).sort({ createdAt: SortDirection.Desc }).exec(),
+        this.model.find().where(where).sort({ createdAt: SortDirection.Desc }).skip(skip).limit(take).exec(),
         this.getDocumentsCount(where)
       ]
     );
