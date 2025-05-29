@@ -2,9 +2,13 @@ import { JSX, Fragment } from 'react';
 
 import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 
+import { useAppSelector } from '../../hooks';
+
 type ResultListProps = {
   mainClassName: string;
-  childrens: JSX.Element[];
+  //childrens: JSX.Element[];
+  appSelector: unknown;
+  onGetElement: (children: unknown) => JSX.Element;
   isHaveMoreData: boolean;
   onNextPageClick: () => void;
   textOnEmpty: string;
@@ -12,7 +16,12 @@ type ResultListProps = {
 }
 
 function ResultList(props: ResultListProps): JSX.Element {
-  const { mainClassName, childrens, isHaveMoreData, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
+  //! Из-за получения подготовленных childrens в props происходит полная перерисовка страницы
+  //    либо прокинуть обработчики для формирования элементов и серекторы передать пропсами
+  //    или заново передать
+
+  const { mainClassName,/* childrens,*/ appSelector, onGetElement, isHaveMoreData, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
+  const childrens = useAppSelector(appSelector);
 
   const handleShowMoreClick = () => {
     onNextPageClick();
@@ -23,8 +32,8 @@ function ResultList(props: ResultListProps): JSX.Element {
       {
         childrens.map(
           (children) => (
-            <li className={`${mainClassName}__item`} key={children.key}>
-              {children}
+            <li className={`${mainClassName}__item`} key={children.id}>
+              {onGetElement(children)}
             </li>
           )
         )

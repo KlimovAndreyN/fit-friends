@@ -23,7 +23,7 @@ function UsersCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const usersProfilesFilter = useAppSelector(getUsersProfilesFilter);
-  const usersProfiles: IUserProfileRdo[] = useAppSelector(getUsersProfiles);
+  //const usersProfiles = useAppSelector(getUsersProfiles);
   const isUsersProfilesFilterActivate = useAppSelector(getIsUsersProfilesFilterActivate);
   const isFetchUsersProfilesExecuting = useAppSelector(getIsFetchUsersProfilesExecuting);
   const isHaveMoreUsersProfiles = useAppSelector(getIsHaveMoreUsersProfiles);
@@ -33,7 +33,13 @@ function UsersCatalog(): JSX.Element {
 
   useScrollToTop(); //! а если в useEffect?
 
+  console.log('UsersCatalog');
+  console.log(location, usersProfilesFilter, isUsersProfilesFilterActivate, prevLocation);
+  console.log('------------------');
+
   useEffect(() => {
+    console.log('useEffect');
+
     if (!isUsersProfilesFilterActivate) {
       dispatch(setUsersProfilesFilter({}));
       dispatch(setIsUsersFilterActivate(true));
@@ -47,7 +53,7 @@ function UsersCatalog(): JSX.Element {
     }
 
     dispatch(clearDetailUserProfile());
-  }, [dispatch, location, usersProfilesFilter, isUsersProfilesFilterActivate, prevLocation]);
+  }, [dispatch, location, /*usersProfilesFilter,*/ isUsersProfilesFilterActivate, prevLocation]);
 
   const handleFilterOnChange = (newFilter: IUserProfileQuery) => {
     dispatch(setPrevLocation(location));
@@ -57,6 +63,7 @@ function UsersCatalog(): JSX.Element {
   const handleNextPageClick = () => {
     dispatch(setPrevLocation(location));
     dispatch(getNextPage());
+    dispatch(fetchUsersProfiles(usersProfilesFilter));
   };
 
   return (
@@ -78,9 +85,14 @@ function UsersCatalog(): JSX.Element {
                   :
                   <ResultList
                     mainClassName='users-catalog'
+                    //childrens={usersProfiles}
+                    appSelector={getUsersProfiles}
+                    /*
                     childrens={usersProfiles.map(
                       (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
                     )}
+                    */
+                    onGetElement={(user: IUserProfileRdo) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)}
                     isHaveMoreData={isHaveMoreUsersProfiles}
                     onNextPageClick={handleNextPageClick}
                     textOnEmpty='Пользователи не найдены'
