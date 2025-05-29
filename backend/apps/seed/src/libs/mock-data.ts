@@ -23,13 +23,13 @@ export const SPORTSMANS: MockUser[] = [
   { name: 'Mike', gender: Gender.Male },
   { name: 'David', gender: Gender.Male },
   { name: 'Mary', gender: Gender.Female },
-  { name: 'Андрей', gender: Gender.Male },
-  { name: 'Владимир', gender: Gender.Male },
-  { name: 'Алексей', gender: Gender.Male },
-  { name: 'Евгений', gender: Gender.Male },
-  { name: 'Денис', gender: Gender.Male },
-  { name: 'Ирина', gender: Gender.Female },
-  { name: 'Юлия', gender: Gender.Female }
+  { name: 'Andrey', gender: Gender.Male },
+  { name: 'Vladimir', gender: Gender.Male },
+  { name: 'Alex', gender: Gender.Male },
+  { name: 'Evgeny', gender: Gender.Male },
+  { name: 'Denis', gender: Gender.Male },
+  { name: 'Irina', gender: Gender.Female },
+  { name: 'Yulia', gender: Gender.Female }
 ];
 
 export const COACHES: MockUser[] = [
@@ -38,12 +38,13 @@ export const COACHES: MockUser[] = [
   { name: 'Max', gender: Gender.Male },
   { name: 'Susan', gender: Gender.Female },
   { name: 'Tim', gender: Gender.Male },
-  { name: 'Игорь', gender: Gender.Male },
-  { name: 'Михаил', gender: Gender.Male },
-  { name: 'Анастасия', gender: Gender.Female }
+  { name: 'Igor', gender: Gender.Male },
+  { name: 'Mihail', gender: Gender.Male },
+  { name: 'Anastasiya', gender: Gender.Female }
 ];
 
 export const DEFAULT_USER_PASSWORD = '123456';
+export const USER_AVATAR_EXIST_FACTOR = 5;
 
 export const UserCreateDateOption = {
   MIN: new Date(2025, 0, 1),
