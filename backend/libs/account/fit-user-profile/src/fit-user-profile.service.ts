@@ -4,6 +4,7 @@ import {
   BasicUserProfileRdo, isCoachRole, UserProfileQuery, Role,
   BasicUsersProfilesWithPaginationRdo, getRoreByUserSortType
 } from '@backend/shared/core';
+import { fillDto } from '@backend/shared/helpers';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
 
@@ -25,23 +26,19 @@ export class FitUserProfileService {
   public async find(userId: string, query: UserProfileQuery, role: Role): Promise<BasicUsersProfilesWithPaginationRdo> {
     this.checkNotAllowForCoach(role);
 
-    //! сначала отобрать userIds из анкет по специализациям и уровню, а затем выбрать поользователей!
+    const { sortType, locations, trainingLevel, specializations } = query;
+    const userIds = await this.fitQuestionnaireRepository.findUserIds(trainingLevel, specializations);
+    const users = await this.fitUserRepository.getAll([userId], userIds, getRoreByUserSortType(sortType), locations); //! тут нужно обработать пагинацию
+    const usersProfiles = users.map((user) => (fillDto(BasicUserProfileRdo, user.toPOJO())));
 
-    const { sortType, locations, trainingLevel, specializations } = query; //! не все поля обработаны
-    const users = await this.fitUserRepository.getAllWithoutIds([userId], getRoreByUserSortType(sortType), locations);
-    const usersProfiles: BasicUserProfileRdo[] = [];
+    for (const userProfile of usersProfiles) {
+      const { specializations: userSpecializations } = await this.fitQuestionnaireRepository.findByUserId(userProfile.id);
 
-    for (const { id, location, name, role, avatarFileId } of users) {
-      const { trainingLevel: userTrainingLevel, specializations: userSpecializations } = await this.fitQuestionnaireRepository.findByUserId(id);
-      const userProfile: BasicUserProfileRdo = { id, location, name, role, specializations, avatarFileId };
-
-      if (!trainingLevel && !specializations) {
-        usersProfiles.push(userProfile);
-      }
-
+      userProfile.specializations = [...userSpecializations];
     }
+
+    //! временно
     const data: BasicUsersProfilesWithPaginationRdo = { currentPage: 1, itemsPerPage: 10, totalItems: 100, totalPages: 10, entities: usersProfiles };
-    //
 
     return data;
   }
@@ -49,7 +46,7 @@ export class FitUserProfileService {
   public async getReadyForTraining(userId: string, role: Role): Promise<BasicUserProfileRdo[]> {
     this.checkNotAllowForCoach(role);
 
-    const users = await this.fitUserRepository.getAllWithoutIds([userId]);
+    const users = await this.fitUserRepository.getAll([userId]);
     const questionnaireUserIds = await this.fitQuestionnaireRepository.getReadyForTrainingUserIds();
     const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
     const usersProfiles: BasicUserProfileRdo[] = [];

@@ -9,10 +9,10 @@ type UserDetailStatusProps = {
 function UserDetailStatus({ isSportsman, readyForTraining }: UserDetailStatusProps): JSX.Element {
   //! напутано с разметкой....
   //    'user-card-coach-2__status user-card-coach-2__status--check' серое
-  //    'user-card-coach__status user-card-coach__status--check' зелоное
+  //    'user-card-coach__status user-card-coach__status--check' зелёное
   //  у спортсмена тоже не то
-  //    'user-card__status user-card__status--check' зелоное
-  //    'user-card__status' зелоное
+  //    'user-card__status user-card__status--check' зелёное
+  //    'user-card__status' зелёное
   //  а у 'user-card-coach-2__status user-card-coach-2__status--check' серое - нет - margin-bottom: 35px;
   //    добавил в style
   //  classNamePrefix исключил из пропсов

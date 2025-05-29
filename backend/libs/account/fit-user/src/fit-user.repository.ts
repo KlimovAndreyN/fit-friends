@@ -25,8 +25,8 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     return this.createEntityFromDocument(document);
   }
 
-  public async getAllWithoutIds(withoutIds: string[] = [], role?: Role, locations?: Location[]): Promise<FitUserEntity[]> {
-    const where = { _id: { $nin: withoutIds } };
+  public async getAll(withoutIds: string[] = [], withIds: string[] = [], role?: Role, locations?: Location[]): Promise<FitUserEntity[]> {
+    const where = { _id: { $nin: withoutIds, $in: withIds } };
 
     if (role) {
       where['role'] = role; // не очень правильно, а как сделать???

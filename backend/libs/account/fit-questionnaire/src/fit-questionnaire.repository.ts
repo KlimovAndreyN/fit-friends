@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ConnectionNameOption, SortDirection } from '@backend/shared/core';
+import { ConnectionNameOption, SortDirection, Specialization, TrainingLevel } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitQuestionnaireEntity } from './fit-questionnaire.entity';
@@ -33,5 +33,21 @@ export class FitQuestionnaireRepository extends BaseMongoRepository<FitQuestionn
       .exec();
 
     return documents.map(({ userId }) => (userId));
+  }
+
+  public async findUserIds(trainingLevel: TrainingLevel, specializations: Specialization[] = []): Promise<string[]> {
+    const where = {};
+
+    if (trainingLevel) {
+      where['trainingLevel'] = trainingLevel; // не очень правильно, а как сделать???
+    }
+
+    if (specializations.length) {
+      where['specializations'] = { $in: specializations }; // не очень правильно, а как сделать???
+    }
+
+    const documents = await this.model.find().select({ userId: true }).where(where).exec();
+
+    return documents.map(({ userId }) => (userId)); //! одинаково с getReadyForTrainingUserIds, как типизировать чтобы объеденить в одно
   }
 }
