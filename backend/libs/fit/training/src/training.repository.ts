@@ -51,7 +51,6 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return Math.ceil(totalCount / limit);
   }
 
-
   private getTrainingsCount(where: Prisma.TrainingWhereInput): Promise<number> {
     return this.client.training.count({ where });
   }

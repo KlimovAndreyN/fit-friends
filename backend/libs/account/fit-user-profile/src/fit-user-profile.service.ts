@@ -38,13 +38,9 @@ export class FitUserProfileService {
       specializations
     } = query;
 
-    //! временно
-    console.log('currentPage', currentPage);
-    console.log('take', take);
-
     const userIds = await this.fitQuestionnaireRepository.findUserIds(trainingLevel, specializations);
-    const users = await this.fitUserRepository.getAll([userId], userIds, getRoreByUserSortType(sortType), locations); //! тут нужно обработать пагинацию
-    const usersProfiles = users.map((user) => (fillDto(BasicUserProfileRdo, user.toPOJO())));
+    const { entities, itemsPerPage, totalItems, totalPages } = await this.fitUserRepository.findManyWithPagination(currentPage, take, [userId], userIds, getRoreByUserSortType(sortType), locations); //! тут нужно обработать пагинацию
+    const usersProfiles = entities.map((user) => (fillDto(BasicUserProfileRdo, user.toPOJO())));
 
     for (const userProfile of usersProfiles) {
       const { specializations: userSpecializations } = await this.fitQuestionnaireRepository.findByUserId(userProfile.id);
@@ -52,16 +48,19 @@ export class FitUserProfileService {
       userProfile.specializations = [...userSpecializations];
     }
 
-    //! временно
-    const data: BasicUsersProfilesWithPaginationRdo = { currentPage: 1, itemsPerPage: 10, totalItems: 100, totalPages: 10, entities: usersProfiles };
-
-    return data;
+    return {
+      currentPage,
+      itemsPerPage,
+      totalItems,
+      totalPages,
+      entities: usersProfiles
+    };
   }
 
   public async getReadyForTraining(userId: string, role: Role): Promise<BasicUserProfileRdo[]> {
     this.checkNotAllowForCoach(role);
 
-    const users = await this.fitUserRepository.getAll([userId]);
+    const users = await this.fitUserRepository.findMany([userId]);
     const questionnaireUserIds = await this.fitQuestionnaireRepository.getReadyForTrainingUserIds();
     const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
     const usersProfiles: BasicUserProfileRdo[] = [];

@@ -1,4 +1,4 @@
-import { Document, Model } from 'mongoose';
+import { Document, FilterQuery, Model } from 'mongoose';
 import { NotFoundException } from '@nestjs/common';
 
 import { Entity, StorableEntity, EntityFactory } from '@backend/shared/core';
@@ -42,6 +42,18 @@ export abstract class BaseMongoRepository<
     const entity = this.entityFactory.create(plainObject);
 
     return entity;
+  }
+
+  protected createEntitesFromDocuments(documents: DocumentType[]): T[] {
+    if (!documents || !documents.length) {
+      return [];
+    }
+
+    return documents.map((document) => this.createEntityFromDocument(document));
+  }
+
+  protected async getDocumentsCount(where: FilterQuery<DocumentType> = {}): Promise<number> {
+    return this.model.countDocuments().where(where).exec();
   }
 
   public async findById(id: T['id']): Promise<T> {

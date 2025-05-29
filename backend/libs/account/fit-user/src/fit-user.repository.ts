@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
-import { ConnectionNameOption, Location, Role, SortDirection } from '@backend/shared/core';
+import { ConnectionNameOption, Location, PaginationResult, Role, SortDirection } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitUserEntity } from './fit-user.entity';
@@ -19,29 +19,56 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     super(entityFactory, fitUserModel);
   }
 
+  private calculateUsersPage(totalCount: number, limit: number): number {
+    return Math.ceil(totalCount / limit);
+  }
+
   public async findByEmail(email: string): Promise<FitUserEntity | null> {
     const document = await this.model.findOne({ email }).exec();
 
     return this.createEntityFromDocument(document);
   }
 
-  public async getAll(withoutIds: string[] = [], withIds: string[] = [], role?: Role, locations?: Location[]): Promise<FitUserEntity[]> {
-    const where = { _id: { $nin: withoutIds, $in: withIds } };
+  public async findManyWithPagination(
+    currentPage: number,
+    take: number,
+    withoutIds: string[] = [],
+    withIds: string[] = [],
+    role?: Role,
+    locations?: Location[]
+  ): Promise<PaginationResult<FitUserEntity>> {
+    const where: FilterQuery<FitUserModel> = { _id: { $nin: withoutIds, $in: withIds } };
 
     if (role) {
-      where['role'] = role; // не очень правильно, а как сделать???
+      where.role = role;
     }
 
-    if (locations) {
-      where['location'] = { $in: locations }; // не очень правильно, а как сделать???
+    if (locations && locations.length) {
+      where.location = { $in: locations };
     }
 
-    const documents = await this.model
-      .find()
-      .where(where)
+    const [entities, usersCount] = await Promise.all(
+      [
+        this.model.find().where(where).sort({ createdAt: SortDirection.Desc }).exec(),
+        this.getDocumentsCount(where)
+      ]
+    );
+
+    return {
+      entities: this.createEntitesFromDocuments(entities),
+      currentPage,
+      totalPages: this.calculateUsersPage(usersCount, take),
+      itemsPerPage: take,
+      totalItems: usersCount
+    }
+  }
+
+  public async findMany(withoutIds: string[] = []): Promise<FitUserEntity[]> {
+    const documents = await this.model.find()
+      .where({ _id: { $nin: withoutIds } })
       .sort({ createdAt: SortDirection.Desc })
       .exec();
 
-    return documents.map((document) => this.createEntityFromDocument(document));
+    return this.createEntitesFromDocuments(documents);
   }
 }
