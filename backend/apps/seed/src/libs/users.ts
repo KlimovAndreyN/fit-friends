@@ -39,6 +39,9 @@ export async function seedUsers(
 
   for (const { name, gender } of mockUsers) {
     const avatarsFilesIds = getAvatarsFilesIds(femaleAvatarsFilesIds, maleAvatarsFilesIds, gender);
+
+    avatarsFilesIds.push(''); // добавим пустую аватарку для дополнительных проверок в разметке
+
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
     const user: AuthUser = {
       email: `${name.toLocaleLowerCase()}@local.ru`,

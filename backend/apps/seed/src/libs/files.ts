@@ -69,7 +69,5 @@ export async function seedFiles(
     Logger.error(`Error read direcrtory: ${fromPath}`, err);
   }
 
-  fileIds.push('');// добавим пустой id для дополнительных проверок в разметке
-
   return fileIds;
 }
