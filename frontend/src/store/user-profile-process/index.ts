@@ -8,6 +8,7 @@ import { StoreSlice } from '../../const';
 
 const Default = {
   PAGE: 1,
+  LIMIT: 6,
   TRANING_LEVEL: TrainingLevel.Amateur
 } as const;
 
@@ -15,7 +16,11 @@ const initialState: UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: false,
   lookForCompanyUserProfiles: [],
 
-  usersProfilesFilter: { page: Default.PAGE, trainingLevel: Default.TRANING_LEVEL },
+  usersProfilesFilter: {
+    page: Default.PAGE,
+    limit: Default.LIMIT,
+    trainingLevel: Default.TRANING_LEVEL
+  },
   isFristPage: true,
   isUsersProfilesFilterActivate: false,
   isFetchUsersProfilesExecuting: false,

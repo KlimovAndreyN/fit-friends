@@ -8,7 +8,10 @@ import { fillDto } from '@backend/shared/helpers';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
 
-const LIMIT_MAX = 50;
+const Default = {
+  PAGE: 1,
+  LIMIT_MAX: 50
+} as const;
 
 @Injectable()
 export class FitUserProfileService {
@@ -26,7 +29,19 @@ export class FitUserProfileService {
   public async find(userId: string, query: UserProfileQuery, role: Role): Promise<BasicUsersProfilesWithPaginationRdo> {
     this.checkNotAllowForCoach(role);
 
-    const { sortType, locations, trainingLevel, specializations } = query;
+    const {
+      page: currentPage = Default.PAGE,
+      limit: take = Default.LIMIT_MAX,
+      sortType,
+      locations,
+      trainingLevel,
+      specializations
+    } = query;
+
+    //! временно
+    console.log('currentPage', currentPage);
+    console.log('take', take);
+
     const userIds = await this.fitQuestionnaireRepository.findUserIds(trainingLevel, specializations);
     const users = await this.fitUserRepository.getAll([userId], userIds, getRoreByUserSortType(sortType), locations); //! тут нужно обработать пагинацию
     const usersProfiles = users.map((user) => (fillDto(BasicUserProfileRdo, user.toPOJO())));
@@ -51,7 +66,7 @@ export class FitUserProfileService {
     const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
     const usersProfiles: BasicUserProfileRdo[] = [];
 
-    for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, LIMIT_MAX)) {
+    for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, Default.LIMIT_MAX)) {
       const { specializations } = await this.fitQuestionnaireRepository.findByUserId(id);
       const userProfile: BasicUserProfileRdo = { id, location, name, role, specializations, avatarFileId };
 
