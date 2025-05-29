@@ -6,7 +6,7 @@ import { FitUserEntity, FitUserRepository } from '@backend/account/fit-user';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 
 import { isSwaggers } from './common';
-import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, UserBirthdayDateOption, UserCreateDateOption } from './mock-data';
+import { DEFAULT_USER_PASSWORD, SWAGGER_USER, MockUser, UserBirthdayDateOption, UserCreateDateOption, USER_AVATAR_EXIST_FACTOR } from './mock-data';
 
 export async function clearRefreshTokens(refreshTokenRepository: RefreshTokenRepository): Promise<void> {
   refreshTokenRepository.deleteAll();
@@ -38,10 +38,8 @@ export async function seedUsers(
   const backgroundPaths = [...(isSportsmanRole(role) ? BackgroundPaths.SPORTSMANS : BackgroundPaths.COACHS)];
 
   for (const { name, gender } of mockUsers) {
-    const avatarsFilesIds = getAvatarsFilesIds(femaleAvatarsFilesIds, maleAvatarsFilesIds, gender);
-
-    avatarsFilesIds.push(''); // добавим пустую аватарку для дополнительных проверок в разметке
-
+    const existAvatar = getRandomItem([...Array(USER_AVATAR_EXIST_FACTOR).fill(true), false]);
+    const avatarFileId = (existAvatar) ? getRandomItem(getAvatarsFilesIds(femaleAvatarsFilesIds, maleAvatarsFilesIds, gender)) : '';
     // можно добавлять пользователей через сервис используя DTO, но там будет отправка уведомлений и нужны настройки подключения к RabbitMQ
     const user: AuthUser = {
       email: `${name.toLocaleLowerCase()}@local.ru`,
@@ -51,7 +49,7 @@ export async function seedUsers(
       gender,
       location: getRandomEnumItem(Location),
       role,
-      avatarFileId: getRandomItem(avatarsFilesIds),
+      avatarFileId,
       birthday: getRandomDate(UserBirthdayDateOption.MIN, UserBirthdayDateOption.MAX),
       passwordHash: ''
     };
