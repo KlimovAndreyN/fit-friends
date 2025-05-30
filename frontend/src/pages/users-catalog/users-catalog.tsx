@@ -1,21 +1,19 @@
 import { JSX, Fragment, useEffect } from 'react';
 
-import { IUserProfileRdo, IUserProfileQuery } from '@backend/shared/core';
+import { IUserProfileQuery } from '@backend/shared/core';
 
 import Header from '../../components/header/header';
-import Spinner from '../../components/spinner/spinner';
 import UsersCatalogForm from '../../components/users-catalog-form/users-catalog-form';
-import ResultList from '../../components/result-list/result-list';
-import ThumbnailUser from '../../components/thumbnail-user/thumbnail-user';
 
 import useScrollToTop from '../../hooks/use-scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getPrevLocation } from '../../store/user-process/selectors';
-import { getIsFetchUsersProfilesExecuting, getIsHaveMoreUsersProfiles, getIsUsersProfilesFilterActivate, getUsersProfiles, getUsersProfilesFilter } from '../../store/user-profile-process/selectors';
+import { getIsUsersProfilesFilterActivate, getUsersProfilesFilter } from '../../store/user-profile-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { clearDetailUserProfile, getNextPage, setIsUsersFilterActivate, setUsersProfilesFilter } from '../../store/user-profile-process';
+import { clearDetailUserProfile, /*getNextPage,*/ setIsUsersFilterActivate, setUsersProfilesFilter } from '../../store/user-profile-process';
 import { fetchUsersProfiles } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle } from '../../const';
+import UsersCatalogList from '../../components/users-catalog-list/users-catalog-list';
 
 function UsersCatalog(): JSX.Element {
   //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
@@ -23,10 +21,7 @@ function UsersCatalog(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const usersProfilesFilter = useAppSelector(getUsersProfilesFilter);
-  const usersProfiles: IUserProfileRdo[] = useAppSelector(getUsersProfiles);
   const isUsersProfilesFilterActivate = useAppSelector(getIsUsersProfilesFilterActivate);
-  const isFetchUsersProfilesExecuting = useAppSelector(getIsFetchUsersProfilesExecuting);
-  const isHaveMoreUsersProfiles = useAppSelector(getIsHaveMoreUsersProfiles);
   const prevLocation = useAppSelector(getPrevLocation);
   const location = AppRoute.UsersCatalog;
   const title = PageTitle.UsersCatalog;
@@ -54,10 +49,12 @@ function UsersCatalog(): JSX.Element {
     dispatch(setUsersProfilesFilter({ ...usersProfilesFilter, ...newFilter }));
   };
 
-  const handleNextPageClick = () => {
-    dispatch(setPrevLocation(location));
-    dispatch(getNextPage());
-  };
+  /*
+    const handleNextPageClick = () => {
+      dispatch(setPrevLocation(location));
+      dispatch(getNextPage());
+    };
+  */
 
   return (
     <Fragment>
@@ -71,22 +68,7 @@ function UsersCatalog(): JSX.Element {
                 usersFilter={usersProfilesFilter}
                 onUsersFilterChange={handleFilterOnChange}
               />
-              {
-                (isFetchUsersProfilesExecuting && (usersProfilesFilter.page === 1))
-                  ?
-                  <Spinner />
-                  :
-                  <ResultList
-                    mainClassName='users-catalog'
-                    childrens={usersProfiles.map(
-                      (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
-                    )}
-                    isHaveMoreData={isHaveMoreUsersProfiles}
-                    onNextPageClick={handleNextPageClick}
-                    textOnEmpty='Пользователи не найдены'
-                    showedAdditionalDiv
-                  />
-              }
+              <UsersCatalogList />
             </div>
           </div>
         </section>
