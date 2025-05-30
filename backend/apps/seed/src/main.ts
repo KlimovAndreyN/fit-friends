@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { join } from 'path/posix';
 import { resolve } from 'node:path';
 
-import { ConfigAlias, Role } from '@backend/shared/core';
+import { ConfigAlias, Gender, Role } from '@backend/shared/core';
 import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { FitUserRepository } from '@backend/account/fit-user';
@@ -66,17 +66,20 @@ async function bootstrap() {
       await clearUsers(fitUserRepository);
     }
 
-    // файлы
-    const avatarsFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS), filesDirectory, filesDistDirectory, dbPath);
+    // аватарки по гендерам
+    const femaleAvatarsFilesIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS, Gender.Female), filesDirectory, filesDistDirectory, dbPath);
+    const maleAvatarsFilesIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, AVATARS, Gender.Male), filesDirectory, filesDistDirectory, dbPath);
+    // сертификаты тренера
     const certificatesFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, CERTIFICATES), filesDirectory, filesDistDirectory, dbPath);
+    // видео для тренировок
     const videosFileIds = await seedFiles(fileUploaderRepository, resolve(__dirname, ASSETS, VIDEOS), filesDirectory, filesDistDirectory, dbPath);
 
     // пользователи
-    const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman, avatarsFileIds);
+    const sportsmans = await seedUsers(fitUserRepository, SPORTSMANS, Role.Sportsman, femaleAvatarsFilesIds, maleAvatarsFilesIds);
 
     Logger.log(`Sportsmans count: ${sportsmans.length}`);
 
-    const coaches = await seedUsers(fitUserRepository, COACHES, Role.Coach, avatarsFileIds);
+    const coaches = await seedUsers(fitUserRepository, COACHES, Role.Coach, femaleAvatarsFilesIds, maleAvatarsFilesIds);
 
     Logger.log(`Coaches count: ${coaches.length}`);
 
