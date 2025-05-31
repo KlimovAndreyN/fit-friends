@@ -13,7 +13,8 @@ import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/us
 import UserDetailCoachCertificates from '../user-detail-coach-certificates/user-detail-coach-certificates';
 import PopupModalMap from '../popup-modal-map/popup-modal-map';
 
-import { LocationTitle, SpecializationTitle } from '../../const';
+import { getSpecializationsTitles } from '../../utils/common';
+import { LocationTitle } from '../../const';
 
 type UserDetailWrapperProps = {
   classNamePrefix: string;
@@ -39,9 +40,6 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   const [showCertificates, setShowCertificates] = useState(false);
   const [showLocationMap, setShowLocationMap] = useState(false);
   const isCoach = isCoachRole(role);
-  const specializationsTitles = specializations.map(
-    (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
-  );
 
   const handleLocationLinkClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -120,9 +118,9 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           </Fragment>
         }
         <Hashtags
-          classNamePrefix={`${classNamePrefix}__hashtag`}
-          items={specializationsTitles}
-          isNotNeedSpecialClassName
+          items={getSpecializationsTitles(specializations)}
+          listClassName={`${classNamePrefix}__hashtag-list`}
+          itemClassName={`${classNamePrefix}__hashtag-item`}
         />
         <button className={`btn ${classNamePrefix}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
       </div>

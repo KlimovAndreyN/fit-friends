@@ -1,4 +1,6 @@
-import { AppRoute, ID_PARAM, MAIN_TITLE } from '../const';
+import { Specialization } from '@backend/shared/core';
+
+import { AppRoute, ID_PARAM, MAIN_TITLE, SpecializationTitle } from '../const';
 
 export function getPageTitle(title: string): string {
   return (title === MAIN_TITLE) ? MAIN_TITLE : `${title} — ${MAIN_TITLE}`;
@@ -22,4 +24,10 @@ export function isEventEscKey(event: KeyboardEvent): boolean {
 
 export function hasPriceMaxPropertyKey(object: object): boolean {
   return Object.hasOwn(object, 'priceMax');
+}
+
+export function getSpecializationsTitles(specializations: Specialization[]): string[] {
+  return specializations.map(
+    (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
+  );
 }

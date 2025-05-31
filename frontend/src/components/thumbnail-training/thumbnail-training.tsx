@@ -13,6 +13,7 @@ type ThumbnailTrainingProps = {
 }
 
 function ThumbnailTraining({ training }: ThumbnailTrainingProps): JSX.Element {
+  //! вынести 'thumbnail-training'
   //! куда ведут сслыка отзывы - пока сделал #reviews, но не прокручивает на вверх... перепроверить!
 
   const { id, title, description, specialization, caloriesWaste, backgroundPath, price, rating } = training;
@@ -38,9 +39,10 @@ function ThumbnailTraining({ training }: ThumbnailTrainingProps): JSX.Element {
         <h3 className="thumbnail-training__title">{title}</h3>
         <div className="thumbnail-training__info">
           <Hashtags
-            classNamePrefix='thumbnail-training'
-            divItemClassNamePrefix='thumbnail-training'
             items={[specializationText, `${caloriesWaste}ккал`]}
+            listClassName='thumbnail-training__hashtags-list'
+            itemClassName='thumbnail-training__hashtags-item'
+            divItemClassName='thumbnail-training__hashtag'
           />
           <div className="thumbnail-training__rate">
             <svg width="16" height="16" aria-hidden="true">

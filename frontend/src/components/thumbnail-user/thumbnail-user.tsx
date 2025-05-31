@@ -8,8 +8,7 @@ import UserPhoto from '../user-photo/user-photo';
 import UserLocation from '../user-location/user-location';
 import Hashtags from '../hashtags/hashtags';
 
-import { getUserRoute } from '../../utils/common';
-import { SpecializationTitle } from '../../const';
+import { getSpecializationsTitles, getUserRoute } from '../../utils/common';
 
 const USER_PHOTO_SIZE = 82;
 
@@ -29,9 +28,7 @@ function ThumbnailUser({ userProfile, isUseCoachClassName, extraDivClassName, ex
     extraDivClassName
   );
   const linkClassName = classNames('btn', extraLinkClassName, `btn--medium ${mainClassName}__button`);
-  const hashtags = specializations.map(
-    (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
-  );
+  const hashtags = getSpecializationsTitles(specializations);
 
   return (
     <div className={mainDivClassName}>
@@ -40,7 +37,12 @@ function ThumbnailUser({ userProfile, isUseCoachClassName, extraDivClassName, ex
         <h3 className={`${mainClassName}__name`}>{name}</h3>
         <UserLocation location={location} extraClassName={mainClassName} />
       </div>
-      <Hashtags classNamePrefix={mainClassName} divItemClassNamePrefix={mainClassName} items={hashtags} />
+      <Hashtags
+        items={hashtags}
+        listClassName={`${mainClassName}__hashtags-list`}
+        itemClassName={`${mainClassName}__hashtags-item`}
+        divItemClassName={`${mainClassName}__hashtag`}
+      />
       <Link className={linkClassName} to={getUserRoute(id)}>Подробнее</Link>
     </div>
   );

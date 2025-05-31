@@ -17,6 +17,7 @@ type TrainingInfoProps = {
 }
 
 function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element {
+  //! вынести отдельно 'training-info'
   //! Будет работать в нескольких режимах:
   //    отработчики передать с управлющей страницы/компонента
   //    1. Просмотр карточки от спортсмена
@@ -109,11 +110,10 @@ function TrainingInfo({ training, isSportsman }: TrainingInfoProps): JSX.Element
                   </label>
                 </div>
                 <Hashtags
-                  classNamePrefix='training-info'
-                  divItemClassNamePrefix='hashtag--white'
-                  separator='__'
-                  isNotNeedSpecialClassName
                   items={hashtags}
+                  listClassName='training-info__list'
+                  itemClassName='training-info__item'
+                  divItemClassName='hashtag--white'
                 />
               </div>
               <div className="training-info__price-wrapper">
