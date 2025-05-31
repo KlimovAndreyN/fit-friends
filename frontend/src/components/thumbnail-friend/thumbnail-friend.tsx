@@ -7,7 +7,7 @@ import { isSportsmanRole } from '@backend/shared/core';
 import UserPhoto from '../user-photo/user-photo';
 import Hashtags from '../hashtags/hashtags';
 
-import { getSpecializationsTitles, getUserRoute } from '../../utils/common';
+import { getReadyTraining, getSpecializationsTitles, getUserRoute } from '../../utils/common';
 import { Friend, LocationTitle } from '../../const';
 
 type ThumbnailFriendProps = {
@@ -18,9 +18,10 @@ type ThumbnailFriendProps = {
 function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
 
-  const { id, name, avatarFilePath, role, location, specializations } = friend;
+  const { id, name, avatarFilePath, role, location, specializations, readyForTraning } = friend;
   const userRoute = getUserRoute(id);
   const isSportsman = isSportsmanRole(role);
+  const readyTitle = getReadyTraining(role, readyForTraning);
   const mainClassName = 'thumbnail-friend';
   const mainDivClassName = classNames(`${mainClassName}__info`, `${mainClassName}__info--${(isSportsman) ? 'theme-light' : 'theme-dark'}`);
 
@@ -37,11 +38,11 @@ function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Eleme
             <Link to={userRoute} className={`${mainClassName}__name`} style={{ color: (isSportsman) ? 'black' : 'white' }}>
               <h2 className={`${mainClassName}__name`}>{name}</h2>
             </Link>
-            <div className="thumbnail-friend__location">
+            <div className={`${mainClassName}__location`}>
               <svg width="14" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-location" />
               </svg>
-              <address className="thumbnail-friend__location-address">{LocationTitle[location]}</address>
+              <address className={`${mainClassName}__location-address`}>{LocationTitle[location]}</address>
             </div>
           </div>
           <Hashtags
@@ -49,13 +50,15 @@ function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Eleme
             listClassName={`${mainClassName}__training-types-list`}
             divItemClassName={`${mainClassName}__hashtag`}
           />
-          <div className="thumbnail-friend__activity-bar">
-            <div className="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов к&nbsp;тренировке</span>
+          <div className={`${mainClassName}__activity-bar`}>
+            <div className="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready">
+              <span>{readyTitle}</span>
             </div>
             <button className="thumbnail-friend__invite-button" type="button">
               <svg width="43" height="46" aria-hidden="true" focusable="false">
                 <use xlinkHref="#icon-invite" />
-              </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>
+              </svg>
+              <span className="visually-hidden">Пригласить друга на совместную тренировку</span>
             </button>
           </div>
         </div>
