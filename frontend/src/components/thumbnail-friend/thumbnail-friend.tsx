@@ -5,6 +5,7 @@ import { isSportsmanRole, Role } from '@backend/shared/core';
 
 import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
+import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thumbnail-friend-request-status';
 
 import { Friend, isPendingTrainingRequestStatus } from '../../const';
 
@@ -20,13 +21,27 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   const { id, name, avatarFilePath, role, location, specializations, readyForTraning, outJointTrainingStatus, inMyJointTrainingStatus, personalTrainingStatus } = friend;
   const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
+  const isShowRequestStatus = (isSportsmanUser && !!inMyJointTrainingStatus || !isSportsmanUser && !!personalTrainingStatus);
+  const isShowRequestButtons = (
+    isSportsmanUser && isPendingTrainingRequestStatus(inMyJointTrainingStatus)
+    || !isSportsmanUser && isPendingTrainingRequestStatus(personalTrainingStatus)
+  );
   const mainClassName = 'thumbnail-friend';
   const mainDivClassName = classNames(`${mainClassName}__info`, `${mainClassName}__info--${(isSportsman) ? 'theme-light' : 'theme-dark'}`);
-  const divRequestClassName = `${mainClassName}__request-status`;
 
   const handleInviteButtonClick = () => {
     // eslint-disable-next-line no-console
     console.log('handleInviteButtonClick');
+  };
+
+  const handleAcceptButtonClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('handleAcceptButtonClick');
+  };
+
+  const handleRejectButtonClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('handleRejectButtonClick');
   };
 
   return (
@@ -52,14 +67,14 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
           />
         </div>
         {
-          (isSportsmanUser && inMyJointTrainingStatus || !isSportsmanUser && personalTrainingStatus) &&
-          <div className={`${divRequestClassName} ${divRequestClassName}--role-user`}>
-            <p className="thumbnail-friend__request-text">Запрос на&nbsp;совместную тренировку</p>
-            <div className="thumbnail-friend__button-wrapper">
-              <button className="btn btn--medium btn--dark-bg thumbnail-friend__button" type="button">Принять</button>
-              <button className="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button" type="button">Отклонить</button>
-            </div>
-          </div>
+          isShowRequestStatus &&
+          <ThumbnailFriendRequestStatus
+            text='Запрос на&nbsp;совместную тренировку' //! тут определить текст
+            classNamePrefix={mainClassName}
+            isShowButtons={isShowRequestButtons}
+            onAcceptButtonClick={handleAcceptButtonClick}
+            onRejectButtonClick={handleRejectButtonClick}
+          />
         }
       </div>
     </li>

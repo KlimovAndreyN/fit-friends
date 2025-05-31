@@ -214,7 +214,7 @@ export const MOCK_FRIENDS: Friend[] = [
     readyForTraning: false,
     specializations: [Specialization.Pilates, Specialization.Power],
     outJointTrainingStatus: TrainingRequestStatus.Pending,
-    inMyJointTrainingStatus: TrainingRequestStatus.Pending,
+    inMyJointTrainingStatus: undefined,
     personalTrainingStatus: TrainingRequestStatus.Pending
   },
   {
@@ -226,7 +226,7 @@ export const MOCK_FRIENDS: Friend[] = [
     readyForTraning: false,
     specializations: [Specialization.Running, Specialization.Stretching],
     outJointTrainingStatus: TrainingRequestStatus.Rejected,
-    inMyJointTrainingStatus: TrainingRequestStatus.Rejected,
+    inMyJointTrainingStatus: TrainingRequestStatus.Pending,
     personalTrainingStatus: TrainingRequestStatus.Rejected
   },
   {
