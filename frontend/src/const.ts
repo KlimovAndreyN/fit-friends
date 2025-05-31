@@ -187,8 +187,8 @@ export type Friend = {
   location: Location;
   readyForTraning: boolean;
   specializations: Specialization[];
-  myJointTrainingStatus?: TrainingRequestStatus;
-  forMyJointTrainingStatus?: TrainingRequestStatus;
+  outJointTrainingStatus?: TrainingRequestStatus;
+  inMyJointTrainingStatus?: TrainingRequestStatus;
   personalTrainingStatus?: TrainingRequestStatus;
 }
 
@@ -201,8 +201,8 @@ export const MOCK_FRIENDS: Friend[] = [
     location: Location.Petrogradskaya,
     readyForTraning: true,
     specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
-    myJointTrainingStatus: undefined,
-    forMyJointTrainingStatus: undefined,
+    outJointTrainingStatus: undefined,
+    inMyJointTrainingStatus: undefined,
     personalTrainingStatus: undefined
   },
   {
@@ -213,8 +213,8 @@ export const MOCK_FRIENDS: Friend[] = [
     location: Location.Pionerskaya,
     readyForTraning: false,
     specializations: [Specialization.Pilates, Specialization.Power],
-    myJointTrainingStatus: TrainingRequestStatus.Pending,
-    forMyJointTrainingStatus: TrainingRequestStatus.Pending,
+    outJointTrainingStatus: TrainingRequestStatus.Pending,
+    inMyJointTrainingStatus: TrainingRequestStatus.Pending,
     personalTrainingStatus: TrainingRequestStatus.Pending
   },
   {
@@ -225,8 +225,8 @@ export const MOCK_FRIENDS: Friend[] = [
     location: Location.Udelnaya,
     readyForTraning: false,
     specializations: [Specialization.Running, Specialization.Stretching],
-    myJointTrainingStatus: TrainingRequestStatus.Rejected,
-    forMyJointTrainingStatus: TrainingRequestStatus.Rejected,
+    outJointTrainingStatus: TrainingRequestStatus.Rejected,
+    inMyJointTrainingStatus: TrainingRequestStatus.Rejected,
     personalTrainingStatus: TrainingRequestStatus.Rejected
   },
   {
@@ -237,8 +237,8 @@ export const MOCK_FRIENDS: Friend[] = [
     location: Location.Zvezdnaya,
     readyForTraning: true,
     specializations: [Specialization.Yoga],
-    myJointTrainingStatus: TrainingRequestStatus.Accepted,
-    forMyJointTrainingStatus: TrainingRequestStatus.Accepted,
+    outJointTrainingStatus: TrainingRequestStatus.Accepted,
+    inMyJointTrainingStatus: TrainingRequestStatus.Accepted,
     personalTrainingStatus: TrainingRequestStatus.Accepted
   }
 ];

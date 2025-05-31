@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { isSportsmanRole } from '@backend/shared/core';
+import { isSportsmanRole, Role } from '@backend/shared/core';
 
 import UserPhoto from '../user-photo/user-photo';
 import Hashtags from '../hashtags/hashtags';
@@ -13,9 +13,10 @@ import { Friend, LocationTitle } from '../../const';
 type ThumbnailFriendProps = {
   className: string;
   friend: Friend;
+  userRole: Role;
 }
 
-function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Element {
+function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
 
   const { id, name, avatarFilePath, role, location, specializations, readyForTraning } = friend;
@@ -24,9 +25,10 @@ function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Eleme
   const readyTitle = getReadyTraining(role, readyForTraning);
   const mainClassName = 'thumbnail-friend';
   const mainDivClassName = classNames(`${mainClassName}__info`, `${mainClassName}__info--${(isSportsman) ? 'theme-light' : 'theme-dark'}`);
+  const divReadyClassName = `${mainClassName}__ready-status`;
 
   return (
-    <li className={`${className}__item`} >
+    <li className={`${className}__item`}>
       <div className={mainClassName}>
         <div className={mainDivClassName}>
           <div className={`${mainClassName}__image-status`}>
@@ -49,17 +51,21 @@ function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Eleme
             items={getSpecializationsTitles(specializations)}
             listClassName={`${mainClassName}__training-types-list`}
             divItemClassName={`${mainClassName}__hashtag`}
+            style={{ minHeight: '85px' }} // для трех специализаций кривые карточки, а есть вариант через css автоматически поправить?
           />
           <div className={`${mainClassName}__activity-bar`}>
-            <div className="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready">
+            <div className={classNames(divReadyClassName, `${divReadyClassName}--${(readyForTraning) ? 'is-ready' : 'is-not-ready'}`)}>
               <span>{readyTitle}</span>
             </div>
-            <button className="thumbnail-friend__invite-button" type="button">
-              <svg width="43" height="46" aria-hidden="true" focusable="false">
-                <use xlinkHref="#icon-invite" />
-              </svg>
-              <span className="visually-hidden">Пригласить друга на совместную тренировку</span>
-            </button>
+            {
+              isSportsmanRole(userRole) && isSportsman && readyForTraning &&
+              <button className={`${mainClassName}__invite-button`} type="button">
+                <svg width="43" height="46" aria-hidden="true" focusable="false">
+                  <use xlinkHref="#icon-invite" />
+                </svg>
+                <span className="visually-hidden">Пригласить друга на совместную тренировку</span>
+              </button>
+            }
           </div>
         </div>
         <div className="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">

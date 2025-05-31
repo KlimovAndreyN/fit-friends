@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import { CSSProperties, JSX } from 'react';
 import classNames from 'classnames';
 
 type HashtagsProps = {
@@ -6,11 +6,12 @@ type HashtagsProps = {
   listClassName: string;
   itemClassName?: string;
   divItemClassName?: string;
+  style?: CSSProperties;
 }
 
-function Hashtags({ listClassName, itemClassName, divItemClassName, items }: HashtagsProps): JSX.Element {
+function Hashtags({ items, listClassName, itemClassName, divItemClassName, style }: HashtagsProps): JSX.Element {
   return (
-    <ul className={listClassName}>
+    <ul className={listClassName} style={style}>
       {
         items.map(
           (item) => (

@@ -4,12 +4,15 @@ import BackButton from '../back-button/back-button';
 import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 import ThumbnailFriend from '../thumbnail-friend/thumbnail-friend';
 
+import { useAppSelector } from '../../hooks';
+import { getUserRole } from '../../store/user-process/selectors';
 import { MOCK_FRIENDS } from '../../const';
 
 function FriendsList(): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
+  const userRole = useAppSelector(getUserRole);
   const friends = MOCK_FRIENDS;
   const isHaveMoreData = true;
   //const isHaveMoreData = false;
@@ -34,7 +37,13 @@ function FriendsList(): JSX.Element {
             </div>
             <ul className={`${mainClassName}__list`}>
               {
-                friends.map((friend) => (<ThumbnailFriend key={friend.id} className={mainClassName} friend={friend} />))
+                friends.map((friend) => (
+                  <ThumbnailFriend
+                    key={friend.id}
+                    className={mainClassName}
+                    friend={friend}
+                    userRole={userRole}
+                  />))
               }
             </ul>
             <ButtonsShowMoreAndToTop divClassNamePrefix={mainClassName} isHaveMoreData={isHaveMoreData} onShowMoreClick={handleButtonsShowMoreAndToTopClick} />
