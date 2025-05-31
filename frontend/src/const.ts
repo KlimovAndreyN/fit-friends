@@ -179,11 +179,24 @@ export function isRejectedTrainingRequestStatus(status?: TrainingRequestStatus) 
   return (status === TrainingRequestStatus.Rejected);
 }
 
-export const MOCK_FRIENDS = [
+export type Friend = {
+  id: string;
+  name: string;
+  avatarFilePath: string;
+  role: Role;
+  location: Location;
+  readyForTraning: boolean;
+  specialization: Specialization[];
+  myJointTrainingStatus?: TrainingRequestStatus;
+  forMyJointTrainingStatus?: TrainingRequestStatus;
+  personalTrainingStatus?: TrainingRequestStatus;
+}
+
+export const MOCK_FRIENDS: Friend[] = [
   {
     id: '01',
     name: 'Елизавета',
-    avatarFilePath: 'img/content/thumbnails/friend-08.jpg',
+    avatarFilePath: '',
     role: Role.Sportsman,
     location: Location.Petrogradskaya,
     readyForTraning: true,

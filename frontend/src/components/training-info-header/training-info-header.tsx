@@ -31,7 +31,7 @@ function TrainingInfoHeader(props: TrainingInfoHeaderProps): JSX.Element {
   );
   const coachInfo = (
     <Fragment>
-      <UserPhoto path={coachAvatarFilePath} className='training-info__photo' />
+      <UserPhoto path={coachAvatarFilePath} className='training-info__photo' imageInfo={'Изображение тренера'} />
       <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
         <span className="training-info__name">{coachName}</span>
       </div>

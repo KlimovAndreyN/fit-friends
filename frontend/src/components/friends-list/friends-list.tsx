@@ -1,7 +1,8 @@
 import { JSX } from 'react';
 
 import BackButton from '../back-button/back-button';
-import FriendCard from '../friend-card/friend-card';
+import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
+import ThumbnailFriend from '../thumbnail-friend/thumbnail-friend';
 
 import { MOCK_FRIENDS } from '../../const';
 
@@ -10,7 +11,14 @@ function FriendsList(): JSX.Element {
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
 
   const friends = MOCK_FRIENDS;
+  const isHaveMoreData = true;
+  //const isHaveMoreData = false;
   const mainClassName = 'friends-list';
+
+  const handleButtonsShowMoreAndToTopClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('handleButtonsShowMoreAndToTopClick');
+  };
 
   return (
     <main>
@@ -26,13 +34,10 @@ function FriendsList(): JSX.Element {
             </div>
             <ul className={`${mainClassName}__list`}>
               {
-                friends.map((friend) => (<FriendCard key={friend.id} className={mainClassName} />))
+                friends.map((friend) => (<ThumbnailFriend key={friend.id} className={mainClassName} friend={friend} />))
               }
             </ul>
-            <div className="show-more friends-list__show-more">
-              <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
-              <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
-            </div>
+            <ButtonsShowMoreAndToTop divClassNamePrefix={mainClassName} isHaveMoreData={isHaveMoreData} onShowMoreClick={handleButtonsShowMoreAndToTopClick} />
           </div>
         </div>
       </section>

@@ -7,9 +7,10 @@ type UserPhotoProps = {
   path?: string;
   className: string;
   size?: number;
+  imageInfo?: string;
 }
 
-function UserPhoto({ path, className, size }: UserPhotoProps): JSX.Element {
+function UserPhoto({ path, className, size, imageInfo = '' }: UserPhotoProps): JSX.Element {
   const imgSize = size ?? DEFAULT_USER_PHOTO_SIZE;
   const svgSize = imgSize * DEFAULT_SVG_RATIO;
 
@@ -18,7 +19,8 @@ function UserPhoto({ path, className, size }: UserPhotoProps): JSX.Element {
       {
         (path)
           ?
-          <img src={path} width={imgSize} height={imgSize} alt="Изображение тренера" />
+          <img src={path} width={imgSize} height={imgSize} alt={imageInfo} />
+          /* //! закоментировано в маркапах у друзей <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>--> */
           :
           <div style={{
             backgroundColor: 'white',

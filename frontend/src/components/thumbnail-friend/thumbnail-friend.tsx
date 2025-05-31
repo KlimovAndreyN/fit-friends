@@ -1,29 +1,36 @@
 import { JSX } from 'react';
+import { Link } from 'react-router-dom';
 
-type FriendCardProps = {
+import UserPhoto from '../user-photo/user-photo';
+
+import { getUserRoute } from '../../utils/common';
+import { Friend } from '../../const';
+
+type ThumbnailFriendProps = {
   className: string;
+  friend: Friend;
 }
 
-function FriendCard({ className }: FriendCardProps): JSX.Element {
+function ThumbnailFriend({ className, friend }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
+
+  const { id, name, avatarFilePath } = friend;
+  const userRoute = getUserRoute(id);
+  const mainClassName = 'thumbnail-friend';
 
   return (
     <li className={`${className}_item`} >
-      <div className="thumbnail-friend">
+      <div className={mainClassName}>
         <div className="thumbnail-friend__info thumbnail-friend__info--theme-light">
           <div className="thumbnail-friend__image-status">
-            <div className="thumbnail-friend__image">
-              <picture>
-                <source type="image/webp" srcSet="img/content/thumbnails/friend-08.webp, img/content/thumbnails/friend-08@2x.webp 2x" />
-                <img src="img/content/thumbnails/friend-08.jpg" srcSet="img/content/thumbnails/friend-08@2x.jpg 2x" width="78" height="78" alt="" />
-              </picture>
-              {/* //! закоментировано в маркапах
-                            <!--<div className="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
-                          */}
-            </div>
+            <Link to={userRoute}>
+              <UserPhoto className={`${mainClassName}__image`} path={avatarFilePath} size={78} />
+            </Link>
           </div>
           <div className="thumbnail-friend__header">
-            <h2 className="thumbnail-friend__name">Елизавета</h2>
+            <Link to={userRoute}>
+              <h2 className="thumbnail-friend__name">{name}</h2>
+            </Link>
             <div className="thumbnail-friend__location">
               <svg width="14" height="16" aria-hidden="true">
                 <use xlinkHref="#icon-location" />
@@ -58,4 +65,4 @@ function FriendCard({ className }: FriendCardProps): JSX.Element {
   );
 }
 
-export default FriendCard;
+export default ThumbnailFriend;
