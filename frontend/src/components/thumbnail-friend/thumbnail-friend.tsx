@@ -1,14 +1,12 @@
 import { JSX } from 'react';
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { isSportsmanRole, Role } from '@backend/shared/core';
 
-import UserPhoto from '../user-photo/user-photo';
-import Hashtags from '../hashtags/hashtags';
+import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 
-import { getReadyTraining, getSpecializationsTitles, getUserRoute } from '../../utils/common';
-import { Friend, LocationTitle } from '../../const';
+import { getReadyTraining } from '../../utils/common';
+import { Friend, isPendingTrainingRequestStatus } from '../../const';
 
 type ThumbnailFriendProps = {
   className: string;
@@ -19,47 +17,44 @@ type ThumbnailFriendProps = {
 function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
 
-  const { id, name, avatarFilePath, role, location, specializations, readyForTraning } = friend;
-  const userRoute = getUserRoute(id);
+  const { id, name, avatarFilePath, role, location, specializations, readyForTraning, outJointTrainingStatus, inMyJointTrainingStatus, personalTrainingStatus } = friend;
+  const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
-  const readyTitle = getReadyTraining(role, readyForTraning);
+  const readyTitle = getReadyTraining(role, readyForTraning); //! в маркапах у тренера такие же заголовки тренар, я сделал разные, как на остальных страницах
   const mainClassName = 'thumbnail-friend';
   const mainDivClassName = classNames(`${mainClassName}__info`, `${mainClassName}__info--${(isSportsman) ? 'theme-light' : 'theme-dark'}`);
   const divReadyClassName = `${mainClassName}__ready-status`;
+  const divRequestClassName = `${mainClassName}__request-status`;
+
+  const hendleInviteButtonClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('hendleInviteButtonClick');
+  };
 
   return (
     <li className={`${className}__item`}>
       <div className={mainClassName}>
         <div className={mainDivClassName}>
-          <div className={`${mainClassName}__image-status`}>
-            <Link to={userRoute}>
-              <UserPhoto className={`${mainClassName}__image`} path={avatarFilePath} size={78} />
-            </Link>
-          </div>
-          <div className={`${mainClassName}__header`}>
-            <Link to={userRoute} className={`${mainClassName}__name`} style={{ color: (isSportsman) ? 'black' : 'white' }}>
-              <h2 className={`${mainClassName}__name`}>{name}</h2>
-            </Link>
-            <div className={`${mainClassName}__location`}>
-              <svg width="14" height="16" aria-hidden="true">
-                <use xlinkHref="#icon-location" />
-              </svg>
-              <address className={`${mainClassName}__location-address`}>{LocationTitle[location]}</address>
-            </div>
-          </div>
-          <Hashtags
-            items={getSpecializationsTitles(specializations)}
-            listClassName={`${mainClassName}__training-types-list`}
-            divItemClassName={`${mainClassName}__hashtag`}
-            style={{ minHeight: '85px' }} // для трех специализаций кривые карточки, а есть вариант через css автоматически поправить?
+          <ThumbnailFriendHeader
+            className={mainClassName}
+            id={id}
+            name={name}
+            avatarFilePath={avatarFilePath}
+            isSportsman={isSportsman}
+            location={location}
+            specializations={specializations}
           />
           <div className={`${mainClassName}__activity-bar`}>
             <div className={classNames(divReadyClassName, `${divReadyClassName}--${(readyForTraning) ? 'is-ready' : 'is-not-ready'}`)}>
               <span>{readyTitle}</span>
             </div>
             {
-              isSportsmanRole(userRole) && isSportsman && readyForTraning &&
-              <button className={`${mainClassName}__invite-button`} type="button">
+              isSportsmanUser && isSportsman && readyForTraning &&
+              <button
+                className={classNames(`${mainClassName}__invite-button`, { 'is-disabled': isPendingTrainingRequestStatus(outJointTrainingStatus) })}
+                type="button"
+                onClick={hendleInviteButtonClick}
+              >
                 <svg width="43" height="46" aria-hidden="true" focusable="false">
                   <use xlinkHref="#icon-invite" />
                 </svg>
@@ -68,13 +63,16 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
             }
           </div>
         </div>
-        <div className="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">
-          <p className="thumbnail-friend__request-text">Запрос на&nbsp;совместную тренировку</p>
-          <div className="thumbnail-friend__button-wrapper">
-            <button className="btn btn--medium btn--dark-bg thumbnail-friend__button" type="button">Принять</button>
-            <button className="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button" type="button">Отклонить</button>
+        {
+          (isSportsmanUser && inMyJointTrainingStatus || !isSportsmanUser && personalTrainingStatus) &&
+          <div className={`${divRequestClassName} ${divRequestClassName}--role-user`}>
+            <p className="thumbnail-friend__request-text">Запрос на&nbsp;совместную тренировку</p>
+            <div className="thumbnail-friend__button-wrapper">
+              <button className="btn btn--medium btn--dark-bg thumbnail-friend__button" type="button">Принять</button>
+              <button className="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button" type="button">Отклонить</button>
+            </div>
           </div>
-        </div>
+        }
       </div>
     </li>
   );
