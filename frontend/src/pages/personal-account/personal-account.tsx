@@ -48,7 +48,7 @@ function PersonalAccount(): JSX.Element {
               <h1 className="visually-hidden">Личный кабинет</h1>
               <PersonalAccountLeftPanel
                 account={userProfile}
-                isSpotsmanRole={isSpotsman}
+                role={userRole}
                 onSubmit={handleLeftPanelSubmit}
               />
               <div className="inner-page__content">

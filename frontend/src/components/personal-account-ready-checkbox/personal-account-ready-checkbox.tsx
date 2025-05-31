@@ -1,18 +1,21 @@
 import { JSX } from 'react';
 
+import { Role } from '@backend/shared/core';
+
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsReadyForTrainingChangeExecuting, getReadyForTraining } from '../../store/account-process/selectors';
 import { changeReadyForTraining } from '../../store/actions/account-action';
+import { getReadyTraining } from '../../utils/common';
 
 type PersonalAccountReadyCheckboxProps = {
   name: string;
   mainClassName: string;
-  isSpotsmanRole: boolean;
+  role: Role;
 }
 
-function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: PersonalAccountReadyCheckboxProps): JSX.Element {
+function PersonalAccountReadyCheckbox({ name, mainClassName, role }: PersonalAccountReadyCheckboxProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isReadyForTrainingChangeExecuting = useAppSelector(getIsReadyForTrainingChangeExecuting);
   const readyForTraining = useAppSelector(getReadyForTraining);
@@ -24,7 +27,7 @@ function PersonalAccountReadyCheckbox({ name, mainClassName, isSpotsmanRole }: P
   return (
     <CustomCheckbox
       name={name}
-      spanText={(isSpotsmanRole) ? 'Готов к тренировке' : 'Готов тренировать'}
+      spanText={getReadyTraining(role)}
       value={readyForTraining}
       isSwitch
       onChange={handleReadyForTrainingCheckboxChange}

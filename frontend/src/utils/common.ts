@@ -1,4 +1,4 @@
-import { Specialization } from '@backend/shared/core';
+import { isSportsmanRole, Role, Specialization } from '@backend/shared/core';
 
 import { AppRoute, ID_PARAM, MAIN_TITLE, SpecializationTitle } from '../const';
 
@@ -24,6 +24,12 @@ export function isEventEscKey(event: KeyboardEvent): boolean {
 
 export function hasPriceMaxPropertyKey(object: object): boolean {
   return Object.hasOwn(object, 'priceMax');
+}
+
+export function getReadyTraining(role: Role, readyForTraining = true): string {
+  const text = (isSportsmanRole(role)) ? 'Готов к\u00A0тренировке' : 'Готов тренировать';
+
+  return ((readyForTraining) ? text : `Не\u00A0${text.toLowerCase()}`);
 }
 
 export function getSpecializationsTitles(specializations: Specialization[]): string[] {

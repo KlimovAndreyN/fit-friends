@@ -1,12 +1,16 @@
 import { JSX } from 'react';
 import classNames from 'classnames';
 
+import { isSportsmanRole, Role } from '@backend/shared/core';
+
+import { getReadyTraining } from '../../utils/common';
+
 type UserDetailStatusProps = {
-  isSportsman: boolean;
+  role: Role;
   readyForTraining: boolean;
 }
 
-function UserDetailStatus({ isSportsman, readyForTraining }: UserDetailStatusProps): JSX.Element {
+function UserDetailStatus({ role, readyForTraining }: UserDetailStatusProps): JSX.Element {
   //! напутано с разметкой....
   //    'user-card-coach-2__status user-card-coach-2__status--check' серое
   //    'user-card-coach__status user-card-coach__status--check' зелёное
@@ -17,8 +21,7 @@ function UserDetailStatus({ isSportsman, readyForTraining }: UserDetailStatusPro
   //    добавил в style
   //  classNamePrefix исключил из пропсов
 
-  const text = (isSportsman) ? 'Готов к тренировке' : 'Готов тренировать';
-  const caption = ((readyForTraining) ? text : `Не ${text.toLowerCase()}`);
+  const isSportsman = isSportsmanRole(role);
   const mainClassNamePrefix = (isSportsman) ? 'user-card' : 'user-card-coach';
   const classNamePrefix = (readyForTraining) ? mainClassNamePrefix : 'user-card-coach-2';
   const divMainClassName = `${classNamePrefix}__status`;
@@ -26,7 +29,7 @@ function UserDetailStatus({ isSportsman, readyForTraining }: UserDetailStatusPro
 
   const content = (
     <div className={classNames(divMainClassName, divCheckClassName)} style={{ marginBottom: (isSportsman && !readyForTraining) ? '35px' : undefined }}>
-      <span>{caption}</span>
+      <span>{getReadyTraining(role, readyForTraining)}</span>
     </div>
   );
 

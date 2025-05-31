@@ -90,7 +90,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
             onClose={handleLocationPopupModalMapClose}
           />
         }
-        <UserDetailStatus isSportsman={!isCoach} readyForTraining={readyForTraining} />
+        <UserDetailStatus role={role} readyForTraining={readyForTraining} />
         <div className={`${classNamePrefix}__text`}>
           <p>{about}</p>
           {(description) && <p>{description}</p>}

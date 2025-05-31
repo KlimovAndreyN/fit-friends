@@ -7,12 +7,12 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel } from '@backend/shared/core';
+import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
 import { useAppSelector } from '../../hooks';
+import useEscapeKey from '../../hooks/use-escape-key';
 import { getIsUpdateAccountError, getIsUpdateAccountExecuting } from '../../store/account-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
-import useEscapeKey from '../../hooks/use-escape-key';
 
 enum FormFieldName {
   Avatar = 'user-photo-1',
@@ -27,11 +27,11 @@ enum FormFieldName {
 
 type PersonalAccountLeftPanelProps = {
   account: IDetailUserProfileRdo;
-  isSpotsmanRole: boolean;
+  role: Role;
   onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
 }
 
-function PersonalAccountLeftPanel({ account, isSpotsmanRole, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
+function PersonalAccountLeftPanel({ account, role, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
   //! много кода! поделить как нибуть!
   // при режиме - только чтение - не менять курсор мыши у AvatarUpload...
 
@@ -142,7 +142,7 @@ function PersonalAccountLeftPanel({ account, isSpotsmanRole, onSubmit }: Persona
           <PersonalAccountReadyCheckbox
             name={FormFieldName.ReadyForTraining}
             mainClassName={mainClassName}
-            isSpotsmanRole={isSpotsmanRole}
+            role={role}
           />
         </PersonalAccountBlock>
         <PersonalAccountBlock mainClassNamePrefix={mainClassName} extraClassNamePrefix='specialization' title='Специализация' >
