@@ -159,3 +159,73 @@ export const TRAINING_LEVELS: Option[] = convertEnumToArray(TrainingLevel).map(
 );
 
 export const CERTIFICATES_FILE_TYPES = '.pdf, .jpg, .jpeg, .png';
+
+//! временно здесь
+export enum TrainingRequestStatus {
+  Pending = 'pending',
+  Accepted = 'accepted',
+  Rejected = 'rejected'
+}
+
+export function isPendingTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Pending);
+}
+
+export function isAcceptedTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Accepted);
+}
+
+export function isRejectedTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Rejected);
+}
+
+export const MOCK_FRIENDS = [
+  {
+    id: '01',
+    name: 'Елизавета',
+    avatarFilePath: 'img/content/thumbnails/friend-08.jpg',
+    role: Role.Sportsman,
+    location: Location.Petrogradskaya,
+    readyForTraning: true,
+    specialization: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
+    myJointTrainingStatus: undefined,
+    forMyJointTrainingStatus: undefined,
+    personalTrainingStatus: undefined
+  },
+  {
+    id: '02',
+    name: 'Татьяна',
+    avatarFilePath: 'img/content/thumbnails/friend-04.jpg',
+    role: Role.Coach,
+    location: Location.Pionerskaya,
+    readyForTraning: true,
+    specialization: [Specialization.Pilates, Specialization.Power],
+    myJointTrainingStatus: TrainingRequestStatus.Pending,
+    forMyJointTrainingStatus: TrainingRequestStatus.Pending,
+    personalTrainingStatus: TrainingRequestStatus.Pending
+  },
+  {
+    id: '03',
+    name: 'Ксения',
+    avatarFilePath: 'img/content/thumbnails/friend-07.jpg',
+    role: Role.Sportsman,
+    location: Location.Udelnaya,
+    readyForTraning: false,
+    specialization: [Specialization.Running, Specialization.Stretching],
+    myJointTrainingStatus: TrainingRequestStatus.Rejected,
+    forMyJointTrainingStatus: TrainingRequestStatus.Rejected,
+    personalTrainingStatus: TrainingRequestStatus.Rejected
+  },
+  {
+    id: '04',
+    name: 'Ева',
+    avatarFilePath: 'img/content/thumbnails/friend-10.jpg',
+    role: Role.Sportsman,
+    location: Location.Zvezdnaya,
+    readyForTraning: true,
+    specialization: [Specialization.Yoga],
+    myJointTrainingStatus: TrainingRequestStatus.Accepted,
+    forMyJointTrainingStatus: TrainingRequestStatus.Accepted,
+    personalTrainingStatus: TrainingRequestStatus.Accepted
+  }
+];
