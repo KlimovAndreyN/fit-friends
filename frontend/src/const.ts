@@ -186,7 +186,7 @@ export type Friend = {
   role: Role;
   location: Location;
   readyForTraning: boolean;
-  specialization: Specialization[];
+  specializations: Specialization[];
   myJointTrainingStatus?: TrainingRequestStatus;
   forMyJointTrainingStatus?: TrainingRequestStatus;
   personalTrainingStatus?: TrainingRequestStatus;
@@ -200,7 +200,7 @@ export const MOCK_FRIENDS: Friend[] = [
     role: Role.Sportsman,
     location: Location.Petrogradskaya,
     readyForTraning: true,
-    specialization: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
+    specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
     myJointTrainingStatus: undefined,
     forMyJointTrainingStatus: undefined,
     personalTrainingStatus: undefined
@@ -211,8 +211,8 @@ export const MOCK_FRIENDS: Friend[] = [
     avatarFilePath: 'img/content/thumbnails/friend-04.jpg',
     role: Role.Coach,
     location: Location.Pionerskaya,
-    readyForTraning: true,
-    specialization: [Specialization.Pilates, Specialization.Power],
+    readyForTraning: false,
+    specializations: [Specialization.Pilates, Specialization.Power],
     myJointTrainingStatus: TrainingRequestStatus.Pending,
     forMyJointTrainingStatus: TrainingRequestStatus.Pending,
     personalTrainingStatus: TrainingRequestStatus.Pending
@@ -224,7 +224,7 @@ export const MOCK_FRIENDS: Friend[] = [
     role: Role.Sportsman,
     location: Location.Udelnaya,
     readyForTraning: false,
-    specialization: [Specialization.Running, Specialization.Stretching],
+    specializations: [Specialization.Running, Specialization.Stretching],
     myJointTrainingStatus: TrainingRequestStatus.Rejected,
     forMyJointTrainingStatus: TrainingRequestStatus.Rejected,
     personalTrainingStatus: TrainingRequestStatus.Rejected
@@ -236,7 +236,7 @@ export const MOCK_FRIENDS: Friend[] = [
     role: Role.Sportsman,
     location: Location.Zvezdnaya,
     readyForTraning: true,
-    specialization: [Specialization.Yoga],
+    specializations: [Specialization.Yoga],
     myJointTrainingStatus: TrainingRequestStatus.Accepted,
     forMyJointTrainingStatus: TrainingRequestStatus.Accepted,
     personalTrainingStatus: TrainingRequestStatus.Accepted
