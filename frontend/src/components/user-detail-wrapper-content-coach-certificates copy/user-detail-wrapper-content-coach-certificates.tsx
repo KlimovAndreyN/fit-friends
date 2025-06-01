@@ -7,12 +7,12 @@ import { ICertificateRdo } from '@backend/shared/core';
 import CoachCertificatesPopupModalSlider from '../coach-certificates-popup-modal-slider/coach-certificates-popup-modal-slider';
 
 
-type UserDetailWrapperContentuserCoachCertificatesProps = {
+type UserDetailWrapperContentCoachCertificatesProps = {
   classNamePrefix: string;
   certificates: ICertificateRdo[];
 }
 
-function UserDetailWrapperContentuserCoachCertificates({ classNamePrefix, certificates }: UserDetailWrapperContentuserCoachCertificatesProps): JSX.Element {
+function UserDetailWrapperContentCoachCertificates({ classNamePrefix, certificates }: UserDetailWrapperContentCoachCertificatesProps): JSX.Element {
   // кнопке Показать сертификаты добавил outline-none-on-focus, т.к. была рамка на кнопке при закрытии окна
 
   const [showCertificates, setShowCertificates] = useState(false);
@@ -49,4 +49,4 @@ function UserDetailWrapperContentuserCoachCertificates({ classNamePrefix, certif
   );
 }
 
-export default UserDetailWrapperContentuserCoachCertificates;
+export default UserDetailWrapperContentCoachCertificates;

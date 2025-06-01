@@ -7,10 +7,10 @@ import UserPhoto from '../user-photo/user-photo';
 import Hashtags from '../hashtags/hashtags';
 import UserDetailStatus from '../user-detail-status/user-detail-status';
 import PopupModalMap from '../popup-modal-map/popup-modal-map';
+import UserDetailWrapperContentCoachCertificates from '../user-detail-wrapper-content-coach-certificates copy/user-detail-wrapper-content-coach-certificates';
 
 import { getSpecializationsTitles } from '../../utils/common';
 import { LocationTitle } from '../../const';
-import UserDetailWrapperContentuserCoachCertificates from '../user-detail-wrapper-content-coach-certificates copy/user-detail-wrapper-content-coach-certificates';
 
 type UserDetailWrapperContentProps = {
   classNamePrefix: string;
@@ -77,7 +77,7 @@ function UserDetailWrapperContent({ classNamePrefix, detailUserProfile }: UserDe
       </div>
       {
         isCoach &&
-        <UserDetailWrapperContentuserCoachCertificates classNamePrefix={classNamePrefix} certificates={certificates} />
+        <UserDetailWrapperContentCoachCertificates classNamePrefix={classNamePrefix} certificates={certificates} />
       }
       <Hashtags
         items={getSpecializationsTitles(specializations)}
