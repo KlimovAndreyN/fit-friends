@@ -58,6 +58,6 @@ export class UserProfileController {
     const user = await this.userService.getDetailUser(userId, sub, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
-    return { user, questionnaire };
+    return { user, questionnaire, isFriend: false/* //! временно */ };
   }
 }

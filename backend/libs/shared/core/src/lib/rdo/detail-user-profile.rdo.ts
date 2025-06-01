@@ -13,4 +13,8 @@ export class DetailUserProfileRdo implements IDetailUserProfileRdo {
   @ApiProperty()
   @Expose()
   public questionnaire: QuestionnaireRdo;
+
+  @ApiProperty()
+  @Expose()
+  isFriend: boolean;
 }

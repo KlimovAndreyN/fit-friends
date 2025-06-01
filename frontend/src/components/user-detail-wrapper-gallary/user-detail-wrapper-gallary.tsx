@@ -1,11 +1,11 @@
 import { JSX } from 'react';
 
-type UserDetailGallaryProps = {
+type UserDetailWrapperGallaryProps = {
   classNamePrefix: string;
   filesPaths: string[];
 }
 
-function UserDetailGallary({ classNamePrefix, filesPaths }: UserDetailGallaryProps): JSX.Element {
+function UserDetailWrapperGallary({ classNamePrefix, filesPaths }: UserDetailWrapperGallaryProps): JSX.Element {
   const mainClassName = `${classNamePrefix}__gallary`;
 
   return (
@@ -23,4 +23,4 @@ function UserDetailGallary({ classNamePrefix, filesPaths }: UserDetailGallaryPro
   );
 }
 
-export default UserDetailGallary;
+export default UserDetailWrapperGallary;

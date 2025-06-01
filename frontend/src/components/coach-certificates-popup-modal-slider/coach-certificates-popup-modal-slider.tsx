@@ -5,14 +5,15 @@ import { ICertificateRdo } from '@backend/shared/core';
 
 import PopupModalSlider from '../popup-modal-slider/popup-modal-slider';
 
-type UserDetailCoachCertificatesProps = {
+type CoachCertificatesPopupModalSliderProps = {
   certificates: ICertificateRdo[];
   onClose: () => void;
 }
 
-function UserDetailCoachCertificates({ certificates, onClose }: UserDetailCoachCertificatesProps): JSX.Element {
+function CoachCertificatesPopupModalSlider({ certificates, onClose }: CoachCertificatesPopupModalSliderProps): JSX.Element {
   // добавил ссылку на сам файл, есть небольшое повторение кода с CertificateCard, но там код с редактированием...
   //   почему-то выравнивание картинок по содежимому, поискать что в css отличается от CoachCertificates и CertificateCard
+
   const childrens =
     certificates.map(
       ({ fileId, filePath, title }) => {
@@ -43,4 +44,4 @@ function UserDetailCoachCertificates({ certificates, onClose }: UserDetailCoachC
   );
 }
 
-export default UserDetailCoachCertificates;
+export default CoachCertificatesPopupModalSlider;
