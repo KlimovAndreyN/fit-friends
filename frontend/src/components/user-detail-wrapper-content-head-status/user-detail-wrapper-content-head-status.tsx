@@ -5,12 +5,12 @@ import { isSportsmanRole, Role } from '@backend/shared/core';
 
 import { getReadyTraining } from '../../utils/common';
 
-type UserDetailStatusProps = {
+type UserDetailWrapperContentHeadProps = {
   role: Role;
   readyForTraining: boolean;
 }
 
-function UserDetailStatus({ role, readyForTraining }: UserDetailStatusProps): JSX.Element {
+function UserDetailWrapperContentHeadStatus({ role, readyForTraining }: UserDetailWrapperContentHeadProps): JSX.Element {
   //! напутано с разметкой....
   //    'user-card-coach-2__status user-card-coach-2__status--check' серое
   //    'user-card-coach__status user-card-coach__status--check' зелёное
@@ -50,4 +50,4 @@ function UserDetailStatus({ role, readyForTraining }: UserDetailStatusProps): JS
   );
 }
 
-export default UserDetailStatus;
+export default UserDetailWrapperContentHeadStatus;

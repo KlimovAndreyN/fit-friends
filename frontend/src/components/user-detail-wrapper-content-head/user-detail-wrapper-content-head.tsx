@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { IDetailUserProfileRdo } from '@backend/shared/core';
 
 import UserPhoto from '../user-photo/user-photo';
-import UserDetailStatus from '../user-detail-status/user-detail-status';
+import UserDetailWrapperContentHeadStatus from '../user-detail-wrapper-content-head-status/user-detail-wrapper-content-head-status';
 import PopupModalMap from '../popup-modal-map/popup-modal-map';
 
 import { LocationTitle } from '../../const';
@@ -54,7 +54,7 @@ function UserDetailWrapperContentHead({ classNamePrefix, detailUserProfile }: Us
         showLocationMap &&
         <PopupModalMap title={name} address={locationText} onClose={handleLocationPopupModalMapClose} />
       }
-      <UserDetailStatus role={role} readyForTraining={readyForTraining} />
+      <UserDetailWrapperContentHeadStatus role={role} readyForTraining={readyForTraining} />
       <div className={`${classNamePrefix}__text`}>
         <p>{about}</p>
         {(description) && <p>{description}</p>}
