@@ -16,7 +16,9 @@ export class TrainingService {
 
   public async find(query: TrainingQuery, userId: string, userRole: Role): Promise<TrainingEntityWithPagination> {
     if (isCoachRole(userRole)) {
-      if (query.coachId) {
+      const { coachId } = query;
+
+      if (coachId && (userId !== coachId)) { // разрешим тренеру смотреть тренировки в своей карточке
         throw new ForbiddenException('User with role \'coach\' is not allowed to use \'coachId\'!');
       }
 
