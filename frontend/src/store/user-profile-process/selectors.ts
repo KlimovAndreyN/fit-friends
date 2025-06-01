@@ -11,6 +11,8 @@ export const getIsFetchUsersProfilesExecuting = ({ [StoreSlice.UserProfileProces
 export const getUsersProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['usersProfiles'] => USER_PROFILE_PROCESS.usersProfiles;
 export const getIsHaveMoreUsersProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isHaveMoreUsersProfiles'] => USER_PROFILE_PROCESS.isHaveMoreUsersProfiles;
 
-export const getIsFetchDetailUserProfileExecuting = ({ [StoreSlice.UserProfileProcess]: TRAINING_PROCESS }: State): UserProfileProcess['isFetchDetailUserProfileExecuting'] => TRAINING_PROCESS.isFetchDetailUserProfileExecuting;
-export const getIsFetchDetailUserProfileError = ({ [StoreSlice.UserProfileProcess]: TRAINING_PROCESS }: State): UserProfileProcess['isFetchDetailUserProfileError'] => TRAINING_PROCESS.isFetchDetailUserProfileError;
-export const getDetailUserProfile = ({ [StoreSlice.UserProfileProcess]: TRAINING_PROCESS }: State): UserProfileProcess['detailUserProfile'] => TRAINING_PROCESS.detailUserProfile;
+export const getIsFetchDetailUserProfileExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchDetailUserProfileExecuting'] => USER_PROFILE_PROCESS.isFetchDetailUserProfileExecuting;
+export const getIsFetchDetailUserProfileError = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchDetailUserProfileError'] => USER_PROFILE_PROCESS.isFetchDetailUserProfileError;
+export const getDetailUserProfile = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['detailUserProfile'] => USER_PROFILE_PROCESS.detailUserProfile;
+export const getIsFriendUserProfile = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFriendUserProfile'] => USER_PROFILE_PROCESS.isFriendUserProfile;
+export const getIsFriendUserProfileChangeExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFriendUserProfileChangeExecuting'] => USER_PROFILE_PROCESS.isFriendUserProfileChangeExecuting;

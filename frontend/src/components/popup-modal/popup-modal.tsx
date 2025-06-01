@@ -41,6 +41,7 @@ function PopupModal(props: PopupModalProps): JSX.Element {
 
   const handleCloseButtonClick = (event: FormEvent) => {
     event.preventDefault();
+
     onClose();
   };
 

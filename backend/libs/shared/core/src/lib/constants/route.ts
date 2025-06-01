@@ -47,7 +47,8 @@ export enum UserProfileRoute {
   QuestionnairesCoach = `${Questionnaires}/${Role.Coach}`,
   Certificates = 'certificates',
   ReadyForTraining = 'ready-for-training',
-  LookForCompany = 'look-for-company'
+  LookForCompany = 'look-for-company',
+  Friend = 'friend'
 }
 
 export enum FileStorageRoute {

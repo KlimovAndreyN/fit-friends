@@ -67,6 +67,7 @@ function PersonalAccountLeftPanel({ account, role, onSubmit }: PersonalAccountLe
 
   const handleButtonClick = (event: FormEvent) => {
     event.preventDefault();
+
     setIsEditing(true);
   };
 

@@ -60,4 +60,20 @@ export class UserProfileService {
 
     return usersProfiles;
   }
+
+  public async updateFriend(isFriend: boolean, userId: string, currentUserId: string, requestId: string): Promise<void> {
+    //! отладка
+    console.log('updateFriend', isFriend, userId, currentUserId, requestId);
+    /*
+    const { user: { sub, role }, requestId } = request;
+    const url = this.getUrl(UserProfileRoute.LookForCompany);
+    const headers = makeHeaders(requestId, null, sub, role);
+    const { data: basicUsersProfiles } = await this.httpService.axiosRef.get<BasicUserProfileRdo[]>(url, headers);
+    */
+    /*
+      const headers = makeHeaders(requestId, null, userId);
+      const dto: UpdateQuestionnaireDto = { readyForTraining };
+      await this.httpService.axiosRef.patch<QuestionnaireRdo>(this.getUrl(), dto, headers);
+    */
+  }
 }

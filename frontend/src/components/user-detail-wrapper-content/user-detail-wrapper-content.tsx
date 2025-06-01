@@ -1,4 +1,4 @@
-import { JSX, MouseEvent } from 'react';
+import { JSX } from 'react';
 
 import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
 
@@ -7,6 +7,7 @@ import UserDetailWrapperContentHead from '../user-detail-wrapper-content-head/us
 import UserDetailWrapperContentCoachCertificates from '../user-detail-wrapper-content-coach-certificates copy/user-detail-wrapper-content-coach-certificates';
 
 import { getSpecializationsTitles } from '../../utils/common';
+import UserDetailWrapperContentFriendButton from '../user-detail-wrapper-content-friend-button/user-detail-wrapper-content-friend-button';
 
 type UserDetailWrapperContentProps = {
   classNamePrefix: string;
@@ -14,21 +15,11 @@ type UserDetailWrapperContentProps = {
 }
 
 function UserDetailWrapperContent({ classNamePrefix, detailUserProfile }: UserDetailWrapperContentProps): JSX.Element {
-  //! кнопка - добавить в друзья
-
   const {
-    user: { role },
+    user: { id, role },
     questionnaire: { specializations, certificates = [] }
   } = detailUserProfile;
   const isCoach = isCoachRole(role);
-
-  const handleAddFriendButtonClick = (event: MouseEvent) => {
-    event.preventDefault();
-
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handleAddFriendButtonClick');
-  };
 
   return (
     <div className={`${classNamePrefix}__content`}>
@@ -42,13 +33,7 @@ function UserDetailWrapperContent({ classNamePrefix, detailUserProfile }: UserDe
         listClassName={`${classNamePrefix}__hashtag-list`}
         itemClassName={`${classNamePrefix}__hashtag-item`}
       />
-      <button
-        className={`btn ${classNamePrefix}__btn`}
-        type="button"
-        onClick={handleAddFriendButtonClick}
-      >
-        Добавить в друзья
-      </button>
+      <UserDetailWrapperContentFriendButton userId={id} classNamePrefix={classNamePrefix} />
     </div>
   );
 }

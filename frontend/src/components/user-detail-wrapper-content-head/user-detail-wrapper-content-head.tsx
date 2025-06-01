@@ -29,6 +29,7 @@ function UserDetailWrapperContentHead({ classNamePrefix, detailUserProfile }: Us
 
   const handleLocationLinkClick = (event: MouseEvent) => {
     event.preventDefault();
+
     setShowLocationMap(true);
   };
 

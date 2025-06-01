@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
-import { fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchDetailUserProfile } from '../actions/user-profile-action';
+import { fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchDetailUserProfile, changeIsFriendUserProfile } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
 const Default = {
@@ -29,7 +29,9 @@ const initialState: UserProfileProcess = {
 
   isFetchDetailUserProfileExecuting: false,
   isFetchDetailUserProfileError: false,
-  detailUserProfile: null
+  detailUserProfile: null,
+  isFriendUserProfile: false,
+  isFriendUserProfileChangeExecuting: false
 };
 
 export const userProfileProcess = createSlice(
@@ -58,6 +60,7 @@ export const userProfileProcess = createSlice(
       },
       clearDetailUserProfile: (state) => {
         state.detailUserProfile = initialState.detailUserProfile;
+        state.isFriendUserProfile = initialState.isFriendUserProfile;
       },
       resetUserProfileProcess: () => initialState
     },
@@ -129,7 +132,27 @@ export const userProfileProcess = createSlice(
           fetchDetailUserProfile.fulfilled,
           (state, { payload }) => {
             state.detailUserProfile = payload;
+            state.isFriendUserProfile = payload.isFriend;
             state.isFetchDetailUserProfileExecuting = false;
+          }
+        )
+        .addCase(
+          changeIsFriendUserProfile.pending,
+          (state) => {
+            state.isFriendUserProfileChangeExecuting = true;
+          }
+        )
+        .addCase(
+          changeIsFriendUserProfile.rejected,
+          (state) => {
+            state.isFriendUserProfileChangeExecuting = false;
+          }
+        )
+        .addCase(
+          changeIsFriendUserProfile.fulfilled,
+          (state, { payload }) => {
+            state.isFriendUserProfile = payload;
+            state.isFriendUserProfileChangeExecuting = false;
           }
         );
     }

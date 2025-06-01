@@ -40,11 +40,13 @@ function TrainingInfoHeader(props: TrainingInfoHeaderProps): JSX.Element {
 
   const handleEditButtonClick = (isSportsman) ? undefined : (event: MouseEvent) => {
     event.preventDefault();
+
     onEditClick?.();
   };
 
   const handleSaveButtonClick = (isSportsman) ? undefined : (event: MouseEvent) => {
     event.preventDefault();
+
     onSaveClick?.();
   };
 

@@ -19,6 +19,7 @@ function UserDetailWrapperContentCoachCertificates({ classNamePrefix, certificat
 
   const handleShowCertificatesButtonClick = (event: MouseEvent) => {
     event.preventDefault();
+
     setShowCertificates(true);
   };
 

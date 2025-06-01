@@ -14,7 +14,8 @@ type Extra = {
 export const Action = {
   FETCH_LOOK_FOR_COMPANY_USERS_PROFILES: 'user-profile/fetch-look-for-company-users-profiles',
   FETCH_USERS_PROFILES: 'user-profile/fetch-users-profiles',
-  FETCH_USER_PROFILE: 'user-profile/fetch-user-profile'
+  FETCH_USER_PROFILE: 'user-profile/fetch-user-profile',
+  CHANGE_IS_FRIEND_USER_PROFILE: 'user-profile/change-is-friend-user-profile'
 };
 
 export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
@@ -48,3 +49,20 @@ export const fetchDetailUserProfile = createAsyncThunk<IDetailUserProfileRdo, st
     return data;
   }
 );
+
+export const changeIsFriendUserProfile = createAsyncThunk<boolean, { userId: string; isFriend: boolean }, { extra: Extra }>(
+  Action.CHANGE_IS_FRIEND_USER_PROFILE,
+  async ({ userId, isFriend }, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.Friend);
+
+    if (isFriend) {
+      await api.post(url, { userId });
+    } else {
+      await api.delete(joinUrl(url, userId));
+    }
+
+    return isFriend;
+  }
+);
+
