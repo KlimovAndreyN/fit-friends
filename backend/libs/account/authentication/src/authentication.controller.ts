@@ -96,7 +96,7 @@ export class AuthenticationController {
   }
 
   @ApiResponse({ type: BasicDetailUserRdo }) //! перенести в описание
-  @UseGuards(JwtAuthGuard) // разрешено менять только себя, но по правильному и токеп пейлоад обновить там имя... или исключить его из токеп пейлоад
+  @UseGuards(JwtAuthGuard)
   @Patch()
   public async update(
     @Body() dto: UpdateBasicUserDto,

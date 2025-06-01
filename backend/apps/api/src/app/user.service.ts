@@ -68,7 +68,6 @@ export class UserService {
     return convertToDetailUserRdo(updateUser, avatarFilePath);
   }
 
-  //! где используется ?
   public async getDetailUser(userId: string, currentUserId: string, userRole: Role, requestId: string): Promise<DetailUserRdo> {
     const url = this.getUrl(userId);
     const headers = makeHeaders(requestId, null, currentUserId, userRole);
@@ -78,7 +77,6 @@ export class UserService {
     return user;
   }
 
-  //! где используется ?
   public async getDetailUserFromRequest(request: RequestWithRequestIdAndUser): Promise<DetailUserRdo> {
     const { user: { sub: userId, role }, requestId } = request;
 

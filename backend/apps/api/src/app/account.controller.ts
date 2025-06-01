@@ -106,11 +106,10 @@ export class AccountController {
 
   @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
   @Get()
-  public async getAccountInfo(
-    @Req() request: RequestWithRequestIdAndUser
-  ): Promise<AccountInfoRdo> {
+  public async getAccountInfo(@Req() request: RequestWithRequestIdAndUser): Promise<AccountInfoRdo> {
     const user = await this.userService.getDetailUserFromRequest(request);
-    const questionnaire = await this.fitQuestionnaireService.findByUserId(request.user.sub, request.requestId);
+    const { user: { sub: userId }, requestId } = request;
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
     return { user, questionnaire };
   }
@@ -127,7 +126,7 @@ export class AccountController {
     const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
     const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
 
-    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId); //! убрать bearerAuth
+    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
     const questionnaire = await this.fitQuestionnaireService.updateQuestionnaire(upadteQuestionnaireDto, userId, requestId);
 
     return { user, questionnaire };
