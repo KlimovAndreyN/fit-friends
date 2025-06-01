@@ -54,17 +54,17 @@ export class FitQuestionnaireService {
     return certificates;
   }
 
-  public async convertToQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
-    const { fileIds, ...fields } = rdo;
+  public async makeQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
+    const { fileIds, ...questionnaireFields } = rdo;
     const certificates = await this.getCertificates(fileIds, requestId);
 
-    return { ...fields, certificates };
+    return { ...questionnaireFields, certificates };
   }
 
   public async findByUserId(userId: string, requestId: string): Promise<QuestionnaireRdo> {
     const headers = makeHeaders(requestId, null, userId);
     const { data: basicQuestionnaire } = await this.httpService.axiosRef.get<BasicQuestionnaireRdo>(this.getUrl(), headers);
-    const questionnaire = await this.convertToQuestionnaireRdo(basicQuestionnaire, requestId);
+    const questionnaire = await this.makeQuestionnaireRdo(basicQuestionnaire, requestId);
 
     return questionnaire;
   }
@@ -89,7 +89,7 @@ export class FitQuestionnaireService {
 
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers);
-    const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
+    const questionnaire = await this.makeQuestionnaireRdo(data, requestId);
 
     return questionnaire;
   }
@@ -101,7 +101,7 @@ export class FitQuestionnaireService {
   ): Promise<QuestionnaireRdo> {
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.patch<BasicQuestionnaireRdo>(this.getUrl(), dto, headers);
-    const questionnaire = await this.convertToQuestionnaireRdo(data, requestId);
+    const questionnaire = await this.makeQuestionnaireRdo(data, requestId);
 
     return questionnaire;
   }

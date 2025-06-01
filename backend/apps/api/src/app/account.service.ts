@@ -8,6 +8,7 @@ import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { FileService } from './file.service';
+import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @Injectable()
@@ -15,6 +16,7 @@ export class AccountService {
   constructor(
     private readonly httpService: HttpService,
     private readonly fileService: FileService,
+    private readonly userService: UserService,
     private readonly fitQuestionnaireService: FitQuestionnaireService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
@@ -24,17 +26,11 @@ export class AccountService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.UsersProfiles, route);
   }
 
-  private async convertToAccountInfoRdo(
-    accountInfo: BasicAccountInfoRdo,
-    avatarFilePath: AccountInfoRdo['user']['avatarFilePath'],
-    requestId: string
-  ): Promise<AccountInfoRdo> {
+  private async makeAccountInfoRdo(accountInfo: BasicAccountInfoRdo, requestId: string): Promise<AccountInfoRdo> {
     const { user, questionnaire } = accountInfo
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { avatarFileId, ...userFields } = user;
     const rdo: AccountInfoRdo = {
-      user: { ...userFields, avatarFilePath },
-      questionnaire: await this.fitQuestionnaireService.convertToQuestionnaireRdo(questionnaire, requestId)
+      user: await this.userService.makeDetailUserRdo(user, requestId),
+      questionnaire: await this.fitQuestionnaireService.makeQuestionnaireRdo(questionnaire, requestId)
     };
 
     return rdo;
@@ -44,8 +40,7 @@ export class AccountService {
     const url = this.getUrl(UserProfileRoute.AccountInfo);
     const headers = makeHeaders(requestId, null, userId);
     const { data } = await this.httpService.axiosRef.get<BasicAccountInfoRdo>(url, headers);
-    const filePath = await this.fileService.getFilePath(data.user.avatarFileId, requestId);
 
-    return this.convertToAccountInfoRdo(data, filePath, requestId);
+    return this.makeAccountInfoRdo(data, requestId);
   }
 }

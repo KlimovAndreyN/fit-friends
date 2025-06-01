@@ -33,9 +33,9 @@ export class FitReviewService {
     const reviews = [];
 
     for (const item of data) {
-      const { userId, ...fields } = item;
+      const { userId, ...reviewFields } = item;
       const user = await this.userService.getUser(userId, currentUserId, userRole, requestId);
-      const review: ReviewRdo = { ...fields, user };
+      const review: ReviewRdo = { ...reviewFields, user };
 
       reviews.push(review);
     }

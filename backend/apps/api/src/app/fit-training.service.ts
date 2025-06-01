@@ -28,14 +28,14 @@ export class FitTrainingService {
     return joinUrl(this.apiOptions.fitServiceUrl, ServiceRoute.Trainings, route);
   }
 
-  private convertToTrainingRdo(rdo: BasicDetailTrainingRdo): TrainingRdo {
+  private makeTrainingRdo(rdo: BasicDetailTrainingRdo): TrainingRdo {
     const { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate } = rdo;
     const training: TrainingRdo = { id, title, description, specialization, caloriesWaste, price, backgroundPath, isSpecial, rating, createdDate };
 
     return training;
   }
 
-  private async convertToDetailTrainingRdo(
+  private async makeDetailTrainingRdo(
     rdo: BasicDetailTrainingRdo,
     videoFilePath: string,
     currentUserId: string,
@@ -43,9 +43,9 @@ export class FitTrainingService {
     requestId: string
   ): Promise<DetailTrainingRdo> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { userId, videoFileId, ...fields } = rdo;
+    const { userId, videoFileId, ...trainingFields } = rdo;
     const coach = await this.userService.getUser(userId, currentUserId, userRole, requestId); //! Убрать авторизацию и добавить userRole перед requestId
-    const detailTrainingRdo: DetailTrainingRdo = { ...fields, videoFilePath, coach };
+    const detailTrainingRdo: DetailTrainingRdo = { ...trainingFields, videoFilePath, coach };
 
     return detailTrainingRdo;
   }
@@ -69,7 +69,7 @@ export class FitTrainingService {
     const { data } = await this.httpService.axiosRef.get<BasicDetailTrainingRdo>(url, headers);
     const videoFilePath = await this.fileService.getFilePath(data.videoFileId, requestId);
 
-    return await this.convertToDetailTrainingRdo(data, videoFilePath, userId, userRole, requestId);
+    return await this.makeDetailTrainingRdo(data, videoFilePath, userId, userRole, requestId);
   }
 
   public async update(
@@ -85,7 +85,7 @@ export class FitTrainingService {
     const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
-    //const detailTraining: DetailTrainingRdo = await this.convertToDetailTrainingRdo(data, bearerAuth, requestId);
+    //const detailTraining: DetailTrainingRdo = await this.makeDetailTrainingRdo(data, bearerAuth, requestId);
     //! временно
     const detailTraining: DetailTrainingRdo = { backgroundPath: (data) ? '' : '', caloriesWaste: 0, coach: { id: '', name: '', avatarFilePath: '' }, createdDate: '', description: '', duration: Duration.Minutes_10_30, gender: Gender.Female, id: '', isSpecial: false, price: 0, rating: 0, specialization: Specialization.Aerobics, title: '', trainingLevel: TrainingLevel.Amateur, videoFilePath: '' };
 
@@ -104,6 +104,6 @@ export class FitTrainingService {
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
 
-    return this.convertToTrainingRdo(data);
+    return this.makeTrainingRdo(data);
   }
 }

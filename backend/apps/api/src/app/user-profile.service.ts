@@ -25,7 +25,7 @@ export class UserProfileService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.UsersProfiles, ...routes);
   }
 
-  private async convertToUsersProfiles(basicUsersProfiles: BasicUserProfileRdo[], requestId: string): Promise<UserProfileRdo[]> {
+  private async makeUsersProfiles(basicUsersProfiles: BasicUserProfileRdo[], requestId: string): Promise<UserProfileRdo[]> {
     const usersProfiles: UserProfileRdo[] = [];
 
     for (const { id, location, name, role, specializations, avatarFileId } of basicUsersProfiles) {
@@ -45,7 +45,7 @@ export class UserProfileService {
     const {
       data: { currentPage, entities, itemsPerPage, totalItems, totalPages }
     } = await this.httpService.axiosRef.get<BasicUsersProfilesWithPaginationRdo>(url, headers);
-    const usersProfiles = await this.convertToUsersProfiles(entities, requestId);
+    const usersProfiles = await this.makeUsersProfiles(entities, requestId);
     const data: UsersProfilesWithPaginationRdo = { entities: usersProfiles, currentPage, itemsPerPage, totalItems, totalPages };
 
     return data;
@@ -56,7 +56,7 @@ export class UserProfileService {
     const url = this.getUrl(UserProfileRoute.LookForCompany);
     const headers = makeHeaders(requestId, null, sub, role);
     const { data: basicUsersProfiles } = await this.httpService.axiosRef.get<BasicUserProfileRdo[]>(url, headers);
-    const usersProfiles = await this.convertToUsersProfiles(basicUsersProfiles, requestId);
+    const usersProfiles = await this.makeUsersProfiles(basicUsersProfiles, requestId);
 
     return usersProfiles;
   }
