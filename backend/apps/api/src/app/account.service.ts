@@ -3,11 +3,13 @@ import { ConfigType } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import 'multer'; // Express.Multer.File
 
-import { ServiceRoute, AccountInfoRdo, BasicAccountInfoRdo, UserProfileRoute } from '@backend/shared/core';
-import { joinUrl, makeHeaders } from '@backend/shared/helpers';
+import {
+  ServiceRoute, AccountInfoRdo, BasicAccountInfoRdo, UserProfileRoute,
+  UpdateAccountInfoDto, UpdateUserDto, UpdateQuestionnaireDto
+} from '@backend/shared/core';
+import { fillDto, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
-import { FileService } from './file.service';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
@@ -15,7 +17,6 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 export class AccountService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly fileService: FileService,
     private readonly userService: UserService,
     private readonly fitQuestionnaireService: FitQuestionnaireService,
     @Inject(apiConfig.KEY)
@@ -42,5 +43,21 @@ export class AccountService {
     const { data } = await this.httpService.axiosRef.get<BasicAccountInfoRdo>(url, headers);
 
     return this.makeAccountInfoRdo(data, requestId);
+  }
+
+  public async updateAccountInfo(
+    dto: UpdateAccountInfoDto,
+    userId: string,
+    bearerAuth: string,
+    requestId: string,
+    avatarFile?: Express.Multer.File
+  ): Promise<AccountInfoRdo> {
+    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
+    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
+
+    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
+    const questionnaire = await this.fitQuestionnaireService.updateQuestionnaire(upadteQuestionnaireDto, userId, requestId);
+
+    return { user, questionnaire };
   }
 }

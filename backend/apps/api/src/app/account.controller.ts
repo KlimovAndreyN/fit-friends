@@ -7,22 +7,20 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateAccountInfoDto, UpdateUserDto,
-  QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, ApiParamOption,
+  ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateAccountInfoDto, QuestionnaireRdo,
+  CreateQuestionnaireSportsmanDto, UserProfileRoute, ApiParamOption, AccountInfoRdo,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
-  AVATAR_FILE_PROPERTY, BearerAuth, AccountInfoRdo, parseUserAvatarFilePipeBuilder,
-  UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder,
-  CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder,
-  IdParam, FILE_KEY
+  AVATAR_FILE_PROPERTY, BearerAuth, parseUserAvatarFilePipeBuilder, FILES_PROPERTY,
+  parseQuestionnaireFilesPipeBuilder, CertificateRdo, FileUploaderFileApiBody,
+  parseCertificateFilePipeBuilder, IdParam, FILE_KEY
 } from '@backend/shared/core';
-import { fillDto, joinUrl } from '@backend/shared/helpers';
+import { joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
 import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
 import { AccountService } from './account.service';
-import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @ApiTags(ApiServiceRoute.UsersProfiles)
@@ -33,7 +31,6 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 export class AccountController {
   constructor(
     private accountService: AccountService,
-    private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
   ) { }
 
@@ -125,14 +122,9 @@ export class AccountController {
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<AccountInfoRdo> {
-    // сделать напрямую в FitUserProfileController + файл + сервис
-    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
-    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
+    const accountInfo = await this.accountService.updateAccountInfo(dto, userId, bearerAuth, requestId, avatarFile);
 
-    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId);
-    const questionnaire = await this.fitQuestionnaireService.updateQuestionnaire(upadteQuestionnaireDto, userId, requestId);
-
-    return { user, questionnaire };
+    return accountInfo;
   }
 
   @Post(UserProfileRoute.ReadyForTraining)
