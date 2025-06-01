@@ -42,6 +42,7 @@ export enum TrainingRoute {
 }
 
 export enum UserProfileRoute {
+  AccountInfo = 'account-info',
   Questionnaires = ServiceRoute.Questionnaires,
   QuestionnairesSportsman = `${Questionnaires}/${Role.Sportsman}`,
   QuestionnairesCoach = `${Questionnaires}/${Role.Coach}`,

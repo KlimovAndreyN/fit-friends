@@ -18,7 +18,7 @@ import { FileService } from './file.service';
 export class FitTrainingService {
   constructor(
     private readonly httpService: HttpService,
-    private userService: UserService,
+    private readonly userService: UserService,
     private readonly fileService: FileService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>

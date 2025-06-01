@@ -25,9 +25,9 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 @UseFilters(AxiosExceptionFilter)
 export class FitTrainingController {
   constructor(
-    private fitTrainingService: FitTrainingService,
-    private userService: UserService,
-    private fitQuestionnaireService: FitQuestionnaireService
+    private readonly fitTrainingService: FitTrainingService,
+    private readonly userService: UserService,
+    private readonly fitQuestionnaireService: FitQuestionnaireService
   ) { }
 
   @ApiResponse({ type: TrainingsWithPaginationRdo })

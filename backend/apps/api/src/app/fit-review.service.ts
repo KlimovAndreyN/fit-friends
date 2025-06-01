@@ -12,7 +12,7 @@ import { UserService } from './user.service';
 export class FitReviewService {
   constructor(
     private readonly httpService: HttpService,
-    private userService: UserService,
+    private readonly userService: UserService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }

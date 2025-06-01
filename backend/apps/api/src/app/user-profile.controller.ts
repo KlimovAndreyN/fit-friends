@@ -23,9 +23,9 @@ import { UserProfileService } from './user-profile.service';
 @UseFilters(AxiosExceptionFilter)
 export class UserProfileController {
   constructor(
-    private userService: UserService,
-    private fitQuestionnaireService: FitQuestionnaireService,
-    private userProfileService: UserProfileService
+    private readonly userService: UserService,
+    private readonly fitQuestionnaireService: FitQuestionnaireService,
+    private readonly userProfileService: UserProfileService
   ) { }
 
   @ApiResponse({ type: UserProfileRdo, isArray: true })

@@ -14,7 +14,7 @@ import { FitReviewService } from './fit-review.service';
 @UseFilters(AxiosExceptionFilter)
 export class FitReviewController {
   constructor(
-    private fitReviewService: FitReviewService
+    private readonly fitReviewService: FitReviewService
   ) { }
 
   @ApiResponse({ type: ReviewRdo })

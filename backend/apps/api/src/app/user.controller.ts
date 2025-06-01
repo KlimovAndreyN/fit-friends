@@ -26,7 +26,7 @@ import { CheckNotAuthGuard } from './guards/check-not-auth.guard';
 export class UserController {
   constructor(
     private readonly httpService: HttpService,
-    private userService: UserService
+    private readonly userService: UserService
   ) { }
 
   @ApiOperation(AuthenticationApiOperation.Check)

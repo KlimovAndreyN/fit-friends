@@ -13,7 +13,7 @@ import {
   AVATAR_FILE_PROPERTY, BearerAuth, AccountInfoRdo, parseUserAvatarFilePipeBuilder,
   UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder,
   CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder,
-  IdParam, FILE_KEY, RequestWithRequestIdAndUser
+  IdParam, FILE_KEY
 } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -21,6 +21,7 @@ import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
 import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
+import { AccountService } from './account.service';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
@@ -31,6 +32,7 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 @UseFilters(AxiosExceptionFilter)
 export class AccountController {
   constructor(
+    private accountService: AccountService,
     private userService: UserService,
     private fitQuestionnaireService: FitQuestionnaireService
   ) { }
@@ -106,14 +108,12 @@ export class AccountController {
 
   @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
   @Get()
-  public async getUserProfile(
-    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+  public async getAccountInfo(
+    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
   ): Promise<AccountInfoRdo> {
-    // сделать напрямую в FitUserProfileController + файл + сервис
-    const user = await this.userService.getDetailUser(sub, sub, role, requestId);
-    const questionnaire = await this.fitQuestionnaireService.findByUserId(sub, requestId);
+    const accountInfo = await this.accountService.getAccountInfo(userId, requestId);
 
-    return { user, questionnaire };
+    return accountInfo;
   }
 
   @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
