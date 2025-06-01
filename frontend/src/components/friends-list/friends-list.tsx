@@ -18,9 +18,9 @@ function FriendsList(): JSX.Element {
   //const isHaveMoreData = false;
   const mainClassName = 'friends-list';
 
-  const handleButtonsShowMoreAndToTopClick = () => {
+  const handleShowMoreClick = () => {
     // eslint-disable-next-line no-console
-    console.log('handleButtonsShowMoreAndToTopClick');
+    console.log('handleShowMoreClick');
   };
 
   return (
@@ -46,7 +46,7 @@ function FriendsList(): JSX.Element {
                   />))
               }
             </ul>
-            <ButtonsShowMoreAndToTop divClassNamePrefix={mainClassName} isHaveMoreData={isHaveMoreData} onShowMoreClick={handleButtonsShowMoreAndToTopClick} />
+            <ButtonsShowMoreAndToTop divClassNamePrefix={mainClassName} isHaveMoreData={isHaveMoreData} onShowMoreClick={handleShowMoreClick} />
           </div>
         </div>
       </section>

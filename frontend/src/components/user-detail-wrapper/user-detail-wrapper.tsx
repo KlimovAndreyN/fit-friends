@@ -23,6 +23,7 @@ type UserDetailWrapperProps = {
 
 function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
   //! кнопка - добавить в друзья
+  //! много кода, попробовать разделить, сертификаты... что то еще
   //! возможно отдельный компонет Location, где иконка #icon-location
   //    нет css для user-card__icon-location / user-card-coach__icon-location / user-card-coach-2__icon-location, но в svg выставлено
   //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
