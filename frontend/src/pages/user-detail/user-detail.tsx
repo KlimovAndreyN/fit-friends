@@ -1,8 +1,6 @@
 import { JSX, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { isCoachRole } from '@backend/shared/core';
-
 import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
 import UserDetailWrapper from '../../components/user-detail-wrapper/user-detail-wrapper';
@@ -54,10 +52,6 @@ function UserDetail(): JSX.Element | null {
     return null;
   }
 
-  const { user: { role }, questionnaire: { individualTraining } } = detailUserProfile;
-  const isCoach = isCoachRole(role);
-  const className = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
-
   return (
     <Fragment>
       <Header title={PageTitle.UserDetail} />
@@ -66,15 +60,7 @@ function UserDetail(): JSX.Element | null {
           <div className="container">
             <div className="inner-page__wrapper">
               <BackButton className='inner-page' />
-              <div className="inner-page__content">
-                <section className={className}>
-                  <h1 className="visually-hidden">{`Карточка пользователя${(isCoach) ? ' роль тренер' : ''}`}</h1>
-                  <UserDetailWrapper
-                    classNamePrefix={className}
-                    detailUserProfile={detailUserProfile}
-                  />
-                </section>
-              </div>
+              <UserDetailWrapper detailUserProfile={detailUserProfile} />
             </div>
           </div>
         </div>

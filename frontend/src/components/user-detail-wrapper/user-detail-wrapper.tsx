@@ -17,13 +17,13 @@ import { getSpecializationsTitles } from '../../utils/common';
 import { LocationTitle } from '../../const';
 
 type UserDetailWrapperProps = {
-  classNamePrefix: string;
   detailUserProfile: IDetailUserProfileRdo;
 }
 
-function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWrapperProps): JSX.Element {
+function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.Element {
   //! кнопка - добавить в друзья
   //! много кода, попробовать разделить, сертификаты... что то еще
+
   //! возможно отдельный компонет Location, где иконка #icon-location
   //    нет css для user-card__icon-location / user-card-coach__icon-location / user-card-coach-2__icon-location, но в svg выставлено
   //! просмотр карты с местоположением - обработка клика в Location карта href={`${pathname}#popup-user-map.html`}
@@ -35,12 +35,13 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
   const { pathname } = useLocation();
   const {
     user: { id: userId, role, name, avatarFilePath, location, about, backgroundPath },
-    questionnaire: { readyForTraining, specializations, description, certificates = [] }
+    questionnaire: { readyForTraining, specializations, description, individualTraining, certificates = [] }
   } = detailUserProfile;
   const locationText = LocationTitle[location];
   const [showCertificates, setShowCertificates] = useState(false);
   const [showLocationMap, setShowLocationMap] = useState(false);
   const isCoach = isCoachRole(role);
+  const mainClassName = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
 
   const handleLocationLinkClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -70,14 +71,14 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
 
   const content = (
     <Fragment>
-      <div className={`${classNamePrefix}__content`}>
-        <UserPhoto className={`${classNamePrefix}__head`} size={80} path={avatarFilePath} />
-        <div className={`${classNamePrefix}__head`}>
-          <h2 className={`${classNamePrefix}__title`}>{name}</h2>
+      <div className={`${mainClassName}__content`}>
+        <UserPhoto className={`${mainClassName}__head`} size={80} path={avatarFilePath} />
+        <div className={`${mainClassName}__head`}>
+          <h2 className={`${mainClassName}__title`}>{name}</h2>
         </div>
-        <div className={`${classNamePrefix}__label`}>
+        <div className={`${mainClassName}__label`}>
           <a href={`${pathname}#popup-user-map.html`} onClick={handleLocationLinkClick}>
-            <svg className={`${classNamePrefix}__icon-location`} width="12" height="14" aria-hidden="true">
+            <svg className={`${mainClassName}__icon-location`} width="12" height="14" aria-hidden="true">
               <use xlinkHref="#icon-location"></use>
             </svg>
             <span>{locationText}</span>
@@ -92,7 +93,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           />
         }
         <UserDetailStatus role={role} readyForTraining={readyForTraining} />
-        <div className={`${classNamePrefix}__text`}>
+        <div className={`${mainClassName}__text`}>
           <p>{about}</p>
           {(description) && <p>{description}</p>}
         </div>
@@ -100,7 +101,7 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
           isCoach &&
           <Fragment>
             <button
-              className={`btn-flat ${classNamePrefix}__sertificate outline-none-on-focus`}
+              className={`btn-flat ${mainClassName}__sertificate outline-none-on-focus`}
               type="button"
               onClick={handleShowCertificatesButtonClick}
             >
@@ -120,23 +121,28 @@ function UserDetailWrapper({ classNamePrefix, detailUserProfile }: UserDetailWra
         }
         <Hashtags
           items={getSpecializationsTitles(specializations)}
-          listClassName={`${classNamePrefix}__hashtag-list`}
-          itemClassName={`${classNamePrefix}__hashtag-item`}
+          listClassName={`${mainClassName}__hashtag-list`}
+          itemClassName={`${mainClassName}__hashtag-item`}
         />
-        <button className={`btn ${classNamePrefix}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
+        <button className={`btn ${mainClassName}__btn`} type="button" onClick={handleAddFriendButtonClick}>Добавить в друзья</button>
       </div>
-      <UserDetailGallary classNamePrefix={classNamePrefix} filesPaths={[backgroundPath]} />
+      <UserDetailGallary classNamePrefix={mainClassName} filesPaths={[backgroundPath]} />
     </Fragment>
   );
 
   return (
-    <div className={`${classNamePrefix}__wrapper`}>
-      {
-        isCoach
-          ? <div className={`${classNamePrefix}__card`}>{content}</div>
-          : content
-      }
-      {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={classNamePrefix} userId={userId} />}
+    <div className="inner-page__content">
+      <section className={mainClassName}>
+        <h1 className="visually-hidden">{`Карточка пользователя${(isCoach) ? ' роль тренер' : ''}`}</h1>
+        <div className={`${mainClassName}__wrapper`}>
+          {
+            isCoach
+              ? <div className={`${mainClassName}__card`}>{content}</div>
+              : content
+          }
+          {isCoach && <UserDetailCoachTrainingBlock classNamePrefix={mainClassName} userId={userId} />}
+        </div>
+      </section>
     </div>
   );
 }
