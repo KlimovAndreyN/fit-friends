@@ -7,7 +7,7 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserProfileDto, IAccountInfoRdo, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
+import { IUpdateAccountInfoDto, IAccountInfoRdo, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
 import { useAppSelector } from '../../hooks';
 import useEscapeKey from '../../hooks/use-escape-key';
@@ -28,7 +28,7 @@ enum FormFieldName {
 type PersonalAccountLeftPanelProps = {
   account: IAccountInfoRdo;
   role: Role;
-  onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
+  onSubmit: (updatedUserProfile: IUpdateAccountInfoDto) => void;
 }
 
 function PersonalAccountLeftPanel({ account, role, onSubmit }: PersonalAccountLeftPanelProps): JSX.Element {
@@ -76,7 +76,7 @@ function PersonalAccountLeftPanel({ account, role, onSubmit }: PersonalAccountLe
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const updatedUserProfile: IUpdateUserProfileDto = {
+    const updatedUserProfile: IUpdateAccountInfoDto = {
       avatarFile,
       emptyAvatarFile: !currentAvatarFilePath,
       name: formData.get(FormFieldName.Name)?.toString() || '',

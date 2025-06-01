@@ -1,12 +1,12 @@
 import { IntersectionType, OmitType } from '@nestjs/swagger';
 
-import { IUpdateUserProfileDto } from '../interfaces/dto/i-update-user-profile.dto';
+import { IUpdateAccountInfoDto } from '../interfaces/dto/i-update-accoun-info.dto';
 import { UpdateUserDto } from './update-user.dto';
 import { UpdateQuestionnaireDto } from './update-questionnaire.dto';
 
-export class UpdateUserProfileDto
+export class UpdateAccountInfoDto
   extends IntersectionType(
     UpdateUserDto,
     OmitType(UpdateQuestionnaireDto, ['readyForTraining'])
   )
-  implements IUpdateUserProfileDto { };
+  implements IUpdateAccountInfoDto { };

@@ -2,8 +2,8 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, IQuestionnaireRdo, FILE_KEY, IAccountInfoRdo,
-  Role, UserProfileRoute, ApiServiceRoute, isSportsmanRole, ICertificateRdo
+  IQuestionnaireRdo, FILE_KEY, IAccountInfoRdo, isSportsmanRole, Role,
+  UserProfileRoute, ApiServiceRoute, ICertificateRdo, IUpdateAccountInfoDto
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 
@@ -71,7 +71,7 @@ export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra
   }
 );
 
-export const updateAccountInfo = createAsyncThunk<IAccountInfoRdo, IUpdateUserProfileDto, { extra: Extra }>(
+export const updateAccountInfo = createAsyncThunk<IAccountInfoRdo, IUpdateAccountInfoDto, { extra: Extra }>(
   Action.UPDATE_ACCOUNT_INFO,
   async (dto, { extra }) => {
     const { api } = extra;

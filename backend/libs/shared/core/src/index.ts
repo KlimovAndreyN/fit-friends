@@ -37,9 +37,9 @@ export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-
 export { CreateTrainingDto } from './lib/dto/create-training.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
+export { UpdateAccountInfoDto } from './lib/dto/update-account-info.dto';
 export { UpdateBasicUserDto } from './lib/dto/update-basic-user.dto';
 export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
-export { UpdateUserProfileDto } from './lib/dto/update-user-profile.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { FILES_PROPERTY } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';

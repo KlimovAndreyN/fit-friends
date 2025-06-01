@@ -6,7 +6,7 @@ import PersonalAccountLeftPanel from '../../components/personal-account-left-pan
 import PersonalAccountRoleSportsman from '../../components/personal-account-role-sportsman/personal-account-role-sportsman';
 import PersonalAccountRoleCoach from '../../components/personal-account-role-coach/personal-account-role-coach';
 
-import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
+import { isSportsmanRole, IUpdateAccountInfoDto } from '@backend/shared/core';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
@@ -26,7 +26,7 @@ function PersonalAccount(): JSX.Element {
     dispatch(setPrevLocation(AppRoute.PersonalAccount));
   }, [dispatch]);
 
-  const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
+  const handleLeftPanelSubmit = (updatedUserProfile: IUpdateAccountInfoDto) => {
     dispatch(updateAccountInfo(updatedUserProfile));
   };
 

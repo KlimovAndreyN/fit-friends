@@ -9,9 +9,7 @@ export { type ICreateQuestionnaireSportsmanDto } from './lib/interfaces/dto/i-cr
 export { type ICreateTrainingDto } from './lib/interfaces/dto/i-create-training.dto';
 export { type ICreateUserDto } from './lib/interfaces/dto/i-create-user.dto';
 export { type ILoginUserDto } from './lib/interfaces/dto/i-login-user.dto';
-export { type IUpdateQuestionnaireDto } from './lib/interfaces/dto/i-update-questionnaire.dto';
-export { type IUpdateUserProfileDto } from './lib/interfaces/dto/i-update-user-profile.dto';
-export { type IUpdateUserDto } from './lib/interfaces/dto/i-update-user.dto';
+export { type IUpdateAccountInfoDto } from './lib/interfaces/dto/i-update-accoun-info.dto';
 
 export { type IPageQuery } from './lib/interfaces/query/i-page.query';
 export { type ITrainingQuery } from './lib/interfaces/query/i-training.query';

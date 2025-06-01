@@ -7,7 +7,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import 'multer'; // Express.Multer.File
 
 import {
-  ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateUserProfileDto, UpdateUserDto,
+  ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateAccountInfoDto, UpdateUserDto,
   QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, ApiParamOption,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, AccountInfoRdo, parseUserAvatarFilePipeBuilder,
@@ -121,7 +121,7 @@ export class AccountController {
   @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Patch()
   public async update(
-    @Body() dto: UpdateUserProfileDto,
+    @Body() dto: UpdateAccountInfoDto,
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<AccountInfoRdo> {
