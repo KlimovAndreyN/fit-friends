@@ -7,12 +7,12 @@ export const getExistQuestionnaire = ({ [StoreSlice.AccountProcess]: ACCOUNT_PRO
 
 export const getIsCreateQuestionnaireExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isCreateQuestionnaireExecuting'] => ACCOUNT_PROCESS.isCreateQuestionnaireExecuting;
 
-export const getIsFetchAccountExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isFetchAccountExecuting'] => ACCOUNT_PROCESS.isFetchAccountExecuting;
-export const getAccount = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['account'] => ACCOUNT_PROCESS.account;
+export const getIsFetchAccountInfoExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isFetchAccountInfoExecuting'] => ACCOUNT_PROCESS.isFetchAccountInfoExecuting;
+export const getAccountInfo = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['accountInfo'] => ACCOUNT_PROCESS.accountInfo;
 export const getCoachCertificates = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['coachCertificates'] => ACCOUNT_PROCESS.coachCertificates;
 
-export const getIsUpdateAccountExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateAccountExecuting'] => ACCOUNT_PROCESS.isUpdateAccountExecuting;
-export const getIsUpdateAccountError = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateAccountError'] => ACCOUNT_PROCESS.isUpdateAccountError;
+export const getIsUpdateAccountInfoExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateAccountInfoExecuting'] => ACCOUNT_PROCESS.isUpdateAccountInfoExecuting;
+export const getIsUpdateAccountInfoError = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateAccountInfoError'] => ACCOUNT_PROCESS.isUpdateAccountInfoError;
 
 export const getIsUpdateCoachCertificatesExecuting = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateCoachCertificatesExecuting'] => ACCOUNT_PROCESS.isUpdateCoachCertificatesExecuting;
 export const getIsUpdateCoachCertificatesError = ({ [StoreSlice.AccountProcess]: ACCOUNT_PROCESS }: State): AccountProcess['isUpdateCoachCertificatesError'] => ACCOUNT_PROCESS.isUpdateCoachCertificatesError;

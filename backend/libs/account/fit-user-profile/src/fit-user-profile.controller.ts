@@ -39,4 +39,6 @@ export class FitUserProfileController {
 
     return usersProfiles;
   }
+
+  //! добавить получение по одному пользователю
 }

@@ -11,23 +11,23 @@ import { isSportsmanRole, IUpdateUserProfileDto } from '@backend/shared/core';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { getIsFetchAccountExecuting, getAccount } from '../../store/account-process/selectors';
-import { fetchAccount, updateAccount } from '../../store/actions/account-action';
+import { getIsFetchAccountInfoExecuting, getAccountInfo } from '../../store/account-process/selectors';
+import { fetchAccountInfo, updateAccountInfo } from '../../store/actions/account-action';
 import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isFetchAccountExecuting = useAppSelector(getIsFetchAccountExecuting);
+  const isFetchAccountExecuting = useAppSelector(getIsFetchAccountInfoExecuting);
   const userRole = useAppSelector(getUserRole);
-  const userProfile = useAppSelector(getAccount);
+  const userProfile = useAppSelector(getAccountInfo);
 
   useEffect(() => {
-    dispatch(fetchAccount());
+    dispatch(fetchAccountInfo());
     dispatch(setPrevLocation(AppRoute.PersonalAccount));
   }, [dispatch]);
 
   const handleLeftPanelSubmit = (updatedUserProfile: IUpdateUserProfileDto) => {
-    dispatch(updateAccount(updatedUserProfile));
+    dispatch(updateAccountInfo(updatedUserProfile));
   };
 
   //! userProfile можно отдельно обработать если пусто то выдать сообщение об ошибке - компонет Error с текстом и ссылкой на главную

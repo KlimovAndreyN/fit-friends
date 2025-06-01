@@ -77,7 +77,6 @@ export class UserService {
     return this.getDetailUser(userId, userId, role, requestId);
   }
 
-  //! role! currentUserId!
   public async getUser(userId: string, currentUserId: string, userRole: Role, requestId: string): Promise<UserRdo> {
     const detailUser = await this.getDetailUser(userId, currentUserId, userRole, requestId);
     const { name, avatarFilePath } = detailUser;

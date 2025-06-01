@@ -10,7 +10,7 @@ import {
   ApiServiceRoute, RequestWithRequestIdAndUserId, UpdateUserProfileDto, UpdateUserDto,
   QuestionnaireRdo, CreateQuestionnaireSportsmanDto, UserProfileRoute, ApiParamOption,
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
-  AVATAR_FILE_PROPERTY, BearerAuth, DetailUserProfileRdo, parseUserAvatarFilePipeBuilder,
+  AVATAR_FILE_PROPERTY, BearerAuth, AccountInfoRdo, parseUserAvatarFilePipeBuilder,
   UpdateQuestionnaireDto, FILES_PROPERTY, parseQuestionnaireFilesPipeBuilder,
   CertificateRdo, FileUploaderFileApiBody, parseCertificateFilePipeBuilder,
   IdParam, FILE_KEY, RequestWithRequestIdAndUser
@@ -104,18 +104,19 @@ export class AccountController {
     await this.fitQuestionnaireService.deleteCoachCertificate(fileId, userId, requestId);
   }
 
-  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
+  @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
   @Get()
   public async getUserProfile(
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
-  ): Promise<DetailUserProfileRdo> {
+  ): Promise<AccountInfoRdo> {
+    // сделать напрямую в FitUserProfileController + файл + сервис
     const user = await this.userService.getDetailUser(sub, sub, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(sub, requestId);
 
     return { user, questionnaire };
   }
 
-  @ApiResponse({ type: DetailUserProfileRdo }) //! вынести в описание
+  @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor(AVATAR_FILE_PROPERTY))
   @Patch()
@@ -123,7 +124,8 @@ export class AccountController {
     @Body() dto: UpdateUserProfileDto,
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
-  ): Promise<DetailUserProfileRdo> {
+  ): Promise<AccountInfoRdo> {
+    // сделать напрямую в FitUserProfileController + файл + сервис
     const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
     const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
 

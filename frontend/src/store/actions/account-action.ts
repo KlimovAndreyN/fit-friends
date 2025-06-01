@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
-  IUpdateUserProfileDto, IQuestionnaireRdo, FILE_KEY, IDetailUserProfileRdo,
+  IUpdateUserProfileDto, IQuestionnaireRdo, FILE_KEY, IAccountInfoRdo,
   Role, UserProfileRoute, ApiServiceRoute, isSportsmanRole, ICertificateRdo
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
@@ -16,8 +16,8 @@ type Extra = {
 export const Action = {
   EXIST_QUESTIONNARE: 'account/exist-questionnaire',
   CREATE_QUESTIONNARE: 'account/create-questionnaire',
-  FETCH_ACCOUNT: 'account/fetch-account',
-  UPDATE_ACCOUNT: 'account/update-account',
+  FETCH_ACCOUNT_INFO: 'account/fetch-account-info',
+  UPDATE_ACCOUNT_INFO: 'account/update-account-info',
   CREATE_COACH_CERTIFICATE: 'account/create-coach-certificate',
   UPDATE_COACH_CERTIFICATE: 'account/update-coach-certificate',
   DELETE_COACH_CERTIFICATE: 'account/delete-coach-certificate',
@@ -45,11 +45,11 @@ export const createQuestionnaire = createAsyncThunk<void, { dto: CreateQuestionn
   }
 );
 
-export const fetchAccount = createAsyncThunk<IDetailUserProfileRdo, undefined, { extra: Extra }>(
-  Action.FETCH_ACCOUNT,
+export const fetchAccountInfo = createAsyncThunk<IAccountInfoRdo, undefined, { extra: Extra }>(
+  Action.FETCH_ACCOUNT_INFO,
   async (_, { extra }) => {
     const { api } = extra;
-    const { data } = await api.get<IDetailUserProfileRdo>(ApiServiceRoute.Accounts);
+    const { data } = await api.get<IAccountInfoRdo>(ApiServiceRoute.Accounts);
 
     return data;
   }
@@ -71,11 +71,11 @@ export const changeReadyForTraining = createAsyncThunk<boolean, boolean, { extra
   }
 );
 
-export const updateAccount = createAsyncThunk<IDetailUserProfileRdo, IUpdateUserProfileDto, { extra: Extra }>(
-  Action.UPDATE_ACCOUNT,
+export const updateAccountInfo = createAsyncThunk<IAccountInfoRdo, IUpdateUserProfileDto, { extra: Extra }>(
+  Action.UPDATE_ACCOUNT_INFO,
   async (dto, { extra }) => {
     const { api } = extra;
-    const { data } = await api.patch<IDetailUserProfileRdo>(ApiServiceRoute.Accounts, dto, { useMultipartFormData: true });
+    const { data } = await api.patch<IAccountInfoRdo>(ApiServiceRoute.Accounts, dto, { useMultipartFormData: true });
 
     return data;
   }

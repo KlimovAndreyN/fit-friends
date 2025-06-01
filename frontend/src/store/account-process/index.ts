@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { AccountProcess } from '../../types/process/account.process';
 import {
-  changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchAccount,
-  updateAccount, createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
+  changeReadyForTraining, createQuestionnaire, existQuestionnaire, fetchAccountInfo,
+  updateAccountInfo, createCoachCertificate, deleteCoachCertificate, updateCoachCertificate
 } from '../actions/account-action';
 import { StoreSlice } from '../../const';
 
@@ -13,12 +13,12 @@ const initialState: AccountProcess = {
 
   isCreateQuestionnaireExecuting: false,
 
-  isFetchAccountExecuting: false,
-  account: null,
+  isFetchAccountInfoExecuting: false,
+  accountInfo: null,
   coachCertificates: [],
 
-  isUpdateAccountExecuting: false,
-  isUpdateAccountError: false,
+  isUpdateAccountInfoExecuting: false,
+  isUpdateAccountInfoError: false,
 
   isUpdateCoachCertificatesExecuting: false,
   isUpdateCoachCertificatesError: false,
@@ -76,48 +76,48 @@ export const accountProcess = createSlice(
           }
         )
         .addCase(
-          fetchAccount.pending,
+          fetchAccountInfo.pending,
           (state) => {
-            state.isFetchAccountExecuting = true;
+            state.isFetchAccountInfoExecuting = true;
           }
         )
         .addCase(
-          fetchAccount.rejected,
+          fetchAccountInfo.rejected,
           (state) => {
-            state.isFetchAccountExecuting = false;
+            state.isFetchAccountInfoExecuting = false;
           }
         )
         .addCase(
-          fetchAccount.fulfilled,
+          fetchAccountInfo.fulfilled,
           (state, { payload }) => {
-            state.account = payload;
+            state.accountInfo = payload;
             state.coachCertificates = payload.questionnaire.certificates || [];
             state.readyForTraining = payload.questionnaire.readyForTraining;
-            state.isFetchAccountExecuting = false;
+            state.isFetchAccountInfoExecuting = false;
           }
         )
         .addCase(
-          updateAccount.pending,
+          updateAccountInfo.pending,
           (state) => {
-            state.isUpdateAccountError = false;
-            state.isUpdateAccountExecuting = true;
+            state.isUpdateAccountInfoError = false;
+            state.isUpdateAccountInfoExecuting = true;
           }
         )
         .addCase(
-          updateAccount.rejected,
+          updateAccountInfo.rejected,
           (state) => {
-            state.isUpdateAccountError = true;
-            state.isUpdateAccountExecuting = false;
+            state.isUpdateAccountInfoError = true;
+            state.isUpdateAccountInfoExecuting = false;
           }
         )
         .addCase(
-          updateAccount.fulfilled,
+          updateAccountInfo.fulfilled,
           (state, { payload }) => {
-            state.account = payload;
+            state.accountInfo = payload;
             state.coachCertificates = payload.questionnaire.certificates || [];
             state.readyForTraining = payload.questionnaire.readyForTraining;
-            state.isUpdateAccountError = false;
-            state.isUpdateAccountExecuting = false;
+            state.isUpdateAccountInfoError = false;
+            state.isUpdateAccountInfoExecuting = false;
           }
         )
         .addCase(

@@ -1,4 +1,4 @@
-import { ICertificateRdo, IDetailUserProfileRdo } from '@backend/shared/core';
+import { IAccountInfoRdo, ICertificateRdo } from '@backend/shared/core';
 
 export type AccountProcess = {
   isExistQuestionnaireExecuting: boolean;
@@ -6,12 +6,12 @@ export type AccountProcess = {
 
   isCreateQuestionnaireExecuting: boolean;
 
-  isFetchAccountExecuting: boolean;
-  account: IDetailUserProfileRdo | null;
+  isFetchAccountInfoExecuting: boolean;
+  accountInfo: IAccountInfoRdo | null;
   coachCertificates: ICertificateRdo[];
 
-  isUpdateAccountExecuting: boolean;
-  isUpdateAccountError: boolean;
+  isUpdateAccountInfoExecuting: boolean;
+  isUpdateAccountInfoError: boolean;
 
   isUpdateCoachCertificatesExecuting: boolean;
   isUpdateCoachCertificatesError: boolean;

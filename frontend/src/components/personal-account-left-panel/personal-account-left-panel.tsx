@@ -7,11 +7,11 @@ import CustomInput from '../../components/custom-input/custom-input';
 import CustomSelect from '../../components/custom-select/custom-select';
 import SpecializationsCheckbox from '../../components/specializations-checkbox/specializations-checkbox';
 
-import { IUpdateUserProfileDto, IDetailUserProfileRdo, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
+import { IUpdateUserProfileDto, IAccountInfoRdo, Location, Specialization, Gender, TrainingLevel, Role } from '@backend/shared/core';
 
 import { useAppSelector } from '../../hooks';
 import useEscapeKey from '../../hooks/use-escape-key';
-import { getIsUpdateAccountError, getIsUpdateAccountExecuting } from '../../store/account-process/selectors';
+import { getIsUpdateAccountInfoError, getIsUpdateAccountInfoExecuting } from '../../store/account-process/selectors';
 import { LOCATIONS, USER_GENDERS, TRAINING_LEVELS } from '../../const';
 
 enum FormFieldName {
@@ -26,7 +26,7 @@ enum FormFieldName {
 }
 
 type PersonalAccountLeftPanelProps = {
-  account: IDetailUserProfileRdo;
+  account: IAccountInfoRdo;
   role: Role;
   onSubmit: (updatedUserProfile: IUpdateUserProfileDto) => void;
 }
@@ -35,8 +35,8 @@ function PersonalAccountLeftPanel({ account, role, onSubmit }: PersonalAccountLe
   //! много кода! поделить как нибуть!
   // при режиме - только чтение - не менять курсор мыши у AvatarUpload...
 
-  const isUpdateAccountExecuting = useAppSelector(getIsUpdateAccountExecuting);
-  const isUpdateAccountError = useAppSelector(getIsUpdateAccountError);
+  const isUpdateAccountExecuting = useAppSelector(getIsUpdateAccountInfoExecuting);
+  const isUpdateAccountError = useAppSelector(getIsUpdateAccountInfoError);
 
   const { user, questionnaire } = account;
   const { name, avatarFilePath, about, location, gender } = user;

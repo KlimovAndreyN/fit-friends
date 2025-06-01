@@ -45,7 +45,7 @@ export class FitTrainingController {
   @ApiResponse({ type: TrainingRdo, isArray: true }) //! вынести в описание
   @Get(TrainingRoute.ForSportsman)
   public async getForSportsman(@Req() request: RequestWithRequestIdAndUser): Promise<TrainingRdo[]> {
-    //! много кода - перенести в сервис
+    //! много кода - перенести в сервис -> получить через UserProfileService
     const detailUser = await this.userService.getDetailUserFromRequest(request);
     const { gender } = detailUser;
     //! немного переделать вызов, а запреты как проверяются?

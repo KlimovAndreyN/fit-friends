@@ -17,6 +17,7 @@ export { type IPageQuery } from './lib/interfaces/query/i-page.query';
 export { type ITrainingQuery } from './lib/interfaces/query/i-training.query';
 export { type IUserProfileQuery } from './lib/interfaces/query/i-user-profile.query';
 
+export { type IAccountInfoRdo } from './lib/interfaces/rdo/i-account-info.rdo';
 export { type ICertificateRdo } from './lib/interfaces/rdo/i-certificate.rdo';
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type IDetailUserProfileRdo } from './lib/interfaces/rdo/i-detail-user-profile.rdo';
