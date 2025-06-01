@@ -12,15 +12,16 @@ import {
   RequestWithRequestIdAndBearerAuth, RequestWithUserId, CreateQuestionnaireCoachDto,
   AVATAR_FILE_PROPERTY, BearerAuth, parseUserAvatarFilePipeBuilder, FILES_PROPERTY,
   parseQuestionnaireFilesPipeBuilder, CertificateRdo, FileUploaderFileApiBody,
-  parseCertificateFilePipeBuilder, IdParam, FILE_KEY
+  parseCertificateFilePipeBuilder, IdParam, FILE_KEY, RequestWithRequestIdAndUser,
+  UpdateUserDto, UpdateQuestionnaireDto
 } from '@backend/shared/core';
-import { joinUrl } from '@backend/shared/helpers';
+import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
 import { CheckRoleCoachGuard } from './guards/check-role-coach.guard';
-import { AccountService } from './account.service';
+import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @ApiTags(ApiServiceRoute.UsersProfiles)
@@ -30,8 +31,8 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 @UseFilters(AxiosExceptionFilter)
 export class AccountController {
   constructor(
-    private accountService: AccountService,
-    private fitQuestionnaireService: FitQuestionnaireService
+    private readonly userService: UserService,
+    private readonly fitQuestionnaireService: FitQuestionnaireService,
   ) { }
 
   //! в описание: 200 - есть, 404 - нету
@@ -106,11 +107,12 @@ export class AccountController {
   @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
   @Get()
   public async getAccountInfo(
-    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
+    @Req() request: RequestWithRequestIdAndUser
   ): Promise<AccountInfoRdo> {
-    const accountInfo = await this.accountService.getAccountInfo(userId, requestId);
+    const user = await this.userService.getDetailUserFromRequest(request);
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(request.user.sub, request.requestId);
 
-    return accountInfo;
+    return { user, questionnaire };
   }
 
   @ApiResponse({ type: AccountInfoRdo }) //! вынести в описание
@@ -122,9 +124,13 @@ export class AccountController {
     @Req() { requestId, bearerAuth, userId }: RequestWithRequestIdAndBearerAuth & RequestWithUserId,
     @UploadedFile(parseUserAvatarFilePipeBuilder) avatarFile?: Express.Multer.File
   ): Promise<AccountInfoRdo> {
-    const accountInfo = await this.accountService.updateAccountInfo(dto, userId, bearerAuth, requestId, avatarFile);
+    const upadteUserDto: UpdateUserDto = fillDto(UpdateUserDto, dto);
+    const upadteQuestionnaireDto: UpdateQuestionnaireDto = fillDto(UpdateQuestionnaireDto, dto);
 
-    return accountInfo;
+    const user = await this.userService.updateUser(upadteUserDto, avatarFile, bearerAuth, requestId); //! убрать bearerAuth
+    const questionnaire = await this.fitQuestionnaireService.updateQuestionnaire(upadteQuestionnaireDto, userId, requestId);
+
+    return { user, questionnaire };
   }
 
   @Post(UserProfileRoute.ReadyForTraining)

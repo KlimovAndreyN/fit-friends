@@ -54,7 +54,7 @@ export class FitQuestionnaireService {
     return certificates;
   }
 
-  public async makeQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
+  private async makeQuestionnaireRdo(rdo: BasicQuestionnaireRdo, requestId: string): Promise<QuestionnaireRdo> {
     const { fileIds, ...questionnaireFields } = rdo;
     const certificates = await this.getCertificates(fileIds, requestId);
 

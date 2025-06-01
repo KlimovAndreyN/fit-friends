@@ -1,9 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import {
-  BasicUserProfileRdo, isCoachRole, UserProfileQuery, BasicDetailUserRdo, getRoreByUserSortType,
-  BasicUsersProfilesWithPaginationRdo, Role, BasicQuestionnaireRdo, BasicAccountInfoRdo,
-
+  BasicUserProfileRdo, UserProfileQuery, getRoreByUserSortType,
+  BasicUsersProfilesWithPaginationRdo, isCoachRole, Role
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { FitUserRepository } from '@backend/account/fit-user';
@@ -25,16 +24,6 @@ export class FitUserProfileService {
     if (isCoachRole(role)) {
       throw new ForbiddenException('Not allow for coach!');
     }
-  }
-
-  public async getAccounInfo(userId: string): Promise<BasicAccountInfoRdo> {
-    const user = await this.fitUserRepository.findById(userId);
-    const questionnaire = await this.fitQuestionnaireRepository.findByUserId(userId);
-
-    return {
-      user: fillDto(BasicDetailUserRdo, user),
-      questionnaire: fillDto(BasicQuestionnaireRdo, questionnaire)
-    };
   }
 
   public async find(userId: string, query: UserProfileQuery, role: Role): Promise<BasicUsersProfilesWithPaginationRdo> {

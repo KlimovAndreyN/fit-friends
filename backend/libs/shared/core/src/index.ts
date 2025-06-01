@@ -71,7 +71,6 @@ export { TrainingQuery } from './lib/query/training.query';
 export { UserProfileQuery } from './lib/query/user-profile.query';
 
 export { AccountInfoRdo } from './lib/rdo/account-info.rdo';
-export { BasicAccountInfoRdo } from './lib/rdo/basic-account-info.rdo';
 export { BasicDetailTrainingRdo } from './lib/rdo/basic-detail-training.rdo';
 export { BasicDetailUserRdo } from './lib/rdo/basic-detail-user.rdo';
 export { BasicQuestionnaireRdo } from './lib/rdo/basic-questionnaire.rdo';

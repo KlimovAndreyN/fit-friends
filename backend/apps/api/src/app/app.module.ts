@@ -5,7 +5,6 @@ import { ApiConfigModule } from '@backend/api/config';
 
 import { FileService } from './file.service';
 import { UserService } from './user.service';
-import { AccountService } from './account.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UserProfileService } from './user-profile.service';
 import { FitTrainingService } from './fit-training.service';
@@ -39,7 +38,6 @@ const HttpClient = {
   providers: [
     FileService,
     UserService,
-    AccountService,
     FitQuestionnaireService,
     UserProfileService,
     FitTrainingService,

@@ -44,7 +44,7 @@ export class FitTrainingService {
   ): Promise<DetailTrainingRdo> {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { userId, videoFileId, ...trainingFields } = rdo;
-    const coach = await this.userService.getUser(userId, currentUserId, userRole, requestId); //! Убрать авторизацию и добавить userRole перед requestId
+    const coach = await this.userService.getUser(userId, currentUserId, userRole, requestId);
     const detailTrainingRdo: DetailTrainingRdo = { ...trainingFields, videoFilePath, coach };
 
     return detailTrainingRdo;
