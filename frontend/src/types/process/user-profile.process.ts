@@ -19,6 +19,6 @@ export type UserProfileProcess = {
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;
   detailUserProfile: IDetailUserProfileRdo | null;
-  isFriendUserProfile: boolean;
+  isFriendUserProfile?: boolean;
   isFriendUserProfileChangeExecuting: boolean;
 }

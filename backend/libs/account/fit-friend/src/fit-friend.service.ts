@@ -61,10 +61,9 @@ export class FitFriendService {
       limit: take = Default.LIMIT_MAX
     } = query;
     const skip = (currentPage - 1) * take;
-
     const entity = await this.fitFriendRepository.findByUserId(userId);
     const friends = (entity) ? entity.friends : [];
-    const entities = friends.slice(skip, take);
+    const entities = friends.slice(skip, skip + take);
     const totalItems = friends.length;
     const totalPages = Math.ceil(totalItems / take);
 
