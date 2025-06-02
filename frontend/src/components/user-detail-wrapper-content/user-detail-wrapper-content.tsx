@@ -5,9 +5,9 @@ import { IDetailUserProfileRdo, isCoachRole } from '@backend/shared/core';
 import Hashtags from '../hashtags/hashtags';
 import UserDetailWrapperContentHead from '../user-detail-wrapper-content-head/user-detail-wrapper-content-head';
 import UserDetailWrapperContentCoachCertificates from '../user-detail-wrapper-content-coach-certificates copy/user-detail-wrapper-content-coach-certificates';
+import UserDetailWrapperContentFriendButton from '../user-detail-wrapper-content-friend-button/user-detail-wrapper-content-friend-button';
 
 import { getSpecializationsTitles } from '../../utils/common';
-import UserDetailWrapperContentFriendButton from '../user-detail-wrapper-content-friend-button/user-detail-wrapper-content-friend-button';
 
 type UserDetailWrapperContentProps = {
   classNamePrefix: string;

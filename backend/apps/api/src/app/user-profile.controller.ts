@@ -57,8 +57,9 @@ export class UserProfileController {
   ): Promise<DetailUserProfileRdo> {
     const user = await this.userService.getDetailUser(userId, sub, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+    const isFriend = await this.userProfileService.checkFriend(userId, sub, requestId);
 
-    return { user, questionnaire, isFriend: false/* //! временно */ };
+    return { user, questionnaire, isFriend };
   }
 
   @UseGuards(CheckRoleSportsmanGuard)

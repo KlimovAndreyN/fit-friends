@@ -1,6 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import { Friend, isCoachRole, Role } from '@backend/shared/core';
+import { deleteItem } from '@backend/shared/helpers';
 
 import { FitFriendRepository } from './fit-friend.repository';
 import { FitFriendEntity } from './fit-friend.entity';
@@ -24,7 +25,7 @@ export class FitFriendService {
     return entity;
   }
 
-  private async addFriends(userId: string, currentUserId: string): Promise<FitFriendEntity> {
+  private async addOneFriend(userId: string, currentUserId: string): Promise<FitFriendEntity> {
     let entity = await this.fitFriendRepository.findByUserId(currentUserId);
 
     if (!entity) {
@@ -44,10 +45,44 @@ export class FitFriendService {
     return entity;
   }
 
+  private async deleteOneFriend(userId: string, currentUserId: string): Promise<FitFriendEntity | void> {
+    const entity = await this.fitFriendRepository.findByUserId(currentUserId);
+
+    if (!entity) {
+      return;
+    }
+
+    const { friends } = entity;
+
+    if (friends.includes(userId)) {
+      entity.friends = deleteItem(friends, userId);
+      await this.fitFriendRepository.update(entity);
+    }
+
+    return entity;
+  }
+
+  public async checkFriend(userId: string, currentUserId: string): Promise<boolean> {
+    const entity = await this.fitFriendRepository.findByUserId(currentUserId);
+
+    if (!entity) {
+      return false;
+    }
+
+    return entity.friends.includes(userId);
+  }
+
   public async addFriend(userId: string, currentUserId: string, userRole: Role): Promise<void> {
     this.checkNotAllowForCoach(userRole);
 
-    await this.addFriends(userId, currentUserId);
-    await this.addFriends(currentUserId, userId);
+    await this.addOneFriend(userId, currentUserId);
+    await this.addOneFriend(currentUserId, userId);
+  }
+
+  public async deleteFriend(userId: string, currentUserId: string, userRole: Role): Promise<void> {
+    this.checkNotAllowForCoach(userRole);
+
+    await this.deleteOneFriend(userId, currentUserId);
+    await this.deleteOneFriend(currentUserId, userId);
   }
 }

@@ -65,6 +65,14 @@ export class UserProfileService {
     return usersProfiles;
   }
 
+  public async checkFriend(userId: string, currentUserId: string, requestId: string): Promise<boolean> {
+    const url = this.getFriendsUrl(userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
+    const { data: isFriend } = await this.httpService.axiosRef.get<boolean>(url, headers);
+
+    return isFriend;
+  }
+
   public async updateFriend(
     isFriend: boolean,
     userId: string,

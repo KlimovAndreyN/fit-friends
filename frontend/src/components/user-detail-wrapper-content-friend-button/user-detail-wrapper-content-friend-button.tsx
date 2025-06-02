@@ -1,6 +1,9 @@
 import { JSX, MouseEvent } from 'react';
 
+import { isCoachRole } from '@backend/shared/core';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getUserRole } from '../../store/user-process/selectors';
 import { getIsFriendUserProfile, getIsFriendUserProfileChangeExecuting } from '../../store/user-profile-process/selectors';
 import { changeIsFriendUserProfile } from '../../store/actions/user-profile-action';
 
@@ -9,11 +12,15 @@ type UserDetailWrapperContentFriendButtonProps = {
   userId: string;
 }
 
-function UserDetailWrapperContentFriendButton({ classNamePrefix, userId }: UserDetailWrapperContentFriendButtonProps): JSX.Element {
+function UserDetailWrapperContentFriendButton({ classNamePrefix, userId }: UserDetailWrapperContentFriendButtonProps): JSX.Element | null {
   const dispatch = useAppDispatch();
+  const userRole = useAppSelector(getUserRole);
   const isFriendUserProfileChangeExecuting = useAppSelector(getIsFriendUserProfileChangeExecuting);
   const isFriendUserProfile = useAppSelector(getIsFriendUserProfile);
-  const addFriendButtonCaption = (isFriendUserProfile) ? 'Удалить из\u00A0друзей' : 'Добавить в\u00A0друзья';
+
+  if (isCoachRole(userRole) && !isFriendUserProfile) {
+    return null;
+  }
 
   const handleAddFriendButtonClick = (event: MouseEvent) => {
     event.preventDefault();
@@ -28,7 +35,7 @@ function UserDetailWrapperContentFriendButton({ classNamePrefix, userId }: UserD
       onClick={handleAddFriendButtonClick}
       disabled={isFriendUserProfileChangeExecuting}
     >
-      {addFriendButtonCaption}
+      {(isFriendUserProfile) ? 'Удалить из\u00A0друзей' : 'Добавить в\u00A0друзья'}
     </button>
   );
 }
