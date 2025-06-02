@@ -64,9 +64,9 @@ export class FitUserRepository extends BaseMongoRepository<FitUserEntity, FitUse
     }
   }
 
-  public async findMany(withoutIds: string[] = []): Promise<FitUserEntity[]> {
+  public async findSportsmans(withoutIds: string[] = []): Promise<FitUserEntity[]> {
     const documents = await this.model.find()
-      .where({ _id: { $nin: withoutIds } })
+      .where({ _id: { $nin: withoutIds }, role: { $eq: Role.Sportsman } })
       .sort({ createdAt: SortDirection.Desc })
       .exec();
 

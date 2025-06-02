@@ -83,19 +83,14 @@ export class UserProfileService {
     const {
       data: { currentPage, entities: userIds, itemsPerPage, totalItems, totalPages }
     } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
-
-    //! отладка
-    console.log('userIds', userIds);
-    console.log('currentPage, itemsPerPage, totalItems, totalPages');
-    //! временно
     const entities: UserProfileRdo[] = [];
+
     for (const userId of userIds) {
       const detailUserProfile = await this.getDetailUserProfile(userId, currentUserId, currentUserRole, requestId);
       const {
         user: { id, name, role, location, avatarFilePath },
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
-
       const friend: UserProfileRdo = { id, name, role, location, avatarFilePath, readyForTraining, specializations }
 
       entities.push(friend);
