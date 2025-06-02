@@ -71,7 +71,7 @@ export class UserProfileService {
     const headers = makeHeaders(requestId, null, userId);
     const {
       data: { currentPage, entities: userIds, itemsPerPage, totalItems, totalPages }
-    } = await this.httpService.axiosRef.get<PaginationResult<string[]>>(url, headers);
+    } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
 
     //! отладка
     console.log('userIds', userIds);

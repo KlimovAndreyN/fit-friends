@@ -11,6 +11,7 @@ import { MOCK_FRIENDS } from '../../const';
 function FriendsList(): JSX.Element {
   //! проверить консоль браузера на ошибки
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
+  //! если нет друзей - вывести текст 'У вас еще нет друзей'
 
   const userRole = useAppSelector(getUserRole);
   const friends = MOCK_FRIENDS;

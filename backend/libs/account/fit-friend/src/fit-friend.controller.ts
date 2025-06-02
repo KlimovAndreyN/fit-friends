@@ -23,7 +23,7 @@ export class FitFriendController {
   public async index(
     @Query() query: PageQuery,
     @Req() { userId }: RequestWithUserId
-  ): Promise<PaginationResult<string[]>> {
+  ): Promise<PaginationResult<string>> {
     const data = await this.fitFriendService.findByUserId(userId, query);
 
     return data;

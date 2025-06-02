@@ -6,24 +6,17 @@ import { deleteItem } from '@backend/shared/helpers';
 import { FitFriendRepository } from './fit-friend.repository';
 import { FitFriendEntity } from './fit-friend.entity';
 
+//! убрать лимиты в константы
+const Default = {
+  PAGE: 1,
+  LIMIT_MAX: 50
+} as const;
+
 @Injectable()
 export class FitFriendService {
   constructor(
     private readonly fitFriendRepository: FitFriendRepository
   ) { }
-
-  public async findByUserId(userId: string, query: PageQuery): Promise<PaginationResult<string[]>> {
-    //! отладка
-    console.log('findByUserId', userId, query);
-
-    //! список друзей - нужна пагинация!
-    //const entity = await this.fitFriendRepository.findByUserId(userId);
-
-    //! временно
-    const data: PaginationResult<string[]> = { entities: [], currentPage: 1, itemsPerPage: 1, totalItems: 1, totalPages: 1 };
-
-    return data;
-  }
 
   private async addOneFriend(userId: string, currentUserId: string): Promise<FitFriendEntity> {
     let entity = await this.fitFriendRepository.findByUserId(currentUserId);
@@ -60,6 +53,31 @@ export class FitFriendService {
     }
 
     return entity;
+  }
+
+  public async findByUserId(userId: string, query: PageQuery): Promise<PaginationResult<string>> {
+    //! отладка
+    console.log('findByUserId', userId, query);
+
+    //! список друзей - нужна пагинация!
+    //const entity = await this.fitFriendRepository.findByUserId(userId);
+    const {
+      page: currentPage = Default.PAGE,
+      limit: take = Default.LIMIT_MAX
+    } = query;
+
+    const { friends } = await this.fitFriendRepository.findByUserId(userId);
+    const entities = friends; // skip(skip).limit(take)
+    const totalItems = friends.length;
+    const totalPages = Math.ceil(totalItems / take);
+
+    return {
+      entities,
+      currentPage,
+      totalPages,
+      itemsPerPage: take,
+      totalItems
+    }
   }
 
   public async checkFriend(userId: string, currentUserId: string): Promise<boolean> {
