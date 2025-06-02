@@ -182,7 +182,7 @@ export function isRejectedTrainingRequestStatus(status?: TrainingRequestStatus) 
 export type Friend = {
   id: string;
   name: string;
-  avatarFilePath: string;
+  avatarFilePath?: string;
   role: Role;
   location: Location;
   readyForTraning: boolean;
@@ -191,54 +191,3 @@ export type Friend = {
   inMyJointTrainingStatus?: TrainingRequestStatus;
   personalTrainingStatus?: TrainingRequestStatus;
 }
-
-export const MOCK_FRIENDS: Friend[] = [
-  {
-    id: '01',
-    name: 'Елизавета',
-    avatarFilePath: '',
-    role: Role.Sportsman,
-    location: Location.Petrogradskaya,
-    readyForTraning: true,
-    specializations: [Specialization.Aerobics, Specialization.Boxing, Specialization.Crossfit],
-    outJointTrainingStatus: undefined,
-    inMyJointTrainingStatus: undefined,
-    personalTrainingStatus: undefined
-  },
-  {
-    id: '02',
-    name: 'Татьяна',
-    avatarFilePath: 'img/content/thumbnails/friend-04.jpg',
-    role: Role.Coach,
-    location: Location.Pionerskaya,
-    readyForTraning: false,
-    specializations: [Specialization.Pilates, Specialization.Power],
-    outJointTrainingStatus: TrainingRequestStatus.Pending,
-    inMyJointTrainingStatus: undefined,
-    personalTrainingStatus: TrainingRequestStatus.Pending
-  },
-  {
-    id: '03',
-    name: 'Ксения',
-    avatarFilePath: 'img/content/thumbnails/friend-07.jpg',
-    role: Role.Sportsman,
-    location: Location.Udelnaya,
-    readyForTraning: false,
-    specializations: [Specialization.Running, Specialization.Stretching],
-    outJointTrainingStatus: TrainingRequestStatus.Rejected,
-    inMyJointTrainingStatus: TrainingRequestStatus.Pending,
-    personalTrainingStatus: TrainingRequestStatus.Rejected
-  },
-  {
-    id: '04',
-    name: 'Ева',
-    avatarFilePath: 'img/content/thumbnails/friend-10.jpg',
-    role: Role.Sportsman,
-    location: Location.Zvezdnaya,
-    readyForTraning: true,
-    specializations: [Specialization.Yoga],
-    outJointTrainingStatus: TrainingRequestStatus.Accepted,
-    inMyJointTrainingStatus: TrainingRequestStatus.Accepted,
-    personalTrainingStatus: TrainingRequestStatus.Accepted
-  }
-];

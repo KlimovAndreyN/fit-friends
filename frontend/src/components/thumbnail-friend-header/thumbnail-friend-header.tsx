@@ -13,7 +13,7 @@ type ThumbnailFriendHeaderProps = {
   className: string;
   id: string;
   name: string;
-  avatarFilePath: string;
+  avatarFilePath?: string;
   isSportsman: boolean;
   location: Location;
   specializations: Specialization[];

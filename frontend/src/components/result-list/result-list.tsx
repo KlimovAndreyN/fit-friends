@@ -6,13 +6,14 @@ type ResultListProps = {
   mainClassName: string;
   childrens: JSX.Element[];
   isHaveMoreData: boolean;
+  isButtonsDisabled: boolean;
   onNextPageClick: () => void;
   textOnEmpty: string;
   showedAdditionalDiv?: boolean;
 }
 
 function ResultList(props: ResultListProps): JSX.Element {
-  const { mainClassName, childrens, isHaveMoreData, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
+  const { mainClassName, childrens, isHaveMoreData, isButtonsDisabled, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
 
   const handleShowMoreClick = () => {
     onNextPageClick();
@@ -39,7 +40,12 @@ function ResultList(props: ResultListProps): JSX.Element {
           ?
           <Fragment>
             {list}
-            <ButtonsShowMoreAndToTop divClassNamePrefix={mainClassName} isHaveMoreData={isHaveMoreData} onShowMoreClick={handleShowMoreClick} />
+            <ButtonsShowMoreAndToTop
+              divClassNamePrefix={mainClassName}
+              isHaveMoreData={isHaveMoreData}
+              disabled={isButtonsDisabled}
+              onShowMoreClick={handleShowMoreClick}
+            />
           </Fragment>
           :
           <Fragment>

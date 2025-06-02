@@ -1,11 +1,12 @@
-import { Fragment, JSX } from 'react';
+import { Fragment, JSX, useEffect } from 'react';
 
 import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 import ThumbnailFriend from '../thumbnail-friend/thumbnail-friend';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserRole } from '../../store/user-process/selectors';
-import { MOCK_FRIENDS } from '../../const';
+import { fetchFriends } from '../../store/actions/user-profile-action';
+import { getFriends, getIsFetchFriendsExecuting, getIsHaveMoreFriends } from '../../store/user-profile-process/selectors';
 
 
 type FriendsListProps = {
@@ -17,14 +18,23 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
   //! вызвать в useEffect dispatch clearDetailUserProfile + setPrevLocation
   //! если нет друзей - вывести текст 'У вас еще нет друзей'
 
+  const dispatch = useAppDispatch();
   const userRole = useAppSelector(getUserRole);
-  const friends = MOCK_FRIENDS;
-  const isHaveMoreData = true;
-  //const isHaveMoreData = false;
+  const isFetchFriendsExecuting = useAppSelector(getIsFetchFriendsExecuting);
+  const friends = useAppSelector(getFriends);
+  const isHaveMoreData = useAppSelector(getIsHaveMoreFriends);
+
+  useEffect(() => {
+    //! временно
+    dispatch(fetchFriends({ page: 1, limit: 9 }));
+  }, [dispatch]);
 
   const handleShowMoreClick = () => {
     // eslint-disable-next-line no-console
     console.log('handleShowMoreClick');
+
+    //! временно
+    dispatch(fetchFriends({ page: 2, limit: 9 }));
   };
 
   if (!friends.length) {
@@ -45,7 +55,7 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
             <ThumbnailFriend
               key={friend.id}
               className={className}
-              friend={friend}
+              friend={{ ...friend, readyForTraning: true }} //! не хватет данных нужен другой RDO!
               userRole={userRole}
             />))
         }
@@ -53,6 +63,7 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
       <ButtonsShowMoreAndToTop
         divClassNamePrefix={className}
         isHaveMoreData={isHaveMoreData}
+        disabled={isFetchFriendsExecuting}
         onShowMoreClick={handleShowMoreClick}
       />
     </Fragment>

@@ -21,5 +21,5 @@ export class BasicUsersProfilesWithPaginationRdo
     isArray: true
   })
   @Expose()
-  public entities: BasicUserProfileRdo[];
+  public entities: IBasicUsersProfilesWithPaginationRdo['entities'];
 }

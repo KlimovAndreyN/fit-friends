@@ -50,6 +50,17 @@ export class UserProfileController {
     return userProfiles;
   }
 
+  @ApiResponse({ type: UsersProfilesWithPaginationRdo })
+  @Get(UserProfileRoute.Friends)
+  public async getFriends(
+    @Query() query: PageQuery,
+    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
+  ): Promise<UsersProfilesWithPaginationRdo> {
+    const data = await this.userProfileService.getFriends(query, userId, requestId);
+
+    return data;
+  }
+
   @ApiResponse({ type: DetailUserProfileRdo })
   @Get(IdParam.USER)
   public async show(
@@ -61,17 +72,6 @@ export class UserProfileController {
     const isFriend = await this.userProfileService.checkFriend(userId, sub, requestId);
 
     return { user, questionnaire, isFriend };
-  }
-
-  @ApiResponse({ type: UsersProfilesWithPaginationRdo })
-  @Get()
-  public async getFriends(
-    @Query() query: PageQuery,
-    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
-  ): Promise<UsersProfilesWithPaginationRdo> {
-    const data = await this.userProfileService.getFriends(query, userId, requestId);
-
-    return data;
   }
 
   @UseGuards(CheckRoleSportsmanGuard)

@@ -6,7 +6,7 @@ import {
   ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, Role,
-  PageQuery, PaginationResult
+  PageQuery, PaginationResult, Location, Specialization
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -78,6 +78,15 @@ export class UserProfileService {
     console.log('currentPage, itemsPerPage, totalItems, totalPages');
     //! временно
     const entities: UserProfileRdo[] = [];
+    for (const userId of userIds) {
+      //! есть в контроллере
+      //const user = await this.userService.getDetailUser(userId, sub, role, requestId);
+      //const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+
+      const friend: UserProfileRdo = { id: userId, location: Location.Petrogradskaya, name: 'name', role: Role.Sportsman, specializations: [Specialization.Aerobics], avatarFilePath: '' }
+
+      entities.push(friend);
+    }
 
     const data: UsersProfilesWithPaginationRdo = { entities, currentPage, itemsPerPage, totalItems, totalPages };
 

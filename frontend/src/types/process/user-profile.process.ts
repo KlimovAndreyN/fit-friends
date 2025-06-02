@@ -11,6 +11,11 @@ export type UserProfileProcess = {
   usersProfiles: IUserProfileRdo[];
   isHaveMoreUsersProfiles: boolean;
 
+  isFetchFriendsExecuting: boolean;
+  friends: IUserProfileRdo[];
+  pageFriends: number;
+  isHaveMoreFriends: boolean;
+
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;
   detailUserProfile: IDetailUserProfileRdo | null;

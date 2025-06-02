@@ -21,7 +21,7 @@ export class TrainingsWithPaginationRdo
     isArray: true
   })
   @Expose()
-  public entities: TrainingRdo[];
+  public entities: ITrainingsWithPaginationRdo['entities'];
 
   @ApiProperty()
   @Expose()

@@ -3,7 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
-import { fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchDetailUserProfile, changeIsFriendUserProfile } from '../actions/user-profile-action';
+import {
+  fetchLookForCompanyUserProfiles, fetchUsersProfiles,
+  fetchDetailUserProfile, changeIsFriendUserProfile, fetchFriends
+} from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
 const Default = {
@@ -26,6 +29,11 @@ const initialState: UserProfileProcess = {
   isFetchUsersProfilesExecuting: false,
   usersProfiles: [],
   isHaveMoreUsersProfiles: false,
+
+  isFetchFriendsExecuting: false,
+  friends: [],
+  pageFriends: Default.PAGE,
+  isHaveMoreFriends: false,
 
   isFetchDetailUserProfileExecuting: false,
   isFetchDetailUserProfileError: false,
@@ -112,6 +120,34 @@ export const userProfileProcess = createSlice(
 
             state.isHaveMoreUsersProfiles = currentPage < totalPages;
             state.isFetchUsersProfilesExecuting = false;
+          }
+        )
+        .addCase(
+          fetchFriends.pending,
+          (state) => {
+            state.isFetchFriendsExecuting = true;
+          }
+        )
+        .addCase(
+          fetchFriends.rejected,
+          (state) => {
+            state.friends = initialState.friends;
+            state.isFetchFriendsExecuting = false;
+          }
+        )
+        .addCase(
+          fetchFriends.fulfilled,
+          (state, { payload }) => {
+            const { entities, currentPage, totalPages } = payload;
+
+            if (currentPage === Default.PAGE) {
+              state.friends = entities;
+            } else {
+              state.friends.push(...entities);
+            }
+
+            state.isHaveMoreFriends = currentPage < totalPages;
+            state.isFetchFriendsExecuting = false;
           }
         )
         .addCase(

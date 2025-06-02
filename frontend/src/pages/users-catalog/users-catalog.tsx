@@ -82,6 +82,7 @@ function UsersCatalog(): JSX.Element {
                       (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
                     )}
                     isHaveMoreData={isHaveMoreUsersProfiles}
+                    isButtonsDisabled={isFetchUsersProfilesExecuting}
                     onNextPageClick={handleNextPageClick}
                     textOnEmpty='Пользователи не найдены'
                     showedAdditionalDiv

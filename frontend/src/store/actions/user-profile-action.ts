@@ -3,7 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
   IUserProfileRdo, IDetailUserProfileRdo, UserProfileRoute,
-  ApiServiceRoute, IUsersProfilesWithPaginationRdo, IUserProfileQuery
+  ApiServiceRoute, IUsersProfilesWithPaginationRdo,
+  IUserProfileQuery, IPageQuery
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
@@ -14,6 +15,7 @@ type Extra = {
 export const Action = {
   FETCH_LOOK_FOR_COMPANY_USERS_PROFILES: 'user-profile/fetch-look-for-company-users-profiles',
   FETCH_USERS_PROFILES: 'user-profile/fetch-users-profiles',
+  FETCH_FRIENDS: 'user-profile/fetch-friends',
   FETCH_USER_PROFILE: 'user-profile/fetch-user-profile',
   CHANGE_IS_FRIEND_USER_PROFILE: 'user-profile/change-is-friend-user-profile'
 };
@@ -34,6 +36,17 @@ export const fetchUsersProfiles = createAsyncThunk<IUsersProfilesWithPaginationR
   async (query, { extra }) => {
     const { api } = extra;
     const url = joinUrl(ApiServiceRoute.UsersProfiles, getQueryString(query));
+    const { data } = await api.get<IUsersProfilesWithPaginationRdo>(url);
+
+    return data;
+  }
+);
+
+export const fetchFriends = createAsyncThunk<IUsersProfilesWithPaginationRdo, IPageQuery, { extra: Extra }>(
+  Action.FETCH_FRIENDS,
+  async (query, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.Friends, getQueryString(query));
     const { data } = await api.get<IUsersProfilesWithPaginationRdo>(url);
 
     return data;

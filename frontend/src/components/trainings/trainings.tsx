@@ -131,6 +131,7 @@ function Trainings(props: TrainingsProps): JSX.Element {
                       (training) => (<ThumbnailTraining key={training.id} training={training} />)
                     )}
                     isHaveMoreData={isHaveMoreTrainings}
+                    isButtonsDisabled={isFetchTrainingsExecuting}
                     onNextPageClick={handleNextPageClick}
                     textOnEmpty='Тренировки не найдены'
                     showedAdditionalDiv={showedAdditionalDiv}
