@@ -114,6 +114,7 @@ export { Role } from './lib/types/role.enum';
 export { SortDirection } from './lib/types/sort-direction.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
+export { TrainingRequestStatus } from './lib/types/training-request-status.enum';
 export { TrainingSortType } from './lib/types/training-sort-type.enum';
 export { UserSortType } from './lib/types/user-sort-type.enum';
 

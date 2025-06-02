@@ -19,6 +19,7 @@ export { type IAccountInfoRdo } from './lib/interfaces/rdo/i-account-info.rdo';
 export { type ICertificateRdo } from './lib/interfaces/rdo/i-certificate.rdo';
 export { type IDetailTrainingRdo } from './lib/interfaces/rdo/i-detail-training.rdo';
 export { type IDetailUserProfileRdo } from './lib/interfaces/rdo/i-detail-user-profile.rdo';
+export { type IFriendRdo } from './lib/interfaces/rdo/i-friend.rdo';
 export { type IDetailUserRdo } from './lib/interfaces/rdo/i-detail-user.rdo';
 export { type ILoggedUserRdo } from './lib/interfaces/rdo/i-logged-user.rdo';
 export { type IQuestionnaireRdo } from './lib/interfaces/rdo/i-questionnaire.rdo';
@@ -39,6 +40,7 @@ export { Location } from './lib/types/location.enum';
 export { Role } from './lib/types/role.enum';
 export { Specialization } from './lib/types/specialization.enum';
 export { TrainingLevel } from './lib/types/training-level.enum';
+export { TrainingRequestStatus } from './lib/types/training-request-status.enum';
 export { TrainingSortType } from './lib/types/training-sort-type.enum';
 export { UserSortType } from './lib/types/user-sort-type.enum';
 

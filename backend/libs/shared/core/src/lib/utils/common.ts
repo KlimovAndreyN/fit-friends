@@ -1,5 +1,6 @@
 import { SPECIAL_OFFER_PERCENT } from '../constants/consts';
 import { Role } from '../types/role.enum';
+import { TrainingRequestStatus } from '../types/training-request-status.enum';
 import { TrainingSortType } from '../types/training-sort-type.enum';
 import { UserSortType } from '../types/user-sort-type.enum';
 
@@ -39,4 +40,16 @@ export function getNewPrice(price: number): number {
 
 export function getOldPrice(price: number): number {
   return Math.round(price / (1 - (SPECIAL_OFFER_PERCENT / 100)));
+}
+
+export function isPendingTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Pending);
+}
+
+export function isAcceptedTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Accepted);
+}
+
+export function isRejectedTrainingRequestStatus(status?: TrainingRequestStatus) {
+  return (status === TrainingRequestStatus.Rejected);
 }

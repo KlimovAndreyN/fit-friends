@@ -159,35 +159,3 @@ export const TRAINING_LEVELS: Option[] = convertEnumToArray(TrainingLevel).map(
 );
 
 export const CERTIFICATES_FILE_TYPES = '.pdf, .jpg, .jpeg, .png';
-
-//! временно здесь
-export enum TrainingRequestStatus {
-  Pending = 'pending',
-  Accepted = 'accepted',
-  Rejected = 'rejected'
-}
-
-export function isPendingTrainingRequestStatus(status?: TrainingRequestStatus) {
-  return (status === TrainingRequestStatus.Pending);
-}
-
-export function isAcceptedTrainingRequestStatus(status?: TrainingRequestStatus) {
-  return (status === TrainingRequestStatus.Accepted);
-}
-
-export function isRejectedTrainingRequestStatus(status?: TrainingRequestStatus) {
-  return (status === TrainingRequestStatus.Rejected);
-}
-
-export type Friend = {
-  id: string;
-  name: string;
-  avatarFilePath?: string;
-  role: Role;
-  location: Location;
-  readyForTraning: boolean;
-  specializations: Specialization[];
-  outJointTrainingStatus?: TrainingRequestStatus;
-  inMyJointTrainingStatus?: TrainingRequestStatus;
-  personalTrainingStatus?: TrainingRequestStatus;
-}

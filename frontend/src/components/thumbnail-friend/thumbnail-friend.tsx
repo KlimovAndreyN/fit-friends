@@ -1,24 +1,22 @@
 import { JSX } from 'react';
 import classNames from 'classnames';
 
-import { isSportsmanRole, Role } from '@backend/shared/core';
+import { IFriendRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role } from '@backend/shared/core';
 
 import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
 import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thumbnail-friend-request-status';
 
-import { Friend, isPendingTrainingRequestStatus } from '../../const';
-
 type ThumbnailFriendProps = {
   className: string;
-  friend: Friend;
+  friend: IFriendRdo;
   userRole: Role;
 }
 
 function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
 
-  const { id, name, avatarFilePath, role, location, specializations, readyForTraning, outJointTrainingStatus, inMyJointTrainingStatus, personalTrainingStatus } = friend;
+  const { id, name, avatarFilePath, role, location, specializations, readyForTraining, outJointTrainingStatus, inMyJointTrainingStatus, personalTrainingStatus } = friend;
   const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
   const isShowRequestStatus = (isSportsmanUser && !!inMyJointTrainingStatus || !isSportsmanUser && !!personalTrainingStatus);
@@ -61,7 +59,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
             classNamePrefix={mainClassName}
             isSportsmanUser={isSportsmanUser}
             role={role}
-            readyForTraning={readyForTraning}
+            readyForTraning={readyForTraining}
             isDisabled={isPendingTrainingRequestStatus(outJointTrainingStatus)}
             onInviteButtonClick={handleInviteButtonClick}
           />

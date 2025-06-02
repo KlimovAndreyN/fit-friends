@@ -8,7 +8,6 @@ import { getUserRole } from '../../store/user-process/selectors';
 import { fetchFriends } from '../../store/actions/user-profile-action';
 import { getFriends, getIsFetchFriendsExecuting, getIsHaveMoreFriends } from '../../store/user-profile-process/selectors';
 
-
 type FriendsListProps = {
   className: string;
 }
@@ -55,7 +54,7 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
             <ThumbnailFriend
               key={friend.id}
               className={className}
-              friend={{ ...friend, readyForTraning: true }} //! не хватет данных нужен другой RDO!
+              friend={friend}
               userRole={userRole}
             />))
         }
