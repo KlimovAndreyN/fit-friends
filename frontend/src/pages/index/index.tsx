@@ -10,14 +10,15 @@ import LookForCompanySection from '../../components/look-for-company-section/loo
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setIsIndexPageActivate, setPrevLocation } from '../../store/user-process';
 import { getIsIndexPageActivate, getPrevLocation } from '../../store/user-process/selectors';
+import { clearDetailTraining } from '../../store/training-process';
 import {
   getIsFetchForSportsmanTrainingsExecuting, getForSportsmanTrainings, getSpecialTrainings,
   getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting
 } from '../../store/training-process/selectors';
-import { clearDetailTraining } from '../../store/training-process';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
-import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
+import { clearDetailUserProfile, clearFriends } from '../../store/user-profile-process';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
+import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
 import { AppRoute, PageTitle } from '../../const';
 
 function Index(): JSX.Element {
@@ -54,6 +55,8 @@ function Index(): JSX.Element {
     }
 
     dispatch(clearDetailTraining());
+    dispatch(clearDetailUserProfile());
+    dispatch(clearFriends());
   }, [dispatch, isIndexPageActivate, prevLocation]);
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {

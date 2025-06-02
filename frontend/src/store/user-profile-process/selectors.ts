@@ -13,6 +13,7 @@ export const getIsHaveMoreUsersProfiles = ({ [StoreSlice.UserProfileProcess]: US
 
 export const getIsFetchFriendsExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchFriendsExecuting'] => USER_PROFILE_PROCESS.isFetchFriendsExecuting;
 export const getFriends = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['friends'] => USER_PROFILE_PROCESS.friends;
+export const getPageFriends = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['pageFriends'] => USER_PROFILE_PROCESS.pageFriends;
 export const getIsHaveMoreFriends = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isHaveMoreFriends'] => USER_PROFILE_PROCESS.isHaveMoreFriends;
 
 export const getIsFetchDetailUserProfileExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchDetailUserProfileExecuting'] => USER_PROFILE_PROCESS.isFetchDetailUserProfileExecuting;
