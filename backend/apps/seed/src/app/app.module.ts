@@ -5,6 +5,7 @@ import { ConnectionNameOption } from '@backend/shared/core';
 import { getEnvMongooseOptions } from '@backend/shared/helpers';
 import { FitUserModule } from '@backend/account/fit-user';
 import { FitQuestionnaireModule } from '@backend/account/fit-questionnaire';
+import { FitFriendModule } from '@backend/account/fit-friend';
 import { PrismaClientModule } from '@backend/fit/models';
 import { TrainingModule } from '@backend/fit/training';
 import { OrderModule } from '@backend/fit/order';
@@ -26,6 +27,7 @@ const EnvPrefix = {
     RefreshTokenWithoutServiceModule,
     FitUserModule,
     FitQuestionnaireModule,
+    FitFriendModule,
     PrismaClientModule,
     TrainingModule,
     OrderModule,

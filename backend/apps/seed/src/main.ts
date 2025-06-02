@@ -8,6 +8,7 @@ import { FileUploaderRepository } from '@backend/file-storage/file-uploader';
 import { RefreshTokenRepository } from '@backend/account/refresh-token';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire';
+import { FitFriendRepository } from '@backend/account/fit-friend';
 import { TrainingRepository } from '@backend/fit/training';
 import { OrderRepository } from '@backend/fit/order';
 import { ReviewRepository } from '@backend/fit/review';
@@ -16,10 +17,11 @@ import { AppModule } from './app/app.module';
 import { clearFiles, seedFiles } from './libs/files';
 import { clearRefreshTokens, clearUsers, seedUsers } from './libs/users';
 import { clearQuestionnaires, seedQuestionnaires } from './libs/questionnaires';
+import { clearFriends, seedFriends } from './libs/friends';
 import { clearTrainings, seedTrainings, updateRatingTrainings } from './libs/trainings';
-import { COACHES, FilesPath, SPORTSMANS } from './libs/mock-data';
 import { clearOrders, seedOrders } from './libs/orders';
 import { clearReviews, seedReviews } from './libs/reviews';
+import { COACHES, FilesPath, SPORTSMANS } from './libs/mock-data';
 
 async function bootstrap() {
   //! предварительная валидация ENV переменных в getEnvMongooseOptions, process.env[databaseUrlEnv] и process.env[filesUploadDirectoryEnv]
@@ -51,6 +53,7 @@ async function bootstrap() {
   const refreshTokenRepository = app.get(RefreshTokenRepository);
   const fitUserRepository = app.get(FitUserRepository);
   const fitQuestionnaireRepository = app.get(FitQuestionnaireRepository);
+  const fitFriendRepository = app.get(FitFriendRepository);
   const trainingRepository = app.get(TrainingRepository);
   const orderRepository = app.get(OrderRepository);
   const reviewRepository = app.get(ReviewRepository);
@@ -62,6 +65,7 @@ async function bootstrap() {
       await clearReviews(reviewRepository)
       await clearOrders(orderRepository);
       await clearTrainings(trainingRepository);
+      await clearFriends(fitFriendRepository);
       await clearQuestionnaires(fitQuestionnaireRepository);
       await clearUsers(fitUserRepository);
     }
@@ -89,6 +93,11 @@ async function bootstrap() {
     const questionnaires = await seedQuestionnaires(fitQuestionnaireRepository, [...sportsmans, ...coaches], certificatesFileIds);
 
     Logger.log(`Questionnaires count: ${questionnaires.length}`);
+
+    // друзья
+    const friends = await seedFriends(fitFriendRepository, sportsmans, coaches);
+
+    Logger.log(`Friends count: ${friends.length}`);
 
     // тренировки
     const trainings = await seedTrainings(trainingRepository, coaches, videosFileIds);

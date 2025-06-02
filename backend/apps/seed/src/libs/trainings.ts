@@ -6,7 +6,8 @@ import { FitUserEntity } from '@backend/account/fit-user';
 import { TrainingEntity, TrainingRepository } from '@backend/fit/training';
 import { ReviewRepository } from '@backend/fit/review';
 
-import { SWAGGER_COACH, ReviewOption, TrainingOption } from './mock-data';
+import { isSwaggers } from './common';
+import { ReviewOption, TrainingOption } from './mock-data';
 
 export async function clearTrainings(trainingRepository: TrainingRepository): Promise<void> {
   await trainingRepository.client.training.deleteMany();
@@ -51,7 +52,7 @@ export async function seedTrainings(
       }
 
       // для удобства тестирования запросов из свагера
-      if ((userName === SWAGGER_COACH) && (trainingGlobalIndex === 1) && (trainingIndex === 1)) {
+      if (isSwaggers(userName) && (trainingGlobalIndex === 1) && (trainingIndex === 1)) {
         training.id = TrainingApiProperty.Id.example;
       }
 

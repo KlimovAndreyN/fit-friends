@@ -11,10 +11,10 @@ export const FilesPath = {
 } as const;
 
 export const SWAGGER_USER = 'Swagger';
-export const SWAGGER_COACH = 'SwaggerCoach';
 
 export const SPORTSMANS: MockUser[] = [
   { name: SWAGGER_USER, gender: Gender.Male },
+  { name: `${SWAGGER_USER}Two`, gender: Gender.Male },
   { name: 'Tom', gender: Gender.Male },
   { name: 'Jerry', gender: Gender.NotMatter },
   { name: 'Roxette', gender: Gender.Female },
@@ -33,7 +33,7 @@ export const SPORTSMANS: MockUser[] = [
 ];
 
 export const COACHES: MockUser[] = [
-  { name: SWAGGER_COACH, gender: Gender.Male },
+  { name: `${SWAGGER_USER}Coach`, gender: Gender.Male },
   { name: 'Nataly', gender: Gender.Female },
   { name: 'Max', gender: Gender.Male },
   { name: 'Susan', gender: Gender.Female },

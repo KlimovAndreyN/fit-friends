@@ -1,5 +1,5 @@
-import { SWAGGER_USER, SWAGGER_COACH } from './mock-data';
+import { SWAGGER_USER } from './mock-data';
 
 export function isSwaggers(name: string): boolean {
-  return [SWAGGER_USER, SWAGGER_COACH].includes(name);
+  return name.startsWith(SWAGGER_USER);
 }
