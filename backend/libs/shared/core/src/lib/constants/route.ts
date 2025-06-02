@@ -9,6 +9,7 @@ export enum ServiceRoute {
   Account = 'auth',
   Questionnaires = 'questionnaires',
   UsersProfiles = 'users-profiles',
+  Friends = 'friends',
   Trainings = 'trainings',
   Orders = 'orders',
   Reviews = 'reviews',
@@ -48,7 +49,7 @@ export enum UserProfileRoute {
   Certificates = 'certificates',
   ReadyForTraining = 'ready-for-training',
   LookForCompany = 'look-for-company',
-  Friend = 'friend'
+  Friends = ServiceRoute.Friends
 }
 
 export enum FileStorageRoute {

@@ -25,6 +25,9 @@
       "@backend/account/config": [
         "libs/account/config/src/index.ts"
       ],
+      "@backend/account/fit-friend": [
+        "libs/account/fit-friend/src/index.ts"
+      ],
       "@backend/account/fit-questionnaire": [
         "libs/account/fit-questionnaire/src/index.ts"
       ],

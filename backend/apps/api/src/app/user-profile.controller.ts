@@ -62,7 +62,7 @@ export class UserProfileController {
   }
 
   @UseGuards(CheckRoleSportsmanGuard)
-  @Post(UserProfileRoute.Friend)
+  @Post(UserProfileRoute.Friends)
   public async addFriend(
     @Body() { userId }: { userId: string }, //! нужен DTO
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
@@ -71,7 +71,7 @@ export class UserProfileController {
   }
 
   @UseGuards(CheckRoleSportsmanGuard)
-  @Delete(joinUrl(UserProfileRoute.Friend, IdParam.USER))
+  @Delete(joinUrl(UserProfileRoute.Friends, IdParam.USER))
   public async deleteFriend(
     @Param(ApiParamOption.UserId.name) userId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser

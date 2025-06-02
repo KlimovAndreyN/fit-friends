@@ -68,7 +68,7 @@ export class UserProfileService {
     role: Role,
     requestId: string
   ): Promise<void> {
-    const url = this.getUrl(UserProfileRoute.Friend);
+    const url = this.getUrl(UserProfileRoute.Friends);
     const headers = makeHeaders(requestId, null, currentUserId, role);
 
     if (isFriend) {

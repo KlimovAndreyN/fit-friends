@@ -5,6 +5,7 @@ import { ConnectionNameOption } from '@backend/shared/core';
 import { getMongooseOptions } from '@backend/shared/helpers';
 import { AccountConfigModule } from '@backend/account/config'
 import { AuthenticationModule } from '@backend/account/authentication'
+import { FitFriendModule } from '@backend/account/fit-friend'
 import { FitQuestionnaireModule } from '@backend/account/fit-questionnaire'
 import { FitUserProfileModule } from '@backend/account/fit-user-profile'
 
@@ -13,6 +14,7 @@ import { FitUserProfileModule } from '@backend/account/fit-user-profile'
     AccountConfigModule,
     MongooseModule.forRootAsync(getMongooseOptions(ConnectionNameOption.Account)),
     AuthenticationModule,
+    FitFriendModule,
     FitQuestionnaireModule,
     FitUserProfileModule
   ],

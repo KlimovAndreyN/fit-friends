@@ -53,6 +53,7 @@ export { Certificate } from './lib/interfaces/certificate.interface';
 export { EmailSubscriber } from './lib/interfaces/email-subscriber.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
 export { File } from './lib/interfaces/file.interface';
+export { Friend } from './lib/interfaces/friend.interface';
 export { JwtToken } from './lib/interfaces/jwt-token.interface';
 export { Order } from './lib/interfaces/order.interface';
 export { PaginationResult } from './lib/interfaces/pagination-result.interface';
