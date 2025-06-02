@@ -54,7 +54,7 @@ export const changeIsFriendUserProfile = createAsyncThunk<boolean, { userId: str
   Action.CHANGE_IS_FRIEND_USER_PROFILE,
   async ({ userId, isFriend }, { extra }) => {
     const { api } = extra;
-    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.Friend);
+    const url = joinUrl(ApiServiceRoute.UsersProfiles, UserProfileRoute.Friends);
 
     if (isFriend) {
       await api.post(url, { userId });

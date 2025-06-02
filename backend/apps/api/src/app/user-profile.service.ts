@@ -25,6 +25,10 @@ export class UserProfileService {
     return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.UsersProfiles, ...routes);
   }
 
+  private getFriendsUrl(...routes: string[]): string {
+    return joinUrl(this.apiOptions.accountServiceUrl, ServiceRoute.Friends, ...routes);
+  }
+
   private async makeUsersProfiles(basicUsersProfiles: BasicUserProfileRdo[], requestId: string): Promise<UserProfileRdo[]> {
     const usersProfiles: UserProfileRdo[] = [];
 
@@ -68,7 +72,7 @@ export class UserProfileService {
     role: Role,
     requestId: string
   ): Promise<void> {
-    const url = this.getUrl(UserProfileRoute.Friends);
+    const url = this.getFriendsUrl();
     const headers = makeHeaders(requestId, null, currentUserId, role);
 
     if (isFriend) {
