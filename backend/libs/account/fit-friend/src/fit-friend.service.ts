@@ -12,13 +12,6 @@ export class FitFriendService {
     private readonly fitFriendRepository: FitFriendRepository
   ) { }
 
-  // обеденить с FitUserProfileServiceюcheckNotAllowForCoach
-  private checkNotAllowForCoach(role: Role) {
-    if (isCoachRole(role)) {
-      throw new ForbiddenException('Not allow for coach!');
-    }
-  }
-
   public async findByUserId(userId: string): Promise<FitFriendEntity> {
     const entity = await this.fitFriendRepository.findByUserId(userId);
 
@@ -73,15 +66,16 @@ export class FitFriendService {
   }
 
   public async addFriend(userId: string, currentUserId: string, userRole: Role): Promise<void> {
-    this.checkNotAllowForCoach(userRole);
+    // обеденить с FitUserProfileServiceюcheckNotAllowForCoach
+    if (isCoachRole(userRole)) {
+      throw new ForbiddenException('Not allow for coach!');
+    }
 
     await this.addOneFriend(userId, currentUserId);
     await this.addOneFriend(currentUserId, userId);
   }
 
-  public async deleteFriend(userId: string, currentUserId: string, userRole: Role): Promise<void> {
-    this.checkNotAllowForCoach(userRole);
-
+  public async deleteFriend(userId: string, currentUserId: string): Promise<void> {
     await this.deleteOneFriend(userId, currentUserId);
     await this.deleteOneFriend(currentUserId, userId);
   }

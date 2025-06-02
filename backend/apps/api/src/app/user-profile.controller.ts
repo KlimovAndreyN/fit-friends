@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   ApiServiceRoute, UserProfileRdo, UserProfileRoute, DetailUserProfileRdo,
   BearerAuth, IdParam, ApiParamOption, RequestWithRequestIdAndUser,
-  UsersProfilesWithPaginationRdo, UserProfileQuery
+  UsersProfilesWithPaginationRdo, UserProfileQuery, RequestWithRequestIdAndUserId
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -68,15 +68,14 @@ export class UserProfileController {
     @Body() { userId }: { userId: string }, //! нужен DTO
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<void> {
-    await this.userProfileService.updateFriend(true, userId, sub, role, requestId);
+    await this.userProfileService.addFriend(userId, sub, role, requestId);
   }
 
-  @UseGuards(CheckRoleSportsmanGuard)
   @Delete(joinUrl(UserProfileRoute.Friends, IdParam.USER))
   public async deleteFriend(
     @Param(ApiParamOption.UserId.name) userId: string,
-    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+    @Req() { userId: currentUserId, requestId }: RequestWithRequestIdAndUserId
   ): Promise<void> {
-    await this.userProfileService.updateFriend(false, userId, sub, role, requestId);
+    await this.userProfileService.deleteFriend(userId, currentUserId, requestId);
   }
 }

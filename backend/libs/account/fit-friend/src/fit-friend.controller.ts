@@ -2,15 +2,16 @@ import { Body, Controller, Delete, Get, Param, Post, Req, UseInterceptors } from
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
 import {
-  ServiceRoute, XAllApiHeaderOptions, RequestWithRequestIdAndUserId,
-  RequestWithRequestIdAndUserIdAndUserRole, ApiParamOption, IdParam
+  ServiceRoute, XUserApiHeaderOptions, RequestWithRequestIdAndUserId,
+  RequestWithRequestIdAndUserIdAndUserRole, ApiParamOption, IdParam,
+  XApiHeaderOptions, RequestWithUserId
 } from '@backend/shared/core';
 import { InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 
 import { FitFriendService } from './fit-friend.service';
 
 @ApiTags(ServiceRoute.Friends)
-@ApiHeaders(XAllApiHeaderOptions)
+@ApiHeaders(XApiHeaderOptions)
 @UseInterceptors(InjectUserIdInterceptor)
 @Controller(ServiceRoute.Friends)
 export class FitFriendController {
@@ -36,6 +37,7 @@ export class FitFriendController {
     return isFriend;
   }
 
+  @ApiHeaders(XUserApiHeaderOptions)
   @UseInterceptors(InjectUserRoleInterceptor)
   @Post()
   public async addFriend(
@@ -45,12 +47,11 @@ export class FitFriendController {
     await this.fitFriendService.addFriend(userId, currentUserId, userRole);
   }
 
-  @UseInterceptors(InjectUserRoleInterceptor)
   @Delete(IdParam.USER)
   public async deleteFriend(
     @Param(ApiParamOption.UserId.name) userId: string,
-    @Req() { userId: currentUserId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
+    @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<void> {
-    await this.fitFriendService.deleteFriend(userId, currentUserId, userRole);
+    await this.fitFriendService.deleteFriend(userId, currentUserId);
   }
 }

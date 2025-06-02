@@ -73,20 +73,17 @@ export class UserProfileService {
     return isFriend;
   }
 
-  public async updateFriend(
-    isFriend: boolean,
-    userId: string,
-    currentUserId: string,
-    role: Role,
-    requestId: string
-  ): Promise<void> {
+  public async addFriend(userId: string, currentUserId: string, role: Role, requestId: string): Promise<void> {
     const url = this.getFriendsUrl();
     const headers = makeHeaders(requestId, null, currentUserId, role);
 
-    if (isFriend) {
-      await this.httpService.axiosRef.post(url, { userId }, headers);
-    } else {
-      await this.httpService.axiosRef.delete(joinUrl(url, userId), headers);
-    }
+    await this.httpService.axiosRef.post(url, { userId }, headers);
+  }
+
+  public async deleteFriend(userId: string, currentUserId: string, requestId: string): Promise<void> {
+    const url = this.getFriendsUrl(userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
+
+    await this.httpService.axiosRef.delete(url, headers);
   }
 }
