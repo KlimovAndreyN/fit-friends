@@ -33,9 +33,9 @@ export class UserProfileService {
   private async makeUsersProfiles(basicUsersProfiles: BasicUserProfileRdo[], requestId: string): Promise<UserProfileRdo[]> {
     const usersProfiles: UserProfileRdo[] = [];
 
-    for (const { id, location, name, role, specializations, avatarFileId } of basicUsersProfiles) {
+    for (const { avatarFileId, ...userFields } of basicUsersProfiles) {
       const avatarFilePath = await this.fileService.getFilePath(avatarFileId, requestId);
-      const userProfile: UserProfileRdo = { id, location, name, role, specializations, avatarFilePath };
+      const userProfile: UserProfileRdo = { ...userFields, avatarFilePath };
 
       usersProfiles.push(userProfile);
     }
@@ -83,7 +83,7 @@ export class UserProfileService {
       //const user = await this.userService.getDetailUser(userId, sub, role, requestId);
       //const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
 
-      const friend: UserProfileRdo = { id: userId, location: Location.Petrogradskaya, name: 'name', role: Role.Sportsman, specializations: [Specialization.Aerobics], avatarFilePath: '' }
+      const friend: UserProfileRdo = { id: userId, location: Location.Petrogradskaya, name: 'name', role: Role.Sportsman, readyForTraining: true, specializations: [Specialization.Aerobics], avatarFilePath: '' }
 
       entities.push(friend);
     }

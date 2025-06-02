@@ -26,7 +26,7 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
 
   useEffect(() => {
     //! временно
-    dispatch(fetchFriends({ page: 1, limit: 9 }));
+    dispatch(fetchFriends({ page: 1, limit: 6 }));
   }, [dispatch]);
 
   const handleShowMoreClick = () => {
@@ -34,7 +34,7 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
     console.log('handleShowMoreClick');
 
     //! временно
-    dispatch(fetchFriends({ page: 2, limit: 9 }));
+    dispatch(fetchFriends({ page: 2, limit: 6 }));
   };
 
   if (!friends.length) {

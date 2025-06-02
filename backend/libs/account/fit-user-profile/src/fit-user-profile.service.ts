@@ -66,8 +66,8 @@ export class FitUserProfileService {
     const usersProfiles: BasicUserProfileRdo[] = [];
 
     for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, Default.LIMIT_MAX)) {
-      const { specializations } = await this.fitQuestionnaireRepository.findByUserId(id);
-      const userProfile: BasicUserProfileRdo = { id, location, name, role, specializations, avatarFileId };
+      const { readyForTraining, specializations } = await this.fitQuestionnaireRepository.findByUserId(id);
+      const userProfile: BasicUserProfileRdo = { id, location, name, role, readyForTraining, specializations, avatarFileId };
 
       usersProfiles.push(userProfile);
     }

@@ -19,6 +19,7 @@ export class UserProfileRdo
     PickType(
       QuestionnaireApiDoc,
       [
+        'readyForTraining',
         'specializations'
       ]
     )

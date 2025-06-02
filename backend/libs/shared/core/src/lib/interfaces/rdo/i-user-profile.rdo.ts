@@ -8,6 +8,7 @@ export interface IUserProfileRdo
     | 'name'
     | 'role'
     | 'location'
+    | 'readyForTraining'
     | 'specializations'
   > {
   avatarFilePath?: IDetailUserRdo['avatarFilePath']

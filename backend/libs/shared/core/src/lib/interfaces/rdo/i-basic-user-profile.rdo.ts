@@ -10,5 +10,6 @@ export interface IBasicUserProfileRdo
     | 'location'
     | 'avatarFileId'
   > {
+  readyForTraining: IQuestionnaireRdo['readyForTraining'];
   specializations: IQuestionnaireRdo['specializations'];
 };
