@@ -2,18 +2,16 @@ import { Body, Controller, Delete, Get, Param, Post, Query, Req, UseFilters, Use
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
-  ApiServiceRoute, UserProfileRdo, UserProfileRoute, DetailUserProfileRdo,
-  BearerAuth, ApiParamOption, RequestWithRequestIdAndUser,
-  UsersProfilesWithPaginationRdo, UserProfileQuery, IdParam,
-  RequestWithRequestIdAndUserId, PageQuery
+  ApiServiceRoute, IdParam, UserProfileRoute, DetailUserProfileRdo,
+  BearerAuth, ApiParamOption, RequestWithRequestIdAndUser, PageQuery,
+  UsersProfilesWithPaginationRdo, UserProfileQuery, UserProfileRdo,
+  FriendsWithPaginationRdo, RequestWithRequestIdAndUserId
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
-import { UserService } from './user.service';
-import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UserProfileService } from './user-profile.service';
 
 //! Добавить описание
@@ -24,8 +22,6 @@ import { UserProfileService } from './user-profile.service';
 @UseFilters(AxiosExceptionFilter)
 export class UserProfileController {
   constructor(
-    private readonly userService: UserService,
-    private readonly fitQuestionnaireService: FitQuestionnaireService,
     private readonly userProfileService: UserProfileService
   ) { }
 
@@ -50,13 +46,13 @@ export class UserProfileController {
     return userProfiles;
   }
 
-  @ApiResponse({ type: UsersProfilesWithPaginationRdo })
+  @ApiResponse({ type: FriendsWithPaginationRdo })
   @Get(UserProfileRoute.Friends)
   public async getFriends(
     @Query() query: PageQuery,
-    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
-  ): Promise<UsersProfilesWithPaginationRdo> {
-    const data = await this.userProfileService.getFriends(query, userId, requestId);
+    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+  ): Promise<FriendsWithPaginationRdo> {
+    const data = await this.userProfileService.getFriends(query, sub, role, requestId);
 
     return data;
   }
@@ -67,20 +63,19 @@ export class UserProfileController {
     @Param(ApiParamOption.UserId.name) userId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
-    const user = await this.userService.getDetailUser(userId, sub, role, requestId);
-    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+    const detailUser = await this.userProfileService.getDetailUserProfile(userId, sub, role, requestId);
     const isFriend = await this.userProfileService.checkFriend(userId, sub, requestId);
 
-    return { user, questionnaire, isFriend };
+    return { ...detailUser, isFriend };
   }
 
   @UseGuards(CheckRoleSportsmanGuard)
   @Post(UserProfileRoute.Friends)
   public async addFriend(
     @Body() { userId }: { userId: string }, //! нужен DTO
-    @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
+    @Req() request: RequestWithRequestIdAndUser
   ): Promise<void> {
-    await this.userProfileService.addFriend(userId, sub, role, requestId);
+    await this.userProfileService.addFriend(userId, request);
   }
 
   @Delete(joinUrl(UserProfileRoute.Friends, IdParam.USER))

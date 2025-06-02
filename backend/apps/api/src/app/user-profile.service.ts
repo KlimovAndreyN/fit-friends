@@ -5,19 +5,23 @@ import { ConfigType } from '@nestjs/config';
 import {
   ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
-  BasicUsersProfilesWithPaginationRdo, UserProfileRdo, Role,
-  PageQuery, PaginationResult, Location, Specialization
+  BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
+  PageQuery, Role, FriendsWithPaginationRdo, DetailUserProfileRdo
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
 import { FileService } from './file.service';
+import { UserService } from './user.service';
+import { FitQuestionnaireService } from './fit-questionnaire.service';
 
 @Injectable()
 export class UserProfileService {
   constructor(
     private readonly httpService: HttpService,
     private readonly fileService: FileService,
+    private readonly userService: UserService,
+    private readonly fitQuestionnaireService: FitQuestionnaireService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
@@ -43,6 +47,13 @@ export class UserProfileService {
     return usersProfiles;
   }
 
+  public async getDetailUserProfile(userId: string, currentUserId: string, role: Role, requestId: string): Promise<DetailUserProfileRdo> {
+    const user = await this.userService.getDetailUser(userId, currentUserId, role, requestId);
+    const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+
+    return { user, questionnaire }
+  }
+
   public async find(request: RequestWithRequestIdAndUser, query: UserProfileQuery): Promise<UsersProfilesWithPaginationRdo> {
     const { user: { sub, role }, requestId } = request;
     const url = this.getUrl(getQueryString(query));
@@ -66,9 +77,9 @@ export class UserProfileService {
     return usersProfiles;
   }
 
-  public async getFriends(query: PageQuery, userId: string, requestId: string): Promise<UsersProfilesWithPaginationRdo> {
+  public async getFriends(query: PageQuery, currentUserId: string, currentUserRole: Role, requestId: string): Promise<FriendsWithPaginationRdo> {
     const url = this.getFriendsUrl(getQueryString(query));
-    const headers = makeHeaders(requestId, null, userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
     const {
       data: { currentPage, entities: userIds, itemsPerPage, totalItems, totalPages }
     } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
@@ -79,16 +90,18 @@ export class UserProfileService {
     //! временно
     const entities: UserProfileRdo[] = [];
     for (const userId of userIds) {
-      //! есть в контроллере
-      //const user = await this.userService.getDetailUser(userId, sub, role, requestId);
-      //const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+      const detailUserProfile = await this.getDetailUserProfile(userId, currentUserId, currentUserRole, requestId);
+      const {
+        user: { id, name, role, location, avatarFilePath },
+        questionnaire: { readyForTraining, specializations }
+      } = detailUserProfile;
 
-      const friend: UserProfileRdo = { id: userId, location: Location.Petrogradskaya, name: 'name', role: Role.Sportsman, readyForTraining: true, specializations: [Specialization.Aerobics], avatarFilePath: '' }
+      const friend: UserProfileRdo = { id, name, role, location, avatarFilePath, readyForTraining, specializations }
 
       entities.push(friend);
     }
 
-    const data: UsersProfilesWithPaginationRdo = { entities, currentPage, itemsPerPage, totalItems, totalPages };
+    const data: FriendsWithPaginationRdo = { entities, currentPage, itemsPerPage, totalItems, totalPages };
 
     return data;
   }
@@ -101,9 +114,10 @@ export class UserProfileService {
     return isFriend;
   }
 
-  public async addFriend(userId: string, currentUserId: string, role: Role, requestId: string): Promise<void> {
+  public async addFriend(userId: string, request: RequestWithRequestIdAndUser): Promise<void> {
+    const { user: { sub, role }, requestId } = request;
     const url = this.getFriendsUrl();
-    const headers = makeHeaders(requestId, null, currentUserId, role);
+    const headers = makeHeaders(requestId, null, sub, role);
 
     await this.httpService.axiosRef.post(url, { userId }, headers);
   }
