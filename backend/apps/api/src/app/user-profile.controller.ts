@@ -3,8 +3,9 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ApiServiceRoute, UserProfileRdo, UserProfileRoute, DetailUserProfileRdo,
-  BearerAuth, IdParam, ApiParamOption, RequestWithRequestIdAndUser,
-  UsersProfilesWithPaginationRdo, UserProfileQuery, RequestWithRequestIdAndUserId
+  BearerAuth, ApiParamOption, RequestWithRequestIdAndUser,
+  UsersProfilesWithPaginationRdo, UserProfileQuery, IdParam,
+  RequestWithRequestIdAndUserId, PageQuery
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -28,7 +29,7 @@ export class UserProfileController {
     private readonly userProfileService: UserProfileService
   ) { }
 
-  @ApiResponse({ type: UserProfileRdo, isArray: true })
+  @ApiResponse({ type: UsersProfilesWithPaginationRdo })
   @UseGuards(CheckRoleSportsmanGuard)
   @Get()
   public async index(
@@ -60,6 +61,17 @@ export class UserProfileController {
     const isFriend = await this.userProfileService.checkFriend(userId, sub, requestId);
 
     return { user, questionnaire, isFriend };
+  }
+
+  @ApiResponse({ type: UsersProfilesWithPaginationRdo })
+  @Get()
+  public async getFriends(
+    @Query() query: PageQuery,
+    @Req() { userId, requestId }: RequestWithRequestIdAndUserId
+  ): Promise<UsersProfilesWithPaginationRdo> {
+    const data = await this.userProfileService.getFriends(query, userId, requestId);
+
+    return data;
   }
 
   @UseGuards(CheckRoleSportsmanGuard)

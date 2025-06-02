@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { Friend, isCoachRole, Role } from '@backend/shared/core';
+import { Friend, isCoachRole, PageQuery, PaginationResult, Role } from '@backend/shared/core';
 import { deleteItem } from '@backend/shared/helpers';
 
 import { FitFriendRepository } from './fit-friend.repository';
@@ -12,10 +12,17 @@ export class FitFriendService {
     private readonly fitFriendRepository: FitFriendRepository
   ) { }
 
-  public async findByUserId(userId: string): Promise<FitFriendEntity> {
-    const entity = await this.fitFriendRepository.findByUserId(userId);
+  public async findByUserId(userId: string, query: PageQuery): Promise<PaginationResult<string[]>> {
+    //! отладка
+    console.log('findByUserId', userId, query);
 
-    return entity;
+    //! список друзей - нужна пагинация!
+    //const entity = await this.fitFriendRepository.findByUserId(userId);
+
+    //! временно
+    const data: PaginationResult<string[]> = { entities: [], currentPage: 1, itemsPerPage: 1, totalItems: 1, totalPages: 1 };
+
+    return data;
   }
 
   private async addOneFriend(userId: string, currentUserId: string): Promise<FitFriendEntity> {

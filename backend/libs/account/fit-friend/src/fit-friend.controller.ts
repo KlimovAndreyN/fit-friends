@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiTags } from '@nestjs/swagger';
 
 import {
   ServiceRoute, XUserApiHeaderOptions, RequestWithRequestIdAndUserId,
   RequestWithRequestIdAndUserIdAndUserRole, ApiParamOption, IdParam,
-  XApiHeaderOptions, RequestWithUserId
+  XApiHeaderOptions, RequestWithUserId, PageQuery, PaginationResult
 } from '@backend/shared/core';
 import { InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 
@@ -20,11 +20,13 @@ export class FitFriendController {
   ) { }
 
   @Get()
-  public async index(@Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole): Promise<void> {
-    //! список друзей - нужна пагинация!
-    const entity = await this.fitFriendService.findByUserId(userId);
-    //! отладка
-    console.log(userId, userRole, entity);
+  public async index(
+    @Query() query: PageQuery,
+    @Req() { userId }: RequestWithUserId
+  ): Promise<PaginationResult<string[]>> {
+    const data = await this.fitFriendService.findByUserId(userId, query);
+
+    return data;
   }
 
   @Get(IdParam.USER)

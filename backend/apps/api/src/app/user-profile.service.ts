@@ -5,7 +5,8 @@ import { ConfigType } from '@nestjs/config';
 import {
   ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
-  BasicUsersProfilesWithPaginationRdo, UserProfileRdo, Role
+  BasicUsersProfilesWithPaginationRdo, UserProfileRdo, Role,
+  PageQuery, PaginationResult
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -63,6 +64,24 @@ export class UserProfileService {
     const usersProfiles = await this.makeUsersProfiles(basicUsersProfiles, requestId);
 
     return usersProfiles;
+  }
+
+  public async getFriends(query: PageQuery, userId: string, requestId: string): Promise<UsersProfilesWithPaginationRdo> {
+    const url = this.getFriendsUrl(getQueryString(query));
+    const headers = makeHeaders(requestId, null, userId);
+    const {
+      data: { currentPage, entities: userIds, itemsPerPage, totalItems, totalPages }
+    } = await this.httpService.axiosRef.get<PaginationResult<string[]>>(url, headers);
+
+    //! отладка
+    console.log('userIds', userIds);
+    console.log('currentPage, itemsPerPage, totalItems, totalPages');
+    //! временно
+    const entities: UserProfileRdo[] = [];
+
+    const data: UsersProfilesWithPaginationRdo = { entities, currentPage, itemsPerPage, totalItems, totalPages };
+
+    return data;
   }
 
   public async checkFriend(userId: string, currentUserId: string, requestId: string): Promise<boolean> {
