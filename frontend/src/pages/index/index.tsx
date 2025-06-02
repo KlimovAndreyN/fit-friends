@@ -56,7 +56,7 @@ function Index(): JSX.Element {
 
     dispatch(clearDetailTraining());
     dispatch(clearDetailUserProfile());
-    dispatch(clearFriends());
+    dispatch(clearFriends()); //! для обновления информации на странице мои друзья
   }, [dispatch, isIndexPageActivate, prevLocation]);
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {

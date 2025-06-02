@@ -13,6 +13,7 @@ import { getUserRole } from '../../store/user-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
 import { getIsFetchAccountInfoExecuting, getAccountInfo } from '../../store/account-process/selectors';
 import { fetchAccountInfo, updateAccountInfo } from '../../store/actions/account-action';
+import { clearFriends } from '../../store/user-profile-process';
 import { AppRoute, PageTitle } from '../../const';
 
 function PersonalAccount(): JSX.Element {
@@ -22,6 +23,9 @@ function PersonalAccount(): JSX.Element {
   const userProfile = useAppSelector(getAccountInfo);
 
   useEffect(() => {
+    dispatch(clearFriends()); //! для обновления информации на странице мои друзья
+    dispatch(setPrevLocation(AppRoute.PersonalAccount)); //! для обновления информации на главной странице, но нужно проверить...
+
     dispatch(fetchAccountInfo());
     dispatch(setPrevLocation(AppRoute.PersonalAccount));
   }, [dispatch]);
