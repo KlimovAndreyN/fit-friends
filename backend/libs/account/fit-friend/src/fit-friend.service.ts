@@ -24,9 +24,7 @@ export class FitFriendService {
     return entity;
   }
 
-  public async addFriend(userId: string, currentUserId: string, userRole: Role): Promise<FitFriendEntity> {
-    this.checkNotAllowForCoach(userRole);
-
+  private async addFriends(userId: string, currentUserId: string): Promise<FitFriendEntity> {
     let entity = await this.fitFriendRepository.findByUserId(currentUserId);
 
     if (!entity) {
@@ -44,5 +42,12 @@ export class FitFriendService {
     }
 
     return entity;
+  }
+
+  public async addFriend(userId: string, currentUserId: string, userRole: Role): Promise<void> {
+    this.checkNotAllowForCoach(userRole);
+
+    await this.addFriends(userId, currentUserId);
+    await this.addFriends(currentUserId, userId);
   }
 }
