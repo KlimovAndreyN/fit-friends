@@ -56,18 +56,15 @@ export class FitFriendService {
   }
 
   public async findByUserId(userId: string, query: PageQuery): Promise<PaginationResult<string>> {
-    //! отладка
-    console.log('findByUserId', userId, query);
-
-    //! список друзей - нужна пагинация!
-    //const entity = await this.fitFriendRepository.findByUserId(userId);
     const {
       page: currentPage = Default.PAGE,
       limit: take = Default.LIMIT_MAX
     } = query;
+    const skip = (currentPage - 1) * take;
 
-    const { friends } = await this.fitFriendRepository.findByUserId(userId);
-    const entities = friends; // skip(skip).limit(take)
+    const entity = await this.fitFriendRepository.findByUserId(userId);
+    const friends = (entity) ? entity.friends : [];
+    const entities = friends.slice(skip, take);
     const totalItems = friends.length;
     const totalPages = Math.ceil(totalItems / take);
 
