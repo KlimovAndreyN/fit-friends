@@ -27,6 +27,16 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
     console.log('handleShowMoreClick');
   };
 
+  if (!friends.length) {
+    return (
+      <Fragment>
+        <br />
+        <br />
+        <h2 style={{ textAlign: 'center' }}>У вас еще нет друзей</h2>
+      </Fragment>
+    );
+  }
+
   return (
     <Fragment>
       <ul className={`${className}__list`}>

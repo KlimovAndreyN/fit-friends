@@ -32,7 +32,6 @@ function ResultList(props: ResultListProps): JSX.Element {
     </ul>
   );
 
-
   const mainDiv = (
     <div className={mainClassName}>
       {
