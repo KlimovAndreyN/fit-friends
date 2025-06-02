@@ -4,5 +4,5 @@ import { IDetailUserRdo } from './i-detail-user.rdo';
 export interface IDetailUserProfileRdo {
   user: IDetailUserRdo;
   questionnaire: IQuestionnaireRdo;
-  isFriend: boolean;
+  isFriend?: boolean;
 }

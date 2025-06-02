@@ -62,7 +62,7 @@ export class FitUserProfileService {
 
     const users = await this.fitUserRepository.findMany([userId]);
     const questionnaireUserIds = await this.fitQuestionnaireRepository.getReadyForTrainingUserIds();
-    const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)))
+    const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)));
     const usersProfiles: BasicUserProfileRdo[] = [];
 
     for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, Default.LIMIT_MAX)) {

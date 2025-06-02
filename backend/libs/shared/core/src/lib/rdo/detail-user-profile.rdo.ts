@@ -16,5 +16,5 @@ export class DetailUserProfileRdo implements IDetailUserProfileRdo {
 
   @ApiProperty()
   @Expose()
-  isFriend: boolean;
+  isFriend?: boolean;
 }
