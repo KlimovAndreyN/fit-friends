@@ -1,4 +1,5 @@
 import { JSX, MouseEvent } from 'react';
+import classNames from 'classnames';
 
 import { isCoachRole } from '@backend/shared/core';
 
@@ -17,6 +18,7 @@ function UserDetailWrapperContentFriendButton({ classNamePrefix, userId }: UserD
   const userRole = useAppSelector(getUserRole);
   const isFriendUserProfileChangeExecuting = useAppSelector(getIsFriendUserProfileChangeExecuting);
   const isFriendUserProfile = useAppSelector(getIsFriendUserProfile);
+  const buttonClassName = classNames('btn', { 'btn--outlined': isFriendUserProfile }, `${classNamePrefix}__btn`);
 
   if (isCoachRole(userRole) && !isFriendUserProfile) {
     return null;
@@ -30,7 +32,7 @@ function UserDetailWrapperContentFriendButton({ classNamePrefix, userId }: UserD
 
   return (
     <button
-      className={`btn ${classNamePrefix}__btn`}
+      className={buttonClassName}
       type="button"
       onClick={handleAddFriendButtonClick}
       disabled={isFriendUserProfileChangeExecuting}
