@@ -19,11 +19,6 @@ type UserDetailCoachTrainingBlockProps = {
 }
 
 function UserDetailCoachTrainingBlock(props: UserDetailCoachTrainingBlockProps): JSX.Element {
-  //! проработать логику 'персональной тренировки', что по ТЗ?
-  //    нажал > пропала? или поменяла текст отказала
-  //! проработать логику подписки
-  //    нажал > меняется галочка и происходит подписка и отписка?
-
   const { classNamePrefix, userId, readyForTraining, individualTraining } = props;
   const dispatch = useAppDispatch();
   const isFetchCoachTrainingsExecuting = useAppSelector(getIsFetchCoachTrainingsExecuting);
