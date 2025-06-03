@@ -13,7 +13,7 @@ type UserDetailWrapperProps = {
 function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.Element {
   const {
     user: { id: userId, role, backgroundPath },
-    questionnaire: { individualTraining }
+    questionnaire: { readyForTraining, individualTraining }
   } = detailUserProfile;
   const isCoach = isCoachRole(role);
   const mainClassName = (isCoach) ? `user-card-coach${(individualTraining) ? '-2' : ''}` : 'user-card';
@@ -37,7 +37,12 @@ function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.E
           }
           {
             isCoach &&
-            <UserDetailCoachTrainingBlock classNamePrefix={mainClassName} userId={userId} />
+            <UserDetailCoachTrainingBlock
+              classNamePrefix={mainClassName}
+              userId={userId}
+              readyForTraining={readyForTraining}
+              individualTraining={individualTraining}
+            />
           }
         </div>
       </section>
