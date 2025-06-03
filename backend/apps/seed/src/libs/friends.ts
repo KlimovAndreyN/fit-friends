@@ -7,43 +7,44 @@ export async function clearFriends(fitFriendRepository: FitFriendRepository): Pr
   fitFriendRepository.deleteAll();
 }
 
+async function seedFriendsFromFriendsIds(
+  fitFriendRepository: FitFriendRepository,
+  firstFriendId: string,
+  secondFriendsIds: string[]
+): Promise<FitFriendEntity[]> {
+  const friendsEntities: FitFriendEntity[] = [];
+
+  for (const secondFriendId of secondFriendsIds) {
+    const friendEntity = new FitFriendEntity({ firstFriendId, secondFriendId });
+
+    await fitFriendRepository.save(friendEntity);
+    friendsEntities.push(friendEntity);
+  }
+
+  return friendsEntities;
+}
+
 export async function seedFriends(
   fitFriendRepository: FitFriendRepository,
   sportsmans: FitUserEntity[],
   coaches: FitUserEntity[]
 ): Promise<FitFriendEntity[]> {
   const friendsEntities: FitFriendEntity[] = [];
-  const sportsmansIds = sportsmans.map(({ id }) => (id));
-  const swaggerSportsmansIds = sportsmans
-    .filter(({ name }) => (isSwaggers(name)))
-    .map(({ id }) => (id));
   const noSwaggerSportsmansIds = sportsmans
     .filter(({ name }) => (!isSwaggers(name)))
     .map(({ id }) => (id));
   const coachesIds = coaches.map(({ id }) => (id));
 
-  for (const { id: userId, name } of sportsmans) {
-    const friends = [...coachesIds];
-    //console.log('friends', friends);
-
+  for (const { id, name } of sportsmans) {
     if (isSwaggers(name)) {
-      friends.push(...noSwaggerSportsmansIds);
-    } else {
-      friends.push(...swaggerSportsmansIds);
+      const entities = await seedFriendsFromFriendsIds(fitFriendRepository, id, noSwaggerSportsmansIds);
+
+      friendsEntities.push(...entities);
     }
-    //console.log('friends', friends);
 
-    const friendEntity = new FitFriendEntity({ userId, friends });
+    const entities = await seedFriendsFromFriendsIds(fitFriendRepository, id, coachesIds);
 
-    await fitFriendRepository.save(friendEntity);
-    friendsEntities.push(friendEntity);
-  }
-
-  for (const userId of coachesIds) {
-    const friendEntity = new FitFriendEntity({ userId, friends: sportsmansIds });
-
-    await fitFriendRepository.save(friendEntity);
-    friendsEntities.push(friendEntity);
+    friendsEntities.push(...entities);
   }
 
   return friendsEntities;
