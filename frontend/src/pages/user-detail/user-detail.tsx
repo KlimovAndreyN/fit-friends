@@ -9,6 +9,7 @@ import NotFound from '../not-found/not-found';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import useScrollToTop from '../../hooks/use-scroll-to-top';
+import { getUserId } from '../../store/user-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
 import { getDetailUserProfile, getIsFetchDetailUserProfileError, getIsFetchDetailUserProfileExecuting } from '../../store/user-profile-process/selectors';
 import { fetchDetailUserProfile } from '../../store/actions/user-profile-action';
@@ -21,6 +22,7 @@ function UserDetail(): JSX.Element | null {
   const dispatch = useAppDispatch();
   const isFetchDetailUserProfileExecuting = useAppSelector(getIsFetchDetailUserProfileExecuting);
   const isFetchDetailUserProfileError = useAppSelector(getIsFetchDetailUserProfileError);
+  const isSelfProfile = userId === useAppSelector(getUserId);
   const detailUserProfile = useAppSelector(getDetailUserProfile);
 
   useScrollToTop(); //! а если в useEffect?
@@ -60,7 +62,7 @@ function UserDetail(): JSX.Element | null {
           <div className="container">
             <div className="inner-page__wrapper">
               <BackButton className='inner-page' />
-              <UserDetailWrapper detailUserProfile={detailUserProfile} />
+              <UserDetailWrapper isSelfProfile={isSelfProfile} detailUserProfile={detailUserProfile} />
             </div>
           </div>
         </div>

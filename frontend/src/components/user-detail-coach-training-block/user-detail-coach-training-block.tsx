@@ -13,13 +13,14 @@ const SLIDES_COUNT = 4;
 
 type UserDetailCoachTrainingBlockProps = {
   classNamePrefix: string;
+  isSelfProfile: boolean;
   userId: string;
   readyForTraining: boolean;
   individualTraining?: boolean;
 }
 
 function UserDetailCoachTrainingBlock(props: UserDetailCoachTrainingBlockProps): JSX.Element {
-  const { classNamePrefix, userId, readyForTraining, individualTraining } = props;
+  const { classNamePrefix, isSelfProfile, userId, readyForTraining, individualTraining } = props;
   const dispatch = useAppDispatch();
   const isFetchCoachTrainingsExecuting = useAppSelector(getIsFetchCoachTrainingsExecuting);
   const trainings = useAppSelector(getCoachTrainings);
@@ -54,12 +55,16 @@ function UserDetailCoachTrainingBlock(props: UserDetailCoachTrainingBlockProps):
       slidesCount={SLIDES_COUNT}
       marginRight={20}
       additionalFooterElement={
-        <UserDetailCoachTrainingForm
-          classNamePrefix={classNamePrefix}
-          userId={userId}
-          readyForTraining={readyForTraining}
-          individualTraining={individualTraining}
-        />
+        (isSelfProfile)
+          ?
+          undefined
+          :
+          <UserDetailCoachTrainingForm
+            classNamePrefix={classNamePrefix}
+            userId={userId}
+            readyForTraining={readyForTraining}
+            individualTraining={individualTraining}
+          />
       }
       textForEmpty='У тренера еще нет тренировок'
     />

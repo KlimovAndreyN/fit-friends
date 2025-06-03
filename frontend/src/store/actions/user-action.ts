@@ -1,7 +1,7 @@
 import { AxiosInstance, AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { ILoginUserDto, IDetailUserRdo, ITokenPayloadRdo, ILoggedUserRdo, ICreateUserDto } from '@backend/shared/core';
+import { ILoginUserDto, IDetailUserRdo, ITokenPayload, ILoggedUserRdo, ICreateUserDto } from '@backend/shared/core';
 
 import { isErrorNetwork } from '../../utils/parse-axios-error';
 import { AccessTokenStore, RefreshTokenStore } from '../../utils/token-store';
@@ -20,7 +20,7 @@ export const Action = {
 };
 
 
-export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { extra: Extra }>(
+export const fetchUserStatus = createAsyncThunk<ITokenPayload, undefined, { extra: Extra }>(
   Action.FETCH_USER_STATUS,
   async (_, { extra, dispatch }) => {
     // если токена изначально нет, то и проверять не нужно...
@@ -29,7 +29,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
     }
 
     const { api } = extra;
-    const { data } = await api.get<ITokenPayloadRdo>(ApiRoute.CHECK);
+    const { data } = await api.get<ITokenPayload>(ApiRoute.CHECK);
 
     dispatch(existQuestionnaire());
 
@@ -37,7 +37,7 @@ export const fetchUserStatus = createAsyncThunk<ITokenPayloadRdo, undefined, { e
   }
 );
 
-export const loginUser = createAsyncThunk<ITokenPayloadRdo, ILoginUserDto, { extra: Extra }>(
+export const loginUser = createAsyncThunk<ITokenPayload, ILoginUserDto, { extra: Extra }>(
   Action.LOGIN_USER,
   async ({ email, password }, { extra, dispatch }) => {
     const { api } = extra;
@@ -65,7 +65,7 @@ export const logoutUser = createAsyncThunk<boolean, undefined, { extra: Extra }>
     let needDropTokens = true;
 
     try {
-      await api.delete<ITokenPayloadRdo>(ApiRoute.LOGOUT);
+      await api.delete<ITokenPayload>(ApiRoute.LOGOUT);
 
     } catch (error) {
       if (error instanceof AxiosError) {

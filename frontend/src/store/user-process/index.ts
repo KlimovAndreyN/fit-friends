@@ -9,7 +9,12 @@ const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isSingInExecuting: false,
   isSingUpExecuting: false,
-  userRole: DefaultUser.ROLE,
+  userInfo: {
+    name: '',
+    email: '',
+    role: DefaultUser.ROLE,
+    sub: ''
+  },
 
   prevLocation: AppRoute.Index,
 
@@ -38,8 +43,8 @@ export const userProcess = createSlice(
         )
         .addCase(
           fetchUserStatus.fulfilled,
-          (state, { payload: { role } }) => {
-            state.userRole = role;
+          (state, { payload }) => {
+            state.userInfo = payload;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -57,9 +62,9 @@ export const userProcess = createSlice(
         )
         .addCase(
           loginUser.fulfilled,
-          (state, { payload: { role } }) => {
+          (state, { payload }) => {
             state.isSingInExecuting = false;
-            state.userRole = role;
+            state.userInfo = payload;
             state.authorizationStatus = AuthorizationStatus.Auth;
           }
         )
@@ -67,6 +72,7 @@ export const userProcess = createSlice(
           logoutUser.fulfilled,
           (state, { payload }) => {
             if (payload) {
+              state.userInfo = initialState.userInfo;
               state.authorizationStatus = AuthorizationStatus.NoAuth;
             }
           }

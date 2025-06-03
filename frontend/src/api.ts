@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { toast } from 'react-toastify';
 
-import { AUTH_NAME, ITokensRdo } from '@backend/shared/core';
+import { AUTH_NAME, ITokens } from '@backend/shared/core';
 import { convertDtoToFormData } from '@backend/shared/helpers';
 
 import { AccessTokenStore, RefreshTokenStore } from './utils/token-store';
@@ -73,7 +73,7 @@ export function createAPI(): AxiosInstance {
         }
 
         //! возможно тут стоит вставить ожидание обновления токенов, т.к. паралельные запросы могут их очистить, т.к. refreshToken одноразовый
-        const { data: { accessToken, refreshToken } } = await api.post<ITokensRdo>(REFRESH);
+        const { data: { accessToken, refreshToken } } = await api.post<ITokens>(REFRESH);
 
         AccessTokenStore.save(accessToken);
         RefreshTokenStore.save(refreshToken);

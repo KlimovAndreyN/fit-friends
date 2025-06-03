@@ -32,8 +32,8 @@ export { type IUserProfileRdo } from './lib/interfaces/rdo/i-user-profile.rdo';
 export { type IUserRdo } from './lib/interfaces/rdo/i-user.rdo';
 export { type IUsersProfilesWithPaginationRdo } from './lib/interfaces/rdo/i-users-profiles-with-pagination.rdo';
 
-export { type TokenPayload as ITokenPayloadRdo } from './lib/interfaces/token-payload.interface';
-export { type Tokens as ITokensRdo } from './lib/interfaces/tokens.interface';
+export { type TokenPayload as ITokenPayload } from './lib/interfaces/token-payload.interface';
+export { type Tokens as ITokens } from './lib/interfaces/tokens.interface';
 
 export { Duration } from './lib/types/duration.enum';
 export { Gender } from './lib/types/gender.enum';

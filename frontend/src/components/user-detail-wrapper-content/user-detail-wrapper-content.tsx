@@ -11,10 +11,11 @@ import { getSpecializationsTitles } from '../../utils/common';
 
 type UserDetailWrapperContentProps = {
   classNamePrefix: string;
+  isSelfProfile: boolean;
   detailUserProfile: IDetailUserProfileRdo;
 }
 
-function UserDetailWrapperContent({ classNamePrefix, detailUserProfile }: UserDetailWrapperContentProps): JSX.Element {
+function UserDetailWrapperContent({ classNamePrefix, isSelfProfile, detailUserProfile }: UserDetailWrapperContentProps): JSX.Element {
   const {
     user: { id, role },
     questionnaire: { specializations, certificates = [] }
@@ -33,7 +34,10 @@ function UserDetailWrapperContent({ classNamePrefix, detailUserProfile }: UserDe
         listClassName={`${classNamePrefix}__hashtag-list`}
         itemClassName={`${classNamePrefix}__hashtag-item`}
       />
-      <UserDetailWrapperContentFriendButton userId={id} classNamePrefix={classNamePrefix} />
+      {
+        !isSelfProfile &&
+        <UserDetailWrapperContentFriendButton userId={id} classNamePrefix={classNamePrefix} />
+      }
     </div>
   );
 }

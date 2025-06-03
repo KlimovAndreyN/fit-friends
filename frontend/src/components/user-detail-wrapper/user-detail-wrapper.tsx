@@ -7,10 +7,11 @@ import UserDetailCoachTrainingBlock from '../user-detail-coach-training-block/us
 import UserDetailWrapperContent from '../user-detail-wrapper-content/user-detail-wrapper-content';
 
 type UserDetailWrapperProps = {
+  isSelfProfile: boolean;
   detailUserProfile: IDetailUserProfileRdo;
 }
 
-function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.Element {
+function UserDetailWrapper({ detailUserProfile, isSelfProfile }: UserDetailWrapperProps): JSX.Element {
   const {
     user: { id: userId, role, backgroundPath },
     questionnaire: { readyForTraining, individualTraining }
@@ -20,8 +21,15 @@ function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.E
 
   const content = (
     <Fragment>
-      <UserDetailWrapperContent classNamePrefix={mainClassName} detailUserProfile={detailUserProfile} />
-      <UserDetailWrapperGallary classNamePrefix={mainClassName} filesPaths={[backgroundPath]} />
+      <UserDetailWrapperContent
+        classNamePrefix={mainClassName}
+        isSelfProfile={isSelfProfile}
+        detailUserProfile={detailUserProfile}
+      />
+      <UserDetailWrapperGallary
+        classNamePrefix={mainClassName}
+        filesPaths={[backgroundPath]}
+      />
     </Fragment>
   );
 
@@ -39,6 +47,7 @@ function UserDetailWrapper({ detailUserProfile }: UserDetailWrapperProps): JSX.E
             isCoach &&
             <UserDetailCoachTrainingBlock
               classNamePrefix={mainClassName}
+              isSelfProfile={isSelfProfile}
               userId={userId}
               readyForTraining={readyForTraining}
               individualTraining={individualTraining}
