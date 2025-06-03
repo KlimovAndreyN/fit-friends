@@ -1,17 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
 import {
-  BasicUserProfileRdo, UserProfileQuery, getRoreByUserSortType,
-  BasicUsersProfilesWithPaginationRdo, isCoachRole, Role
+  BasicUserProfileRdo, UserProfileQuery, getRoreByUserSortType, Role,
+  BasicUsersProfilesWithPaginationRdo, isCoachRole, DefaultPagination
 } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
 import { FitUserRepository } from '@backend/account/fit-user';
 import { FitQuestionnaireRepository } from '@backend/account/fit-questionnaire'
-
-const Default = {
-  PAGE: 1,
-  LIMIT_MAX: 50
-} as const;
 
 @Injectable()
 export class FitUserProfileService {
@@ -30,8 +25,8 @@ export class FitUserProfileService {
     this.checkNotAllowForCoach(role);
 
     const {
-      page: currentPage = Default.PAGE,
-      limit: take = Default.LIMIT_MAX,
+      page: currentPage = DefaultPagination.PAGE,
+      limit: take = DefaultPagination.LIMIT_MAX,
       sortType,
       locations,
       trainingLevel,
@@ -65,7 +60,7 @@ export class FitUserProfileService {
     const filteredUsers = users.filter(({ id }) => (questionnaireUserIds.includes(id)));
     const usersProfiles: BasicUserProfileRdo[] = [];
 
-    for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, Default.LIMIT_MAX)) {
+    for (const { id, location, name, role, avatarFileId } of filteredUsers.slice(0, DefaultPagination.LIMIT_MAX)) {
       const { readyForTraining, specializations } = await this.fitQuestionnaireRepository.findByUserId(id);
       const userProfile: BasicUserProfileRdo = { id, location, name, role, readyForTraining, specializations, avatarFileId };
 

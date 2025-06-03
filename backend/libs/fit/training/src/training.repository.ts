@@ -3,19 +3,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import {
-  Duration, ITrainingRepositoryQuery, SortDirection, Gender, TrainingSortType,
-  Specialization, Training, TrainingLevel, isForFreeTrainingSortType
+  Duration, ITrainingRepositoryQuery, SortDirection, TrainingSortType,
+  Specialization, Training, TrainingLevel, isForFreeTrainingSortType,
+  Gender, DefaultPagination
 } from '@backend/shared/core';
 import { Prisma, Training as PrismaTraining } from '@prisma/client';
 
 import { TrainingEntity, TrainingEntityWithPagination } from './training.entity';
 import { TrainingFactory } from './training.factory';
 
-const Default = {
-  PAGE: 1,
-  LIMIT_MAX: 50,
-  SORT_TYPE: TrainingSortType.LowPrice
-} as const;
+const DEFAULT_SORT_TYPE = TrainingSortType.LowPrice;
 
 @Injectable()
 export class TrainingRepository extends BasePostgresRepository<TrainingEntity, Training> {
@@ -80,8 +77,8 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
 
   public async find(query: ITrainingRepositoryQuery): Promise<TrainingEntityWithPagination> {
     const {
-      page: currentPage = Default.PAGE,
-      limit: take = Default.LIMIT_MAX,
+      page: currentPage = DefaultPagination.PAGE,
+      limit: take = DefaultPagination.LIMIT_MAX,
       priceMin,
       priceMax,
       caloriesWasteMin,
@@ -91,7 +88,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       gender,
       specializations,
       durations,
-      sortType = Default.SORT_TYPE,
+      sortType = DEFAULT_SORT_TYPE,
       coachId,
       isSortCreatedDate,
       isSpecial,
