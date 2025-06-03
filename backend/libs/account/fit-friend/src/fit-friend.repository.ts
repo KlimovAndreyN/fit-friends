@@ -1,19 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 
-import { ConnectionNameOption, PageQuery, PaginationResult } from '@backend/shared/core';
+import { ConnectionNameOption, DefaultPagination, PageQuery, PaginationResult, SortDirection } from '@backend/shared/core';
 import { BaseMongoRepository } from '@backend/shared/data-access';
 
 import { FitFriendEntity } from './fit-friend.entity';
 import { FitFriendFactory } from './fit-friend.factory';
 import { FitFriendModel } from './fit-friend.model';
-
-//! убрать лимиты в константы
-const Default = {
-  PAGE: 1,
-  LIMIT_MAX: 50
-} as const;
 
 @Injectable()
 export class FitFriendRepository extends BaseMongoRepository<FitFriendEntity, FitFriendModel> {
@@ -23,6 +17,10 @@ export class FitFriendRepository extends BaseMongoRepository<FitFriendEntity, Fi
     fitFriendModel: Model<FitFriendModel>
   ) {
     super(entityFactory, fitFriendModel);
+  }
+
+  private calculateUsersPage(totalCount: number, limit: number): number {
+    return Math.ceil(totalCount / limit);
   }
 
   public async findFriend(firstFriendId: string, secondFriendId: string): Promise<FitFriendEntity | null> {
@@ -37,53 +35,31 @@ export class FitFriendRepository extends BaseMongoRepository<FitFriendEntity, Fi
   }
 
   public async findByUserId(userId: string, query: PageQuery): Promise<PaginationResult<FitFriendEntity>> {
-    const documents = await this.model.find({
+    const {
+      page: currentPage = DefaultPagination.PAGE,
+      limit: take = DefaultPagination.LIMIT_MAX
+    } = query;
+    const skip = (currentPage - 1) * take;
+    const where: FilterQuery<FitFriendModel> = {
       $or: [
         { firstFriendId: userId },
         { secondFriendId: userId }
       ]
-    }).exec();
+    };
 
-    /*
-    const {
-      page: currentPage = Default.PAGE,
-      limit: take = Default.LIMIT_MAX
-    } = query;
-    const skip = (currentPage - 1) * take;
-    const entity = await this.fitFriendRepository.findByUserId(userId);
-    const friends = (entity) ? entity.friends : [];
-    const entities = friends.slice(skip, skip + take);
-    const totalItems = friends.length;
-    const totalPages = Math.ceil(totalItems / take);
-
-    return {
-      entities,
-      currentPage,
-      totalPages,
-      itemsPerPage: take,
-      totalItems
-    }
-    */
-
-
-    //! если не сработает, то
-    /*
-  public async findByUserId(searchedUserId: string): Promise<FitFriendEntity[] | []> {
-    const documents = await this.model.find({
-      $or: [
-        { userId: searchedUserId },
-        { friendId: searchedUserId }
+    const [entities, friendsCount] = await Promise.all(
+      [
+        this.model.find().where(where).sort({ createdAt: SortDirection.Desc }).skip(skip).limit(take).exec(),
+        this.getDocumentsCount(where)
       ]
-    }).exec();
-    */
-    //return ;
+    );
 
     return {
-      entities: this.createEntitesFromDocuments(documents),
-      currentPage: 1,
-      totalPages: 1,
-      itemsPerPage: 1,
-      totalItems: 1
+      entities: this.createEntitesFromDocuments(entities),
+      currentPage,
+      totalPages: this.calculateUsersPage(friendsCount, take),
+      itemsPerPage: take,
+      totalItems: friendsCount
     };
   }
 }
