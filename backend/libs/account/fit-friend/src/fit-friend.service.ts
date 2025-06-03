@@ -98,6 +98,7 @@ export class FitFriendService {
 
   public async deleteFriend(userId: string, currentUserId: string): Promise<void> {
     await this.deleteOneFriend(userId, currentUserId);
+    //! тут не совсем ясно по ТЗ удалить
     await this.deleteOneFriend(currentUserId, userId);
   }
 }
