@@ -8,18 +8,22 @@ import { Friend } from '@backend/shared/core';
   timestamps: true
 })
 export class FitFriendModel extends Document implements Friend {
-  @Prop({ required: true, unique: true })
-  public userId: string;
+  @Prop({ required: true })
+  public firstFriendId: string;
 
-  @Prop({ required: true, type: Array })
-  public friends: string[];
+  @Prop({ required: true })
+  public secondFriendId: string;
 
   public createdAt: Date;
 
   public updatedAt: Date;
 }
 
+const FitFriendSchema = SchemaFactory.createForClass(FitFriendModel);
+
+FitFriendSchema.index({ firstFriendId: 1, secondFriendId: 1 }, { unique: true });
+
 export const FitFriendModels: ModelDefinition[] = [{
   name: FitFriendModel.name,
-  schema: SchemaFactory.createForClass(FitFriendModel)
+  schema: FitFriendSchema
 }];

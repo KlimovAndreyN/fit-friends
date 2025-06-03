@@ -1,8 +1,8 @@
 import { Entity, StorableEntity, Friend } from '@backend/shared/core';
 
 export class FitFriendEntity extends Entity implements StorableEntity<Friend> {
-  public userId: Friend['userId'];
-  public friends: Friend['friends'];
+  public firstFriendId: Friend['firstFriendId'];
+  public secondFriendId: Friend['secondFriendId'];
   public createdAt?: Friend['createdAt'];
   public updatedAt?: Friend['updatedAt'];
 
@@ -18,8 +18,8 @@ export class FitFriendEntity extends Entity implements StorableEntity<Friend> {
     }
 
     this.id = friend.id;
-    this.userId = friend.userId;
-    this.friends = [...friend.friends];
+    this.firstFriendId = friend.firstFriendId;
+    this.secondFriendId = friend.secondFriendId;
     this.createdAt = friend.createdAt;
     this.updatedAt = friend.updatedAt;
   }
@@ -27,11 +27,10 @@ export class FitFriendEntity extends Entity implements StorableEntity<Friend> {
   public toPOJO(): Friend {
     return {
       id: this.id,
-      userId: this.userId,
-      friends: this.friends,
+      firstFriendId: this.firstFriendId,
+      secondFriendId: this.secondFriendId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     }
   }
 }
-
