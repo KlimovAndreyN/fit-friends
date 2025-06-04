@@ -11,7 +11,7 @@ export class FriendRdo
       RequestStatusApiDoc,
       [
         'outJointTrainingStatus',
-        'inMyJointTrainingStatus',
+        'inJointTrainingStatus',
         'personalTrainingStatus'
       ]
     )

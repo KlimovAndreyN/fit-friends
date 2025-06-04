@@ -19,7 +19,7 @@ export class RequestStatusApiDoc {
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingRequestStatus)
-  inMyJointTrainingStatus?: IFriendRdo['inMyJointTrainingStatus'];
+  inJointTrainingStatus?: IFriendRdo['inJointTrainingStatus'];
 
   @ApiProperty()
   @Expose()

@@ -6,7 +6,8 @@ import {
   ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
-  PageQuery, Role, FriendsWithPaginationRdo, DetailUserProfileRdo
+  PageQuery, Role, FriendsWithPaginationRdo, DetailUserProfileRdo,
+  FriendRdo, TrainingRequestStatus
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -80,10 +81,14 @@ export class UserProfileService {
   public async getFriends(query: PageQuery, currentUserId: string, currentUserRole: Role, requestId: string): Promise<FriendsWithPaginationRdo> {
     const url = this.getFriendsUrl(getQueryString(query));
     const headers = makeHeaders(requestId, null, currentUserId);
-    const {
-      data: { currentPage, entities: userIds, itemsPerPage, totalItems, totalPages }
-    } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
-    const entities: UserProfileRdo[] = [];
+    const { data: {
+      currentPage,
+      entities: userIds,
+      itemsPerPage,
+      totalItems,
+      totalPages
+    } } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
+    const entities: FriendRdo[] = [];
 
     for (const userId of userIds) {
       const detailUserProfile = await this.getDetailUserProfile(userId, currentUserId, currentUserRole, requestId);
@@ -91,14 +96,50 @@ export class UserProfileService {
         user: { id, name, role, location, avatarFilePath },
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
-      const friend: UserProfileRdo = { id, name, role, location, avatarFilePath, readyForTraining, specializations }
+      const outJointTrainingStatus = undefined;
+      const inJointTrainingStatus = undefined;
+      let personalTrainingStatus = undefined;
 
-      entities.push(friend);
+      //! отладка
+      if (currentUserId === '658170cbb954e9f5b905ccf4') {
+        if (id === '683f30550f05978e7ecc5a41') {
+          personalTrainingStatus = TrainingRequestStatus.Pending;
+        }
+      }
+      if (currentUserId === '683f30550f05978e7ecc5a41') {
+        if (id === '658170cbb954e9f5b905ccf4') {
+          personalTrainingStatus = TrainingRequestStatus.Pending;
+        }
+        if (id === '683f30550f05978e7ecc5a3f') {
+          personalTrainingStatus = TrainingRequestStatus.Accepted;
+        }
+        if (id === '683f30550f05978e7ecc5a3d') {
+          personalTrainingStatus = TrainingRequestStatus.Rejected;
+        }
+      }
+      //!
+
+      entities.push({
+        id,
+        name,
+        role,
+        location,
+        avatarFilePath,
+        readyForTraining,
+        specializations,
+        outJointTrainingStatus,
+        inJointTrainingStatus,
+        personalTrainingStatus
+      });
     }
 
-    const data: FriendsWithPaginationRdo = { entities, currentPage, itemsPerPage, totalItems, totalPages };
-
-    return data;
+    return {
+      entities,
+      currentPage,
+      itemsPerPage,
+      totalItems,
+      totalPages
+    };
   }
 
   public async checkFriend(userId: string, currentUserId: string, requestId: string): Promise<boolean> {

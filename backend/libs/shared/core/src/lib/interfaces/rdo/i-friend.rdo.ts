@@ -4,6 +4,6 @@ import { IUserProfileRdo } from './i-user-profile.rdo';
 export interface IFriendRdo
   extends IUserProfileRdo {
   outJointTrainingStatus?: TrainingRequestStatus;
-  inMyJointTrainingStatus?: TrainingRequestStatus;
+  inJointTrainingStatus?: TrainingRequestStatus;
   personalTrainingStatus?: TrainingRequestStatus;
 }
