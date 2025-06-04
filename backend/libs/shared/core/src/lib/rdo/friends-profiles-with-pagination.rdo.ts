@@ -1,11 +1,11 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IFriendsWithPaginationRdo } from '../interfaces/rdo/i-friends-profiles-with-pagination.rdo';
+import { IFriendsProfilesWithPaginationRdo } from '../interfaces/rdo/i-friends-profiles-with-pagination.rdo';
 import { PaginationRdo } from './pagination.rdo';
-import { FriendRdo } from './friend-profile.rdo';
+import { FriendProfileRdo } from './friend-profile.rdo';
 
-export class FriendsWithPaginationRdo
+export class FriendsProfilesWithPaginationRdo
   extends PickType(
     PaginationRdo,
     [
@@ -15,11 +15,11 @@ export class FriendsWithPaginationRdo
       'totalPages'
     ]
   )
-  implements IFriendsWithPaginationRdo {
+  implements IFriendsProfilesWithPaginationRdo {
   @ApiProperty({
-    type: FriendRdo,
+    type: FriendProfileRdo,
     isArray: true
   })
   @Expose()
-  public entities: IFriendsWithPaginationRdo['entities'];
+  public entities: IFriendsProfilesWithPaginationRdo['entities'];
 }

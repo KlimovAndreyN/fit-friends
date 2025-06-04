@@ -5,7 +5,7 @@ import {
   ApiServiceRoute, IdParam, UserProfileRoute, DetailUserProfileRdo,
   BearerAuth, ApiParamOption, RequestWithRequestIdAndUser, PageQuery,
   UsersProfilesWithPaginationRdo, UserProfileQuery, UserProfileRdo,
-  FriendsWithPaginationRdo, RequestWithRequestIdAndUserId
+  FriendsProfilesWithPaginationRdo, RequestWithRequestIdAndUserId
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -46,12 +46,12 @@ export class UserProfileController {
     return userProfiles;
   }
 
-  @ApiResponse({ type: FriendsWithPaginationRdo })
+  @ApiResponse({ type: FriendsProfilesWithPaginationRdo })
   @Get(UserProfileRoute.Friends)
   public async getFriends(
     @Query() query: PageQuery,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
-  ): Promise<FriendsWithPaginationRdo> {
+  ): Promise<FriendsProfilesWithPaginationRdo> {
     const data = await this.userProfileService.getFriends(query, sub, role, requestId);
 
     return data;

@@ -1,10 +1,10 @@
 import { IntersectionType, PickType } from '@nestjs/swagger';
 
-import { IFriendRdo } from '../interfaces/rdo/i-friend-profile.rdo';
+import { IFriendProfileRdo } from '../interfaces/rdo/i-friend-profile.rdo';
 import { UserProfileRdo } from './user-profile.rdo';
 import { RequestStatusApiDoc } from '../constants/api-doc/request-status.api-doc';
 
-export class FriendRdo
+export class FriendProfileRdo
   extends IntersectionType(
     UserProfileRdo,
     PickType(
@@ -16,4 +16,4 @@ export class FriendRdo
       ]
     )
   )
-  implements IFriendRdo { }
+  implements IFriendProfileRdo { }

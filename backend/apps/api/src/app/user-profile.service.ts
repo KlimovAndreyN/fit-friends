@@ -6,8 +6,8 @@ import {
   ServiceRoute, UserProfileRoute, UsersProfilesWithPaginationRdo,
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
-  PageQuery, Role, FriendsWithPaginationRdo, DetailUserProfileRdo,
-  FriendRdo, TrainingRequestStatus
+  PageQuery, Role, FriendsProfilesWithPaginationRdo, DetailUserProfileRdo,
+  FriendProfileRdo, TrainingRequestStatus
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -78,7 +78,7 @@ export class UserProfileService {
     return usersProfiles;
   }
 
-  public async getFriends(query: PageQuery, currentUserId: string, currentUserRole: Role, requestId: string): Promise<FriendsWithPaginationRdo> {
+  public async getFriends(query: PageQuery, currentUserId: string, currentUserRole: Role, requestId: string): Promise<FriendsProfilesWithPaginationRdo> {
     const url = this.getFriendsUrl(getQueryString(query));
     const headers = makeHeaders(requestId, null, currentUserId);
     const { data: {
@@ -88,7 +88,7 @@ export class UserProfileService {
       totalItems,
       totalPages
     } } = await this.httpService.axiosRef.get<PaginationResult<string>>(url, headers);
-    const entities: FriendRdo[] = [];
+    const entities: FriendProfileRdo[] = [];
 
     for (const userId of userIds) {
       const detailUserProfile = await this.getDetailUserProfile(userId, currentUserId, currentUserRole, requestId);

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum } from 'class-validator';
 import { Expose } from 'class-transformer';
 
-import { IFriendRdo } from '../../interfaces/rdo/i-friend-profile.rdo';
+import { IFriendProfileRdo } from '../../interfaces/rdo/i-friend-profile.rdo';
 import { TrainingRequestStatus } from '../../types/training-request-status.enum';
 
 //! типизировать через SchemaObjectMetadata не получается
@@ -14,15 +14,15 @@ export class RequestStatusApiDoc {
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingRequestStatus)
-  outJointTrainingStatus?: IFriendRdo['outJointTrainingStatus'];
+  outJointTrainingStatus?: IFriendProfileRdo['outJointTrainingStatus'];
 
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingRequestStatus)
-  inJointTrainingStatus?: IFriendRdo['inJointTrainingStatus'];
+  inJointTrainingStatus?: IFriendProfileRdo['inJointTrainingStatus'];
 
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingRequestStatus)
-  personalTrainingStatus?: IFriendRdo['personalTrainingStatus'];
+  personalTrainingStatus?: IFriendProfileRdo['personalTrainingStatus'];
 }

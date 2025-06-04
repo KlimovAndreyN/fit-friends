@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import classNames from 'classnames';
 
-import { IFriendRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role } from '@backend/shared/core';
+import { IFriendProfileRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role } from '@backend/shared/core';
 
 import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
@@ -11,7 +11,7 @@ import { addStatusText, getBaseRequestText, getPersonalTrainingStatusText } from
 
 type ThumbnailFriendProps = {
   className: string;
-  friend: IFriendRdo;
+  friend: IFriendProfileRdo;
   userRole: Role;
 }
 
