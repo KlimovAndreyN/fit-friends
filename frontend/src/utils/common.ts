@@ -39,7 +39,7 @@ export function getSpecializationsTitles(specializations: Specialization[]): str
 }
 
 export function getBaseRequestText(isPersonal = false): string {
-  return `Запрос на\u00A0${(isPersonal) ? 'персональную' : 'совместную'}`;
+  return `Запрос на\u00A0${(isPersonal) ? 'персональную' : 'совместную'} тренировку`;
 }
 
 export function addStatusText(text: string, status?: TrainingRequestStatus): string {
@@ -55,8 +55,8 @@ export function addStatusText(text: string, status?: TrainingRequestStatus): str
   return '';
 }
 
-export function getPersonalTrainingStatusCoachText(status?: TrainingRequestStatus): string {
-  const baseText = getBaseRequestText(true);
+export function getPersonalTrainingStatusText(forCoach: boolean, status?: TrainingRequestStatus): string {
+  const baseText = getBaseRequestText(forCoach);
 
   switch (status) {
     case TrainingRequestStatus.Pending:

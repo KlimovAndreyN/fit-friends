@@ -9,7 +9,7 @@ import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thu
 
 import { useAppSelector } from '../../hooks';
 import { getUserId } from '../../store/user-process/selectors';
-import { addStatusText, getBaseRequestText, getPersonalTrainingStatusCoachText } from '../../utils/common';
+import { addStatusText, getBaseRequestText, getPersonalTrainingStatusText } from '../../utils/common';
 
 type ThumbnailFriendProps = {
   className: string;
@@ -29,7 +29,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   // определим, что показывать и для каких случаев
   let isShowRequestStatus = false;
   let isShowRequestButtons = false;
-  let statusText = '';
+  const statusTexts: string[] = [];
 
   if (isSportsmanUser) {
     // для спортсмена
@@ -37,25 +37,25 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
       // исходящие personalTrainingStatus
       if (outJointTrainingStatus) {
         isShowRequestStatus = true;
-
+        statusTexts.push(addStatusText(getBaseRequestText(), outJointTrainingStatus));
       }
       // входящие inJointTrainingStatus
-      //! можно объеденить с текстом для исходящего статуса
+      //! можно не объеденять с текстом для исходящего запроса
       if (inJointTrainingStatus) {
         isShowRequestStatus = true;
         isShowRequestButtons = isPendingTrainingRequestStatus(inJointTrainingStatus);
-        statusText = getPersonalTrainingStatusCoachText(personalTrainingStatus);
+        statusTexts.push(getPersonalTrainingStatusText(false, inJointTrainingStatus));
       }
     } else {
       // персональные - отправленные запросы тренерам
       isShowRequestStatus = !!personalTrainingStatus;
-      statusText = addStatusText(getBaseRequestText(true), personalTrainingStatus);
+      statusTexts.push(addStatusText(getBaseRequestText(true), personalTrainingStatus));
     }
   } else {
     // для тренера смотрим только personalTrainingStatus
     isShowRequestStatus = !!personalTrainingStatus;
     isShowRequestButtons = isPendingTrainingRequestStatus(personalTrainingStatus);
-    statusText = getPersonalTrainingStatusCoachText(personalTrainingStatus);
+    statusTexts.push(getPersonalTrainingStatusText(true, personalTrainingStatus));
   }
 
   //! отладка
@@ -126,7 +126,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
         {
           isShowRequestStatus &&
           <ThumbnailFriendRequestStatus
-            text={statusText}
+            texts={statusTexts}
             classNamePrefix={mainClassName}
             isShowButtons={isShowRequestButtons}
             onAcceptButtonClick={handleAcceptButtonClick}

@@ -114,7 +114,7 @@ export class UserProfileService {
         }
         if (id === '683f30540f05978e7ecc5a23') {
           outJointTrainingStatus = TrainingRequestStatus.Pending;
-          inJointTrainingStatus = TrainingRequestStatus.Rejected;
+          inJointTrainingStatus = TrainingRequestStatus.Pending;
         }
       }
       if (currentUserId === '683f30550f05978e7ecc5a41') {
