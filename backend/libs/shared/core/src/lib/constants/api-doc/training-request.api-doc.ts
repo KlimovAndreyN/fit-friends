@@ -10,7 +10,7 @@ import { TrainingRequestStatus } from '../../types/training-request-status.enum'
 // или import { SchemaObjectMetadata } from '@nestjs/swagger/dist/interfaces/schema-object-metadata.interface';
 // Ошибка - has or is using name 'SchemaObjectCommonMetadata' from external module "fit-friends/backend/node_modules/@nestjs/swagger/dist/interfaces/schema-object-metadata.interface" but cannot be named.ts(4023)
 
-export class RequestStatusApiDoc {
+export class TrainingRequestApiDoc {
   @ApiProperty()
   @Expose()
   @IsEnum(TrainingRequestStatus)

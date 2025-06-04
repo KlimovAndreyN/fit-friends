@@ -64,6 +64,7 @@ export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { StoredFile } from './lib/interfaces/stored-file.interface';
 export { TokenPayload } from './lib/interfaces/token-payload.interface';
 export { Tokens } from './lib/interfaces/tokens.interface';
+export { TrainingRequest } from './lib/interfaces/training-request.interface';
 export { Training } from './lib/interfaces/training.interface';
 export { User } from './lib/interfaces/user.interface';
 
