@@ -96,14 +96,25 @@ export class UserProfileService {
         user: { id, name, role, location, avatarFilePath },
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
-      const outJointTrainingStatus = undefined;
-      const inJointTrainingStatus = undefined;
+      let outJointTrainingStatus = undefined;
+      let inJointTrainingStatus = undefined;
       let personalTrainingStatus = undefined;
 
       //! отладка
       if (currentUserId === '658170cbb954e9f5b905ccf4') {
         if (id === '683f30550f05978e7ecc5a41') {
           personalTrainingStatus = TrainingRequestStatus.Pending;
+        }
+        if (id === '683f30550f05978e7ecc5a4f') {
+          personalTrainingStatus = TrainingRequestStatus.Accepted;
+        }
+        if (id === '683f30540f05978e7ecc5a25') {
+          outJointTrainingStatus = TrainingRequestStatus.Pending;
+          inJointTrainingStatus = TrainingRequestStatus.Accepted;
+        }
+        if (id === '683f30540f05978e7ecc5a23') {
+          outJointTrainingStatus = TrainingRequestStatus.Pending;
+          inJointTrainingStatus = TrainingRequestStatus.Rejected;
         }
       }
       if (currentUserId === '683f30550f05978e7ecc5a41') {

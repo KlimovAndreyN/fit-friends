@@ -1,4 +1,4 @@
-import { isSportsmanRole, Role, Specialization } from '@backend/shared/core';
+import { isSportsmanRole, Role, Specialization, TrainingRequestStatus } from '@backend/shared/core';
 
 import { AppRoute, ID_PARAM, MAIN_TITLE, SpecializationTitle } from '../const';
 
@@ -36,4 +36,36 @@ export function getSpecializationsTitles(specializations: Specialization[]): str
   return specializations.map(
     (specialization) => (SpecializationTitle[specialization].toLocaleLowerCase())
   );
+}
+
+export function getBaseRequestText(isPersonal = false): string {
+  return `Запрос на\u00A0${(isPersonal) ? 'персональную' : 'совместную'}`;
+}
+
+export function addStatusText(text: string, status?: TrainingRequestStatus): string {
+  switch (status) {
+    case TrainingRequestStatus.Pending:
+      return `${text} на\u00A0рассмотрении`;
+    case TrainingRequestStatus.Accepted:
+      return `${text} принят`;
+    case TrainingRequestStatus.Rejected:
+      return `${text} отклонён`;
+  }
+
+  return '';
+}
+
+export function getPersonalTrainingStatusCoachText(status?: TrainingRequestStatus): string {
+  const baseText = getBaseRequestText(true);
+
+  switch (status) {
+    case TrainingRequestStatus.Pending:
+      return baseText;
+    case TrainingRequestStatus.Accepted:
+      return `Вы приняли ${baseText.toLocaleLowerCase()}`;
+    case TrainingRequestStatus.Rejected:
+      return `Вы отклонили ${baseText.toLocaleLowerCase()}`;
+  }
+
+  return '';
 }

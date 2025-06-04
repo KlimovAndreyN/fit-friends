@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import classNames from 'classnames';
 
-import { IFriendRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role, TrainingRequestStatus } from '@backend/shared/core';
+import { IFriendRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role } from '@backend/shared/core';
 
 import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
@@ -9,6 +9,7 @@ import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thu
 
 import { useAppSelector } from '../../hooks';
 import { getUserId } from '../../store/user-process/selectors';
+import { addStatusText, getBaseRequestText, getPersonalTrainingStatusCoachText } from '../../utils/common';
 
 type ThumbnailFriendProps = {
   className: string;
@@ -25,45 +26,37 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   const mainClassName = 'thumbnail-friend';
   const mainDivClassName = classNames(`${mainClassName}__info`, `${mainClassName}__info--${(isSportsman) ? 'theme-light' : 'theme-dark'}`);
 
-  // определим что показывать
+  // определим, что показывать и для каких случаев
   let isShowRequestStatus = false;
   let isShowRequestButtons = false;
   let statusText = '';
 
   if (isSportsmanUser) {
     // для спортсмена
-    isShowRequestStatus = false;
-    isShowRequestButtons = false;
-    statusText = '';
+    if (isSportsman) {
+      // исходящие personalTrainingStatus
+      if (outJointTrainingStatus) {
+        isShowRequestStatus = true;
+
+      }
+      // входящие inJointTrainingStatus
+      //! можно объеденить с текстом для исходящего статуса
+      if (inJointTrainingStatus) {
+        isShowRequestStatus = true;
+        isShowRequestButtons = isPendingTrainingRequestStatus(inJointTrainingStatus);
+        statusText = getPersonalTrainingStatusCoachText(personalTrainingStatus);
+      }
+    } else {
+      // персональные - отправленные запросы тренерам
+      isShowRequestStatus = !!personalTrainingStatus;
+      statusText = addStatusText(getBaseRequestText(true), personalTrainingStatus);
+    }
   } else {
     // для тренера смотрим только personalTrainingStatus
     isShowRequestStatus = !!personalTrainingStatus;
     isShowRequestButtons = isPendingTrainingRequestStatus(personalTrainingStatus);
-
-    const status = 'Запрос на\u00A0персональную тренировку';
-
-    switch (personalTrainingStatus) {
-      case TrainingRequestStatus.Pending:
-        statusText = status;
-        break;
-      case TrainingRequestStatus.Accepted:
-        statusText = `Вы приняли ${status.toLocaleLowerCase()}`;
-        break;
-      case TrainingRequestStatus.Rejected:
-        statusText = `Вы отклонили ${status.toLocaleLowerCase()}`;
-        break;
-    }
+    statusText = getPersonalTrainingStatusCoachText(personalTrainingStatus);
   }
-  /*
-  const isShowRequestStatus = (isSportsmanUser && !!inJointTrainingStatus || !isSportsmanUser && !!personalTrainingStatus);
-  const isShowRequestButtons = (
-    isSportsmanUser && isPendingTrainingRequestStatus(inJointTrainingStatus)
-    || !isSportsmanUser && isPendingTrainingRequestStatus(personalTrainingStatus)
-  );
-  const inStatusText = `Запрос на\u00A0${(isSportsmanUser) ? 'совместную' : 'персональную'} тренировку`; //! тут определить текст
-  const outStatusText = `Запрос на\u00A0${(isSportsman) ? 'совместную' : 'персональную'} тренировку ...`;
-  const statusText = (isSportsmanUser && outJointTrainingStatus) ? outStatusText : inStatusText;
-  */
 
   //! отладка
   const currentUserId = useAppSelector(getUserId);
@@ -88,16 +81,22 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   //!
 
   const handleInviteButtonClick = () => {
+    //! тут обработать ответ и поменять содержимое массива
+
     // eslint-disable-next-line no-console
     console.log('handleInviteButtonClick');
   };
 
   const handleAcceptButtonClick = () => {
+    //! тут обработать ответ и поменять содержимое массива
+
     // eslint-disable-next-line no-console
     console.log('handleAcceptButtonClick');
   };
 
   const handleRejectButtonClick = () => {
+    //! тут обработать ответ и поменять содержимое массива
+
     // eslint-disable-next-line no-console
     console.log('handleRejectButtonClick');
   };
