@@ -109,11 +109,11 @@ export class UserProfileService {
           personalTrainingStatus = TrainingRequestStatus.Accepted;
         }
         if (id === '683f30540f05978e7ecc5a25') {
-          outJointTrainingStatus = TrainingRequestStatus.Pending;
+          outJointTrainingStatus = TrainingRequestStatus.Accepted;
           inJointTrainingStatus = TrainingRequestStatus.Accepted;
         }
         if (id === '683f30540f05978e7ecc5a23') {
-          outJointTrainingStatus = TrainingRequestStatus.Pending;
+          outJointTrainingStatus = TrainingRequestStatus.Rejected;
           inJointTrainingStatus = TrainingRequestStatus.Pending;
         }
       }

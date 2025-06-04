@@ -1,14 +1,16 @@
 import { JSX } from 'react';
 
 type ThumbnailFriendRequestStatusProps = {
-  texts: string[];
   classNamePrefix: string;
+  outStatusText: string;
+  inStatusText: string;
   isShowButtons: boolean;
   onAcceptButtonClick: () => void;
   onRejectButtonClick: () => void;
 }
 
-function ThumbnailFriendRequestStatus({ texts, classNamePrefix, isShowButtons, onAcceptButtonClick, onRejectButtonClick }: ThumbnailFriendRequestStatusProps): JSX.Element {
+function ThumbnailFriendRequestStatus(props: ThumbnailFriendRequestStatusProps): JSX.Element {
+  const { classNamePrefix, outStatusText, inStatusText, isShowButtons, onAcceptButtonClick, onRejectButtonClick } = props;
   const divRequestClassName = `${classNamePrefix}__request-status`;
 
   const handleAcceptButtonClick = () => {
@@ -22,7 +24,11 @@ function ThumbnailFriendRequestStatus({ texts, classNamePrefix, isShowButtons, o
   return (
     <div className={`${divRequestClassName} ${divRequestClassName}--role-user`}>
       {
-        texts.map((text, index) => {
+        [outStatusText, inStatusText].map((text, index) => {
+          if (!text) {
+            return null;
+          }
+
           const key = `text-${index}`;
 
           return (<p className="thumbnail-friend__request-text" key={key}>{text}</p>);
