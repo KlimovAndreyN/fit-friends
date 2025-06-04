@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum } from 'class-validator';
 import { Expose } from 'class-transformer';
 
-import { IFriendRdo } from '../../interfaces/rdo/i-friend.rdo';
+import { IFriendRdo } from '../../interfaces/rdo/i-friend-profile.rdo';
 import { TrainingRequestStatus } from '../../types/training-request-status.enum';
 
 //! типизировать через SchemaObjectMetadata не получается

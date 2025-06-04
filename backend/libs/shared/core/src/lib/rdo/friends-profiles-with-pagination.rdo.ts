@@ -1,9 +1,9 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IFriendsWithPaginationRdo } from '../interfaces/rdo/i-friends-with-pagination.rdo';
+import { IFriendsWithPaginationRdo } from '../interfaces/rdo/i-friends-profiles-with-pagination.rdo';
 import { PaginationRdo } from './pagination.rdo';
-import { FriendRdo } from './friend.rdo';
+import { FriendRdo } from './friend-profile.rdo';
 
 export class FriendsWithPaginationRdo
   extends PickType(
