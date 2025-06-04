@@ -138,9 +138,21 @@ export class UserProfileService {
         avatarFilePath,
         readyForTraining,
         specializations,
-        outJointTrainingStatus,
-        inJointTrainingStatus,
-        personalTrainingStatus
+        outJointTraining: {
+          id: '111',
+          status: outJointTrainingStatus,
+          updatedAt: new Date()
+        },
+        inJointTraining: {
+          id: '222',
+          status: inJointTrainingStatus,
+          updatedAt: new Date()
+        },
+        personalTraining: {
+          id: '333',
+          status: personalTrainingStatus,
+          updatedAt: new Date()
+        }
       });
     }
 

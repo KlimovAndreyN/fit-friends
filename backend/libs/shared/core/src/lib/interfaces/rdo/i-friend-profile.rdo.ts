@@ -1,9 +1,9 @@
-import { TrainingRequestStatus } from '../../types/training-request-status.enum';
+import { ITrainingRequestRdo } from './i-training-request.rdo';
 import { IUserProfileRdo } from './i-user-profile.rdo';
 
 export interface IFriendProfileRdo
   extends IUserProfileRdo {
-  outJointTrainingStatus?: TrainingRequestStatus;
-  inJointTrainingStatus?: TrainingRequestStatus;
-  personalTrainingStatus?: TrainingRequestStatus;
+  outJointTraining?: ITrainingRequestRdo;
+  inJointTraining?: ITrainingRequestRdo;
+  personalTraining?: ITrainingRequestRdo;
 }
