@@ -1,6 +1,9 @@
 import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
 
-import { isCoachRole, Role, TrainingRequestStatus } from '@backend/shared/core';
+import {
+  CreateTrainingRequestDto, isCoachRole, Role,
+  TrainingRequestStatus, UpdateTrainingRequestDto
+} from '@backend/shared/core';
 
 import { TrainingRequestRepository } from './training-request.repository';
 import { TrainingRequestEntity } from './training-request.entity';
@@ -20,7 +23,7 @@ export class TrainingRequestService {
   }
 
   public async create(
-    { userId }: { userId: string; }, //! нужен свой DTO
+    { userId }: CreateTrainingRequestDto,
     initiatorId: string,
     initiatorRole: Role
   ): Promise<TrainingRequestEntity> {
@@ -37,7 +40,7 @@ export class TrainingRequestService {
   }
 
   public async updateById(
-    { status }: { status: TrainingRequestStatus; },//! нужен свой DTO
+    { status }: UpdateTrainingRequestDto,
     id: string,
     userId: string
   ): Promise<TrainingRequestEntity> {

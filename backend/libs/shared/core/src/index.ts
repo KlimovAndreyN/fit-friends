@@ -34,12 +34,14 @@ export { CreateBasicUserDto } from './lib/dto/create-basic-user.dto';
 export { CreateEmailSubscriberDto } from './lib/dto/create-email-subscriber.dto';
 export { CreateQuestionnaireCoachDto } from './lib/dto/create-questionnaire-coach.dto';
 export { CreateQuestionnaireSportsmanDto } from './lib/dto/create-questionnaire-sportsman.dto';
+export { CreateTrainingRequestDto } from './lib/dto/create-training-request.dto';
 export { CreateTrainingDto } from './lib/dto/create-training.dto';
 export { CreateUserDto } from './lib/dto/create-user.dto';
 export { LoginUserDto } from './lib/dto/login-user.dto';
 export { UpdateAccountInfoDto } from './lib/dto/update-account-info.dto';
 export { UpdateBasicUserDto } from './lib/dto/update-basic-user.dto';
 export { UpdateQuestionnaireDto } from './lib/dto/update-questionnaire.dto';
+export { UpdateTrainingRequestDto } from './lib/dto/update-training-request.dto';
 export { UpdateUserDto } from './lib/dto/update-user.dto';
 
 export { FILES_PROPERTY } from './lib/interfaces/dto/i-create-questionnaire-coach.dto';

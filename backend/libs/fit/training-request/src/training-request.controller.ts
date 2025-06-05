@@ -1,7 +1,11 @@
 import { Body, Controller, Get, Param, Patch, Post, Req, UseInterceptors } from '@nestjs/common';
 import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { ServiceRoute, XAllApiHeaderOptions, ApiParamOption, IdParam, TrainingRequestRdo, TrainingRequestRoute, RequestWithUserId, RequestWithRequestIdAndUserIdAndUserRole, TrainingRequestStatus } from '@backend/shared/core';
+import {
+  ServiceRoute, XAllApiHeaderOptions, ApiParamOption, IdParam, RequestWithUserId,
+  TrainingRequestRdo, TrainingRequestRoute, RequestWithRequestIdAndUserIdAndUserRole,
+  CreateTrainingRequestDto, UpdateTrainingRequestDto
+} from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { GuidValidationPipe, MongoIdValidationPipe } from '@backend/shared/pipes';
 import { InjectUserRoleInterceptor } from '@backend/shared/interceptors';
@@ -44,7 +48,7 @@ export class TrainingRequestController {
   @UseInterceptors(InjectUserRoleInterceptor)
   @Post()
   public async create(
-    @Body() dto: { userId: string; }, //! нужен свой DTO
+    @Body() dto: CreateTrainingRequestDto,
     @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
   ): Promise<TrainingRequestRdo> {
     const entity = await this.trainingRequestService.create(dto, userId, userRole);
@@ -56,7 +60,7 @@ export class TrainingRequestController {
   @ApiParam(ApiParamOption.TrainingRequestId)
   @Patch(IdParam.TRAINING_REQUEST)
   public async update(
-    @Body() dto: { status: TrainingRequestStatus; }, //! нужен свой DTO
+    @Body() dto: UpdateTrainingRequestDto,
     @Param(ApiParamOption.TrainingRequestId.name, GuidValidationPipe) trainingRequestId: string,
     @Req() { userId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {

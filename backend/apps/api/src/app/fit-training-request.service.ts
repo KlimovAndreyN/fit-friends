@@ -2,7 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
-import { ServiceRoute, RequestWithRequestIdAndUser, TrainingRequestRdo, TrainingRequestStatus } from '@backend/shared/core';
+import {
+  ServiceRoute, RequestWithRequestIdAndUser, TrainingRequestRdo,
+  UpdateTrainingRequestDto, CreateTrainingRequestDto
+} from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
 
@@ -19,7 +22,7 @@ export class FitTrainingRequestService {
   }
 
   public async create(
-    dto: { userId: string; }, //! нужен свой DTO
+    dto: CreateTrainingRequestDto,
     { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<TrainingRequestRdo> {
     const url = this.getUrl();
@@ -30,7 +33,7 @@ export class FitTrainingRequestService {
   }
 
   public async update(
-    dto: { status: TrainingRequestStatus; }, //! нужен свой DTO
+    dto: UpdateTrainingRequestDto,
     trainingRequestId: string,
     userId: string,
     requestId: string

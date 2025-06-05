@@ -3,7 +3,8 @@ import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
   ApiServiceRoute, BearerAuth, ApiParamOption, RequestWithRequestIdAndUserId,
-  RequestWithRequestIdAndUser, TrainingRequestRdo, IdParam, TrainingRequestStatus
+  RequestWithRequestIdAndUser, TrainingRequestRdo, IdParam,
+  CreateTrainingRequestDto, UpdateTrainingRequestDto
 } from '@backend/shared/core';
 import { GuidValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
@@ -27,7 +28,7 @@ export class FitTrainingRequestController {
   @UseGuards(CheckRoleSportsmanGuard)
   @Post()
   public async create(
-    @Body() dto: { userId: string; }, //! нужен свой DTO
+    @Body() dto: CreateTrainingRequestDto,
     @Req() request: RequestWithRequestIdAndUser
   ): Promise<TrainingRequestRdo> {
     const trainingRequest = await this.fitTrainingRequestService.create(dto, request);
@@ -39,7 +40,7 @@ export class FitTrainingRequestController {
   @ApiParam(ApiParamOption.TrainingRequestId)
   @Patch(IdParam.TRAINING_REQUEST)
   public async update(
-    @Body() dto: { status: TrainingRequestStatus; }, //! нужен свой DTO
+    @Body() dto: UpdateTrainingRequestDto,
     @Param(ApiParamOption.TrainingRequestId.name, GuidValidationPipe) trainingRequestId: string,
     @Req() { userId, requestId }: RequestWithRequestIdAndUserId
   ): Promise<TrainingRequestRdo> {
