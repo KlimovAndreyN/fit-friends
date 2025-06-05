@@ -48,6 +48,23 @@ model Training {
   @@map("trainings")
 }
 
+model TrainingRequest {
+  id          String   @id @default(uuid()) @db.VarChar(50)
+  initiatorId String   @map("initiator_id") @db.VarChar(50)
+  userId      String   @map("user_id") @db.VarChar(50)
+  status      String   @map("status") @db.VarChar(50)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@unique([initiatorId, userId])
+  @@index([initiatorId, userId])
+  @@index([initiatorId])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@map("trainings_requests")
+}
+
 model Order {
   id            String   @id @default(uuid()) @db.VarChar(50)
   userId        String   @map("user_id") @db.VarChar(50)
