@@ -8,7 +8,7 @@ import {
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
   PageQuery, Role, FriendsProfilesWithPaginationRdo, DetailUserProfileRdo,
   FriendProfileRdo, TrainingRequestStatus, isCoachRole,
-  TrainingRequestRdo
+  TrainingRequestRdo, isSportsmanRole
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -63,10 +63,14 @@ export class UserProfileService {
     const user = await this.userService.getDetailUser(userId, currentUserId, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
     const isFriend = await this.checkFriend(userId, currentUserId, requestId);
+    let personalTrainingRequest = undefined;
 
-    //! если запрос от спортсмена по карточке тренера, то нужно проверить отправлял ли он запрос на персональную тренировку!
-    //! еще раз расширить тип, добавить personalTraining: TrainingRequest или только статус personalTrainingStatus: TrainingRequestStatus или boolean
-    return { user, questionnaire, isFriend }
+    // если запрос от спортсмена по карточке тренера, то нужно проверить отправлял ли он запрос на персональную тренировку
+    if (isSportsmanRole(role) && isCoachRole(user.role)) {
+      personalTrainingRequest = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
+    }
+
+    return { user, questionnaire, isFriend, personalTrainingRequest }
   }
 
   public async find(request: RequestWithRequestIdAndUser, query: UserProfileQuery): Promise<UsersProfilesWithPaginationRdo> {

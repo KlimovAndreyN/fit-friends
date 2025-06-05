@@ -41,6 +41,7 @@ const initialState: UserProfileProcess = {
   detailUserProfile: null,
   isFriendUserProfile: false,
   isFriendUserProfileChangeExecuting: false,
+  personalTrainingRequest: null,
   isCreateRequestExecuting: false
 };
 
@@ -77,6 +78,7 @@ export const userProfileProcess = createSlice(
       clearDetailUserProfile: (state) => {
         state.detailUserProfile = initialState.detailUserProfile;
         state.isFriendUserProfile = initialState.isFriendUserProfile;
+        state.personalTrainingRequest = initialState.personalTrainingRequest;
       },
       resetUserProfileProcess: () => initialState
     },
@@ -178,6 +180,7 @@ export const userProfileProcess = createSlice(
           (state, { payload }) => {
             state.detailUserProfile = payload;
             state.isFriendUserProfile = payload.isFriend;
+            state.personalTrainingRequest = payload.personalTrainingRequest;
             state.isFetchDetailUserProfileExecuting = false;
           }
         )
@@ -223,7 +226,9 @@ export const userProfileProcess = createSlice(
             state.isCreateRequestExecuting = false;
 
             // в детальной карточке изменяем статус
-            //! state.detailUserProfile.personalTraining = payload
+            if (state.detailUserProfile && isCoachRole(state.detailUserProfile.user.role)) {
+              state.personalTrainingRequest = payload;
+            }
 
             // добавляем запрос в список друзей к нужному другу
             const friend = state.friends.find((item) => (item.id === userId));

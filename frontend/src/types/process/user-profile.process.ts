@@ -1,4 +1,4 @@
-import { IDetailUserProfileRdo, IUserProfileRdo, IUserProfileQuery, IFriendProfileRdo } from '@backend/shared/core';
+import { IDetailUserProfileRdo, IUserProfileRdo, IUserProfileQuery, IFriendProfileRdo, ITrainingRequestRdo } from '@backend/shared/core';
 
 export type UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: boolean;
@@ -19,7 +19,8 @@ export type UserProfileProcess = {
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;
   detailUserProfile: IDetailUserProfileRdo | null;
-  isFriendUserProfile?: boolean;
+  isFriendUserProfile?: boolean; //! проверить - возможно и без вынесенных полей будет нормально обновляться
   isFriendUserProfileChangeExecuting: boolean;
+  personalTrainingRequest?: ITrainingRequestRdo | null; //! проверить - возможно и без вынесенных полей будет нормально обновляться
   isCreateRequestExecuting: boolean;
 }

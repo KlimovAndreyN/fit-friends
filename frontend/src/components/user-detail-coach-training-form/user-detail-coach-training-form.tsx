@@ -6,7 +6,7 @@ import './user-detail-coach-training-form.css';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsCreateRequestExecuting, getIsFriendUserProfile } from '../../store/user-profile-process/selectors';
+import { getIsCreateRequestExecuting, getIsFriendUserProfile, getPersonalTrainingRequest } from '../../store/user-profile-process/selectors';
 import { createTrainingRequest } from '../../store/actions/user-profile-action';
 
 type UserDetailCoachTrainingFormProps = {
@@ -26,12 +26,13 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
   const dispatch = useAppDispatch();
   const isFriendUserProfile = useAppSelector(getIsFriendUserProfile);
   const isCreateRequestExecuting = useAppSelector(getIsCreateRequestExecuting);
-
+  const personalTrainingRequest = useAppSelector(getPersonalTrainingRequest);
+  const buttonPersonalTrainingDisabled = !readyForTraining || isCreateRequestExecuting || !!personalTrainingRequest;
   const mainClassNamePrefix = `${classNamePrefix}__training`;
   const buttonPersonalTrainingClassName = classNames(
     'btn',
     `${classNamePrefix}__btn-training`,
-    { 'btn--border': !readyForTraining }
+    { 'btn--border': buttonPersonalTrainingDisabled }
   );
 
   const handlePersonalTrainingButtonClick = (event: MouseEvent) => {
@@ -56,7 +57,7 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
           className={buttonPersonalTrainingClassName}
           type="button"
           onClick={handlePersonalTrainingButtonClick}
-          disabled={!readyForTraining || isCreateRequestExecuting}
+          disabled={buttonPersonalTrainingDisabled}
         >Хочу персональную тренировку
         </button>
       }

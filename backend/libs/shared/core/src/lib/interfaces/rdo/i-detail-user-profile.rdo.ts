@@ -1,10 +1,10 @@
 import { IQuestionnaireRdo } from './i-questionnaire.rdo';
 import { IDetailUserRdo } from './i-detail-user.rdo';
-import { TrainingRequest } from '../training-request.interface';
+import { ITrainingRequestRdo } from './i-training-request.rdo';
 
 export interface IDetailUserProfileRdo {
   user: IDetailUserRdo;
   questionnaire: IQuestionnaireRdo;
   isFriend?: boolean;
-  personalTrainingRequest?: TrainingRequest
+  personalTrainingRequest?: ITrainingRequestRdo
 }
