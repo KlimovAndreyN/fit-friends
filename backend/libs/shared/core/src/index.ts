@@ -90,6 +90,7 @@ export { QuestionnaireRdo } from './lib/rdo/questionnaire.rdo';
 export { ReviewRdo } from './lib/rdo/review.rdo';
 export { TokenPayloadRdo } from './lib/rdo/token-payload.rdo';
 export { TokensRdo } from './lib/rdo/tokens.rdo';
+export { TrainingRequestRdo } from './lib/rdo/training-request.rdo';
 export { TrainingRdo } from './lib/rdo/training.rdo';
 export { TrainingsWithPaginationRdo } from './lib/rdo/trainings-with-pagination.rdo';
 export { UploadedFileRdo } from './lib/rdo/uploaded-file.rdo';

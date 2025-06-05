@@ -67,6 +67,9 @@
       "@backend/fit/training": [
         "libs/fit/training/src/index.ts"
       ],
+      "@backend/fit/training-request": [
+        "libs/fit/training-request/src/index.ts"
+      ],
       "@backend/notify/config": [
         "libs/notify/config/src/index.ts"
       ],

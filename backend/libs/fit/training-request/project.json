@@ -1,0 +1,9 @@
+{
+  "name": "fit-training-request",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/fit/training-request/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project fit-training-request --web",
+  "targets": {}
+}

@@ -14,5 +14,9 @@ export const ApiParamOption = {
   TrainingId: {
     name: 'trainingId',
     schema: TrainingApiProperty.Id
+  },
+  TrainingRequestId: {
+    name: 'trainingRequestId'
+    //! добавить schema как у осталльны
   }
 } as const;

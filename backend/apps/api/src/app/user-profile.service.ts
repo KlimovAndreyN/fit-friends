@@ -141,17 +141,17 @@ export class UserProfileService {
         outJointTraining: {
           id: '111',
           status: outJointTrainingStatus,
-          updatedAt: new Date()
+          updatedAt: '2222'
         },
         inJointTraining: {
           id: '222',
           status: inJointTrainingStatus,
-          updatedAt: new Date()
+          updatedAt: '2222'
         },
         personalTraining: {
           id: '333',
           status: personalTrainingStatus,
-          updatedAt: new Date()
+          updatedAt: '2222'
         }
       });
     }

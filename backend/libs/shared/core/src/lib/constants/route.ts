@@ -13,6 +13,7 @@ export enum ServiceRoute {
   Trainings = 'trainings',
   Orders = 'orders',
   Reviews = 'reviews',
+  TrainingsRequests = 'trainings-requests',
   FileStorage = 'files'
 }
 
@@ -50,6 +51,11 @@ export enum UserProfileRoute {
   ReadyForTraining = 'ready-for-training',
   LookForCompany = 'look-for-company',
   Friends = ServiceRoute.Friends
+}
+
+export enum TrainingRequestRoute {
+  FindToUser = 'find-to-user',
+  FindFromUser = 'find-from-user'
 }
 
 export enum FileStorageRoute {

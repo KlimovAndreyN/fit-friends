@@ -5,6 +5,7 @@ import { PrismaClientModule } from '@backend/fit/models';
 import { TrainingModule } from '@backend/fit/training';
 import { OrderModule } from '@backend/fit/order';
 import { ReviewModule } from '@backend/fit/review';
+import { TrainingRequestModule } from '@backend/fit/training-request';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { ReviewModule } from '@backend/fit/review';
     PrismaClientModule,
     TrainingModule,
     OrderModule,
-    ReviewModule
+    ReviewModule,
+    TrainingRequestModule
   ],
   controllers: [],
   providers: []
