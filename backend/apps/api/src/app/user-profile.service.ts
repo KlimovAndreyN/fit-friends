@@ -48,11 +48,22 @@ export class UserProfileService {
     return usersProfiles;
   }
 
+  private async checkFriend(userId: string, currentUserId: string, requestId: string): Promise<boolean> {
+    const url = this.getFriendsUrl(userId);
+    const headers = makeHeaders(requestId, null, currentUserId);
+    const { data: isFriend } = await this.httpService.axiosRef.get<boolean>(url, headers);
+
+    return isFriend;
+  }
+
   public async getDetailUserProfile(userId: string, currentUserId: string, role: Role, requestId: string): Promise<DetailUserProfileRdo> {
     const user = await this.userService.getDetailUser(userId, currentUserId, role, requestId);
     const questionnaire = await this.fitQuestionnaireService.findByUserId(userId, requestId);
+    const isFriend = await this.checkFriend(userId, currentUserId, requestId);
 
-    return { user, questionnaire }
+    //! если запрос от спортсмена по карточке тренера, то нужно проверить отправлял ли он запрос на персональную тренировку!
+    //! еще раз расширить тип, добавить personalTraining: TrainingRequest или только статус personalTrainingStatus: TrainingRequestStatus или boolean
+    return { user, questionnaire, isFriend }
   }
 
   public async find(request: RequestWithRequestIdAndUser, query: UserProfileQuery): Promise<UsersProfilesWithPaginationRdo> {
@@ -163,14 +174,6 @@ export class UserProfileService {
       totalItems,
       totalPages
     };
-  }
-
-  public async checkFriend(userId: string, currentUserId: string, requestId: string): Promise<boolean> {
-    const url = this.getFriendsUrl(userId);
-    const headers = makeHeaders(requestId, null, currentUserId);
-    const { data: isFriend } = await this.httpService.axiosRef.get<boolean>(url, headers);
-
-    return isFriend;
   }
 
   public async addFriend(userId: string, request: RequestWithRequestIdAndUser): Promise<void> {
