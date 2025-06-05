@@ -23,3 +23,4 @@ export const getIsFriendUserProfile = ({ [StoreSlice.UserProfileProcess]: USER_P
 export const getIsFriendUserProfileChangeExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFriendUserProfileChangeExecuting'] => USER_PROFILE_PROCESS.isFriendUserProfileChangeExecuting;
 export const getPersonalTrainingRequest = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['personalTrainingRequest'] => USER_PROFILE_PROCESS.personalTrainingRequest;
 export const getIsCreateRequestExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isCreateRequestExecuting'] => USER_PROFILE_PROCESS.isCreateRequestExecuting;
+export const getIsUpdateRequestExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isUpdateRequestExecuting'] => USER_PROFILE_PROCESS.isUpdateRequestExecuting;

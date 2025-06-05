@@ -4,8 +4,8 @@ import { isCoachRole, IUserProfileQuery, TrainingLevel } from '@backend/shared/c
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import {
-  fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchFriends,
-  fetchDetailUserProfile, changeIsFriendUserProfile, createTrainingRequest
+  fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchFriends, fetchDetailUserProfile,
+  changeIsFriendUserProfile, createTrainingRequest, updateTrainingRequest
 } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
@@ -42,7 +42,8 @@ const initialState: UserProfileProcess = {
   isFriendUserProfile: false,
   isFriendUserProfileChangeExecuting: false,
   personalTrainingRequest: null,
-  isCreateRequestExecuting: false
+  isCreateRequestExecuting: false,
+  isUpdateRequestExecuting: false
 };
 
 export const userProfileProcess = createSlice(
@@ -223,8 +224,6 @@ export const userProfileProcess = createSlice(
         .addCase(
           createTrainingRequest.fulfilled,
           (state, { payload, meta: { arg: { userId } } }) => {
-            state.isCreateRequestExecuting = false;
-
             // в детальной карточке изменяем статус
             if (state.detailUserProfile && isCoachRole(state.detailUserProfile.user.role)) {
               state.personalTrainingRequest = payload;
@@ -233,15 +232,48 @@ export const userProfileProcess = createSlice(
             // добавляем запрос в список друзей к нужному другу
             const friend = state.friends.find((item) => (item.id === userId));
 
-            if (!friend) {
-              return;
+            if (friend) {
+              if (isCoachRole(friend.role)) {
+                friend.personalTrainingRequest = payload;
+              } else {
+                friend.outJointTrainingRequest = payload;
+              }
             }
 
-            if (isCoachRole(friend.role)) {
-              friend.personalTrainingRequest = payload;
-            } else {
-              friend.outJointTrainingRequest = payload;
-            }
+            state.isCreateRequestExecuting = false;
+          }
+        )
+        .addCase(
+          updateTrainingRequest.pending,
+          (state) => {
+            state.isUpdateRequestExecuting = true;
+          }
+        )
+        .addCase(
+          updateTrainingRequest.rejected,
+          (state) => {
+            state.isUpdateRequestExecuting = false;
+          }
+        )
+        .addCase(
+          updateTrainingRequest.fulfilled,
+          (state, { payload, meta: { arg: { trainingRequestId } } }) => {
+            // добавляем запрос в список друзей к нужному другу
+            state.friends.some((friend) => {
+              if (friend.inJointTrainingRequest?.id === trainingRequestId) {
+                friend.inJointTrainingRequest = payload;
+
+                return true;
+              }
+
+              if (friend.personalTrainingRequest?.id === trainingRequestId) {
+                friend.personalTrainingRequest = payload;
+
+                return true;
+              }
+            });
+
+            state.isUpdateRequestExecuting = false;
           }
         );
     }

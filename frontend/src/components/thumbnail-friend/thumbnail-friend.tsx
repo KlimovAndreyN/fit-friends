@@ -7,7 +7,8 @@ import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-h
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
 import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thumbnail-friend-request-status';
 
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsUpdateRequestExecuting } from '../../store/user-profile-process/selectors';
 import { updateTrainingRequest } from '../../store/actions/user-profile-action';
 import { addStatusText, getBaseRequestText, getPersonalTrainingStatusText } from '../../utils/common';
 
@@ -22,6 +23,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
 
   const { id, name, avatarFilePath, role, location, specializations, readyForTraining, outJointTrainingRequest, inJointTrainingRequest, personalTrainingRequest } = friend;
   const dispatch = useAppDispatch();
+  const isUpdateRequestExecuting = useAppSelector(getIsUpdateRequestExecuting);
   const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
   const mainClassName = 'thumbnail-friend';
@@ -105,6 +107,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
             outStatusText={outStatusText}
             inStatusText={inStatusText}
             isShowButtons={isShowRequestButtons}
+            isDisabledButtons={isUpdateRequestExecuting}
             onAcceptButtonClick={handleAcceptButtonClick}
             onRejectButtonClick={handleRejectButtonClick}
           />

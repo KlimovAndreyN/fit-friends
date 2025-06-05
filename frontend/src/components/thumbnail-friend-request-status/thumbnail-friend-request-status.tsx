@@ -5,12 +5,13 @@ type ThumbnailFriendRequestStatusProps = {
   outStatusText: string;
   inStatusText: string;
   isShowButtons: boolean;
+  isDisabledButtons?: boolean;
   onAcceptButtonClick: () => void;
   onRejectButtonClick: () => void;
 }
 
 function ThumbnailFriendRequestStatus(props: ThumbnailFriendRequestStatusProps): JSX.Element {
-  const { classNamePrefix, outStatusText, inStatusText, isShowButtons, onAcceptButtonClick, onRejectButtonClick } = props;
+  const { classNamePrefix, outStatusText, inStatusText, isShowButtons, isDisabledButtons, onAcceptButtonClick, onRejectButtonClick } = props;
   const divRequestClassName = `${classNamePrefix}__request-status`;
 
   const handleAcceptButtonClick = (event: MouseEvent) => {
@@ -39,10 +40,23 @@ function ThumbnailFriendRequestStatus(props: ThumbnailFriendRequestStatusProps):
         })
       }
       {
+        //! попробовать обеъденить кнопки
         isShowButtons &&
         <div className="thumbnail-friend__button-wrapper">
-          <button className="btn btn--medium btn--dark-bg thumbnail-friend__button" type="button" onClick={handleAcceptButtonClick}>Принять</button>
-          <button className="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button" type="button" onClick={handleRejectButtonClick}>Отклонить</button>
+          {
+            [{
+              caption: 'Принять',
+              className: 'btn btn--medium btn--dark-bg thumbnail-friend__button',
+              onClick: handleAcceptButtonClick
+            },
+            {
+              caption: 'Отклонить',
+              className: 'btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button',
+              onClick: handleRejectButtonClick
+            }].map(({ caption, className, onClick }) => (
+              <button key={caption} className={className} type="button" onClick={onClick} disabled={isDisabledButtons}>{caption}</button>
+            ))
+          }
         </div>
       }
     </div>

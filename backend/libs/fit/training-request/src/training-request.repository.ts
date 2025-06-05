@@ -24,13 +24,17 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
     return this.createEntityFromDocument({ ...recordFields, status });
   }
 
-  public async findById(id: string): Promise<TrainingRequestEntity> {
-    const record = await this.client.trainingRequest.findFirst({ where: { id } });
-
+  private checkRecord(record: PrismaTrainingRequest): void {
     if (!record) {
       //! вынести в константы
       throw new NotFoundException('Request not found!');
     }
+  }
+
+  public async findById(id: string): Promise<TrainingRequestEntity> {
+    const record = await this.client.trainingRequest.findFirst({ where: { id } });
+
+    this.checkRecord(record);
 
     return this.convertPrismaTrainingRequest(record);
   }
@@ -38,10 +42,7 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
   public async find(initiatorId: string, userId: string): Promise<TrainingRequestEntity> {
     const record = await this.client.trainingRequest.findFirst({ where: { initiatorId, userId } });
 
-    if (!record) {
-      //! вынести в константы
-      throw new NotFoundException('Request not found!');
-    }
+    this.checkRecord(record);
 
     return this.convertPrismaTrainingRequest(record);
   }

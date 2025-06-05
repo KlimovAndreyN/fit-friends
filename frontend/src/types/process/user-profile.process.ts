@@ -23,4 +23,5 @@ export type UserProfileProcess = {
   isFriendUserProfileChangeExecuting: boolean;
   personalTrainingRequest?: ITrainingRequestRdo | null; // если не отдельно, то происходит перерисовка всей детальной карточки
   isCreateRequestExecuting: boolean;
+  isUpdateRequestExecuting: boolean;
 }
