@@ -12,13 +12,13 @@ import { TrainingRequestRdo } from '../../rdo/training-request.rdo';
 export class FriendProfileApiDoc {
   @ApiProperty({ type: TrainingRequestRdo })
   @Expose()
-  outJointTraining?: IFriendProfileRdo['outJointTraining'];
+  outJointTrainingRequest?: IFriendProfileRdo['outJointTrainingRequest'];
 
   @ApiProperty({ type: TrainingRequestRdo })
   @Expose()
-  inJointTraining?: IFriendProfileRdo['inJointTraining'];
+  inJointTrainingRequest?: IFriendProfileRdo['inJointTrainingRequest'];
 
   @ApiProperty({ type: TrainingRequestRdo })
   @Expose()
-  personalTraining?: IFriendProfileRdo['personalTraining'];
+  personalTrainingRequest?: IFriendProfileRdo['personalTrainingRequest'];
 }

@@ -233,9 +233,9 @@ export const userProfileProcess = createSlice(
             }
 
             if (isCoachRole(friend.role)) {
-              friend.personalTraining = payload;
+              friend.personalTrainingRequest = payload;
             } else {
-              friend.outJointTraining = payload;
+              friend.personalTrainingRequest = payload;
             }
           }
         );

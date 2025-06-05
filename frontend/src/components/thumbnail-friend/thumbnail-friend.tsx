@@ -18,7 +18,7 @@ type ThumbnailFriendProps = {
 function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps): JSX.Element {
   //! проверить консоль браузера на ошибки
 
-  const { id, name, avatarFilePath, role, location, specializations, readyForTraining, outJointTraining, inJointTraining, personalTraining } = friend;
+  const { id, name, avatarFilePath, role, location, specializations, readyForTraining, outJointTrainingRequest, inJointTrainingRequest, personalTrainingRequest } = friend;
   const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
   const mainClassName = 'thumbnail-friend';
@@ -34,27 +34,27 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
     // для спортсмена
     if (isSportsman) {
       // исходящие personalTrainingStatus
-      if (outJointTraining?.status) {
+      if (outJointTrainingRequest?.status) {
         isShowRequestStatus = true;
-        outStatusText = addStatusText(getBaseRequestText(), outJointTraining.status);
+        outStatusText = addStatusText(getBaseRequestText(), outJointTrainingRequest.status);
       }
       // входящие inJointTrainingStatus
       //! можно не объеденять с текстом для исходящего запроса
-      if (inJointTraining?.status) {
+      if (inJointTrainingRequest?.status) {
         isShowRequestStatus = true;
-        isShowRequestButtons = isPendingTrainingRequestStatus(inJointTraining.status);
-        inStatusText = getPersonalTrainingStatusText(false, inJointTraining.status);
+        isShowRequestButtons = isPendingTrainingRequestStatus(inJointTrainingRequest.status);
+        inStatusText = getPersonalTrainingStatusText(false, inJointTrainingRequest.status);
       }
     } else {
       // персональные - отправленные запросы тренерам
-      isShowRequestStatus = !!personalTraining?.status;
-      outStatusText = addStatusText(getBaseRequestText(true), personalTraining?.status);
+      isShowRequestStatus = !!personalTrainingRequest?.status;
+      outStatusText = addStatusText(getBaseRequestText(true), personalTrainingRequest?.status);
     }
   } else {
     // для тренера смотрим только personalTrainingStatus
-    isShowRequestStatus = !!personalTraining?.status;
-    isShowRequestButtons = isPendingTrainingRequestStatus(personalTraining?.status);
-    inStatusText = getPersonalTrainingStatusText(true, personalTraining?.status);
+    isShowRequestStatus = !!personalTrainingRequest?.status;
+    isShowRequestButtons = isPendingTrainingRequestStatus(personalTrainingRequest?.status);
+    inStatusText = getPersonalTrainingStatusText(true, personalTrainingRequest?.status);
   }
 
   const handleAcceptButtonClick = () => {
@@ -89,7 +89,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
             isSportsmanUser={isSportsmanUser}
             role={role}
             readyForTraning={readyForTraining}
-            isDisabled={!!outJointTraining?.status}
+            isDisabled={!!outJointTrainingRequest?.status}
           />
         </div>
         {

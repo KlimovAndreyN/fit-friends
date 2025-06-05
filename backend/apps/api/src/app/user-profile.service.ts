@@ -110,15 +110,15 @@ export class UserProfileService {
         user: { id, name, role, location, avatarFilePath },
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
-      let personalTraining: TrainingRequestRdo = undefined;
+      let personalTrainingRequest: TrainingRequestRdo = undefined;
       let outJointTrainingStatus = undefined;
       let inJointTrainingStatus = undefined;
 
       if (isCoachRole(currentUserRole)) {
-        personalTraining = await this.fitTrainingRequestService.find(userId, currentUserId, requestId);
+        personalTrainingRequest = await this.fitTrainingRequestService.find(userId, currentUserId, requestId);
 
       } else {
-        personalTraining = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
+        personalTrainingRequest = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
 
         //! отладка
         if (currentUserId === '658170cbb954e9f5b905ccf4') {
@@ -142,17 +142,17 @@ export class UserProfileService {
         avatarFilePath,
         readyForTraining,
         specializations,
-        outJointTraining: {
+        outJointTrainingRequest: {
           id: '111',
           status: outJointTrainingStatus,
           updatedAt: '2222'
         },
-        inJointTraining: {
+        inJointTrainingRequest: {
           id: '222',
           status: inJointTrainingStatus,
           updatedAt: '2222'
         },
-        personalTraining
+        personalTrainingRequest
       });
     }
 

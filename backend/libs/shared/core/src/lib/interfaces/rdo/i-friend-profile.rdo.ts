@@ -3,7 +3,7 @@ import { IUserProfileRdo } from './i-user-profile.rdo';
 
 export interface IFriendProfileRdo
   extends IUserProfileRdo {
-  outJointTraining?: ITrainingRequestRdo;
-  inJointTraining?: ITrainingRequestRdo;
-  personalTraining?: ITrainingRequestRdo;
+  outJointTrainingRequest?: ITrainingRequestRdo;
+  inJointTrainingRequest?: ITrainingRequestRdo;
+  personalTrainingRequest?: ITrainingRequestRdo;
 }

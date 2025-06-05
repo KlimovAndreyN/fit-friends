@@ -10,9 +10,9 @@ export class FriendProfileRdo
     PickType(
       FriendProfileApiDoc,
       [
-        'outJointTraining',
-        'inJointTraining',
-        'personalTraining'
+        'outJointTrainingRequest',
+        'inJointTrainingRequest',
+        'personalTrainingRequest'
       ]
     )
   )

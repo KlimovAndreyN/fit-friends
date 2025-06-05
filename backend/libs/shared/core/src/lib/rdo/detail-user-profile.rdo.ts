@@ -6,15 +6,19 @@ import { DetailUserRdo } from './detail-user.rdo';
 import { QuestionnaireRdo } from './questionnaire.rdo';
 
 export class DetailUserProfileRdo implements IDetailUserProfileRdo {
-  @ApiProperty()
+  @ApiProperty({ type: DetailUserRdo })
   @Expose()
-  public user: DetailUserRdo;
+  public user: IDetailUserProfileRdo['user'];
+
+  @ApiProperty({ type: QuestionnaireRdo })
+  @Expose()
+  public questionnaire: IDetailUserProfileRdo['questionnaire'];
 
   @ApiProperty()
   @Expose()
-  public questionnaire: QuestionnaireRdo;
+  isFriend?: IDetailUserProfileRdo['isFriend'];
 
-  @ApiProperty()
+  @ApiProperty({ type: QuestionnaireRdo })
   @Expose()
-  isFriend?: boolean;
+  personalTrainingRequest?: IDetailUserProfileRdo['personalTrainingRequest'];
 }
