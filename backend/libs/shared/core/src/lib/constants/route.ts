@@ -22,7 +22,8 @@ export enum ApiServiceRoute {
   Accounts = 'accounts',
   UsersProfiles = ServiceRoute.UsersProfiles,
   Trainings = ServiceRoute.Trainings,
-  Reviews = ServiceRoute.Reviews
+  Reviews = ServiceRoute.Reviews,
+  TrainingsRequests = ServiceRoute.TrainingsRequests
 }
 
 export enum AccountRoute {

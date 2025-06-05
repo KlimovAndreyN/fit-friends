@@ -9,11 +9,13 @@ import { FitQuestionnaireService } from './fit-questionnaire.service';
 import { UserProfileService } from './user-profile.service';
 import { FitTrainingService } from './fit-training.service';
 import { FitReviewService } from './fit-review.service';
+import { FitTrainingRequestService } from './fit-training-request.service';
 import { UserController } from './user.controller';
 import { AccountController } from './account.controller';
 import { UserProfileController } from './user-profile.controller';
 import { FitTrainingController } from './fit-training.controller';
 import { FitReviewController } from './fit-review.controller';
+import { FitTrainingRequestController } from './fit-training-request.controller';
 
 const HttpClient = {
   MAX_REDIRECTS: 5,
@@ -33,7 +35,8 @@ const HttpClient = {
     AccountController,
     UserProfileController,
     FitTrainingController,
-    FitReviewController
+    FitReviewController,
+    FitTrainingRequestController
   ],
   providers: [
     FileService,
@@ -41,7 +44,8 @@ const HttpClient = {
     FitQuestionnaireService,
     UserProfileService,
     FitTrainingService,
-    FitReviewService
+    FitReviewService,
+    FitTrainingRequestService
   ]
 })
 export class AppModule { }
