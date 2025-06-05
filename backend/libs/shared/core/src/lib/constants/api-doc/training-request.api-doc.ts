@@ -20,7 +20,7 @@ export class TrainingRequestApiDoc {
   @Expose()
   userId: ICreateTrainingRequestDto['userId'];
 
-  @ApiProperty()
+  @ApiProperty({ enum: TrainingRequestStatus })
   @Expose()
   @IsEnum(TrainingRequestStatus)
   status: ITrainingRequestRdo['status'];

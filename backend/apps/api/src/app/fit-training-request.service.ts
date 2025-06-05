@@ -3,8 +3,8 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigType } from '@nestjs/config';
 
 import {
-  ServiceRoute, RequestWithRequestIdAndUser, TrainingRequestRdo,
-  UpdateTrainingRequestDto, CreateTrainingRequestDto
+  ServiceRoute, RequestWithRequestIdAndUser, UpdateTrainingRequestDto,
+  CreateTrainingRequestDto, TrainingRequestRdo, TrainingRequestRoute
 } from '@backend/shared/core';
 import { joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -45,6 +45,11 @@ export class FitTrainingRequestService {
     return data;
   }
 
-  // public async findToUser(
-  // public async findFromUser(
+  public async find(initiatorId: string, userId: string, requestId: string): Promise<TrainingRequestRdo> {
+    const url = this.getUrl(TrainingRequestRoute.FindToUser, userId);
+    const headers = makeHeaders(requestId, null, initiatorId);
+    const { data } = await this.httpService.axiosRef.get<TrainingRequestRdo>(url, headers);
+
+    return data;
+  }
 }

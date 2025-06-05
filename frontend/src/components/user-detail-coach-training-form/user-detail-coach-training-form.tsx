@@ -5,8 +5,9 @@ import './user-detail-coach-training-form.css';
 
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIsFriendUserProfile } from '../../store/user-profile-process/selectors';
+import { createPersonalTrainingRequest } from '../../store/actions/user-profile-action';
 
 type UserDetailCoachTrainingFormProps = {
   classNamePrefix: string;
@@ -22,7 +23,7 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
   //    нажал > меняется галочка и происходит подписка и отписка?
 
   const { classNamePrefix, userId, readyForTraining, individualTraining } = props;
-  //const dispatch = useAppDispatch();//! позже нужно
+  const dispatch = useAppDispatch();
   const isFriendUserProfile = useAppSelector(getIsFriendUserProfile);
   const mainClassNamePrefix = `${classNamePrefix}__training`;
   const buttonPersonalTrainingClassName = classNames(
@@ -37,6 +38,8 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
     //! отладка
     // eslint-disable-next-line no-console
     console.log('handlePersonalTrainingButtonClick - userId', userId);
+
+    dispatch(createPersonalTrainingRequest({ userId }));
   };
 
   const handleSubscribeCheckboxChange = (newValue: boolean) => {
