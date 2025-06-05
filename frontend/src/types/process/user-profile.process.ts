@@ -19,8 +19,8 @@ export type UserProfileProcess = {
   isFetchDetailUserProfileExecuting: boolean;
   isFetchDetailUserProfileError: boolean;
   detailUserProfile: IDetailUserProfileRdo | null;
-  isFriendUserProfile?: boolean; //! проверить - возможно и без вынесенных полей будет нормально обновляться
+  isFriendUserProfile?: boolean; // если не отдельно, то происходит перерисовка всей детальной карточки
   isFriendUserProfileChangeExecuting: boolean;
-  personalTrainingRequest?: ITrainingRequestRdo | null; //! проверить - возможно и без вынесенных полей будет нормально обновляться
+  personalTrainingRequest?: ITrainingRequestRdo | null; // если не отдельно, то происходит перерисовка всей детальной карточки
   isCreateRequestExecuting: boolean;
 }
