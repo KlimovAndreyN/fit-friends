@@ -87,9 +87,10 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
           <ThumbnailFriendActivityBar
             classNamePrefix={mainClassName}
             isSportsmanUser={isSportsmanUser}
+            userId={id}
             role={role}
             readyForTraning={readyForTraining}
-            isDisabled={!!outJointTrainingRequest?.status}
+            isInviteButtonDisabled={!!outJointTrainingRequest}
           />
         </div>
         {

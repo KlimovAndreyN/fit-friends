@@ -1,20 +1,26 @@
-import { JSX } from 'react';
+import { JSX, MouseEvent } from 'react';
 import classNames from 'classnames';
 
 import { isSportsmanRole, Role } from '@backend/shared/core';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsCreateRequestExecuting } from '../../store/user-profile-process/selectors';
+import { createTrainingRequest } from '../../store/actions/user-profile-action';
 import { getReadyTraining } from '../../utils/common';
 
-type ThumbnailFriendActivityBarrops = {
+type ThumbnailFriendActivityBarProps = {
   classNamePrefix: string;
   isSportsmanUser: boolean;
+  userId: string;
   role: Role;
   readyForTraning: boolean;
-  isDisabled: boolean;
+  isInviteButtonDisabled: boolean;
 }
 
-function ThumbnailFriendActivityBar(props: ThumbnailFriendActivityBarrops): JSX.Element {
-  const { classNamePrefix, isSportsmanUser, role, readyForTraning, isDisabled } = props;
+function ThumbnailFriendActivityBar(props: ThumbnailFriendActivityBarProps): JSX.Element {
+  const { classNamePrefix, isSportsmanUser, userId, role, readyForTraning, isInviteButtonDisabled } = props;
+  const dispatch = useAppDispatch();
+  const isCreateRequestExecuting = useAppSelector(getIsCreateRequestExecuting);
   const isSportsman = isSportsmanRole(role);
   const readyTitle = getReadyTraining(role, readyForTraning); //! в маркапах у тренера такие же заголовки тренар, я сделал разные, как на остальных страницах
   const readyMainDivClassName = `${classNamePrefix}__ready-status`;
@@ -24,13 +30,10 @@ function ThumbnailFriendActivityBar(props: ThumbnailFriendActivityBarrops): JSX.
     /*{ 'is-disabled': isDisabled } // совсем бледно получается, добавил кнопке disabled*/
   );
 
-  const handleInviteButtonClick = () => {
-    //! тут обработать ответ и поменять содержимое массива
-    //! отключать кнопку пока идет запрос
-    // может совсем выделить отдельно эту кнопку!
+  const handleInviteButtonClick = (event: MouseEvent) => {
+    event.preventDefault();
 
-    // eslint-disable-next-line no-console
-    console.log('handleInviteButtonClick');
+    dispatch(createTrainingRequest({ userId }));
   };
 
   return (
@@ -44,7 +47,7 @@ function ThumbnailFriendActivityBar(props: ThumbnailFriendActivityBarrops): JSX.
           className={inviteButtonClassName}
           type="button"
           onClick={handleInviteButtonClick}
-          disabled={isDisabled}
+          disabled={isInviteButtonDisabled || isCreateRequestExecuting}
         >
           <svg width="43" height="46" aria-hidden="true" focusable="false">
             <use xlinkHref="#icon-invite" />

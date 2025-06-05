@@ -7,8 +7,7 @@ import {
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
   PageQuery, Role, FriendsProfilesWithPaginationRdo, DetailUserProfileRdo,
-  FriendProfileRdo, TrainingRequestStatus, isCoachRole,
-  TrainingRequestRdo, isSportsmanRole
+  FriendProfileRdo, isCoachRole, TrainingRequestRdo, isSportsmanRole
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -115,27 +114,18 @@ export class UserProfileService {
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
       let personalTrainingRequest: TrainingRequestRdo = undefined;
-      let outJointTrainingStatus = undefined;
-      let inJointTrainingStatus = undefined;
+      let outJointTrainingRequest = undefined;
+      let inJointTrainingRequest = undefined;
 
       if (isCoachRole(currentUserRole)) {
         personalTrainingRequest = await this.fitTrainingRequestService.find(userId, currentUserId, requestId);
-
       } else {
-        personalTrainingRequest = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
-
-        //! отладка
-        if (currentUserId === '658170cbb954e9f5b905ccf4') {
-          if (id === '683f30540f05978e7ecc5a25') {
-            outJointTrainingStatus = TrainingRequestStatus.Accepted;
-            inJointTrainingStatus = TrainingRequestStatus.Accepted;
-          }
-          if (id === '683f30540f05978e7ecc5a23') {
-            outJointTrainingStatus = TrainingRequestStatus.Rejected;
-            inJointTrainingStatus = TrainingRequestStatus.Pending;
-          }
+        if (isCoachRole(role)) {
+          personalTrainingRequest = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
+        } else {
+          outJointTrainingRequest = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
+          inJointTrainingRequest = await this.fitTrainingRequestService.find(userId, currentUserId, requestId);
         }
-        //!
       }
 
       entities.push({
@@ -146,16 +136,8 @@ export class UserProfileService {
         avatarFilePath,
         readyForTraining,
         specializations,
-        outJointTrainingRequest: {
-          id: '111',
-          status: outJointTrainingStatus,
-          updatedAt: '2222'
-        },
-        inJointTrainingRequest: {
-          id: '222',
-          status: inJointTrainingStatus,
-          updatedAt: '2222'
-        },
+        outJointTrainingRequest,
+        inJointTrainingRequest,
         personalTrainingRequest
       });
     }

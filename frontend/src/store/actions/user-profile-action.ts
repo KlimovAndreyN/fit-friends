@@ -18,7 +18,7 @@ export const Action = {
   FETCH_FRIENDS: 'user-profile/fetch-friends',
   FETCH_USER_PROFILE: 'user-profile/fetch-user-profile',
   CHANGE_IS_FRIEND_USER_PROFILE: 'user-profile/change-is-friend-user-profile',
-  CREATE_PERSONAL_TRAINING_REQUEST: 'user-profile/create-personal-training-request'
+  CREATE_TRAINING_REQUEST: 'user-profile/create-training-request'
 };
 
 export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
@@ -81,7 +81,7 @@ export const changeIsFriendUserProfile = createAsyncThunk<boolean, { userId: str
 );
 
 export const createTrainingRequest = createAsyncThunk<ITrainingRequestRdo, ICreateTrainingRequestDto, { extra: Extra }>(
-  Action.CREATE_PERSONAL_TRAINING_REQUEST,
+  Action.CREATE_TRAINING_REQUEST,
   async (dto, { extra }) => {
     const { api } = extra;
     const { data: trainingRequest } = await api.post<ITrainingRequestRdo>(ApiServiceRoute.TrainingsRequests, dto);

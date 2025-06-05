@@ -240,7 +240,7 @@ export const userProfileProcess = createSlice(
             if (isCoachRole(friend.role)) {
               friend.personalTrainingRequest = payload;
             } else {
-              friend.personalTrainingRequest = payload;
+              friend.outJointTrainingRequest = payload;
             }
           }
         );
