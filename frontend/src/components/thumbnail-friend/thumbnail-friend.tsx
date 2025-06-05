@@ -1,12 +1,14 @@
 import { JSX } from 'react';
 import classNames from 'classnames';
 
-import { IFriendProfileRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role } from '@backend/shared/core';
+import { IFriendProfileRdo, isPendingTrainingRequestStatus, isSportsmanRole, Role, TrainingRequestStatus } from '@backend/shared/core';
 
 import ThumbnailFriendHeader from '../thumbnail-friend-header/thumbnail-friend-header';
 import ThumbnailFriendActivityBar from '../thumbnail-friend-activity-bar/thumbnail-friend-activity-bar';
 import ThumbnailFriendRequestStatus from '../thumbnail-friend-request-status/thumbnail-friend-request-status';
 
+import { useAppDispatch } from '../../hooks';
+import { updateTrainingRequest } from '../../store/actions/user-profile-action';
 import { addStatusText, getBaseRequestText, getPersonalTrainingStatusText } from '../../utils/common';
 
 type ThumbnailFriendProps = {
@@ -19,6 +21,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   //! проверить консоль браузера на ошибки
 
   const { id, name, avatarFilePath, role, location, specializations, readyForTraining, outJointTrainingRequest, inJointTrainingRequest, personalTrainingRequest } = friend;
+  const dispatch = useAppDispatch();
   const isSportsmanUser = isSportsmanRole(userRole);
   const isSportsman = isSportsmanRole(role);
   const mainClassName = 'thumbnail-friend';
@@ -57,18 +60,20 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
     inStatusText = getPersonalTrainingStatusText(true, personalTrainingRequest?.status);
   }
 
-  const handleAcceptButtonClick = () => {
-    //! тут обработать ответ и поменять содержимое массива
+  const updateTrainingRequestStatus = (status: TrainingRequestStatus) => {
+    const trainingRequestId = (isSportsmanUser) ? outJointTrainingRequest?.id : personalTrainingRequest?.id;
 
-    // eslint-disable-next-line no-console
-    console.log('handleAcceptButtonClick');
+    if (trainingRequestId) {
+      dispatch(updateTrainingRequest({ trainingRequestId, dto: { status } }));
+    }
+  };
+
+  const handleAcceptButtonClick = () => {
+    updateTrainingRequestStatus(TrainingRequestStatus.Accepted);
   };
 
   const handleRejectButtonClick = () => {
-    //! тут обработать ответ и поменять содержимое массива
-
-    // eslint-disable-next-line no-console
-    console.log('handleRejectButtonClick');
+    updateTrainingRequestStatus(TrainingRequestStatus.Rejected);
   };
 
   return (

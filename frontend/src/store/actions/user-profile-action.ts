@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   IUserProfileRdo, IDetailUserProfileRdo, UserProfileRoute, IPageQuery,
   ApiServiceRoute, IUsersProfilesWithPaginationRdo, IUserProfileQuery,
-  ICreateTrainingRequestDto, ITrainingRequestRdo
+  ICreateTrainingRequestDto, ITrainingRequestRdo, IUpdateTrainingRequestDto
 } from '@backend/shared/core';
 import { getQueryString, joinUrl } from '@backend/shared/helpers';
 
@@ -18,7 +18,8 @@ export const Action = {
   FETCH_FRIENDS: 'user-profile/fetch-friends',
   FETCH_USER_PROFILE: 'user-profile/fetch-user-profile',
   CHANGE_IS_FRIEND_USER_PROFILE: 'user-profile/change-is-friend-user-profile',
-  CREATE_TRAINING_REQUEST: 'user-profile/create-training-request'
+  CREATE_TRAINING_REQUEST: 'user-profile/create-training-request',
+  UPDATE_TRAINING_REQUEST: 'user-profile/update-training-request'
 };
 
 export const fetchLookForCompanyUserProfiles = createAsyncThunk<IUserProfileRdo[], undefined, { extra: Extra }>(
@@ -85,6 +86,17 @@ export const createTrainingRequest = createAsyncThunk<ITrainingRequestRdo, ICrea
   async (dto, { extra }) => {
     const { api } = extra;
     const { data: trainingRequest } = await api.post<ITrainingRequestRdo>(ApiServiceRoute.TrainingsRequests, dto);
+
+    return trainingRequest;
+  }
+);
+
+export const updateTrainingRequest = createAsyncThunk<ITrainingRequestRdo, { trainingRequestId: string; dto: IUpdateTrainingRequestDto }, { extra: Extra }>(
+  Action.UPDATE_TRAINING_REQUEST,
+  async ({ trainingRequestId, dto }, { extra }) => {
+    const { api } = extra;
+    const url = joinUrl(ApiServiceRoute.TrainingsRequests, trainingRequestId);
+    const { data: trainingRequest } = await api.patch<ITrainingRequestRdo>(url, dto);
 
     return trainingRequest;
   }

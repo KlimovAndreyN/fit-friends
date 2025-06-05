@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import { JSX, MouseEvent } from 'react';
 
 type ThumbnailFriendRequestStatusProps = {
   classNamePrefix: string;
@@ -13,11 +13,15 @@ function ThumbnailFriendRequestStatus(props: ThumbnailFriendRequestStatusProps):
   const { classNamePrefix, outStatusText, inStatusText, isShowButtons, onAcceptButtonClick, onRejectButtonClick } = props;
   const divRequestClassName = `${classNamePrefix}__request-status`;
 
-  const handleAcceptButtonClick = () => {
+  const handleAcceptButtonClick = (event: MouseEvent) => {
+    event.preventDefault();
+
     onAcceptButtonClick();
   };
 
-  const handleRejectButtonClick = () => {
+  const handleRejectButtonClick = (event: MouseEvent) => {
+    event.preventDefault();
+
     onRejectButtonClick();
   };
 

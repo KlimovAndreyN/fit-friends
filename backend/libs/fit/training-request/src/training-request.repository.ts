@@ -1,5 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 
+import { TrainingRequest as PrismaTrainingRequest } from '@prisma/client';
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
 import { TrainingRequest, TrainingRequestStatus } from '@backend/shared/core';
@@ -16,6 +17,24 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
     super(entityFactory, client);
   }
 
+  private convertPrismaTrainingRequest(record: PrismaTrainingRequest): TrainingRequestEntity {
+    const { status: statusString, ...recordFields } = record;
+    const status = statusString as TrainingRequestStatus;
+
+    return this.createEntityFromDocument({ ...recordFields, status });
+  }
+
+  public async findById(id: string): Promise<TrainingRequestEntity> {
+    const record = await this.client.trainingRequest.findFirst({ where: { id } });
+
+    if (!record) {
+      //! вынести в константы
+      throw new NotFoundException('Request not found!');
+    }
+
+    return this.convertPrismaTrainingRequest(record);
+  }
+
   public async find(initiatorId: string, userId: string): Promise<TrainingRequestEntity> {
     const record = await this.client.trainingRequest.findFirst({ where: { initiatorId, userId } });
 
@@ -24,10 +43,7 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
       throw new NotFoundException('Request not found!');
     }
 
-    const { status: statusString, ...recordFields } = record;
-    const status = statusString as TrainingRequestStatus;
-
-    return this.createEntityFromDocument({ ...recordFields, status });
+    return this.convertPrismaTrainingRequest(record);
   }
 
   public async save(entity: TrainingRequestEntity): Promise<void> {
