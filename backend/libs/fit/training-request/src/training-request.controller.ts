@@ -23,7 +23,7 @@ export class TrainingRequestController {
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {
-    const entity = await this.trainingRequestService.findToUserId(currentUserId, userId);
+    const entity = await this.trainingRequestService.find(currentUserId, userId);
 
     return fillDto(TrainingRequestRdo, entity.toPOJO());
   }
@@ -35,7 +35,7 @@ export class TrainingRequestController {
     @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {
-    const entity = await this.trainingRequestService.findToUserId(userId, currentUserId);
+    const entity = await this.trainingRequestService.find(userId, currentUserId);
 
     return fillDto(TrainingRequestRdo, entity.toPOJO());
   }

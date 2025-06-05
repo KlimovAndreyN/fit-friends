@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable } from '@nestjs/common';
 
-import { Role, TrainingRequestStatus } from '@backend/shared/core';
+import { isCoachRole, Role, TrainingRequestStatus } from '@backend/shared/core';
 
 import { TrainingRequestRepository } from './training-request.repository';
 import { TrainingRequestEntity } from './training-request.entity';
+
+const START_TRAINING_REQUEST_STATUS = TrainingRequestStatus.Pending;
 
 @Injectable()
 export class TrainingRequestService {
@@ -11,40 +13,47 @@ export class TrainingRequestService {
     private readonly trainingRequestRepository: TrainingRequestRepository
   ) { }
 
-  public async findToUserId(initiatorId: string, userId: string): Promise<TrainingRequestEntity> {
-    //! отладка
-    console.log('TrainingRequestService.findToUserId');
-    console.log('initiatorId', initiatorId);
-    console.log('userId', userId);
-    return null;
+  public async find(initiatorId: string, userId: string): Promise<TrainingRequestEntity> {
+    const entity = await this.trainingRequestRepository.find(initiatorId, userId);
+
+    return entity;
   }
 
   public async create(
-    dto: { userId: string; }, //! нужен свой DTO
+    { userId }: { userId: string; }, //! нужен свой DTO
     initiatorId: string,
     initiatorRole: Role
   ): Promise<TrainingRequestEntity> {
-    //! проверить роль, тренерам нельзя
-    //! начальный статус на рассмотрении
-    console.log('TrainingRequestService.create');
-    console.log('dto', dto);
-    console.log('initiatorId', initiatorId);
-    console.log('initiatorRole', initiatorRole);
-    return null;
+    // обеденить с FitUserProfileServiceюcheckNotAllowForCoach
+    if (isCoachRole(initiatorRole)) {
+      throw new ForbiddenException('Not allow for coach!');
+    }
+
+    const entity = new TrainingRequestEntity({ initiatorId, userId, status: START_TRAINING_REQUEST_STATUS });
+
+    await this.trainingRequestRepository.save(entity);
+
+    return entity;
   }
 
   public async updateById(
-    dto: { status: TrainingRequestStatus; },//! нужен свой DTO
-    trainingRequestId: string,
+    { status }: { status: TrainingRequestStatus; },//! нужен свой DTO
+    id: string,
     userId: string
   ): Promise<TrainingRequestEntity> {
-    //! проверить, что в запросе userId = userId и что может отвечать...
-    //! проверить, что статус не равен исходному
-    //! отладка
-    console.log('TrainingRequestService.findToUserId');
-    console.log('dto', dto);
-    console.log('trainingRequestId', trainingRequestId);
-    console.log('initiatorId', userId);
-    return null;
+    const foundTrainingRequest = await this.trainingRequestRepository.findById(id);
+
+    if (foundTrainingRequest.userId !== userId) {
+      throw new ForbiddenException('Request not your!');
+    }
+
+    if (foundTrainingRequest.status === status) {
+      throw new ConflictException(`Request status already ${status}!`);
+    }
+
+    foundTrainingRequest.status = status;
+    await this.trainingRequestRepository.update(foundTrainingRequest);
+
+    return foundTrainingRequest;
   }
 }

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
-import { TrainingRequest } from '@backend/shared/core';
+import { TrainingRequest, TrainingRequestStatus } from '@backend/shared/core';
 
 import { TrainingRequestEntity } from './training-request.entity';
 import { TrainingRequestFactory } from './training-request.factory';
@@ -16,5 +16,39 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
     super(entityFactory, client);
   }
 
-  //! пока пусто
+  public async find(initiatorId: string, userId: string): Promise<TrainingRequestEntity> {
+    const record = await this.client.trainingRequest.findFirst({ where: { initiatorId, userId } });
+
+    if (!record) {
+      //! вынести в константы
+      throw new NotFoundException('Request not found!');
+    }
+
+    const { status: statusString, ...recordFields } = record;
+    const status = statusString as TrainingRequestStatus;
+
+    return this.createEntityFromDocument({ ...recordFields, status });
+  }
+
+  public async save(entity: TrainingRequestEntity): Promise<void> {
+    const pojoEntity = entity.toPOJO();
+    const record = await this.client.trainingRequest.create({
+      data: { ...pojoEntity }
+    });
+
+    entity.id = record.id;
+    entity.createdAt = record.createdAt;
+    entity.updatedAt = record.updatedAt;
+  }
+
+  public async update(entity: TrainingRequestEntity): Promise<void> {
+    const { id } = entity;
+    const pojoEntity = entity.toPOJO();
+
+    //! тут можно проанализировать только изменные поля
+    await this.client.trainingRequest.update({
+      where: { id },
+      data: { ...pojoEntity }
+    });
+  }
 }

@@ -156,7 +156,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
 
     if (!record) {
       //! вынести в константы
-      throw new NotFoundException('Training Not Found');
+      throw new NotFoundException('Training not found!');
     }
 
     return this.convertPrismaTraining(record);
@@ -177,6 +177,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     const { id } = entity;
     const pojoEntity = entity.toPOJO();
 
+    //! тут можно проанализировать только изменные поля
     await this.client.training.update({
       where: { id },
       data: { ...pojoEntity }
