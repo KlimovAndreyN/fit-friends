@@ -80,7 +80,7 @@ export const changeIsFriendUserProfile = createAsyncThunk<boolean, { userId: str
   }
 );
 
-export const createPersonalTrainingRequest = createAsyncThunk<ITrainingRequestRdo, ICreateTrainingRequestDto, { extra: Extra }>(
+export const createTrainingRequest = createAsyncThunk<ITrainingRequestRdo, ICreateTrainingRequestDto, { extra: Extra }>(
   Action.CREATE_PERSONAL_TRAINING_REQUEST,
   async (dto, { extra }) => {
     const { api } = extra;

@@ -23,6 +23,9 @@ swaggercoach@local.ru
 123456
 --------------
 Вопросы:
+  расширить для форнта IDetailUserProfileRdo, для трененра выводить был ли ему направлен запрос на персональную тренировку
+    и прятать кнопку
+
   сделать однотипно, т.е. передавать из api / проверять в сервисе роль и т.д. пример: this.httpService.axiosRef.post<BasicQuestionnaireRdo>(this.getUrl(), createDto, headers)
     может передавать централизованно?
 

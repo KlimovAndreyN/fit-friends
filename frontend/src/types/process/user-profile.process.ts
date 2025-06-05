@@ -1,4 +1,4 @@
-import { IDetailUserProfileRdo, IUserProfileRdo, IUserProfileQuery } from '@backend/shared/core';
+import { IDetailUserProfileRdo, IUserProfileRdo, IUserProfileQuery, IFriendProfileRdo } from '@backend/shared/core';
 
 export type UserProfileProcess = {
   isFetchLookForCompanyUserProfilesExecuting: boolean;
@@ -12,7 +12,7 @@ export type UserProfileProcess = {
   isHaveMoreUsersProfiles: boolean;
 
   isFetchFriendsExecuting: boolean;
-  friends: IUserProfileRdo[];
+  friends: IFriendProfileRdo[];
   pageFriends: number;
   isHaveMoreFriends: boolean;
 
@@ -21,4 +21,5 @@ export type UserProfileProcess = {
   detailUserProfile: IDetailUserProfileRdo | null;
   isFriendUserProfile?: boolean;
   isFriendUserProfileChangeExecuting: boolean;
+  isCreateRequestExecuting: boolean;
 }

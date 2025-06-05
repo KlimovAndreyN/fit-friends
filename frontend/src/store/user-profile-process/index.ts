@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
+import { isCoachRole, IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import {
-  fetchLookForCompanyUserProfiles, fetchUsersProfiles,
-  fetchDetailUserProfile, changeIsFriendUserProfile, fetchFriends
+  fetchLookForCompanyUserProfiles, fetchUsersProfiles, fetchFriends,
+  fetchDetailUserProfile, changeIsFriendUserProfile, createTrainingRequest
 } from '../actions/user-profile-action';
 import { StoreSlice } from '../../const';
 
@@ -40,7 +40,8 @@ const initialState: UserProfileProcess = {
   isFetchDetailUserProfileError: false,
   detailUserProfile: null,
   isFriendUserProfile: false,
-  isFriendUserProfileChangeExecuting: false
+  isFriendUserProfileChangeExecuting: false,
+  isCreateRequestExecuting: false
 };
 
 export const userProfileProcess = createSlice(
@@ -201,6 +202,40 @@ export const userProfileProcess = createSlice(
             // если удалили из друзей, то удаляем из списка
             if (!payload) {
               state.friends = state.friends.filter((friend) => (friend.id !== userId));
+            }
+          }
+        )
+        .addCase(
+          createTrainingRequest.pending,
+          (state) => {
+            state.isCreateRequestExecuting = true;
+          }
+        )
+        .addCase(
+          createTrainingRequest.rejected,
+          (state) => {
+            state.isCreateRequestExecuting = false;
+          }
+        )
+        .addCase(
+          createTrainingRequest.fulfilled,
+          (state, { payload, meta: { arg: { userId } } }) => {
+            state.isCreateRequestExecuting = false;
+
+            // в детальной карточке изменяем статус
+            //! state.detailUserProfile.personalTraining = payload
+
+            // добавляем запрос в список друзей к нужному другу
+            const friend = state.friends.find((item) => (item.id === userId));
+
+            if (!friend) {
+              return;
+            }
+
+            if (isCoachRole(friend.role)) {
+              friend.personalTraining = payload;
+            } else {
+              friend.outJointTraining = payload;
             }
           }
         );

@@ -6,8 +6,8 @@ import './user-detail-coach-training-form.css';
 import CustomCheckbox from '../custom-checkbox/custom-checkbox';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsFriendUserProfile } from '../../store/user-profile-process/selectors';
-import { createPersonalTrainingRequest } from '../../store/actions/user-profile-action';
+import { getIsCreateRequestExecuting, getIsFriendUserProfile } from '../../store/user-profile-process/selectors';
+import { createTrainingRequest } from '../../store/actions/user-profile-action';
 
 type UserDetailCoachTrainingFormProps = {
   classNamePrefix: string;
@@ -25,6 +25,8 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
   const { classNamePrefix, userId, readyForTraining, individualTraining } = props;
   const dispatch = useAppDispatch();
   const isFriendUserProfile = useAppSelector(getIsFriendUserProfile);
+  const isCreateRequestExecuting = useAppSelector(getIsCreateRequestExecuting);
+
   const mainClassNamePrefix = `${classNamePrefix}__training`;
   const buttonPersonalTrainingClassName = classNames(
     'btn',
@@ -35,11 +37,7 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
   const handlePersonalTrainingButtonClick = (event: MouseEvent) => {
     event.preventDefault();
 
-    //! отладка
-    // eslint-disable-next-line no-console
-    console.log('handlePersonalTrainingButtonClick - userId', userId);
-
-    dispatch(createPersonalTrainingRequest({ userId }));
+    dispatch(createTrainingRequest({ userId }));
   };
 
   const handleSubscribeCheckboxChange = (newValue: boolean) => {
@@ -58,7 +56,7 @@ function UserDetailCoachTrainingForm(props: UserDetailCoachTrainingFormProps): J
           className={buttonPersonalTrainingClassName}
           type="button"
           onClick={handlePersonalTrainingButtonClick}
-          disabled={!readyForTraining}
+          disabled={!readyForTraining || isCreateRequestExecuting}
         >Хочу персональную тренировку
         </button>
       }
