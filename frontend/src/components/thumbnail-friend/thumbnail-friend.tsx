@@ -63,7 +63,7 @@ function ThumbnailFriend({ className, friend, userRole }: ThumbnailFriendProps):
   }
 
   const updateTrainingRequestStatus = (status: TrainingRequestStatus) => {
-    const trainingRequestId = (isSportsmanUser) ? outJointTrainingRequest?.id : personalTrainingRequest?.id;
+    const trainingRequestId = (isSportsmanUser) ? inJointTrainingRequest?.id : personalTrainingRequest?.id;
 
     if (trainingRequestId) {
       dispatch(updateTrainingRequest({ trainingRequestId, dto: { status } }));
