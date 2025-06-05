@@ -3,6 +3,7 @@ import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ServiceRoute, XAllApiHeaderOptions, ApiParamOption, IdParam, TrainingRequestRdo, TrainingRequestRoute, RequestWithUserId, RequestWithRequestIdAndUserIdAndUserRole, TrainingRequestStatus } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
+import { GuidValidationPipe, MongoIdValidationPipe } from '@backend/shared/pipes';
 import { InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 
 import { TrainingRequestService } from './training-request.service';
@@ -19,7 +20,7 @@ export class TrainingRequestController {
   @ApiParam(ApiParamOption.UserId)
   @Get(joinUrl(TrainingRequestRoute.FindToUser, IdParam.USER))
   public async findToUser(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {
     const entity = await this.trainingRequestService.findToUserId(currentUserId, userId);
@@ -31,7 +32,7 @@ export class TrainingRequestController {
   @ApiParam(ApiParamOption.UserId)
   @Get(joinUrl(TrainingRequestRoute.FindFromUser, IdParam.USER))
   public async findFromUser(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {
     const entity = await this.trainingRequestService.findToUserId(userId, currentUserId);
@@ -46,7 +47,7 @@ export class TrainingRequestController {
     @Body() dto: { userId: string; }, //! нужен свой DTO
     @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
   ): Promise<TrainingRequestRdo> {
-    const entity = await this.trainingRequestService.create(dto, userId, userRole); //! проверить роль, тренерам нельзя
+    const entity = await this.trainingRequestService.create(dto, userId, userRole);
 
     return fillDto(TrainingRequestRdo, entity.toPOJO());
   }
@@ -56,10 +57,10 @@ export class TrainingRequestController {
   @Patch(IdParam.TRAINING_REQUEST)
   public async update(
     @Body() dto: { status: TrainingRequestStatus; }, //! нужен свой DTO
-    @Param(ApiParamOption.TrainingRequestId.name) trainingRequestId: string,
+    @Param(ApiParamOption.TrainingRequestId.name, GuidValidationPipe) trainingRequestId: string,
     @Req() { userId }: RequestWithUserId
   ): Promise<TrainingRequestRdo> {
-    const entity = await this.trainingRequestService.updateById(dto, trainingRequestId, userId); //! проверить что в запросе userId = userId
+    const entity = await this.trainingRequestService.updateById(dto, trainingRequestId, userId);
 
     return fillDto(TrainingRequestRdo, entity.toPOJO());
   }

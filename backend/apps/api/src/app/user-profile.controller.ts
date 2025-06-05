@@ -8,6 +8,7 @@ import {
   FriendsProfilesWithPaginationRdo, RequestWithRequestIdAndUserId
 } from '@backend/shared/core';
 import { joinUrl } from '@backend/shared/helpers';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
@@ -60,7 +61,7 @@ export class UserProfileController {
   @ApiResponse({ type: DetailUserProfileRdo })
   @Get(IdParam.USER)
   public async show(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailUserProfileRdo> {
     const detailUser = await this.userProfileService.getDetailUserProfile(userId, sub, role, requestId);
@@ -79,7 +80,7 @@ export class UserProfileController {
 
   @Delete(joinUrl(UserProfileRoute.Friends, IdParam.USER))
   public async deleteFriend(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId, requestId }: RequestWithRequestIdAndUserId
   ): Promise<void> {
     await this.userProfileService.deleteFriend(userId, currentUserId, requestId);

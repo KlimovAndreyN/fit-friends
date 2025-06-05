@@ -6,6 +6,7 @@ import {
   RequestWithRequestIdAndUserIdAndUserRole, ApiParamOption, IdParam,
   XApiHeaderOptions, RequestWithUserId, PageQuery, PaginationResult
 } from '@backend/shared/core';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { InjectUserIdInterceptor, InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 
 import { FitFriendService } from './fit-friend.service';
@@ -31,7 +32,7 @@ export class FitFriendController {
 
   @Get(IdParam.USER)
   public async check(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithRequestIdAndUserId
   ): Promise<boolean> {
     const isFriend = await this.fitFriendService.checkFriend(userId, currentUserId);
@@ -51,7 +52,7 @@ export class FitFriendController {
 
   @Delete(IdParam.USER)
   public async deleteFriend(
-    @Param(ApiParamOption.UserId.name) userId: string,
+    @Param(ApiParamOption.UserId.name, MongoIdValidationPipe) userId: string,
     @Req() { userId: currentUserId }: RequestWithUserId
   ): Promise<void> {
     await this.fitFriendService.deleteFriend(userId, currentUserId);

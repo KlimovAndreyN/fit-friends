@@ -17,6 +17,7 @@ import {
 } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
@@ -86,7 +87,7 @@ export class AccountController {
   @UseInterceptors(FileInterceptor(FILE_KEY))
   @Patch(joinUrl(UserProfileRoute.Certificates, IdParam.FILE))
   public async updateCoachCertificate(
-    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId,
     @UploadedFile(parseCertificateFilePipeBuilder) file: Express.Multer.File
   ): Promise<CertificateRdo> {
@@ -98,7 +99,7 @@ export class AccountController {
   @UseGuards(CheckRoleCoachGuard)
   @Delete(joinUrl(UserProfileRoute.Certificates, IdParam.FILE))
   public async deleteCoachCertificate(
-    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string,
     @Req() { requestId, userId }: RequestWithRequestIdAndUserId
   ): Promise<void> {
     await this.fitQuestionnaireService.deleteCoachCertificate(fileId, userId, requestId);

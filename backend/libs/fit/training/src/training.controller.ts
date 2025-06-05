@@ -7,6 +7,7 @@ import {
   TrainingQuery, ApiParamOption, RequestWithRequestIdAndUserIdAndUserRole,
   CreateBasicTrainingDto
 } from '@backend/shared/core';
+import { GuidValidationPipe } from '@backend/shared/pipes';
 import { InjectUserRoleInterceptor } from '@backend/shared/interceptors';
 import { fillDto } from '@backend/shared/helpers';
 
@@ -72,7 +73,7 @@ export class TrainingController {
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
   public async show(
-    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Param(ApiParamOption.TrainingId.name, GuidValidationPipe) trainingId: string,
     @Req() { userId, userRole }: RequestWithRequestIdAndUserIdAndUserRole
   ): Promise<BasicDetailTrainingRdo> {
     //! возможно тут нужно проверить куплена ли тренировка.... если не куплена, то очистить videoFileId... как по ТЗ?

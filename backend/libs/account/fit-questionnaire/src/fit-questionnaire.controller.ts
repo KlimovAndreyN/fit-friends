@@ -7,6 +7,7 @@ import {
   ApiParamOption, IdParam
 } from '@backend/shared/core';
 import { fillDto, joinUrl } from '@backend/shared/helpers';
+import { MongoIdValidationPipe } from '@backend/shared/pipes';
 import { InjectUserIdInterceptor } from '@backend/shared/interceptors';
 
 import { FitQuestionnaireService } from './fit-questionnaire.service';
@@ -68,7 +69,7 @@ export class FitQuestionnaireController {
   @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
   @Patch(joinUrl(QuestionnaireRoute.Files, IdParam.FILE))
   public async updateFileId(
-    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string,
     //! нужен тип
     @Body() dto: { fileId: string },
     @Req() { userId }: RequestWithUserId
@@ -81,7 +82,7 @@ export class FitQuestionnaireController {
   @ApiResponse({ type: 'string', isArray: true }) //! вынести в описание
   @Delete(joinUrl(QuestionnaireRoute.Files, IdParam.FILE))
   public async deleteFileId(
-    @Param(ApiParamOption.FileId.name) fileId: string,
+    @Param(ApiParamOption.FileId.name, MongoIdValidationPipe) fileId: string,
     @Req() { userId }: RequestWithUserId
   ): Promise<void> {
     await this.fitQuestionnaireService.deleteFileId(fileId, userId);

@@ -73,6 +73,7 @@ export class FitTrainingService {
   }
 
   public async update(
+    trainingId: string,
     dto: CreateTrainingDto, //! будет UpdateTrainingDto
     file: Express.Multer.File,
     userId: string,
@@ -84,7 +85,7 @@ export class FitTrainingService {
     const { id: videoFileId } = await this.fileService.uploadFile(file, requestId);
     const createDto: CreateBasicTrainingDto = { ...dto, videoFileId };
     const headers = makeHeaders(requestId, null, userId, userRole);
-    const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(), createDto, headers);
+    const { data } = await this.httpService.axiosRef.post<BasicDetailTrainingRdo>(this.getUrl(trainingId), createDto, headers);
     //const detailTraining: DetailTrainingRdo = await this.makeDetailTrainingRdo(data, bearerAuth, requestId);
     //! временно
     const detailTraining: DetailTrainingRdo = { backgroundPath: (data) ? '' : '', caloriesWaste: 0, coach: { id: '', name: '', avatarFilePath: '' }, createdDate: '', description: '', duration: Duration.Minutes_10_30, gender: Gender.Female, id: '', isSpecial: false, price: 0, rating: 0, specialization: Specialization.Aerobics, title: '', trainingLevel: TrainingLevel.Amateur, videoFilePath: '' };

@@ -10,6 +10,7 @@ import {
 } from '@backend/shared/core';
 import { getQueryString } from '@backend/shared/helpers';
 import { AxiosExceptionFilter } from '@backend/shared/exception-filters';
+import { GuidValidationPipe } from '@backend/shared/pipes';
 
 import { CheckAuthGuard } from './guards/check-auth.guard';
 import { CheckRoleSportsmanGuard } from './guards/check-role-sportsman.guard';
@@ -80,7 +81,7 @@ export class FitTrainingController {
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
   public async show(
-    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Param(ApiParamOption.TrainingId.name, GuidValidationPipe) trainingId: string,
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser
   ): Promise<DetailTrainingRdo> {
     const training = await this.fitTrainingService.findById(trainingId, sub, role, requestId);
@@ -94,13 +95,13 @@ export class FitTrainingController {
   @UseGuards(CheckRoleCoachGuard)
   @Patch(IdParam.TRAINING)
   public async update(
-    @Param(ApiParamOption.TrainingId.name) trainingId: string,
+    @Param(ApiParamOption.TrainingId.name, GuidValidationPipe) trainingId: string,
     @Body() dto: CreateTrainingDto, //! потом будет UpdateTraningDto
     @Req() { user: { sub, role }, requestId }: RequestWithRequestIdAndUser,
     @UploadedFile(parseTrainingVideoFilePipeBuilder) file: Express.Multer.File
   ): Promise<DetailTrainingRdo> {
     //! протестировать
-    const training = await this.fitTrainingService.update(dto, file, sub, role, requestId);
+    const training = await this.fitTrainingService.update(trainingId, dto, file, sub, role, requestId);
 
     return training;
   }

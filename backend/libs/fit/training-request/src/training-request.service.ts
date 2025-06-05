@@ -15,7 +15,7 @@ export class TrainingRequestService {
     //! отладка
     console.log('TrainingRequestService.findToUserId');
     console.log('initiatorId', initiatorId);
-    console.log('initiatorId', userId);
+    console.log('userId', userId);
     return null;
   }
 

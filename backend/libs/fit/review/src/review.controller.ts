@@ -3,6 +3,7 @@ import { ApiHeaders, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { ServiceRoute, XApiHeaderOptions, ApiParamOption, IdParam, BasicReviewRdo } from '@backend/shared/core';
 import { fillDto } from '@backend/shared/helpers';
+import { GuidValidationPipe } from '@backend/shared/pipes';
 
 import { ReviewService } from './review.service';
 
@@ -17,7 +18,7 @@ export class ReviewController {
   @ApiResponse({ type: BasicReviewRdo, isArray: true })
   @ApiParam(ApiParamOption.TrainingId)
   @Get(IdParam.TRAINING)
-  public async index(@Param(ApiParamOption.TrainingId.name) trainingId: string): Promise<BasicReviewRdo[]> {
+  public async index(@Param(ApiParamOption.TrainingId.name, GuidValidationPipe) trainingId: string): Promise<BasicReviewRdo[]> {
     const entities = await this.reviewService.findByTrainingId(trainingId);
 
     return entities.map((entity) => (fillDto(BasicReviewRdo, entity.toPOJO())));
