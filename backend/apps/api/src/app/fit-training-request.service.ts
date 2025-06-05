@@ -48,8 +48,13 @@ export class FitTrainingRequestService {
   public async find(initiatorId: string, userId: string, requestId: string): Promise<TrainingRequestRdo> {
     const url = this.getUrl(TrainingRequestRoute.FindToUser, userId);
     const headers = makeHeaders(requestId, null, initiatorId);
-    const { data } = await this.httpService.axiosRef.get<TrainingRequestRdo>(url, headers);
+    try {
+      const { data } = await this.httpService.axiosRef.get<TrainingRequestRdo>(url, headers);
 
-    return data;
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error: unknown) {
+      return undefined;
+    }
   }
 }

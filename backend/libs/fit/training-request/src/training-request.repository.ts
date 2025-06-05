@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaClientService } from '@backend/fit/models';
 import { BasePostgresRepository } from '@backend/shared/data-access';
@@ -32,13 +32,18 @@ export class TrainingRequestRepository extends BasePostgresRepository<TrainingRe
 
   public async save(entity: TrainingRequestEntity): Promise<void> {
     const pojoEntity = entity.toPOJO();
-    const record = await this.client.trainingRequest.create({
-      data: { ...pojoEntity }
-    });
+    try {
+      const record = await this.client.trainingRequest.create({
+        data: { ...pojoEntity }
+      });
 
-    entity.id = record.id;
-    entity.createdAt = record.createdAt;
-    entity.updatedAt = record.updatedAt;
+      entity.id = record.id;
+      entity.createdAt = record.createdAt;
+      entity.updatedAt = record.updatedAt;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error: unknown) {
+      throw new ConflictException('Request already exsist!');
+    }
   }
 
   public async update(entity: TrainingRequestEntity): Promise<void> {

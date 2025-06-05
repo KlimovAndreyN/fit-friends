@@ -7,7 +7,8 @@ import {
   BasicUserProfileRdo, UserProfileQuery, RequestWithRequestIdAndUser,
   BasicUsersProfilesWithPaginationRdo, UserProfileRdo, PaginationResult,
   PageQuery, Role, FriendsProfilesWithPaginationRdo, DetailUserProfileRdo,
-  FriendProfileRdo, TrainingRequestStatus
+  FriendProfileRdo, TrainingRequestStatus, isCoachRole,
+  TrainingRequestRdo
 } from '@backend/shared/core';
 import { getQueryString, joinUrl, makeHeaders } from '@backend/shared/helpers';
 import { apiConfig } from '@backend/api/config';
@@ -15,6 +16,7 @@ import { apiConfig } from '@backend/api/config';
 import { FileService } from './file.service';
 import { UserService } from './user.service';
 import { FitQuestionnaireService } from './fit-questionnaire.service';
+import { FitTrainingRequestService } from './fit-training-request.service';
 
 @Injectable()
 export class UserProfileService {
@@ -23,6 +25,7 @@ export class UserProfileService {
     private readonly fileService: FileService,
     private readonly userService: UserService,
     private readonly fitQuestionnaireService: FitQuestionnaireService,
+    private readonly fitTrainingRequestService: FitTrainingRequestService,
     @Inject(apiConfig.KEY)
     private readonly apiOptions: ConfigType<typeof apiConfig>
   ) { }
@@ -107,39 +110,29 @@ export class UserProfileService {
         user: { id, name, role, location, avatarFilePath },
         questionnaire: { readyForTraining, specializations }
       } = detailUserProfile;
+      let personalTraining: TrainingRequestRdo = undefined;
       let outJointTrainingStatus = undefined;
       let inJointTrainingStatus = undefined;
-      let personalTrainingStatus = undefined;
 
-      //! отладка
-      if (currentUserId === '658170cbb954e9f5b905ccf4') {
-        if (id === '683f30550f05978e7ecc5a41') {
-          personalTrainingStatus = TrainingRequestStatus.Pending;
+      if (isCoachRole(currentUserRole)) {
+        personalTraining = await this.fitTrainingRequestService.find(userId, currentUserId, requestId);
+
+      } else {
+        personalTraining = await this.fitTrainingRequestService.find(currentUserId, userId, requestId);
+
+        //! отладка
+        if (currentUserId === '658170cbb954e9f5b905ccf4') {
+          if (id === '683f30540f05978e7ecc5a25') {
+            outJointTrainingStatus = TrainingRequestStatus.Accepted;
+            inJointTrainingStatus = TrainingRequestStatus.Accepted;
+          }
+          if (id === '683f30540f05978e7ecc5a23') {
+            outJointTrainingStatus = TrainingRequestStatus.Rejected;
+            inJointTrainingStatus = TrainingRequestStatus.Pending;
+          }
         }
-        if (id === '683f30550f05978e7ecc5a4f') {
-          personalTrainingStatus = TrainingRequestStatus.Accepted;
-        }
-        if (id === '683f30540f05978e7ecc5a25') {
-          outJointTrainingStatus = TrainingRequestStatus.Accepted;
-          inJointTrainingStatus = TrainingRequestStatus.Accepted;
-        }
-        if (id === '683f30540f05978e7ecc5a23') {
-          outJointTrainingStatus = TrainingRequestStatus.Rejected;
-          inJointTrainingStatus = TrainingRequestStatus.Pending;
-        }
+        //!
       }
-      if (currentUserId === '683f30550f05978e7ecc5a41') {
-        if (id === '658170cbb954e9f5b905ccf4') {
-          personalTrainingStatus = TrainingRequestStatus.Pending;
-        }
-        if (id === '683f30550f05978e7ecc5a3f') {
-          personalTrainingStatus = TrainingRequestStatus.Accepted;
-        }
-        if (id === '683f30550f05978e7ecc5a3d') {
-          personalTrainingStatus = TrainingRequestStatus.Rejected;
-        }
-      }
-      //!
 
       entities.push({
         id,
@@ -159,11 +152,7 @@ export class UserProfileService {
           status: inJointTrainingStatus,
           updatedAt: '2222'
         },
-        personalTraining: {
-          id: '333',
-          status: personalTrainingStatus,
-          updatedAt: '2222'
-        }
+        personalTraining
       });
     }
 
