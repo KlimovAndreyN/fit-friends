@@ -29,25 +29,22 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
   const page = useAppSelector(getPageFriends) + 1;
   const isHaveMoreData = useAppSelector(getIsHaveMoreFriends);
   const { LIMIT: limit, FIRST_PAGE } = Default;
+  const isFirstPage = page === FIRST_PAGE;
 
   useEffect(() => {
     dispatch(clearDetailUserProfile()); //! без очистки отрабатывает загрузка тренировок предыдущего тренера вперед получения данных о новом пользователе
     dispatch(setPrevLocation(AppRoute.Friends)); //! вроде для обновления главной страницы... но нужно проверить... там нужны только детальная тренировка и детально пользователь
 
-    if (page === FIRST_PAGE) {
+    if (isFirstPage) {
       dispatch(fetchFriends({ page, limit }));
     }
-  }, [dispatch, page, limit, FIRST_PAGE]);
+  }, [dispatch, page, limit, isFirstPage]);
 
   const handleShowMoreClick = () => {
-    // eslint-disable-next-line no-console
-    console.log('handleShowMoreClick');
-
-    //! временно
     dispatch(fetchFriends({ page, limit }));
   };
 
-  if (isFetchFriendsExecuting) {
+  if (isFetchFriendsExecuting && (isFirstPage)) {
     return (<Spinner />);
   }
 
@@ -74,6 +71,9 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
             />))
         }
       </ul>
+      {
+        isFetchFriendsExecuting && <Spinner />
+      }
       <ButtonsShowMoreAndToTop
         divClassNamePrefix={className}
         isHaveMoreData={isHaveMoreData}
