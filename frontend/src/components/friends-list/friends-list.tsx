@@ -1,5 +1,6 @@
 import { Fragment, JSX, useEffect } from 'react';
 
+import Spinner from '../spinner/spinner';
 import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
 import ThumbnailFriend from '../thumbnail-friend/thumbnail-friend';
 
@@ -21,7 +22,6 @@ type FriendsListProps = {
 }
 
 function FriendsList({ className }: FriendsListProps): JSX.Element {
-
   const dispatch = useAppDispatch();
   const userRole = useAppSelector(getUserRole);
   const isFetchFriendsExecuting = useAppSelector(getIsFetchFriendsExecuting);
@@ -46,6 +46,10 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
     //! временно
     dispatch(fetchFriends({ page, limit }));
   };
+
+  if (isFetchFriendsExecuting) {
+    return (<Spinner />);
+  }
 
   if (!friends.length) {
     return (
