@@ -44,13 +44,7 @@ export class TrainingController {
     return result;
   }
 
-  @ApiResponse({ type: TrainingRdo, isArray: true })
-  @Get(TrainingRoute.ForSportsman)
-  public async getForSportsman(@Req() { userId }: RequestWithUserId): Promise<TrainingRdo[]> {
-    const data = await this.trainingService.getForSportsman(userId);
-
-    return this.convertTrainingEntities(data);
-  }
+  //GET /TrainingRoute.ForSportsman выполянется прям на api
 
   @ApiResponse({ type: TrainingRdo, isArray: true })
   @Get(TrainingRoute.Special)

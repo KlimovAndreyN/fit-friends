@@ -55,6 +55,7 @@ export class FitTrainingController {
     //! пока только это для подборки под спротсмена
     const query: TrainingQuery = { gender, specializations };
     const data = await this.fitTrainingService.getTrainings<TrainingsWithPaginationRdo>(getQueryString(query), request);
+    //! можно сделать BasicTrainingQuery и него положить Special и Popular, ключ для подбора под спортсмена и выполянть все запросы!
 
     return data.entities;
   }

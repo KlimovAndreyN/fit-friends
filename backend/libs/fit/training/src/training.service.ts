@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 
-import { CreateBasicTrainingDto, isCoachRole, isForFreeTrainingSortType, Role, Specialization, TrainingQuery } from '@backend/shared/core';
+import { CreateBasicTrainingDto, isCoachRole, isForFreeTrainingSortType, Role, TrainingQuery } from '@backend/shared/core';
 
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity, TrainingEntityWithPagination } from './training.entity';
@@ -30,20 +30,6 @@ export class TrainingService {
     const result = await this.trainingRepository.find({ ...query, isSortCreatedDate });
 
     return result;
-  }
-
-  public async getForSportsman(userId: string): Promise<TrainingEntity[]> {
-    //! придумать алгоритм подходящих, забрать данные из опросника и выполнить по ним поиск, расставив баллы по совпадениям
-    //! пока только специализации
-    //! добавить сортировку
-
-    //! поменялась логика скорее всего принять запрос TrainingQuery, но без цены и пагинации... сделать другой...
-    console.log('TrainingService - getForSportsman - userId', userId);
-    //const { specializations } = await this.questionnaireRepository.findByUserId(userId);
-    const specializations = [Specialization.Aerobics];
-    const { entities } = await this.trainingRepository.find({ specializations, isSortCreatedDate: true });
-
-    return entities;
   }
 
   public async getSpecial(): Promise<TrainingEntity[]> {

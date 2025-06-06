@@ -50,7 +50,10 @@ export class FitTrainingService {
     return detailTrainingRdo;
   }
 
-  public async getTrainings<T>(route: string, { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser): Promise<T> {
+  public async getTrainings<T>(
+    route: string,
+    { user: { sub: userId, role: userRole }, requestId }: RequestWithRequestIdAndUser
+  ): Promise<T> {
     const url = this.getUrl(route);
     const headers = makeHeaders(requestId, null, userId, userRole);
     const { data } = await this.httpService.axiosRef.get<T>(url, headers);
