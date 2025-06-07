@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { isCoachRole, IUserProfileQuery, TrainingLevel } from '@backend/shared/core';
+import { isCoachRole, TrainingLevel } from '@backend/shared/core';
 
 import { UserProfileProcess } from '../../types/process/user-profile.process';
 import {
@@ -10,8 +10,8 @@ import {
 import { StoreSlice } from '../../const';
 
 const Default = {
-  PAGE: 1,
-  PAGE_FRIEND: 0, //! для друзей начнем с 0 чтобы не делать isFriendsActivate
+  PAGE: 0, //! для друзей и пользователей начнем с 0 чтобы не делать isFriendsActivate / isUsersFilterActive
+  FIRST_PAGE: 1,
   LIMIT: 6,
   TRANING_LEVEL: TrainingLevel.Amateur
 } as const;
@@ -25,15 +25,13 @@ const initialState: UserProfileProcess = {
     limit: Default.LIMIT,
     trainingLevel: Default.TRANING_LEVEL
   },
-  isFristPage: true,
-  isUsersProfilesFilterActivate: false,
   isFetchUsersProfilesExecuting: false,
   usersProfiles: [],
   isHaveMoreUsersProfiles: false,
 
   isFetchFriendsExecuting: false,
   friends: [],
-  pageFriends: Default.PAGE_FRIEND,
+  pageFriends: Default.PAGE,
   isHaveMoreFriends: false,
 
   isFetchDetailUserProfileExecuting: false,
@@ -51,24 +49,11 @@ export const userProfileProcess = createSlice(
     name: StoreSlice.UserProfileProcess,
     initialState,
     reducers: {
-      setUsersProfilesFilter: (state, { payload }: PayloadAction<IUserProfileQuery>) => {
-        state.isFristPage = true;
-        state.usersProfilesFilter = { ...state.usersProfilesFilter, ...payload, page: Default.PAGE };
-      },
-      getNextPage: (state) => {
-        const { usersProfilesFilter: { page }, isHaveMoreUsersProfiles } = state;
-
-        if (page && isHaveMoreUsersProfiles) {
-          state.isFristPage = false;
-          state.usersProfilesFilter = { ...state.usersProfilesFilter, page: page + 1 };
-        }
-      },
-      setIsUsersFilterActivate: (state, { payload }: PayloadAction<boolean>) => {
-        state.isUsersProfilesFilterActivate = payload;
-
-        if (!payload) {
-          state.usersProfilesFilter = { ...initialState.usersProfilesFilter };
-        }
+      clearUsersCatalog: (state) => {
+        state.usersProfilesFilter = initialState.usersProfilesFilter;
+        state.isFetchUsersProfilesExecuting = initialState.isFetchUsersProfilesExecuting;
+        state.usersProfiles = initialState.usersProfiles;
+        state.isHaveMoreUsersProfiles = initialState.isHaveMoreUsersProfiles;
       },
       clearFriends: (state) => {
         state.isFetchFriendsExecuting = initialState.isFetchFriendsExecuting;
@@ -120,15 +105,17 @@ export const userProfileProcess = createSlice(
         )
         .addCase(
           fetchUsersProfiles.fulfilled,
-          (state, { payload }) => {
+          (state, { payload, meta: { arg } }) => {
             const { entities, currentPage, totalPages } = payload;
 
-            if (state.isFristPage) {
+            if (currentPage === Default.FIRST_PAGE) {
               state.usersProfiles = entities;
+              state.usersProfilesFilter = arg;
             } else {
               state.usersProfiles.push(...entities);
             }
 
+            state.usersProfilesFilter.page = currentPage; // если вынести page отдельно, то не будет рендер фильтра, если он будет сделано отдельно
             state.isHaveMoreUsersProfiles = currentPage < totalPages;
             state.isFetchUsersProfilesExecuting = false;
           }
@@ -151,7 +138,8 @@ export const userProfileProcess = createSlice(
           (state, { payload }) => {
             const { entities, currentPage, totalPages } = payload;
 
-            if (currentPage === Default.PAGE) {
+            // тут как бы без разницы, т.к. нет других фильтров
+            if (currentPage === Default.FIRST_PAGE) {
               state.friends = entities;
             } else {
               state.friends.push(...entities);
@@ -280,4 +268,4 @@ export const userProfileProcess = createSlice(
   }
 );
 
-export const { setUsersProfilesFilter, getNextPage, setIsUsersFilterActivate, clearFriends, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;
+export const { /*setUsersProfilesFilter, getNextPage, setIsUsersFilterActivate,*/ clearUsersCatalog, clearFriends, clearDetailUserProfile, resetUserProfileProcess } = userProfileProcess.actions;

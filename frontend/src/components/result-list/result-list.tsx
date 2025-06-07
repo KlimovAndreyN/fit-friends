@@ -1,19 +1,20 @@
 import { JSX, Fragment } from 'react';
 
 import ButtonsShowMoreAndToTop from '../buttons-show-more-and-to-top/buttons-show-more-and-to-top';
+import Spinner from '../spinner/spinner';
 
 type ResultListProps = {
   mainClassName: string;
   childrens: JSX.Element[];
   isHaveMoreData: boolean;
-  isButtonsDisabled: boolean;
+  isFetchExecuting: boolean;
   onNextPageClick: () => void;
   textOnEmpty: string;
   showedAdditionalDiv?: boolean;
 }
 
 function ResultList(props: ResultListProps): JSX.Element {
-  const { mainClassName, childrens, isHaveMoreData, isButtonsDisabled, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
+  const { mainClassName, childrens, isHaveMoreData, isFetchExecuting, onNextPageClick, textOnEmpty, showedAdditionalDiv } = props;
 
   const handleShowMoreClick = () => {
     onNextPageClick();
@@ -40,10 +41,13 @@ function ResultList(props: ResultListProps): JSX.Element {
           ?
           <Fragment>
             {list}
+            {
+              isFetchExecuting && <Spinner />
+            }
             <ButtonsShowMoreAndToTop
               divClassNamePrefix={mainClassName}
               isHaveMoreData={isHaveMoreData}
-              disabled={isButtonsDisabled}
+              disabled={isFetchExecuting}
               onShowMoreClick={handleShowMoreClick}
             />
           </Fragment>

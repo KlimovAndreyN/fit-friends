@@ -5,8 +5,6 @@ export type UserProfileProcess = {
   lookForCompanyUserProfiles: IUserProfileRdo[];
 
   usersProfilesFilter: IUserProfileQuery;
-  isFristPage: boolean;
-  isUsersProfilesFilterActivate: boolean;
   isFetchUsersProfilesExecuting: boolean;
   usersProfiles: IUserProfileRdo[];
   isHaveMoreUsersProfiles: boolean;

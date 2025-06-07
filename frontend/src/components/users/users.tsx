@@ -1,4 +1,4 @@
-import { JSX, useEffect } from 'react';
+import { JSX, useEffect, useState } from 'react';
 
 import { IUserProfileQuery } from '@backend/shared/core';
 
@@ -8,12 +8,13 @@ import ResultList from '../result-list/result-list';
 import ThumbnailUser from '../thumbnail-user/thumbnail-user';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getPrevLocation } from '../../store/user-process/selectors';
-import { getIsFetchUsersProfilesExecuting, getIsHaveMoreUsersProfiles, getIsUsersProfilesFilterActivate, getUsersProfiles, getUsersProfilesFilter } from '../../store/user-profile-process/selectors';
+import { getIsFetchUsersProfilesExecuting, getIsHaveMoreUsersProfiles, getUsersProfiles, getUsersProfilesFilter } from '../../store/user-profile-process/selectors';
 import { setPrevLocation } from '../../store/user-process';
-import { clearDetailUserProfile, getNextPage, setIsUsersFilterActivate, setUsersProfilesFilter } from '../../store/user-profile-process';
+import { clearDetailUserProfile } from '../../store/user-profile-process';
 import { fetchUsersProfiles } from '../../store/actions/user-profile-action';
 import { AppRoute, PageTitle } from '../../const';
+
+const FIRST_PAGE = 1;
 
 function Users(): JSX.Element {
   //! Частично функциональность пересекается с каталогом тернировок - подумать как объеденить
@@ -22,37 +23,33 @@ function Users(): JSX.Element {
   const dispatch = useAppDispatch();
   const usersProfilesFilter = useAppSelector(getUsersProfilesFilter);
   const usersProfiles = useAppSelector(getUsersProfiles);
-  const isUsersProfilesFilterActivate = useAppSelector(getIsUsersProfilesFilterActivate);
   const isFetchUsersProfilesExecuting = useAppSelector(getIsFetchUsersProfilesExecuting);
   const isHaveMoreUsersProfiles = useAppSelector(getIsHaveMoreUsersProfiles);
-  const prevLocation = useAppSelector(getPrevLocation);
+  const [isFilterChange, setIsFilterChange] = useState(false);
   const location = AppRoute.UsersCatalog;
+  const { page } = usersProfilesFilter;
+
   const title = PageTitle.UsersCatalog;
 
   useEffect(() => {
-    if (!isUsersProfilesFilterActivate) {
-      dispatch(setUsersProfilesFilter({}));
-      dispatch(setIsUsersFilterActivate(true));
-    } else {
-      if (prevLocation && (prevLocation !== location) && (prevLocation !== AppRoute.UserDetail)) {
-        dispatch(setPrevLocation(location));
-        dispatch(setIsUsersFilterActivate(false)); // происходит сброс фильтров, можно и не сбрасывать
-      } else if (!prevLocation || (prevLocation === location)) {
-        dispatch(fetchUsersProfiles(usersProfilesFilter));
-      }
-    }
+    dispatch(clearDetailUserProfile()); //! без очистки отрабатывает загрузка тренировок предыдущего тренера вперед получения данных о новом пользователе
+    dispatch(setPrevLocation(location)); //! вроде для обновления главной страницы... но нужно проверить... там нужны только детальная тренировка и детально пользователь
 
-    dispatch(clearDetailUserProfile());
-  }, [dispatch, location, usersProfilesFilter, isUsersProfilesFilterActivate, prevLocation]);
+    if (page === 0) {
+      dispatch(fetchUsersProfiles({ ...usersProfilesFilter, page: FIRST_PAGE }));
+    }
+  }, [dispatch, location, page, usersProfilesFilter, isFilterChange]);
 
   const handleFilterOnChange = (newFilter: IUserProfileQuery) => {
-    dispatch(setPrevLocation(location));
-    dispatch(setUsersProfilesFilter({ ...usersProfilesFilter, ...newFilter }));
+    dispatch(setPrevLocation(location)); //! вроде для обновления главной страницы... но нужно проверить... там нужны только детальная тренировка и детально пользователь
+    setIsFilterChange(true);
+    dispatch(fetchUsersProfiles({ ...usersProfilesFilter, ...newFilter, page: FIRST_PAGE }));
   };
 
   const handleNextPageClick = () => {
-    dispatch(setPrevLocation(location));
-    dispatch(getNextPage());
+    dispatch(setPrevLocation(location)); //! вроде для обновления главной страницы... но нужно проверить... там нужны только детальная тренировка и детально пользователь
+    setIsFilterChange(false);
+    dispatch(fetchUsersProfiles({ ...usersProfilesFilter, page: (page ?? 0) + 1 }));
   };
 
   return (
@@ -63,7 +60,7 @@ function Users(): JSX.Element {
         onUsersFilterChange={handleFilterOnChange}
       />
       {
-        (isFetchUsersProfilesExecuting && (usersProfilesFilter.page === 1))
+        (isFetchUsersProfilesExecuting && ((page === 0) || isFilterChange))
           ?
           <Spinner />
           :
@@ -73,7 +70,7 @@ function Users(): JSX.Element {
               (user) => (<ThumbnailUser key={user.id} userProfile={user} isUseCoachClassName />)
             )}
             isHaveMoreData={isHaveMoreUsersProfiles}
-            isButtonsDisabled={isFetchUsersProfilesExecuting}
+            isFetchExecuting={isFetchUsersProfilesExecuting}
             onNextPageClick={handleNextPageClick}
             textOnEmpty='Пользователи не найдены'
             showedAdditionalDiv

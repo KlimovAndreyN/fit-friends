@@ -16,7 +16,7 @@ import {
   getPopularTrainings, getIsFetchSpecialTrainingsExecuting, getIsFetchPopularTrainingsExecuting
 } from '../../store/training-process/selectors';
 import { fetchForSportsmanTrainings, fetchPopularTrainings, fetchSpecialTrainings } from '../../store/actions/training-action';
-import { clearDetailUserProfile, clearFriends } from '../../store/user-profile-process';
+import { clearDetailUserProfile, clearFriends, clearUsersCatalog } from '../../store/user-profile-process';
 import { fetchLookForCompanyUserProfiles } from '../../store/actions/user-profile-action';
 import { getIsFetchLookForCompanyUserProfilesExecuting, getLookForCompanyUserProfiles } from '../../store/user-profile-process/selectors';
 import { AppRoute, PageTitle } from '../../const';
@@ -56,7 +56,8 @@ function Index(): JSX.Element {
 
     dispatch(clearDetailTraining());
     dispatch(clearDetailUserProfile());
-    dispatch(clearFriends()); //! для обновления информации на странице мои друзья
+    dispatch(clearUsersCatalog()); //! для обновления информации на странице мои друзья
+    dispatch(clearFriends()); //! для обновления информации на странице пользователи
   }, [dispatch, isIndexPageActivate, prevLocation]);
 
   if (isFetchForSportsmanTrainingsExecuting || isFetchFetchSpecialTrainingsExecuting || isFetchPopularTrainingsExecuting || isFetchLookForCompanyUserProfilesExecuting) {

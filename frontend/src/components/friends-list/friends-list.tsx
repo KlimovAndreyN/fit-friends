@@ -12,10 +12,7 @@ import { fetchFriends } from '../../store/actions/user-profile-action';
 import { getFriends, getIsFetchFriendsExecuting, getIsHaveMoreFriends, getPageFriends } from '../../store/user-profile-process/selectors';
 import { AppRoute } from '../../const';
 
-const Default = {
-  FIRST_PAGE: 1,
-  LIMIT: 6,
-} as const;
+const DEFAULT_LIMIT = 6;
 
 type FriendsListProps = {
   className: string;
@@ -26,25 +23,24 @@ function FriendsList({ className }: FriendsListProps): JSX.Element {
   const userRole = useAppSelector(getUserRole);
   const isFetchFriendsExecuting = useAppSelector(getIsFetchFriendsExecuting);
   const friends = useAppSelector(getFriends);
-  const page = useAppSelector(getPageFriends) + 1;
+  const page = useAppSelector(getPageFriends);
   const isHaveMoreData = useAppSelector(getIsHaveMoreFriends);
-  const { LIMIT: limit, FIRST_PAGE } = Default;
-  const isFirstPage = page === FIRST_PAGE;
+  const limit = DEFAULT_LIMIT;
 
   useEffect(() => {
     dispatch(clearDetailUserProfile()); //! без очистки отрабатывает загрузка тренировок предыдущего тренера вперед получения данных о новом пользователе
     dispatch(setPrevLocation(AppRoute.Friends)); //! вроде для обновления главной страницы... но нужно проверить... там нужны только детальная тренировка и детально пользователь
 
-    if (isFirstPage) {
-      dispatch(fetchFriends({ page, limit }));
+    if (page === 0) {
+      dispatch(fetchFriends({ limit }));
     }
-  }, [dispatch, page, limit, isFirstPage]);
+  }, [dispatch, page, limit]);
 
   const handleShowMoreClick = () => {
-    dispatch(fetchFriends({ page, limit }));
+    dispatch(fetchFriends({ page: page + 1, limit }));
   };
 
-  if (isFetchFriendsExecuting && (isFirstPage)) {
+  if (isFetchFriendsExecuting && (page === 0)) {
     return (<Spinner />);
   }
 

@@ -6,7 +6,6 @@ export const getIsFetchLookForCompanyUserProfilesExecuting = ({ [StoreSlice.User
 export const getLookForCompanyUserProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['lookForCompanyUserProfiles'] => USER_PROFILE_PROCESS.lookForCompanyUserProfiles;
 
 export const getUsersProfilesFilter = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['usersProfilesFilter'] => USER_PROFILE_PROCESS.usersProfilesFilter;
-export const getIsUsersProfilesFilterActivate = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isUsersProfilesFilterActivate'] => USER_PROFILE_PROCESS.isUsersProfilesFilterActivate;
 export const getIsFetchUsersProfilesExecuting = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isFetchUsersProfilesExecuting'] => USER_PROFILE_PROCESS.isFetchUsersProfilesExecuting;
 export const getUsersProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['usersProfiles'] => USER_PROFILE_PROCESS.usersProfiles;
 export const getIsHaveMoreUsersProfiles = ({ [StoreSlice.UserProfileProcess]: USER_PROFILE_PROCESS }: State): UserProfileProcess['isHaveMoreUsersProfiles'] => USER_PROFILE_PROCESS.isHaveMoreUsersProfiles;

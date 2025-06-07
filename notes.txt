@@ -22,6 +22,10 @@ swagger@local.ru
 swaggercoach@local.ru
 123456
 --------------
+function BackButton({ className, underlined }: BackButtonProps): JSX.Element {
+  const prevLocation = useAppSelector(getPrevLocation);
+сделать куда вернутся
+
 const prevLocation = useAppSelector(getPrevLocation);
 dispatch(setPrevLocation(AppRoute.SignIn));
 
@@ -42,6 +46,7 @@ dispatch(setPrevLocation(AppRoute.SignIn));
     для страниц главная, каталог тренировок, мои тренировки, каталог пользователей, мои друзья
       не загружает данные если начали с главной, посомтрели несколько карточек и перешли в каталог - не выполняется setPrevLocation(AppRoute.Index)
       возможно setPrevLocation(AppRoute.Index) можно выполнять в App?
+      -- в друзьях и пользователях сделал по нормальному, без setPrevLocation
     может для гнавной обновлять когда по лого... а когда назад с каталогов и т.д. не обновлять данные, в backbutton очищать признак активности главной...
 
   Из-за получения подготовленных childrens в props происходит полная перерисовка страницы
