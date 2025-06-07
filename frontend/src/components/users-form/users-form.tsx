@@ -20,12 +20,12 @@ const USER_SORTS: Option[] = convertEnumToArray(UserSortType).map(
   (sortType) => ({ value: sortType, title: SortTypeTitle[sortType] })
 );
 
-type UsersCatalogFormProps = {
+type UsersFormProps = {
   usersFilter: IUserProfileQuery;
   onUsersFilterChange: (newFilter: IUserProfileQuery) => void;
 }
 
-function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
+function UsersForm({ usersFilter, onUsersFilterChange }: UsersFormProps): JSX.Element {
   const { locations, specializations, trainingLevel, sortType } = usersFilter;
   const className = 'user-catalog-form';
 
@@ -105,4 +105,4 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
   );
 }
 
-export default UsersCatalogForm;
+export default UsersForm;

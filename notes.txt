@@ -22,6 +22,9 @@ swagger@local.ru
 swaggercoach@local.ru
 123456
 --------------
+const prevLocation = useAppSelector(getPrevLocation);
+dispatch(setPrevLocation(AppRoute.SignIn));
+
 Вопросы:
   Реализовать персональные тренировки
     проверить:
