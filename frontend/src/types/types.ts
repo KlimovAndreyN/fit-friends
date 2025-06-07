@@ -18,5 +18,4 @@ export type CreateQuestionnaireDto = ICreateQuestionnaireSportsmanDto | ICreateQ
 export type PlaceLocation = {
   latitude: number;
   longitude: number;
-  zoom: number;
 };

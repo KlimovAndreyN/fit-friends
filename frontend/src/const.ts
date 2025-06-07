@@ -4,7 +4,7 @@ import {
 } from '@backend/shared/core';
 import { convertEnumToArray, joinUrl } from '@backend/shared/helpers';
 
-import { Option } from './types/types';
+import { Option, PlaceLocation } from './types/types';
 
 export const MAIN_TITLE = 'FitFriends';
 export const ID_PARAM = ':id';
@@ -167,4 +167,17 @@ export const LeafletOption = {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }
+} as const;
+
+export const CityLocation = {
+  LOCATION: { latitude: 59.9275, longitude: 30.2969 },
+  ZOOM: 11
+};
+
+export const MetroPlaceLocation: { [key in Location]: PlaceLocation } = {
+  [Location.Petrogradskaya]: { latitude: 59.85, longitude: 30.2269 },
+  [Location.Pionerskaya]: { latitude: 59.85, longitude: 30.459 },
+  [Location.Sportivnaya]: { latitude: 59.85, longitude: 30.569 },
+  [Location.Udelnaya]: { latitude: 59.89, longitude: 30.569 },
+  [Location.Zvezdnaya]: { latitude: 59.99, longitude: 30.529 }
 } as const;

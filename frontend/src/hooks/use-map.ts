@@ -8,13 +8,14 @@ import { PlaceLocation } from '../types/types';
 
 function useMap(
   mapRef: RefObject<HTMLElement | null>,
-  startLocation: PlaceLocation
+  startLocation: PlaceLocation,
+  zoom: number
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
-    const { latitude: lat, longitude: lng, zoom } = startLocation;
+    const { latitude: lat, longitude: lng } = startLocation;
     const center = { lat, lng };
 
     if (mapRef.current && !isRenderedRef.current) {
@@ -28,7 +29,7 @@ function useMap(
     } else {
       map?.setView(center, zoom);
     }
-  }, [map, mapRef, startLocation]);
+  }, [map, mapRef, startLocation, zoom]);
 
   return map;
 }

@@ -7,7 +7,7 @@ import UserPhoto from '../user-photo/user-photo';
 import UserDetailWrapperContentHeadStatus from '../user-detail-wrapper-content-head-status/user-detail-wrapper-content-head-status';
 import PopupModalMap from '../popup-modal-map/popup-modal-map';
 
-import { LocationTitle } from '../../const';
+import { CityLocation, LocationTitle, MetroPlaceLocation } from '../../const';
 
 type UserDetailWrapperContentHeadProps = {
   classNamePrefix: string;
@@ -24,7 +24,10 @@ function UserDetailWrapperContentHead({ classNamePrefix, detailUserProfile }: Us
     user: { role, name, avatarFilePath, location, about },
     questionnaire: { readyForTraining, description }
   } = detailUserProfile;
+  const { LOCATION, ZOOM } = CityLocation;
   const locationText = LocationTitle[location];
+  const placeLocation = MetroPlaceLocation[location];
+
   const [showLocationMap, setShowLocationMap] = useState(false);
 
   const handleLocationLinkClick = (event: MouseEvent) => {
@@ -53,7 +56,14 @@ function UserDetailWrapperContentHead({ classNamePrefix, detailUserProfile }: Us
       </div>
       {
         showLocationMap &&
-        <PopupModalMap title={name} address={locationText} onClose={handleLocationPopupModalMapClose} />
+        <PopupModalMap
+          title={name}
+          address={locationText}
+          startPlaceLocation={LOCATION}
+          startZomm={ZOOM}
+          placeLocation={placeLocation}
+          onClose={handleLocationPopupModalMapClose}
+        />
       }
       <UserDetailWrapperContentHeadStatus role={role} readyForTraining={readyForTraining} />
       <div className={`${classNamePrefix}__text`}>

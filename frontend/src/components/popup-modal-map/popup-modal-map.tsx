@@ -12,26 +12,27 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [40, 49]
 });
 
+// height: 623px у картинки img/content/popup/map.jpg
+const MAP_HEIGHT = '623px';
+
 type PopupModalMapProps = {
   title: string;
   address: string;
+  startPlaceLocation: PlaceLocation;
+  startZomm: number;
+  placeLocation: PlaceLocation;
   onClose: () => void;
 }
 
 function PopupModalMap(props: PopupModalMapProps): JSX.Element {
-  const { title, address, onClose } = props;
+  const { title, address, startPlaceLocation, startZomm, placeLocation, onClose } = props;
   const mapRef = useRef(null);
-  const startLocation: PlaceLocation = { latitude: 59.9275, longitude: 30.2969, zoom: 11 };
-  const map = useMap(mapRef, startLocation);
+  const map = useMap(mapRef, startPlaceLocation, startZomm);
 
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      //const { latitude: lat, longitude: lng } = { latitude: 59.85, longitude: 30.2269 };
-      //const { latitude: lat, longitude: lng } = { latitude: 59.85, longitude: 30.469 };
-      //const { latitude: lat, longitude: lng } = { latitude: 59.85, longitude: 30.569 };
-      //const { latitude: lat, longitude: lng } = { latitude: 59.89, longitude: 30.569 };
-      const { latitude: lat, longitude: lng } = { latitude: 59.99, longitude: 30.529 };
+      const { latitude: lat, longitude: lng } = placeLocation;
       const marker = new Marker({ lat, lng });
 
       marker.setIcon(defaultCustomIcon).addTo(markerLayer);
@@ -40,12 +41,11 @@ function PopupModalMap(props: PopupModalMapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map]);
+  }, [map, placeLocation]);
 
-  // height: 623px у картинки img/content/popup/map.jpg
   const content = (
     <div className="popup__map">
-      <section ref={mapRef} style={{ height: '623px' }} />
+      <section ref={mapRef} style={{ height: MAP_HEIGHT }} />
     </div>
   );
 
