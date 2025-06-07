@@ -11,6 +11,12 @@ export type OnFileInputChange = (filePath: string, file: File | undefined) => vo
 export type Option = {
   value: string;
   title: string;
-}
+};
 
 export type CreateQuestionnaireDto = ICreateQuestionnaireSportsmanDto | ICreateQuestionnaireCoachDto;
+
+export type PlaceLocation = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};

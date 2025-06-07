@@ -159,3 +159,12 @@ export const TRAINING_LEVELS: Option[] = convertEnumToArray(TrainingLevel).map(
 );
 
 export const CERTIFICATES_FILE_TYPES = '.pdf, .jpg, .jpeg, .png';
+
+export const LeafletOption = {
+  URL_TEMPLATE: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  OPTIONS:
+  {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }
+} as const;
