@@ -3,6 +3,7 @@ import { FormEvent, JSX } from 'react';
 import { IUserProfileQuery, Location, Specialization, TrainingLevel, UserSortType } from '@backend/shared/core';
 import { convertEnumToArray, deleteItem } from '@backend/shared/helpers';
 
+import BackButton from '../back-button/back-button';
 import FilterEnumCheckboxes from '../filter-enum-checkboxes/filter-enum-checkboxes';
 import CustomToggleRadio from '../custom-toggle-radio/custom-toggle-radio';
 import FilterFormSort from '../filter-form-sort/filter-form-sort';
@@ -26,6 +27,7 @@ type UsersCatalogFormProps = {
 
 function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogFormProps): JSX.Element {
   const { locations, specializations, trainingLevel, sortType } = usersFilter;
+  const className = 'user-catalog-form';
 
   const handleFormSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -56,22 +58,18 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
   };
 
   return (
-    <div className="user-catalog-form">
+    <div className={className}>
       <h2 className="visually-hidden">Каталог пользователя</h2>
-      <div className="user-catalog-form__wrapper">
-        <button className="btn-flat btn-flat--underlined user-catalog-form__btnback" type="button">
-          <svg width="14" height="10" aria-hidden="true">
-            <use xlinkHref="#arrow-left"></use>
-          </svg><span>Назад</span>
-        </button>
-        <h3 className="user-catalog-form__title">Фильтры</h3>
-        <form className="user-catalog-form__form" onSubmit={handleFormSubmit}>
+      <div className={`${className}__wrapper`}>
+        <BackButton className={`${className}__btnback`} underlined />
+        <h3 className={`${className}__title`}>Фильтры</h3>
+        <form className={`${className}__form`} onSubmit={handleFormSubmit}>
           <FilterEnumCheckboxes<Location>
             caption='Локация, станция метро'
             name='location'
             items={locations}
             options={LOCATIONS}
-            className='user-catalog-form'
+            className={className}
             isShowAllButton
             onChange={handleLocationsChange}
           />
@@ -80,12 +78,12 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
             name='spezialization'
             items={specializations}
             options={SPECIALISATIONS}
-            className='user-catalog-form'
+            className={className}
             isShowAllButton
             onChange={handleSpecializationsChange}
           />
-          <div className="user-catalog-form__block user-catalog-form__block--level">
-            <h4 className="user-catalog-form__block-title">Уровень</h4> {/* //! в маркапе видимо опечатка "Ваш уровень", но мы ищем пользоватлей с каким то уровнем...*/}
+          <div className={`${className}__block ${className}__block--level`}>
+            <h4 className={`${className}__block-title`}>Уровень</h4> {/* //! в маркапе видимо опечатка "Ваш уровень", но мы ищем пользоватлей с каким то уровнем...*/}
             <CustomToggleRadio
               name='level'
               options={TRAINING_LEVELS}
@@ -97,7 +95,7 @@ function UsersCatalogForm({ usersFilter, onUsersFilterChange }: UsersCatalogForm
           <FilterFormSort
             value={sortType}
             options={USER_SORTS}
-            className='user-catalog-form'
+            className={className}
             isUseButtonRatioClassName={false}
             onChange={handleSortChange}
           />

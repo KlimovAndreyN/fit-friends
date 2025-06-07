@@ -1,5 +1,6 @@
 import { JSX, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
 
 import Header from '../../components/header/header';
 import BackButton from '../../components/back-button/back-button';
@@ -24,6 +25,7 @@ function UserDetail(): JSX.Element | null {
   const isFetchDetailUserProfileError = useAppSelector(getIsFetchDetailUserProfileError);
   const isSelfProfile = userId === useAppSelector(getUserId);
   const detailUserProfile = useAppSelector(getDetailUserProfile);
+  const className = 'inner-page';
 
   useScrollToTop(); //! а если в useEffect?
 
@@ -58,10 +60,10 @@ function UserDetail(): JSX.Element | null {
     <Fragment>
       <Header title={PageTitle.UserDetail} />
       <main>
-        <div className="inner-page inner-page--no-sidebar">
+        <div className={classNames(className, `${className}--no-sidebar`)}>
           <div className="container">
-            <div className="inner-page__wrapper">
-              <BackButton className='inner-page' />
+            <div className={`${className}__wrapper`}>
+              <BackButton className={`${className}__back`} />
               <UserDetailWrapper isSelfProfile={isSelfProfile} detailUserProfile={detailUserProfile} />
             </div>
           </div>

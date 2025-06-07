@@ -16,7 +16,7 @@ function Friends(): JSX.Element {
         <section className={mainClassName}>
           <div className="container">
             <div className={`${mainClassName}__wrapper`}>
-              <BackButton className={mainClassName} />
+              <BackButton className={`${mainClassName}__back`} />
               <div className={`${mainClassName}__title-wrapper`}>
                 <h1 className={`${mainClassName}__title`}>Мои друзья</h1>
                 {/* //! закоментировано в маркапах? есть компонет CustomCheckbox

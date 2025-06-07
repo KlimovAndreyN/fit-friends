@@ -23,6 +23,7 @@ function ReviewsPanel({ trainingId, isAddReviewButtonEnabled }: ReviewsPanelProp
   const dispatch = useAppDispatch();
   const isFetchReviewsExecuting = useAppSelector(getIsFetchReviewsExecuting);
   const reviews = useAppSelector(getReviews);
+  const className = 'reviews-side-bar';
 
   useEffect(() => {
     dispatch(fetchReviews(trainingId));
@@ -33,17 +34,17 @@ function ReviewsPanel({ trainingId, isAddReviewButtonEnabled }: ReviewsPanelProp
   }
 
   return (
-    <aside className="reviews-side-bar">
-      <BackButton className='reviews-side-bar' underlined />
-      <h2 className="reviews-side-bar__title" id={REVIEWS_ANCHOR}>Отзывы</h2>
-      <ul className="reviews-side-bar__list">
+    <aside className={className}>
+      <BackButton className={`${className}__back`} underlined />
+      <h2 className={`${className}__title`} id={REVIEWS_ANCHOR}>Отзывы</h2>
+      <ul className={`${className}__list`}>
         {
           reviews.map(
             (review) => {
               const { user: { id: userId, name: userName, avatarFilePath: userAvatarFilePath }, rating, message } = review;
 
               return (
-                <li className="reviews-side-bar__item" key={userId}>
+                <li className={`${className}__item`} key={userId}>
                   <div className="review">
                     <div className="review__user-info">
                       <UserPhoto path={userAvatarFilePath} className='review__user-photo' />
@@ -63,7 +64,7 @@ function ReviewsPanel({ trainingId, isAddReviewButtonEnabled }: ReviewsPanelProp
           )
         }
       </ul>
-      <button className="btn btn--medium reviews-side-bar__button" type="button" disabled={!isAddReviewButtonEnabled}>Оставить отзыв</button>
+      <button className={`btn btn--medium ${className}__button`} type="button" disabled={!isAddReviewButtonEnabled}>Оставить отзыв</button>
     </aside>
   );
 }

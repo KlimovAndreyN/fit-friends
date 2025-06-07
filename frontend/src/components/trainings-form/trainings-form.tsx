@@ -86,7 +86,7 @@ function TrainingsForm(props: TrainingsFormProps): JSX.Element {
     <div className={className}>
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className={`${className}__wrapper`}>
-        <BackButton className={className} classPrefix underlined />
+        <BackButton className={`${className}__btnback`} underlined />
         <h3 className={`${className}__title`}>Фильтры</h3>
         <form className={`${className}__form`} onSubmit={handleFormSubmit}>
           <FilterMinMaxRange

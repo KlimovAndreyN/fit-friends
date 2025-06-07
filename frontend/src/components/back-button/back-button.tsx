@@ -7,11 +7,10 @@ import { getPrevLocation, getUserMainPage } from '../../store/user-process/selec
 
 type BackButtonProps = {
   className: string;
-  classPrefix?: boolean;
   underlined?: boolean;
 }
 
-function BackButton({ className, classPrefix, underlined }: BackButtonProps): JSX.Element {
+function BackButton({ className, underlined }: BackButtonProps): JSX.Element {
   const prevLocation = useAppSelector(getPrevLocation);
   const mainPage = useAppSelector(getUserMainPage);
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ function BackButton({ className, classPrefix, underlined }: BackButtonProps): JS
   const buttonClassName = classNames(
     'btn-flat',
     { 'btn-flat--underlined': underlined },
-    `${className}__${(classPrefix) ? 'btn' : ''}back`
+    className
   );
 
   return (
