@@ -24,7 +24,15 @@ swaggercoach@local.ru
 --------------
 function BackButton({ className, underlined }: BackButtonProps): JSX.Element {
   const prevLocation = useAppSelector(getPrevLocation);
-сделать куда вернутся
+  const mainPage = useAppSelector(getUserMainPage);
+сделать куда вернутся to....
+  const handleBackButtonClick = () => {
+    if (prevLocation) {
+      navigate(-1);
+    } else {
+      navigate(mainPage);
+    }
+  };
 
 const prevLocation = useAppSelector(getPrevLocation);
 dispatch(setPrevLocation(AppRoute.SignIn));

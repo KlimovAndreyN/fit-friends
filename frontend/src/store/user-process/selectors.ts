@@ -9,8 +9,10 @@ export const getIsSingInExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }:
 export const getIsSingUpExecuting = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isSingUpExecuting'] => USER_PROCESS.isSingUpExecuting;
 export const getUserId = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userInfo']['sub'] => USER_PROCESS.userInfo.sub;
 export const getUserRole = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['userInfo']['role'] => USER_PROCESS.userInfo.role;
+// возможно уже не нужное
 export const getUserMainPage = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): AppRoute => (isCoachRole(USER_PROCESS.userInfo.role) ? AppRoute.PersonalAccount : AppRoute.Index);
 
+// возможно уже не нужное
 export const getPrevLocation = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['prevLocation'] => USER_PROCESS.prevLocation;
 
 export const getIsIndexPageActivate = ({ [StoreSlice.UserProcess]: USER_PROCESS }: State): UserProcess['isIndexPageActivate'] => USER_PROCESS.isIndexPageActivate;
