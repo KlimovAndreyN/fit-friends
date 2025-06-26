@@ -1,8 +1,3 @@
-+++++++++++++++++++++++++
-! перед сдачей прокомпилировать и запустить под Linux!
-! везде где используется оставил 'crypto' - import { randomUUID } from 'node:crypto';
-+++++++++++++++++++++++++
-
 id2486639
 Сдача:
   1. description.md
@@ -33,6 +28,9 @@ function BackButton({ className, underlined }: BackButtonProps): JSX.Element {
       navigate(mainPage);
     }
   };
+---------------
+Ошибка 500 - после регистрации и входа, перед опросником
+  null reading toPOJO - libs/account/fit-questionare/src/fit-questionare.controller.ts 54:50 
 
 const prevLocation = useAppSelector(getPrevLocation);
 dispatch(setPrevLocation(AppRoute.SignIn));
