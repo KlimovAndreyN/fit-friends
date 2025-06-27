@@ -29,8 +29,9 @@ function BackButton({ className, underlined }: BackButtonProps): JSX.Element {
     }
   };
 ---------------
-Ошибка 500 - после регистрации и входа, перед опросником
-  null reading toPOJO - libs/account/fit-questionare/src/fit-questionare.controller.ts 54:50 
+1. Ошибка 500 - после регистрации и входа, перед опросником
+  null reading toPOJO - libs/account/fit-questionare/src/fit-questionare.controller.ts 54:50
+2. Не обновялется список друзей при добавления/удаления открытытого из каталога пользователей, может перестало работать при удалении из друзей? на добавление может и не делал...
 
 const prevLocation = useAppSelector(getPrevLocation);
 dispatch(setPrevLocation(AppRoute.SignIn));
